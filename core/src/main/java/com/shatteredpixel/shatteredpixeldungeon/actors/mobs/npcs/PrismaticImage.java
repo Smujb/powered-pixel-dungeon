@@ -34,6 +34,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Mob;
 import com.shatteredpixel.shatteredpixeldungeon.effects.CellEmitter;
 import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.levels.features.Chasm;
@@ -42,6 +43,8 @@ import com.shatteredpixel.shatteredpixeldungeon.sprites.PrismaticSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+
+import java.util.ArrayList;
 
 public class PrismaticImage extends NPC {
 	
@@ -177,20 +180,24 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 		damage = super.defenseProc(enemy, damage);
-		if (hero.belongings.armor != null){
-			return hero.belongings.armor.proc( enemy, this, damage );
-		} else {
-			return damage;
+		ArrayList<Armor> Armors = hero.belongings.armor();//Proc all armours 1 by 1
+		for (int i=0; i < Armors.size(); i++) {
+			damage = Armors.get(i).proc(enemy,this, damage);
 		}
+		return damage;
 	}
 	
 	@Override
 	public void damage(int dmg, Object src) {
-		
+
 		//TODO improve this when I have proper damage source logic
-		if (hero.belongings.armor != null && hero.belongings.armor.hasGlyph(AntiMagic.class, this)
-				&& AntiMagic.RESISTS.contains(src.getClass())){
-			dmg -= AntiMagic.drRoll(hero.belongings.armor.level());
+		//checks if *any* equipped armour has Anti Magic
+		ArrayList<Armor> Armors = hero.belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
+					&& AntiMagic.RESISTS.contains(src.getClass())) {
+				dmg -= AntiMagic.drRoll(Armors.get(i).level());
+			}
 		}
 		
 		super.damage(dmg, src);
@@ -198,10 +205,12 @@ public class PrismaticImage extends NPC {
 	
 	@Override
 	public float speed() {
-		if (hero.belongings.armor != null){
-			return hero.belongings.armor.speedFactor(this, super.speed());
+		float speed = super.speed();
+		ArrayList<Armor> Armors = hero.belongings.armor();//Applies speed factor for all armours
+		for (int i=0; i < Armors.size(); i++) {
+			speed *= Armors.get(i).speedFactor(this, speed);
 		}
-		return super.speed();
+		return speed;
 	}
 	
 	@Override
@@ -228,12 +237,15 @@ public class PrismaticImage extends NPC {
 	
 	@Override
 	public boolean isImmune(Class effect) {
-		if (effect == Burning.class
-				&& hero != null
-				&& hero.belongings.armor != null
-				&& hero.belongings.armor.hasGlyph(Brimstone.class, this)){
-			return true;
+		ArrayList<Armor> Armors = hero.belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			if (effect == Burning.class
+					&& Armors.get(i) != null
+					&& Armors.get(i).hasGlyph(Brimstone.class, this)) {
+				return true;
+			}
 		}
+
 		return super.isImmune(effect);
 	}
 	
