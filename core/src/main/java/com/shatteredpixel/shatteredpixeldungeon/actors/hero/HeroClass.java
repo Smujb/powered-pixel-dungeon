@@ -98,7 +98,7 @@ public enum HeroClass {
 
 	private static void initCommon( Hero hero ) {
 		Item i = new ClothArmor().identify();
-		if (!Challenges.isItemBlocked(i)) hero.belongings.armor = (ClothArmor)i;
+		if (!Challenges.isItemBlocked(i))
 
 		i = new Food();
 		if (!Challenges.isItemBlocked(i)) i.collect();
@@ -126,14 +126,12 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.weapon = new WornShortsword()).identify();
+		(hero.belongings.miscs[0] = new WornShortsword()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);
 
-		if (hero.belongings.armor != null){
-			hero.belongings.armor.affixSeal(new BrokenSeal());
-		}
+		new BrokenSeal().collect();
 		
 		new PotionBandolier().collect();
 		Dungeon.LimitedDrops.POTION_BANDOLIER.drop();
@@ -147,8 +145,8 @@ public enum HeroClass {
 		
 		staff = new MagesStaff(new WandOfMagicMissile());
 
-		(hero.belongings.weapon = staff).identify();
-		hero.belongings.weapon.activate(hero);
+		(hero.belongings.miscs[0] = staff).identify();
+		hero.belongings.weapon().get(0).activate(hero);
 
 		Dungeon.quickslot.setSlot(0, staff);
 
@@ -160,11 +158,11 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
-		(hero.belongings.weapon = new Dagger()).identify();
+		(hero.belongings.miscs[0] = new Dagger()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();
-		(hero.belongings.misc1 = cloak).identify();
-		hero.belongings.misc1.activate( hero );
+		(hero.belongings.miscs[1] = cloak).identify();
+		hero.belongings.miscs[1].activate( hero );
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
@@ -181,7 +179,7 @@ public enum HeroClass {
 
 	private static void initHuntress( Hero hero ) {
 
-		(hero.belongings.weapon = new Gloves()).identify();
+		(hero.belongings.miscs[0] = new Gloves()).identify();
 		SpiritBow bow = new SpiritBow();
 		bow.identify().collect();
 

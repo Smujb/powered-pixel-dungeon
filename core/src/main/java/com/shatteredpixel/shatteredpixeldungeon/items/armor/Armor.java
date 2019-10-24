@@ -33,6 +33,7 @@ import com.shatteredpixel.shatteredpixeldungeon.effects.Speck;
 import com.shatteredpixel.shatteredpixeldungeon.items.BrokenSeal;
 import com.shatteredpixel.shatteredpixeldungeon.items.EquipableItem;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.AntiEntropy;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Bulk;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.curses.Corrosion;
@@ -69,7 +70,7 @@ import com.watabou.utils.Reflection;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Armor extends EquipableItem {
+public class Armor extends KindofMisc {
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -185,34 +186,6 @@ public class Armor extends EquipableItem {
 		}
 	}
 
-	@Override
-	public boolean doEquip( Hero hero ) {
-		
-		detach(hero.belongings.backpack);
-
-		if (hero.belongings.armor == null || hero.belongings.armor.doUnequip( hero, true, false )) {
-			
-			hero.belongings.armor = this;
-			
-			cursedKnown = true;
-			if (cursed) {
-				equipCursed( hero );
-				GLog.n( Messages.get(Armor.class, "equip_cursed") );
-			}
-			
-			((HeroSprite)hero.sprite).updateArmor();
-			activate(hero);
-
-			hero.spendAndNext( time2equip( hero ) );
-			return true;
-			
-		} else {
-			
-			collect( hero.belongings.backpack );
-			return false;
-			
-		}
-	}
 
 	@Override
 	public void activate(Char ch) {
@@ -238,30 +211,6 @@ public class Armor extends EquipableItem {
 	@Override
 	protected float time2equip( Hero hero ) {
 		return 2 / hero.speed();
-	}
-
-	@Override
-	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
-		if (super.doUnequip( hero, collect, single )) {
-
-			hero.belongings.armor = null;
-			((HeroSprite)hero.sprite).updateArmor();
-
-			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
-			if (sealBuff != null) sealBuff.setArmor(null);
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-	}
-	
-	@Override
-	public boolean isEquipped( Hero hero ) {
-		return hero.belongings.armor == this;
 	}
 
 	public final int DRMax(){

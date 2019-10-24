@@ -99,8 +99,8 @@ public class MirrorImage extends NPC {
 	@Override
 	public int damageRoll() {
 		int damage;
-		if (hero.belongings.weapon != null){
-			damage = hero.belongings.weapon.damageRoll(this);
+		if (hero.belongings.weapon() != null){
+			damage = hero.belongings.weapon().get(0).damageRoll(this);
 		} else {
 			damage = hero.damageRoll(); //handles ring of force
 		}
@@ -132,13 +132,13 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || (hero.belongings.weapon != null && hero.belongings.weapon.canReach(this, enemy.pos));
+		return super.canAttack(enemy) || (hero.belongings.weapon() != null && hero.belongings.weapon().get(0).canReach(this, enemy.pos));
 	}
 	
 	@Override
 	public int drRoll() {
-		if (hero != null && hero.belongings.weapon != null){
-			return Random.NormalIntRange(0, hero.belongings.weapon.defenseFactor(this)/2);
+		if (hero != null && hero.belongings.weapon() != null){
+			return Random.NormalIntRange(0, hero.belongings.weapon().get(0).defenseFactor(this)/2);
 		} else {
 			return 0;
 		}
@@ -156,8 +156,8 @@ public class MirrorImage extends NPC {
 		if (enemy instanceof Mob) {
 			((Mob)enemy).aggro( this );
 		}
-		if (hero.belongings.weapon != null){
-			return hero.belongings.weapon.proc( this, enemy, damage );
+		if (hero.belongings.weapon() != null){
+			return hero.belongings.weapon().get(0).proc( this, enemy, damage );
 		} else {
 			return damage;
 		}
