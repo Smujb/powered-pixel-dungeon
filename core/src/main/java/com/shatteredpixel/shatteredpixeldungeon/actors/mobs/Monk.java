@@ -28,6 +28,7 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.Terror;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.actors.mobs.npcs.Imp;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
 import com.shatteredpixel.shatteredpixeldungeon.items.food.Food;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gauntlet;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves;
@@ -90,20 +91,20 @@ public class Monk extends Mob {
 		if (enemy == Dungeon.hero) {
 			
 			Hero hero = Dungeon.hero;
-			KindOfWeapon weapon = hero.belongings.weapon;
+			KindofMisc item = hero.belongings.miscs[0];
 			
-			if (weapon != null
-					&& !(weapon instanceof Gloves)
-					&& !(weapon instanceof Gauntlet)
-					&& !weapon.cursed) {
+			if ((item != null)
+					&& !(item instanceof Gloves)
+					&& !(item instanceof Gauntlet)
+					&& !item.cursed) {
 				if (hitsToDisarm == 0) hitsToDisarm = Random.NormalIntRange(4, 8);
 
 				if (--hitsToDisarm == 0) {
-					hero.belongings.weapon = null;
-					Dungeon.quickslot.convertToPlaceholder(weapon);
-					weapon.updateQuickslot();
-					Dungeon.level.drop(weapon, hero.pos).sprite.drop();
-					GLog.w(Messages.get(this, "disarm", weapon.name()));
+					hero.belongings.miscs[0] = null;
+					Dungeon.quickslot.convertToPlaceholder(item);
+					item.updateQuickslot();
+					Dungeon.level.drop(item, hero.pos).sprite.drop();
+					GLog.w(Messages.get(this, "disarm", item.name()));
 				}
 			}
 		}
