@@ -91,11 +91,7 @@ public class Dart extends MissileWeapon {
 	private static Crossbow bow;
 	
 	private void updateCrossbow(){
-		if (Dungeon.hero.belongings.weapon instanceof Crossbow){
-			bow = (Crossbow) Dungeon.hero.belongings.weapon;
-		} else {
-			bow = null;
-		}
+		bow = null;//TODO: Fix this method so Crossbows work
 	}
 	
 	@Override

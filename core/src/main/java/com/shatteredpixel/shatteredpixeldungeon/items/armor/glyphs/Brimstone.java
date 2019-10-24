@@ -43,42 +43,4 @@ public class Brimstone extends Armor.Glyph {
 		return ORANGE;
 	}
 
-	//pre-0.7.4 saves
-	public static class BrimstoneShield extends ShieldBuff {
-		
-		{
-			type = buffType.POSITIVE;
-		}
-
-		@Override
-		public boolean act() {
-			Hero hero = (Hero)target;
-
-			if (hero.belongings.armor == null || !hero.belongings.armor.hasGlyph(Brimstone.class, hero)) {
-				detach();
-				return true;
-			}
-
-			if (shielding() > 0){
-				decShield();
-
-				//shield decays at a rate of 1 per turn.
-				spend(TICK);
-			} else {
-				detach();
-			}
-
-			return true;
-		}
-
-		@Override
-		public void restoreFromBundle(Bundle bundle) {
-			super.restoreFromBundle(bundle);
-			//pre-0.7.0
-			if (bundle.contains("added")){
-				setShield(bundle.getInt("added"));
-			}
-		}
-	}
-
 }
