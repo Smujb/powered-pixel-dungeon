@@ -35,21 +35,35 @@ public abstract class KindofMisc extends EquipableItem {
 	@Override
 	public boolean doEquip(final Hero hero) {
 
-		if (hero.belongings.misc1 != null && hero.belongings.misc2 != null) {
+		if (hero.belongings.miscs[0] != null && hero.belongings.miscs[1] != null && hero.belongings.miscs[2] != null && hero.belongings.miscs[3] != null) {
 
-			final KindofMisc m1 = hero.belongings.misc1;
-			final KindofMisc m2 = hero.belongings.misc2;
+			final KindofMisc m1 = hero.belongings.miscs[0];
+			final KindofMisc m2 = hero.belongings.miscs[1];
+			final KindofMisc m3 = hero.belongings.miscs[2];
+			final KindofMisc m4 = hero.belongings.miscs[3];
 
 			GameScene.show(
 					new WndOptions(Messages.get(KindofMisc.class, "unequip_title"),
 							Messages.get(KindofMisc.class, "unequip_message"),
 							Messages.titleCase(m1.toString()),
-							Messages.titleCase(m2.toString())) {
+							Messages.titleCase(m2.toString()),
+							Messages.titleCase(m3.toString()),
+							Messages.titleCase(m4.toString())) {
 
 						@Override
 						protected void onSelect(int index) {
 
-							KindofMisc equipped = (index == 0 ? m1 : m2);
+							KindofMisc equipped;
+
+							if (index == 0) {
+								equipped = m1;
+							} else if (index == 1) {
+								equipped = m2;
+							} else if (index == 2) {
+								equipped = m3;
+							} else {
+								equipped = m4;
+							}
 							//temporarily give 1 extra backpack spot to support swapping with a full inventory
 							hero.belongings.backpack.size++;
 							if (equipped.doUnequip(hero, true, false)) {
@@ -64,10 +78,14 @@ public abstract class KindofMisc extends EquipableItem {
 
 		} else {
 
-			if (hero.belongings.misc1 == null) {
-				hero.belongings.misc1 = this;
+			if (hero.belongings.miscs[0] == null) {
+				hero.belongings.miscs[0] = this;
+			} else if (hero.belongings.miscs[1] == null) {
+				hero.belongings.miscs[1] = this;
+			} else if (hero.belongings.miscs[2] == null) {
+				hero.belongings.miscs[2] = this;
 			} else {
-				hero.belongings.misc2 = this;
+				hero.belongings.miscs[3] = this;
 			}
 
 			detach( hero.belongings.backpack );
@@ -91,10 +109,14 @@ public abstract class KindofMisc extends EquipableItem {
 	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 
-			if (hero.belongings.misc1 == this) {
-				hero.belongings.misc1 = null;
+			if (hero.belongings.miscs[0] == this) {
+				hero.belongings.miscs[0] = null;
+			} else if (hero.belongings.miscs[1] == this) {
+				hero.belongings.miscs[1] = null;
+			} else if (hero.belongings.miscs[2] == this) {
+				hero.belongings.miscs[2] = null;
 			} else {
-				hero.belongings.misc2 = null;
+				hero.belongings.miscs[3] = null;
 			}
 
 			return true;
@@ -108,7 +130,9 @@ public abstract class KindofMisc extends EquipableItem {
 
 	@Override
 	public boolean isEquipped( Hero hero ) {
-		return hero.belongings.misc1 == this || hero.belongings.misc2 == this;
+		return hero.belongings.miscs[0] == this || hero.belongings.miscs[1] == this || hero.belongings.miscs[2] == this || hero.belongings.miscs[3] == this;
 	}
 
 }
+
+
