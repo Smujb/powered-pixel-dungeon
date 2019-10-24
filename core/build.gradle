@@ -1,0 +1,7 @@
+apply plugin: 'java-library'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+dependencies {
+    api project(':SPD-classes')
+}
