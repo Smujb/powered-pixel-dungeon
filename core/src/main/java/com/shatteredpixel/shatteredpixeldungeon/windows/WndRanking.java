@@ -232,17 +232,20 @@ public class WndRanking extends WndTabbed {
 			super();
 			
 			Belongings stuff = Dungeon.hero.belongings;
-			if (stuff.weapon != null) {
-				addItem( stuff.weapon );
+			if (stuff.miscs[0] != null) {
+				addItem( stuff.miscs[0] );
 			}
-			if (stuff.armor != null) {
-				addItem( stuff.armor );
+			if (stuff.miscs[1] != null) {
+				addItem( stuff.miscs[1] );
 			}
-			if (stuff.misc1 != null) {
-				addItem( stuff.misc1);
+			if (stuff.miscs[2] != null) {
+				addItem( stuff.miscs[2] );
 			}
-			if (stuff.misc2 != null) {
-				addItem( stuff.misc2);
+			if (stuff.miscs[3] != null) {
+				addItem( stuff.miscs[3] );
+			}
+			if (stuff.miscs[4] != null) {
+				addItem( stuff.miscs[4] );
 			}
 
 			pos = 0;

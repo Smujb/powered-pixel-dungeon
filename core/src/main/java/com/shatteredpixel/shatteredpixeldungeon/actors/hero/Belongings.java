@@ -33,11 +33,13 @@ import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.keys.Key;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.shatteredpixeldungeon.items.wands.Wand;
+import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -56,8 +58,33 @@ public class Belongings implements Iterable<Item> {
 		return new ClothArmor();
 	}
 
-	public KindOfWeapon weapon() {
-		return new WornShortsword();
+	public ArrayList<KindOfWeapon> weapon() {
+		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
+
+		if (miscs[0] instanceof MeleeWeapon) {
+			weapons.add((KindOfWeapon) miscs[0]);
+		}
+
+		if (miscs[1] instanceof MeleeWeapon) {
+			weapons.add((KindOfWeapon) miscs[1]);
+		}
+
+		if (miscs[2] instanceof MeleeWeapon) {
+			weapons.add((KindOfWeapon) miscs[2]);
+		}
+
+		if (miscs[3] instanceof MeleeWeapon) {
+			weapons.add((KindOfWeapon) miscs[3]);
+		}
+
+		if (miscs[4] instanceof MeleeWeapon) {
+			weapons.add((KindOfWeapon) miscs[4]);
+		}
+		if (weapons.isEmpty()) {
+			weapons.add(new WornShortsword());
+		}
+		return weapons;
+
 	}
 
 	public KindofMisc[] miscs = new KindofMisc[5];

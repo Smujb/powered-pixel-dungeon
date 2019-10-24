@@ -75,31 +75,27 @@ public class CursingTrap extends Trap {
 		//items the trap can curse if nothing else is available.
 		ArrayList<Item> canCurse = new ArrayList<>();
 
-		KindOfWeapon weapon = hero.belongings.weapon;
-		if (weapon instanceof Weapon && !weapon.cursed){
-			if (((Weapon) weapon).enchantment == null)
-				priorityCurse.add(weapon);
-			else
-				canCurse.add(weapon);
-		}
-
-		Armor armor = hero.belongings.armor;
-		if (armor != null && !armor.cursed){
-			if (armor.glyph == null)
-				priorityCurse.add(armor);
-			else
-				canCurse.add(armor);
-		}
-
-		KindofMisc misc1 = hero.belongings.misc1;
+		KindofMisc misc1 = hero.belongings.miscs[0];
 		if (misc1 != null){
 			canCurse.add(misc1);
 		}
-
-		KindofMisc misc2 = hero.belongings.misc2;
-		if (misc2 != null){
+		KindofMisc misc2 = hero.belongings.miscs[1];
+		if (misc1 != null){
 			canCurse.add(misc2);
 		}
+		KindofMisc misc3 = hero.belongings.miscs[2];
+		if (misc1 != null){
+			canCurse.add(misc3);
+		}
+		KindofMisc misc4 = hero.belongings.miscs[3];
+		if (misc1 != null){
+			canCurse.add(misc4);
+		}
+		KindofMisc misc5 = hero.belongings.miscs[4];
+		if (misc1 != null){
+			canCurse.add(misc5);
+		}
+
 
 		Collections.shuffle(priorityCurse);
 		Collections.shuffle(canCurse);

@@ -63,13 +63,14 @@ public class DisarmingTrap extends Trap{
 
 		if (Dungeon.hero.pos == pos && !Dungeon.hero.flying){
 			Hero hero = Dungeon.hero;
-			KindOfWeapon weapon = hero.belongings.weapon;
+
+			KindOfWeapon weapon = hero.belongings.weapon().get(0);
 
 			if (weapon != null && !weapon.cursed) {
 
 				int cell = Dungeon.level.randomRespawnCell();
 				if (cell != -1) {
-					hero.belongings.weapon = null;
+					hero.belongings.miscs[0] = null;
 					Dungeon.quickslot.clearItem(weapon);
 					weapon.updateQuickslot();
 
