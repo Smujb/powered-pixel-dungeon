@@ -54,11 +54,36 @@ public class Belongings implements Iterable<Item> {
 	//public KindOfWeapon weapon = null;
 	//public Armor armor = null;
 
-	public Armor armor() {
-		return new ClothArmor();
+	public ArrayList<Armor> armor() {
+		ArrayList<Armor> armors = new ArrayList<>();
+
+		if (miscs[0] instanceof Armor) {
+			armors.add((Armor) miscs[0]);
+		}
+
+		if (miscs[1] instanceof Armor) {
+			armors.add((Armor) miscs[1]);
+		}
+
+		if (miscs[2] instanceof Armor) {
+			armors.add((Armor) miscs[2]);
+		}
+
+		if (miscs[3] instanceof Armor) {
+			armors.add((Armor) miscs[3]);
+		}
+
+		if (miscs[4] instanceof Armor) {
+			armors.add((Armor) miscs[4]);
+		}
+		if (armors.isEmpty()) {
+			armors.add(new ClothArmor());
+		}
+		return armors;
+
 	}
 
-	public ArrayList<KindOfWeapon> weapon() {
+			public ArrayList<KindOfWeapon> weapon() {
 		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
 
 		if (miscs[0] instanceof MeleeWeapon) {

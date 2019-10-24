@@ -65,6 +65,8 @@ import com.shatteredpixel.shatteredpixeldungeon.items.Heap;
 import com.shatteredpixel.shatteredpixeldungeon.items.Heap.Type;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.KindOfWeapon;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
+import com.shatteredpixel.shatteredpixeldungeon.items.armor.Armor;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.shatteredpixeldungeon.items.armor.glyphs.Viscosity;
@@ -146,6 +148,8 @@ public class Hero extends Char {
 	public static final int MAX_LEVEL = 30;
 
 	public static final int STARTING_STR = 10;
+
+	public int currentWeapon = 0;
 	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
@@ -298,18 +302,18 @@ public class Hero extends Char {
 		Buff.affect( this, Hunger.class );
 	}
 	
-	public int tier() {
-		return belongings.armor == null ? 0 : belongings.armor.tier;
+	public int tier() {//Not needed any more
+		return belongings.armor().get(0) == null ? 0 : belongings.armor().get(0).tier;
 	}
 	
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 
 		//temporarily set the hero's weapon to the missile weapon being used
-		KindOfWeapon equipped = belongings.weapon;
-		belongings.weapon = wep;
+		KindofMisc equipped = belongings.miscs[0];
+		belongings.miscs[0] = wep;
 		boolean hit = attack( enemy );
 		Invisibility.dispel();
-		belongings.weapon = equipped;
+		belongings.miscs[0] = equipped;
 		
 		if (subClass == HeroSubClass.GLADIATOR){
 			if (hit) {
@@ -322,10 +326,21 @@ public class Hero extends Char {
 
 		return hit;
 	}
+
+	public int numberOfWeapons() {
+		return belongings.weapon().size();
+	}
+
+	public void resetWeapon() {//After hitting with each weapon, return to first
+		if (currentWeapon > (numberOfWeapons() + 1)) {
+			currentWeapon = 0;
+		}
+	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		KindOfWeapon wep = belongings.weapon;
+		resetWeapon();
+		KindOfWeapon wep = belongings.weapon().get(currentWeapon);
 		
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -355,9 +370,9 @@ public class Hero extends Char {
 		if (paralysed > 0) {
 			evasion /= 2;
 		}
-
-		if (belongings.armor != null) {
-			evasion = belongings.armor.evasionFactor(this, evasion);
+		ArrayList<Armor> Armors = belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			evasion *= Armors.get(i).evasionFactor(this, evasion);
 		}
 
 		return Math.round(evasion);
@@ -366,18 +381,20 @@ public class Hero extends Char {
 	@Override
 	public int drRoll() {
 		int dr = 0;
-
-		if (belongings.armor != null) {
-			int armDr = Random.NormalIntRange( belongings.armor.DRMin(), belongings.armor.DRMax());
-			if (STR() < belongings.armor.STRReq()){
-				armDr -= 2*(belongings.armor.STRReq() - STR());
+		if (belongings.armor() != null) {
+			ArrayList<Armor> Armors = belongings.armor();
+			for (int i=0; i < Armors.size(); i++) {
+				int armDr = Random.NormalIntRange( Armors.get(i).DRMin(), Armors.get(i).DRMax());
+				if (STR() < Armors.get(i).STRReq()){
+					armDr -= 2*(Armors.get(i).STRReq() - STR());
+				}
+				if (armDr > 0) dr += armDr;
 			}
-			if (armDr > 0) dr += armDr;
-		}
-		if (belongings.weapon != null)  {
-			int wepDr = Random.NormalIntRange( 0 , belongings.weapon.defenseFactor( this ) );
-			if (STR() < ((Weapon)belongings.weapon).STRReq()){
-				wepDr -= 2*(((Weapon)belongings.weapon).STRReq() - STR());
+		} if (belongings.weapon() != null)  {//Only defense factor from current weapon applies
+			ArrayList<KindOfWeapon> Weapons = belongings.weapon();
+			int wepDr = Random.NormalIntRange( 0 , Weapons.get(currentWeapon).defenseFactor( this ) );
+			if (STR() < ((Weapon) Weapons.get(currentWeapon)).STRReq()){
+				wepDr -= 2*(((Weapon)Weapons.get(currentWeapon)).STRReq() - STR());
 			}
 			if (wepDr > 0) dr += wepDr;
 		}
@@ -392,9 +409,10 @@ public class Hero extends Char {
 	
 	@Override
 	public int damageRoll() {
-		KindOfWeapon wep = belongings.weapon;
+		resetWeapon();//ensures "CurrentWeapon" never goes above maximum possible
+		ArrayList<KindOfWeapon> weapons = belongings.weapon();
 		int dmg;
-
+		KindOfWeapon wep = weapons.get(currentWeapon);
 		if (wep != null) {
 			dmg = wep.damageRoll( this );
 			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
@@ -405,7 +423,7 @@ public class Hero extends Char {
 		
 		Berserk berserk = buff(Berserk.class);
 		if (berserk != null) dmg = berserk.damageFactor(dmg);
-		
+		currentWeapon += 1;
 		return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
 	}
 	
@@ -415,9 +433,10 @@ public class Hero extends Char {
 		float speed = super.speed();
 
 		speed *= RingOfHaste.speedMultiplier(this);
-		
-		if (belongings.armor != null) {
-			speed = belongings.armor.speedFactor(this, speed);
+
+		ArrayList<Armor> Armors = belongings.armor();//Applies speed factor for all armours
+		for (int i=0; i < Armors.size(); i++) {
+			speed *= Armors.get(i).speedFactor(this, speed);
 		}
 		
 		Momentum momentum = buff(Momentum.class);
@@ -431,9 +450,11 @@ public class Hero extends Char {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (belongings.weapon == null || !(belongings.weapon instanceof Weapon))    return true;
-		if (STR() < ((Weapon)belongings.weapon).STRReq())                           return false;
-		if (belongings.weapon instanceof Flail)                                     return false;
+		resetWeapon();
+		KindOfWeapon curWep = getCurrentWeapon();
+		if (!(curWep instanceof Weapon))                      return true;
+		if (STR() < ((Weapon)curWep).STRReq())                return false;
+		if (curWep instanceof Flail)                          return false;
 
 		return true;
 	}
@@ -448,7 +469,7 @@ public class Hero extends Char {
 			return true;
 		}
 
-		KindOfWeapon wep = Dungeon.hero.belongings.weapon;
+		KindOfWeapon wep = getCurrentWeapon();
 
 		if (wep != null){
 			return wep.canReach(this, enemy.pos);
@@ -456,11 +477,15 @@ public class Hero extends Char {
 			return false;
 		}
 	}
-	
+
+	public KindOfWeapon getCurrentWeapon() {
+		return Dungeon.hero.belongings.weapon().get(currentWeapon);
+	}
+
 	public float attackDelay() {
-		if (belongings.weapon != null) {
+		if (getCurrentWeapon() != null) {
 			
-			return belongings.weapon.speedFactor( this );
+			return getCurrentWeapon().speedFactor( this );
 			
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
@@ -959,7 +984,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int attackProc( final Char enemy, int damage ) {
-		KindOfWeapon wep = belongings.weapon;
+		KindOfWeapon wep = getCurrentWeapon();
 
 		if (wep != null) damage = wep.proc( this, enemy, damage );
 		
@@ -997,9 +1022,10 @@ public class Hero extends Char {
 			Berserk berserk = Buff.affect(this, Berserk.class);
 			berserk.damage(damage);
 		}
-		
-		if (belongings.armor != null) {
-			damage = belongings.armor.proc( enemy, this, damage );
+
+		ArrayList<Armor> Armors = belongings.armor();//Proc all armours 1 by 1
+		for (int i=0; i < Armors.size(); i++) {
+			damage = Armors.get(i).proc(enemy,this, damage);
 		}
 		
 		Earthroot.Armor armor = buff( Earthroot.Armor.class );
@@ -1038,9 +1064,13 @@ public class Hero extends Char {
 		dmg = (int)Math.ceil(dmg * RingOfTenacity.damageMultiplier( this ));
 
 		//TODO improve this when I have proper damage source logic
-		if (belongings.armor != null && belongings.armor.hasGlyph(AntiMagic.class, this)
-				&& AntiMagic.RESISTS.contains(src.getClass())){
-			dmg -= AntiMagic.drRoll(belongings.armor.level());
+		//checks if *any* equipped armour has Anti Magic
+		ArrayList<Armor> Armors = belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
+					&& AntiMagic.RESISTS.contains(src.getClass())) {
+				dmg -= AntiMagic.drRoll(Armors.get(i).level());
+			}
 		}
 
 		super.damage( dmg, src );
@@ -1375,9 +1405,10 @@ public class Hero extends Char {
 	@Override
 	public float stealth() {
 		float stealth = super.stealth();
-		
-		if (belongings.armor != null){
-			stealth = belongings.armor.stealthFactor(this, stealth);
+
+		ArrayList<Armor> Armors = belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			stealth *= Armors.get(i).stealthFactor(this, stealth);
 		}
 		
 		return stealth;
@@ -1614,11 +1645,16 @@ public class Hero extends Char {
 
 	@Override
 	public boolean isImmune(Class effect) {
-		if (effect == Burning.class
-				&& belongings.armor != null
-				&& belongings.armor.hasGlyph(Brimstone.class, this)){
-			return true;
+		//if *any* armour has Brimstone Glyph
+		ArrayList<Armor> Armors = belongings.armor();
+		for (int i=0; i < Armors.size(); i++) {
+			if (effect == Burning.class
+					&& Armors.get(i) != null
+					&& Armors.get(i).hasGlyph(Brimstone.class, this)) {
+				return true;
+			}
 		}
+
 		return super.isImmune(effect);
 	}
 

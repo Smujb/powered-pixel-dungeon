@@ -224,9 +224,9 @@ public abstract class Char extends Actor {
 			
 			int dr = enemy.drRoll();
 			
-			if (this instanceof Hero){
+			if (this instanceof Hero){//Missile Weapons are always equipped in slot 1
 				Hero h = (Hero)this;
-				if (h.belongings.weapon instanceof MissileWeapon
+				if (h.belongings.miscs[0] instanceof MissileWeapon
 						&& h.subClass == HeroSubClass.SNIPER
 						&& !Dungeon.level.adjacent(h.pos, enemy.pos)){
 					dr = 0;

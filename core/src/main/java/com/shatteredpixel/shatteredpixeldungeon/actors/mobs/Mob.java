@@ -507,7 +507,7 @@ public abstract class Mob extends Char {
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
 		
-		if (enemy instanceof Hero && ((Hero) enemy).belongings.weapon instanceof MissileWeapon){
+		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
 		}
 		
