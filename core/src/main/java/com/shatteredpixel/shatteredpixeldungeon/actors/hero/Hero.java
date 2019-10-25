@@ -484,9 +484,11 @@ public class Hero extends Char {
 	}
 
 	public float attackDelay() {
+		float multiplier = 1f;
+		multiplier /= numberOfWeapons();
 		if (getCurrentWeapon() != null) {
 			
-			return getCurrentWeapon().speedFactor( this );
+			return getCurrentWeapon().speedFactor( this )*multiplier;//Two weapons = 1/2 attack speed
 			
 		} else {
 			//Normally putting furor speed on unarmed attacks would be unnecessary
