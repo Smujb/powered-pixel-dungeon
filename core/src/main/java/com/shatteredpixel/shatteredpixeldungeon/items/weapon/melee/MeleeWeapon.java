@@ -63,7 +63,20 @@ public class MeleeWeapon extends Weapon {
 		
 		return damage;
 	}
-	
+
+	public int defaultSTRReq() {
+		return super.STRReq();
+	}
+
+	@Override
+	public int STRReq() {
+		if (isEquipped(Dungeon.hero)) {
+			return Dungeon.hero.belongings.getWeaponSTRReq();
+		} else {
+			return defaultSTRReq();
+		}
+	}
+
 	@Override
 	public String info() {
 

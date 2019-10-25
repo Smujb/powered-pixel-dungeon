@@ -83,7 +83,7 @@ public class Belongings implements Iterable<Item> {
 
 	}
 
-			public ArrayList<KindOfWeapon> weapon() {
+	public ArrayList<KindOfWeapon> weapon() {
 		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
 
 		if (miscs[0] instanceof MeleeWeapon) {
@@ -110,6 +110,35 @@ public class Belongings implements Iterable<Item> {
 		}
 		return weapons;
 
+	}
+
+	public int getWeaponSTRReq() {
+		ArrayList<KindOfWeapon> weapons = weapon();
+		int TotalRequirement = 8;
+		int IndividualRequirement;
+		for (int i=0; i < weapons.size(); i++) {
+			if (weapons.get(i) instanceof MeleeWeapon) {
+				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
+				IndividualRequirement -= 8;
+				TotalRequirement += IndividualRequirement;
+			}
+
+		}
+		return TotalRequirement;
+	}
+
+	public int getArmorSTRReq() {
+		ArrayList<Armor> armors = armor();
+		int TotalRequirement = 8;
+		int IndividualRequirement;
+		for (int i=0; i < armors.size(); i++) {
+			IndividualRequirement = armors.get(i).defaultSTRReq();
+			IndividualRequirement -= 8;
+			TotalRequirement += IndividualRequirement;
+
+
+		}
+		return TotalRequirement;
 	}
 
 	public KindofMisc[] miscs = new KindofMisc[5];

@@ -438,9 +438,18 @@ public class Armor extends KindofMisc {
 		return this;
 	}
 
-	public int STRReq(){
+	public int defaultSTRReq() {
 		return STRReq(level());
 	}
+
+	public int STRReq() {
+		if (isEquipped(Dungeon.hero)) {
+			return Dungeon.hero.belongings.getArmorSTRReq();
+		} else {
+			return defaultSTRReq();
+		}
+	}
+
 
 	public int STRReq(int lvl){
 		lvl = Math.max(0, lvl);
