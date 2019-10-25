@@ -37,6 +37,8 @@ import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroClass;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.HeroSubClass;
 import com.shatteredpixel.shatteredpixeldungeon.effects.MagicMissile;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
+import com.shatteredpixel.shatteredpixeldungeon.items.KindofMisc;
+import com.shatteredpixel.shatteredpixeldungeon.items.artifacts.Artifact;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.Bag;
 import com.shatteredpixel.shatteredpixeldungeon.items.bags.MagicalHolster;
 import com.shatteredpixel.shatteredpixeldungeon.items.rings.RingOfEnergy;
@@ -55,9 +57,10 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public abstract class Wand extends Item {
+public abstract class Wand extends KindofMisc {
 
 	public static final String AC_ZAP	= "ZAP";
+	public static final String AC_ZAP_OVERRIDE	= "ZAP_OVERRIDE";
 
 	private static final float TIME_TO_ZAP	= 1f;
 	
@@ -94,20 +97,34 @@ public abstract class Wand extends Item {
 	}
 	
 	@Override
-	public void execute( Hero hero, String action ) {
+		public void execute( Hero hero, String action ) {
 
 		super.execute( hero, action );
 
 		if (action.equals( AC_ZAP )) {
+
+			if (!isEquipped(hero)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
+			else {
+				curUser = hero;
+				curItem = this;
+				GameScene.selectCell(zapper);
+
+			}
 			
+		} else if (action.equals( AC_ZAP_OVERRIDE )) {
 			curUser = hero;
 			curItem = this;
-			GameScene.selectCell( zapper );
-			
+			GameScene.selectCell(zapper);
 		}
 	}
-	
-	protected abstract void onZap( Ballistica attack );
+
+	@Override
+	public void activate(Char ch) {//When equipped, start charging
+		charge(ch);
+		super.activate(ch);
+	}
+
+	protected abstract void onZap(Ballistica attack );
 
 	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
 

@@ -128,7 +128,7 @@ public class MagesStaff extends MeleeWeapon {
 
 			if (cursed || hasCurseEnchant()) wand.cursed = true;
 			else                             wand.cursed = false;
-			wand.execute(hero, AC_ZAP);
+			wand.execute(hero, Wand.AC_ZAP_OVERRIDE);
 		}
 	}
 

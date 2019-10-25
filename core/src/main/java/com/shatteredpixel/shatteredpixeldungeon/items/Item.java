@@ -72,7 +72,6 @@ public class Item implements Bundlable {
 	public boolean dropsDownHeap = false;
 	
 	private int level = 0;
-
 	public boolean levelKnown = false;
 	
 	public boolean cursed;
@@ -337,10 +336,10 @@ public class Item implements Bundlable {
 	public boolean visiblyCursed() {
 		return cursed && cursedKnown;
 	}
-	
+
 	public boolean isUpgradable() {
-		return true;
-	}
+		return level() < 3;
+	}//Hard +3 cap for all items
 	
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;
