@@ -332,7 +332,7 @@ public class Hero extends Char {
 	}
 
 	public void resetWeapon() {//After hitting with each weapon, return to first
-		if (currentWeapon > (numberOfWeapons() + 1)) {
+		if (currentWeapon > (numberOfWeapons() - 1)) {
 			currentWeapon = 0;
 		}
 	}
@@ -479,6 +479,7 @@ public class Hero extends Char {
 	}
 
 	public KindOfWeapon getCurrentWeapon() {
+		resetWeapon();
 		return Dungeon.hero.belongings.weapon().get(currentWeapon);
 	}
 

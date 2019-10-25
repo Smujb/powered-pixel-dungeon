@@ -202,16 +202,6 @@ public abstract class Char extends Actor {
 		}
 		
 		//pre-0.7.0
-		if (bundle.contains( "SHLD" )){
-			int legacySHLD = bundle.getInt( "SHLD" );
-			//attempt to find the buff that may have given the shield
-			ShieldBuff buff = buff(Brimstone.BrimstoneShield.class);
-			if (buff != null) legacySHLD -= buff.shielding();
-			if (legacySHLD > 0){
-				BrokenSeal.WarriorShield buff2 = buff(BrokenSeal.WarriorShield.class);
-				if (buff != null) buff2.supercharge(legacySHLD);
-			}
-		}
 	}
 	
 	public boolean attack( Char enemy ) {
