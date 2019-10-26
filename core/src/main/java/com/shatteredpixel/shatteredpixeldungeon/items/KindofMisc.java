@@ -90,8 +90,8 @@ public abstract class KindofMisc extends EquipableItem {
 				hero.belongings.miscs[2] = this;
 			} else if (hero.belongings.miscs[3] == null) {
 				hero.belongings.miscs[3] = this;
-			}  else if (hero.belongings.miscs[4] == this) {
-				hero.belongings.miscs[4] = null;
+			}  else if (hero.belongings.miscs[4] == null) {
+				hero.belongings.miscs[4] = this;
 			}
 
 			detach( hero.belongings.backpack );
