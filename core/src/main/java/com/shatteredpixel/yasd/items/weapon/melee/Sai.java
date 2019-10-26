@@ -31,13 +31,10 @@ public class Sai extends MeleeWeapon {
 
 		tier = 3;
 		DLY = 0.5f; //2x speed
+
+		damageMultiplier = 0.6f;
 	}
 
-	@Override
-	public int max(int lvl) {
-		return  Math.round(2.5f*(tier+1)) +     //10 base, down from 20
-				lvl*Math.round(0.5f*(tier+1));  //+2 per level, down from +4
-	}
 
 	@Override
 	public int defenseFactor( Char owner ) {

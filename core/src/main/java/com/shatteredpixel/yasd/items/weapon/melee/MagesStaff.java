@@ -72,17 +72,14 @@ public class MagesStaff extends MeleeWeapon {
 
 		unique = true;
 		bones = false;
+
+		damageMultiplier = 0.8f;
 	}
 
 	public MagesStaff() {
 		wand = null;
 	}
 
-	@Override
-	public int max(int lvl) {
-		return  4*(tier+1) +    //8 base damage, down from 10
-				lvl*(tier+1);   //scaling unaffected
-	}
 
 	public MagesStaff(Wand wand){
 		this();
