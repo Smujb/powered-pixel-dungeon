@@ -27,7 +27,7 @@ import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.painters.Painter;
 import com.watabou.utils.Point;
 
-//import com.shatteredpixel.shatteredpixeldungeon.actors.blobs.SacrificialFire;
+//import com.shatteredpixel.yasd.actors.blobs.SacrificialFire;
 
 public class AltarRoom extends SpecialRoom {
 
