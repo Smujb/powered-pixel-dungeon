@@ -370,11 +370,7 @@ public class Hero extends Char {
 		if (paralysed > 0) {
 			evasion /= 2;
 		}
-		float BaseEvasion = evasion;
-		ArrayList<Armor> Armors = belongings.getArmors();
-		for (int i=0; i < Armors.size(); i++) {
-			evasion *= Armors.get(i).evasionFactor(this, BaseEvasion);
-		}
+		evasion = belongings.getArmors().get(0).evasionFactor(this, evasion);
 
 		return Math.round(evasion);
 	}
@@ -1411,11 +1407,7 @@ public class Hero extends Char {
 	public float stealth() {
 		float stealth = super.stealth();
 
-		ArrayList<Armor> Armors = belongings.getArmors();
-		float BaseStealth = stealth;
-		for (int i=0; i < Armors.size(); i++) {
-			stealth *= Armors.get(i).stealthFactor(this, BaseStealth);
-		}
+		stealth = belongings.getArmors().get(0).stealthFactor(this, stealth);
 		
 		return stealth;
 	}
