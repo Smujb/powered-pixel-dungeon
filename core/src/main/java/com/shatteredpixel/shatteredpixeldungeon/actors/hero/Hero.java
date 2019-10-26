@@ -370,9 +370,10 @@ public class Hero extends Char {
 		if (paralysed > 0) {
 			evasion /= 2;
 		}
+		float BaseEvasion = evasion;
 		ArrayList<Armor> Armors = belongings.armor();
 		for (int i=0; i < Armors.size(); i++) {
-			evasion *= Armors.get(i).evasionFactor(this, evasion);
+			evasion *= Armors.get(i).evasionFactor(this, BaseEvasion);
 		}
 
 		return Math.round(evasion);
@@ -435,8 +436,9 @@ public class Hero extends Char {
 		speed *= RingOfHaste.speedMultiplier(this);
 
 		ArrayList<Armor> Armors = belongings.armor();//Applies speed factor for all armours
+		float BaseSpeed = speed;
 		for (int i=0; i < Armors.size(); i++) {
-			speed *= Armors.get(i).speedFactor(this, speed);
+			speed *= Armors.get(i).speedFactor(this, BaseSpeed);
 		}
 		
 		Momentum momentum = buff(Momentum.class);
@@ -1410,8 +1412,9 @@ public class Hero extends Char {
 		float stealth = super.stealth();
 
 		ArrayList<Armor> Armors = belongings.armor();
+		float BaseStealth = stealth;
 		for (int i=0; i < Armors.size(); i++) {
-			stealth *= Armors.get(i).stealthFactor(this, stealth);
+			stealth *= Armors.get(i).stealthFactor(this, BaseStealth);
 		}
 		
 		return stealth;
