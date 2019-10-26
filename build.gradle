@@ -11,8 +11,8 @@ buildscript {
 allprojects {
 
     ext {
-        appName = '?? Pixel Dungeon'
-        appPackageName = 'com.smujamesb.unknownpixeldungeon'
+        appName = 'Yet Another Shattered Dungeon'
+        appPackageName = 'com.smujamesb.yasd'
 
         appVersionCode = 380
         appVersionName = '0.0.1'
