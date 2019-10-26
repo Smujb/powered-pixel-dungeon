@@ -114,13 +114,13 @@ public enum HeroClass {
 		
 		new ScrollOfIdentify().identify();
 
-		new WornShortsword().identify().collect();
+		/*new WornShortsword().identify().collect();
 
 		new Spear().identify().collect();
 		new Crossbow().identify().collect();
 		new Dart().quantity(5).collect();
 		Generator.random(Generator.Category.ARTIFACT).identify().collect();
-		new PotionOfStrength().quantity(10).identify().collect();
+		new PotionOfStrength().quantity(10).identify().collect();*/
 	}
 
 	public Badges.Badge masteryBadge() {
