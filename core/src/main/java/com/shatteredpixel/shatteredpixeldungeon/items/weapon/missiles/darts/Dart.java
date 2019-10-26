@@ -42,13 +42,12 @@ public class Dart extends MissileWeapon {
 
 	{
 		image = ItemSpriteSheet.DART;
-		
+
 		tier = 1;
-		
+
 		//infinite, even with penalties
 		baseUses = 1000;
 	}
-
 	public int CurrentCrossbow = 0;
 
 	protected static final String AC_TIP = "TIP";
@@ -59,7 +58,6 @@ public class Dart extends MissileWeapon {
 		actions.add( AC_TIP );
 		return actions;
 	}
-	
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_TIP)){
@@ -107,6 +105,10 @@ public class Dart extends MissileWeapon {
 			CurrentCrossbow = 0;
 		}
 	}
+
+	private int numberOfBows() {
+		return getCrossbows().size();
+	}
 	
 	@Override
 	public boolean hasEnchant(Class<? extends Enchantment> type, Char owner) {
@@ -126,7 +128,12 @@ public class Dart extends MissileWeapon {
 		}
 		return super.proc(attacker, defender, damage);
 	}
-	
+
+	@Override
+	public float castDelay(Char user, int dst) {
+		return super.castDelay(user, dst)/(float) numberOfBows();
+	}
+
 	@Override
 	protected void onThrow(int cell) {
 		CurrentCrossbow += 1;
