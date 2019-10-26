@@ -47,68 +47,68 @@ public class ShatteredPixelDungeon extends Game {
 		//v0.7.0
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.bombs.Bomb.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.Bomb" );
+				"com.shatteredpixel.yasd.items.Bomb" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.scrolls.ScrollOfRetribution.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfPsionicBlast" );
+				"com.shatteredpixel.yasd.items.scrolls.ScrollOfPsionicBlast" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.potions.PotionOfMight" );
+				"com.shatteredpixel.yasd.items.potions.PotionOfMight" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.spells.MagicalInfusion.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfMagicalInfusion" );
+				"com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicalInfusion" );
 		
 		//v0.7.1
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.SpiritBow.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.missiles.Boomerang" );
+				"com.shatteredpixel.yasd.items.getWeapons.missiles.Boomerang" );
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.melee.Gloves.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.melee.Knuckles" );
+				"com.shatteredpixel.yasd.items.getWeapons.melee.Knuckles" );
 		
 		//v0.7.2
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.stones.StoneOfDisarming.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.stones.StoneOfDetectCurse" );
+				"com.shatteredpixel.yasd.items.stones.StoneOfDetectCurse" );
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.curses.Elastic" );
+				"com.shatteredpixel.yasd.items.getWeapons.curses.Elastic" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Dazzling" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Dazzling" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Eldritch" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Eldritch" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Grim.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Stunning" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Stunning" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Chilling.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Venomous" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Venomous" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Vorpal" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Vorpal" );
 		
 		//v0.7.3
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Precise" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Precise" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Swift" );
+				"com.shatteredpixel.yasd.items.getWeapons.enchantments.Swift" );
 		
 		//v0.7.5
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.levels.rooms.sewerboss.SewerBossEntranceRoom.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.rooms.standard.SewerBossEntranceRoom" );
+				"com.shatteredpixel.yasd.levels.rooms.standard.SewerBossEntranceRoom" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.levels.OldPrisonBossLevel.class,
-				"com.shatteredpixel.shatteredpixeldungeon.levels.PrisonBossLevel" );
+				"com.shatteredpixel.yasd.levels.PrisonBossLevel" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.actors.mobs.OldTengu.class,
-				"com.shatteredpixel.shatteredpixeldungeon.actors.mobs.Tengu" );
+				"com.shatteredpixel.yasd.actors.mobs.Tengu" );
 	}
 	
 	@Override

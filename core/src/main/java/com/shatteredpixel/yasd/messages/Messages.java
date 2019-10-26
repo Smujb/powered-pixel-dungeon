@@ -62,15 +62,15 @@ public class Messages {
 	 */
 
 	private static String[] prop_files = new String[]{
-			"com.shatteredpixel.shatteredpixeldungeon.messages.actors.actors",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.items.items",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.journal.journal",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.levels.levels",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.plants.plants",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.scenes.scenes",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.ui.ui",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.windows.windows",
-			"com.shatteredpixel.shatteredpixeldungeon.messages.misc.misc"
+			"com.shatteredpixel.yasd.messages.actors.actors",
+			"com.shatteredpixel.yasd.messages.items.items",
+			"com.shatteredpixel.yasd.messages.journal.journal",
+			"com.shatteredpixel.yasd.messages.levels.levels",
+			"com.shatteredpixel.yasd.messages.plants.plants",
+			"com.shatteredpixel.yasd.messages.scenes.scenes",
+			"com.shatteredpixel.yasd.messages.ui.ui",
+			"com.shatteredpixel.yasd.messages.windows.windows",
+			"com.shatteredpixel.yasd.messages.misc.misc"
 	};
 
 	static{
@@ -111,7 +111,7 @@ public class Messages {
 	public static String get(Class c, String k, Object...args){
 		String key;
 		if (c != null){
-			key = c.getName().replace("com.shatteredpixel.shatteredpixeldungeon.", "");
+			key = c.getName().replace("com.shatteredpixel.yasd.", "");
 			key += "." + k;
 		} else
 			key = k;
