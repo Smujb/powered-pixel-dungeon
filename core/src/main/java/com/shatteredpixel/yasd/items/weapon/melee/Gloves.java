@@ -32,6 +32,8 @@ public class Gloves extends MeleeWeapon {
 		DLY = 0.5f; //2x speed
 		
 		bones = false;
+
+		damageMultiplier = 0.5f;
 	}
 
 	@Override

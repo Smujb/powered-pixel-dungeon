@@ -29,8 +29,10 @@ public class Glaive extends MeleeWeapon {
 		image = ItemSpriteSheet.GLAIVE;
 
 		tier = 5;
-		DLY = 1.5f; //0.67x speed
+		DLY = 2f;   //0.5x speed
 		RCH = 2;    //extra reach
+
+		damageMultiplier = 1.7f;
 	}
 
 	@Override

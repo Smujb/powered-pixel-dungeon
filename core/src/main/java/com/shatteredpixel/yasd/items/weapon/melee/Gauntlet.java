@@ -31,6 +31,8 @@ public class Gauntlet extends MeleeWeapon {
 		
 		tier = 5;
 		DLY = 0.5f; //2x speed
+
+		damageMultiplier = 0.50f;
 	}
 	
 	@Override
