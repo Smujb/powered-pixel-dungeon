@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.shatteredpixel.shatteredpixeldungeon.android"
+	package="com.shatteredpixel.yasd.android"
 	android:installLocation="auto">
 	
 	<uses-feature android:glEsVersion="0x00020000"/>
@@ -22,10 +22,10 @@
 		android:resizeableActivity="true"
 		android:allowBackup="true"
 		android:fullBackupOnly="true"
-		android:backupAgent=".AndroidBackupHandler">
+		android:backupAgent="com.shatteredpixel.yasd.android.AndroidBackupHandler">
 		<activity
 			android:label="${appName}"
-			android:name=".AndroidLauncher">
+			android:name="com.shatteredpixel.yasd.android.AndroidLauncher">
 			<intent-filter >
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
@@ -33,7 +33,7 @@
 		</activity>
 		<activity
 			android:label="${appName}"
-			android:name=".AndroidGame"
+			android:name="com.shatteredpixel.yasd.android.AndroidGame"
 			android:screenOrientation="nosensor"
 			android:configChanges="keyboard|keyboardHidden|orientation">
 		</activity>
