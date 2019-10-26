@@ -49,7 +49,7 @@ public class WandOfWarding extends Wand {
 		for (Buff buff : curUser.buffs()){
 			if (buff instanceof Wand.Charger){
 				if (((Charger) buff).wand() instanceof WandOfWarding){
-					maxWardEnergy += 3 + ((Charger) buff).wand().level();
+					maxWardEnergy += 3 + ((Charger) buff).wand().level()*3;
 				}
 			}
 		}
@@ -286,7 +286,7 @@ public class WandOfWarding extends Wand {
 			spend( 1f );
 
 			//always hits
-			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 4*wandLevel );
+			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 8*wandLevel );
 			enemy.damage( dmg, WandOfWarding.class );
 			if (enemy.isAlive()){
 				Wand.processSoulMark(enemy, wandLevel, 1);

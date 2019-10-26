@@ -115,7 +115,7 @@ public class WandOfTransfusion extends Wand {
 				}
 				
 				//and grants a self shield
-				Buff.affect(curUser, Barrier.class).setShield((5 + 2*level()));
+				Buff.affect(curUser, Barrier.class).setShield((5 + 4*level()));
 
 			}
 			

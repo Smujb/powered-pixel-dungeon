@@ -131,7 +131,7 @@ public class WandOfRegrowth extends Wand {
 	}
 	
 	private int chargeLimit( int heroLevel ){
-		if (level() >= 12){
+		if (level() >= 3){
 			return Integer.MAX_VALUE;
 		} else {
 			//4 charges per hero level at +0, with another 2-4 each upgrade from +1 to +9.
@@ -246,7 +246,7 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	protected int initialCharges() {
-		return 1;
+		return 6;
 	}
 
 	@Override

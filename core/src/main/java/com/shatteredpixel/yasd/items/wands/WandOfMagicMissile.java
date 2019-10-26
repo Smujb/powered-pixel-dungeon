@@ -38,13 +38,18 @@ public class WandOfMagicMissile extends DamageWand {
 	}
 
 	public int min(int lvl){
-		return 2+lvl;
+		return max();
 	}
 
 	public int max(int lvl){
-		return 8+2*lvl;
+		return 8+4*lvl;
 	}
-	
+
+	@Override
+	public int damageRoll() {
+		return max(level());
+	}
+
 	@Override
 	protected void onZap( Ballistica bolt ) {
 				
