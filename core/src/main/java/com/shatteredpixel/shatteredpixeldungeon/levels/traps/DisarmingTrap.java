@@ -64,7 +64,7 @@ public class DisarmingTrap extends Trap{
 		if (Dungeon.hero.pos == pos && !Dungeon.hero.flying){
 			Hero hero = Dungeon.hero;
 
-			KindOfWeapon weapon = hero.belongings.weapon().get(0);
+			KindOfWeapon weapon = hero.belongings.getWeapons().get(0);
 
 			if (weapon != null && !weapon.cursed) {
 

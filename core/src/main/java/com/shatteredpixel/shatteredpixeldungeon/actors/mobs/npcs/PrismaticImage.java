@@ -180,7 +180,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 		damage = super.defenseProc(enemy, damage);
-		ArrayList<Armor> Armors = hero.belongings.armor();//Proc all armours 1 by 1
+		ArrayList<Armor> Armors = hero.belongings.getArmors();//Proc all armours 1 by 1
 		for (int i=0; i < Armors.size(); i++) {
 			damage = Armors.get(i).proc(enemy,this, damage);
 		}
@@ -192,7 +192,7 @@ public class PrismaticImage extends NPC {
 
 		//TODO improve this when I have proper damage source logic
 		//checks if *any* equipped armour has Anti Magic
-		ArrayList<Armor> Armors = hero.belongings.armor();
+		ArrayList<Armor> Armors = hero.belongings.getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
 					&& AntiMagic.RESISTS.contains(src.getClass())) {
@@ -206,7 +206,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public float speed() {
 		float speed = super.speed();
-		ArrayList<Armor> Armors = hero.belongings.armor();//Applies speed factor for all armours
+		ArrayList<Armor> Armors = hero.belongings.getArmors();//Applies speed factor for all armours
 		for (int i=0; i < Armors.size(); i++) {
 			speed *= Armors.get(i).speedFactor(this, speed);
 		}
@@ -237,7 +237,7 @@ public class PrismaticImage extends NPC {
 	
 	@Override
 	public boolean isImmune(Class effect) {
-		ArrayList<Armor> Armors = hero.belongings.armor();
+		ArrayList<Armor> Armors = hero.belongings.getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			if (effect == Burning.class
 					&& Armors.get(i) != null

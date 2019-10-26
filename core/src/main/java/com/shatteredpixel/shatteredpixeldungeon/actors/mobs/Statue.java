@@ -60,7 +60,7 @@ public class Statue extends Mob {
 		defenseSkill = 4 + Dungeon.depth;
 	}
 	
-	private static final String WEAPON	= "weapon";
+	private static final String WEAPON	= "getWeapons";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {

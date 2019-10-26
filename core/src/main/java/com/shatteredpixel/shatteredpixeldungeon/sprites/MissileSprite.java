@@ -103,7 +103,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		ANGULAR_SPEEDS.put(TenguSprite.TenguShuriken.class,      2160);
 	}
 
-	//TODO it might be nice to have a source and destination angle, to improve thrown weapon visuals
+	//TODO it might be nice to have a source and destination angle, to improve thrown getWeapons visuals
 	private void setup( PointF from, PointF to, Item item, Callback listener ){
 
 		originToCenter();
@@ -137,7 +137,7 @@ public class MissileSprite extends ItemSprite implements Tweener.Listener {
 		}
 		
 		float speed = SPEED;
-		if (item instanceof Dart && Dungeon.hero.belongings.weapon().contains(Crossbow.class)){
+		if (item instanceof Dart && Dungeon.hero.belongings.getWeapons().contains(Crossbow.class)){
 			speed *= 3f;
 			
 		} else if (item instanceof SpiritBow.SpiritArrow

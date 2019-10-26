@@ -260,7 +260,7 @@ public class WandOfLivingEarth extends DamageWand {
 		}
 
 		private static final String WAND_LEVEL = "wand_level";
-		private static final String ARMOR = "armor";
+		private static final String ARMOR = "getArmors";
 
 		@Override
 		public void storeInBundle(Bundle bundle) {

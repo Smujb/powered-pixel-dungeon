@@ -290,7 +290,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_ Overhauled main menu interface to allow for more expandability.\n" +
 				"_-_ Updated hero icons in rankings and saved game screens.\n\n" +
-				"_-_ Class armor abilities no longer affect allies\n" +
+				"_-_ Class getArmors abilities no longer affect allies\n" +
 				"_-_ Autotargeting now no longer targets ally characters, in any circumstances.\n" +
 				"_-_ Most scrolls with an area of affect now no longer affect allies. More destructive ones will still damage them though.\n" +
 				"_-_ Added a little surprise if you reach the surface with an upgraded ally item.\n\n" +
@@ -399,14 +399,14 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.KUNAI, null), "New Thrown Weapons",
 				"Four new thrown weapons have been added!\n\n" +
-				"_-_ Throwing clubs are a tier-2 weapon with extra durability\n\n" +
-				"_-_ Kunai are a tier-3 weapon with bonus damage on sneak attacks\n\n" +
-				"_-_ Heavy boomerangs are a tier-4 weapon which returns after being thrown\n\n" +
-				"_-_ Force cubes are a tier-5 weapon which damage enemies in a 3x3 area"));
+				"_-_ Throwing clubs are a tier-2 getWeapons with extra durability\n\n" +
+				"_-_ Kunai are a tier-3 getWeapons with bonus damage on sneak attacks\n\n" +
+				"_-_ Heavy boomerangs are a tier-4 getWeapons which returns after being thrown\n\n" +
+				"_-_ Force cubes are a tier-5 getWeapons which damage enemies in a 3x3 area"));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ELIXIR_ARCANE, null), "New Boss Recipes",
 				"Two new recipes have been added, one which uses goo blobs and another which uses metal shards.\n\n" +
-				"_-_ Elixir of arcane armor requires a goo blob and a potion of earthen armor. It grants a long-lasting resistance to magic.\n\n" +
+				"_-_ Elixir of arcane getArmors requires a goo blob and a potion of earthen getArmors. It grants a long-lasting resistance to magic.\n\n" +
 				"_-_ Wild energy requires a metal shard and a scroll of mystical energy. It grants large amounts of recharging, but with some unpredictable effects attached!"));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"), false, null);
@@ -436,8 +436,8 @@ public class v0_7_X_Changes {
 				"_-_ Curse of multiplicity closing doors when it shouldn't\n" +
 				"_-_ Ring of wealth rarely generating items which are blocked by challenges\n" +
 				"_-_ Windows rarely appearing in places they shouldn't\n" +
-				"_-_ Odd behaviour when the player is killed by electricity or a grim weapon\n" +
-				"_-_ Explosions destroying armor with the warrior's seal on it\n" +
+				"_-_ Odd behaviour when the player is killed by electricity or a grim getWeapons\n" +
+				"_-_ Explosions destroying getArmors with the warrior's seal on it\n" +
 				"_-_ Various minor visual bugs\n" +
 				"_-_ Various rare crash bugs"));
 		
@@ -454,13 +454,13 @@ public class v0_7_X_Changes {
 				"Gladiator is now significantly more flexible:\n" +
 				"_-_ Using items no longer resets combo\n" +
 				"_-_ Throwing weapons now increment combo\n" +
-				"_-_ Slam ability now deals damage based on armor, instead of simply increasing damage."));
+				"_-_ Slam ability now deals damage based on getArmors, instead of simply increasing damage."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CURSE_INFUSE, null), "Boss Recipe Buffs",
 				"All recipes made with ingredients dropped by bosses have been buffed (except bombs):\n\n" +
 				"_-_ Caustic brew now affects a 7x7 area, up from 5x5. Energy cost of caustic brew reduced to 4 from 8.\n\n" +
 				"_-_ Elixir of aquatic rejuvenation now heals faster, and does not waste healing if the hero is not in water. Total amount of healing reduced to compensate.\n\n" +
-				"_-_ Curse Infusion now grants a single upgrade to wands/weapons/armor in addition to cursing. This upgrade is lost if the item is uncursed.\n\n" +
+				"_-_ Curse Infusion now grants a single upgrade to wands/weapons/getArmors in addition to cursing. This upgrade is lost if the item is uncursed.\n\n" +
 				"_-_ Reclaim trap no longer grants recharging, now stores the trap instead. The trap can then be triggered anywhere the player likes."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_EMERALD, null), "Other Item Buffs",
@@ -471,7 +471,7 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_SCALE, new ItemSprite.Glowing( 0x663300 )), "Enchant/Glyph Buffs",
 				"_-_ Vampiric now has a chance to heal for large amounts, instead of always healing for small amounts.\n\n" +
-				"_-_ Entanglement no longer roots, now only applies herbal armor buff. Amount of herbal armor granted reduced to compensate.\n\n" +
+				"_-_ Entanglement no longer roots, now only applies herbal getArmors buff. Amount of herbal getArmors granted reduced to compensate.\n\n" +
 				"_-_ Affection charm duration up to 8-12 from 4-12. This means an affection proc now guarantees a free hit.\n\n" +
 				"_-_ Potential no longer grants small amounts of partial charge on every hit, now has a chance to grant one full charge instead. Overall amount of charge given increased by ~20%."));
 		
@@ -500,9 +500,9 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_PLATE, new ItemSprite.Glowing( 0x660022 )), "Enchant/Glyph Nerfs",
 				"_-_ Chilling now only stacks the chilled debuff up to 6 turns.\n\n" +
-				"_-_ Thorns now bleeds enemies for a set amount based on armor level, instead of scaling with damage dealt.\n\n" +
+				"_-_ Thorns now bleeds enemies for a set amount based on getArmors level, instead of scaling with damage dealt.\n\n" +
 				"_-_ Antimagic no longer affects the melee attacks of magic wielding enemies.\n" +
-				"_-_ Antimagic no longer bases its blocking power on armor directly, now uses its own calculation which scales on level. This is a slight boost for lower tier armors and a nerf for higher tier ones."));
+				"_-_ Antimagic no longer bases its blocking power on getArmors directly, now uses its own calculation which scales on level. This is a slight boost for lower tier armors and a nerf for higher tier ones."));
 	}
 	
 	public static void add_v0_7_2_Changes( ArrayList<ChangeInfo> changeInfos ){
@@ -634,7 +634,7 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SPEAR, new ItemSprite.Glowing(0x00FFFF)), "Buffed Enchants",
 				"_-_ Chilling now stacks with itself over multiple procs\n\n" +
-				"_-_ Lucky buffed/reworked. No longer affects damage, now generates bonus items when enemies are killed with a lucky weapon."));
+				"_-_ Lucky buffed/reworked. No longer affects damage, now generates bonus items when enemies are killed with a lucky getWeapons."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SEED_SWIFTTHISTLE, null), "Item Balance Adjustments",
 				"Several seeds and stones have been buffed:\n" +
@@ -685,7 +685,7 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton( new Image(Assets.HUNTRESS, 0, 90, 12, 15), "Huntress Subclasses Reworked!",
 				"Huntress subclasses have also received overhauls:\n\n" +
-				"The Sniper can now see 50% further, penetrates armor with ranged attacks, and can perform a special attack with her bow.\n\n" +
+				"The Sniper can now see 50% further, penetrates getArmors with ranged attacks, and can perform a special attack with her bow.\n\n" +
 				"The Warden can now see through grass and gains a variety of bonuses to plant interaction."));
 		
 		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.TRIDENT, null), "Thrown Weapon Improvements",
@@ -693,7 +693,7 @@ public class v0_7_X_Changes {
 				"All Heroes now benefit from excess strength on thrown weapons.\n\n" +
 				"Thrown weapons now get +50% accuracy when used at range.\n\n" +
 				"Thrown weapons can now be upgraded!\n" +
-				"_-_ Upgrades work on a single thrown weapon\n" +
+				"_-_ Upgrades work on a single thrown getWeapons\n" +
 				"_-_ Increases damage based on tier\n" +
 				"_-_ Gives 3x durability each upgrade\n" +
 				"_-_ Weapons with 100+ uses now last forever\n" +
@@ -777,9 +777,9 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.RING_RUBY, null), "Ring Nerfs",
 				"Ring of furor has been nerfed/simplified:\n" +
-				"_-_ Now provides a flat +10.5% attack speed per level, instead of speed which scales based on how slow the weapon is.\n\n" +
+				"_-_ Now provides a flat +10.5% attack speed per level, instead of speed which scales based on how slow the getWeapons is.\n\n" +
 				"This means the ring is effectively nerfed for slow weapons and regular weapons, and slightly buffed for fast weapons. A +6 ring grants almost exactly doubled attack speed.\n\n\n" +
-				"The ring of force's equipped weapon bonus was always meant as a small boost so it wasn't useless if the player already had a better weapon. It wasn't intended to be used to both replace melee and then boost thrown weapons.\n" +
+				"The ring of force's equipped getWeapons bonus was always meant as a small boost so it wasn't useless if the player already had a better getWeapons. It wasn't intended to be used to both replace melee and then boost thrown weapons.\n" +
 				"_-_ The ring of force no longer gives bonus damage to thrown weapons."));
 		
 		changes.addButton( new ChangeButton( new Gauntlet(),
@@ -915,7 +915,7 @@ public class v0_7_X_Changes {
 				"_-_ Assassin buffs not being cleared when they should in some cases\n" +
 				"_-_ Rooting not working correctly on retreating enemies\n" +
 				"_-_ Searching spending hunger in a locked level\n" +
-				"_-_ 'Faith is my armor' deleting class armors\n" +
+				"_-_ 'Faith is my getArmors' deleting class armors\n" +
 				"_-_ Various cases where the player can be ontop of enemies"));
 		
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
@@ -952,7 +952,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.SCROLL_ODAL, null), new ScrollOfMirrorImage().trueName(),
 				"Scroll of mirror image has been adjusted to have more interactions with other items, but to also be less powerful at base:\n\n" +
 				"_-_ Scroll now spawns 2 images, down from 3\n\n" +
-				"_-_ Mirror images now attack with the hero's weapon, at 50% damage\n\n" +
+				"_-_ Mirror images now attack with the hero's getWeapons, at 50% damage\n\n" +
 				"_-_ Images no longer fade after a successful attack, instead they pull enemy aggro\n\n" +
 				"_-_ Images start out invisible, have 1 hp, no blocking power, but do inherit some of the hero's evasion."));
 		

@@ -303,12 +303,12 @@ public class Hero extends Char {
 	}
 	
 	public int tier() {//Not needed any more
-		return belongings.armor().get(0) == null ? 0 : belongings.armor().get(0).tier;
+		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).tier;
 	}
 	
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 
-		//temporarily set the hero's weapon to the missile weapon being used
+		//temporarily set the hero's getWeapons to the missile getWeapons being used
 		KindofMisc equipped = belongings.miscs[0];
 		belongings.miscs[0] = wep;
 		boolean hit = attack( enemy );
@@ -328,10 +328,10 @@ public class Hero extends Char {
 	}
 
 	public int numberOfWeapons() {
-		return belongings.weapon().size();
+		return belongings.getWeapons().size();
 	}
 
-	public void resetWeapon() {//After hitting with each weapon, return to first
+	public void resetWeapon() {//After hitting with each getWeapons, return to first
 		if (currentWeapon > (numberOfWeapons() - 1)) {
 			currentWeapon = 0;
 		}
@@ -340,7 +340,7 @@ public class Hero extends Char {
 	@Override
 	public int attackSkill( Char target ) {
 		resetWeapon();
-		KindOfWeapon wep = belongings.weapon().get(currentWeapon);
+		KindOfWeapon wep = belongings.getWeapons().get(currentWeapon);
 		
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -371,7 +371,7 @@ public class Hero extends Char {
 			evasion /= 2;
 		}
 		float BaseEvasion = evasion;
-		ArrayList<Armor> Armors = belongings.armor();
+		ArrayList<Armor> Armors = belongings.getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			evasion *= Armors.get(i).evasionFactor(this, BaseEvasion);
 		}
@@ -382,8 +382,8 @@ public class Hero extends Char {
 	@Override
 	public int drRoll() {
 		int dr = 0;
-		if (belongings.armor() != null) {
-			ArrayList<Armor> Armors = belongings.armor();
+		if (belongings.getArmors() != null) {
+			ArrayList<Armor> Armors = belongings.getArmors();
 			for (int i=0; i < Armors.size(); i++) {
 				int armDr = Random.NormalIntRange( Armors.get(i).DRMin(), Armors.get(i).DRMax());
 				if (STR() < Armors.get(i).STRReq()){
@@ -391,8 +391,8 @@ public class Hero extends Char {
 				}
 				if (armDr > 0) dr += armDr;
 			}
-		} if (belongings.weapon() != null)  {//Only defense factor from current weapon applies
-			ArrayList<KindOfWeapon> Weapons = belongings.weapon();
+		} if (belongings.getWeapons() != null)  {//Only defense factor from current getWeapons applies
+			ArrayList<KindOfWeapon> Weapons = belongings.getWeapons();
 			int wepDr = Random.NormalIntRange( 0 , Weapons.get(currentWeapon).defenseFactor( this ) );
 			if (STR() < ((Weapon) Weapons.get(currentWeapon)).STRReq()){
 				wepDr -= 2*(((Weapon)Weapons.get(currentWeapon)).STRReq() - STR());
@@ -411,7 +411,7 @@ public class Hero extends Char {
 	@Override
 	public int damageRoll() {
 		resetWeapon();//ensures "CurrentWeapon" never goes above maximum possible
-		ArrayList<KindOfWeapon> weapons = belongings.weapon();
+		ArrayList<KindOfWeapon> weapons = belongings.getWeapons();
 		int dmg;
 		KindOfWeapon wep = weapons.get(currentWeapon);
 		if (wep != null) {
@@ -435,7 +435,7 @@ public class Hero extends Char {
 
 		speed *= RingOfHaste.speedMultiplier(this);
 
-		ArrayList<Armor> Armors = belongings.armor();//Applies speed factor for all armours
+		ArrayList<Armor> Armors = belongings.getArmors();//Applies speed factor for all armours
 		float BaseSpeed = speed;
 		for (int i=0; i < Armors.size(); i++) {
 			speed *= Armors.get(i).speedFactor(this, BaseSpeed);
@@ -482,7 +482,7 @@ public class Hero extends Char {
 
 	public KindOfWeapon getCurrentWeapon() {
 		resetWeapon();
-		return Dungeon.hero.belongings.weapon().get(currentWeapon);
+		return Dungeon.hero.belongings.getWeapons().get(currentWeapon);
 	}
 
 	public float attackDelay() {
@@ -1028,7 +1028,7 @@ public class Hero extends Char {
 			berserk.damage(damage);
 		}
 
-		ArrayList<Armor> Armors = belongings.armor();//Proc all armours 1 by 1
+		ArrayList<Armor> Armors = belongings.getArmors();//Proc all armours 1 by 1
 		for (int i=0; i < Armors.size(); i++) {
 			damage = Armors.get(i).proc(enemy,this, damage);
 		}
@@ -1070,7 +1070,7 @@ public class Hero extends Char {
 
 		//TODO improve this when I have proper damage source logic
 		//checks if *any* equipped armour has Anti Magic
-		ArrayList<Armor> Armors = belongings.armor();
+		ArrayList<Armor> Armors = belongings.getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
 					&& AntiMagic.RESISTS.contains(src.getClass())) {
@@ -1411,7 +1411,7 @@ public class Hero extends Char {
 	public float stealth() {
 		float stealth = super.stealth();
 
-		ArrayList<Armor> Armors = belongings.armor();
+		ArrayList<Armor> Armors = belongings.getArmors();
 		float BaseStealth = stealth;
 		for (int i=0; i < Armors.size(); i++) {
 			stealth *= Armors.get(i).stealthFactor(this, BaseStealth);
@@ -1652,7 +1652,7 @@ public class Hero extends Char {
 	@Override
 	public boolean isImmune(Class effect) {
 		//if *any* armour has Brimstone Glyph
-		ArrayList<Armor> Armors = belongings.armor();
+		ArrayList<Armor> Armors = belongings.getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			if (effect == Burning.class
 					&& Armors.get(i) != null

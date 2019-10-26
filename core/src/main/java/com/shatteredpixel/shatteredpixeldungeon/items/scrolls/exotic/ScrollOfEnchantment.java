@@ -62,7 +62,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				enchants[2] = Weapon.Enchantment.random( existing, enchants[0].getClass(), enchants[1].getClass());
 				
 				GameScene.show(new WndOptions(Messages.titleCase(ScrollOfEnchantment.this.name()),
-						Messages.get(ScrollOfEnchantment.class, "weapon") +
+						Messages.get(ScrollOfEnchantment.class, "getWeapons") +
 						"\n\n" +
 						Messages.get(ScrollOfEnchantment.class, "cancel_warn"),
 						enchants[0].name(),
@@ -74,7 +74,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 					protected void onSelect(int index) {
 						if (index < 3) {
 							((Weapon) item).enchant(enchants[index]);
-							GLog.p(Messages.get(StoneOfEnchantment.class, "weapon"));
+							GLog.p(Messages.get(StoneOfEnchantment.class, "getWeapons"));
 							((ScrollOfEnchantment)curItem).readAnimation();
 							
 							Sample.INSTANCE.play( Assets.SND_READ );
@@ -99,7 +99,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				glyphs[2] = Armor.Glyph.random( existing, glyphs[0].getClass(), glyphs[1].getClass());
 				
 				GameScene.show(new WndOptions(Messages.titleCase(ScrollOfEnchantment.this.name()),
-						Messages.get(ScrollOfEnchantment.class, "armor") +
+						Messages.get(ScrollOfEnchantment.class, "getArmors") +
 						"\n\n" +
 						Messages.get(ScrollOfEnchantment.class, "cancel_warn"),
 						glyphs[0].name(),
@@ -111,7 +111,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 					protected void onSelect(int index) {
 						if (index < 3) {
 							((Armor) item).inscribe(glyphs[index]);
-							GLog.p(Messages.get(StoneOfEnchantment.class, "armor"));
+							GLog.p(Messages.get(StoneOfEnchantment.class, "getArmors"));
 							((ScrollOfEnchantment)curItem).readAnimation();
 							
 							Sample.INSTANCE.play( Assets.SND_READ );

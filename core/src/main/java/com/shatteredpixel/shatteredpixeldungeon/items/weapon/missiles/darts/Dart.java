@@ -24,6 +24,7 @@ package com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.darts;
 import com.shatteredpixel.shatteredpixeldungeon.Dungeon;
 import com.shatteredpixel.shatteredpixeldungeon.actors.Char;
 import com.shatteredpixel.shatteredpixeldungeon.actors.buffs.MagicImmune;
+import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Belongings;
 import com.shatteredpixel.shatteredpixeldungeon.actors.hero.Hero;
 import com.shatteredpixel.shatteredpixeldungeon.items.Item;
 import com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Crossbow;
@@ -47,7 +48,9 @@ public class Dart extends MissileWeapon {
 		//infinite, even with penalties
 		baseUses = 1000;
 	}
-	
+
+	public int CurrentCrossbow = 0;
+
 	protected static final String AC_TIP = "TIP";
 	
 	@Override
@@ -90,8 +93,19 @@ public class Dart extends MissileWeapon {
 	
 	private static Crossbow bow;
 	
-	private void updateCrossbow(){
-		bow = null;//TODO: Fix this method so Crossbows work
+	private ArrayList<Item> getCrossbows(){
+		return Dungeon.hero.belongings.getEquippedItemsOFType( Crossbow.class );
+	}
+
+	private Crossbow getCrossbow() {
+		resetCrossbow();
+		return ((Crossbow)getCrossbows().get(CurrentCrossbow));
+	}
+
+	private void resetCrossbow() {
+		if (CurrentCrossbow > this.getCrossbows().size() - 1) {
+			CurrentCrossbow = 0;
+		}
 	}
 	
 	@Override
@@ -115,13 +129,14 @@ public class Dart extends MissileWeapon {
 	
 	@Override
 	protected void onThrow(int cell) {
-		updateCrossbow();
+		CurrentCrossbow += 1;
+		bow = getCrossbow();
 		super.onThrow(cell);
 	}
 	
 	@Override
 	public String info() {
-		updateCrossbow();
+		bow = getCrossbow();
 		return super.info();
 	}
 	

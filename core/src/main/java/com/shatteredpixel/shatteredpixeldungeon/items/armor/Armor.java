@@ -154,7 +154,7 @@ public class Armor extends KindofMisc {
 		super.reset();
 		usesLeftToID = USES_TO_ID;
 		availableUsesToID = USES_TO_ID/2f;
-		//armor can be kept in bones between runs, the seal cannot.
+		//getArmors can be kept in bones between runs, the seal cannot.
 		seal = null;
 	}
 

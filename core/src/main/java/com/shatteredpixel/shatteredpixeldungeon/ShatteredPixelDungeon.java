@@ -61,11 +61,11 @@ public class ShatteredPixelDungeon extends Game {
 		//v0.7.1
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.SpiritBow.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.missiles.Boomerang" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.missiles.Boomerang" );
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Gloves.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.melee.Knuckles" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.melee.Knuckles" );
 		
 		//v0.7.2
 		com.watabou.utils.Bundle.addAlias(
@@ -74,30 +74,30 @@ public class ShatteredPixelDungeon extends Game {
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.curses.Elastic" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.curses.Elastic" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Dazzling" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Dazzling" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Elastic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Eldritch" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Eldritch" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Grim.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Stunning" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Stunning" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Chilling.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Venomous" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Venomous" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Vorpal" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Vorpal" );
 		
 		//v0.7.3
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Precise" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Precise" );
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Kinetic.class,
-				"com.shatteredpixel.shatteredpixeldungeon.items.weapon.enchantments.Swift" );
+				"com.shatteredpixel.shatteredpixeldungeon.items.getWeapons.enchantments.Swift" );
 		
 		//v0.7.5
 		com.watabou.utils.Bundle.addAlias(

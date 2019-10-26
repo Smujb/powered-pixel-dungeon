@@ -158,7 +158,7 @@ public enum HeroClass {
 		staff = new MagesStaff(new WandOfMagicMissile());
 
 		(hero.belongings.miscs[0] = staff).identify();
-		hero.belongings.weapon().get(0).activate(hero);
+		hero.belongings.getWeapons().get(0).activate(hero);
 
 		Dungeon.quickslot.setSlot(0, staff);
 

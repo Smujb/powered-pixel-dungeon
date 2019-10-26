@@ -69,13 +69,13 @@ public class v0_2_X_Changes {
 				"v1.7.3 - v1.7.5 Source Implemented, with exceptions:\n" +
 				"_-_ Degredation not implemented.\n\n" +
 				"_-_ Badge syncing not implemented.\n\n" +
-				"_-_ Scroll of Weapon Upgrade renamed to Magical Infusion, works on armor.\n\n" +
+				"_-_ Scroll of Weapon Upgrade renamed to Magical Infusion, works on getArmors.\n\n" +
 				"_-_ Scroll of Enchantment not implemented, Arcane stylus has not been removed.\n\n" +
 				"_-_ Honey pots now shatter in a new item: shattered honeypot. A bee will defend its shattered pot to the death against anything that gets near.\n\n" +
 				"_-_ Bombs have been reworked/nerfed: they explode after a delay, no longer stun, deal more damage at the center of the blast, affect the world (destroy items, blow up other bombs)."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.BANDOLIER, null), "New Content",
-				"_-_ The huntress has been buffed: starts with Potion of Mind Vision identified, now benefits from strength on melee attacks, and has a chance to reclaim a single used ranged weapon from each defeated enemy.\n\n" +
+				"_-_ The huntress has been buffed: starts with Potion of Mind Vision identified, now benefits from strength on melee attacks, and has a chance to reclaim a single used ranged getWeapons from each defeated enemy.\n\n" +
 				"_-_ A new container: The Potion Bandolier! Potions can now shatter from frost, but the bandolier can protect them.\n\n" +
 				"_-_ Shops now stock a much greater variety of items, some item prices have been rebalanced.\n\n" +
 				"_-_ Added Merchant's Beacon.\n\n" +

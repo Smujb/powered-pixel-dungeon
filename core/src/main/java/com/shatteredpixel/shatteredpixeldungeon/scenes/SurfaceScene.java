@@ -152,7 +152,7 @@ public class SurfaceScene extends PixelScene {
 		//Rose level is halved because it's easier to upgrade
 		CharSprite allySprite = null;
 		
-		//picks the highest between ghost's weapon, armor, and rose level/2
+		//picks the highest between ghost's getWeapons, getArmors, and rose level/2
 		int roseLevel = 0;
 		DriedRose rose = Dungeon.hero.belongings.getItem(DriedRose.class);
 		if (rose != null){

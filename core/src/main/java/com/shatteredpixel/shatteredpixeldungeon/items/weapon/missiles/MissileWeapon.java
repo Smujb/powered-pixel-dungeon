@@ -62,7 +62,7 @@ abstract public class MissileWeapon extends Weapon {
 	
 	public boolean holster;
 	
-	//used to reduce durability from the source weapon stack, rather than the one being thrown.
+	//used to reduce durability from the source getWeapons stack, rather than the one being thrown.
 	protected MissileWeapon parent;
 	
 	public int tier;
@@ -200,7 +200,7 @@ abstract public class MissileWeapon extends Weapon {
 	protected void rangedHit( Char enemy, int cell ){
 		decrementDurability();
 		if (durability > 0){
-			//attempt to stick the missile weapon to the enemy, just drop it if we can't.
+			//attempt to stick the missile getWeapons to the enemy, just drop it if we can't.
 			if (sticky && enemy != null && enemy.isAlive() && enemy.buff(Corruption.class) == null){
 				PinCushion p = Buff.affect(enemy, PinCushion.class);
 				if (p.target == enemy){
@@ -233,8 +233,8 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	protected void decrementDurability(){
-		//if this weapon was thrown from a source stack, degrade that stack.
-		//unless a weapon is about to break, then break the one being thrown
+		//if this getWeapons was thrown from a source stack, degrade that stack.
+		//unless a getWeapons is about to break, then break the one being thrown
 		if (parent != null){
 			if (parent.durability <= parent.durabilityPerUse()){
 				durability = 0;
@@ -296,7 +296,7 @@ abstract public class MissileWeapon extends Weapon {
 		Item split = super.split(amount);
 		bundleRestoring = false;
 		
-		//unless the thrown weapon will break, split off a max durability item and
+		//unless the thrown getWeapons will break, split off a max durability item and
 		//have it reduce the durability of the main stack. Cleaner to the player this way
 		if (split != null){
 			MissileWeapon m = (MissileWeapon)split;

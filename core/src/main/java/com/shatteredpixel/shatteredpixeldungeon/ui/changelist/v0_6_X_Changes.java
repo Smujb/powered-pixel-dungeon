@@ -91,14 +91,14 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton(new StoneOfAugmentation(),
 				"The weightstone is now the runestone of augmentation!\n\n" +
 				"Usability on weapons unchanged, can still be used to enhance either speed or damage at the cost of the other.\n\n" +
-				"Can now be used on armor! Armor can be modified to enhance either defense or evasion, at the cost of the other.\n\n" +
+				"Can now be used on getArmors! Armor can be modified to enhance either defense or evasion, at the cost of the other.\n\n" +
 				"Every shop now stocks a runestone of augmentation and an ankh, instead of one or the other."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_CLOTH, new Bulk().glowing()), "New Curses",
 				"Added 4 new curses:\n\n" +
 				"_-_ Friendly curse makes weapons sometimes charm both you and the enemy.\n" +
 				"_-_ Elastic curse lets weapons apply knockback, but reduces damage to 0.\n\n" +
-				"_-_ Bulk curse makes armor large, slowing movement through doorways.\n" +
+				"_-_ Bulk curse makes getArmors large, slowing movement through doorways.\n" +
 				"_-_ Overgrowth curse causes random plant effects when you are struck."));
 		
 		changes.addButton( new ChangeButton(BadgeBanner.image(Badges.Badge.CHAMPION_3.image), "New and Changed Badges",
@@ -111,7 +111,7 @@ public class v0_6_X_Changes {
 				"These changes focus on giving the berserker some of his old power back, but making it more difficult to access that power.\n\n" +
 				"_-_ Rage is built by taking physical damage\n" +
 				"_-_ Rage fades over time, lasts longer at low HP\n" +
-				"_-_ Rage builds faster with better armor\n" +
+				"_-_ Rage builds faster with better getArmors\n" +
 				"_-_ Rage grants bonus damage, max of +50%\n" +
 				"_-_ Berserker now needs full rage to berserk\n" +
 				"_-_ Berserking no longer reduces max hp\n" +
@@ -125,11 +125,11 @@ public class v0_6_X_Changes {
 		changeInfos.add(changes);
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.STYLUS, null), "Glyph Changes",
-				"Glyphs were originally designed with the intention that taking no glyph should be a valid option. Now with augmenting armor, glyphs can be more about added bonuses, somewhat like enchantments. Several glyphs have been adjusted:\n\n" +
+				"Glyphs were originally designed with the intention that taking no glyph should be a valid option. Now with augmenting getArmors, glyphs can be more about added bonuses, somewhat like enchantments. Several glyphs have been adjusted:\n\n" +
 				"_-_ Entanglement now only roots if you stand still.\n\n" +
 				"_-_ Potential no longer self-damages and grants charge more consistently.\n\n" +
 				"_-_ Viscocity now always defers some damage, instead of sometimes deferring all damage.\n\n" +
-				"_-_ Stone reworked. Now sets evasion to 0 and grants armor in proportion to evasion.\n\n" +
+				"_-_ Stone reworked. Now sets evasion to 0 and grants getArmors in proportion to evasion.\n\n" +
 				"_-_ Swiftness reworked. Now grants movement speed when no enemies are near.\n\n" +
 				"_-_ Viscocity is now a common glyph, Stone is now uncommon."));
 		
@@ -176,7 +176,7 @@ public class v0_6_X_Changes {
 				"This substantially increases soul mark chance at wand levels +1 to +5"));
 		
 		changes.addButton( new ChangeButton( new Image(Assets.HUNTRESS, 0, 15, 12, 15), "Huntress",
-				"Huntress ranged weapon durability boost now stacks with magical holster durability boost, for a total of 180% durability."));
+				"Huntress ranged getWeapons durability boost now stacks with magical holster durability boost, for a total of 180% durability."));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
 		changes.hardlight( CharSprite.NEGATIVE );
@@ -187,7 +187,7 @@ public class v0_6_X_Changes {
 				"_-_ Reduced wayward accuracy penalty by 50%"));
 		
 		changes.addButton( new ChangeButton(new Image(Assets.SKELETON, 0, 0, 12, 15), "Skeletons",
-				"Skeletons have been adjusted to be more counterable with armor, and to give less inventory-clogging loot.\n\n" +
+				"Skeletons have been adjusted to be more counterable with getArmors, and to give less inventory-clogging loot.\n\n" +
 				"_-_ Bone explosion damage up to 6-12 from 2-10\n" +
 				"_-_ Armor is now 2x effective against bone explosion, up from 0.5x\n\n" +
 				"_-_ Loot drop chance reduced to 1/8, from 1/5"));
@@ -219,7 +219,7 @@ public class v0_6_X_Changes {
 				"_-_ Challenges now have descriptions\n" +
 				"\n" +
 				"_-_ On diet now provides small rations, rather than removing all food\n" +
-				"_-_ Cloth armor is now allowed on faith is my armor\n" +
+				"_-_ Cloth getArmors is now allowed on faith is my getArmors\n" +
 				"_-_ Pharmacophobia is unchanged\n" +
 				"_-_ Barren land now allows seeds to drop, but they cannot be planted\n" +
 				"_-_ Swarm intelligence now draws nearby enemies, not all enemies\n" +
@@ -237,18 +237,18 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.CROSSBOW, null), "New Weapons",
 				"Three new weapons have been added!\n" +
 				"\n" +
-				"Throwing spears are a basic tier 3 missile weapon, fishing spears have been reduced to tier 2. Tiers 2-5 now each have a basic missile weapon.\n" +
+				"Throwing spears are a basic tier 3 missile getWeapons, fishing spears have been reduced to tier 2. Tiers 2-5 now each have a basic missile getWeapons.\n" +
 				"\n" +
-				"The crossbow is a tier 4 melee weapon which enhances darts! You'll do less damage up-front, but thrown darts will pack a punch!\n" +
+				"The crossbow is a tier 4 melee getWeapons which enhances darts! You'll do less damage up-front, but thrown darts will pack a punch!\n" +
 				"\n" +
-				"The gauntlet is a tier 5 fast melee weapon, similar to the sai. Excellent for chaining combos or enchantments."));
+				"The gauntlet is a tier 5 fast melee getWeapons, similar to the sai. Excellent for chaining combos or enchantments."));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"), false, null);
 		changes.hardlight( CharSprite.WARNING );
 		changeInfos.add(changes);
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.HOLSTER, null), "Inventory changes",
-				"Since the ranged weapon improvements in 0.6.3, inventory space has become a bit too congested. Rather than make a small change that only helps the issue for a few more updates, I have decided to make a larger-scale adjustment to available inventory space:\n" +
+				"Since the ranged getWeapons improvements in 0.6.3, inventory space has become a bit too congested. Rather than make a small change that only helps the issue for a few more updates, I have decided to make a larger-scale adjustment to available inventory space:\n" +
 				"\n" +
 				"_-_ The wand holster is now the magical holster, and can store missile weapons as well as wands.\n" +
 				"\n" +
@@ -358,14 +358,14 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.TRIDENT, null), "Ranged Weapons Overhaul!",
 				"Ranged weapons have been completely overhauled!\n\n" +
 				"_-_ Quantity of ranged weapons decreased, however most ranged weapons now last for several uses before breaking.\n\n" +
-				"_-_ Ranged weapon effectiveness increased significantly.\n\n" +
+				"_-_ Ranged getWeapons effectiveness increased significantly.\n\n" +
 				"_-_ Ranged weapons are now dropped in more situations, and do not replace melee weapons.\n\n" +
 				"_-_ Existing ranged weapons reworked, 5 new ranged weapons added.\n\n" +
 				"_-_ Warrior now starts with throwing stones, rogue starts with throwing knives"));
 		
 		changes.addButton( new ChangeButton( new Image(Assets.HUNTRESS, 0, 15, 12, 15), "Huntress",
-				"Huntress adjusted due to ranged weapon changes (note that this is not a full class rework):\n\n" +
-				"_-_ Huntress no longer has a chance to reclaim a single ranged weapon.\n\n" +
+				"Huntress adjusted due to ranged getWeapons changes (note that this is not a full class rework):\n\n" +
+				"_-_ Huntress no longer has a chance to reclaim a single ranged getWeapons.\n\n" +
 				"_-_ Missile weapons now have 50% greater durability when used by the huntress.\n\n" +
 				"_-_ Boomerang dmg increased to 1-6 from 1-5\n" +
 				"_-_ Boomerang str req reduced to 9 from 10\n" +
@@ -381,8 +381,8 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.RING_TOPAZ, null), Messages.get(RingOfSharpshooting.class, "name"),
 				"Ring of Sharpshooting overhauled\n\n" +
 				"_-_ No longer grants bonus accuracy\n\n" +
-				"_-_ Now increases ranged weapon durability, instead of giving a chance to not consume them\n\n" +
-				"_-_ Now increases ranged weapon damage, scaling based on the weapon's initial damage."));
+				"_-_ Now increases ranged getWeapons durability, instead of giving a chance to not consume them\n\n" +
+				"_-_ Now increases ranged getWeapons damage, scaling based on the getWeapons's initial damage."));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"), false, null);
 		changes.hardlight( CharSprite.WARNING );
@@ -407,7 +407,7 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_ Performance improvements to the fog of war & mind vision.\n\n" +
 				"_-_ Improved the consistency of how ranged traps pick targets.\n\n" +
-				"_-_ Weapons and armor can now be found upgraded and cursed. Overall curse chance unchanged.\n\n" +
+				"_-_ Weapons and getArmors can now be found upgraded and cursed. Overall curse chance unchanged.\n\n" +
 				"_-_ Each shop now always stocks 2 random tipped darts\n\n" +
 				"_-_ Starting weapons can no longer appear in hero's remains\n\n" +
 				"_-_ The ghost hero is no longer unaffected by all buffs, and is also immune to corruption"));
@@ -464,7 +464,7 @@ public class v0_6_X_Changes {
 				"_-_ WarHammer accuracy bonus increased by 5%\n\n" +
 				"Glyph Buffs:\n" +
 				"_-_ Glyph of obfuscation no longer reduces damage blocking, but is also less powerful.\n" +
-				"_-_ Glyph of entanglement now gives more herbal armor, and root duration decreases at higher armor levels."));
+				"_-_ Glyph of entanglement now gives more herbal getArmors, and root duration decreases at higher getArmors levels."));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
 		changes.hardlight( CharSprite.NEGATIVE );
@@ -479,7 +479,7 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_ONYX, null), new RingOfEvasion().trueName(),
 				"The ring of evasion has always been a very powerful ring, but the recent freerunner rework has increased the power of evasiveness in general, making the ring overbearingly strong.\n\n" +
 				"Evasion synergy has been adjusted:\n" +
-				"_-_ Ring of evasion no longer synergizes as strongly with freerunner or armor of swiftness.\n" +
+				"_-_ Ring of evasion no longer synergizes as strongly with freerunner or getArmors of swiftness.\n" +
 				"_-_ Previously their affects would multiply together, they now add to eachother instead.\n\n" +
 				"And the ring itself has been nerf/simplified:\n" +
 				"_-_ Ring of evasion no longer grants stealth"));
@@ -511,7 +511,7 @@ public class v0_6_X_Changes {
 		changes.addButton( new ChangeButton( new Image(Assets.ROGUE, 0, 15, 12, 15), "Rogue Rework!",
 				"The rogue has been reworked! His abilities have received a number of changes to make his strengths more pronounced and focused.\n\n" +
 				"These abilities have been _removed:_\n" +
-				"_-_ Gains evasion from excess strength on armor\n" +
+				"_-_ Gains evasion from excess strength on getArmors\n" +
 				"_-_ Gains hunger 20% more slowly\n" +
 				"_-_ Identifies rings by wearing them\n" +
 				"_-_ Has an increased chance to detect secrets\n\n" +
@@ -530,7 +530,7 @@ public class v0_6_X_Changes {
 				"_-_ No longer gains movement speed when not hungry or encumbered\n" +
 				"_-_ Now gains 'momentum' as he runs. Momentum increases evasion and movement speed as it builds.\n" +
 				"_-_ Momentum is rapidly lost when standing still.\n" +
-				"_-_ Evasion gained from momentum scales with excess strength on armor."));
+				"_-_ Evasion gained from momentum scales with excess strength on getArmors."));
 		
 		changes.addButton( new ChangeButton( new Image(Assets.TERRAIN_FEATURES, 16, 0, 16, 16), "Trap Overhaul!",
 				"Most of the game's traps have received changes, some have been overhauled entirely!\n\n" +
@@ -603,7 +603,7 @@ public class v0_6_X_Changes {
 				"_-_ Plants not updating terrain correctly\n" +
 				"_-_ Enemies spawning ontop of exit stairs\n" +
 				"_-_ Evil Eyes sometimes skipping beam chargeup\n" +
-				"_-_ Warrior's seal being disabled by armor kit\n" +
+				"_-_ Warrior's seal being disabled by getArmors kit\n" +
 				"_-_ Gladiator being able to combo non-visible enemies\n" +
 				"_-_ Music volume being ignored in certain cases\n" +
 				"_-_ Game music not correctly pausing on android 2.2/2.3\n" +
@@ -689,7 +689,7 @@ public class v0_6_X_Changes {
 				"_-_ Massively expanded the items catalog, now contains every identifiable item in the game."));
 		
 		changes.addButton( new ChangeButton(BadgeBanner.image(Badges.Badge.ALL_ITEMS_IDENTIFIED.image), "Badge Changes",
-				"_-_ Added new badges for identifying all weapons, armor, wands, and artifacts.\n\n" +
+				"_-_ Added new badges for identifying all weapons, getArmors, wands, and artifacts.\n\n" +
 				"_-_ All identification-based badges are now tied to the new item list system, and progress for them will persist between runs.\n\n" +
 				"_-_ Removed the Night Hunter badge\n\n" +
 				"_-_ The 'Many Deaths' badge now covers all death related badges, previously it was not covering 2 of them.\n\n" +
@@ -805,7 +805,7 @@ public class v0_6_X_Changes {
 		
 		changes.addButton( new ChangeButton( new DriedRose().upgrade(10),
 				"The ghost hero summoned by the rose is now much more capable and is also much less temporary:\n\n" +
-				"_-_ Ghost can now be equipped with a weapon and armor and uses them just like the hero.\n" +
+				"_-_ Ghost can now be equipped with a getWeapons and getArmors and uses them just like the hero.\n" +
 				"_-_ Ghost no longer takes damage over time as long as the rose remains equipped.\n" +
 				"_-_ Ghost health increased by 10\n" +
 				"_-_ Ghost now has a persistent HP bar\n" +

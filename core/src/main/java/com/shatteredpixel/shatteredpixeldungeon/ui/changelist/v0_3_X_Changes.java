@@ -65,7 +65,7 @@ public class v0_3_X_Changes {
 				"_-_ Short sword dmg down to 1-10, from 1-12\n" +
 				"_-_ Short sword can no longer be reforged\n" +
 				"_-_ Now IDs potions of health, not STR\n" +
-				"_-_ Now starts with a unique seal for armor\n" +
+				"_-_ Now starts with a unique seal for getArmors\n" +
 				"_-_ Seal grants shielding ontop of health\n" +
 				"_-_ Seal allows for one upgrade transfer"));
 		
@@ -274,7 +274,7 @@ public class v0_3_X_Changes {
 				"_-_ No longer starts with knuckledusters or a wand\n" +
 				"_-_ Can no longer equip wands\n" +
 				"_-_ Now starts with a unique mages staff, empowered with magic missile to start.\n\n" +
-				"_-_ Battlemage reworked, staff now deals bonus effects when used as a melee weapon.\n\n" +
+				"_-_ Battlemage reworked, staff now deals bonus effects when used as a melee getWeapons.\n\n" +
 				"_-_ Warlock reworked, gains more health and fullness from gaining exp, but food no longer restores hunger."));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_DISINTEGRATION, null), "Wand Rework!",

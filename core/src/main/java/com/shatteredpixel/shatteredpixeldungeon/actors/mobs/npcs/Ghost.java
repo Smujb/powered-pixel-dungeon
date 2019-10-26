@@ -225,8 +225,8 @@ public class Ghost extends NPC {
 		private static final String GIVEN		= "given";
 		private static final String PROCESSED	= "processed";
 		private static final String DEPTH		= "depth";
-		private static final String WEAPON		= "weapon";
-		private static final String ARMOR		= "armor";
+		private static final String WEAPON		= "getWeapons";
+		private static final String ARMOR		= "getArmors";
 		
 		public static void storeInBundle( Bundle bundle ) {
 			

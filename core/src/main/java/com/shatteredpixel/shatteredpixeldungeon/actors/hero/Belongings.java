@@ -39,7 +39,6 @@ import com.shatteredpixel.shatteredpixeldungeon.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -51,10 +50,7 @@ public class Belongings implements Iterable<Item> {
 	
 	public Bag backpack;
 
-	//public KindOfWeapon weapon = null;
-	//public Armor armor = null;
-
-	public ArrayList<Armor> armor() {
+	public ArrayList<Armor> getArmors() {
 		ArrayList<Armor> armors = new ArrayList<>();
 
 		if (miscs[0] instanceof Armor) {
@@ -83,7 +79,7 @@ public class Belongings implements Iterable<Item> {
 
 	}
 
-	public ArrayList<KindOfWeapon> weapon() {
+	public ArrayList<KindOfWeapon> getWeapons() {
 		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
 
 		if (miscs[0] instanceof MeleeWeapon) {
@@ -112,8 +108,28 @@ public class Belongings implements Iterable<Item> {
 
 	}
 
+	public ArrayList<Item> getEquippedItemsOFType( Class type ) {//Find equipped items of a certain kind
+		ArrayList<Item> items = new ArrayList<>();
+		if (miscs[0].getClass() == type) {
+			items.add(miscs[0]);
+		}
+		if (miscs[1].getClass() == type) {
+			items.add(miscs[1]);
+		}
+		if (miscs[2].getClass() == type) {
+			items.add(miscs[2]);
+		}
+		if (miscs[3].getClass() == type) {
+			items.add(miscs[3]);
+		}
+		if (miscs[4].getClass() == type) {
+			items.add(miscs[4]);
+		}
+		return items;
+	}
+
 	public int getWeaponSTRReq() {
-		ArrayList<KindOfWeapon> weapons = weapon();
+		ArrayList<KindOfWeapon> weapons = getWeapons();
 		int TotalRequirement = 8;
 		int IndividualRequirement;
 		for (int i=0; i < weapons.size(); i++) {
@@ -128,7 +144,7 @@ public class Belongings implements Iterable<Item> {
 	}
 
 	public int getArmorSTRReq() {
-		ArrayList<Armor> armors = armor();
+		ArrayList<Armor> armors = getArmors();
 		int TotalRequirement = 8;
 		int IndividualRequirement;
 		for (int i=0; i < armors.size(); i++) {
@@ -154,8 +170,8 @@ public class Belongings implements Iterable<Item> {
 		backpack.owner = owner;
 	}
 	
-	private static final String WEAPON		= "weapon";
-	private static final String ARMOR		= "armor";
+	private static final String WEAPON		= "getWeapons";
+	private static final String ARMOR		= "getArmors";
 	private static final String MISC1       = "misc1";
 	private static final String MISC2       = "misc2";
 	private static final String MISC3       = "misc3";

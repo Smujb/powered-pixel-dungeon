@@ -31,7 +31,7 @@ public class Obfuscation extends Armor.Glyph {
 
 	@Override
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
-		//no proc effect, see armor.stealthfactor for effect.
+		//no proc effect, see getArmors.stealthfactor for effect.
 		return damage;
 	}
 

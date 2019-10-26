@@ -293,8 +293,8 @@ public class DriedRose extends Artifact {
 	private static final String GHOSTID =       "ghostID";
 	private static final String PETALS =        "petals";
 	
-	private static final String WEAPON =        "weapon";
-	private static final String ARMOR =         "armor";
+	private static final String WEAPON =        "getWeapons";
+	private static final String ARMOR =         "getArmors";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {

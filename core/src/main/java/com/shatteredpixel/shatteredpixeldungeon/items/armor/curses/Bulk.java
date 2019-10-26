@@ -32,7 +32,7 @@ public class Bulk extends Armor.Glyph {
 	@Override
 	public int proc(Armor armor, Char attacker, Char defender, int damage) {
 		
-		//no proc effect, see armor.speedfactor
+		//no proc effect, see getArmors.speedfactor
 		return damage;
 	}
 	

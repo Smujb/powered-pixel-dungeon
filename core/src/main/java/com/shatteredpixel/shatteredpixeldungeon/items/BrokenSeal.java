@@ -74,7 +74,7 @@ public class BrokenSeal extends Item {
 	}
 
 	@Override
-	//scroll of upgrade can be used directly once, same as upgrading armor the seal is affixed to then removing it.
+	//scroll of upgrade can be used directly once, same as upgrading getArmors the seal is affixed to then removing it.
 	public boolean isUpgradable() {
 		return level() == 0;
 	}
