@@ -33,13 +33,9 @@ public class AssassinsBlade extends MeleeWeapon {
 		image = ItemSpriteSheet.ASSASSINS_BLADE;
 
 		tier = 4;
+		damageMultiplier = 0.80f;
 	}
 
-	@Override
-	public int max(int lvl) {
-		return  4*(tier+1) +    //20 base, down from 25
-				lvl*(tier+1);   //scaling unchanged
-	}
 
 	@Override
 	public int damageRoll(Char owner) {

@@ -35,12 +35,8 @@ public class Dagger extends MeleeWeapon {
 		tier = 1;
 		
 		bones = false;
-	}
 
-	@Override
-	public int max(int lvl) {
-		return  4*(tier+1) +    //8 base, down from 10
-				lvl*(tier+1);   //scaling unchanged
+		damageMultiplier = 0.80f;
 	}
 	
 	@Override

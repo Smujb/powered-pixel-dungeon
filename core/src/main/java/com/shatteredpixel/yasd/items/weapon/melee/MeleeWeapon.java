@@ -32,6 +32,8 @@ public class MeleeWeapon extends Weapon {
 	
 	public int tier;
 
+	public float damageMultiplier = 1f;
+
 	@Override
 	public int min(int lvl) {
 		return  tier +  //base
@@ -40,8 +42,8 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public int max(int lvl) {
-		return  5*(tier*2) +    //base
-				lvl*(tier+2);   //level scaling
+		return (int) ((5*(tier+1) +    //base
+				lvl*(tier*2))*damageMultiplier);   //level scaling
 	}
 
 	public int STRReq(int lvl){
