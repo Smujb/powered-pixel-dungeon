@@ -340,7 +340,7 @@ public class Hero extends Char {
 	@Override
 	public int attackSkill( Char target ) {
 		resetWeapon();
-		KindOfWeapon wep = belongings.getWeapons().get(currentWeapon);
+		KindOfWeapon wep = getCurrentWeapon();
 		
 		float accuracy = 1;
 		accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -389,9 +389,9 @@ public class Hero extends Char {
 			}
 		} if (belongings.getWeapons() != null)  {//Only defense factor from current getWeapons applies
 			ArrayList<KindOfWeapon> Weapons = belongings.getWeapons();
-			int wepDr = Random.NormalIntRange( 0 , Weapons.get(currentWeapon).defenseFactor( this ) );
-			if (STR() < ((Weapon) Weapons.get(currentWeapon)).STRReq()){
-				wepDr -= 2*(((Weapon)Weapons.get(currentWeapon)).STRReq() - STR());
+			int wepDr = Random.NormalIntRange( 0 , getCurrentWeapon().defenseFactor(this) );
+			if (STR() < ((Weapon) getCurrentWeapon()).STRReq()){
+				wepDr -= 2* ((Weapon) getCurrentWeapon()).STRReq() - STR();
 			}
 			if (wepDr > 0) dr += wepDr;
 		}
@@ -407,9 +407,8 @@ public class Hero extends Char {
 	@Override
 	public int damageRoll() {
 		resetWeapon();//ensures "CurrentWeapon" never goes above maximum possible
-		ArrayList<KindOfWeapon> weapons = belongings.getWeapons();
 		int dmg;
-		KindOfWeapon wep = weapons.get(currentWeapon);
+		KindOfWeapon wep = getCurrentWeapon();
 		if (wep != null) {
 			dmg = wep.damageRoll( this );
 			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
