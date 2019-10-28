@@ -216,7 +216,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRMax(int lvl){
-		return (tier*3) * tier * lvl;
+		return (tier*3) + (tier * lvl);
 	}
 
 	public final int DRMin(){
