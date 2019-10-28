@@ -134,6 +134,9 @@ public class Belongings implements Iterable<Item> {
 		int IndividualRequirement;
 		for (int i=0; i < weapons.size(); i++) {
 			if (weapons.get(i) instanceof MeleeWeapon) {
+				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).dualWieldpenalty) {
+					TotalRequirement += 2;
+				}
 				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
 				IndividualRequirement -= 8;
 				IndividualRequirement = Math.max(IndividualRequirement,1);//Can't only act as 0str (+3 T1 weapon)
