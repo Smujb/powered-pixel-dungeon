@@ -194,7 +194,7 @@ public class Armor extends KindofMisc {
 		this.seal = seal;
 		if (seal.level() > 0){
 			//doesn't trigger upgrading logic such as affecting curses/glyphs
-			level(level()+1);
+			level(Math.min(level()+1,3));
 			Badges.validateItemLevelAquired(this);
 		}
 		if (isEquipped(Dungeon.hero)){
