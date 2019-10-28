@@ -189,8 +189,8 @@ public class WandOfFireblast extends DamageWand {
 
 	@Override
 	protected int chargesPerCast() {
-		//consumes 30% of current charges, rounded up, with a minimum of one.
-		return Math.max(1, (int)Math.ceil(curCharges*0.3f));
+		//consumes all charges, up to 3
+		return Math.min(3,curCharges);
 	}
 
 	@Override
@@ -199,6 +199,11 @@ public class WandOfFireblast extends DamageWand {
 			return Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
 		else
 			return Messages.get(this, "stats_desc", chargesPerCast(), min(0), max(0));
+	}
+
+	@Override
+	protected int initialCharges() {
+		return 3;
 	}
 
 	@Override
