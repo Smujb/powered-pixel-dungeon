@@ -31,6 +31,8 @@ public class Greataxe extends MeleeWeapon {
 		tier = 5;
 
 		damageMultiplier = 1.3f;
+
+		dualWieldpenalty = true;
 	}
 
 }

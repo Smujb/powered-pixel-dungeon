@@ -34,6 +34,8 @@ public class MeleeWeapon extends Weapon {
 
 	public float damageMultiplier = 1f;
 
+	public boolean dualWieldpenalty = false;
+
 	@Override
 	public int min(int lvl) {
 		return  tier +  //base
