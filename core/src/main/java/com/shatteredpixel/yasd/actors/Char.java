@@ -228,7 +228,13 @@ public abstract class Char extends Actor {
 			} else {
 				dmg = damageRoll();
 			}
-			
+
+			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
+				Hero h = (Hero) this;
+				if (h.belongings.miscs[0] instanceof MissileWeapon) {
+					dmg = ((MissileWeapon)h.belongings.miscs[0]).damageRoll(h);
+				}
+			}
 			int effectiveDamage = enemy.defenseProc( this, dmg );
 			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
 			effectiveDamage = attackProc( enemy, effectiveDamage );
