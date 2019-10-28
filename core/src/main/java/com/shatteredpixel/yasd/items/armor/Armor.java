@@ -216,12 +216,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRMax(int lvl){
-		int max = tier * (2 + lvl) + augment.defenseFactor(lvl);
-		if (lvl > max){
-			return ((lvl - max)+1)/2;
-		} else {
-			return max;
-		}
+		return (tier*3) * tier * lvl;
 	}
 
 	public final int DRMin(){
@@ -229,12 +224,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRMin(int lvl){
-		int max = DRMax(lvl);
-		if (lvl >= max){
-			return (lvl - max);
-		} else {
-			return lvl;
-		}
+		return tier + lvl;
 	}
 	
 	public float evasionFactor( Char owner, float evasion ){

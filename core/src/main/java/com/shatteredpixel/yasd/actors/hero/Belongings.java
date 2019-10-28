@@ -134,7 +134,7 @@ public class Belongings implements Iterable<Item> {
 		int IndividualRequirement;
 		for (int i=0; i < weapons.size(); i++) {
 			if (weapons.get(i) instanceof MeleeWeapon) {
-				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).dualWieldpenalty) {
+				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).dualWieldpenalty) {//If the weapon has a dual wield penalty and it is being used with another weapon, increase total requirement.
 					TotalRequirement += 2;
 				}
 				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
