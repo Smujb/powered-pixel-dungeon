@@ -44,6 +44,15 @@ public class AboutScene extends PixelScene {
 
 	private static final String LNK_SHPX = "ShatteredPixel.com";
 
+	private static final String TTL_YASD = "Yet Another Shattered Dungeon";
+
+	private static final String TXT_YASD =
+			"Code: Smujamesb (Modified from Shattered Pixel Dungeon)\n" +
+			"Graphics: Evan (From Shattered PD), Ømicrónrg9\n" +
+					"Invite to my Discord Server:";
+
+	private static final String POPUP_YASD = "https://discord.gg/Cj5vvjV";
+
 	private static final String TTL_WATA = "Pixel Dungeon";
 
 	private static final String TXT_WATA =
@@ -68,7 +77,7 @@ public class AboutScene extends PixelScene {
 
 		new Flare( 7, 64 ).color( 0x225511, true ).show( shpx, 0 ).angularSpeed = +20;
 
-		RenderedTextBlock shpxtitle = renderTextBlock( TTL_SHPX, 8 );
+		RenderedTextBlock shpxtitle = renderTextBlock( TTL_YASD, 8 );
 		shpxtitle.hardlight( Window.SHPX_COLOR );
 		add( shpxtitle );
 
@@ -78,14 +87,14 @@ public class AboutScene extends PixelScene {
 		);
 		align(shpxtitle);
 
-		RenderedTextBlock shpxtext = renderTextBlock( TXT_SHPX, 8 );
+		RenderedTextBlock shpxtext = renderTextBlock( TXT_YASD, 8 );
 		shpxtext.maxWidth((int)Math.min(colWidth, 120));
 		add( shpxtext );
 
 		shpxtext.setPos((colWidth - shpxtext.width()) / 2, shpxtitle.bottom() + 12);
 		align(shpxtext);
 
-		RenderedTextBlock shpxlink = renderTextBlock( LNK_SHPX, 8 );
+		RenderedTextBlock shpxlink = renderTextBlock( POPUP_YASD, 8 );
 		shpxlink.maxWidth(shpxtext.maxWidth());
 		shpxlink.hardlight( Window.SHPX_COLOR );
 		add( shpxlink );
@@ -96,7 +105,7 @@ public class AboutScene extends PixelScene {
 		PointerArea shpxhotArea = new PointerArea( shpxlink.left(), shpxlink.top(), shpxlink.width(), shpxlink.height() ) {
 			@Override
 			protected void onClick( PointerEvent event ) {
-				DeviceCompat.openURI( "https://" + LNK_SHPX );
+				DeviceCompat.openURI( "https://" + POPUP_YASD );
 			}
 		};
 		add( shpxhotArea );
