@@ -116,13 +116,11 @@ public class WandOfLifeDrain extends DamageWand {
         return 4;
     }
 
-    @Override
-    public int min(int lvl) {
-        return 2*chargesPerCast();
+    public int min(int lvl){
+        return (1+lvl) * chargesPerCast();
     }
 
-    @Override
-    public int max(int lvl) {
-        return chargesPerCast();
+    public int max(int lvl){
+        return (6+4*lvl) * chargesPerCast();
     }
 }
