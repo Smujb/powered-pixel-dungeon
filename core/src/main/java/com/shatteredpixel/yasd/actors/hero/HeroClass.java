@@ -46,6 +46,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.items.wands.WandOfLifeDrain;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
@@ -114,6 +115,8 @@ public enum HeroClass {
 		}
 		
 		new ScrollOfIdentify().identify();
+
+		new WandOfLifeDrain().identify().collect();
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
 

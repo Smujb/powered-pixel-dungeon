@@ -36,7 +36,7 @@ import java.util.List;
 public class Lightning extends Group {
 
 	private static final float DURATION = 0.3f;
-	
+
 	private float life;
 
 	private List<Arc> arcs;
@@ -72,7 +72,7 @@ public class Lightning extends Group {
 		life = DURATION;
 	}
 	
-	private static final double A = 180 / Math.PI;
+	public static final double A = 180 / Math.PI;
 	
 	@Override
 	public void update() {
