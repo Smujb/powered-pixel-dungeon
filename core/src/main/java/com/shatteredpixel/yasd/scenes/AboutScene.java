@@ -51,7 +51,7 @@ public class AboutScene extends PixelScene {
 			"Graphics: Evan (From Shattered PD), Ømicrónrg9\n" +
 					"Invite to my Discord Server:";
 
-	private static final String POPUP_YASD = "https://discord.gg/Cj5vvjV";
+	private static final String POPUP_YASD = "discord.gg/Cj5vvjV";
 
 	private static final String TTL_WATA = "Pixel Dungeon";
 
