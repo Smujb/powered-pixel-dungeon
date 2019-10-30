@@ -47,7 +47,6 @@ import com.watabou.utils.Random;
 public class WandOfLifeDrain extends DamageWand {
 
 	{
-		name = "Wand of Life Drain";
         image = ItemSpriteSheet.WAND_DISINTEGRATION;
 	}
 
@@ -96,15 +95,6 @@ public class WandOfLifeDrain extends DamageWand {
         Sample.INSTANCE.play( Assets.SND_LIGHTNING );
         callback.call();
     }
-
-	@Override
-	public String desc() {
-		return
-			"This wand will allow you to steal life energy from living creatures to restore your " +
-            "own health. Using it against non-living creatures will just harm them, but it is " +
-            "especially effective against targets which are sleeping or otherwise unaware of danger.";
-	}
-
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
