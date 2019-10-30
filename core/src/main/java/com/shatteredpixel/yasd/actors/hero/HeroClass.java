@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.BrokenSeal;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.TomeOfMastery;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.yasd.items.bags.PotionBandolier;
@@ -113,7 +114,7 @@ public enum HeroClass {
 		}
 		
 		new ScrollOfIdentify().identify();
-
+		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
 
 		new Spear().identify().collect();
