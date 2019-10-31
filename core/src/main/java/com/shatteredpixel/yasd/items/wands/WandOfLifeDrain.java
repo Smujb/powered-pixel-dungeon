@@ -47,7 +47,7 @@ import com.watabou.utils.Random;
 public class WandOfLifeDrain extends DamageWand {
 
 	{
-        image = ItemSpriteSheet.WAND_DISINTEGRATION;
+        image = ItemSpriteSheet.WAND_LIFE_DRAIN;
 	}
 
     @Override
