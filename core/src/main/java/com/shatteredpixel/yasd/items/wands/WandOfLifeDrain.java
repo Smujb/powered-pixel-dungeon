@@ -91,7 +91,9 @@ public class WandOfLifeDrain extends DamageWand {
         }
 
         //don't want to wait for the effect before processing damage.
-        curUser.sprite.parent.addToFront( new RedLightning(Dungeon.hero.pos, cell, null) );
+        RedLightning lightning = new RedLightning(Dungeon.hero.pos, cell, null);
+        //lightning.setColour(0x66002);
+        curUser.sprite.parent.addToFront( lightning  );
         Sample.INSTANCE.play( Assets.SND_LIGHTNING );
         callback.call();
     }
@@ -104,6 +106,14 @@ public class WandOfLifeDrain extends DamageWand {
     @Override
     protected int initialCharges() {
         return 4;
+    }
+
+    @Override
+    public String statsDesc() {
+        if (levelKnown)
+            return Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
+        else
+            return Messages.get(this, "stats_desc", chargesPerCast(), min(0), max(0));
     }
 
     public int min(int lvl){
