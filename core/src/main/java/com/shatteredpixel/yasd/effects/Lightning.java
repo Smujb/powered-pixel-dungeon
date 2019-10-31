@@ -35,6 +35,12 @@ import java.util.List;
 
 public class Lightning extends Group {
 
+	int gobalColour = 0xffffff;
+
+	public void setColour(int Colour) {
+		gobalColour = Colour;
+	}
+
 	private static final float DURATION = 0.3f;
 
 	private float life;
@@ -42,6 +48,8 @@ public class Lightning extends Group {
 	private List<Arc> arcs;
 	
 	private Callback callback;
+
+
 
 	public Lightning(int from, int to, Callback callback){
 		this(Arrays.asList(new Arc(from, to)), callback);
@@ -60,12 +68,15 @@ public class Lightning extends Group {
 	}
 	
 	public Lightning( List<Arc> arcs, Callback callback ) {
-		
+
 		super();
 
 		this.arcs = arcs;
-		for (Arc arc : this.arcs)
+		for (Arc arc : this.arcs) {
+
 			add(arc);
+			arc.setColour(gobalColour);
+		}
 
 		this.callback = callback;
 		
@@ -105,6 +116,11 @@ public class Lightning extends Group {
 	//A lightning object is meant to be loaded up with arcs.
 	//these act as a means of easily expressing lighting between two points.
 	public static class Arc extends Group {
+		int gobalColour = 0xffffff;
+
+		public void setColour(int Colour) {
+			gobalColour = Colour;
+		}
 
 		private Image arc1, arc2;
 
@@ -132,10 +148,12 @@ public class Lightning extends Group {
 			arc1.x = start.x - arc1.origin.x;
 			arc1.y = start.y - arc1.origin.y;
 			arc1.origin.set( 0, arc1.height()/2 );
+			arc1.color(gobalColour);
 			add( arc1 );
 
 			arc2 = new Image(Effects.get(Effects.Type.LIGHTNING));
 			arc2.origin.set( 0, arc2.height()/2 );
+			arc1.color(gobalColour);
 			add( arc2 );
 		}
 
