@@ -255,6 +255,17 @@ public class Hero extends Char {
 		}
 	}
 
+	public void loseMorale(float Amount) {
+		morale -= Amount;
+		morale = Math.max(morale, 0);
+		moraleCheck();
+	}
+
+	public void gainMorale(float Amount) {
+		morale += Amount;
+		morale = Math.min(morale, MAX_MORALE);
+	}
+
 	private static final String ATTACK		= "attackSkill";
 	private static final String DEFENSE		= "defenseSkill";
 	private static final String STRENGTH	= "STR";
@@ -1109,7 +1120,7 @@ public class Hero extends Char {
 
 		if (shake > 0.5f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), 0.3f);
-			morale -= shake;//Lose some morale when damaged a lot
+			loseMorale(shake);
 		}
 
 		super.damage( dmg, src );
