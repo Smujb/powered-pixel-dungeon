@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.effects.SpellSprite;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -89,8 +90,10 @@ public class Food extends Item {
 		}
 	}
 	
-	protected void satisfy( Hero hero ){
+	protected void satisfy( Hero hero ){//Eating food satisfies morale as well as hunger.
 		Buff.affect(hero, Hunger.class).satisfy( energy );
+		hero.morale += Math.min(1f, hero.MAX_MORALE-hero.morale);//Cannot have more than maximum.
+		hero.sprite.showStatus( CharSprite.POSITIVE, "+morale" );
 	}
 	
 	public static void foodProc( Hero hero ){
