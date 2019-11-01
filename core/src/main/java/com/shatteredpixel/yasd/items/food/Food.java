@@ -92,8 +92,7 @@ public class Food extends Item {
 	
 	protected void satisfy( Hero hero ){//Eating food satisfies morale as well as hunger.
 		Buff.affect(hero, Hunger.class).satisfy( energy );
-		hero.morale += Math.min(1f, hero.MAX_MORALE-hero.morale);//Cannot have more than maximum.
-		hero.sprite.showStatus( CharSprite.POSITIVE, "+morale" );
+		hero.gainMorale(1f);
 	}
 	
 	public static void foodProc( Hero hero ){

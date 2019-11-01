@@ -264,6 +264,7 @@ public class Hero extends Char {
 	public void gainMorale(float Amount) {
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
+		this.sprite.showStatus( CharSprite.POSITIVE, "+morale" );
 	}
 
 	private static final String ATTACK		= "attackSkill";
