@@ -1118,7 +1118,7 @@ public class Hero extends Char {
 
 		float shake;
 
-		shake = dmg / (Math.max(1, HP) / 4);
+		shake = (float) dmg / (float) HP / 4f;
 
 		if (shake > 0.5f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), 0.3f);
