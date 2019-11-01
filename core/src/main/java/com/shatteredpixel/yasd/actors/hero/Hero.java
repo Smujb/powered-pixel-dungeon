@@ -103,6 +103,7 @@ import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
+import com.shatteredpixel.yasd.items.weapon.melee.Glaive;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.levels.Level;
@@ -233,6 +234,16 @@ public class Hero extends Char {
 		}
 
 		return (buff(Weakness.class) != null) ? STR - 2 : STR;
+	}
+
+	public void moraleCheck() {
+		if (morale > MAX_MORALE*0.67) {
+			return;
+		} else if (morale > MAX_MORALE*0.33) {
+			GLog.w(Messages.get(Hero.class, "low_morale"));
+		} else {
+			GLog.n(Messages.get(Hero.class, "very_low_morale"));
+		}
 	}
 
 	private static final String ATTACK		= "attackSkill";
