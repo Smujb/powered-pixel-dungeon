@@ -148,7 +148,7 @@ public class Hero extends Char {
 	public static final int MAX_LEVEL = 30;
 	//Morale, coming soon
 	public float MAX_MORALE = 10f;
-	public float MORALE = MAX_MORALE;
+	public float morale = MAX_MORALE;
 
 	public static final int STARTING_STR = 10;
 
@@ -241,6 +241,7 @@ public class Hero extends Char {
 	private static final String LEVEL		= "lvl";
 	private static final String EXPERIENCE	= "exp";
 	private static final String HTBOOST     = "htboost";
+	private static final String MORALE      = "morale";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -259,6 +260,8 @@ public class Hero extends Char {
 		bundle.put( EXPERIENCE, exp );
 		
 		bundle.put( HTBOOST, HTBoost );
+
+		bundle.put( MORALE, morale );
 
 		belongings.storeInBundle( bundle );
 	}
@@ -279,6 +282,8 @@ public class Hero extends Char {
 		exp = bundle.getInt( EXPERIENCE );
 		
 		HTBoost = bundle.getInt(HTBOOST);
+
+		morale = bundle.getFloat(MORALE);
 		
 		belongings.restoreFromBundle( bundle );
 	}
@@ -1057,26 +1062,34 @@ public class Hero extends Char {
 			resting = false;
 		}
 
-		if (this.buff(Drowsy.class) != null){
+		if (this.buff(Drowsy.class) != null) {
 			Buff.detach(this, Drowsy.class);
-			GLog.w( Messages.get(this, "pain_resist") );
+			GLog.w(Messages.get(this, "pain_resist"));
 		}
 
-		CapeOfThorns.Thorns thorns = buff( CapeOfThorns.Thorns.class );
+		CapeOfThorns.Thorns thorns = buff(CapeOfThorns.Thorns.class);
 		if (thorns != null) {
-			dmg = thorns.proc(dmg, (src instanceof Char ? (Char)src : null),  this);
+			dmg = thorns.proc(dmg, (src instanceof Char ? (Char) src : null), this);
 		}
 
-		dmg = (int)Math.ceil(dmg * RingOfTenacity.damageMultiplier( this ));
+		dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
 
 		//TODO improve this when I have proper damage source logic
 		//checks if *any* equipped armour has Anti Magic
 		ArrayList<Armor> Armors = belongings.getArmors();
-		for (int i=0; i < Armors.size(); i++) {
+		for (int i = 0; i < Armors.size(); i++) {
 			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
 					&& AntiMagic.RESISTS.contains(src.getClass())) {
 				dmg -= AntiMagic.drRoll(Armors.get(i).level());
 			}
+		}
+
+		float shake;
+		shake = dmg / (HP / 4);
+
+		if (shake > 0.5f){
+			Camera.main.shake(GameMath.gate(1, shake, 5), 0.3f);
+			morale -= shake;//Lose some morale when damaged a lot
 		}
 
 		super.damage( dmg, src );

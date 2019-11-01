@@ -30,7 +30,6 @@ import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.items.quest.CorpseDust;
-import com.shatteredpixel.yasd.items.wands.DamageWand;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.painters.Painter;
@@ -131,7 +130,7 @@ public class MassGraveRoom extends SpecialRoom {
 
 		@Override
 		public String desc(int tileX, int tileY) {
-			if (Dungeon.hero.MORALE > Dungeon.hero.MAX_MORALE/2) {
+			if (Dungeon.hero.morale > Dungeon.hero.MAX_MORALE/2) {
 				return Messages.get(this, "desc");
 			} else {
 				return Messages.get(this, "desc_low_morale");

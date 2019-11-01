@@ -1118,7 +1118,7 @@ public abstract class Level implements Bundlable {
 			case Terrain.CHASM:
 				return Messages.get(Level.class, "chasm_desc");
 			case Terrain.WATER:
-				if (Dungeon.hero.MORALE > Dungeon.hero.MAX_MORALE/2f) {
+				if (Dungeon.hero.morale > Dungeon.hero.MAX_MORALE/2f) {
 					return Messages.get(Level.class, "water_desc");
 				} else {
 					return Messages.get(Level.class, "water_desc_low_morale");
