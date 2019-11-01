@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.levels.rooms.special;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.mobs.Skeleton;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Gold;
@@ -29,6 +30,7 @@ import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.items.quest.CorpseDust;
+import com.shatteredpixel.yasd.items.wands.DamageWand;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.painters.Painter;
@@ -129,7 +131,11 @@ public class MassGraveRoom extends SpecialRoom {
 
 		@Override
 		public String desc(int tileX, int tileY) {
-			return Messages.get(this, "desc");
+			if (Dungeon.hero.MORALE > Dungeon.hero.MAX_MORALE/2) {
+				return Messages.get(this, "desc");
+			} else {
+				return Messages.get(this, "desc_low_morale");
+			}
 		}
 	}
 }
