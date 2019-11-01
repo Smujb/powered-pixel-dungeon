@@ -253,7 +253,6 @@ public abstract class Char extends Actor {
 
 
 			enemy.damage( effectiveDamage, this );
-
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
