@@ -146,6 +146,9 @@ public class Hero extends Char {
 	}
 	
 	public static final int MAX_LEVEL = 30;
+	//Morale, coming soon
+	public float MAX_MORALE = 10f;
+	public float MORALE = MAX_MORALE;
 
 	public static final int STARTING_STR = 10;
 
@@ -185,6 +188,9 @@ public class Hero extends Char {
 
 	//This list is maintained so that some logic checks can be skipped
 	// for enemies we know we aren't seeing normally, resultign in better performance
+
+	public class Morale{}
+
 	public ArrayList<Mob> mindVisionEnemies = new ArrayList<>();
 	
 	public Hero() {
