@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.scrolls;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -68,6 +69,9 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 			GLog.p( Messages.get(this, "cleansed") );
 		} else {
 			GLog.i( Messages.get(this, "not_cleansed") );
+			if (Dungeon.hero.morale < Dungeon.hero.MAX_MORALE/2) {
+				GLog.n(Messages.get(this, "not_cleansed_low_morale"));
+			}
 		}
 	}
 
