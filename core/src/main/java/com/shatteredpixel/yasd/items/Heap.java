@@ -407,7 +407,11 @@ public class Heap implements Bundlable {
 			case TOMB:
 				return Messages.get(this, "tomb_desc");
 			case SKELETON:
-				return Messages.get(this, "skeleton_desc");
+				if (Dungeon.hero.morale > Dungeon.hero.MAX_MORALE/2) {
+					return Messages.get(this, "skeleton_desc");
+				} else {
+					return Messages.get(this, "skeleton_desc_low_morale");
+				}
 			case REMAINS:
 				if (Dungeon.hero.morale > Dungeon.hero.MAX_MORALE/2) {
 					return Messages.get(this, "remains_desc");
