@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.actors.buffs;
 
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
@@ -67,8 +68,12 @@ public class MagicalSleep extends Buff {
 			target.HP = Math.min(target.HP+1, target.HT);
 			if (target instanceof  Hero) ((Hero) target).resting = true;
 			if (target.HP == target.HT) {
-				if (target instanceof  Hero) GLog.p(Messages.get(this, "wakeup"));
+				if (target instanceof  Hero) {
+					GLog.p(Messages.get(this, "wakeup"));
+					((Hero)target).morale += Math.min(3f, ((Hero)target).MAX_MORALE-((Hero)target).morale);
+				}
 				detach();
+
 			}
 		}
 		spend( STEP );
