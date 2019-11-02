@@ -240,18 +240,14 @@ public class Hero extends Char {
 		if (morale > MAX_MORALE*0.67) {
 			return;
 		} else if (morale > MAX_MORALE*0.33) {
-			if (Random.Int(1) == 0) {
-				GLog.w(Messages.get(Hero.class, "low_morale_1"));
-			} else {
-				GLog.w(Messages.get(Hero.class, "low_morale_2"));
-			}
+			int choice = Random.Int(5);
+			String messageTitle = "low_morale_" + choice;
+			GLog.w(Messages.get(Hero.class, messageTitle));
 
 		} else {
-			if (Random.Int(1) == 0) {
-				GLog.w(Messages.get(Hero.class, "very_low_morale_1"));
-			} else {
-				GLog.w(Messages.get(Hero.class, "very_low_morale_2"));
-			}
+			int choice = Random.Int(5);
+			String messageTitle = "very_low_morale_" + choice;
+			GLog.w(Messages.get(Hero.class, messageTitle));
 		}
 	}
 
