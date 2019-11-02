@@ -534,6 +534,12 @@ public abstract class Wand extends KindofMisc {
 		}
 
 		private void recharge(){
+			float moraleMultiplier = 1f;
+			if (target instanceof Hero) {
+				moraleMultiplier = (float) ((((Hero)target).morale - 5) * 0.04);
+			}
+
+
 			int missingCharges = maxCharges - curCharges;
 			missingCharges = Math.max(0, missingCharges);
 
@@ -546,7 +552,7 @@ public abstract class Wand extends KindofMisc {
 
 			for (Recharging bonus : target.buffs(Recharging.class)){
 				if (bonus != null && bonus.remainder() > 0f) {
-					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder();
+					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder() * moraleMultiplier;
 				}
 			}
 		}

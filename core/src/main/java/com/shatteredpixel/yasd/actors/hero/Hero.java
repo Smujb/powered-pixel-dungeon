@@ -415,6 +415,8 @@ public class Hero extends Char {
 	public int defenseSkill( Char enemy ) {
 		
 		float evasion = defenseSkill;
+
+		float moraleMultiplier = (float) ((morale - 5) * 0.04);
 		
 		evasion *= RingOfEvasion.evasionMultiplier( this );
 		
@@ -423,7 +425,7 @@ public class Hero extends Char {
 		}
 		evasion = belongings.getArmors().get(0).evasionFactor(this, evasion);
 
-		return Math.round(evasion);
+		return Math.round(evasion * moraleMultiplier);
 	}
 	
 	@Override
