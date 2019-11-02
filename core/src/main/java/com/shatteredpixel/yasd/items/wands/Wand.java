@@ -536,7 +536,7 @@ public abstract class Wand extends KindofMisc {
 		private void recharge(){
 			float moraleMultiplier = 1f;
 			if (target instanceof Hero) {
-				moraleMultiplier = (float) ((((Hero)target).morale - 5) * 0.04);
+				moraleMultiplier = 1f + (float) ((((Hero)target).morale - 5) * 0.04);
 			}
 
 
