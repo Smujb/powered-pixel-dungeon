@@ -1130,8 +1130,8 @@ public class Hero extends Char {
 
 		shake = ((float) dmg / (float) HP) *4f;
 
-		if (shake > 0.3f){
-			Camera.main.shake(GameMath.gate(1, shake, 5), 0.3f);
+		if (shake > 0.4f){
+			Camera.main.shake(GameMath.gate(1, shake, 5), Math.max(shake/2,0.3f));
 			loseMorale(shake);
 		}
 
