@@ -401,11 +401,13 @@ public class Hero extends Char {
 				accuracy *= 1.5f;
 			}
 		}
+
+		float moraleMultiplier = (float) ((morale - 5) * 0.04);
 		
 		if (wep != null) {
-			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ));
+			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ) * (1 + moraleMultiplier));
 		} else {
-			return (int)(attackSkill * accuracy);
+			return (int)(attackSkill * accuracy * (1 + moraleMultiplier));
 		}
 	}
 	
