@@ -96,7 +96,11 @@ public class Dart extends MissileWeapon {
 
 	private Crossbow getCrossbow() {
 		resetCrossbow();
-		return ((Crossbow)getCrossbows().get(CurrentCrossbow));
+		if (numberOfBows() > 0) {
+			return ((Crossbow) getCrossbows().get(CurrentCrossbow));
+		} else {
+			return null;
+		}
 	}
 
 	private void resetCrossbow() {
