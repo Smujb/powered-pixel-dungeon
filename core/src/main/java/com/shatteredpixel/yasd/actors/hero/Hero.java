@@ -256,15 +256,21 @@ public class Hero extends Char {
 	}
 
 	public void loseMorale(float Amount) {
+		loseMorale(Amount, true);
+	}
+
+	public void loseMorale(float Amount, boolean say) {
 		morale -= Amount;
 		morale = Math.max(morale, 0);
-		moraleCheck();
+		if (say) {
+			moraleCheck();
+		}
 	}
 
 	public void gainMorale(float Amount) {
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
-		this.sprite.showStatus( CharSprite.POSITIVE, "+morale" );
+		this.sprite.showStatus( CharSprite.NEUTRAL, "+morale" );
 	}
 
 	private static final String ATTACK		= "attackSkill";
@@ -1118,9 +1124,9 @@ public class Hero extends Char {
 
 		float shake;
 
-		shake = (float) dmg / (float) HP / 4f;
+		shake = ((float) dmg / (float) HP) *4f;
 
-		if (shake > 0.5f){
+		if (shake > 0.3f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), 0.3f);
 			loseMorale(shake);
 		}
