@@ -15,7 +15,7 @@ allprojects {
         appPackageName = 'com.smujamesb.yasd'
 
         appVersionCode = 380
-        appVersionName = '0.0.1'
+        appVersionName = '0.0.2'
 
         appAndroidCompileSDK = 29
         appAndroidMinSDK = 9
