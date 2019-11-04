@@ -104,6 +104,7 @@ import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.Glaive;
+import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.levels.Level;
@@ -441,13 +442,15 @@ public class Hero extends Char {
 				}
 				if (armDr > 0) dr += armDr;
 			}
-		} if (belongings.getWeapons() != null)  {//Only defense factor from current getWeapons applies
+		} if (belongings.getWeapons() != null)  {
 			ArrayList<KindOfWeapon> Weapons = belongings.getWeapons();
-			int wepDr = Random.NormalIntRange( 0 , getCurrentWeapon().defenseFactor(this) );
-			if (STR() < ((Weapon) getCurrentWeapon()).STRReq()){
-				wepDr -= 2* ((Weapon) getCurrentWeapon()).STRReq() - STR();
+			for (int i=0; i < Weapons.size(); i++) {
+				int wepDr = Random.NormalIntRange(0,Weapons.get(i).defenseFactor(this));
+				if (Weapons.get(i) instanceof MeleeWeapon & STR() < ((MeleeWeapon)Weapons.get(i)).STRReq()) {
+					wepDr -= 2 * (((MeleeWeapon)Weapons.get(i)).STRReq()) - STR();
+				}
+				if (wepDr > 0) dr += wepDr;
 			}
-			if (wepDr > 0) dr += wepDr;
 		}
 		Barkskin bark = buff(Barkskin.class);
 		if (bark != null)               dr += Random.NormalIntRange( 0 , bark.level() );
@@ -531,6 +534,9 @@ public class Hero extends Char {
 
 	public KindOfWeapon getCurrentWeapon() {
 		resetWeapon();
+		if (belongings.miscs[0] instanceof MissileWeapon) {
+			return ((MissileWeapon)belongings.miscs[0]);
+		}
 		return Dungeon.hero.belongings.getWeapons().get(currentWeapon);
 	}
 
