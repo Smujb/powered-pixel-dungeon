@@ -264,7 +264,7 @@ public class Hero extends Char {
 			moraleCheck();
 		}
 		if (morale == 0f & isAlive()) {
-			damage(Random.Int(HT/20,HT/10), Morale.class);
+			damage(Random.Int(HT/10,HT/5), Morale.class);
 		}
 	}
 
