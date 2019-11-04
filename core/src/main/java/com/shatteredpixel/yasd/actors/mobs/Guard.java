@@ -46,7 +46,7 @@ public class Guard extends Mob {
 	{
 		spriteClass = GuardSprite.class;
 
-		HP = HT = 40;
+		HP = HT = 50;
 		defenseSkill = 10;
 
 		EXP = 7;
@@ -62,7 +62,7 @@ public class Guard extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(4, 12);
+		return Random.NormalIntRange(5, 18);
 	}
 
 	private boolean chain(int target){

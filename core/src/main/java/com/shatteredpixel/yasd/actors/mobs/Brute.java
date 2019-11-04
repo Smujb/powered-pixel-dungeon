@@ -23,8 +23,10 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.items.Gold;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.BruteSprite;
 import com.shatteredpixel.yasd.sprites.CharSprite;
@@ -36,7 +38,7 @@ public class Brute extends Mob {
 	{
 		spriteClass = BruteSprite.class;
 		
-		HP = HT = 40;
+		HP = HT = 50;
 		defenseSkill = 15;
 		
 		EXP = 8;
@@ -57,8 +59,8 @@ public class Brute extends Mob {
 	@Override
 	public int damageRoll() {
 		return enraged ?
-			Random.NormalIntRange( 15, 45 ) :
-			Random.NormalIntRange( 6, 26 );
+			Random.NormalIntRange( 20, 45 ) :
+			Random.NormalIntRange( 10, 26 );
 	}
 	
 	@Override
@@ -86,5 +88,7 @@ public class Brute extends Mob {
 	
 	{
 		immunities.add( Terror.class );
+		immunities.add( Paralysis.class );
+		immunities.add( Grim.class);
 	}
 }

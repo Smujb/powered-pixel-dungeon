@@ -49,7 +49,7 @@ public class Necromancer extends Mob {
 	{
 		spriteClass = NecromancerSprite.class;
 		
-		HP = HT = 35;
+		HP = HT = 40;
 		defenseSkill = 11;
 		
 		EXP = 7;
@@ -340,10 +340,15 @@ public class Necromancer extends Mob {
 			//no loot or exp
 			maxLvl = -5;
 			
-			//20/25 health to start
-			HP = 20;
+			//Less HP than Shattered, more damage
+			HP = 15;
 		}
-		
+
+		@Override
+		public int damageRoll() {//Better kill the Necromancer fast :P
+			return (int) (super.damageRoll()*1.5f);
+		}
+
 		private void teleportSpend(){
 			spend(TICK);
 		}

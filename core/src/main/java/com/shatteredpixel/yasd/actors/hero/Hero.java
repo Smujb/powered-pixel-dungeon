@@ -240,12 +240,12 @@ public class Hero extends Char {
 		if (morale > MAX_MORALE*0.67) {
 			return;
 		} else if (morale > MAX_MORALE*0.33) {
-			int choice = Random.Int(5);
+			int choice = Random.Int(5) + 1;
 			String messageTitle = "low_morale_" + choice;
 			GLog.w(Messages.get(Hero.class, messageTitle));
 
 		} else {
-			int choice = Random.Int(5);
+			int choice = Random.Int(5) + 1;
 			String messageTitle = "very_low_morale_" + choice;
 			GLog.w(Messages.get(Hero.class, messageTitle));
 

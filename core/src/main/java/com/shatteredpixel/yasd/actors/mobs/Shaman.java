@@ -41,7 +41,7 @@ public class Shaman extends Mob implements Callback {
 	{
 		spriteClass = ShamanSprite.class;
 		
-		HP = HT = 18;
+		HP = HT = 20;
 		defenseSkill = 8;
 		
 		EXP = 6;
@@ -55,7 +55,7 @@ public class Shaman extends Mob implements Callback {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 8 );
+		return Random.NormalIntRange( 2, 12 );
 	}
 	
 	@Override
@@ -92,9 +92,9 @@ public class Shaman extends Mob implements Callback {
 			spend( TIME_TO_ZAP );
 			
 			if (hit( this, enemy, true )) {
-				int dmg = Random.NormalIntRange(3, 10);
+				int dmg = Random.NormalIntRange(4, 13);
 				if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
-					dmg *= 1.5f;
+					dmg *= 2f;
 				}
 				enemy.damage( dmg, new LightningBolt() );
 				
