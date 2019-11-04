@@ -292,7 +292,7 @@ public class WndRanking extends WndTabbed {
 	
 	private class ItemButton extends Button {
 		
-		public static final int HEIGHT	= 28;
+		public static final int HEIGHT	= 20;
 		
 		private Item item;
 		
