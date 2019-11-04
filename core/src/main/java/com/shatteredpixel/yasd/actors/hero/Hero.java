@@ -248,6 +248,7 @@ public class Hero extends Char {
 			int choice = Random.Int(5);
 			String messageTitle = "very_low_morale_" + choice;
 			GLog.w(Messages.get(Hero.class, messageTitle));
+
 		}
 	}
 
@@ -258,8 +259,12 @@ public class Hero extends Char {
 	public void loseMorale(float Amount, boolean say) {
 		morale -= Amount;
 		morale = Math.max(morale, 0);
+		this.sprite.showStatus( CharSprite.NEGATIVE, "-morale" );
 		if (say) {
 			moraleCheck();
+		}
+		if (morale == 0f) {
+			damage(Random.Int(HT/20,HT/10), Morale.class);
 		}
 	}
 
@@ -1127,11 +1132,11 @@ public class Hero extends Char {
 		shake = ((float) dmg / (float) HP) * 3f;
 
 		if (shake > 0.5f){
-			Camera.main.shake(GameMath.gate(1, shake, 5), Math.max(shake/2,0.3f));
+			Camera.main.shake(GameMath.gate(1, shake, 5), Math.max(shake/2f,0.3f));
 			if (shake > 1f) {//This is to prevent the game being flooded with messages if you take small amounts of damage repeatedly on low health (eg Poison, Bleeding). May add a cooldown in future.
-				loseMorale(shake);
+				loseMorale(shake/2f);
 			} else {
-				loseMorale(shake,false);
+				loseMorale(shake/2f,false);
 			}
 
 		}
