@@ -60,8 +60,8 @@ public class Shaman extends Mob implements Callback {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 11;
-	}
+		return Dungeon.depth*2;
+	}//Finding Shaman later are still hard.
 	
 	@Override
 	public int drRoll() {

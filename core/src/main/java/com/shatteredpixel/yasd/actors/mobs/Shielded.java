@@ -28,7 +28,7 @@ public class Shielded extends Brute {
 
 	{
 		spriteClass = ShieldedSprite.class;
-		
+		HP = HT = 60;
 		defenseSkill = 20;
 	}
 	
