@@ -70,7 +70,7 @@ public class MagicalSleep extends Buff {
 			if (target.HP == target.HT) {
 				if (target instanceof  Hero) {
 					GLog.p(Messages.get(this, "wakeup"));
-					((Hero)target).gainMorale(3f);
+					((Hero)target).gainMorale(5f);
 				}
 				detach();
 
