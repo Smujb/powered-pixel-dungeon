@@ -122,16 +122,16 @@ public class TitleScene extends PixelScene {
 		btnPlay.icon(Icons.get(Icons.ENTER));
 		add(btnPlay);
 		
-		TitleButton btnSupport = new TitleButton(Messages.get(this, "support")){
+		TitleButton btnSupport = new TitleButton(Messages.get(this, "discord")){
 			@Override
 			protected void onClick() {
-				WndOptions wnd = new WndOptions(Messages.get(TitleScene.class, "support"),
-						Messages.get(TitleScene.class, "patreon_body"),
-						Messages.get(TitleScene.class, "patreon_button")){
+				WndOptions wnd = new WndOptions(Messages.get(TitleScene.class, "discord"),
+						Messages.get(TitleScene.class, "discord_body"),
+						Messages.get(TitleScene.class, "discord_button")){
 					@Override
 					protected void onSelect(int index) {
 						if (index == 0){
-							DeviceCompat.openURI("https://www.patreon.com/ShatteredPixel");
+							DeviceCompat.openURI(AboutScene.POPUP_YASD);
 						} else {
 							hide();
 						}
