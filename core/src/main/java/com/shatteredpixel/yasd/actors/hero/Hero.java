@@ -234,7 +234,7 @@ public class Hero extends Char {
 			STR += buff.boost();
 		}
 
-		return (buff(Weakness.class) != null) ? STR - 2 : STR;
+		return (buff(Weakness.class) != null) ? STR - 1 : STR;
 	}
 
 	public void moraleCheck() {

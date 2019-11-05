@@ -44,7 +44,7 @@ public class Warlock extends Mob implements Callback {
 	{
 		spriteClass = WarlockSprite.class;
 		
-		HP = HT = 70;
+		HP = HT = 80;
 		defenseSkill = 18;
 		
 		EXP = 11;
@@ -105,7 +105,7 @@ public class Warlock extends Mob implements Callback {
 				Buff.prolong( enemy, Weakness.class, Weakness.DURATION );
 			}
 			
-			int dmg = Random.Int( 12, 18 );
+			int dmg = Random.Int( 12, 20 );
 			enemy.damage( dmg, new DarkBolt() );
 			
 			if (!enemy.isAlive() && enemy == Dungeon.hero) {
