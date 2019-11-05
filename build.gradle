@@ -14,8 +14,8 @@ allprojects {
         appName = 'Yet Another Shattered Dungeon'
         appPackageName = 'com.smujamesb.yasd'
 
-        appVersionCode = 380
-        appVersionName = '0.0.2'
+        appVersionCode = 381
+        appVersionName = '0.0.3'
 
         appAndroidCompileSDK = 29
         appAndroidMinSDK = 9
