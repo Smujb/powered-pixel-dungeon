@@ -81,6 +81,8 @@ public class YASD_log {
 				"_-_ Each slot can hold a weapon, armour, a wand, a ring or an artifact\n" +
 				"_-_ When using multiple weapons, you will attack with one after the other, and strength requirements will be increased\n" +
 				"_-_ When using multiple armours, all defense rolls will be added together and all glyphs will proc from left to right, and strength requirements will be increased."));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.WARNING), "Upgrade Limits", "All items are capped at +3"));
 		
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
