@@ -150,7 +150,7 @@ public class ChangesScene extends PixelScene {
 				panel.innerHeight() + 2);
 		list.scrollTo(0, 0);
 		
-		RedButton btn0_7 = new RedButton("Too Cruel PD"){
+		RedButton btn0_7 = new RedButton("YASD"){
 			@Override
 			protected void onClick() {
 				super.onClick();
