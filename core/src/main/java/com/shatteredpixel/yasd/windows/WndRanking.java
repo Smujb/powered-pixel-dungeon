@@ -50,17 +50,14 @@ import java.util.Locale;
 public class WndRanking extends WndTabbed {
 	
 	private static final int WIDTH			= 115;
-	private static final int HEIGHT			= getBottomOfMiscs() + QuickSlotButton.HEIGHT;
+	private static final int HEIGHT			= 150;
 	
 	private static Thread thread;
 	private String error = null;
 	
 	private Image busy;
 
-	public static int getBottomOfMiscs() {
-		return (ItemButton.HEIGHT*Dungeon.hero.belongings.miscs.length)+4;
-	}
-	
+
 	public WndRanking( final Rankings.Record rec ) {
 		
 		super();
@@ -271,8 +268,12 @@ public class WndRanking extends WndTabbed {
 			}
 		}
 
+		public int getBottomOfMiscs() {
+			return (ItemButton.HEIGHT*Dungeon.hero.belongings.miscs.length)+4;
+		}
 
-		
+
+
 		private void addItem( Item item ) {
 			ItemButton slot = new ItemButton( item );
 			slot.setRect( 0, pos, width, ItemButton.HEIGHT );

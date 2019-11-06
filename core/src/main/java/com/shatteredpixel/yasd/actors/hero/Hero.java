@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.actors.buffs.Barkskin;
 import com.shatteredpixel.yasd.actors.buffs.Berserk;
+import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Bless;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
@@ -265,7 +266,7 @@ public class Hero extends Char {
 			moraleCheck();
 		}
 		if (morale == 0f & isAlive()) {
-			damage(Random.Int(HT/10,HT/5), Morale.class);
+			Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP/6));
 		}
 	}
 
