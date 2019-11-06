@@ -76,23 +76,15 @@ public class YASD_log {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.INFO), "Developer Commentary",
-				"_-_ Released August 12th, 2019\n" +
-						"_-_ First release\n" +
-						"_-_ 25 ays after Shattered Pixel Dungeon v0.7.4" +
-						"\n" +
-						"Dev commentary will be added here in the future."));
-		
-		changes.addButton( new ChangeButton(Icons.get(Icons.CHALLENGE_ON), "Challenges",
-				"_-_ Added 11 new challenges\n" +
-						"_-_ Challenges are unlocked by default"));
-		changes.addButton(new ChangeButton(new Image(Assets.HUNTRESS, 0, 90, 12, 15),"Huntress","All hero classes are unlocked by default"));
+		changes.addButton(new ChangeButton(Icons.get(Icons.COMPASS), "Equipment System Reworked", "The equipment system has been completely overhauled:\n" +
+				"_-_ The hero now has 5 equip slots, and Wands must be equipped\n" +
+				"_-_ Each slot can hold a weapon, armour, a wand, a ring or an artifact\n" +
+				"_-_ When using multiple weapons, you will attack with one after the other, and strength requirements will be increased\n" +
+				"_-_ When using multiple armours, all defense rolls will be added together and all glyphs will proc from left to right."));
 		
 		changes = new ChangeInfo("Challenges",false,null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
-		
-		changes.addButton(new ChangeButton(Icons.get(Icons.CHALLENGE_OFF),Messages.get(Challenges.class,"amnesia"),Messages.get(Challenges.class,"amnesia_desc")));
 	}
 	
 	
