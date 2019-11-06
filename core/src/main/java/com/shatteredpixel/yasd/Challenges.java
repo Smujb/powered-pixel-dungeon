@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.items.food.Blandfruit;
 import com.shatteredpixel.yasd.items.food.Food;
 import com.shatteredpixel.yasd.items.food.SmallRation;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
+import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 
 public class Challenges {
 
@@ -85,6 +86,12 @@ public class Challenges {
 
 		if (Dungeon.isChallenged(NO_HERBALISM)){
 			if (item instanceof Dewdrop) {
+				return true;
+			}
+		}
+
+		if (Dungeon.isChallenged(NO_SCROLLS)) {
+			if (item instanceof ScrollOfUpgrade) {
 				return true;
 			}
 		}

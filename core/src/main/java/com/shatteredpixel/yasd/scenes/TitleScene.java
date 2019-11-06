@@ -130,11 +130,7 @@ public class TitleScene extends PixelScene {
 						Messages.get(TitleScene.class, "discord_button")){
 					@Override
 					protected void onSelect(int index) {
-						if (index == 0){
-							DeviceCompat.openURI(AboutScene.POPUP_YASD);
-						} else {
-							hide();
-						}
+						DeviceCompat.openURI(AboutScene.POPUP_YASD);
 					}
 				};
 				parent.add(wnd);
