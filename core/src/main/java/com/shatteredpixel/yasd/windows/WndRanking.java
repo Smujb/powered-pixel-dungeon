@@ -50,12 +50,16 @@ import java.util.Locale;
 public class WndRanking extends WndTabbed {
 	
 	private static final int WIDTH			= 115;
-	private static final int HEIGHT			= 144;
+	private static final int HEIGHT			= getBottomOfMiscs() + QuickSlotButton.HEIGHT;
 	
 	private static Thread thread;
 	private String error = null;
 	
 	private Image busy;
+
+	public static int getBottomOfMiscs() {
+		return (ItemButton.HEIGHT*Dungeon.hero.belongings.miscs.length)+4;
+	}
 	
 	public WndRanking( final Rankings.Record rec ) {
 		
@@ -253,19 +257,21 @@ public class WndRanking extends WndTabbed {
 				if (Dungeon.quickslot.getItem(i) != null){
 					QuickSlotButton slot = new QuickSlotButton(Dungeon.quickslot.getItem(i));
 
-					slot.setRect( pos, 116, 28, 28 );
+					slot.setRect( pos, getBottomOfMiscs(), 24, 24 );
 
 					add(slot);
 
 				} else {
-					ColorBlock bg = new ColorBlock( 28, 28, 0x9953564D );
+					ColorBlock bg = new ColorBlock( 24, 24, 0x9953564D );
 					bg.x = pos;
-					bg.y = 116;
+					bg.y = getBottomOfMiscs();
 					add(bg);
 				}
-				pos += 29;
+				pos += 25;
 			}
 		}
+
+
 		
 		private void addItem( Item item ) {
 			ItemButton slot = new ItemButton( item );
@@ -292,7 +298,7 @@ public class WndRanking extends WndTabbed {
 	
 	private class ItemButton extends Button {
 		
-		public static final int HEIGHT	= 20;
+		public static final int HEIGHT	= 24;
 		
 		private Item item;
 		
@@ -368,7 +374,7 @@ public class WndRanking extends WndTabbed {
 
 	private class QuickSlotButton extends ItemSlot{
 
-		public static final int HEIGHT	= 28;
+		public static final int HEIGHT	= 24;
 
 		private Item item;
 		private ColorBlock bg;
