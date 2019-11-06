@@ -80,11 +80,21 @@ public class YASD_log {
 				"_-_ The hero now has 5 equip slots, and Wands must be equipped\n" +
 				"_-_ Each slot can hold a weapon, armour, a wand, a ring or an artifact\n" +
 				"_-_ When using multiple weapons, you will attack with one after the other, and strength requirements will be increased\n" +
-				"_-_ When using multiple armours, all defense rolls will be added together and all glyphs will proc from left to right."));
+				"_-_ When using multiple armours, all defense rolls will be added together and all glyphs will proc from left to right, and strength requirements will be increased."));
 		
-		changes = new ChangeInfo("Challenges",false,null);
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Morale System", "A Darkest PD style \"Morale\" system has been implemented:\n" +
+				"_-_ Taking large amounts of damage, starving and some other things will reduce hero's Morale\n" +
+				"_-_ Low Morale will cause your accuracy, evasion and Wand charge speed to be reduced\n" +
+				"_-_ You can increase Morale a little by eating or leveling up, and a lot through Scrolls of Lullaby and Beer or Whiskey\n" +
+				"_-_ Be careful though, as Beer and Whiskey will also permanently increase the rate at which the hero loses morale"));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_LIFE_DRAIN, null), "Wand of Life Drain", "Wand of Life Drain from YAPD has been added:\n" +
+				"_-_ Functionality is basically the same as YAPD\n" +
+				"_-_ Consumes all charges, heavy damage, heals the hero if the enemy is not undead"));
 	}
 	
 	
