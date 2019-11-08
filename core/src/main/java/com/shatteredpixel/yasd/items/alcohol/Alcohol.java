@@ -13,6 +13,9 @@ import com.watabou.noosa.audio.Sample;
 import java.util.ArrayList;
 
 public abstract class Alcohol extends Item {
+    {
+        cursed = false;
+    }
     public static final String AC_DRINK = "DRINK";
     private static final float TIME_TO_DRINK = 1f;
     float MoraleGain;
@@ -49,5 +52,10 @@ public abstract class Alcohol extends Item {
 
         hero.sprite.operate(hero.pos);
 
+    }
+
+    @Override
+    public boolean isIdentified() {
+        return true;
     }
 }
