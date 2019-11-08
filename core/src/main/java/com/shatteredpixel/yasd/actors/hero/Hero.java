@@ -499,9 +499,8 @@ public class Hero extends Char {
 
 		ArrayList<Armor> Armors = belongings.getArmors();//Applies speed factor for all armours
 		float BaseSpeed = speed;
-		for (int i=0; i < Armors.size(); i++) {
-			speed *= Armors.get(i).speedFactor(this, BaseSpeed);
-		}
+
+		speed = belongings.SpeedFactor(speed);
 		
 		Momentum momentum = buff(Momentum.class);
 		if (momentum != null){
