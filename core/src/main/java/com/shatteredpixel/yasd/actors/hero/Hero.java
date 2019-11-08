@@ -435,7 +435,7 @@ public class Hero extends Char {
 		if (paralysed > 0) {
 			evasion /= 2;
 		}
-		evasion = belongings.getArmors().get(0).evasionFactor(this, evasion);
+		evasion = belongings.EvasionFactor(evasion);
 
 		return Math.round(evasion * moraleMultiplier);
 	}

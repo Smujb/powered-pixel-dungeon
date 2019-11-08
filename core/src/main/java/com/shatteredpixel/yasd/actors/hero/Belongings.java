@@ -22,19 +22,28 @@
 package com.shatteredpixel.yasd.actors.hero;
 
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
+import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.curses.Bulk;
+import com.shatteredpixel.yasd.items.armor.glyphs.Flow;
+import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
+import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.keys.Key;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.WornShortsword;
+import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -172,6 +181,60 @@ public class Belongings implements Iterable<Item> {
 			size = BACKPACK_SIZE;
 		}};
 		backpack.owner = owner;
+	}
+
+	public float EvasionFactor(float evasion) {
+		ArrayList<Armor> Armors = getArmors();
+		for (int i=0; i < Armors.size(); i++) {
+			Armor CurArmour = Armors.get(i);
+			if (CurArmour.hasGlyph(Stone.class, owner) && !((Stone) CurArmour.glyph).testingEvasion()) {
+				return 0;
+			}
+			int aEnc = CurArmour.STRReq() - ((Hero) owner).STR();
+			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
+
+			Momentum momentum = owner.buff(Momentum.class);
+			if (momentum != null) {
+				evasion += momentum.evasionBonus(Math.max(0, -aEnc));
+
+			}
+			evasion += CurArmour.augment.evasionFactor(CurArmour.level());
+
+		}
+		return evasion;
+	}
+
+	public float SpeedFactor(float speed) {
+		ArrayList<Armor> Armors = getArmors();
+		for (int i=0; i < Armors.size(); i++) {
+			Armor CurArmour = Armors.get(i);
+			int aEnc = CurArmour.STRReq() - ((Hero) owner).STR();
+			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
+
+			if (CurArmour.hasGlyph(Swiftness.class, owner)) {
+				boolean enemyNear = false;
+				for (Char ch : Actor.chars()){
+					if (Dungeon.level.adjacent(ch.pos, owner.pos) && owner.alignment != ch.alignment){
+						enemyNear = true;
+						break;
+					}
+				}
+				if (!enemyNear) speed *= (1.2f + 0.04f * CurArmour.level());
+			} else if (CurArmour.hasGlyph(Flow.class, owner) && Dungeon.level.water[owner.pos]){
+				speed *= 2f;
+			}
+
+			if (CurArmour.hasGlyph(Bulk.class, owner) &&
+					(Dungeon.level.map[owner.pos] == Terrain.DOOR
+							|| Dungeon.level.map[owner.pos] == Terrain.OPEN_DOOR )) {
+				speed /= 3f;
+			}
+		}
+		return speed;
+	}
+
+	public float StealthFactor() {
+		return 1f;
 	}
 	
 	private static final String WEAPON		= "getWeapons";
