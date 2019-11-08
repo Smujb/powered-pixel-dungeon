@@ -33,6 +33,8 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.MerchantsBeacon;
 import com.shatteredpixel.yasd.items.Stylus;
 import com.shatteredpixel.yasd.items.Torch;
+import com.shatteredpixel.yasd.items.alcohol.Beer;
+import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
 import com.shatteredpixel.yasd.items.armor.MailArmor;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
@@ -205,6 +207,8 @@ public class ShopRoom extends SpecialRoom {
 		}
 		
 		itemsToSpawn.add( TippedDart.randomTipped(2) );
+
+		itemsToSpawn.add( Random.oneOf(new Whiskey(), new Beer()));
 
 		itemsToSpawn.add( new MerchantsBeacon() );
 

@@ -116,8 +116,8 @@ public enum HeroClass {
 			new SmallRation().collect();
 		}
 		
-		new ScrollOfIdentify().identify();
-		new Whiskey().collect();
+		new ScrollOfIdentify().identify().collect();
+
 		new Beer().collect();
 		//new WandOfLifeDrain().identify().collect();
 		//new TomeOfMastery().collect();
