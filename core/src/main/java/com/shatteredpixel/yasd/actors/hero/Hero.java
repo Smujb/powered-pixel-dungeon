@@ -272,9 +272,14 @@ public class Hero extends Char {
 	}
 
 	public void gainMorale(float Amount) {
+		Amount *= MoraleMultiplier;
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
 		this.sprite.showStatus( CharSprite.NEUTRAL, "+morale" );
+	}
+
+	public void speedMoraleLoss(float Multiplier) {
+		MoraleMultiplier *= Multiplier;
 	}
 
 	private static final String ATTACK		= "attackSkill";
@@ -284,6 +289,7 @@ public class Hero extends Char {
 	private static final String EXPERIENCE	= "exp";
 	private static final String HTBOOST     = "htboost";
 	private static final String MORALE      = "morale";
+	private static final String MORALE_MULTIPLIER  = "morale-multiplier";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -304,6 +310,7 @@ public class Hero extends Char {
 		bundle.put( HTBOOST, HTBoost );
 
 		bundle.put( MORALE, morale );
+		bundle.put( MORALE_MULTIPLIER, MoraleMultiplier);
 
 		belongings.storeInBundle( bundle );
 	}
@@ -326,6 +333,7 @@ public class Hero extends Char {
 		HTBoost = bundle.getInt(HTBOOST);
 
 		morale = bundle.getFloat(MORALE);
+		MoraleMultiplier = bundle.getFloat(MORALE_MULTIPLIER);
 		
 		belongings.restoreFromBundle( bundle );
 	}
