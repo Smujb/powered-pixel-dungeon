@@ -58,11 +58,15 @@ public abstract class EquipableItem extends Item {
 		if (action.equals( AC_EQUIP )) {
 			//In addition to equipping itself, item reassigns itself to the quickslot
 			//This is a special case as the item is being removed from inventory, but is staying with the hero.
-			int slot = Dungeon.quickslot.getSlot( this );
-			doEquip(hero);
-			if (slot != -1) {
-				Dungeon.quickslot.setSlot( slot, this );
-				updateQuickslot();
+			if (isEquipped(hero)) {
+				execute(hero,AC_UNEQUIP);
+			} else {
+				int slot = Dungeon.quickslot.getSlot(this);
+				doEquip(hero);
+				if (slot != -1) {
+					Dungeon.quickslot.setSlot(slot, this);
+					updateQuickslot();
+				}
 			}
 		} else if (action.equals( AC_UNEQUIP )) {
 			doUnequip( hero, true );
