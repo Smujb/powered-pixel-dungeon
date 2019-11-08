@@ -442,7 +442,10 @@ public class ItemSpriteSheet {
 		assignItemRect(ARTIFACT_ROSE3,      14, 14);
 	}
 
-	                                                                                    //16 free slots
+	private static final int ALCOHOL        =                               xy(1, 18);  //16 slots
+	public static final int BEER            = ALCOHOL+0;
+	public static final int WHISKEY         = ALCOHOL+1;
+
 
 	private static final int SCROLLS        =                               xy(1, 19);  //16 slots
 	public static final int SCROLL_KAUNAN   = SCROLLS+0;
