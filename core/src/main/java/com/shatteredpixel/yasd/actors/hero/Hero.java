@@ -1490,7 +1490,7 @@ public class Hero extends Char {
 	public float stealth() {
 		float stealth = super.stealth();
 
-		stealth = belongings.getArmors().get(0).stealthFactor(this, stealth);
+		stealth = belongings.StealthFactor(stealth);
 		
 		return stealth;
 	}

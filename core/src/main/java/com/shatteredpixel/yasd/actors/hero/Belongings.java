@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.curses.Bulk;
 import com.shatteredpixel.yasd.items.armor.glyphs.Flow;
+import com.shatteredpixel.yasd.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.items.bags.Bag;
@@ -233,8 +234,15 @@ public class Belongings implements Iterable<Item> {
 		return speed;
 	}
 
-	public float StealthFactor() {
-		return 1f;
+	public float StealthFactor(float stealth) {
+		ArrayList<Armor> Armors = getArmors();
+		for (int i=0; i < Armors.size(); i++) {
+			Armor CurArmour = Armors.get(i);
+			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
+				stealth += 1 + CurArmour.level()/3f;
+			}
+		}
+		return stealth;
 	}
 	
 	private static final String WEAPON		= "getWeapons";
