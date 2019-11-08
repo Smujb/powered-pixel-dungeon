@@ -22,6 +22,9 @@
 package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.items.alcohol.Alcohol;
+import com.shatteredpixel.yasd.items.alcohol.Beer;
+import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
@@ -201,7 +204,9 @@ public class Generator {
 		ARTIFACT( 1,    Artifact.class),
 		
 		FOOD	( 0,    Food.class ),
-		
+
+		ALCOHOL ( 0,    Alcohol.class),
+
 		POTION	( 20,   Potion.class ),
 		SEED	( 0,    Plant.Seed.class ), //dropped by grass
 		
@@ -237,6 +242,12 @@ public class Generator {
 			GOLD.classes = new Class<?>[]{
 					Gold.class };
 			GOLD.probs = new float[]{ 1 };
+
+			ALCOHOL.classes = new Class<?>[]{
+					Whiskey.class,
+					Beer.class
+			};
+			ALCOHOL.probs = new float[]{ 1, 2 };
 			
 			POTION.classes = new Class<?>[]{
 					PotionOfStrength.class, //2 drop every chapter, see Dungeon.posNeeded()

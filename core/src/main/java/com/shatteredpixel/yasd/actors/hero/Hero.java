@@ -260,6 +260,7 @@ public class Hero extends Char {
 	}
 
 	public void loseMorale(float Amount, boolean say) {
+		Amount *= MoraleMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
 		this.sprite.showStatus( CharSprite.NEGATIVE, "-morale" );
@@ -272,7 +273,6 @@ public class Hero extends Char {
 	}
 
 	public void gainMorale(float Amount) {
-		Amount *= MoraleMultiplier;
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
 		this.sprite.showStatus( CharSprite.NEUTRAL, "+morale" );
