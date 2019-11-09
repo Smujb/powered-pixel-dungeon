@@ -105,13 +105,11 @@ public abstract class Wand extends KindofMisc {
 
 			if (!isEquipped(hero)) execute(hero, AC_EQUIP);
 			else {
-				curUser = hero;
-				curItem = this;
-				GameScene.selectCell(zapper);
+				execute(hero, AC_ZAP_OVERRIDE);
 
 			}
 			
-		} else if (action.equals( AC_ZAP_OVERRIDE )) {
+		} else if (action.equals( AC_ZAP_OVERRIDE )) {//This is used by Mage's Staff as the Wand in the staff is never equipped.
 			curUser = hero;
 			curItem = this;
 			GameScene.selectCell(zapper);
