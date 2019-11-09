@@ -49,37 +49,8 @@ abstract public class ClassArmor extends Armor {
 	}
 	
 	public static ClassArmor upgrade ( Hero owner, Armor armor ) {
-		
-		ClassArmor classArmor = null;
-		
-		switch (owner.heroClass) {
-		case WARRIOR:
-			classArmor = new WarriorArmor();
-			BrokenSeal seal = armor.checkSeal();
-			if (seal != null) {
-				classArmor.affixSeal(seal);
-			}
-			break;
-		case ROGUE:
-			classArmor = new RogueArmor();
-			break;
-		case MAGE:
-			classArmor = new MageArmor();
-			break;
-		case HUNTRESS:
-			classArmor = new HuntressArmor();
-			break;
-		}
-		
-		classArmor.level(armor.level() - (armor.curseInfusionBonus ? 1 : 0));
-		classArmor.armorTier = armor.tier;
-		classArmor.augment = armor.augment;
-		classArmor.inscribe( armor.glyph );
-		classArmor.cursed = armor.cursed;
-		classArmor.curseInfusionBonus = armor.curseInfusionBonus;
-		classArmor.identify();
-		
-		return classArmor;
+
+		return null;
 	}
 
 	private static final String ARMOR_TIER	= "armortier";
