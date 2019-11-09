@@ -40,7 +40,7 @@ public abstract class EquipableItem extends Item {
 
 	{
 		bones = true;
-		defaultAction=isEquipped( Dungeon.hero ) ? AC_UNEQUIP : AC_EQUIP;
+		defaultAction=AC_EQUIP;
 	}
 
 	@Override

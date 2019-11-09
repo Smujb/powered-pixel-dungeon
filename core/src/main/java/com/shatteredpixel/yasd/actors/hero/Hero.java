@@ -435,7 +435,10 @@ public class Hero extends Char {
 		if (paralysed > 0) {
 			evasion /= 2;
 		}
-		evasion = belongings.EvasionFactor(evasion);
+		if (belongings != null) {
+			evasion = belongings.EvasionFactor(evasion);
+		}
+
 
 		return Math.round(evasion * moraleMultiplier);
 	}
@@ -499,8 +502,10 @@ public class Hero extends Char {
 
 		ArrayList<Armor> Armors = belongings.getArmors();//Applies speed factor for all armours
 		float BaseSpeed = speed;
+		if (belongings != null) {
+			speed = belongings.SpeedFactor(speed);
+		}
 
-		speed = belongings.SpeedFactor(speed);
 		
 		Momentum momentum = buff(Momentum.class);
 		if (momentum != null){
@@ -1489,8 +1494,10 @@ public class Hero extends Char {
 	@Override
 	public float stealth() {
 		float stealth = super.stealth();
+		if (belongings != null) {
+			stealth = belongings.StealthFactor(stealth);
+		}
 
-		stealth = belongings.StealthFactor(stealth);
 		
 		return stealth;
 	}
