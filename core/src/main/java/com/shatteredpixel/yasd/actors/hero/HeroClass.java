@@ -32,6 +32,10 @@ import com.shatteredpixel.yasd.items.TomeOfMastery;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.HuntressArmor;
+import com.shatteredpixel.yasd.items.armor.MageArmor;
+import com.shatteredpixel.yasd.items.armor.RogueArmor;
+import com.shatteredpixel.yasd.items.armor.WarriorArmor;
 import com.shatteredpixel.yasd.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.yasd.items.bags.PotionBandolier;
 import com.shatteredpixel.yasd.items.bags.ScrollHolder;
@@ -146,6 +150,7 @@ public enum HeroClass {
 
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.miscs[0] = new WornShortsword()).identify();
+		(hero.belongings.miscs[1] = new WarriorArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);
@@ -165,6 +170,7 @@ public enum HeroClass {
 		staff = new MagesStaff(new WandOfMagicMissile());
 
 		(hero.belongings.miscs[0] = staff).identify();
+		(hero.belongings.miscs[1] = new MageArmor()).identify();
 		hero.belongings.getWeapons().get(0).activate(hero);
 
 		Dungeon.quickslot.setSlot(0, staff);
@@ -178,10 +184,11 @@ public enum HeroClass {
 
 	private static void initRogue( Hero hero ) {
 		(hero.belongings.miscs[0] = new Dagger()).identify();
+		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();
-		(hero.belongings.miscs[1] = cloak).identify();
-		hero.belongings.miscs[1].activate( hero );
+		(hero.belongings.miscs[2] = cloak).identify();
+		hero.belongings.miscs[2].activate( hero );
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
@@ -199,6 +206,7 @@ public enum HeroClass {
 	private static void initHuntress( Hero hero ) {
 
 		(hero.belongings.miscs[0] = new Gloves()).identify();
+		(hero.belongings.miscs[1] = new HuntressArmor()).identify();
 		SpiritBow bow = new SpiritBow();
 		bow.identify().collect();
 
