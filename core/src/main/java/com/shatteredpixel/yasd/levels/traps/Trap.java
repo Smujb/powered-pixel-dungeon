@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Random;
 
 public abstract class Trap implements Bundlable {
 
@@ -89,6 +90,9 @@ public abstract class Trap implements Bundlable {
 		if (active) {
 			if (Dungeon.level.heroFOV[pos]) {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
+			}
+			if (!this.visible && Dungeon.hero.pos == this.pos) {//Did the Hero trigger the trap
+				Dungeon.hero.loseMorale((float)Random.Int(1,2));//Lose 1 or 2 Morale
 			}
 			disarm();
 			reveal();
