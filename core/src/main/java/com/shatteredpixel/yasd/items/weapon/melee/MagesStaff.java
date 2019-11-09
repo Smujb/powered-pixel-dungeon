@@ -60,7 +60,7 @@ public class MagesStaff extends MeleeWeapon {
 	public static final String AC_IMBUE = "IMBUE";
 	public static final String AC_ZAP	= "ZAP";
 
-	private static final float STAFF_SCALE_FACTOR = 0.85f;
+	private static final float STAFF_SCALE_FACTOR = 0.750f;
 
 	{
 		image = ItemSpriteSheet.MAGES_STAFF;
@@ -286,7 +286,7 @@ public class MagesStaff extends MeleeWeapon {
 		super.restoreFromBundle(bundle);
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {
-			wand.maxCharges = Math.min(wand.maxCharges + 1, 10);
+			wand.maxCharges = Math.min(wand.maxCharges, 10);
 			name = Messages.get(wand, "staff_name");
 		}
 	}
