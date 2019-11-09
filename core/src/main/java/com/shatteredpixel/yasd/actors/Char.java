@@ -120,7 +120,14 @@ public abstract class Char extends Actor {
 	public boolean[] fieldOfView = null;
 	
 	private HashSet<Buff> buffs = new HashSet<>();
-	
+
+	public boolean isFlying() {
+		return (flying
+				& buff(Paralysis.class) != null
+		& (buff(Vertigo.class) != null) & Random.Int(2) == 0)
+				& buff(Frost.class) != null;
+	}
+
 	@Override
 	protected boolean act() {
 		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){

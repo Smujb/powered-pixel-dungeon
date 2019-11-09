@@ -764,7 +764,7 @@ public class Dungeon {
 	public static PathFinder.Path findPath(Char ch, int from, int to, boolean pass[], boolean[] visible ) {
 
 		setupPassable();
-		if (ch.flying || ch.buff( Amok.class ) != null) {
+		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
 			BArray.or( pass, Dungeon.level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
@@ -787,7 +787,7 @@ public class Dungeon {
 		}
 
 		setupPassable();
-		if (ch.flying || ch.buff( Amok.class ) != null) {
+		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
 			BArray.or( pass, Dungeon.level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
@@ -806,7 +806,7 @@ public class Dungeon {
 	public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {
 
 		setupPassable();
-		if (ch.flying) {
+		if (ch.isFlying()) {
 			BArray.or( pass, Dungeon.level.avoid, passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
