@@ -22,80 +22,38 @@
 package com.shatteredpixel.yasd.items.armor;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.Paralysis;
-import com.shatteredpixel.yasd.effects.CellEmitter;
-import com.shatteredpixel.yasd.effects.Speck;
-import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.alcohol.Alcohol;
+import com.shatteredpixel.yasd.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.yasd.messages.Messages;
-import com.shatteredpixel.yasd.scenes.CellSelector;
-import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
-import com.watabou.noosa.Camera;
+import com.shatteredpixel.yasd.sprites.MissileSprite;
+import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
 
-public class WarriorArmor extends ClassArmor {
-	
-	private static int LEAP_TIME	= 1;
-	private static int SHOCK_TIME	= 3;
+import java.util.HashMap;
+
+public class WarriorArmor extends ClothArmor {
+
 
 	{
-		image = ItemSpriteSheet.ARMOR_WARRIOR;
+		image = ItemSpriteSheet.ARMOR_LEATHER;
 	}
 
 	@Override
-	public void doSpecial() {
-		GameScene.selectCell( leaper );
+	public float evasionFactor(Char owner, float evasion) {
+		return super.evasionFactor(owner, evasion) * 0.75f;
 	}
-	
-	protected static CellSelector.Listener leaper = new  CellSelector.Listener() {
-		
-		@Override
-		public void onSelect( Integer target ) {
-			if (target != null && target != curUser.pos) {
-				
-				Ballistica route = new Ballistica(curUser.pos, target, Ballistica.PROJECTILE);
-				int cell = route.collisionPos;
 
-				//can't occupy the same cell as another char, so move back one.
-				if (Actor.findChar( cell ) != null && cell != curUser.pos)
-					cell = route.path.get(route.dist-1);
+	@Override
+	public float stealthFactor(Char owner, float speed) {
+		return super.speedFactor(owner, speed) * 0.75f;
+	}
 
-
-				curUser.HP -= (curUser.HP / 3);
-
-				final int dest = cell;
-				curUser.busy();
-				curUser.sprite.jump(curUser.pos, cell, new Callback() {
-					@Override
-					public void call() {
-						curUser.move(dest);
-						Dungeon.level.occupyCell(curUser);
-						Dungeon.observe();
-						GameScene.updateFog();
-
-						for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
-							Char mob = Actor.findChar(curUser.pos + PathFinder.NEIGHBOURS8[i]);
-							if (mob != null && mob != curUser && mob.alignment != Char.Alignment.ALLY) {
-								Buff.prolong(mob, Paralysis.class, SHOCK_TIME);
-							}
-						}
-
-						CellEmitter.center(dest).burst(Speck.factory(Speck.DUST), 10);
-						Camera.main.shake(2, 0.5f);
-
-						curUser.spendAndNext(LEAP_TIME);
-					}
-				});
-			}
-		}
-		
-		@Override
-		public String prompt() {
-			return Messages.get(WarriorArmor.class, "prompt");
-		}
-	};
+	@Override
+	public int DRMax(int lvl) {
+		return (int) (super.DRMax(lvl) * 1.5f);
+	}
 }

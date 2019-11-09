@@ -21,43 +21,34 @@
 
 package com.shatteredpixel.yasd.items.armor;
 
-import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.Burning;
-import com.shatteredpixel.yasd.actors.buffs.Roots;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
+import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.alcohol.Alcohol;
+import com.shatteredpixel.yasd.items.weapon.missiles.Shuriken;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
-import com.watabou.noosa.audio.Sample;
+import com.shatteredpixel.yasd.sprites.MissileSprite;
+import com.shatteredpixel.yasd.utils.GLog;
+import com.watabou.utils.Callback;
 
-public class MageArmor extends ClassArmor {
-	
+import java.util.HashMap;
+
+public class MageArmor extends ClothArmor {
+
+
 	{
 		image = ItemSpriteSheet.ARMOR_MAGE;
 	}
-	
-	@Override
-	public void doSpecial() {
-		
-		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (Dungeon.level.heroFOV[mob.pos]
-				&& mob.alignment != Char.Alignment.ALLY) {
-				Buff.affect( mob, Burning.class ).reignite( mob );
-				Buff.prolong( mob, Roots.class, 3 );
-			}
-		}
 
-		curUser.HP -= (curUser.HP / 3);
-		
-		curUser.spend( Actor.TICK );
-		curUser.sprite.operate( curUser.pos );
-		curUser.busy();
-		
-		curUser.sprite.centerEmitter().start( ElmoParticle.FACTORY, 0.15f, 4 );
-		Sample.INSTANCE.play( Assets.SND_READ );
+	@Override
+	public float evasionFactor(Char owner, float evasion) {
+		return super.evasionFactor(owner, evasion) * 1.25f;
 	}
 
+	@Override
+	public int DRMax(int lvl) {
+		return (int) (super.DRMax(lvl) * 0.75f);
+	}
 }

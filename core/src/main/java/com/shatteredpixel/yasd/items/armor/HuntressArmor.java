@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.alcohol.Alcohol;
 import com.shatteredpixel.yasd.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
@@ -34,52 +35,25 @@ import com.watabou.utils.Callback;
 
 import java.util.HashMap;
 
-public class HuntressArmor extends ClassArmor {
+public class HuntressArmor extends ClothArmor {
 
 	
 	{
 		image = ItemSpriteSheet.ARMOR_HUNTRESS;
 	}
-	
-	private HashMap<Callback, Mob> targets = new HashMap<>();
-	
+
 	@Override
-	public void doSpecial() {
-		
-		Item proto = new Shuriken();
-		
-		for (Mob mob : Dungeon.level.mobs) {
-			if (Dungeon.level.distance(curUser.pos, mob.pos) <= 12
-				&& Dungeon.level.heroFOV[mob.pos]
-				&& mob.alignment != Char.Alignment.ALLY) {
-				
-				Callback callback = new Callback() {
-					@Override
-					public void call() {
-						curUser.attack( targets.get( this ) );
-						targets.remove( this );
-						if (targets.isEmpty()) {
-							curUser.spendAndNext( curUser.attackDelay() );
-						}
-					}
-				};
-				
-				((MissileSprite)curUser.sprite.parent.recycle( MissileSprite.class )).
-					reset( curUser.pos, mob.pos, proto, callback );
-				
-				targets.put( callback, mob );
-			}
-		}
-		
-		if (targets.size() == 0) {
-			GLog.w( Messages.get(this, "no_enemies") );
-			return;
-		}
-		
-		curUser.HP -= (curUser.HP / 3);
-		
-		curUser.sprite.zap( curUser.pos );
-		curUser.busy();
+	public float evasionFactor(Char owner, float evasion) {
+		return super.evasionFactor(owner, evasion) * 1.25f;
 	}
 
+	@Override
+	public float speedFactor(Char owner, float speed) {
+		return super.speedFactor(owner, speed) * 1.25f;
+	}
+
+	@Override
+	public int DRMax(int lvl) {
+		return (int) (super.DRMax(lvl) * 0.75f);
+	}
 }
