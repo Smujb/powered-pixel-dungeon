@@ -414,7 +414,7 @@ public class Hero extends Char {
 			}
 		}
 
-		float moraleMultiplier = (float) ((morale - 5) * 0.04);
+		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		
 		if (wep != null) {
 			return (int)(attackSkill * accuracy * wep.accuracyFactor( this ) * (1 + moraleMultiplier));
@@ -428,7 +428,7 @@ public class Hero extends Char {
 		
 		float evasion = defenseSkill;
 
-		float moraleMultiplier = (float) ((morale - 5) * 0.04);
+		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		
 		evasion *= RingOfEvasion.evasionMultiplier( this );
 		

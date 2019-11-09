@@ -59,57 +59,57 @@ import java.util.ArrayList;
 
 public abstract class Wand extends KindofMisc {
 
-	public static final String AC_ZAP	= "ZAP";
-	public static final String AC_ZAP_OVERRIDE	= "ZAP_OVERRIDE";
+	public static final String AC_ZAP = "ZAP";
+	public static final String AC_ZAP_OVERRIDE = "ZAP_OVERRIDE";
 
-	private static final float TIME_TO_ZAP	= 1f;
-	
+	private static final float TIME_TO_ZAP = 1f;
+
 	public int maxCharges = initialCharges();
 	public int curCharges = maxCharges;
 	public float partialCharge = 0f;
-	
+
 	protected Charger charger;
-	
+
 	private boolean curChargeKnown = false;
-	
+
 	public boolean curseInfusionBonus = false;
-	
+
 	private static final int USES_TO_ID = 10;
 	private int usesLeftToID = USES_TO_ID;
-	private float availableUsesToID = USES_TO_ID/2f;
+	private float availableUsesToID = USES_TO_ID / 2f;
 
 	protected int collisionProperties = Ballistica.MAGIC_BOLT;
-	
+
 	{
 		defaultAction = AC_ZAP;
 		usesTargeting = true;
 		bones = true;
 	}
-	
+
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
 		if (curCharges > 0 || !curChargeKnown & isEquipped(hero)) {
-			actions.add( AC_ZAP );
+			actions.add(AC_ZAP);
 		}
 
 		return actions;
 	}
-	
+
 	@Override
-		public void execute( Hero hero, String action ) {
+	public void execute(Hero hero, String action) {
 
-		super.execute( hero, action );
+		super.execute(hero, action);
 
-		if (action.equals( AC_ZAP )) {
+		if (action.equals(AC_ZAP)) {
 
 			if (!isEquipped(hero)) execute(hero, AC_EQUIP);
 			else {
 				execute(hero, AC_ZAP_OVERRIDE);
 
 			}
-			
-		} else if (action.equals( AC_ZAP_OVERRIDE )) {//This is used by Mage's Staff as the Wand in the staff is never equipped.
+
+		} else if (action.equals(AC_ZAP_OVERRIDE)) {//This is used by Mage's Staff as the Wand in the staff is never equipped.
 			curUser = hero;
 			curItem = this;
 			GameScene.selectCell(zapper);
@@ -118,9 +118,16 @@ public abstract class Wand extends KindofMisc {
 
 	@Override
 	public void activate(Char ch) {//When equipped, start charging
-		charge(ch);
 		super.activate(ch);
+		if (ch instanceof Hero && ((Hero) ch).belongings.getItem(MagicalHolster.class) != null) {
+			charge(ch, ((Hero) ch).belongings.getItem(MagicalHolster.class).HOLSTER_SCALE_FACTOR);
+		} else {
+			charge(ch);
+		}
+
 	}
+
+
 
 	protected abstract void onZap(Ballistica attack );
 
@@ -141,7 +148,7 @@ public abstract class Wand extends KindofMisc {
 		}
 	}
 
-	@Override
+	/*@Override
 	public boolean collect( Bag container ) {
 		if (super.collect( container )) {
 			if (container.owner != null) {
@@ -154,7 +161,7 @@ public abstract class Wand extends KindofMisc {
 		} else {
 			return false;
 		}
-	}
+	}*/
 	
 	public void gainCharge( float amt ){
 		partialCharge += amt;
@@ -534,7 +541,7 @@ public abstract class Wand extends KindofMisc {
 		private void recharge(){
 			float moraleMultiplier = 1f;
 			if (target instanceof Hero) {
-				moraleMultiplier = 1f + (float) ((((Hero)target).morale - 5) * 0.04);
+				moraleMultiplier = 1f + (float) ((((Hero)target).morale - ((Hero)target).MAX_MORALE) * 0.04);
 			}
 
 
