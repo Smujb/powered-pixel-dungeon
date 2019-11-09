@@ -89,7 +89,7 @@ public abstract class Wand extends KindofMisc {
 	@Override
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = super.actions( hero );
-		if (curCharges > 0 || !curChargeKnown) {
+		if (curCharges > 0 || !curChargeKnown & isEquipped(hero)) {
 			actions.add( AC_ZAP );
 		}
 
@@ -103,7 +103,7 @@ public abstract class Wand extends KindofMisc {
 
 		if (action.equals( AC_ZAP )) {
 
-			if (!isEquipped(hero)) GLog.i( Messages.get(Artifact.class, "need_to_equip") );
+			if (!isEquipped(hero)) execute(hero, AC_EQUIP);
 			else {
 				curUser = hero;
 				curItem = this;
