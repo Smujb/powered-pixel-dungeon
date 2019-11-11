@@ -48,7 +48,7 @@ public class AboutScene extends PixelScene {
 
 	private static final String TXT_YASD =
 			"Code: Smujamesb (Modified from Shattered Pixel Dungeon)\n" +
-			"Graphics: Evan (From Shattered PD), Ømicrónrg9\n" +
+			"Graphics: Evan (From Shattered PD), Ømicrónrg9, ConsideredHamster (YAPD)\n" +
 					"Invite to my Discord Server:";
 
 	public static final String POPUP_YASD = "discord.gg/Cj5vvjV";
