@@ -49,7 +49,6 @@ import com.shatteredpixel.yasd.effects.particles.WindParticle;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
-import com.shatteredpixel.yasd.items.Stylus;
 import com.shatteredpixel.yasd.items.Torch;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
@@ -191,9 +190,9 @@ public abstract class Level implements Bundlable {
 				addItemToSpawn( new ScrollOfUpgrade() );
 				Dungeon.LimitedDrops.UPGRADE_SCROLLS.count++;
 			}
-			if (Dungeon.asNeeded()) {
-				addItemToSpawn( new Stylus() );
-				Dungeon.LimitedDrops.ARCANE_STYLI.count++;
+			if (Dungeon.esNeeded()) {
+				addItemToSpawn( new StoneOfEnchantment() );
+				Dungeon.LimitedDrops.ENCHANT_STONE.count++;
 			}
 			//one scroll of transmutation is guaranteed to spawn somewhere on chapter 2-4
 			int enchChapter = (int)((Dungeon.seed / 10) % 3) + 1;

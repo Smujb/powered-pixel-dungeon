@@ -83,7 +83,7 @@ public class Dungeon {
 		//limited world drops
 		STRENGTH_POTIONS,
 		UPGRADE_SCROLLS,
-		ARCANE_STYLI,
+		ENCHANT_STONE,
 
 		//Health potion sources
 		//enemies
@@ -418,9 +418,9 @@ public class Dungeon {
 		return Random.Int(5 - floorThisSet) < souLeftThisSet;
 	}
 	
-	public static boolean asNeeded() {
+	public static boolean esNeeded() {
 		//1 AS each floor set
-		int asLeftThisSet = 1 - (LimitedDrops.ARCANE_STYLI.count - (depth / 5));
+		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (depth / 5));
 		if (asLeftThisSet <= 0) return false;
 
 		int floorThisSet = (depth % 5);
