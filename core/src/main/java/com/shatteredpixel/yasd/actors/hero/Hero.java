@@ -1296,7 +1296,9 @@ public class Hero extends Char {
 			float speed = speed();
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & !(Dungeon.level.map[pos] == Terrain.EXIT || Dungeon.level.map[pos] == Terrain.DOOR || Dungeon.level.map[pos] == Terrain.ENTRANCE|| Dungeon.level.map[pos] == Terrain.OPEN_DOOR)) {
 				if (ShatteredPixelDungeon.scene() instanceof GameScene) {
-					Level.set(pos, Terrain.CHASM);
+					if (isFlying()) {
+						Level.set(pos, Terrain.CHASM);
+					}
 					GameScene.updateMap(pos);
 					if (Dungeon.level.heroFOV[pos]) Dungeon.observe();
 				}
