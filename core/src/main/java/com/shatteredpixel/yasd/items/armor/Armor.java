@@ -56,6 +56,7 @@ import com.shatteredpixel.yasd.items.armor.glyphs.Thorns;
 import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.HeroSprite;
 import com.shatteredpixel.yasd.sprites.ItemSprite;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
@@ -284,7 +285,13 @@ public class Armor extends KindofMisc {
 		
 		return stealth;
 	}
-	
+
+	@Override
+	public boolean doEquip(Hero hero) {
+		((HeroSprite)hero.sprite).updateArmor();
+		return super.doEquip(hero);
+	}
+
 	@Override
 	public int level() {
 		return super.level() + (curseInfusionBonus ? 1 : 0);
