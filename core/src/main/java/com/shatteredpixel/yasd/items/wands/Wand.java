@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
+import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.bags.MagicalHolster;
@@ -540,8 +541,12 @@ public abstract class Wand extends KindofMisc {
 
 		private void recharge(){
 			float moraleMultiplier = 1f;
+			float ArmourMultiplier = 1f;
 			if (target instanceof Hero) {
 				moraleMultiplier = 1f + (float) ((((Hero)target).morale - ((Hero)target).MAX_MORALE) * 0.04);
+				if (((Hero)target).belongings.getItem(MageArmor.class) != null) {
+					ArmourMultiplier = 1.25f;
+				}
 			}
 
 
@@ -557,7 +562,7 @@ public abstract class Wand extends KindofMisc {
 
 			for (Recharging bonus : target.buffs(Recharging.class)){
 				if (bonus != null && bonus.remainder() > 0f) {
-					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder() * moraleMultiplier;
+					partialCharge += CHARGE_BUFF_BONUS * bonus.remainder() * moraleMultiplier * ArmourMultiplier;
 				}
 			}
 		}
