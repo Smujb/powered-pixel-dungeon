@@ -53,6 +53,7 @@ import com.shatteredpixel.yasd.items.Torch;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.food.SmallRation;
+import com.shatteredpixel.yasd.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.items.stones.StoneOfEnchantment;
@@ -203,6 +204,9 @@ public abstract class Level implements Bundlable {
 			
 			if ( Dungeon.depth == ((Dungeon.seed % 3) + 1)){
 				addItemToSpawn( new StoneOfIntuition() );
+			}
+			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR)) {
+				addItemToSpawn( new PotionOfLevitation());
 			}
 
 			DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
