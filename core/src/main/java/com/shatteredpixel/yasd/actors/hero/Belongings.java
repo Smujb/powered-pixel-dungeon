@@ -33,6 +33,10 @@ import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.HuntressArmor;
+import com.shatteredpixel.yasd.items.armor.MageArmor;
+import com.shatteredpixel.yasd.items.armor.RogueArmor;
+import com.shatteredpixel.yasd.items.armor.WarriorArmor;
 import com.shatteredpixel.yasd.items.armor.curses.Bulk;
 import com.shatteredpixel.yasd.items.armor.glyphs.Flow;
 import com.shatteredpixel.yasd.items.armor.glyphs.Obfuscation;
@@ -200,6 +204,12 @@ public class Belongings implements Iterable<Item> {
 
 			}
 			evasion += CurArmour.augment.evasionFactor(CurArmour.level());
+			if (CurArmour instanceof HuntressArmor || CurArmour instanceof MageArmor || CurArmour instanceof RogueArmor) {
+				evasion*=1.25;
+			}
+			if (CurArmour instanceof WarriorArmor) {
+				evasion*=0.75;
+			}
 
 		}
 		return evasion;
@@ -230,6 +240,10 @@ public class Belongings implements Iterable<Item> {
 							|| Dungeon.level.map[owner.pos] == Terrain.OPEN_DOOR )) {
 				speed /= 3f;
 			}
+			if (CurArmour instanceof HuntressArmor) {
+				speed*=1.25;
+			}
+
 		}
 		return speed;
 	}
@@ -240,6 +254,12 @@ public class Belongings implements Iterable<Item> {
 			Armor CurArmour = Armors.get(i);
 			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
 				stealth += 1 + CurArmour.level()/3f;
+			}
+			if (CurArmour instanceof RogueArmor) {
+				stealth*=1.25;
+			}
+			if (CurArmour instanceof WarriorArmor) {
+				stealth*=0.75;
 			}
 		}
 		return stealth;
