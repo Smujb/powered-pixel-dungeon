@@ -298,7 +298,7 @@ public class WandOfLivingEarth extends DamageWand {
 		private void setInfo(Hero hero, int wandLevel, int healthToAdd){
 			if (wandLevel > this.wandLevel) {
 				this.wandLevel = wandLevel;
-				HT = 16 + 8 * wandLevel;
+				HT = 16 + 16 * wandLevel;
 			}
 			HP = Math.min(HT, HP + healthToAdd);
 			//half of hero's evasion
@@ -327,7 +327,7 @@ public class WandOfLivingEarth extends DamageWand {
 			if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
 				return Random.NormalIntRange(wandLevel, 2 + wandLevel);
 			} else {
-				return Random.NormalIntRange(wandLevel, 3 + 3 * wandLevel);
+				return Random.NormalIntRange(wandLevel, 3 + 6 * wandLevel);
 			}
 		}
 
