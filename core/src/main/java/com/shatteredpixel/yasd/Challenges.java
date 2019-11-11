@@ -43,6 +43,7 @@ public class Challenges {
 	public static final int SWARM_INTELLIGENCE	= 16;
 	public static final int DARKNESS			= 32;
 	public static final int NO_SCROLLS		    = 64;
+	public static final int COLLAPSING_FLOOR    = 128;
 
 	public static final int MAX_VALUE           = 127;
 
@@ -53,11 +54,12 @@ public class Challenges {
 			"no_herbalism",
 			"swarm_intelligence",
 			"darkness",
-			"no_scrolls"
+			"no_scrolls",
+			"collapsing_floor"
 	};
 
 	public static final int[] MASKS = {
-			NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS
+			NO_FOOD, NO_ARMOR, NO_HEALING, NO_HERBALISM, SWARM_INTELLIGENCE, DARKNESS, NO_SCROLLS, COLLAPSING_FLOOR
 	};
 
 	public static boolean isItemBlocked( Item item ){

@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.actors.hero;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Bones;
+import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.ShatteredPixelDungeon;
@@ -50,6 +51,7 @@ import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.actors.buffs.Regeneration;
 import com.shatteredpixel.yasd.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
@@ -59,6 +61,7 @@ import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.CheckedCell;
 import com.shatteredpixel.yasd.effects.Flare;
 import com.shatteredpixel.yasd.effects.Speck;
+import com.shatteredpixel.yasd.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.items.Amulet;
 import com.shatteredpixel.yasd.items.Ankh;
 import com.shatteredpixel.yasd.items.Dewdrop;
@@ -1291,7 +1294,14 @@ public class Hero extends Char {
 		if (step != -1) {
 			
 			float speed = speed();
-			
+			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & !(Dungeon.level.map[pos] == Terrain.EXIT || Dungeon.level.map[pos] == Terrain.DOOR || Dungeon.level.map[pos] == Terrain.ENTRANCE|| Dungeon.level.map[pos] == Terrain.OPEN_DOOR)) {
+				if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+					Level.set(pos, Terrain.CHASM);
+					GameScene.updateMap(pos);
+					if (Dungeon.level.heroFOV[pos]) Dungeon.observe();
+				}
+			}
+
 			sprite.move(pos, step);
 			move(step);
 
