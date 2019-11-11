@@ -8,4 +8,9 @@ public class Whiskey extends Alcohol {
         MoraleGain = 7.5f;
         MoraleMultiplier = 2f;
     }
+
+    @Override
+    public int price() {
+        return 500;
+    }
 }
