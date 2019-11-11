@@ -45,6 +45,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.DeviceCompat;
 
+import static com.shatteredpixel.yasd.scenes.AboutScene.POPUP_YASD;
+
 public class TitleScene extends PixelScene {
 	
 	@Override
@@ -130,7 +132,7 @@ public class TitleScene extends PixelScene {
 						Messages.get(TitleScene.class, "discord_button")){
 					@Override
 					protected void onSelect(int index) {
-						DeviceCompat.openURI(AboutScene.POPUP_YASD);
+						DeviceCompat.openURI("https://" + POPUP_YASD);
 					}
 				};
 				parent.add(wnd);
