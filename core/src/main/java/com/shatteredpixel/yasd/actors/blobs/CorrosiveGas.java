@@ -28,6 +28,8 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
+import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 
@@ -49,6 +51,7 @@ public class CorrosiveGas extends Blob {
 			for (int i = area.left; i < area.right; i++){
 				for (int j = area.top; j < area.bottom; j++){
 					cell = i + j*Dungeon.level.width();
+					affectCell(cell);
 					if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
 						if (!ch.isImmune(this.getClass()))
 							Buff.affect(ch, Corrosion.class).set(2f, strength);
@@ -68,6 +71,11 @@ public class CorrosiveGas extends Blob {
 	private static final String STRENGTH = "strength";
 
 	@Override
+	public void use(BlobEmitter emitter) {
+		super.use(emitter);
+	}
+
+	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		strength = bundle.getInt( STRENGTH );
@@ -78,13 +86,10 @@ public class CorrosiveGas extends Blob {
 		super.storeInBundle(bundle);
 		bundle.put( STRENGTH, strength );
 	}
-
-	@Override
-	public void use( BlobEmitter emitter ) {
-		super.use( emitter );
-
-		emitter.pour( Speck.factory(Speck.CORROSION), 0.4f );
+	public static void affectCell( int cell ) {
+		Level.set( cell, Terrain.FURROWED_GRASS );
 	}
+
 
 	@Override
 	public String tileDesc() {

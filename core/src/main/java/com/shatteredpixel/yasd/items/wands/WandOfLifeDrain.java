@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.effects.RedLightning;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.SpellSprite;
 import com.shatteredpixel.yasd.effects.particles.SparkParticle;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -100,7 +101,7 @@ public class WandOfLifeDrain extends DamageWand {
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-
+        new Vampiric().proc(staff, attacker, defender, damage);
     }
 
     @Override
