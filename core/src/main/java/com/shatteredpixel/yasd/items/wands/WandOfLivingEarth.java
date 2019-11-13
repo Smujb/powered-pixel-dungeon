@@ -336,7 +336,7 @@ public class WandOfLivingEarth extends DamageWand {
 			if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
 				return Messages.get(this, "desc", wandLevel, 2 + wandLevel);
 			} else {
-				return Messages.get(this, "desc", wandLevel, 3 + 3*wandLevel);
+				return Messages.get(this, "desc", wandLevel, 3 + 6*wandLevel);
 			}
 			
 		}
