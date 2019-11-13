@@ -11,6 +11,6 @@ public class Whiskey extends Alcohol {
 
     @Override
     public int price() {
-        return 500;
+        return 50*quantity;
     }
 }
