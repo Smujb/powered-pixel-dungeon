@@ -15,11 +15,17 @@ import java.util.ArrayList;
 public abstract class Alcohol extends Item {
     {
         cursed = false;
+        stackable = true;
     }
     public static final String AC_DRINK = "DRINK";
     private static final float TIME_TO_DRINK = 1f;
     float MoraleGain;
     float MoraleMultiplier;
+
+    @Override
+    public boolean isUpgradable() {
+        return false;
+    }
 
     @Override
     public ArrayList<String> actions(Hero hero ) {
