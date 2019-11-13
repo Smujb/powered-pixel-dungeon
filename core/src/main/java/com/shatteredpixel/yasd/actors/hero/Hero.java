@@ -272,6 +272,7 @@ public class Hero extends Char {
 		}
 		if (morale == 0f & isAlive()) {
 			Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP/6));
+			morale += Random.Float() + 1;
 		}
 	}
 
