@@ -13,6 +13,9 @@ import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 
 public class AcidPool extends Blob {
+    {
+        actPriority = MOB_PRIO + 1;
+    }
     public int damageOnStep = 0;
     @Override
     public String tileDesc() {

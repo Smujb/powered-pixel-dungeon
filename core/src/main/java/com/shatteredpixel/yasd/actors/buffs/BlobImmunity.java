@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.actors.blobs.Fire;
 import com.shatteredpixel.yasd.actors.blobs.Freezing;
 import com.shatteredpixel.yasd.actors.blobs.Inferno;
+import com.shatteredpixel.yasd.actors.blobs.Miasma;
 import com.shatteredpixel.yasd.actors.blobs.ParalyticGas;
 import com.shatteredpixel.yasd.actors.blobs.Regrowth;
 import com.shatteredpixel.yasd.actors.blobs.SmokeScreen;
@@ -78,6 +79,7 @@ public class BlobImmunity extends FlavourBuff {
 		immunities.add( StormCloud.class );
 		immunities.add( ToxicGas.class );
 		immunities.add( Web.class );
+		immunities.add( Miasma.class );
 	}
 
 	@Override

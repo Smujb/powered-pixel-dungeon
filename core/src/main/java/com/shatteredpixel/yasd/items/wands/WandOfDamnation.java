@@ -8,6 +8,7 @@ import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.blobs.Miasma;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.DeferredDeath;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.effects.CellEmitter;
@@ -31,8 +32,7 @@ public class WandOfDamnation extends Wand {
     protected void onZap(Ballistica attack) {
         Char ch = Actor.findChar(attack.collisionPos);
         if (ch != null) {
-            ch.damage(ch.HP, Grim.class);
-            GameScene.add(Blob.seed(attack.collisionPos, 50 + 10 * level(), Miasma.class));
+            Buff.affect(ch, DeferredDeath.class, 2f);
         }
     }
 
