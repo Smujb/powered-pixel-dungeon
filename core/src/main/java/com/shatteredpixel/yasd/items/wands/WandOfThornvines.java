@@ -3,6 +3,7 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
@@ -20,6 +21,10 @@ public class WandOfThornvines extends Wand {
 
     @Override
     protected void onZap(Ballistica attack) {
+
+    }
+
+    class ThornVine extends Mob {
 
     }
 
