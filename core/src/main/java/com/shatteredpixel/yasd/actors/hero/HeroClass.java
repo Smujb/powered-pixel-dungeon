@@ -125,7 +125,7 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify().collect();
 
 		new Beer().collect();
-		new WandOfDamnation().identify().collect();
+		//new WandOfDamnation().identify().collect();
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
 
