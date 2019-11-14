@@ -43,6 +43,9 @@ public class WandOfAcid extends DamageWand {
 
     @Override
     public String statsDesc() {
-        return Messages.get(this, "stats_desc",min(),max());
+        if (levelKnown)
+            return Messages.get(this, "stats_desc",  min(), max());
+        else
+            return Messages.get(this, "stats_desc",  min(0), max(0));
     }
 }

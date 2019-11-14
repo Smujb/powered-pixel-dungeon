@@ -68,6 +68,7 @@ public class Speck extends Image {
 	public static final int STORM       = 117;
 	public static final int INFERNO     = 118;
 	public static final int BLIZZARD    = 119;
+	public static final int BUBBLE_GREEN= 120;
 	
 	private static final int SIZE = 7;
 	
@@ -285,7 +286,7 @@ public class Speck extends Image {
 			lifespan = 0.5f;
 			break;
 			
-		case TOXIC:
+		case TOXIC:  case BUBBLE_GREEN:
 			hardlight( 0x50FF60 );
 			angularSpeed = 30;
 			angle = Random.Float( 360 );
@@ -449,7 +450,7 @@ public class Speck extends Image {
 				am = 1 - p * p;
 				break;
 				
-			case BUBBLE:
+			case BUBBLE: case BUBBLE_GREEN:
 				am = p < 0.2f ? p * 5 : 1;
 				break;
 				
