@@ -3,10 +3,13 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
+import com.watabou.utils.Callback;
+import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
@@ -30,5 +33,34 @@ public class WandOfThornvines extends Wand {
 
         }
 
+    }
+
+    @Override
+    protected void fx(Ballistica bolt, Callback callback) {
+        MagicMissile.boltFromChar( curUser.sprite.parent,
+                MagicMissile.FOLIAGE_CONE,
+                curUser.sprite,
+                bolt.path.get(bolt.dist),
+                callback );
+    }
+    @Override
+    public void staffFx(MagesStaff.StaffParticle particle) {
+        particle.color( ColorMath.random(0x004400, 0x88CC44) );
+        particle.am = 1f;
+        particle.setLifespan(1f);
+        particle.setSize( 1f, 1.5f);
+        particle.shuffleXY(0.5f);
+        float dst = Random.Float(11f);
+        particle.x -= dst;
+        particle.y += dst;
+    }
+
+    @Override
+    protected int initialCharges() {
+        return 4;
+    }
+
+    protected int chargesPerCast() {
+        return Math.max(1, curCharges);
     }
 }

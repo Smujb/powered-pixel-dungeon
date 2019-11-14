@@ -190,7 +190,7 @@ public class WandOfFireblast extends DamageWand {
 	@Override
 	protected int chargesPerCast() {
 		//consumes all charges, up to 3
-		return Math.min(3,curCharges);
+		return Math.max(1,Math.min(3,curCharges));
 	}
 
 	@Override
