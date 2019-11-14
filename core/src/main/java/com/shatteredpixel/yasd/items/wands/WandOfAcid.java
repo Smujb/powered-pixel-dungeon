@@ -1,12 +1,11 @@
 package com.shatteredpixel.yasd.items.wands;
 
-import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.AcidPool;
-import com.shatteredpixel.yasd.actors.blobs.Blob;
-import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
+import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -27,13 +26,25 @@ public class WandOfAcid extends DamageWand {
 
     @Override
     public int max(int lvl) {
-        return 8 + lvl * 8;
+        return 8 + lvl * 7;
     }
 
     @Override
     protected void onZap(Ballistica attack) {
+        Char ch = Actor.findChar( attack.collisionPos );
         int pos = attack.collisionPos;
-        GameScene.add( seed( pos, 1, AcidPool.class ).setStrength(damageRoll()));
+        if (ch != null) {
+
+            processSoulMark(ch, chargesPerCast());
+            ch.damage(damageRoll(), this);
+
+            ch.sprite.emitter().pour( Speck.factory(Speck.BUBBLE), 0.1f );
+
+        } else {
+            GameScene.add( seed( pos, 1, AcidPool.class ).setStrength((int)(damageRoll()*1.5f)));
+        }
+
+
     }
 
     @Override
