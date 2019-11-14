@@ -69,7 +69,7 @@ public class WandOfDamnation extends Wand {
 
 
             if (ch != null) {
-                Buff.affect(ch, DeferredDeath.class, enemyResist/corruptingPower*2f*((float)maxCharges/(float)curCharges));
+                Buff.affect(ch, DeferredDeath.class, enemyResist/corruptingPower*((float)maxCharges/(float)curCharges));
             }
         }
     }
