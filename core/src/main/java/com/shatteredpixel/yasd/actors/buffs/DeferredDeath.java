@@ -1,10 +1,13 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
-import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.blobs.Blob;
+import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
+import com.shatteredpixel.yasd.actors.blobs.Miasma;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
-import com.watabou.utils.Bundle;
 
 public class DeferredDeath extends FlavourBuff {
 
@@ -12,10 +15,6 @@ public class DeferredDeath extends FlavourBuff {
         type = buffType.NEGATIVE;
         announced = true;
     }
-
-    private static final String COUNTDOWN    = "countdown";
-
-    int countdown = 0;
 
     @Override
     public void fx(boolean on) {
@@ -39,14 +38,14 @@ public class DeferredDeath extends FlavourBuff {
     }
 
     @Override
-    public void storeInBundle( Bundle bundle ) {
-        super.storeInBundle( bundle );
-        bundle.put( COUNTDOWN, countdown );
+    public boolean act() {
+        return super.act();
     }
 
     @Override
-    public void restoreFromBundle( Bundle bundle ) {
-        super.restoreFromBundle( bundle );
-        countdown = bundle.getInt( COUNTDOWN );
+    public void detach() {
+        super.detach();
+        GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
+        target.damage(target.HP, Grim.class);
     }
 }

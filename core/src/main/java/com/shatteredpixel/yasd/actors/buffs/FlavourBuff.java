@@ -27,7 +27,6 @@ import com.watabou.noosa.Image;
 //buff whose only internal logic is to wait and detach after a time.
 public abstract class FlavourBuff extends Buff {
 
-	public static abstract void detach(Char target, Class<? extends Buff> cl);
 
 	@Override
 	public boolean act() {
