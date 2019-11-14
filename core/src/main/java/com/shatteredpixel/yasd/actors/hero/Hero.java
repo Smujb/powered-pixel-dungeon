@@ -1453,7 +1453,8 @@ public class Hero extends Char {
 				GLog.p( Messages.get(this, "new_level"), lvl );
 				sprite.showStatus( CharSprite.POSITIVE, Messages.get(Hero.class, "level_up") );
 				Sample.INSTANCE.play( Assets.SND_LEVELUP );
-				gainMorale(0.5f);
+				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
+				gainMorale(0.5f + missingMoralePercent);//Gains more Morale on level up when on low Morale
 			}
 			
 			Item.updateQuickslot();
