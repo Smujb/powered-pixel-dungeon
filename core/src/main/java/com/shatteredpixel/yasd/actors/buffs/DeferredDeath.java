@@ -3,6 +3,8 @@ package com.shatteredpixel.yasd.actors.buffs;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.blobs.Miasma;
+import com.shatteredpixel.yasd.effects.CellEmitter;
+import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
@@ -34,7 +36,7 @@ public class DeferredDeath extends FlavourBuff {
 
     @Override
     public String desc() {
-        return Messages.get(this, "desc");
+        return Messages.get(this, "desc", dispTurns());
     }
 
     @Override
@@ -47,5 +49,6 @@ public class DeferredDeath extends FlavourBuff {
         super.detach();
         GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
         target.damage(target.HP, Grim.class);
+        CellEmitter.get(target.pos).burst(ShadowParticle.UP, 5);
     }
 }

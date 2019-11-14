@@ -11,6 +11,15 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.DeferredDeath;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.actors.mobs.Bee;
+import com.shatteredpixel.yasd.actors.mobs.King;
+import com.shatteredpixel.yasd.actors.mobs.Mimic;
+import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.actors.mobs.Piranha;
+import com.shatteredpixel.yasd.actors.mobs.Statue;
+import com.shatteredpixel.yasd.actors.mobs.Swarm;
+import com.shatteredpixel.yasd.actors.mobs.Wraith;
+import com.shatteredpixel.yasd.actors.mobs.Yog;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -31,8 +40,37 @@ public class WandOfDamnation extends Wand {
     @Override
     protected void onZap(Ballistica attack) {
         Char ch = Actor.findChar(attack.collisionPos);
-        if (ch != null) {
-            Buff.affect(ch, DeferredDeath.class, 2f);
+        Mob enemy;
+        if (ch instanceof Mob) {
+            enemy = ((Mob)ch);
+
+            float corruptingPower = 2 + level();
+
+            //base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
+            float enemyResist = 1 + enemy.EXP;
+            if (ch instanceof Mimic || ch instanceof Statue) {
+                enemyResist = 1 + Dungeon.depth;
+            } else if (ch instanceof Piranha || ch instanceof Bee) {
+                enemyResist = 1 + Dungeon.depth / 2f;
+            } else if (ch instanceof Wraith) {
+                //divide by 3 as wraiths are always at full HP and are therefore ~3x harder to corrupt
+                enemyResist = (1f + Dungeon.depth / 3f) / 3f;
+            } else if (ch instanceof Yog.BurningFist || ch instanceof Yog.RottingFist) {
+                enemyResist = 1 + 30;
+            } else if (ch instanceof Yog.Larva || ch instanceof King.Undead) {
+                enemyResist = 1 + 5;
+            } else if (ch instanceof Swarm) {
+                //child swarms don't give exp, so we force this here.
+                enemyResist = 1 + 3;
+            }
+
+            //100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
+            enemyResist *= 1 + 2 * Math.pow(enemy.HP / (float) enemy.HT, 2);
+
+
+            if (ch != null) {
+                Buff.affect(ch, DeferredDeath.class, enemyResist/corruptingPower*2f);
+            }
         }
     }
 
