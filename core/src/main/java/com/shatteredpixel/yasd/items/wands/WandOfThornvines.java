@@ -4,11 +4,13 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.sprites.ThornVineSprite;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
@@ -24,7 +26,12 @@ public class WandOfThornvines extends Wand {
 
     }
 
-    class ThornVine extends Mob {
+    class ThornVine extends NPC {
+        {
+            spriteClass = ThornVineSprite.class;
+            properties.add(Property.IMMOVABLE);
+        }
+
 
     }
 
