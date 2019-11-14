@@ -1,6 +1,7 @@
 package com.shatteredpixel.yasd.items.wands;
 
 
+import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -21,6 +22,7 @@ import com.shatteredpixel.yasd.actors.mobs.Swarm;
 import com.shatteredpixel.yasd.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.actors.mobs.Yog;
 import com.shatteredpixel.yasd.effects.CellEmitter;
+import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
@@ -29,6 +31,8 @@ import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
+import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class WandOfDamnation extends Wand {
@@ -104,5 +108,24 @@ public class WandOfDamnation extends Wand {
     @Override
     protected int initialCharges() {
         return 4;
+    }
+    @Override
+    protected void fx(Ballistica bolt, Callback callback) {
+        MagicMissile.boltFromChar( curUser.sprite.parent,
+                MagicMissile.SHADOW,
+                curUser.sprite,
+                bolt.collisionPos,
+                callback);
+        Sample.INSTANCE.play( Assets.SND_ZAP );
+    }
+
+    @Override
+    public void staffFx(MagesStaff.StaffParticle particle) {
+        particle.color( 0 );
+        particle.am = 0.6f;
+        particle.setLifespan(2f);
+        particle.speed.set(0, 5);
+        particle.setSize( 0.5f, 2f);
+        particle.shuffleXY(1f);
     }
 }
