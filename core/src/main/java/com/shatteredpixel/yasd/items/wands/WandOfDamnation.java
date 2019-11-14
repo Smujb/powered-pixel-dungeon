@@ -2,6 +2,7 @@ package com.shatteredpixel.yasd.items.wands;
 
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
@@ -11,12 +12,13 @@ import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Random;
 
 public class WandOfDamnation extends Wand {
     @Override
     protected void onZap(Ballistica attack) {
-
+        Char ch = Actor.findChar(attack.collisionPos);
     }
 
     @Override
@@ -40,5 +42,10 @@ public class WandOfDamnation extends Wand {
                 ch.damage(ch.HT/20, this);
                 break;
         }
+    }
+
+    @Override
+    protected int initialCharges() {
+        return 4;
     }
 }
