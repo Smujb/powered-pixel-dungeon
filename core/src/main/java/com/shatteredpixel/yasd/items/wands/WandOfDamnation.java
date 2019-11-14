@@ -4,21 +4,40 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.blobs.Blob;
+import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
+import com.shatteredpixel.yasd.actors.blobs.Miasma;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
 public class WandOfDamnation extends Wand {
+
+    {
+        image = ItemSpriteSheet.WAND_DAMNATION;
+    }
+
     @Override
     protected void onZap(Ballistica attack) {
         Char ch = Actor.findChar(attack.collisionPos);
+        if (ch != null) {
+            ch.damage(ch.HP, Grim.class);
+            GameScene.add(Blob.seed(attack.collisionPos, 50 + 10 * level(), Miasma.class));
+        }
+    }
+
+    protected int chargesPerCast() {
+        return Math.max(1, curCharges);
     }
 
     @Override
