@@ -39,6 +39,7 @@ public class WandOfAcid extends DamageWand {
             ch.damage(damageRoll(), this);
 
             ch.sprite.emitter().pour( Speck.factory(Speck.BUBBLE), 0.1f );
+            ch.sprite.emitter().clear();
 
         } else {
             GameScene.add( seed( pos, 1, AcidPool.class ).setStrength((int)(damageRoll()*1.5f)));
