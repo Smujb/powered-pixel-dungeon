@@ -9,6 +9,7 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
@@ -38,5 +39,10 @@ public class WandOfAcid extends DamageWand {
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
         Buff.affect(defender, Corrosion.class).set(2f, 1 + staff.level()/2);
+    }
+
+    @Override
+    public String statsDesc() {
+        return Messages.get(this, "stats_desc",min(),max());
     }
 }

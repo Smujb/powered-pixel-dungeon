@@ -51,7 +51,6 @@ public class CorrosiveGas extends Blob {
 			for (int i = area.left; i < area.right; i++){
 				for (int j = area.top; j < area.bottom; j++){
 					cell = i + j*Dungeon.level.width();
-					affectCell(cell);
 					if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
 						if (!ch.isImmune(this.getClass()))
 							Buff.affect(ch, Corrosion.class).set(2f, strength);
@@ -71,8 +70,10 @@ public class CorrosiveGas extends Blob {
 	private static final String STRENGTH = "strength";
 
 	@Override
-	public void use(BlobEmitter emitter) {
-		super.use(emitter);
+	public void use( BlobEmitter emitter ) {
+		super.use( emitter );
+
+		emitter.pour( Speck.factory(Speck.CORROSION), 0.4f );
 	}
 
 	@Override
@@ -86,9 +87,7 @@ public class CorrosiveGas extends Blob {
 		super.storeInBundle(bundle);
 		bundle.put( STRENGTH, strength );
 	}
-	public static void affectCell( int cell ) {
-		Level.set( cell, Terrain.FURROWED_GRASS );
-	}
+
 
 
 	@Override

@@ -7,6 +7,8 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
+import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 
@@ -21,12 +23,7 @@ public class AcidPool extends Blob {
         damageOnStep = damage;
         return this;
     }
-    @Override
-    public void use( BlobEmitter emitter ) {
-        super.use( emitter );
 
-        emitter.pour( Speck.factory(Speck.CORROSION), 0.4f );
-    }
     private static final String DAMAGE = "damage";
     @Override
     public void storeInBundle(Bundle bundle) {
@@ -38,6 +35,13 @@ public class AcidPool extends Blob {
     public void restoreFromBundle(Bundle bundle) {
         damageOnStep = bundle.getInt(DAMAGE);
         super.restoreFromBundle(bundle);
+    }
+
+    @Override
+    public void use( BlobEmitter emitter ) {
+        super.use( emitter );
+
+        emitter.pour( Speck.factory(Speck.BUBBLE), 0.1f );
     }
 
     @Override
@@ -58,7 +62,7 @@ public class AcidPool extends Blob {
                 if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                     if (!ch.isImmune(this.getClass()))
                         ch.damage(damageOnStep, this);
-                        fullyClear();
+                        clear();
                 }
             }
         }
