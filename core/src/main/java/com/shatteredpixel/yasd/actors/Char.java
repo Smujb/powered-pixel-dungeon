@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.actors.buffs.Frost;
 import com.shatteredpixel.yasd.actors.buffs.FrostImbue;
 import com.shatteredpixel.yasd.actors.buffs.Haste;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
+import com.shatteredpixel.yasd.actors.buffs.Levitation;
 import com.shatteredpixel.yasd.actors.buffs.MagicalSleep;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
@@ -122,9 +123,9 @@ public abstract class Char extends Actor {
 	private HashSet<Buff> buffs = new HashSet<>();
 
 	public boolean isFlying() {
-		return (flying
+		return ((flying || buff(Levitation.class) != null)
 				& buff(Paralysis.class) != null
-		& (buff(Vertigo.class) != null) & Random.Int(2) == 0)
+		 		&(buff(Vertigo.class) != null) & Random.Int(2) == 0)
 				& buff(Frost.class) != null;
 	}
 

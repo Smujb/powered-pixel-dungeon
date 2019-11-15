@@ -56,6 +56,7 @@ import com.shatteredpixel.yasd.items.wands.WandOfAcid;
 import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
 import com.shatteredpixel.yasd.items.wands.WandOfLifeDrain;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
+import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
 import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
@@ -125,7 +126,7 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify().collect();
 
 		new Beer().collect();
-		//new WandOfDamnation().identify().collect();
+		new WandOfThornvines().identify().collect();
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
 

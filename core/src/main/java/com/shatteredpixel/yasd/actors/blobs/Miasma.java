@@ -5,6 +5,7 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
+import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.CellEmitter;
@@ -39,7 +40,7 @@ public class Miasma extends Blob {
                         }
                         switch (buff) {//Has random chaotic effects
                             default:
-                                break;
+                                Buff.prolong(ch, Vertigo.class, Vertigo.DURATION / 2f);
                             case 1:
                                 Buff.affect(ch, Ooze.class).set(20f);
                                 Splash.at(ch.pos, 0x000000, 5);
@@ -48,7 +49,7 @@ public class Miasma extends Blob {
                                 Buff.prolong(ch, Weakness.class, Weakness.DURATION / 2f);
                                 break;
                             case 3:
-                                ch.damage(ch.HT / 20, this);
+                                ch.damage((int) (ch.HT / 10f), this);
                                 break;
                         }
                     }
