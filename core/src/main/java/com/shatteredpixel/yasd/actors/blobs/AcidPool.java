@@ -5,6 +5,7 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
+import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.levels.Level;
@@ -65,6 +66,7 @@ public class AcidPool extends Blob {
                 if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                     if (!ch.isImmune(this.getClass()))
                         ch.damage(damageOnStep, this);
+                        Buff.affect(ch, Ooze.class).set( 20f );
                         clear(cell);
                 }
             }

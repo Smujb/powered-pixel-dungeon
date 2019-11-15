@@ -5,6 +5,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.AcidPool;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
+import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
@@ -38,8 +39,9 @@ public class WandOfAcid extends DamageWand {
             processSoulMark(ch, chargesPerCast());
             ch.damage(damageRoll(), this);
 
-            ch.sprite.emitter().pour( Speck.factory(Speck.BUBBLE), 0.1f );
-            ch.sprite.emitter().clear();
+            ch.sprite.emitter().burst( Speck.factory(Speck.BUBBLE), 3 );
+
+            Buff.affect(ch, Ooze.class).set( 20f );
 
         } else {
             GameScene.add( seed( pos, 1, AcidPool.class ).setStrength((int)(damageRoll()*1.5f)));
