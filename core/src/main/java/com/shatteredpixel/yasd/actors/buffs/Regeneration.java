@@ -57,7 +57,7 @@ public class Regeneration extends Buff {
 				else
 					spend( REGENERATION_DELAY - regenBuff.itemLevel()*0.9f );
 			else
-				spend( REGENERATION_DELAY/(Math.max(target.HT,30)/30f));
+				spend( REGENERATION_DELAY/(Math.max(target.HT,40)/40f));
 			
 		} else {
 			
