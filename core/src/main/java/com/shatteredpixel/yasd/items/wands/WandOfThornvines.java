@@ -37,9 +37,11 @@ public class WandOfThornvines extends Wand {
     private ThornVine thornVine = null;
 
     public ThornVine findThornVine() {
-        for (Mob m : Dungeon.level.mobs){
-            if (m instanceof ThornVine){
-                thornVine = (ThornVine) m;
+        if (Dungeon.level != null) {
+            for (Mob m : Dungeon.level.mobs) {
+                if (m instanceof ThornVine) {
+                    thornVine = (ThornVine) m;
+                }
             }
         }
         return thornVine;
@@ -63,11 +65,11 @@ public class WandOfThornvines extends Wand {
 
 
         if (findThornVine() == null) {
-            new ThornVine().spawnAt(bolt.collisionPos, level());
+            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges/(float)maxCharges);
         }
     }
 
-    private class ThornVine extends NPC {
+    private static class ThornVine extends NPC {
         {
             spriteClass = ThornVineSprite.class;
             properties.add(Property.IMMOVABLE);
@@ -75,26 +77,32 @@ public class WandOfThornvines extends Wand {
         }
 
         int level;
+        float chargesPercent;
 
         private final String LEVEL = "level";
+        private final String CHARGESPERCENT = "chargespercent";
 
-        public ThornVine(int level) {
+
+        public ThornVine(int level, float chargesPercent) {
             this.level = level;
+            this.chargesPercent = chargesPercent;
         }
 
         public ThornVine() {
-            this(0);
+            this(0, 1f);
         }
 
         @Override
         public void storeInBundle(Bundle bundle) {
             bundle.put(LEVEL, level);
+            bundle.put(CHARGESPERCENT, chargesPercent);
             super.storeInBundle(bundle);
         }
 
         @Override
         public void restoreFromBundle(Bundle bundle) {
             level = bundle.getInt(LEVEL);
+            chargesPercent = bundle.getInt(CHARGESPERCENT);
             super.restoreFromBundle(bundle);
         }
 
@@ -110,7 +118,7 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public int damageRoll() {
-            return Random.Int(10 + level*8);
+            return (int) (Random.Int(10 + level*10)*chargesPercent);
         }
 
         @Override
@@ -124,7 +132,7 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return 20 + this.level*10;
+            return (int) ((20 + this.level*10)*chargesPercent);
         }
 
         @Override
@@ -152,9 +160,9 @@ public class WandOfThornvines extends Wand {
             return true;
         }
 
-        public ThornVine spawnAt(int pos, int level ) {
+        public ThornVine spawnAt(int pos, int level, float chargesPercent ) {
             if (Dungeon.level.passable[pos]) {
-                ThornVine TV = new ThornVine(level);
+                ThornVine TV = new ThornVine(level, chargesPercent);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
                 } else {
@@ -169,7 +177,7 @@ public class WandOfThornvines extends Wand {
                     }
 
                     if (closest == -1){
-                        curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level()/2);
+                        curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level/2);
                         return null; //do not spawn Thorn Vine
                     } else {
                         TV.pos = closest;
@@ -180,7 +188,7 @@ public class WandOfThornvines extends Wand {
                 GameScene.add(TV);
                 TV.state = TV.HUNTING;
 
-                TV.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level() / 2);
+                TV.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level / 2);
 
                 return TV;
             } else {
