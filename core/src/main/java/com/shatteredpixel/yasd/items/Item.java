@@ -354,7 +354,7 @@ public class Item implements Bundlable {
 	}
 	
 	public Item identify() {
-		if (level() > 0 && isIdentified()) {
+		if (level() > 0 && !isIdentified() && Dungeon.hero.isAlive()) {
 			Dungeon.hero.gainMorale(Math.min((float) level(),3));
 		}
 		levelKnown = true;
