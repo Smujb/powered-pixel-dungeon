@@ -3,24 +3,20 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.blobs.AcidPool;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Splash;
-import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.sprites.ThornVineSprite;
-import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
@@ -61,11 +57,10 @@ public class WandOfThornvines extends Wand {
 
     @Override
     protected void onZap(Ballistica bolt) {
-        Char ch = Actor.findChar(bolt.collisionPos);
 
 
         if (findThornVine() == null) {
-            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges/(float)maxCharges);
+            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges);
         }
     }
 
@@ -77,32 +72,32 @@ public class WandOfThornvines extends Wand {
         }
 
         int level;
-        float chargesPercent;
+        float charges;
 
         private final String LEVEL = "level";
-        private final String CHARGESPERCENT = "chargespercent";
+        private final String CHARGES = "charges";
 
 
-        public ThornVine(int level, float chargesPercent) {
+        public ThornVine(int level, int charges) {
             this.level = level;
-            this.chargesPercent = chargesPercent;
+            this.charges = charges;
         }
 
         public ThornVine() {
-            this(0, 1f);
+            this(0, 1);
         }
 
         @Override
         public void storeInBundle(Bundle bundle) {
             bundle.put(LEVEL, level);
-            bundle.put(CHARGESPERCENT, chargesPercent);
+            bundle.put(CHARGES, charges);
             super.storeInBundle(bundle);
         }
 
         @Override
         public void restoreFromBundle(Bundle bundle) {
             level = bundle.getInt(LEVEL);
-            chargesPercent = bundle.getInt(CHARGESPERCENT);
+            charges = bundle.getInt(CHARGES);
             super.restoreFromBundle(bundle);
         }
 
@@ -118,7 +113,7 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public int damageRoll() {
-            return (int) (Random.Int(10 + level*10)*chargesPercent);
+            return (int) (Random.Int(2,5 + level*3)*charges);
         }
 
         @Override
@@ -132,7 +127,27 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return (int) ((20 + this.level*10)*chargesPercent);
+            return ((20 + this.level*10));
+        }
+
+        @Override
+        public void damage(int dmg, Object src) {
+            dmg = (int)(Math.sqrt(8*(dmg) + 1) - 1)/2;
+
+            super.damage(dmg, src);
+        }
+
+        @Override
+        public int defenseProc(Char enemy, int damage) {
+            if (Random.Int(  3 ) >= 2) {
+
+                Buff.affect(enemy, Bleeding.class).set(damage/3f);
+                Splash.at( enemy.sprite.center(), -PointF.PI / 2, PointF.PI / 6,
+                        enemy.sprite.blood(), 10 );
+
+            }
+            Buff.prolong( enemy, Cripple.class, 3f );
+            return super.defenseProc(enemy, damage);
         }
 
         @Override
@@ -155,14 +170,14 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public boolean interact() {
-            Buff.affect(Dungeon.hero, Recharging.class, ((float)this.HP/(float)this.HT)*5f);
+            Buff.affect(Dungeon.hero, Recharging.class, (HP/(float)HT)*charges);
             die(WandOfThornvines.class);
             return true;
         }
 
-        public ThornVine spawnAt(int pos, int level, float chargesPercent ) {
+        public ThornVine spawnAt(int pos, int level, int charges ) {
             if (Dungeon.level.passable[pos]) {
-                ThornVine TV = new ThornVine(level, chargesPercent);
+                ThornVine TV = new ThornVine(level, charges);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
                 } else {
@@ -184,7 +199,8 @@ public class WandOfThornvines extends Wand {
                     }
                 }
 
-                TV.HP = TV.HT = setHP();
+                TV.HT = setHP();
+                TV.HP = Math.max(1,(int) (TV.HT*(charges/4f+(float)level)));//Can't have 0 HP
                 GameScene.add(TV);
                 TV.state = TV.HUNTING;
 
