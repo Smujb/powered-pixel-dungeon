@@ -127,7 +127,7 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return ((20 + this.level*10));
+            return ((20 + this.level*15));
         }
 
         @Override

@@ -40,6 +40,11 @@ public abstract class DamageWand extends Wand{
 
 	public abstract int max(int lvl);
 
+	@Override
+	protected int initialCharges() {
+		return 3;
+	}
+
 	public int damageRoll(){
 		return Random.NormalIntRange(min(), max());
 	}
