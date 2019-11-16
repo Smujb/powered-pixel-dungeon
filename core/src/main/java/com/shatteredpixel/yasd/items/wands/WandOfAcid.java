@@ -62,4 +62,9 @@ public class WandOfAcid extends DamageWand {
         else
             return Messages.get(this, "stats_desc",  min(0), max(0));
     }
+
+    @Override
+    protected int initialCharges() {
+        return 4;
+    }
 }
