@@ -434,7 +434,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int defaultSTRReq() {
-		return STRReq(level());
+		return Math.max(STRReq(level()),10);
 	}
 
 	public int STRReq() {

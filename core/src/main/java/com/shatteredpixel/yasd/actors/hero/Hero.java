@@ -30,6 +30,7 @@ import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.ShatteredPixelDungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Alchemy;
 import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
@@ -143,7 +144,7 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Hero extends Char {
+public class Hero extends BelongingsHolder {
 
 	{
 		actPriority = HERO_PRIO;

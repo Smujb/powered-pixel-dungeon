@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.items.EquipableItem;
@@ -153,7 +154,6 @@ public class Belongings implements Iterable<Item> {
 				}
 				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
 				IndividualRequirement -= 8;
-				IndividualRequirement = Math.max(IndividualRequirement,1);//Can't only act as 0str (+3 T1 weapon)
 				TotalRequirement += IndividualRequirement;
 			}
 

@@ -69,7 +69,7 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	public int defaultSTRReq() {
-		return super.STRReq();
+		return Math.max(super.STRReq(),10);
 	}
 
 	@Override
