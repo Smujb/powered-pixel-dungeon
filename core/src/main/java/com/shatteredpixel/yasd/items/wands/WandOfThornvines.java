@@ -200,7 +200,7 @@ public class WandOfThornvines extends Wand {
                 }
 
                 TV.HT = setHP();
-                TV.HP = Math.max(1,(int) (TV.HT*(charges/4f+(float)level)));//Can't have 0 HP
+                TV.HP = Math.max(1,(int) (TV.HT*(charges/((float) new WandOfThornvines().initialCharges())+(float)level)));//Can't have 0 HP
                 GameScene.add(TV);
                 TV.state = TV.HUNTING;
 
