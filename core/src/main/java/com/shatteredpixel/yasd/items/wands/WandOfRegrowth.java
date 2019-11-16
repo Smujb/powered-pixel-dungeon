@@ -246,7 +246,7 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	protected int initialCharges() {
-		return 6;
+		return 7;
 	}
 
 	@Override
