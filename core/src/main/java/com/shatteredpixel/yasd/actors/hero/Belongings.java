@@ -61,7 +61,7 @@ public class Belongings implements Iterable<Item> {
 
 	public static final int BACKPACK_SIZE	= 20;
 	
-	private Hero owner;
+	private BelongingsHolder owner;
 	
 	public Bag backpack;
 
@@ -178,7 +178,7 @@ public class Belongings implements Iterable<Item> {
 	public KindofMisc[] miscs = new KindofMisc[5];
 
 
-	public Belongings( Hero owner ) {
+	public Belongings( BelongingsHolder owner ) {
 		this.owner = owner;
 		
 		backpack = new Bag() {{

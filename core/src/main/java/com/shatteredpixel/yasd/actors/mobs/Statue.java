@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
@@ -34,7 +35,7 @@ import com.shatteredpixel.yasd.sprites.StatueSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class Statue extends Mob {
+public class Statue extends BelongingsHolder {
 	
 	{
 		spriteClass = StatueSprite.class;
@@ -51,7 +52,7 @@ public class Statue extends Mob {
 		super();
 		
 		do {
-			weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
+			belongings.miscs[0] = weapon =  (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
 		} while (weapon.cursed);
 		
 		weapon.enchant( Enchantment.random() );

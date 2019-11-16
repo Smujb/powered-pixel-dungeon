@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items;
 
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
@@ -137,7 +138,7 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean isEquipped( Hero hero ) {
+	public boolean isEquipped(BelongingsHolder hero ) {
 		return hero.belongings.miscs[0] == this || hero.belongings.miscs[1] == this || hero.belongings.miscs[2] == this || hero.belongings.miscs[3] == this || hero.belongings.miscs[4] == this;
 	}
 

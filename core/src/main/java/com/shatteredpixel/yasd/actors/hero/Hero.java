@@ -1218,7 +1218,7 @@ public class Hero extends BelongingsHolder {
 	
 	private boolean walkingToVisibleTrapInFog = false;
 	
-	private boolean getCloser( final int target ) {
+	protected boolean getCloser( final int target ) {
 
 		if (target == pos)
 			return false;

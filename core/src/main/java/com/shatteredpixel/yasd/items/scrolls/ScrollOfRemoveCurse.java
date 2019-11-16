@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.scrolls;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -76,7 +77,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		}
 	}
 
-	public static boolean uncurse( Hero hero, Item... items ) {
+	public static boolean uncurse(BelongingsHolder owner, Item... items ) {
 		
 		boolean procced = false;
 		for (Item item : items) {
@@ -107,8 +108,10 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		}
 		
 		if (procced) {
-			hero.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
-			hero.updateHT( false ); //for ring of might
+			owner.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
+			if (owner instanceof Hero) {
+				((Hero)owner).updateHT(false); //for ring of might
+			}
 			updateQuickslot();
 		}
 		

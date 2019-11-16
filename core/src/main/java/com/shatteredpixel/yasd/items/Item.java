@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -349,10 +350,10 @@ public class Item implements Bundlable {
 		return levelKnown && cursedKnown;
 	}
 	
-	public boolean isEquipped( Hero hero ) {
+	public boolean isEquipped(BelongingsHolder hero ) {
 		return false;
 	}
-	
+
 	public Item identify() {
 		if (level() > 0 && !isIdentified() && Dungeon.hero.isAlive()) {
 			Dungeon.hero.gainMorale(Math.min((float) level(),3));
