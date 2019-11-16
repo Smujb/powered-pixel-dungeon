@@ -298,9 +298,13 @@ public abstract class Wand extends KindofMisc {
 		
 		return this;
 	}
+
+	public int chargesScaling() {
+		return 1;
+	}
 	
 	public void updateLevel() {
-		maxCharges = Math.min( initialCharges() + level(), 10 );
+		maxCharges = Math.min( initialCharges() + level()*chargesScaling(), 10 );
 		curCharges = Math.min( curCharges, maxCharges );
 	}
 	

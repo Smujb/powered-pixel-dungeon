@@ -246,7 +246,12 @@ public class WandOfRegrowth extends Wand {
 
 	@Override
 	protected int initialCharges() {
-		return 7;
+		return 4;
+	}
+
+	@Override
+	public int chargesScaling() {
+		return 2;
 	}
 
 	@Override
