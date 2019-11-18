@@ -349,9 +349,10 @@ public class Item implements Bundlable {
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;
 	}
-	
-	public boolean isEquipped(BelongingsHolder hero ) {
-		return false;
+
+
+	public boolean isEquipped(BelongingsHolder owner ) {
+		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
 	}
 
 	public Item identify() {

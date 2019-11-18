@@ -44,6 +44,8 @@ public class Statue extends BelongingsHolder {
 		state = PASSIVE;
 		
 		properties.add(Property.INORGANIC);
+
+		STR = Integer.MAX_VALUE;
 	}
 	
 	protected Weapon weapon;
@@ -92,11 +94,7 @@ public class Statue extends BelongingsHolder {
 	public int attackSkill( Char target ) {
 		return (int)((9 + Dungeon.depth) * weapon.accuracyFactor(this));
 	}
-	
-	@Override
-	protected float attackDelay() {
-		return super.attackDelay()*weapon.speedFactor( this );
-	}
+
 
 	@Override
 	protected boolean canAttack(Char enemy) {

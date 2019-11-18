@@ -138,8 +138,8 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean isEquipped(BelongingsHolder hero ) {
-		return hero.belongings.miscs[0] == this || hero.belongings.miscs[1] == this || hero.belongings.miscs[2] == this || hero.belongings.miscs[3] == this || hero.belongings.miscs[4] == this;
+	public boolean isEquipped(BelongingsHolder owner ) {
+		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
 	}
 
 }
