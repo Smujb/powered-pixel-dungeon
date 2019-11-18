@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
+import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
@@ -47,20 +48,24 @@ public class Statue extends BelongingsHolder {
 
 		STR = Integer.MAX_VALUE;
 	}
-	
-	protected Weapon weapon;
+
 	
 	public Statue() {
 		super();
 		
-		do {
-			belongings.miscs[0] = weapon =  (MeleeWeapon) Generator.random(Generator.Category.WEAPON);
-		} while (weapon.cursed);
+		belongings.miscs[0] = newItem();
+		belongings.miscs[1] = newItem();
+
 		
-		weapon.enchant( Enchantment.random() );
-		
-		HP = HT = 15 + Dungeon.depth * 5;
+		HP = HT = 20 + Dungeon.depth * 5;
 		defenseSkill = 4 + Dungeon.depth;
+	}
+
+	public KindofMisc newItem() {
+		KindofMisc item = ((KindofMisc)Generator.random(Generator.Category.WEAPON));
+		item.level(0);
+		item.cursed = false;
+		return item;
 	}
 	
 	private static final String WEAPON	= "getWeapons";
@@ -68,13 +73,11 @@ public class Statue extends BelongingsHolder {
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
-		bundle.put( WEAPON, weapon );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		weapon = (Weapon)bundle.get( WEAPON );
 	}
 	
 	@Override
@@ -96,20 +99,17 @@ public class Statue extends BelongingsHolder {
 	}
 	
 	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		return weapon.proc( this, enemy, damage );
-	}
-	
-	@Override
 	public void beckon( int cell ) {
 		// Do nothing
 	}
 	
 	@Override
 	public void die( Object cause ) {
-		weapon.identify();
-		Dungeon.level.drop( weapon, pos ).sprite.drop();
+		for (int i=0; i < belongings.miscs.length; i++) {
+			if (belongings.miscs[i] != null) {
+				Dungeon.level.drop(belongings.miscs[i].identify(), pos).sprite.drop();
+			}
+		}
 		super.die( cause );
 	}
 	
@@ -127,7 +127,13 @@ public class Statue extends BelongingsHolder {
 
 	@Override
 	public String description() {
-		return Messages.get(this, "desc", weapon.name());
+		String description = super.description();
+		for (int i=0; i < belongings.miscs.length; i++) {
+			if (belongings.miscs[i] != null) {
+				description += (belongings.miscs[i].name());
+			}
+		}
+		return description;
 	}
 	
 	{

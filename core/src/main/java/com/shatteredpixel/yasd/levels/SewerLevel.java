@@ -28,6 +28,8 @@ import com.shatteredpixel.yasd.effects.Ripple;
 import com.shatteredpixel.yasd.items.DewVial;
 import com.shatteredpixel.yasd.levels.painters.Painter;
 import com.shatteredpixel.yasd.levels.painters.SewerPainter;
+import com.shatteredpixel.yasd.levels.rooms.Room;
+import com.shatteredpixel.yasd.levels.rooms.special.StatueRoom;
 import com.shatteredpixel.yasd.levels.traps.AlarmTrap;
 import com.shatteredpixel.yasd.levels.traps.ChillingTrap;
 import com.shatteredpixel.yasd.levels.traps.ConfusionTrap;
@@ -49,13 +51,16 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import java.util.ArrayList;
+
 public class SewerLevel extends RegularLevel {
 
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
 	}
-	
+
+
 	@Override
 	protected int standardRooms() {
 		//5 to 7, average 5.57
