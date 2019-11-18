@@ -55,6 +55,9 @@ public class Statue extends BelongingsHolder {
 		
 		belongings.miscs[0] = newItem();
 		belongings.miscs[1] = newItem();
+		belongings.miscs[2] = newItem();
+		belongings.miscs[3] = newItem();
+		belongings.miscs[4] = newItem();
 
 		
 		HP = HT = 20 + Dungeon.depth * 5;
