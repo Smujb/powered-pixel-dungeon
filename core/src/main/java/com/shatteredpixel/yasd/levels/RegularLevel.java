@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.PitRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.yasd.levels.rooms.special.StatueRoom;
 import com.shatteredpixel.yasd.levels.rooms.standard.EntranceRoom;
 import com.shatteredpixel.yasd.levels.rooms.standard.ExitRoom;
 import com.shatteredpixel.yasd.levels.rooms.standard.StandardRoom;
@@ -84,6 +85,8 @@ public abstract class RegularLevel extends Level {
 			}
 			rooms = builder.build((ArrayList<Room>)initRooms.clone());
 		} while (rooms == null);
+
+
 		
 		return painter().paint(this, rooms);
 		
