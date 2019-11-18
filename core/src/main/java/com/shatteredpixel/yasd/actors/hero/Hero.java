@@ -909,55 +909,19 @@ public class Hero extends BelongingsHolder {
 			berserk.damage(damage);
 		}
 
-		ArrayList<Armor> Armors = belongings.getArmors();//Proc all armours 1 by 1
-		for (int i=0; i < Armors.size(); i++) {
-			damage = Armors.get(i).proc(enemy,this, damage);
-		}
-		
-		Earthroot.Armor armor = buff( Earthroot.Armor.class );
-		if (armor != null) {
-			damage = armor.absorb( damage );
-		}
-
-		WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
-		if (rockArmor != null) {
-			damage = rockArmor.absorb(damage);
-		}
+		damage = super.defenseProc(enemy,damage);
 		
 		return damage;
 	}
 	
 	@Override
 	public void damage( int dmg, Object src ) {
-		if (buff(TimekeepersHourglass.timeStasis.class) != null)
-			return;
-
 		if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
 			resting = false;
 		}
 
-		if (this.buff(Drowsy.class) != null) {
-			Buff.detach(this, Drowsy.class);
-			GLog.w(Messages.get(this, "pain_resist"));
-		}
-
-		CapeOfThorns.Thorns thorns = buff(CapeOfThorns.Thorns.class);
-		if (thorns != null) {
-			dmg = thorns.proc(dmg, (src instanceof Char ? (Char) src : null), this);
-		}
-
-		dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
-
-		//TODO improve this when I have proper damage source logic
-		//checks if *any* equipped armour has Anti Magic
-		ArrayList<Armor> Armors = belongings.getArmors();
-		for (int i = 0; i < Armors.size(); i++) {
-			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
-					&& AntiMagic.RESISTS.contains(src.getClass())) {
-				dmg -= AntiMagic.drRoll(Armors.get(i).level());
-			}
-		}
+		super.damage( dmg, src );
 
 		float shake;
 
@@ -972,8 +936,6 @@ public class Hero extends BelongingsHolder {
 			}
 
 		}
-
-		super.damage( dmg, src );
 	}
 	
 	public void checkVisibleMobs() {
