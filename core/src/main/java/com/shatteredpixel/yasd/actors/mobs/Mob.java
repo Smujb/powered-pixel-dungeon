@@ -569,6 +569,10 @@ public abstract class Mob extends Char {
 		if (state != HUNTING) {
 			alerted = true;
 		}
+		if (dmg <= 0) {
+			this.sprite.showStatus( CharSprite.NEUTRAL, "blocked" );
+			return;
+		}
 		
 		super.damage( dmg, src );
 	}

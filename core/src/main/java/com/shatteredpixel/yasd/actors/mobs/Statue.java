@@ -86,33 +86,12 @@ public class Statue extends BelongingsHolder {
 	}
 	
 	@Override
-	public int damageRoll() {
-		return weapon.damageRoll(this);
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return (int)((9 + Dungeon.depth) * weapon.accuracyFactor(this));
-	}
-
-
-	@Override
-	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || weapon.canReach(this, enemy.pos);
-	}
-
-	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, Dungeon.depth + weapon.defenseFactor(this));
-	}
-	
-	@Override
 	public void damage( int dmg, Object src ) {
 
 		if (state == PASSIVE) {
 			state = HUNTING;
+			return;
 		}
-		
 		super.damage( dmg, src );
 	}
 	
