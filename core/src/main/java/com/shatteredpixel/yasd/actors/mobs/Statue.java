@@ -62,7 +62,23 @@ public class Statue extends BelongingsHolder {
 	}
 
 	public KindofMisc newItem() {
-		KindofMisc item = ((KindofMisc)Generator.random(Generator.Category.WEAPON));
+		int type = Random.Int(3);
+		KindofMisc item;
+		switch (type) {
+			default:
+				item = ((KindofMisc)Generator.random(Generator.Category.WEAPON));
+				break;
+			case 1:
+				item = ((KindofMisc)Generator.random(Generator.Category.RING));
+				break;
+			case 2:
+				item = ((KindofMisc)Generator.random(Generator.Category.ARMOR));
+				break;
+			case 3:
+				item = ((KindofMisc)Generator.random(Generator.Category.WAND));
+				break;
+		}
+
 		item.level(0);
 		item.cursed = false;
 		return item;
@@ -127,13 +143,13 @@ public class Statue extends BelongingsHolder {
 
 	@Override
 	public String description() {
-		String description = super.description();
+		String description = super.description() + "_";
 		for (int i=0; i < belongings.miscs.length; i++) {
 			if (belongings.miscs[i] != null) {
-				description += (belongings.miscs[i].name());
+				description += (belongings.miscs[i].name()) + "_ \n\n_";
 			}
 		}
-		return description;
+		return description + "_";
 	}
 	
 	{

@@ -180,8 +180,7 @@ public class Hero extends BelongingsHolder {
 	private Char enemy;
 	
 	public boolean resting = false;
-	
-	public int STR;
+
 	
 	public float awareness;
 	

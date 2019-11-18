@@ -225,7 +225,7 @@ public class BelongingsHolder extends Mob {
 
         Momentum momentum = buff(Momentum.class);
         if (momentum != null){
-            ((HeroSprite)sprite).sprint( 1f + 0.05f*momentum.stacks());
+            //((HeroSprite)sprite).sprint( 1f + 0.05f*momentum.stacks());
             speed *= momentum.speedMultiplier();
         }
 
@@ -263,7 +263,7 @@ public class BelongingsHolder extends Mob {
         if (belongings.miscs[0] instanceof MissileWeapon) {
             return ((MissileWeapon)belongings.miscs[0]);
         }
-        return Dungeon.hero.belongings.getWeapons().get(currentWeapon);
+        return belongings.getWeapons().get(currentWeapon);
     }
 
     public int STR() {

@@ -195,7 +195,7 @@ public class Belongings implements Iterable<Item> {
 			if (CurArmour.hasGlyph(Stone.class, owner) && !((Stone) CurArmour.glyph).testingEvasion()) {
 				return 0;
 			}
-			int aEnc = CurArmour.STRReq() - ((Hero) owner).STR();
+			int aEnc = CurArmour.STRReq() -  owner.STR();
 			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
 
 			Momentum momentum = owner.buff(Momentum.class);
@@ -219,7 +219,7 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			int aEnc = CurArmour.STRReq() - ((Hero) owner).STR();
+			int aEnc = CurArmour.STRReq() - owner.STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 
 			if (CurArmour.hasGlyph(Swiftness.class, owner)) {

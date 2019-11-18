@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
+import com.shatteredpixel.yasd.levels.traps.GuardianTrap;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -41,11 +42,14 @@ public class Bestiary {
 		switch(depth){
 			
 			// Sewers
-			case 1: default:
+			default:
+				return new ArrayList<>(Arrays.asList(
+						Statue.class, Statue.class));
+			/*case 1:
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
-						Snake.class));
+						Snake.class));*/
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,
