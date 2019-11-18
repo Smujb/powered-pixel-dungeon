@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.rings;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -50,14 +51,14 @@ public class RingOfForce extends Ring {
 		return tier;
 	}
 
-	public static int damageRoll( Hero hero ){
-		if (hero.buff(Force.class) != null) {
-			int level = getBonus(hero, Force.class);
-			float tier = tier(hero.STR());
+	public static int damageRoll( BelongingsHolder owner ){
+		if (owner.buff(Force.class) != null) {
+			int level = getBonus(owner, Force.class);
+			float tier = tier(owner.STR());
 			return Random.NormalIntRange(min(level, tier), max(level, tier));
 		} else {
 			//attack without any ring of force influence
-			return Random.NormalIntRange(1, Math.max(hero.STR()-8, 1));
+			return Random.NormalIntRange(1, Math.max(owner.STR()-8, 1));
 		}
 	}
 

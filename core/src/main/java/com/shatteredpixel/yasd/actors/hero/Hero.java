@@ -380,82 +380,6 @@ public class Hero extends BelongingsHolder {
 	}
 
 	@Override
-	public int damageRoll() {
-		resetWeapon();//ensures "CurrentWeapon" never goes above maximum possible
-		int dmg;
-		KindOfWeapon wep = getCurrentWeapon();
-		if (wep != null) {
-			dmg = wep.damageRoll( this );
-			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
-		} else {
-			dmg = RingOfForce.damageRoll(this);
-		}
-		if (dmg < 0) dmg = 0;
-		
-		Berserk berserk = buff(Berserk.class);
-		if (berserk != null) dmg = berserk.damageFactor(dmg);
-
-		return buff( Fury.class ) != null ? (int)(dmg * 1.5f) : dmg;
-	}
-	
-	@Override
-	public float speed() {
-
-		float speed = super.speed();
-
-		speed *= RingOfHaste.speedMultiplier(this);
-
-		ArrayList<Armor> Armors = belongings.getArmors();//Applies speed factor for all armours
-		float BaseSpeed = speed;
-		if (belongings != null) {
-			speed = belongings.SpeedFactor(speed);
-		}
-
-		
-		Momentum momentum = buff(Momentum.class);
-		if (momentum != null){
-			((HeroSprite)sprite).sprint( 1f + 0.05f*momentum.stacks());
-			speed *= momentum.speedMultiplier();
-		}
-		
-		return speed;
-		
-	}
-
-	public boolean canSurpriseAttack(){
-		resetWeapon();
-		KindOfWeapon curWep = getCurrentWeapon();
-		if (!(curWep instanceof Weapon))                      return true;
-		if (STR() < ((Weapon)curWep).STRReq())                return false;
-		if (curWep instanceof Flail)                          return false;
-
-		return true;
-	}
-
-	public boolean canAttack(Char enemy){
-		if (enemy == null || pos == enemy.pos) {
-			return false;
-		}
-
-		//can always attack adjacent enemies
-		if (Dungeon.level.adjacent(pos, enemy.pos)) {
-			return true;
-		}
-
-		KindOfWeapon wep = getCurrentWeapon();
-
-		if (wep != null){
-			return wep.canReach(this, enemy.pos);
-		} else {
-			return false;
-		}
-	}
-
-
-
-
-
-	@Override
 	public void spend( float time ) {
 		justMoved = false;
 		TimekeepersHourglass.timeFreeze freeze = buff(TimekeepersHourglass.timeFreeze.class);
@@ -949,9 +873,7 @@ public class Hero extends BelongingsHolder {
 	@Override
 	public int attackProc( final Char enemy, int damage ) {
 		KindOfWeapon wep = getCurrentWeapon();
-
-		if (wep != null) damage = wep.proc( this, enemy, damage );
-		
+		damage = super.attackProc(enemy,damage);
 		switch (subClass) {
 		case SNIPER:
 			if (wep instanceof MissileWeapon && !(wep instanceof SpiritBow.SpiritArrow)) {
