@@ -23,15 +23,13 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.BelongingsHolder;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.KindofMisc;
-import com.shatteredpixel.yasd.items.weapon.Weapon;
+import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
-import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.StatueSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -61,21 +59,27 @@ public class Statue extends BelongingsHolder {
 
 		
 		HP = HT = 20 + Dungeon.depth * 5;
-		defenseSkill = 4 + Dungeon.depth;
+		evasion = 4 + Dungeon.depth;
 	}
 
 	public KindofMisc newItem() {
-		int type = Random.Int(3);
+		int type = Random.Int(4);
 		KindofMisc item;
 		switch (type) {
 			default:
-				item = ((KindofMisc)Generator.random(Generator.Category.WEAPON));
+				item = ((MeleeWeapon)Generator.random(Generator.Category.WEAPON));
+				if (((MeleeWeapon)item).hasCurseEnchant()) {
+					((MeleeWeapon)item).enchant(Enchantment.random());
+				}
 				break;
 			case 1:
 				item = ((KindofMisc)Generator.random(Generator.Category.RING));
 				break;
 			case 2:
-				item = ((KindofMisc)Generator.random(Generator.Category.ARMOR));
+				item = ((Armor)Generator.random(Generator.Category.ARMOR));
+				if (((Armor)item).hasCurseGlyph()) {
+					((Armor)item).inscribe(Armor.Glyph.random());
+				}
 				break;
 			case 3:
 				item = ((KindofMisc)Generator.random(Generator.Category.WAND));

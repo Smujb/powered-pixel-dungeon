@@ -259,7 +259,7 @@ public class Hero extends BelongingsHolder {
 	}
 
 	private static final String ATTACK		= "attackSkill";
-	private static final String DEFENSE		= "defenseSkill";
+	private static final String DEFENSE		= "evasion";
 	private static final String STRENGTH	= "STR";
 	private static final String LEVEL		= "lvl";
 	private static final String EXPERIENCE	= "exp";

@@ -94,7 +94,7 @@ public abstract class Mob extends Char {
 	
 	protected int target = -1;
 	
-	protected int defenseSkill = 0;
+	int defenseSkill = 0;
 	
 	public int EXP = 1;
 	public int maxLvl = Hero.MAX_LEVEL;
@@ -569,10 +569,7 @@ public abstract class Mob extends Char {
 		if (state != HUNTING) {
 			alerted = true;
 		}
-		if (dmg <= 0) {
-			this.sprite.showStatus( CharSprite.NEUTRAL, "blocked" );
-			return;
-		}
+
 		
 		super.damage( dmg, src );
 	}

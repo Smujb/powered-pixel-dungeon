@@ -7,16 +7,13 @@ import com.shatteredpixel.yasd.actors.buffs.Berserk;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Drowsy;
 import com.shatteredpixel.yasd.actors.buffs.Fury;
-import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
-import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
-import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight;
@@ -35,7 +32,6 @@ import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Earthroot;
-import com.shatteredpixel.yasd.sprites.HeroSprite;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Random;
 
@@ -46,7 +42,7 @@ public class BelongingsHolder extends Mob {
     public int currentWeapon = 0;
     public int STR;
     public int attackSkill;
-    public int defenseSkill;
+    public int evasion = 1;
 
     @Override
     public int attackSkill( Char target ) {
@@ -75,7 +71,7 @@ public class BelongingsHolder extends Mob {
     @Override
     public int defenseSkill( Char enemy ) {
 
-        float evasion = defenseSkill;
+        float evasion = this.evasion;
 
         evasion *= RingOfEvasion.evasionMultiplier( this );
 
