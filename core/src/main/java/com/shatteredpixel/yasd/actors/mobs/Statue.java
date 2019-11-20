@@ -59,7 +59,7 @@ public class Statue extends BelongingsHolder {
 
 		
 		HP = HT = 20 + Dungeon.depth * 5;
-		evasion = 4 + Dungeon.depth;
+		defenseSkill = 4 + Dungeon.depth;
 	}
 
 	public KindofMisc newItem() {

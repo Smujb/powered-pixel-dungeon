@@ -41,8 +41,6 @@ public class BelongingsHolder extends Mob {
     public Belongings belongings;
     public int currentWeapon = 0;
     public int STR;
-    public int attackSkill;
-    public int evasion = 1;
 
     @Override
     public int attackSkill( Char target ) {
@@ -71,7 +69,7 @@ public class BelongingsHolder extends Mob {
     @Override
     public int defenseSkill( Char enemy ) {
 
-        float evasion = this.evasion;
+        float evasion = this.defenseSkill;
 
         evasion *= RingOfEvasion.evasionMultiplier( this );
 

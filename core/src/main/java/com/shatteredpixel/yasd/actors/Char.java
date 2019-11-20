@@ -96,6 +96,7 @@ public abstract class Char extends Actor {
 	public CharSprite sprite;
 	
 	public String name = "mob";
+
 	
 	public int HT;
 	public int HP;

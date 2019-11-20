@@ -150,6 +150,9 @@ public class Hero extends BelongingsHolder {
 		actPriority = HERO_PRIO;
 		
 		alignment = Alignment.ALLY;
+
+		attackSkill = 10;
+		defenseSkill=  4;
 	}
 	
 	public static final int MAX_LEVEL = 30;
@@ -167,9 +170,7 @@ public class Hero extends BelongingsHolder {
 	
 	public HeroClass heroClass = HeroClass.ROGUE;
 	public HeroSubClass subClass = HeroSubClass.NONE;
-	
-	private int attackSkill = 10;
-	private int defenseSkill = 5;
+
 
 	public boolean ready = false;
 	private boolean damageInterrupt = true;
@@ -404,6 +405,8 @@ public class Hero extends BelongingsHolder {
 	
 	@Override
 	public boolean act() {
+
+		state = WANDERING;
 		
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;

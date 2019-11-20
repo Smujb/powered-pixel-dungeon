@@ -93,8 +93,9 @@ public abstract class Mob extends Char {
 	public Class<? extends CharSprite> spriteClass;
 	
 	protected int target = -1;
-	
-	int defenseSkill = 0;
+
+	public int defenseSkill = 0;
+	public int attackSkill = 0;
 	
 	public int EXP = 1;
 	public int maxLvl = Hero.MAX_LEVEL;
