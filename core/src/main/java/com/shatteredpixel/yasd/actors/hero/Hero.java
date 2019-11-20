@@ -156,7 +156,7 @@ public class Hero extends BelongingsHolder {
 	}
 	
 	public static final int MAX_LEVEL = 30;
-	//Morale, coming soon
+
 	public float MAX_MORALE = 10f;
 	public float morale = MAX_MORALE;
 
