@@ -67,7 +67,7 @@ public class WandOfRegrowth extends Wand {
 	private int totChrgUsed = 0;
 	
 	@Override
-	protected void onZap( Ballistica bolt ) {
+	public void onZap(Ballistica bolt) {
 
 		//ignore tiles which can't have anything grow in them.
 		for (Iterator<Integer> i = affectedCells.iterator(); i.hasNext();) {

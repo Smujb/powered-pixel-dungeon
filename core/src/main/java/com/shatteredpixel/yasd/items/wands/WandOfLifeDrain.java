@@ -59,7 +59,7 @@ public class WandOfLifeDrain extends DamageWand {
 
 
     @Override
-    protected void onZap( Ballistica bolt ) {
+    public void onZap(Ballistica bolt) {
 
         Char ch = Actor.findChar( bolt.collisionPos );
         if (ch != null) {

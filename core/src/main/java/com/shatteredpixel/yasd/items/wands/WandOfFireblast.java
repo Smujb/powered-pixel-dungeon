@@ -70,7 +70,7 @@ public class WandOfFireblast extends DamageWand {
 	private int direction = 0;
 	
 	@Override
-	protected void onZap( Ballistica bolt ) {
+	public void onZap(Ballistica bolt) {
 		
 		ArrayList<Char> affectedChars = new ArrayList<>();
 		for( int cell : affectedCells){

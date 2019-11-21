@@ -3,6 +3,7 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -36,7 +37,7 @@ public class WandOfWarding extends Wand {
 	private boolean wardAvailable = true;
 	
 	@Override
-	public boolean tryToZap(Hero owner, int target) {
+	public boolean tryToZap(BelongingsHolder owner, int target) {
 		
 		int currentWardEnergy = 0;
 		for (Char ch : Actor.chars()){
@@ -73,7 +74,7 @@ public class WandOfWarding extends Wand {
 	}
 	
 	@Override
-	protected void onZap(Ballistica bolt) {
+	public void onZap(Ballistica bolt) {
 		
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (!curUser.fieldOfView[bolt.collisionPos] || !Dungeon.level.passable[bolt.collisionPos]){
@@ -358,28 +359,32 @@ public class WandOfWarding extends Wand {
 		
 		@Override
 		public boolean canInteract(Hero h) {
-			return true;
+			return (this.alignment == Alignment.ALLY);
 		}
 
 		@Override
 		public boolean interact() {
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					GameScene.show(new WndOptions( Messages.get(Ward.this, "dismiss_title"),
-							Messages.get(Ward.this, "dismiss_body"),
-							Messages.get(Ward.this, "dismiss_confirm"),
-							Messages.get(Ward.this, "dismiss_cancel") ){
-						@Override
-						protected void onSelect(int index) {
-							if (index == 0){
-								die(null);
+			if (alignment == curUser.alignment) {
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						GameScene.show(new WndOptions(Messages.get(Ward.this, "dismiss_title"),
+								Messages.get(Ward.this, "dismiss_body"),
+								Messages.get(Ward.this, "dismiss_confirm"),
+								Messages.get(Ward.this, "dismiss_cancel")) {
+							@Override
+							protected void onSelect(int index) {
+								if (index == 0) {
+									die(null);
+								}
 							}
-						}
-					});
-				}
-			});
-			return true;
+						});
+					}
+				});
+				return true;
+			} else {
+				return super.interact();
+			}
 		}
 
 		@Override

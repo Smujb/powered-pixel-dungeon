@@ -42,7 +42,7 @@ public class WandOfDamnation extends Wand {
     }
 
     @Override
-    protected void onZap(Ballistica attack) {
+    public void onZap(Ballistica attack) {
         Char ch = Actor.findChar(attack.collisionPos);
         Mob enemy;
         if (ch instanceof Mob) {

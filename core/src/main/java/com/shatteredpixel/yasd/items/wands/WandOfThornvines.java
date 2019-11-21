@@ -2,6 +2,7 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -23,6 +24,8 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
+
+import java.security.acl.Owner;
 
 public class WandOfThornvines extends Wand {
     {
@@ -50,17 +53,17 @@ public class WandOfThornvines extends Wand {
     }
 
     @Override
-    public boolean tryToZap(Hero owner, int target) {
+    public boolean tryToZap(BelongingsHolder owner, int target) {
         thornVine = findThornVine();
         return super.tryToZap(owner, target) & thornVine == null;//Can't zap if a thorn vine already exists
     }
 
     @Override
-    protected void onZap(Ballistica bolt) {
+    public void onZap(Ballistica bolt) {
 
 
         if (findThornVine() == null) {
-            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges);
+            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges, curUser);
         }
     }
 
@@ -78,13 +81,14 @@ public class WandOfThornvines extends Wand {
         private final String CHARGES = "charges";
 
 
-        public ThornVine(int level, int charges) {
+        public ThornVine(int level, int charges, BelongingsHolder owner) {
             this.level = level;
             this.charges = charges;
+            this.alignment = owner.alignment;
         }
 
         public ThornVine() {
-            this(0, 1);
+            this(0, 1, Dungeon.hero);
         }
 
         @Override
@@ -175,9 +179,9 @@ public class WandOfThornvines extends Wand {
             return true;
         }
 
-        public ThornVine spawnAt(int pos, int level, int charges ) {
+        public ThornVine spawnAt(int pos, int level, int charges, BelongingsHolder owner ) {
             if (Dungeon.level.passable[pos]) {
-                ThornVine TV = new ThornVine(level, charges);
+                ThornVine TV = new ThornVine(level, charges, owner);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
                 } else {

@@ -31,7 +31,7 @@ public class WandOfAcid extends DamageWand {
     }
 
     @Override
-    protected void onZap(Ballistica attack) {
+    public void onZap(Ballistica attack) {
         Char ch = Actor.findChar( attack.collisionPos );
         int pos = attack.collisionPos;
         if (ch != null) {

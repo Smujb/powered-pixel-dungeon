@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
@@ -128,13 +129,20 @@ public abstract class Wand extends KindofMisc {
 
 	}
 
+	public void zap(Ballistica attack) {
+		this.fx(attack, new Callback() {
+			public void call() {
+				onZap(attack);
+				wandUsed();
+			}
+		});
+	}
 
-
-	protected abstract void onZap(Ballistica attack );
+	public abstract void onZap(Ballistica attack );
 
 	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
 
-	public boolean tryToZap( Hero owner, int target ){
+	public boolean tryToZap(BelongingsHolder owner, int target ){
 
 		if (owner.buff(MagicImmune.class) != null){
 			GLog.w( Messages.get(this, "no_magic") );
@@ -486,12 +494,7 @@ public abstract class Wand extends KindofMisc {
 									}
 								});
 					} else {
-						curWand.fx(shot, new Callback() {
-							public void call() {
-								curWand.onZap(shot);
-								curWand.wandUsed();
-							}
-						});
+						curWand.zap(shot);
 					}
 					curWand.cursedKnown = true;
 					
