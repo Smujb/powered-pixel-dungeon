@@ -113,7 +113,7 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+	public boolean doUnequip(BelongingsHolder hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 
 			if (hero.belongings.miscs[0] == this) {

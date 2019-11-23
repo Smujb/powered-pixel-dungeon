@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.stones;
 
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
@@ -36,7 +37,7 @@ public class StoneOfBlink extends Runestone {
 	private static Ballistica throwPath;
 	
 	@Override
-	public int throwPos(Hero user, int dst) {
+	public int throwPos(BelongingsHolder user, int dst) {
 		throwPath = new Ballistica( user.pos, dst, Ballistica.PROJECTILE );
 		return throwPath.collisionPos;
 	}

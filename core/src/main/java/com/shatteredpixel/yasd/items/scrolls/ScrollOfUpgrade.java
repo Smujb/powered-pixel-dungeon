@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.items.scrolls;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -45,8 +46,9 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	
 	@Override
 	protected void onItemSelected( Item item ) {
-
-		upgrade( curUser );
+		if (curUser instanceof Hero) {
+			upgrade((Hero)curUser);
+		}
 
 		//logic for telling the user when item properties change from upgrades
 		//...yes this is rather messy
@@ -102,7 +104,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		Badges.validateMageUnlock();
 	}
 	
-	public static void upgrade( Hero hero ) {
+	public static void upgrade( BelongingsHolder hero ) {
 		hero.sprite.emitter().start( Speck.factory( Speck.UP ), 0.2f, 3 );
 	}
 

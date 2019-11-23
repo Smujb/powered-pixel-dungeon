@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.ShatteredPixelDungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.ConfusionGas;
@@ -82,7 +83,7 @@ public class CursedWand {
 	private static float RARE_CHANCE = 0.09f;
 	private static float VERY_RARE_CHANCE = 0.01f;
 
-	public static void cursedZap(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+	public static void cursedZap(final Item origin, final BelongingsHolder user, final Ballistica bolt, final Callback afterZap){
 		switch (Random.chances(new float[]{COMMON_CHANCE, UNCOMMON_CHANCE, RARE_CHANCE, VERY_RARE_CHANCE})){
 			case 0:
 			default:
@@ -100,7 +101,7 @@ public class CursedWand {
 		}
 	}
 
-	private static void commonEffect(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+	private static void commonEffect(final Item origin, final BelongingsHolder user, final Ballistica bolt, final Callback afterZap){
 		switch(Random.Int(4)){
 
 			//anti-entropy
@@ -139,7 +140,7 @@ public class CursedWand {
 			case 2:
 				switch(Random.Int(2)){
 					case 0:
-						ScrollOfTeleportation.teleportHero(user);
+						ScrollOfTeleportation.teleportUser(user);
 						afterZap.call();
 						break;
 					case 1:
@@ -147,7 +148,7 @@ public class CursedWand {
 							public void call() {
 								Char ch = Actor.findChar( bolt.collisionPos );
 								if (ch == user){
-									ScrollOfTeleportation.teleportHero(user);
+									ScrollOfTeleportation.teleportUser(user);
 								} else if (ch != null && !ch.properties().contains(Char.Property.IMMOVABLE)) {
 									int count = 10;
 									int pos;
@@ -196,7 +197,7 @@ public class CursedWand {
 
 	}
 
-	private static void uncommonEffect(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+	private static void uncommonEffect(final Item origin, final BelongingsHolder user, final Ballistica bolt, final Callback afterZap){
 		switch(Random.Int(4)){
 
 			//Random plant
@@ -228,7 +229,12 @@ public class CursedWand {
 				if (target != null) {
 					cursedFX(user, bolt, new Callback() {
 						public void call() {
-							int damage = user.lvl * 2;
+							int damage;
+							if (user instanceof Hero) {
+								damage = ((Hero)user).lvl * 2;
+							} else {
+								damage = Dungeon.depth * 2;
+							}
 							switch (Random.Int(2)) {
 								case 0:
 									user.HP = Math.min(user.HT, user.HP + damage);
@@ -279,7 +285,7 @@ public class CursedWand {
 
 	}
 
-	private static void rareEffect(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+	private static void rareEffect(final Item origin, final BelongingsHolder user, final Ballistica bolt, final Callback afterZap){
 		switch(Random.Int(4)){
 
 			//sheep transformation
@@ -335,7 +341,7 @@ public class CursedWand {
 					Game.switchScene(InterlevelScene.class);
 
 				} else {
-					ScrollOfTeleportation.teleportHero(user);
+					ScrollOfTeleportation.teleportUser(user);
 
 				}
 				afterZap.call();
@@ -349,7 +355,7 @@ public class CursedWand {
 		}
 	}
 
-	private static void veryRareEffect(final Item origin, final Hero user, final Ballistica bolt, final Callback afterZap){
+	private static void veryRareEffect(final Item origin, final BelongingsHolder user, final Ballistica bolt, final Callback afterZap){
 		switch(Random.Int(4)){
 
 			//great forest fire!
@@ -450,7 +456,7 @@ public class CursedWand {
 		}
 	}
 
-	private static void cursedFX(final Hero user, final Ballistica bolt, final Callback callback){
+	private static void cursedFX(final BelongingsHolder user, final Ballistica bolt, final Callback callback){
 		MagicMissile.boltFromChar( user.sprite.parent,
 				MagicMissile.RAINBOW,
 				user.sprite,

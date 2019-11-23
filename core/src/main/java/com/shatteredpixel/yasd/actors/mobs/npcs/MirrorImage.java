@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.blobs.ToxicGas;
@@ -52,25 +53,26 @@ public class MirrorImage extends NPC {
 		actPriority = MOB_PRIO + 1;
 	}
 	
-	private Hero hero;
+	private BelongingsHolder user;
 	private int heroID;
 	public int armTier;
 	
 	@Override
 	protected boolean act() {
 		
-		if ( hero == null ){
-			hero = (Hero)Actor.findById(heroID);
-			if ( hero == null ){
+		if ( user == null ){
+			user = (Hero)Actor.findById(heroID);
+			if ( user == null ){
 				die(null);
 				sprite.killAndErase();
 				return true;
 			}
 		}
-		
-		if (hero.tier() != armTier){
-			armTier = hero.tier();
-			((MirrorSprite)sprite).updateArmor( armTier );
+		if (user instanceof Hero) {
+			if (((Hero)user).tier() != armTier) {
+				armTier = ((Hero)user).tier();
+				((MirrorSprite) sprite).updateArmor(armTier);
+			}
 		}
 		
 		return super.act();
@@ -90,35 +92,40 @@ public class MirrorImage extends NPC {
 		heroID = bundle.getInt( HEROID );
 	}
 	
-	public void duplicate( Hero hero ) {
-		this.hero = hero;
-		heroID = this.hero.id();
+	public void duplicate( BelongingsHolder hero ) {
+		this.user = hero;
+		heroID = this.user.id();
 		Buff.affect(this, MirrorInvis.class, Short.MAX_VALUE);
 	}
 	
 	@Override
 	public int damageRoll() {
 		int damage;
-		if (hero.belongings.getWeapons() != null){
-			damage = hero.belongings.getWeapons().get(0).damageRoll(this);
+		if (user.belongings.getWeapons() != null){
+			damage = user.belongings.getWeapons().get(0).damageRoll(this);
 		} else {
-			damage = hero.damageRoll(); //handles ring of force
+			damage = user.damageRoll(); //handles ring of force
 		}
-		return (damage+1)/2; //half hero damage, rounded up
+		return (damage+1)/2; //half user damage, rounded up
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return hero.attackSkill(target);
+		return user.attackSkill(target);
 	}
 	
 	@Override
 	public int defenseSkill(Char enemy) {
-		if (hero != null) {
-			int baseEvasion = 4 + hero.lvl;
-			int heroEvasion = hero.defenseSkill(enemy);
+		if (user != null) {
+			int baseEvasion;
+			if (user instanceof Hero){
+				baseEvasion = 4 + ((Hero)user).lvl;
+			} else {
+				baseEvasion = 4 + Dungeon.depth;
+			}
+			int heroEvasion = user.defenseSkill(enemy);
 			
-			//if the hero has more/less evasion, 50% of it is applied
+			//if the user has more/less evasion, 50% of it is applied
 			return super.defenseSkill(enemy) * (baseEvasion + heroEvasion) / 2;
 		} else {
 			return 0;
@@ -127,18 +134,18 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	protected float attackDelay() {
-		return hero.attackDelay(); //handles ring of furor
+		return user.attackDelay(); //handles ring of furor
 	}
 	
 	@Override
 	protected boolean canAttack(Char enemy) {
-		return super.canAttack(enemy) || (hero.belongings.getWeapons() != null && hero.belongings.getWeapons().get(0).canReach(this, enemy.pos));
+		return super.canAttack(enemy) || (user.belongings.getWeapons() != null && user.belongings.getWeapons().get(0).canReach(this, enemy.pos));
 	}
 	
 	@Override
 	public int drRoll() {
-		if (hero != null && hero.belongings.getWeapons() != null){
-			return Random.NormalIntRange(0, hero.belongings.getWeapons().get(0).defenseFactor(this)/2);
+		if (user != null && user.belongings.getWeapons() != null){
+			return Random.NormalIntRange(0, user.belongings.getWeapons().get(0).defenseFactor(this)/2);
 		} else {
 			return 0;
 		}
@@ -156,8 +163,8 @@ public class MirrorImage extends NPC {
 		if (enemy instanceof Mob) {
 			((Mob)enemy).aggro( this );
 		}
-		if (hero.belongings.getWeapons() != null){
-			return hero.belongings.getWeapons().get(0).proc( this, enemy, damage );
+		if (user.belongings.getWeapons() != null){
+			return user.belongings.getWeapons().get(0).proc( this, enemy, damage );
 		} else {
 			return damage;
 		}
@@ -172,9 +179,9 @@ public class MirrorImage extends NPC {
 			heroID = Dungeon.hero.id();
 		}
 		
-		hero = (Hero)Actor.findById(heroID);
-		if (hero != null) {
-			armTier = hero.tier();
+		user = (Hero)Actor.findById(heroID);
+		if (user instanceof Hero) {
+			armTier = ((Hero)user).tier();
 		}
 		((MirrorSprite)s).updateArmor( armTier );
 		return s;

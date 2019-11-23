@@ -121,6 +121,10 @@ public abstract class Wand extends KindofMisc {
 	@Override
 	public void activate(Char ch) {//When equipped, start charging
 		super.activate(ch);
+		if (ch instanceof BelongingsHolder) {
+			curUser = (BelongingsHolder)ch;
+		}
+
 		if (ch instanceof Hero && ((Hero) ch).belongings.getItem(MagicalHolster.class) != null) {
 			charge(ch, ((Hero) ch).belongings.getItem(MagicalHolster.class).HOLSTER_SCALE_FACTOR);
 		} else {
@@ -134,6 +138,7 @@ public abstract class Wand extends KindofMisc {
 			public void call() {
 				onZap(attack);
 				wandUsed();
+				curUser.next();
 			}
 		});
 	}
@@ -354,7 +359,7 @@ public abstract class Wand extends KindofMisc {
 		
 		curCharges -= cursed ? 1 : chargesPerCast();
 		
-		if (curUser.heroClass == HeroClass.MAGE) levelKnown = true;
+		if (curUser instanceof Hero && ((Hero)curUser).heroClass == HeroClass.MAGE) levelKnown = true;
 		updateQuickslot();
 
 		curUser.spendAndNext( TIME_TO_ZAP );
@@ -476,8 +481,10 @@ public abstract class Wand extends KindofMisc {
 					QuickSlotButton.target(Actor.findChar(cell));
 				
 				if (curWand.tryToZap(curUser, target)) {
-					
-					curUser.busy();
+					if (curUser instanceof Hero) {
+						((Hero)curUser).busy();
+					}
+
 					Invisibility.dispel();
 					
 					if (curWand.cursed){

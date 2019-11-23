@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.actors.mobs.npcs.PrismaticImage;
@@ -101,8 +102,12 @@ public class PrismaticGuard extends Buff {
 		return maxHP((Hero)target);
 	}
 	
-	public static int maxHP( Hero hero ){
-		return 8 + (int)Math.floor(hero.lvl * 2.5f);
+	public static int maxHP( BelongingsHolder hero ){
+		if (hero instanceof Hero) {
+			return 8 + (int) Math.floor(((Hero)hero).lvl * 2.5f);
+		} else {
+			return 8 + (int) Math.floor(Dungeon.depth * 2.5f);
+		}
 	}
 	
 	@Override

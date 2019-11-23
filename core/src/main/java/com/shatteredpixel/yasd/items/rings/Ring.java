@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.rings;
 
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -129,7 +130,7 @@ public class Ring extends KindofMisc {
 	}
 
 	@Override
-	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
+	public boolean doUnequip(BelongingsHolder hero, boolean collect, boolean single ) {
 		if (super.doUnequip( hero, collect, single )) {
 
 			hero.remove( buff );

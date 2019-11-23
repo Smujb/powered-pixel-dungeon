@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Fire;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -339,7 +340,7 @@ public class Potion extends Item {
 	}
 
 	@Override
-	public void cast( final Hero user, int dst ) {
+	public void cast(final BelongingsHolder user, int dst ) {
 			super.cast(user, dst);
 	}
 	

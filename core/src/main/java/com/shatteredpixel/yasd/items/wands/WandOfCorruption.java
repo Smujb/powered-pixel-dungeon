@@ -52,6 +52,7 @@ import com.shatteredpixel.yasd.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Bee;
 import com.shatteredpixel.yasd.actors.mobs.King;
 import com.shatteredpixel.yasd.actors.mobs.Mimic;
@@ -236,11 +237,14 @@ public class WandOfCorruption extends Wand {
 			Statistics.enemiesSlain++;
 			Badges.validateMonstersSlain();
 			Statistics.qualifiedForNoKilling = false;
-			if (enemy.EXP > 0 && curUser.lvl <= enemy.maxLvl) {
-				curUser.sprite.showStatus(CharSprite.POSITIVE, Messages.get(enemy, "exp", enemy.EXP));
-				curUser.earnExp(enemy.EXP, enemy.getClass());
-			} else {
-				curUser.earnExp(0, enemy.getClass());
+			if (curUser instanceof Hero) {
+				Hero hero = ((Hero)curUser);
+				if (enemy.EXP > 0 && hero.lvl <= enemy.maxLvl) {
+					hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(enemy, "exp", enemy.EXP));
+					hero.earnExp(enemy.EXP, enemy.getClass());
+				} else {
+					hero.earnExp(0, enemy.getClass());
+				}
 			}
 		} else {
 			Buff.affect(enemy, Doom.class);

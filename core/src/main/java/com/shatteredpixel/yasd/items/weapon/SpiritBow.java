@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.items.weapon;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Splash;
@@ -269,7 +270,7 @@ public class SpiritBow extends Weapon {
 		int flurryCount = -1;
 		
 		@Override
-		public void cast(final Hero user, final int dst) {
+		public void cast(final BelongingsHolder user, final int dst) {
 			final int cell = throwPos( user, dst );
 			SpiritBow.this.targetPos = cell;
 			if (sniperSpecial && SpiritBow.this.augment == Augment.SPEED){

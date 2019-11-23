@@ -112,8 +112,9 @@ public class TomeOfMastery extends Item {
 		
 		curUser.spend( TomeOfMastery.TIME_TO_READ );
 		curUser.busy();
-		
-		curUser.subClass = way;
+		if (curUser instanceof Hero) {//Non hero should never use this. But you never know... ;)
+			((Hero)curUser).subClass = way;
+		}
 		
 		curUser.sprite.operate( curUser.pos );
 		Sample.INSTANCE.play( Assets.SND_MASTERY );

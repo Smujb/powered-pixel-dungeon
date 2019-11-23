@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.rings;
 
 
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.Item;
@@ -42,7 +43,7 @@ public class RingOfMight extends Ring {
 	}
 
 	@Override
-	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+	public boolean doUnequip(BelongingsHolder hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 			hero.updateHT( false );
 			return true;

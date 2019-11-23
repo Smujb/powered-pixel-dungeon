@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.artifacts;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Cripple;
@@ -129,7 +130,7 @@ public class EtherealChains extends Artifact {
 	};
 	
 	//pulls an enemy to a position along the chain's path, as close to the hero as possible
-	private void chainEnemy( Ballistica chain, final Hero hero, final Char enemy ){
+	private void chainEnemy(Ballistica chain, final BelongingsHolder user, final Char enemy ){
 		
 		if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
 			GLog.w( Messages.get(this, "cant_pull") );
@@ -160,9 +161,11 @@ public class EtherealChains extends Artifact {
 			charge -= chargeUse;
 			updateQuickslot();
 		}
-		
-		hero.busy();
-		hero.sprite.parent.add(new Chains(hero.sprite.center(), enemy.sprite.center(), new Callback() {
+		if (user instanceof Hero) {
+			((Hero)user).busy();
+		}
+
+		user.sprite.parent.add(new Chains(user.sprite.center(), enemy.sprite.center(), new Callback() {
 			public void call() {
 				Actor.add(new Pushing(enemy, enemy.pos, pulledPos, new Callback() {
 					public void call() {
@@ -172,13 +175,13 @@ public class EtherealChains extends Artifact {
 				enemy.pos = pulledPos;
 				Dungeon.observe();
 				GameScene.updateFog();
-				hero.spendAndNext(1f);
+				user.spendAndNext(1f);
 			}
 		}));
 	}
 	
 	//pulls the hero along the chain to the collosionPos, if possible.
-	private void chainLocation( Ballistica chain, final Hero hero ){
+	private void chainLocation( Ballistica chain, final BelongingsHolder user ){
 		
 		//don't pull if the collision spot is in a wall
 		if (Dungeon.level.solid[chain.collisionPos]){
@@ -201,7 +204,7 @@ public class EtherealChains extends Artifact {
 		
 		final int newHeroPos = chain.collisionPos;
 		
-		int chargeUse = Dungeon.level.distance(hero.pos, newHeroPos);
+		int chargeUse = Dungeon.level.distance(user.pos, newHeroPos);
 		if (chargeUse > charge){
 			GLog.w( Messages.get(EtherealChains.class, "no_charge") );
 			return;
@@ -209,17 +212,18 @@ public class EtherealChains extends Artifact {
 			charge -= chargeUse;
 			updateQuickslot();
 		}
-		
-		hero.busy();
-		hero.sprite.parent.add(new Chains(hero.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(newHeroPos), new Callback() {
+		if (user instanceof Hero) {
+			((Hero)user).busy();
+		}
+		user.sprite.parent.add(new Chains(user.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(newHeroPos), new Callback() {
 			public void call() {
-				Actor.add(new Pushing(hero, hero.pos, newHeroPos, new Callback() {
+				Actor.add(new Pushing(user, user.pos, newHeroPos, new Callback() {
 					public void call() {
-						Dungeon.level.occupyCell(hero);
+						Dungeon.level.occupyCell(user);
 					}
 				}));
-				hero.spendAndNext(1f);
-				hero.pos = newHeroPos;
+				user.spendAndNext(1f);
+				user.pos = newHeroPos;
 				Dungeon.observe();
 				GameScene.updateFog();
 			}

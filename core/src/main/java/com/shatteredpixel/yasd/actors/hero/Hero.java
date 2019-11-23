@@ -343,16 +343,10 @@ public class Hero extends BelongingsHolder {
 	public int tier() {//Not needed any more
 		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).tier;
 	}
-	
-	public boolean shoot( Char enemy, MissileWeapon wep ) {
 
-		//temporarily set the hero's getWeapons to the missile getWeapons being used
-		KindofMisc equipped = belongings.miscs[0];
-		belongings.miscs[0] = wep;
-		boolean hit = attack( enemy );
-		Invisibility.dispel();
-		belongings.miscs[0] = equipped;
-		
+	@Override
+	public boolean shoot(Char enemy, MissileWeapon wep) {
+		boolean hit = super.shoot(enemy,wep);
 		if (subClass == HeroSubClass.GLADIATOR){
 			if (hit) {
 				Buff.affect( this, Combo.class ).hit( enemy );
@@ -361,11 +355,8 @@ public class Hero extends BelongingsHolder {
 				if (combo != null) combo.miss( enemy );
 			}
 		}
-
 		return hit;
 	}
-
-
 
 	@Override
 	public int attackSkill( Char target ) {
@@ -396,13 +387,13 @@ public class Hero extends BelongingsHolder {
 		
 		super.spend(time);
 	}
-	
-	public void spendAndNext( float time ) {
+
+	@Override
+	public void spendAndNext(float time) {
 		busy();
-		spend( time );
-		next();
+		super.spendAndNext(time);
 	}
-	
+
 	@Override
 	public boolean act() {
 
@@ -493,7 +484,7 @@ public class Hero extends BelongingsHolder {
 		
 		return actResult;
 	}
-	
+	@Override
 	public void busy() {
 		ready = false;
 	}

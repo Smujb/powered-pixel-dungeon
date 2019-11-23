@@ -204,19 +204,21 @@ public class LloydsBeacon extends Artifact {
 			updateQuickslot();
 
 			if (Actor.findChar(target) == curUser){
-				ScrollOfTeleportation.teleportHero(curUser);
+				ScrollOfTeleportation.teleportUser(curUser);
 				curUser.spendAndNext(1f);
 			} else {
 				final Ballistica bolt = new Ballistica( curUser.pos, target, Ballistica.MAGIC_BOLT );
 				final Char ch = Actor.findChar(bolt.collisionPos);
 
 				if (ch == curUser){
-					ScrollOfTeleportation.teleportHero(curUser);
+					ScrollOfTeleportation.teleportUser(curUser);
 					curUser.spendAndNext( 1f );
 				} else {
 					Sample.INSTANCE.play( Assets.SND_ZAP );
 					curUser.sprite.zap(bolt.collisionPos);
-					curUser.busy();
+					if (curUser instanceof Hero) {
+						((Hero)curUser).busy();
+					}
 
 					MagicMissile.boltFromChar(curUser.sprite.parent,
 							MagicMissile.BEACON,

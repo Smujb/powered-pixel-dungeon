@@ -494,15 +494,18 @@ public class Item implements Bundlable {
 		}
 	}
 
-	public int throwPos( Hero user, int dst){
+	public int throwPos( BelongingsHolder user, int dst){
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 	
-	public void cast( final Hero user, final int dst ) {
+	public void cast( final BelongingsHolder user, final int dst ) {
 		
 		final int cell = throwPos( user, dst );
 		user.sprite.zap( cell );
-		user.busy();
+		if (user instanceof Hero) {
+			((Hero)user).busy();
+		}
+
 
 		Sample.INSTANCE.play( Assets.SND_MISS, 0.6f, 0.6f, 1.5f );
 
@@ -544,7 +547,7 @@ public class Item implements Bundlable {
 		return TIME_TO_THROW;
 	}
 	
-	protected static Hero curUser = null;
+	protected static BelongingsHolder curUser = null;
 	protected static Item curItem = null;
 	protected static CellSelector.Listener thrower = new CellSelector.Listener() {
 		@Override

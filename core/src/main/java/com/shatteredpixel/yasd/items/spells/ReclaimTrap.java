@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.spells;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.quest.MetalShard;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
@@ -46,7 +47,7 @@ public class ReclaimTrap extends TargetedSpell {
 	private Class<?extends Trap> storedTrap = null;
 	
 	@Override
-	protected void affectTarget(Ballistica bolt, Hero hero) {
+	protected void affectTarget(Ballistica bolt, BelongingsHolder hero) {
 		if (storedTrap == null) {
 			quantity++; //storing a trap doesn't consume the spell
 			Trap t = Dungeon.level.traps.get(bolt.collisionPos);

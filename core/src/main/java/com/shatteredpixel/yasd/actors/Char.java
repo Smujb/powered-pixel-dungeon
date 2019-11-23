@@ -97,6 +97,8 @@ public abstract class Char extends Actor {
 	
 	public String name = "mob";
 
+	boolean usesBelongings = false;
+
 	
 	public int HT;
 	public int HP;
@@ -310,6 +312,11 @@ public abstract class Char extends Actor {
 		if (defender.buff(Bless.class) != null) defRoll *= 1.20f;
 		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
 	}
+
+	public void spendAndNext( float time ) {
+		spend( time );
+		next();
+	}
 	
 	public int attackSkill( Char target ) {
 		return 0;
@@ -443,9 +450,13 @@ public abstract class Char extends Actor {
 	public boolean isAlive() {
 		return HP > 0;
 	}
+
+	public void busy() {
+
+	}
 	
 	@Override
-	protected void spend( float time ) {
+	public void spend( float time ) {
 		
 		float timeScale = 1f;
 		if (buff( Slow.class ) != null) {

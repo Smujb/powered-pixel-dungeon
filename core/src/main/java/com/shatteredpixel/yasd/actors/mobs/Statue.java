@@ -22,7 +22,6 @@
 package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
@@ -36,7 +35,6 @@ import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.StatueSprite;
-import com.shatteredpixel.yasd.sprites.WandmakerSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
@@ -77,7 +75,7 @@ public class Statue extends BelongingsHolder implements Callback {
 
 	@Override
 	public boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return (new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos & wandToAttack(enemy) != null) | (Dungeon.level.adjacent( pos, enemy.pos ));
 	}
 
 	public KindofMisc newItem() {
@@ -123,22 +121,22 @@ public class Statue extends BelongingsHolder implements Callback {
 
 
 
-	protected boolean canWandAttack( Char enemy ) {
-		if (enemy != null) {
-			Ballistica attack = new Ballistica(pos, enemy.pos, Ballistica.PROJECTILE);
+	protected Wand wandToAttack(Char enemy ) {
+		if (enemy != null ) {
 			ArrayList<Item> Wands = belongings.getEquippedItemsOFType(Wand.class);
-			boolean WandHasCharges = false;
+			ArrayList<Wand> UsableWands = new ArrayList<>();
 			for (int i = 0; i < Wands.size(); i++) {
 				Wand Wand = ((Wand) Wands.get(i));
 				if (Wand.curCharges > 0) {
-					WandHasCharges = true;
+					UsableWands.add(Wand);
 				}
 			}
+			if (UsableWands.size() > 0) {
+				return ((Wand)Wands.get(Random.Int(Wands.size() - 1)));
 
-			return !Dungeon.level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos && WandHasCharges;
-		} else {
-			return false;
+			}
 		}
+		return null;
 
 	}
 	
@@ -174,6 +172,7 @@ public class Statue extends BelongingsHolder implements Callback {
 				Wand WandToZap = UsableWands.get(Random.Int(UsableWands.size() - 1));
 				if (WandToZap.tryToZap(this, enemy.pos)) {
 					WandToZap.zap(new Ballistica(this.pos,enemy.pos, Ballistica.MAGIC_BOLT));
+					spend(1f);
 					return true;
 				}
 
@@ -185,15 +184,14 @@ public class Statue extends BelongingsHolder implements Callback {
 	}
 
 	protected boolean doAttack( Char enemy ) {
-
-		if (Dungeon.level.adjacent( pos, enemy.pos )) {
+		Wand Attack = wandToAttack(enemy);
+		if ( Attack != null) {
+			Attack.zap(new Ballistica(this.pos,enemy.pos, Ballistica.MAGIC_BOLT));
+			spend(1f);
+			return true;
+		} else {
 
 			return super.doAttack( enemy );
-
-		} else {
-			zap(enemy);
-			next();
-			return true;
 
 		}
 	}

@@ -5,13 +5,17 @@ import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.yasd.actors.buffs.Barkskin;
 import com.shatteredpixel.yasd.actors.buffs.Berserk;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Combo;
 import com.shatteredpixel.yasd.actors.buffs.Drowsy;
 import com.shatteredpixel.yasd.actors.buffs.Fury;
+import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
+import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
+import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
@@ -41,6 +45,18 @@ public class BelongingsHolder extends Mob {
     public Belongings belongings;
     public int currentWeapon = 0;
     public int STR;
+
+    public boolean shoot( Char enemy, MissileWeapon wep ) {
+
+        //temporarily set the hero's getWeapons to the missile getWeapons being used
+        KindofMisc equipped = belongings.miscs[0];
+        belongings.miscs[0] = wep;
+        boolean hit = attack( enemy );
+        Invisibility.dispel();
+        belongings.miscs[0] = equipped;
+
+        return hit;
+    }
 
     @Override
     public int attackSkill( Char target ) {

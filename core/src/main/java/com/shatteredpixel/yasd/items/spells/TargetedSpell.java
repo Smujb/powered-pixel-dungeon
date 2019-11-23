@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.spells;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.MagicMissile;
@@ -43,7 +44,7 @@ public abstract class TargetedSpell extends Spell {
 		GameScene.selectCell(targeter);
 	}
 	
-	protected abstract void affectTarget( Ballistica bolt, Hero hero );
+	protected abstract void affectTarget( Ballistica bolt, BelongingsHolder hero );
 	
 	protected void fx( Ballistica bolt, Callback callback ) {
 		MagicMissile.boltFromChar( curUser.sprite.parent,
@@ -86,7 +87,7 @@ public abstract class TargetedSpell extends Spell {
 				
 				curSpell.fx(shot, new Callback() {
 					public void call() {
-						curSpell.affectTarget(shot, curUser);
+						curSpell.affectTarget(shot, ((Hero)curUser));
 						curSpell.detach( curUser.belongings.backpack );
 						curSpell.updateQuickslot();
 						curUser.spendAndNext( 1f );

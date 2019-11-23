@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.items.scrolls;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
@@ -73,7 +74,7 @@ public class ScrollOfMirrorImage extends Scroll {
 	}
 	
 	//returns the number of images spawned
-	public static int spawnImages( Hero hero, int nImages ){
+	public static int spawnImages(BelongingsHolder hero, int nImages ){
 		
 		ArrayList<Integer> respawnPoints = new ArrayList<>();
 		

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items.spells;
 
+import com.shatteredpixel.yasd.actors.BelongingsHolder;
 import com.shatteredpixel.yasd.actors.buffs.ArtifactRecharge;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Recharging;
@@ -46,7 +47,7 @@ public class WildEnergy extends TargetedSpell {
 	}
 	
 	@Override
-	protected void affectTarget(Ballistica bolt, final Hero hero) {
+	protected void affectTarget(Ballistica bolt, final BelongingsHolder hero) {
 		CursedWand.cursedZap(this, hero, bolt, new Callback() {
 			@Override
 			public void call() {

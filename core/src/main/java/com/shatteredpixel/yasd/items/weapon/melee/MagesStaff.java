@@ -347,7 +347,10 @@ public class MagesStaff extends MeleeWeapon {
 		private void applyWand(Wand wand){
 			Sample.INSTANCE.play(Assets.SND_BURNING);
 			curUser.sprite.emitter().burst( ElmoParticle.FACTORY, 12 );
-			evoke(curUser);
+			if (curUser instanceof Hero) {
+				evoke((Hero)curUser);
+			}
+
 
 			Dungeon.quickslot.clearItem(wand);
 
