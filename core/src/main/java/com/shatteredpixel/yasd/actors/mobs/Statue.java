@@ -158,35 +158,18 @@ public class Statue extends BelongingsHolder implements Callback {
 		super.damage( dmg, src );
 	}
 
-	protected boolean zap(Char enemy) {
+	protected void zap(Char enemy) {
 		if (enemy != null ) {
-			ArrayList<Item> Wands = belongings.getEquippedItemsOFType(Wand.class);
-			ArrayList<Wand> UsableWands = new ArrayList<>();
-			for (int i = 0; i < Wands.size(); i++) {
-				Wand Wand = ((Wand) Wands.get(i));
-				if (Wand.curCharges > 0) {
-					UsableWands.add(Wand);
-				}
+			Wand WandToZap = wandToAttack(enemy);
+			if (WandToZap != null) {
+				WandToZap.zap(enemy.pos);
 			}
-			if (UsableWands.size() > 0) {
-				Wand WandToZap = UsableWands.get(Random.Int(UsableWands.size() - 1));
-				if (WandToZap.tryToZap(this, enemy.pos)) {
-					WandToZap.zap(new Ballistica(this.pos,enemy.pos, Ballistica.MAGIC_BOLT));
-					spend(1f);
-					return true;
-				}
-
-			}
-
-
 		}
-		return false;
 	}
 
 	protected boolean doAttack( Char enemy ) {
-		Wand Attack = wandToAttack(enemy);
-		if ( Attack != null) {
-			Attack.zap(new Ballistica(this.pos,enemy.pos, Ballistica.MAGIC_BOLT));
+		if ( wandToAttack(enemy) != null) {
+			zap(enemy);
 			spend(1f);
 			return true;
 		} else {

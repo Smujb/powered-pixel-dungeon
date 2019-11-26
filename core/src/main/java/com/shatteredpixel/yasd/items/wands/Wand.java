@@ -133,7 +133,8 @@ public abstract class Wand extends KindofMisc {
 
 	}
 
-	public void zap(Ballistica attack) {
+	public void zap(int pos) {
+		final Ballistica attack = new Ballistica( curUser.pos,pos, this.collisionProperties);
 		this.fx(attack, new Callback() {
 			public void call() {
 				onZap(attack);
@@ -501,7 +502,7 @@ public abstract class Wand extends KindofMisc {
 									}
 								});
 					} else {
-						curWand.zap(shot);
+						curWand.zap(target);
 					}
 					curWand.cursedKnown = true;
 					
