@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.scrolls;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
@@ -93,7 +93,7 @@ public class ScrollOfTeleportation extends Scroll {
 		});
 	}
 	
-	public static void teleportToLocation(BelongingsHolder hero, int pos){
+	public static void teleportToLocation(Char hero, int pos){
 		PathFinder.buildDistanceMap(pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
 		if (PathFinder.distance[hero.pos] == Integer.MAX_VALUE
 				|| (!Dungeon.level.passable[pos] && !Dungeon.level.avoid[pos])
@@ -109,7 +109,7 @@ public class ScrollOfTeleportation extends Scroll {
 		
 	}
 	
-	public static void teleportUser(BelongingsHolder  hero ) {
+	public static void teleportUser(Char  hero ) {
 
 		if (Dungeon.bossLevel()){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
@@ -141,7 +141,7 @@ public class ScrollOfTeleportation extends Scroll {
 		}
 	}
 	
-	public static void teleportPreferringUnseen( BelongingsHolder hero ){
+	public static void teleportPreferringUnseen( Char hero ){
 		
 		if (Dungeon.bossLevel() || !(Dungeon.level instanceof RegularLevel)){
 			teleportUser( hero );

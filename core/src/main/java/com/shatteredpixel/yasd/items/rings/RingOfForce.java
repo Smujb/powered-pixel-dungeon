@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.items.rings;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -51,7 +51,7 @@ public class RingOfForce extends Ring {
 		return tier;
 	}
 
-	public static int damageRoll( BelongingsHolder owner ){
+	public static int damageRoll( Char owner ){
 		if (owner.buff(Force.class) != null) {
 			int level = getBonus(owner, Force.class);
 			float tier = tier(owner.STR());

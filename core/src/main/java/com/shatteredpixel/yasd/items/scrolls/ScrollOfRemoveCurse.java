@@ -23,7 +23,8 @@ package com.shatteredpixel.yasd.items.scrolls;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -77,7 +78,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		}
 	}
 
-	public static boolean uncurse(BelongingsHolder owner, Item... items ) {
+	public static boolean uncurse(Char owner, Item... items ) {
 		
 		boolean procced = false;
 		for (Item item : items) {

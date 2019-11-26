@@ -25,7 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -296,7 +296,7 @@ public class WandOfLivingEarth extends DamageWand {
 
 		private int wandLevel = -1;
 
-		private void setInfo(BelongingsHolder owner, int wandLevel, int healthToAdd){
+		private void setInfo(Char owner, int wandLevel, int healthToAdd){
 			if (wandLevel > this.wandLevel) {
 				this.wandLevel = wandLevel;
 				HT = 16 + 16 * wandLevel;

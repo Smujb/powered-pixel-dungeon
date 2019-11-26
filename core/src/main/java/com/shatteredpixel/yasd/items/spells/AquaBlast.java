@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.spells;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
@@ -45,7 +45,7 @@ public class AquaBlast extends TargetedSpell {
 	}
 	
 	@Override
-	protected void affectTarget(Ballistica bolt, BelongingsHolder hero) {
+	protected void affectTarget(Ballistica bolt, Char hero) {
 		int cell = bolt.collisionPos;
 		
 		Splash.at(cell, 0x00AAFF, 10);

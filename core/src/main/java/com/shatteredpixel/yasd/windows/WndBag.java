@@ -24,7 +24,8 @@ package com.shatteredpixel.yasd.windows;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.EquipableItem;
@@ -322,7 +323,7 @@ public class WndBag extends WndTabbed {
 		}
 		
 		@Override
-		public boolean isEquipped(BelongingsHolder hero ) {
+		public boolean isEquipped(Char hero ) {
 			return true;
 		}
 	}

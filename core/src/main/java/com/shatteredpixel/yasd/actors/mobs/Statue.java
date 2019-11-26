@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
@@ -41,7 +41,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public class Statue extends BelongingsHolder implements Callback {
+public class Statue extends Mob implements Callback {
 	
 	{
 		spriteClass = StatueSprite.class;
@@ -52,6 +52,8 @@ public class Statue extends BelongingsHolder implements Callback {
 		properties.add(Property.INORGANIC);
 
 		STR = Integer.MAX_VALUE;
+
+		usesBelongings = true;
 	}
 
 	

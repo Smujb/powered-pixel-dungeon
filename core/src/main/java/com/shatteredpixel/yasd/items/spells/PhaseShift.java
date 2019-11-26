@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.spells;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
@@ -40,7 +40,7 @@ public class PhaseShift extends TargetedSpell {
 	}
 	
 	@Override
-	protected void affectTarget(Ballistica bolt, BelongingsHolder hero) {
+	protected void affectTarget(Ballistica bolt, Char hero) {
 		final Char ch = Actor.findChar(bolt.collisionPos);
 		
 		if (ch == hero){

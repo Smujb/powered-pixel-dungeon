@@ -25,7 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -351,7 +351,7 @@ public class Item implements Bundlable {
 	}
 
 
-	public boolean isEquipped(BelongingsHolder owner ) {
+	public boolean isEquipped(Char owner ) {
 		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
 	}
 
@@ -494,11 +494,11 @@ public class Item implements Bundlable {
 		}
 	}
 
-	public int throwPos( BelongingsHolder user, int dst){
+	public int throwPos( Char user, int dst){
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 	
-	public void cast( final BelongingsHolder user, final int dst ) {
+	public void cast( final Char user, final int dst ) {
 		
 		final int cell = throwPos( user, dst );
 		user.sprite.zap( cell );
@@ -547,7 +547,7 @@ public class Item implements Bundlable {
 		return TIME_TO_THROW;
 	}
 	
-	protected static BelongingsHolder curUser = null;
+	protected static Char curUser = null;
 	protected static Item curItem = null;
 	protected static CellSelector.Listener thrower = new CellSelector.Listener() {
 		@Override

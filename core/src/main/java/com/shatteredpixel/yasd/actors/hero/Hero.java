@@ -30,7 +30,7 @@ import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.ShatteredPixelDungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Alchemy;
 import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
@@ -144,7 +144,7 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Hero extends BelongingsHolder {
+public class Hero extends Char {
 
 	{
 		actPriority = HERO_PRIO;
@@ -152,7 +152,8 @@ public class Hero extends BelongingsHolder {
 		alignment = Alignment.ALLY;
 
 		attackSkill = 10;
-		defenseSkill=  4;
+		defenseSkill = 4;
+		usesBelongings = true;
 	}
 	
 	public static final int MAX_LEVEL = 30;
@@ -396,8 +397,6 @@ public class Hero extends BelongingsHolder {
 
 	@Override
 	public boolean act() {
-
-		state = WANDERING;
 		
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;

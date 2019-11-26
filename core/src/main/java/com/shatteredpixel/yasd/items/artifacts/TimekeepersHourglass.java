@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.artifacts;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
@@ -123,7 +123,7 @@ public class TimekeepersHourglass extends Artifact {
 	}
 
 	@Override
-	public boolean doUnequip(BelongingsHolder hero, boolean collect, boolean single) {
+	public boolean doUnequip(Char hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 			if (activeBuff != null){
 				activeBuff.detach();

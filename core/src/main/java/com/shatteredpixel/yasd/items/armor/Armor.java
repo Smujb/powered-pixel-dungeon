@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.armor;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
@@ -209,7 +209,7 @@ public class Armor extends KindofMisc {
 	}
 
 	@Override
-	protected float time2equip( BelongingsHolder hero ) {
+	protected float time2equip( Char hero ) {
 		return 2 / hero.speed();
 	}
 

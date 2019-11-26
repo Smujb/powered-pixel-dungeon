@@ -3,7 +3,7 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -37,7 +37,7 @@ public class WandOfWarding extends Wand {
 	private boolean wardAvailable = true;
 	
 	@Override
-	public boolean tryToZap(BelongingsHolder owner, int target) {
+	public boolean tryToZap(Char owner, int target) {
 		
 		int currentWardEnergy = 0;
 		for (Char ch : Actor.chars()){
@@ -255,7 +255,7 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
-		protected float attackDelay() {
+        public float attackDelay() {
 			switch (tier){
 				case 1: case 2: default:
 					return 2f;
@@ -267,7 +267,7 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
-		protected boolean canAttack( Char enemy ) {
+        public boolean canAttack(Char enemy) {
 			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		}
 

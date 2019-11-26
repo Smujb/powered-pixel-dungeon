@@ -25,7 +25,7 @@ import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.items.EquipableItem;
@@ -61,7 +61,7 @@ public class Belongings implements Iterable<Item> {
 
 	public static final int BACKPACK_SIZE	= 20;
 	
-	private BelongingsHolder owner;
+	private Char owner;
 	
 	public Bag backpack;
 
@@ -178,7 +178,7 @@ public class Belongings implements Iterable<Item> {
 	public KindofMisc[] miscs = new KindofMisc[5];
 
 
-	public Belongings( BelongingsHolder owner ) {
+	public Belongings( Char owner ) {
 		this.owner = owner;
 		
 		backpack = new Bag() {{

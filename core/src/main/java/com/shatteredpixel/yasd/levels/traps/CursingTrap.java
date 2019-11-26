@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.levels.traps;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -69,7 +69,7 @@ public class CursingTrap extends Trap {
 		}
 	}
 
-	public static void curse(BelongingsHolder hero){
+	public static void curse(Char hero){
 		//items the trap wants to curse because it will create a more negative effect
 		ArrayList<Item> priorityCurse = new ArrayList<>();
 		//items the trap can curse if nothing else is available.

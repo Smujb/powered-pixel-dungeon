@@ -2,7 +2,7 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -53,7 +53,7 @@ public class WandOfThornvines extends Wand {
     }
 
     @Override
-    public boolean tryToZap(BelongingsHolder owner, int target) {
+    public boolean tryToZap(Char owner, int target) {
         thornVine = findThornVine();
         return super.tryToZap(owner, target) & thornVine == null;//Can't zap if a thorn vine already exists
     }
@@ -81,7 +81,7 @@ public class WandOfThornvines extends Wand {
         private final String CHARGES = "charges";
 
 
-        public ThornVine(int level, int charges, BelongingsHolder owner) {
+        public ThornVine(int level, int charges, Char owner) {
             this.level = level;
             this.charges = charges;
             this.alignment = owner.alignment;
@@ -179,7 +179,7 @@ public class WandOfThornvines extends Wand {
             return true;
         }
 
-        public ThornVine spawnAt(int pos, int level, int charges, BelongingsHolder owner ) {
+        public ThornVine spawnAt(int pos, int level, int charges, Char owner ) {
             if (Dungeon.level.passable[pos]) {
                 ThornVine TV = new ThornVine(level, charges, owner);
                 if (Actor.findChar(pos) == null) {

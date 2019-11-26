@@ -94,8 +94,7 @@ public abstract class Mob extends Char {
 	
 	protected int target = -1;
 
-	public int defenseSkill = 0;
-	public int attackSkill = 0;
+
 	
 	public int EXP = 1;
 	public int maxLvl = Hero.MAX_LEVEL;
@@ -324,8 +323,8 @@ public abstract class Mob extends Char {
 			state = HUNTING;
 		}
 	}
-	
-	protected boolean canAttack( Char enemy ) {
+	@Override
+	public boolean canAttack(Char enemy) {
 		return Dungeon.level.adjacent( pos, enemy.pos );
 	}
 	
@@ -453,8 +452,8 @@ public abstract class Mob extends Char {
 				|| Dungeon.hero.buff(Swiftthistle.TimeBubble.class) != null)
 			sprite.add( CharSprite.State.PARALYSED );
 	}
-	
-	protected float attackDelay() {
+	@Override
+    public float attackDelay() {
 		float delay = 1f;
 		if ( buff(Adrenaline.class) != null) delay /= 1.5f;
 		return delay;

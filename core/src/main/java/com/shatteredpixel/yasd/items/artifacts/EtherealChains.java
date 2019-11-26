@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.artifacts;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Cripple;
@@ -130,7 +130,7 @@ public class EtherealChains extends Artifact {
 	};
 	
 	//pulls an enemy to a position along the chain's path, as close to the hero as possible
-	private void chainEnemy(Ballistica chain, final BelongingsHolder user, final Char enemy ){
+	private void chainEnemy(Ballistica chain, final Char user, final Char enemy ){
 		
 		if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
 			GLog.w( Messages.get(this, "cant_pull") );
@@ -181,7 +181,7 @@ public class EtherealChains extends Artifact {
 	}
 	
 	//pulls the hero along the chain to the collosionPos, if possible.
-	private void chainLocation( Ballistica chain, final BelongingsHolder user ){
+	private void chainLocation( Ballistica chain, final Char user ){
 		
 		//don't pull if the collision spot is in a wall
 		if (Dungeon.level.solid[chain.collisionPos]){

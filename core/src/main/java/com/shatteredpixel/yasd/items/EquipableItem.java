@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -82,7 +82,7 @@ public abstract class EquipableItem extends Item {
 	}
 
 	@Override
-	public void cast( final BelongingsHolder user, int dst ) {
+	public void cast( final Char user, int dst ) {
 		if (isEquipped( user )) {
 			if (quantity == 1 && !this.doUnequip( user, false, false )) {
 				return;
@@ -92,18 +92,18 @@ public abstract class EquipableItem extends Item {
 		super.cast( user, dst );
 	}
 
-	public static void equipCursed(BelongingsHolder hero ) {
+	public static void equipCursed(Char hero ) {
 		hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
 		Sample.INSTANCE.play( Assets.SND_CURSED );
 	}
 
-	protected float time2equip( BelongingsHolder hero ) {
+	protected float time2equip( Char hero ) {
 		return 1;
 	}
 
 	public abstract boolean doEquip( Hero hero );
 
-	public boolean doUnequip( BelongingsHolder hero, boolean collect, boolean single ) {
+	public boolean doUnequip( Char hero, boolean collect, boolean single ) {
 
 		if (cursed && hero.buff(MagicImmune.class) == null) {
 			GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));

@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.blobs.ToxicGas;
@@ -53,7 +53,7 @@ public class MirrorImage extends NPC {
 		actPriority = MOB_PRIO + 1;
 	}
 	
-	private BelongingsHolder user;
+	private Char user;
 	private int heroID;
 	public int armTier;
 	
@@ -92,7 +92,7 @@ public class MirrorImage extends NPC {
 		heroID = bundle.getInt( HEROID );
 	}
 	
-	public void duplicate( BelongingsHolder hero ) {
+	public void duplicate( Char hero ) {
 		this.user = hero;
 		heroID = this.user.id();
 		Buff.affect(this, MirrorInvis.class, Short.MAX_VALUE);
@@ -133,12 +133,12 @@ public class MirrorImage extends NPC {
 	}
 	
 	@Override
-	protected float attackDelay() {
+    public float attackDelay() {
 		return user.attackDelay(); //handles ring of furor
 	}
 	
 	@Override
-	protected boolean canAttack(Char enemy) {
+    public boolean canAttack(Char enemy) {
 		return super.canAttack(enemy) || (user.belongings.getWeapons() != null && user.belongings.getWeapons().get(0).canReach(this, enemy.pos));
 	}
 	

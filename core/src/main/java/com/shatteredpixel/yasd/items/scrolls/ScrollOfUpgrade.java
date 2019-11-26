@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.scrolls;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -104,7 +104,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		Badges.validateMageUnlock();
 	}
 	
-	public static void upgrade( BelongingsHolder hero ) {
+	public static void upgrade( Char hero ) {
 		hero.sprite.emitter().start( Speck.factory( Speck.UP ), 0.2f, 3 );
 	}
 

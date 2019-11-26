@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.weapon.missiles;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corruption;
@@ -144,7 +144,7 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	@Override
-	public int throwPos(BelongingsHolder user, int dst) {
+	public int throwPos(Char user, int dst) {
 		if (hasEnchant(Projecting.class, user)
 				&& !Dungeon.level.solid[dst] && Dungeon.level.distance(user.pos, dst) <= 4){
 			return dst;

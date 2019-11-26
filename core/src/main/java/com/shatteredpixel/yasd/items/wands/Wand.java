@@ -25,7 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.BelongingsHolder;
+import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
@@ -121,8 +121,8 @@ public abstract class Wand extends KindofMisc {
 	@Override
 	public void activate(Char ch) {//When equipped, start charging
 		super.activate(ch);
-		if (ch instanceof BelongingsHolder) {
-			curUser = (BelongingsHolder)ch;
+		if (ch instanceof Char) {
+			curUser = (Char)ch;
 		}
 
 		if (ch instanceof Hero && ((Hero) ch).belongings.getItem(MagicalHolster.class) != null) {
@@ -148,7 +148,7 @@ public abstract class Wand extends KindofMisc {
 
 	public abstract void onHit( MagesStaff staff, Char attacker, Char defender, int damage);
 
-	public boolean tryToZap(BelongingsHolder owner, int target ){
+	public boolean tryToZap(Char owner, int target ){
 
 		if (owner.buff(MagicImmune.class) != null){
 			GLog.w( Messages.get(this, "no_magic") );
