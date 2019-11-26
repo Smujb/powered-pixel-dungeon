@@ -439,7 +439,7 @@ public abstract class Char extends Actor {
 	}
 
 	public int attackSkill( Char target ) {
-		float accuracy = 1f;
+		float accuracy = attackSkill;
 		if (usesBelongings) {
 			KindOfWeapon wep = getCurrentWeapon();
 			accuracy *= RingOfAccuracy.accuracyMultiplier( this );
@@ -452,9 +452,7 @@ public abstract class Char extends Actor {
 			}
 
 			if (wep != null) {
-				attackSkill *= accuracy * wep.accuracyFactor(this);
-			} else {
-				attackSkill *= accuracy;
+				attackSkill *=  wep.accuracyFactor(this);
 			}
 		}
 		return (int) accuracy;

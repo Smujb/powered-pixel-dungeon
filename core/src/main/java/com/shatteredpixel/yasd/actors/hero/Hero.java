@@ -921,6 +921,7 @@ public class Hero extends Char {
 
 		if (shake > 0.5f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.max(shake/2f,0.3f));
+			ShatteredPixelDungeon.vibrate((int)(shake*50));
 			if (shake > 1f) {//This is to prevent the game being flooded with messages if you take small amounts of damage repeatedly on low health (eg Poison, Bleeding). May add a cooldown in future.
 				loseMorale(shake*0.3f);
 			} else {
