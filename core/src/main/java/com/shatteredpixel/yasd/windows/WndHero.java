@@ -26,14 +26,19 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
+import com.shatteredpixel.yasd.actors.mobs.npcs.Wandmaker;
+import com.shatteredpixel.yasd.effects.RedLightning;
+import com.shatteredpixel.yasd.effects.particles.WindParticle;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.sprites.HeroSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
+import com.shatteredpixel.yasd.ui.RedButton;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.ui.ScrollPane;
 import com.shatteredpixel.yasd.ui.Window;
+import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.Group;
@@ -47,10 +52,11 @@ import java.util.Locale;
 public class WndHero extends WndTabbed {
 	
 	private static final int WIDTH		= 115;
-	private static final int HEIGHT		= 100;
+	private static final int HEIGHT		= 120;
 	
 	private StatsTab stats;
 	private BuffsTab buffs;
+	private AbilitiesTab abilities;
 	
 	private SmartTexture icons;
 	private TextureFilm film;
@@ -71,6 +77,9 @@ public class WndHero extends WndTabbed {
 		add( buffs );
 		buffs.setRect(0, 0, WIDTH, HEIGHT);
 		buffs.setupList();
+
+		abilities = new AbilitiesTab();
+		add( abilities );
 		
 		add( new LabeledTab( Messages.get(this, "stats") ) {
 			protected void select( boolean value ) {
@@ -85,10 +94,132 @@ public class WndHero extends WndTabbed {
 			}
 		} );
 
+		add( new LabeledTab( Messages.get(this, "abilities") ) {
+			protected void select( boolean value ) {
+				super.select( value );
+				abilities.visible = abilities.active = selected;
+			}
+		} );
 		layoutTabs();
 		
 		select( 0 );
 	}
+
+	private class AbilitiesTab extends Group {
+
+		private static final int GAP = 6;
+
+		private float pos;
+		private static final int BTN_WIDTH  = 20;
+		private static final int BTN_HEIGHT	= 20;
+
+		private class statIncreaseButton extends RedButton {
+
+			public statIncreaseButton() {
+				super("+");
+				setRect(WIDTH*0.6f, pos-BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
+			}
+
+			@Override
+			protected void onClick() {
+				if (Dungeon.hero.DistributionPoints > 0) {
+					Dungeon.hero.DistributionPoints--;
+					onBackPressed();
+					increaseStat();
+				} else {
+					GLog.w(Messages.get(WndHero.class,"no_points"));
+				}
+			}
+			protected void increaseStat() {
+
+			}
+		}
+
+		public AbilitiesTab() {
+
+			Hero hero = Dungeon.hero;
+
+			IconTitle title = new IconTitle();
+			title.icon( HeroSprite.avatar(hero.heroClass, hero.tier()) );
+			title.label( Messages.get(this, "title"));
+			title.color(Window.SHPX_COLOR);
+			title.setRect( 0, 0, WIDTH, 0 );
+			add(title);
+
+			pos = title.bottom() + GAP;
+
+			//Current points to distribute
+			statSlot( Messages.get(this, "points"), hero.DistributionPoints );
+			pos += GAP;
+
+			//Power
+			statSlot( Messages.get(this, "power"), hero.Power );
+			statIncreaseButton btnPower = new statIncreaseButton() {
+				@Override
+				protected void increaseStat() {
+					Dungeon.hero.Power++;
+				}
+			};
+			add( btnPower );
+			pos += GAP;
+			//Focus
+			statSlot( Messages.get(this, "focus"), hero.Focus );
+			statIncreaseButton btnFocus = new statIncreaseButton() {
+				@Override
+				protected void increaseStat() {
+					Dungeon.hero.Focus++;
+				}
+			};
+			add( btnFocus );
+			pos += GAP;
+			//Expertise
+			statSlot( Messages.get(this, "expertise"), hero.Expertise );
+			statIncreaseButton btnExpertise = new statIncreaseButton() {
+				@Override
+				protected void increaseStat() {
+					Dungeon.hero.Expertise++;
+					Dungeon.hero.attackSkill++;
+					Dungeon.hero.defenseSkill++;
+				}
+			};
+			add( btnExpertise );
+			pos += GAP;
+			//Resilience
+			statSlot( Messages.get(this, "resilience"), hero.Resilience );
+			statIncreaseButton btnResilience = new statIncreaseButton() {
+				@Override
+				protected void increaseStat() {
+					Dungeon.hero.Resilience++;
+				}
+			};
+			add( btnResilience );
+
+		}
+
+		private void statSlot( String label, String value ) {
+
+			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 10 );
+			txt.setPos(0, pos);
+			add( txt );
+
+			txt = PixelScene.renderTextBlock( value, 10 );
+			txt.setPos(WIDTH * 0.5f, pos);
+			PixelScene.align(txt);
+			add( txt );
+
+			pos += GAP + txt.height();
+		}
+
+		private void statSlot( String label, int value ) {
+			statSlot( label, Integer.toString( value ) );
+		}
+
+		public float height() {
+			return pos;
+		}
+	}
+
+
 	
 	private class StatsTab extends Group {
 		

@@ -29,6 +29,7 @@ import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
+import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.particles.CorrosionParticle;
@@ -52,9 +53,10 @@ public class WandOfCorrosion extends Wand {
 
 	@Override
 	public void onZap(Ballistica bolt) {
-		CorrosiveGas gas = Blob.seed(bolt.collisionPos, 50 + 10 * level(), CorrosiveGas.class);
+		int level = actualLevel();
+		CorrosiveGas gas = Blob.seed(bolt.collisionPos, 50 + 5 * level, CorrosiveGas.class);
 		CellEmitter.center(bolt.collisionPos).burst( CorrosionParticle.SPLASH, 10 );
-		gas.setStrength(2 + level()*2);
+		gas.setStrength(2 + level);
 		GameScene.add(gas);
 
 		for (int i : PathFinder.NEIGHBOURS9) {

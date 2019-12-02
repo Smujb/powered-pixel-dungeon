@@ -163,8 +163,12 @@ public class Hero extends Char {
 
 	public static final int STARTING_STR = 10;
 
+	public int Power = 1;
+	public int Focus = 1;
+	public int Expertise = 1;
+	public int Resilience = 1;
+	public int DistributionPoints = 0;
 
-	
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
 	private static final float HUNGER_FOR_SEARCH	= 6f;
@@ -268,6 +272,11 @@ public class Hero extends Char {
 	private static final String HTBOOST     = "htboost";
 	private static final String MORALE      = "morale";
 	private static final String MORALE_MULTIPLIER  = "morale-multiplier";
+	private static final String POWER       = "power";
+	private static final String FOCUS       = "focus";
+	private static final String EXPERTISE   = "expertise";
+	private static final String RESILIENCE  = "resilience";
+	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -287,8 +296,17 @@ public class Hero extends Char {
 		
 		bundle.put( HTBOOST, HTBoost );
 
+		//Morale
 		bundle.put( MORALE, morale );
 		bundle.put( MORALE_MULTIPLIER, MoraleMultiplier);
+
+
+		//Hero stats
+		bundle.put( POWER, Power );
+		bundle.put( FOCUS, Focus );
+		bundle.put( EXPERTISE, Expertise);
+		bundle.put( RESILIENCE, Resilience);
+		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
 
 		belongings.storeInBundle( bundle );
 	}
@@ -310,8 +328,16 @@ public class Hero extends Char {
 		
 		HTBoost = bundle.getInt(HTBOOST);
 
+		//Morale
 		morale = bundle.getFloat(MORALE);
 		MoraleMultiplier = bundle.getFloat(MORALE_MULTIPLIER);
+
+		//Hero stats
+		Power = bundle.getInt( POWER );
+		Focus = bundle.getInt( FOCUS );
+		Expertise = bundle.getInt( EXPERTISE );
+		Resilience = bundle.getInt( RESILIENCE );
+		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 		
 		belongings.restoreFromBundle( bundle );
 	}
@@ -367,8 +393,9 @@ public class Hero extends Char {
 
 	@Override
 	public int defenseSkill(Char enemy) {
+		float evasion = super.defenseSkill(enemy);
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
-		return (int) (super.defenseSkill(enemy)*moraleMultiplier);
+		return (int) (evasion*moraleMultiplier);
 	}
 
 	@Override
@@ -1197,8 +1224,6 @@ public class Hero extends Char {
 				}
 				
 				updateHT( true );
-				attackSkill++;
-				defenseSkill++;
 
 			} else {
 				Buff.prolong(this, Bless.class, 30f);
@@ -1219,7 +1244,7 @@ public class Hero extends Char {
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
 				gainMorale(0.5f + missingMoralePercent);//Gains more Morale on level up when on low Morale
 			}
-			
+			DistributionPoints += 2;
 			Item.updateQuickslot();
 			
 			Badges.validateLevelReached();

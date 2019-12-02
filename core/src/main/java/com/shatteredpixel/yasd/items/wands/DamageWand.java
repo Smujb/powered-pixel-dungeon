@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items.wands;
 
+import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Random;
 
@@ -28,14 +29,23 @@ import com.watabou.utils.Random;
 //wands with AOE effects count here (e.g. fireblast), but wands with indrect damage do not (e.g. venom, transfusion)
 public abstract class DamageWand extends Wand{
 
-	public int min(){
-		return min(level());
+	public int min() {
+		if (curUser instanceof Hero) {
+			return min(Math.round(effectiveness((Hero) curUser)));
+		} else {
+			return min(level() * 2);
+		}
 	}
+
 
 	public abstract int min(int lvl);
 
 	public int max(){
-		return max(level());
+		if (curUser instanceof Hero) {
+			return  max(Math.round(effectiveness((Hero)curUser)));
+		} else {
+			return max(level()*2);
+		}
 	}
 
 	public abstract int max(int lvl);

@@ -27,7 +27,7 @@ public class WandOfAcid extends DamageWand {
 
     @Override
     public int max(int lvl) {
-        return 8 + lvl * 7;
+        return 8 + lvl * 4;
     }
 
     @Override

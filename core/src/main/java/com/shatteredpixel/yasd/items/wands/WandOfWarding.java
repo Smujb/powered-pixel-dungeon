@@ -50,7 +50,7 @@ public class WandOfWarding extends Wand {
 		for (Buff buff : curUser.buffs()){
 			if (buff instanceof Wand.Charger){
 				if (((Charger) buff).wand() instanceof WandOfWarding){
-					maxWardEnergy += 3 + ((Charger) buff).wand().level()*3;
+					maxWardEnergy += 3 + ((Charger) buff).wand().actualLevel()*3;
 				}
 			}
 		}
@@ -83,9 +83,9 @@ public class WandOfWarding extends Wand {
 		} else if (ch != null){
 			if (ch instanceof Ward){
 				if (wardAvailable) {
-					((Ward) ch).upgrade(level());
+					((Ward) ch).upgrade(actualLevel());
 				} else {
-					((Ward) ch).wandHeal( level() );
+					((Ward) ch).wandHeal( actualLevel() );
 				}
 				ch.sprite.emitter().burst(MagicMissile.WardParticle.UP, ((Ward) ch).tier);
 			} else {
@@ -94,7 +94,7 @@ public class WandOfWarding extends Wand {
 		} else if (canPlaceWard(bolt.collisionPos)){
 			Ward ward = new Ward();
 			ward.pos = bolt.collisionPos;
-			ward.wandLevel = level();
+			ward.wandLevel = actualLevel();
 			GameScene.add(ward, 1f);
 			Dungeon.level.occupyCell(ward);
 			ward.sprite.emitter().burst(MagicMissile.WardParticle.UP, ward.tier);
@@ -160,7 +160,7 @@ public class WandOfWarding extends Wand {
 	@Override
 	public String statsDesc() {
 		if (levelKnown)
-			return Messages.get(this, "stats_desc", level()+3);
+			return Messages.get(this, "stats_desc", actualLevel()+3);
 		else
 			return Messages.get(this, "stats_desc", 3);
 	}

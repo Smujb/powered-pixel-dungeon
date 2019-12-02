@@ -63,7 +63,7 @@ public class WandOfThornvines extends Wand {
 
 
         if (findThornVine() == null) {
-            new ThornVine().spawnAt(bolt.collisionPos, level(), curCharges, curUser);
+            new ThornVine().spawnAt(bolt.collisionPos, actualLevel(), curCharges, curUser);
         }
     }
 
@@ -117,7 +117,7 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public int damageRoll() {
-            return (int) (Random.Int(2,5 + level*3)*charges);
+            return (int) (Random.Int(2,3 + level)*charges);
         }
 
         @Override
@@ -131,7 +131,7 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return ((20 + this.level*15));
+            return ((20 + this.level*20));
         }
 
         @Override
