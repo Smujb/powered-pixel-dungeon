@@ -228,6 +228,11 @@ public class Armor extends KindofMisc {
 	public int DRMin(int lvl){
 		return tier + lvl;
 	}
+
+	public float evasionMultiplier(Char owner) {
+		float evasion = owner.defenseSkill(owner);
+		return (evasion/evasionFactor(owner,evasion));
+	}
 	
 	public float evasionFactor( Char owner, float evasion ){
 		
@@ -247,7 +252,12 @@ public class Armor extends KindofMisc {
 		
 		return evasion + augment.evasionFactor(level());
 	}
-	
+
+	public float speedMultiplier(Char owner) {
+		float speed = owner.speed();
+		return (speed/speedFactor(owner,speed));
+	}
+
 	public float speedFactor( Char owner, float speed ){
 		
 		if (owner instanceof Hero) {
@@ -277,6 +287,11 @@ public class Armor extends KindofMisc {
 		return speed;
 		
 	}
+
+	public float stealthMultiplier(Char owner) {
+		float stealth = owner.stealth();
+		return (stealth/stealthFactor(owner,stealth));
+	}
 	
 	public float stealthFactor( Char owner, float stealth ){
 		
@@ -289,8 +304,9 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public boolean doEquip(Hero hero) {
+		boolean equipped = super.doEquip(hero);
 		((HeroSprite)hero.sprite).updateArmor();
-		return super.doEquip(hero);
+		return equipped;
 	}
 
 	@Override

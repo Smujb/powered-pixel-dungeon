@@ -43,13 +43,13 @@ public class HuntressArmor extends ClothArmor {
 	}
 
 	@Override
-	public float evasionFactor(Char owner, float evasion) {
-		return super.evasionFactor(owner, evasion) * 1.25f;
+	public float evasionMultiplier(Char owner) {
+		return super.evasionMultiplier(owner)*1.25f;
 	}
 
 	@Override
-	public float speedFactor(Char owner, float speed) {
-		return super.speedFactor(owner, speed) * 1.25f;
+	public float speedMultiplier(Char owner) {
+		return super.speedMultiplier(owner)*1.25f;
 	}
 
 	@Override

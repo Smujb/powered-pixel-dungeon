@@ -43,13 +43,13 @@ public class RogueArmor extends ClothArmor {
 	}
 
 	@Override
-	public float evasionFactor(Char owner, float evasion) {
-		return super.evasionFactor(owner, evasion) * 1.25f;
+	public float evasionMultiplier(Char owner) {
+		return super.evasionMultiplier(owner)*1.25f;
 	}
 
 	@Override
-	public float stealthFactor(Char owner, float speed) {
-		return super.speedFactor(owner, speed) * 1.25f;
+	public float stealthMultiplier(Char owner) {
+		return super.stealthMultiplier(owner)*1.25f;
 	}
 
 	@Override

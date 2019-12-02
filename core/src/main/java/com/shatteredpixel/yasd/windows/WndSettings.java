@@ -40,7 +40,7 @@ import com.watabou.utils.DeviceCompat;
 public class WndSettings extends WndTabbed {
 
 	private static final int WIDTH		    = 112;
-	private static final int HEIGHT         = 138;
+	private static final int HEIGHT         = 150;
 	private static final int SLIDER_HEIGHT	= 24;
 	private static final int BTN_HEIGHT	    = 18;
 	private static final int GAP_TINY 		= 2;
@@ -350,7 +350,19 @@ public class WndSettings extends WndTabbed {
 			btnSound.checked(!SPDSettings.soundFx());
 			add( btnSound );
 
-			resize( WIDTH, (int)btnSound.bottom());
+			CheckBox btnVibrate = new CheckBox( Messages.get(this, "vibrate") ) {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					SPDSettings.vibrate(checked());
+					Sample.INSTANCE.play( Assets.SND_CLICK );
+				}
+			};
+			btnVibrate.setRect(0, btnSound.bottom() + GAP_LRG, WIDTH, BTN_HEIGHT);
+			btnVibrate.checked(SPDSettings.vibrate());
+			add( btnVibrate );
+
+			resize( WIDTH, (int)btnVibrate.bottom());
 		}
 
 	}

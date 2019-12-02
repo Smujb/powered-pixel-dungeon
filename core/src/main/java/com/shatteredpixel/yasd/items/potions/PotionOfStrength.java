@@ -37,11 +37,10 @@ public class PotionOfStrength extends Potion {
 	public void apply( Hero hero ) {
 		setKnown();
 		
-		hero.STR++;
+		/*(hero.STR++;
 		hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "msg_1") );
 		GLog.p( Messages.get(this, "msg_2") );
-		
-		Badges.validateStrengthAttained();
+		Badges.validateStrengthAttained();*/
 	}
 
 	@Override

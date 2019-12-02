@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -158,6 +159,8 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected void increaseStat() {
 					Dungeon.hero.Power++;
+					Dungeon.hero.STR++;
+					Badges.validateStrengthAttained();
 				}
 			};
 			add( btnPower );

@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.Bones;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
+import com.shatteredpixel.yasd.SPDSettings;
 import com.shatteredpixel.yasd.ShatteredPixelDungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
@@ -42,18 +43,25 @@ import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Bless;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
+import com.shatteredpixel.yasd.actors.buffs.Charm;
+import com.shatteredpixel.yasd.actors.buffs.Chill;
 import com.shatteredpixel.yasd.actors.buffs.Combo;
+import com.shatteredpixel.yasd.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.actors.buffs.Drowsy;
 import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.actors.buffs.Foresight;
+import com.shatteredpixel.yasd.actors.buffs.Frost;
 import com.shatteredpixel.yasd.actors.buffs.Fury;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
+import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.actors.buffs.Poison;
 import com.shatteredpixel.yasd.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.actors.buffs.Regeneration;
+import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
@@ -93,6 +101,7 @@ import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.items.rings.RingOfAccuracy;
+import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.items.rings.RingOfForce;
 import com.shatteredpixel.yasd.items.rings.RingOfFuror;
@@ -143,6 +152,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class Hero extends Char {
 
@@ -262,6 +272,38 @@ public class Hero extends Char {
 
 	public void speedMoraleLoss(float Multiplier) {
 		MoraleMultiplier *= Multiplier;
+	}
+
+	@Override
+	public float resist(Class effect) {
+		//Buffs resisted
+		final HashSet<Class> RESISTS = new HashSet<>();
+		RESISTS.add(Burning.class);
+		RESISTS.add(Charm.class);
+		RESISTS.add(Chill.class);
+		RESISTS.add(Frost.class);
+		RESISTS.add(Ooze.class);
+		RESISTS.add(Paralysis.class);
+		RESISTS.add(Poison.class);
+		RESISTS.add(Corrosion.class);
+		RESISTS.add(Weakness.class);
+
+		for (Class c : RESISTS){
+			if (c.isAssignableFrom(effect)){
+				return (float)Math.pow(0.90, Resilience);
+			}
+		}
+
+		//Buffs increased
+		final HashSet<Class> INCREASE = new HashSet<>();
+		INCREASE.add(ShieldBuff.class);
+
+		for (Class c : INCREASE){
+			if (c.isAssignableFrom(effect)){
+				return (float)Math.pow(1.10, Resilience);
+			}
+		}
+		return super.resist(effect);
 	}
 
 	private static final String ATTACK		= "attackSkill";
@@ -948,13 +990,14 @@ public class Hero extends Char {
 
 		if (shake > 0.5f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.max(shake/2f,0.3f));
-			ShatteredPixelDungeon.vibrate((int)(shake*50));
+			if (SPDSettings.vibrate()) {
+				ShatteredPixelDungeon.vibrate(Math.min(500,(int) (shake * 50)));
+			}
 			if (shake > 1f) {//This is to prevent the game being flooded with messages if you take small amounts of damage repeatedly on low health (eg Poison, Bleeding). May add a cooldown in future.
 				loseMorale(shake*0.3f);
 			} else {
 				loseMorale(shake*0.3f,false);
 			}
-
 		}
 	}
 	

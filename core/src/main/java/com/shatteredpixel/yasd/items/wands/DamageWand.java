@@ -30,22 +30,14 @@ import com.watabou.utils.Random;
 public abstract class DamageWand extends Wand{
 
 	public int min() {
-		if (curUser instanceof Hero) {
-			return min(Math.round(effectiveness((Hero) curUser)));
-		} else {
-			return min(level() * 2);
-		}
+		return min(actualLevel());
 	}
 
 
 	public abstract int min(int lvl);
 
 	public int max(){
-		if (curUser instanceof Hero) {
-			return  max(Math.round(effectiveness((Hero)curUser)));
-		} else {
-			return max(level()*2);
-		}
+		return max(actualLevel());
 	}
 
 	public abstract int max(int lvl);

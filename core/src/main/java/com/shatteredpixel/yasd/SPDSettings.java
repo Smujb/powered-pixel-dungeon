@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd;
 
+import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.messages.Languages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.watabou.noosa.Game;
@@ -193,6 +194,8 @@ public class SPDSettings extends GameSettings {
 	public static final String KEY_MUSIC_VOL    = "music_vol";
 	public static final String KEY_SOUND_FX		= "soundfx";
 	public static final String KEY_SFX_VOL      = "sfx_vol";
+	public static final String VIBRATE          = "vibrate";
+	public static boolean vibrate = false;
 	
 	public static void music( boolean value ) {
 		Music.INSTANCE.enable( value );
@@ -219,6 +222,15 @@ public class SPDSettings extends GameSettings {
 	
 	public static boolean soundFx() {
 		return getBoolean( KEY_SOUND_FX, true );
+	}
+
+	public static void vibrate(boolean value) {
+		vibrate = value;
+		put( VIBRATE, value);
+	}
+
+	public static boolean vibrate() {
+		return getBoolean(VIBRATE,true);
 	}
 	
 	public static void SFXVol( int value ) {

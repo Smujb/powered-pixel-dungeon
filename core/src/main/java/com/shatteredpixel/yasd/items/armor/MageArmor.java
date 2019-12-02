@@ -43,8 +43,8 @@ public class MageArmor extends ClothArmor {
 	}
 
 	@Override
-	public float evasionFactor(Char owner, float evasion) {
-		return super.evasionFactor(owner, evasion) * 1.25f;
+	public float evasionMultiplier(Char owner) {
+		return super.evasionMultiplier(owner)*1.25f;
 	}
 
 	@Override

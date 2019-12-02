@@ -43,13 +43,13 @@ public class WarriorArmor extends ClothArmor {
 	}
 
 	@Override
-	public float evasionFactor(Char owner, float evasion) {
-		return super.evasionFactor(owner, evasion) * 0.75f;
+	public float evasionMultiplier(Char owner) {
+		return super.evasionMultiplier(owner)*0.75f;
 	}
 
 	@Override
-	public float stealthFactor(Char owner, float speed) {
-		return super.speedFactor(owner, speed) * 0.75f;
+	public float stealthMultiplier(Char owner) {
+		return super.stealthMultiplier(owner)*0.75f;
 	}
 
 	@Override

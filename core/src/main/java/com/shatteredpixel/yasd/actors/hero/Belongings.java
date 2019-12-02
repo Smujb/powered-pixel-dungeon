@@ -192,7 +192,8 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			if (CurArmour.hasGlyph(Stone.class, owner) && !((Stone) CurArmour.glyph).testingEvasion()) {
+			evasion *= CurArmour.evasionMultiplier(owner);
+			/*if (CurArmour.hasGlyph(Stone.class, owner) && !((Stone) CurArmour.glyph).testingEvasion()) {
 				return 0;
 			}
 			int aEnc = CurArmour.STRReq() -  owner.STR();
@@ -209,7 +210,7 @@ public class Belongings implements Iterable<Item> {
 			}
 			if (CurArmour instanceof WarriorArmor) {
 				evasion*=0.75;
-			}
+			}*/
 
 		}
 		return evasion;
@@ -219,7 +220,8 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			int aEnc = CurArmour.STRReq() - owner.STR();
+			speed *= CurArmour.speedMultiplier(owner);
+			/*int aEnc = CurArmour.STRReq() - owner.STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 
 			if (CurArmour.hasGlyph(Swiftness.class, owner)) {
@@ -242,7 +244,7 @@ public class Belongings implements Iterable<Item> {
 			}
 			if (CurArmour instanceof HuntressArmor) {
 				speed*=1.25;
-			}
+			}*/
 
 		}
 		return speed;
@@ -252,6 +254,8 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
+			stealth *= CurArmour.stealthMultiplier(owner);
+			/*
 			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
 				stealth += 1 + CurArmour.level()/3f;
 			}
@@ -260,7 +264,7 @@ public class Belongings implements Iterable<Item> {
 			}
 			if (CurArmour instanceof WarriorArmor) {
 				stealth*=0.75;
-			}
+			}*/
 		}
 		return stealth;
 	}
