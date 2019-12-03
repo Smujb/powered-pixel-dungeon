@@ -125,15 +125,12 @@ public class Eye extends Mob {
 			return true;
 		} else {
 
-			spend( attackDelay() );
-			
 			beam = new Ballistica(pos, beamTarget, Ballistica.STOP_TERRAIN);
 			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[beam.collisionPos] ) {
 				sprite.zap( beam.collisionPos );
 				return false;
 			} else {
-				deathGaze();
-				return true;
+				return doMagicAttack(enemy);
 			}
 		}
 
@@ -144,11 +141,19 @@ public class Eye extends Mob {
 		if (beamCharged) dmg /= 4;
 		super.damage(dmg, src);
 	}
-	
+
+	@Override
+	public int magicalDamageRoll() {
+		return Random.NormalIntRange( 50, 110 );
+	}
+
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DeathGaze{}
 
 	public void deathGaze(){
+		doMagicAttack(enemy);
+	}
+	/*
 		if (!beamCharged || beamCooldown > 0 || beam == null)
 			return;
 
@@ -195,7 +200,7 @@ public class Eye extends Mob {
 
 		beam = null;
 		beamTarget = -1;
-	}
+	}*/
 
 	private static final String BEAM_TARGET     = "beamTarget";
 	private static final String BEAM_COOLDOWN   = "beamCooldown";

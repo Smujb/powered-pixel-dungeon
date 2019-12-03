@@ -48,7 +48,7 @@ public abstract class DamageWand extends Wand{
 	}
 
 	public int damageRoll(){
-		return Random.NormalIntRange(min(), max());
+		return damageRoll(actualLevel());
 	}
 
 	public int damageRoll(int lvl){

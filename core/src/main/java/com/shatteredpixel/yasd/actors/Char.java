@@ -502,6 +502,10 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean magicalAttack( Char enemy) {
+		return magicalAttack(enemy, this);
+	}
+
+	public boolean magicalAttack( Char enemy, Object src) {
 		if (enemy == null) return false;
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 		if (hit( this, enemy, true )) {
@@ -519,6 +523,7 @@ public abstract class Char extends Actor {
 			this.sprite.zap(enemy.pos);
 			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
 			enemy.sprite.flash();
+			enemy.damage(effectiveDamage,src);
 			return true;
 		} else {
 			if (visibleFight) {

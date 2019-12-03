@@ -434,6 +434,12 @@ public class Hero extends Char {
 	}
 
 	@Override
+	public int magicalDefenseProc(Char enemy, int damage) {
+		damage = (int) (damage*Math.pow( 0.95, Resilience));
+		return super.magicalDefenseProc(enemy, damage);
+	}
+
+	@Override
 	public int attackSkill( Char target ) {
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		attackSkill = 9 + Expertise;

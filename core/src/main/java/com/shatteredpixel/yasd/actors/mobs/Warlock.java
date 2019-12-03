@@ -78,7 +78,7 @@ public class Warlock extends Mob implements Callback {
 
 	@Override
 	public int magicalDamageRoll() {
-		return Random.Int( 12, 20 );
+		return Random.Int( 20, 40 );
 	}
 
 	@Override
@@ -96,14 +96,14 @@ public class Warlock extends Mob implements Callback {
 			return super.doAttack( enemy );
 			
 		} else {
-			return  magicalAttack( enemy );
+			return doMagicAttack( enemy );
 		}
 	}
 	
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DarkBolt{}
-	
-	private void zap() {
+
+	/*private void zap() {
 		spend( TIME_TO_ZAP );
 		
 		if (hit( this, enemy, true )) {
@@ -121,10 +121,9 @@ public class Warlock extends Mob implements Callback {
 		} else {
 			enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
 		}
-	}
+	}*/
 	
 	public void onZapComplete() {
-		zap();
 		next();
 	}
 	
