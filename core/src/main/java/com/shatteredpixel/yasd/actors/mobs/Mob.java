@@ -473,6 +473,17 @@ public abstract class Mob extends Char {
 		
 		return !visible;
 	}
+
+	protected boolean doMagicAttack( Char enemy ) {
+
+		boolean visible = Dungeon.level.heroFOV[pos];
+
+		magicalAttack(enemy);
+
+		spend( magicalAttackDelay() );
+
+		return !visible;
+	}
 	
 	@Override
 	public void onAttackComplete() {

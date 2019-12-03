@@ -166,6 +166,7 @@ public enum HeroClass {
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
 		hero.Power+=2;
+		hero.STR();
 	}
 
 	private static void initMage( Hero hero ) {

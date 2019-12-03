@@ -159,7 +159,7 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected void increaseStat() {
 					Dungeon.hero.Power++;
-					Dungeon.hero.STR++;
+					Dungeon.hero.STR();
 					Badges.validateStrengthAttained();
 				}
 			};
@@ -181,8 +181,6 @@ public class WndHero extends WndTabbed {
 				@Override
 				protected void increaseStat() {
 					Dungeon.hero.Expertise++;
-					Dungeon.hero.attackSkill++;
-					Dungeon.hero.defenseSkill++;
 				}
 			};
 			add( btnExpertise );
@@ -203,6 +201,9 @@ public class WndHero extends WndTabbed {
 
 			RenderedTextBlock txt = PixelScene.renderTextBlock( label, 10 );
 			txt.setPos(0, pos);
+			if (Dungeon.hero.DistributionPoints > 0) {
+				txt.hardlight(0x00FF00);
+			}
 			add( txt );
 
 			txt = PixelScene.renderTextBlock( value, 10 );

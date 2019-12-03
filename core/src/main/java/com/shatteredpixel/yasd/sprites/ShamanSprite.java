@@ -54,7 +54,7 @@ public class ShamanSprite extends MobSprite {
 		
 		play( idle );
 	}
-	
+	@Override
 	public void zap( int pos ) {
 
 		Char enemy = Actor.findChar(pos);
@@ -65,7 +65,7 @@ public class ShamanSprite extends MobSprite {
 			parent.add(new Lightning(center(), pos, (Shaman) ch));
 		}
 		Sample.INSTANCE.play( Assets.SND_LIGHTNING );
-		
+
 		turnTo( ch.pos, pos );
 		play( zap );
 	}

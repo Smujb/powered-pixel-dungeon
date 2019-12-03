@@ -383,8 +383,14 @@ public class Hero extends Char {
 		
 		belongings.restoreFromBundle( bundle );
 	}
-	
-	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
+
+	@Override
+	public int STR() {
+		STR = 9 + Power;
+		return super.STR();
+	}
+
+	public static void preview(GamesInProgress.Info info, Bundle bundle ) {
 		info.level = bundle.getInt( LEVEL );
 		info.str = bundle.getInt( STRENGTH );
 		info.exp = bundle.getInt( EXPERIENCE );
@@ -430,6 +436,7 @@ public class Hero extends Char {
 	@Override
 	public int attackSkill( Char target ) {
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
+		attackSkill = 9 + Expertise;
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
@@ -437,6 +444,7 @@ public class Hero extends Char {
 	public int defenseSkill(Char enemy) {
 		float evasion = super.defenseSkill(enemy);
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
+		defenseSkill = 3 + Expertise;
 		return (int) (evasion*moraleMultiplier);
 	}
 

@@ -41,15 +41,16 @@ public class Bestiary {
 	private static ArrayList<Class<? extends Mob>> standardMobRotation( int depth ){
 		switch(depth){
 			
-			// Sewers
+			// Testing
 			default:
 				return new ArrayList<>(Arrays.asList(
-						Statue.class, Statue.class));
-			case 1:
+						Shaman.class));
+			// Sewers
+			/*case 1:
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
-						Snake.class));
+						Snake.class));*/
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,

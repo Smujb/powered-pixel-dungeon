@@ -481,6 +481,58 @@ public abstract class Char extends Actor {
 		return Messages.get(this, "def_verb");
 	}
 
+	public int magicalDR() {
+		return 0;
+	}
+
+	public int magicalDefenseProc(Char enemy, int damage) {
+		return damage;
+	}
+
+	public int magicalAttackProc(Char enemy, int damage) {
+		return damage;
+	}
+
+	public int magicalDamageRoll() {
+		return 0;
+	}
+
+	public float magicalAttackDelay() {
+		return 1f;
+	}
+
+	public boolean magicalAttack( Char enemy) {
+		if (enemy == null) return false;
+		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
+		if (hit( this, enemy, true )) {
+			int dr = enemy.magicalDR();
+			int dmg = magicalDamageRoll();
+			int effectiveDamage = enemy.magicalDefenseProc( this, dmg );
+			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
+			effectiveDamage = magicalAttackProc( enemy, effectiveDamage );
+
+			// If the enemy is already dead, interrupt the attack.
+			// This matters as defence procs can sometimes inflict self-damage, such as getArmors glyphs.
+			if (!enemy.isAlive()){
+				return true;
+			}
+			this.sprite.zap(enemy.pos);
+			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
+			enemy.sprite.flash();
+			return true;
+		} else {
+			if (visibleFight) {
+				String defense = enemy.defenseVerb();
+				enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
+
+				Sample.INSTANCE.play(Assets.SND_MISS);
+			}
+
+			return false;
+		}
+
+	}
+
 	public int drRoll() {
 		int dr = 0;
 		if (usesBelongings) {

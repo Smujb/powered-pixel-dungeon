@@ -72,10 +72,24 @@ public class Shaman extends Mob implements Callback {
     public boolean canAttack(Char enemy) {
 		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
-	
+
+	@Override
+	public int magicalDamageRoll() {
+		return Random.IntRange(4,14);
+	}
+
+	@Override
+	public int magicalAttackProc(Char enemy, int damage) {
+		damage = super.magicalAttackProc(enemy, damage);
+		if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
+			damage *= 2f;
+		}
+		return damage;
+	}
+
 	//used so resistances can differentiate between melee and magical attacks
 	public static class LightningBolt{}
-	
+
 	@Override
 	protected boolean doAttack( Char enemy ) {
 
@@ -84,42 +98,7 @@ public class Shaman extends Mob implements Callback {
 			return super.doAttack( enemy );
 			
 		} else {
-			
-			if (sprite != null && sprite.visible) {
-				sprite.zap( enemy.pos );
-			}
-			
-			spend( TIME_TO_ZAP );
-			
-			if (hit( this, enemy, true )) {
-				int dmg = Random.NormalIntRange(4, 13);
-				if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
-					dmg *= 2f;
-				}
-				enemy.damage( dmg, new LightningBolt() );
-				
-				enemy.sprite.centerEmitter().burst( SparkParticle.FACTORY, 3 );
-				enemy.sprite.flash();
-				
-				if (enemy == Dungeon.hero) {
-					
-					Camera.main.shake( 2, 0.3f );
-					
-					if (!enemy.isAlive()) {
-						Dungeon.fail( getClass() );
-						GLog.n( Messages.get(this, "zap_kill") );
-					}
-				}
-			} else {
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
-			}
-			
-			if (sprite != null && sprite.visible) {
-				sprite.zap( enemy.pos );
-				return false;
-			} else {
-				return true;
-			}
+			return doMagicAttack( enemy );
 		}
 	}
 	
