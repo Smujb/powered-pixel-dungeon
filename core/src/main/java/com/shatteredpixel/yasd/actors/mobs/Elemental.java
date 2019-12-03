@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Chill;
 import com.shatteredpixel.yasd.actors.buffs.Frost;
+import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.sprites.ElementalSprite;
 import com.watabou.utils.Random;
@@ -77,7 +78,7 @@ public class Elemental extends Mob {
 	
 	@Override
 	public void add( Buff buff ) {
-		if (buff instanceof Frost || buff instanceof Chill) {
+		if (buff instanceof Frost || buff instanceof Chill || buff instanceof Wet) {
 				if (Dungeon.level.water[this.pos])
 					damage( Random.NormalIntRange( HT / 2, HT ), buff );
 				else

@@ -13,6 +13,8 @@ public class Wet extends FlavourBuff {
         announced = true;
     }
 
+    public static final float DURATION = 5f;
+
     @Override
     public boolean attachTo(Char target) {
         //can't chill what's frozen!

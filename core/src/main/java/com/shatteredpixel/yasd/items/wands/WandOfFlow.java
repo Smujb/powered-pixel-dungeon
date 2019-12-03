@@ -9,14 +9,17 @@ import com.shatteredpixel.yasd.actors.blobs.Fire;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Slow;
+import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -62,8 +65,12 @@ public class WandOfFlow extends DamageWand {
         for ( Char ch : affectedChars ) {
             processSoulMark(ch, chargesPerCast());
             ch.damage(damageRoll(), this);
-            Buff.affect(ch, Slow.class, Slow.DURATION/3);
-            //Buff.affect(ch, Wet.class, Wet.DURATION);
+            if (Random.Int(2) == 0) {
+                Buff.affect(ch, Slow.class, Slow.DURATION / 3);
+            }
+            Ballistica trajectory = new Ballistica(ch.pos, bolt.path.get(bolt.dist + 1), Ballistica.MAGIC_BOLT);
+            WandOfBlastWave.throwChar(ch, trajectory, 2);
+            Buff.affect(ch, Wet.class, Wet.DURATION);
         }
     }
 
