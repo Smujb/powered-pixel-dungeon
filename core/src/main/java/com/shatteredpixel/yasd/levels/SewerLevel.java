@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.effects.Ripple;
+import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.items.DewVial;
 import com.shatteredpixel.yasd.levels.painters.Painter;
 import com.shatteredpixel.yasd.levels.painters.SewerPainter;
@@ -201,7 +202,16 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	public static final class WaterParticle extends PixelParticle {
-		
+		public static final Emitter.Factory FACTORY = new Emitter.Factory() {
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				((WaterParticle)emitter.recycle( WaterParticle.class )).reset( x, y );
+			}
+			@Override
+			public boolean lightMode() {
+				return true;
+			}
+		};
 		public WaterParticle() {
 			super();
 			

@@ -40,6 +40,13 @@ public class Chill extends FlavourBuff {
 		//can't chill what's frozen!
 		if (target.buff(Frost.class) != null) return false;
 
+		Buff wet = target.buff(Wet.class);
+		if (wet!= null) {//If enemy is wet, freeze them instead.
+			wet.detach();
+			Buff.affect(target,Frost.class,3f);
+			return false;
+		}
+
 		if (super.attachTo(target)){
 			Buff.detach( target, Burning.class );
 			return true;

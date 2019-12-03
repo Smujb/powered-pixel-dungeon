@@ -23,10 +23,12 @@ package com.shatteredpixel.yasd.effects;
 
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.effects.particles.CorrosionParticle;
+import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -65,6 +67,7 @@ public class MagicMissile extends Emitter {
 
 	public static final int FIRE_CONE       = 100;
 	public static final int FOLIAGE_CONE    = 101;
+	public static final int WATER_CONE      = 102;
 	
 	public void reset( int type, int from, int to, Callback callback ) {
 		reset( type,
@@ -151,6 +154,10 @@ public class MagicMissile extends Emitter {
 			case FIRE_CONE:
 				size( 10 );
 				pour( FlameParticle.FACTORY, 0.03f );
+				break;
+			case WATER_CONE:
+				size( 15 );
+				pour( SewerLevel.WaterParticle.FACTORY, 0.01f );
 				break;
 			case FOLIAGE_CONE:
 				size( 10 );

@@ -64,6 +64,7 @@ import com.shatteredpixel.yasd.actors.buffs.Stamina;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
@@ -461,6 +462,9 @@ public abstract class Char extends Actor {
 
 	public int defenseSkill( Char enemy ) {
 		float evasion = this.defenseSkill;
+		if (buff( Wet.class ) != null) {
+			evasion *= buff( Wet.class ).evasionFactor();
+		}
 		if (usesBelongings) {
 
 

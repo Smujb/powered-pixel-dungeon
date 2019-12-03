@@ -358,6 +358,11 @@ public class ItemSpriteSheet {
 	public static final int WAND_THORNVINES          = WANDS_YAPD+10;
 	public static final int WAND_LIFE_DRAIN          = WANDS_YAPD+11;
 
+	static {
+		for (int i = WANDS_YAPD; i < WANDS_YAPD+16; i++)
+			assignItemRect(i, 14, 14);
+	}
+
 	private static final int WANDS              =                           xy(1, 14);  //16 slots
 	public static final int WAND_MAGIC_MISSILE  = WANDS+0;
 	public static final int WAND_FIREBOLT       = WANDS+1;
