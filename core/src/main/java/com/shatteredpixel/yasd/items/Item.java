@@ -73,7 +73,7 @@ public class Item implements Bundlable {
 	protected String name = Messages.get(this, "name");
 	public int image = 0;
 
-	public final float MAXIMUM_DURABILITY = 1000;
+	public float MAXIMUM_DURABILITY = 1000;
 	public float curDurability = MAXIMUM_DURABILITY;
 	
 	public boolean stackable = false;

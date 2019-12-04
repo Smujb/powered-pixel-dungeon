@@ -74,6 +74,8 @@ public class MagesStaff extends MeleeWeapon {
 		bones = false;
 
 		damageMultiplier = 0.8f;
+
+		curDurability = MAXIMUM_DURABILITY = super.MAXIMUM_DURABILITY*2;//More durable as it can zap and attack at melee
 	}
 
 	public MagesStaff() {
@@ -122,6 +124,8 @@ public class MagesStaff extends MeleeWeapon {
 				GameScene.show(new WndItem(null, this, true));
 				return;
 			}
+
+			use(defaultDegradeAmount());
 
 			if (cursed || hasCurseEnchant()) wand.cursed = true;
 			else                             wand.cursed = false;
