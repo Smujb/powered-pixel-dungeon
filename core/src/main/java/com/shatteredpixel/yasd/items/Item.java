@@ -112,8 +112,11 @@ public class Item implements Bundlable {
 	}
 
 	public void use(float amount) {
+		if (level() <= 0) {
+			return;
+		}
 		if (curUser instanceof Hero) {
-			curDurability *= Math.pow(0.95, ((Hero)curUser).CombatSkill);
+			amount *= Math.pow(0.95f, ((Hero)curUser).CombatSkill);
 		}
 		curDurability -= amount;
 		if (curDurability <= 0) {
@@ -126,7 +129,7 @@ public class Item implements Bundlable {
 	}
 
 	public int defaultDegradeAmount() {
-		return Random.NormalIntRange(3,6);
+		return Random.NormalIntRange(12,30);
 	}
 	
 	public ArrayList<String> actions( Hero hero ) {

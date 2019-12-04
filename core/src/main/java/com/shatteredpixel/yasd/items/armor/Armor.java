@@ -72,6 +72,11 @@ import java.util.Arrays;
 
 public class Armor extends KindofMisc {
 
+	{
+		//MAXIMUM_DURABILITY = super.MAXIMUM_DURABILITY/2;
+		//curDurability = MAXIMUM_DURABILITY;
+	}
+
 	protected static final String AC_DETACH       = "DETACH";
 	
 	public enum Augment {

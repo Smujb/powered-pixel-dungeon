@@ -74,8 +74,8 @@ public class MagesStaff extends MeleeWeapon {
 		bones = false;
 
 		damageMultiplier = 0.8f;
-
-		curDurability = MAXIMUM_DURABILITY = super.MAXIMUM_DURABILITY*2;//More durable as it can zap and attack at melee
+		MAXIMUM_DURABILITY = super.MAXIMUM_DURABILITY*2;
+		curDurability = MAXIMUM_DURABILITY;//More durable as it can zap and attack at melee
 	}
 
 	public MagesStaff() {
