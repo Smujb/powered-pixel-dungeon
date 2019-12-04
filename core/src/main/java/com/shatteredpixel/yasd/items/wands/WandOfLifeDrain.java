@@ -117,7 +117,7 @@ public class WandOfLifeDrain extends DamageWand {
             return Messages.get(this, "stats_desc", chargesPerCast(), min(0), max(0));
     }
 
-    public int min(int lvl){
+    public float min(float lvl){
         return (1+lvl) * chargesPerCast();
     }
 

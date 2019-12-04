@@ -56,7 +56,7 @@ public class WandOfPrismaticLight extends DamageWand {
 		collisionProperties = Ballistica.MAGIC_BOLT;
 	}
 
-	public int min(int lvl){
+	public float min(float lvl){
 		return 1+lvl;
 	}
 

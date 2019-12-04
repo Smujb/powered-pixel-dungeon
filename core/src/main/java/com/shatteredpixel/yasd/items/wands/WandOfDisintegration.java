@@ -46,7 +46,7 @@ public class WandOfDisintegration extends DamageWand {
 	}
 
 
-	public int min(int lvl){
+	public float min(float lvl){
 		return 2+lvl;
 	}
 

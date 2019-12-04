@@ -15,7 +15,7 @@ public class WandOfPlasmaBolt extends DamageWand {
         image = ItemSpriteSheet.WAND_DISINTIGRATION_YAPD;
     }
     @Override
-    public int min(int lvl) {
+    public float min(float lvl) {
         return 4 + 2*lvl;
     }
 

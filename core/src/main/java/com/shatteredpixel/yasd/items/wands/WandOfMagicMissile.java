@@ -38,7 +38,7 @@ public class WandOfMagicMissile extends DamageWand {
 	}
 
 	@Override
-	public float min(int lvl){
+	public float min(float lvl){
 		return max();
 	}
 
@@ -48,8 +48,8 @@ public class WandOfMagicMissile extends DamageWand {
 	}
 
 	@Override
-	public int damageRoll(int lvl) {
-		return max(lvl);
+	public int damageRoll(float lvl) {
+		return (int) max(lvl);
 	}
 
 	@Override

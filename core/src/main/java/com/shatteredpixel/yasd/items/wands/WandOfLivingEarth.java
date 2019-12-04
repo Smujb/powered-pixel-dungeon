@@ -54,7 +54,7 @@ public class WandOfLivingEarth extends DamageWand {
 	}
 	
 	@Override
-	public int min(int lvl) {
+	public float min(float lvl) {
 		return 4;
 	}
 	

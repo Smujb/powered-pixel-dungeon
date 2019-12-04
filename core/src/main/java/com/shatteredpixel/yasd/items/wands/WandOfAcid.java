@@ -21,12 +21,12 @@ public class WandOfAcid extends DamageWand {
         collisionProperties = Ballistica.STOP_TARGET | Ballistica.STOP_TERRAIN;
     }
     @Override
-    public int min(int lvl) {
+    public float min(float lvl) {
         return 2 + lvl;
     }
 
     @Override
-    public int max(int lvl) {
+    public float max(float lvl) {
         return 8 + lvl * 4;
     }
 

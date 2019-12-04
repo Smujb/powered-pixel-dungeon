@@ -54,7 +54,7 @@ public class WandOfFireblast extends DamageWand {
 	}
 
 	//1x/2x/3x damage
-	public int min(int lvl){
+	public float min(float lvl){
 		return (1+lvl) * chargesPerCast();
 	}
 
