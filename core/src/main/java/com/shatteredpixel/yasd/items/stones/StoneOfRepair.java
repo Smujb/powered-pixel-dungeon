@@ -31,7 +31,7 @@ import com.watabou.noosa.audio.Sample;
 public class StoneOfRepair extends InventoryStone {
 
 	{
-		mode = WndBag.Mode.ENCHANTABLE;
+		mode = WndBag.Mode.REPAIRABLE;
 		image = ItemSpriteSheet.STONE_ENCHANT;
 	}
 
