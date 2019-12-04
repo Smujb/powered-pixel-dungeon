@@ -1,6 +1,7 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
@@ -36,7 +37,7 @@ public class Wet extends FlavourBuff {
 
     //reduces speed by 10% for every turn remaining, capping at 50%
     public float evasionFactor(){
-        return Math.max(0.5f, 1 - cooldown()*0.1f);
+        return (float) Math.pow( 1.15, -cooldown());
     }
 
     @Override

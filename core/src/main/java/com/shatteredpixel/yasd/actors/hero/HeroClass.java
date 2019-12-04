@@ -52,6 +52,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfAcid;
 import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
 import com.shatteredpixel.yasd.items.wands.WandOfFlow;
@@ -126,7 +127,7 @@ public enum HeroClass {
 		}
 		
 		new ScrollOfIdentify().identify().collect();
-
+		new StoneOfRepair().collect();
 		new Beer().collect();
 
 		new WandOfPlasmaBolt().identify().collect();
