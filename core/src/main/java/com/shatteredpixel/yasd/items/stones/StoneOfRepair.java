@@ -32,7 +32,7 @@ public class StoneOfRepair extends InventoryStone {
 
 	{
 		mode = WndBag.Mode.REPAIRABLE;
-		image = ItemSpriteSheet.STONE_ENCHANT;
+		image = ItemSpriteSheet.STONE_REPAIR;
 	}
 
 	private final float TIME_TO_REPAIR = 3f;
