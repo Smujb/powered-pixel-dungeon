@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.SPDSettings;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
+import com.shatteredpixel.yasd.ui.HealthBar;
 import com.shatteredpixel.yasd.ui.ItemSlot;
 import com.shatteredpixel.yasd.ui.RedButton;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;
@@ -82,8 +83,18 @@ public class WndItem extends Window {
 		} else if (item.levelKnown && item.level() < 0) {
 			titlebar.color( ItemSlot.DEGRADED );
 		}
-		
-		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
+		if (item.canDegrade()) {
+			HealthBar health = new HealthBar();
+			health.level(item.degradedPercent());
+			float w = width - GAP;
+
+			health.setRect(GAP, titlebar.bottom() + GAP, w, health.height());
+			add(health);
+
+			info.setPos(titlebar.left(), health.bottom() + GAP);
+		} else {
+			info.setPos(titlebar.left(), titlebar.bottom() + GAP);
+		}
 		add( info );
 	
 		float y = info.top() + info.height() + GAP;

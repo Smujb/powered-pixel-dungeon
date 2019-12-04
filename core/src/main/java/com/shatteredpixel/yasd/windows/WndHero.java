@@ -108,7 +108,7 @@ public class WndHero extends WndTabbed {
 
 	private class AbilitiesTab extends Group {
 
-		private static final int GAP = 6;
+		private static final int GAP = 7;
 
 		private float pos;
 		private static final int BTN_WIDTH  = 20;
@@ -118,7 +118,7 @@ public class WndHero extends WndTabbed {
 
 			public statIncreaseButton() {
 				super("+");
-				setRect(WIDTH*0.6f, pos-BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
+				setRect(WIDTH*0.8f, pos-BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
 			}
 
 			@Override
@@ -186,11 +186,11 @@ public class WndHero extends WndTabbed {
 			add( btnExpertise );
 			pos += GAP;
 			//Resilience
-			statSlot( Messages.get(this, "resilience"), hero.Resilience );
+			statSlot( Messages.get(this, "combatskill"), hero.CombatSkill );
 			statIncreaseButton btnResilience = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.Resilience++;
+					Dungeon.hero.CombatSkill++;
 				}
 			};
 			add( btnResilience );
@@ -207,7 +207,7 @@ public class WndHero extends WndTabbed {
 			add( txt );
 
 			txt = PixelScene.renderTextBlock( value, 10 );
-			txt.setPos(WIDTH * 0.5f, pos);
+			txt.setPos(WIDTH * 0.6f, pos);
 			PixelScene.align(txt);
 			add( txt );
 

@@ -212,7 +212,7 @@ public enum HeroClass {
 		
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();
-		hero.Resilience += 2;
+		hero.CombatSkill += 2;
 	}
 
 	private static void initHuntress( Hero hero ) {

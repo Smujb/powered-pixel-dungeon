@@ -86,7 +86,7 @@ import com.shatteredpixel.yasd.items.rings.RingOfMight;
 import com.shatteredpixel.yasd.items.rings.RingOfTenacity;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.yasd.items.stones.StoneOfAggression;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfFireblast;
 import com.shatteredpixel.yasd.items.wands.WandOfLightning;
 import com.shatteredpixel.yasd.items.wands.WandOfLivingEarth;
@@ -107,11 +107,9 @@ import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Earthroot;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.utils.GLog;
-import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -545,9 +543,11 @@ public abstract class Char extends Actor {
 	public int drRoll() {
 		int dr = 0;
 		if (usesBelongings) {
+			float amountToDegrade = Random.Int(10);
 			if (belongings.getArmors() != null) {
 				ArrayList<Armor> Armors = belongings.getArmors();
 				for (int i = 0; i < Armors.size(); i++) {
+					Armors.get(i).use(amountToDegrade/(float)Armors.size());
 					int armDr = Random.NormalIntRange(Armors.get(i).DRMin(), Armors.get(i).DRMax());
 					if (STR() < Armors.get(i).STRReq()) {
 						armDr -= 2 * (Armors.get(i).STRReq() - STR());
@@ -579,6 +579,7 @@ public abstract class Char extends Actor {
 		if (usesBelongings) {
 			int dmg;
 			KindOfWeapon wep = getCurrentWeapon();
+			wep.use(Random.Int(10));
 			if (wep != null) {
 				dmg = wep.damageRoll(this);
 				if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
@@ -998,7 +999,7 @@ public abstract class Char extends Actor {
 
 	public enum Property{
 		BOSS ( new HashSet<Class>( Arrays.asList(Grim.class, GrimTrap.class, ScrollOfRetribution.class, ScrollOfPsionicBlast.class)),
-				new HashSet<Class>( Arrays.asList(Corruption.class, StoneOfAggression.Aggression.class) )),
+				new HashSet<Class>( Arrays.asList(Corruption.class, StoneOfRepair.Aggression.class) )),
 		MINIBOSS ( new HashSet<Class>(),
 				new HashSet<Class>( Arrays.asList(Corruption.class) )),
 		UNDEAD,

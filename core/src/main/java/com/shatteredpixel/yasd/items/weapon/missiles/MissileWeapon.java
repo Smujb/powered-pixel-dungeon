@@ -67,7 +67,12 @@ abstract public class MissileWeapon extends Weapon {
 	protected MissileWeapon parent;
 	
 	public int tier;
-	
+
+	@Override
+	public float degradedPercent() {
+		return durability/MAX_DURABILITY;
+	}
+
 	@Override
 	public int min() {
 		return Math.max(0, min( level() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));

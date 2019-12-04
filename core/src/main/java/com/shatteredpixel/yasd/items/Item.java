@@ -30,9 +30,11 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.bags.Bag;
+import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.journal.Catalog;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.plants.Sungrass;
 import com.shatteredpixel.yasd.scenes.CellSelector;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSprite;
@@ -45,6 +47,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -69,6 +72,9 @@ public class Item implements Bundlable {
 	
 	protected String name = Messages.get(this, "name");
 	public int image = 0;
+
+	public final float MAXIMUM_DURABILITY = 1000;
+	public float curDurability = MAXIMUM_DURABILITY;
 	
 	public boolean stackable = false;
 	protected int quantity = 1;
@@ -92,6 +98,28 @@ public class Item implements Bundlable {
 			return Generator.Category.order( lhs ) - Generator.Category.order( rhs );
 		}
 	};
+
+	public boolean canDegrade() {
+		return false;
+	}
+
+	public float degradedPercent() {
+		return curDurability/MAXIMUM_DURABILITY;
+	}
+
+	public void use(float amount) {
+		if (curUser instanceof Hero) {
+			curDurability *= Math.pow(0.95, ((Hero)curUser).CombatSkill);
+		}
+		curDurability -= amount;
+		if (curDurability <= 0) {
+			curDurability = MAXIMUM_DURABILITY;
+			degrade();
+			cursed = true;
+		} else if (curDurability <= 100) {
+			GLog.w(Messages.get(this,"almost_break",this.name()));
+		}
+	}
 	
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = new ArrayList<>();
@@ -458,6 +486,7 @@ public class Item implements Bundlable {
 	private static final String CURSED			= "cursed";
 	private static final String CURSED_KNOWN	= "cursedKnown";
 	private static final String QUICKSLOT		= "quickslotpos";
+	private static final String DURABILITY      = "durability";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -466,6 +495,7 @@ public class Item implements Bundlable {
 		bundle.put( LEVEL_KNOWN, levelKnown );
 		bundle.put( CURSED, cursed );
 		bundle.put( CURSED_KNOWN, cursedKnown );
+		bundle.put( DURABILITY, curDurability );
 		if (Dungeon.quickslot.contains(this)) {
 			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
 		}
@@ -476,6 +506,7 @@ public class Item implements Bundlable {
 		quantity	= bundle.getInt( QUANTITY );
 		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
 		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
+		curDurability = bundle.getFloat( DURABILITY );
 		
 		int level = bundle.getInt( LEVEL );
 		if (level > 0) {

@@ -49,7 +49,7 @@ import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.rings.Ring;
 import com.shatteredpixel.yasd.items.rings.RingOfWealth;
-import com.shatteredpixel.yasd.items.stones.StoneOfAggression;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.levels.Level;
@@ -200,10 +200,10 @@ public abstract class Mob extends Char {
 		//if we are an enemy, and have no target or current target isn't affected by aggression
 		//then auto-prioritize a target that is affected by aggression, even another enemy
 		if (alignment == Alignment.ENEMY
-				&& (enemy == null || enemy.buff(StoneOfAggression.Aggression.class) == null)) {
+				&& (enemy == null || enemy.buff(StoneOfRepair.Aggression.class) == null)) {
 			for (Char ch : Actor.chars()) {
 				if (ch != this && fieldOfView[ch.pos] &&
-						ch.buff(StoneOfAggression.Aggression.class) != null) {
+						ch.buff(StoneOfRepair.Aggression.class) != null) {
 					return ch;
 				}
 			}

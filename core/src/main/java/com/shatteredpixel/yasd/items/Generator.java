@@ -89,7 +89,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.items.stones.Runestone;
 import com.shatteredpixel.yasd.items.stones.StoneOfAffection;
-import com.shatteredpixel.yasd.items.stones.StoneOfAggression;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.yasd.items.stones.StoneOfBlast;
 import com.shatteredpixel.yasd.items.stones.StoneOfBlink;
@@ -302,7 +302,7 @@ public class Generator {
 					StoneOfEnchantment.class,   //1 is guaranteed to drop on floors 6-19
 					StoneOfAugmentation.class,  //1 is sold in each shop
 					StoneOfIntuition.class,     //1 additional stone is also dropped on floors 1-3
-					StoneOfAggression.class,
+					StoneOfRepair.class,
 					StoneOfAffection.class,
 					StoneOfBlast.class,
 					StoneOfBlink.class,

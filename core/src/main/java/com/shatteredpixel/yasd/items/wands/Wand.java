@@ -133,6 +133,11 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	@Override
+	public boolean canDegrade() {
+		return true;
+	}
+
+	@Override
 	public void activate(Char ch) {//When equipped, start charging
 		super.activate(ch);
 		if (ch instanceof Char) {
@@ -376,6 +381,8 @@ public abstract class Wand extends KindofMisc {
 		
 		if (curUser instanceof Hero && ((Hero)curUser).heroClass == HeroClass.MAGE) levelKnown = true;
 		updateQuickslot();
+
+		use(Random.Int(10));
 
 		curUser.spendAndNext( TIME_TO_ZAP );
 	}

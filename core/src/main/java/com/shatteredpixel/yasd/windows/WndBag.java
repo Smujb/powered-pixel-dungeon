@@ -91,7 +91,8 @@ public class WndBag extends WndTabbed {
 		TRANMSUTABLE,
 		ALCHEMY,
 		RECYCLABLE,
-		NOT_EQUIPPED
+		NOT_EQUIPPED,
+		REPAIRABLE
 	}
 
 	protected static final int COLS_P    = 4;
@@ -408,6 +409,7 @@ public class WndBag extends WndTabbed {
 						mode == Mode.TRANMSUTABLE && ScrollOfTransmutation.canTransmute(item) ||
 						mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
 						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
+						mode == Mode.REPAIRABLE && item.canDegrade() & item.curDurability < item.MAXIMUM_DURABILITY ||
 						mode == Mode.ALL
 					);
 				}

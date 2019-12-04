@@ -37,6 +37,11 @@ public class MeleeWeapon extends Weapon {
 	public boolean dualWieldpenalty = false;
 
 	@Override
+	public boolean canDegrade() {
+		return true;
+	}
+
+	@Override
 	public int min(int lvl) {
 		return  tier +  //base
 				lvl;    //level scaling

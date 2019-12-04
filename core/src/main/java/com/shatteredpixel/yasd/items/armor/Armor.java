@@ -95,7 +95,12 @@ public class Armor extends KindofMisc {
 			return Math.round((2 + level) * defenceFactor);
 		}
 	}
-	
+
+	@Override
+	public boolean canDegrade() {
+		return true;
+	}
+
 	public Augment augment = Augment.NONE;
 	
 	public Glyph glyph;

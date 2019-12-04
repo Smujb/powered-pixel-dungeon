@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.yasd.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.yasd.items.stones.Runestone;
 import com.shatteredpixel.yasd.items.stones.StoneOfAffection;
-import com.shatteredpixel.yasd.items.stones.StoneOfAggression;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.yasd.items.stones.StoneOfBlast;
 import com.shatteredpixel.yasd.items.stones.StoneOfBlink;
@@ -310,7 +310,7 @@ public abstract class Scroll extends Item {
 			stones.put(ScrollOfRetribution.class,   StoneOfBlast.class);
 			amnts.put(ScrollOfRetribution.class,    2);
 			
-			stones.put(ScrollOfRage.class,          StoneOfAggression.class);
+			stones.put(ScrollOfRage.class,          StoneOfRepair.class);
 			amnts.put(ScrollOfRage.class,           3);
 			
 			stones.put(ScrollOfRecharging.class,    StoneOfShock.class);

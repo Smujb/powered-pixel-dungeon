@@ -176,7 +176,7 @@ public class Hero extends Char {
 	public int Power = 1;
 	public int Focus = 1;
 	public int Expertise = 1;
-	public int Resilience = 1;
+	public int CombatSkill = 1;
 	public int DistributionPoints = 0;
 
 	private static final float TIME_TO_REST		    = 1f;
@@ -276,33 +276,6 @@ public class Hero extends Char {
 
 	@Override
 	public float resist(Class effect) {
-		//Buffs resisted
-		final HashSet<Class> RESISTS = new HashSet<>();
-		RESISTS.add(Burning.class);
-		RESISTS.add(Charm.class);
-		RESISTS.add(Chill.class);
-		RESISTS.add(Frost.class);
-		RESISTS.add(Ooze.class);
-		RESISTS.add(Paralysis.class);
-		RESISTS.add(Poison.class);
-		RESISTS.add(Corrosion.class);
-		RESISTS.add(Weakness.class);
-
-		for (Class c : RESISTS){
-			if (c.isAssignableFrom(effect)){
-				return (float)Math.pow(0.90, Resilience);
-			}
-		}
-
-		//Buffs increased
-		final HashSet<Class> INCREASE = new HashSet<>();
-		INCREASE.add(ShieldBuff.class);
-
-		for (Class c : INCREASE){
-			if (c.isAssignableFrom(effect)){
-				return (float)Math.pow(1.10, Resilience);
-			}
-		}
 		return super.resist(effect);
 	}
 
@@ -317,7 +290,7 @@ public class Hero extends Char {
 	private static final String POWER       = "power";
 	private static final String FOCUS       = "focus";
 	private static final String EXPERTISE   = "expertise";
-	private static final String RESILIENCE  = "resilience";
+	private static final String COMBATSKILL = "combatskill";
 	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
@@ -347,7 +320,7 @@ public class Hero extends Char {
 		bundle.put( POWER, Power );
 		bundle.put( FOCUS, Focus );
 		bundle.put( EXPERTISE, Expertise);
-		bundle.put( RESILIENCE, Resilience);
+		bundle.put( COMBATSKILL, CombatSkill );
 		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
 
 		belongings.storeInBundle( bundle );
@@ -378,7 +351,7 @@ public class Hero extends Char {
 		Power = bundle.getInt( POWER );
 		Focus = bundle.getInt( FOCUS );
 		Expertise = bundle.getInt( EXPERTISE );
-		Resilience = bundle.getInt( RESILIENCE );
+		CombatSkill = bundle.getInt( COMBATSKILL );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 		
 		belongings.restoreFromBundle( bundle );
@@ -415,7 +388,7 @@ public class Hero extends Char {
 		Buff.affect( this, Hunger.class );
 	}
 	
-	public int tier() {//Not needed any more
+	public int tier() {
 		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).tier;
 	}
 
@@ -435,7 +408,6 @@ public class Hero extends Char {
 
 	@Override
 	public int magicalDefenseProc(Char enemy, int damage) {
-		damage = (int) (damage*Math.pow( 0.95, Resilience));
 		return super.magicalDefenseProc(enemy, damage);
 	}
 
