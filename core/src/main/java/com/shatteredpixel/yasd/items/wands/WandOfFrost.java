@@ -49,7 +49,7 @@ public class WandOfFrost extends DamageWand {
 		return 2+lvl;
 	}
 
-	public int max(int lvl){
+	public float max(float lvl){
 		return 8+5*lvl;
 	}
 

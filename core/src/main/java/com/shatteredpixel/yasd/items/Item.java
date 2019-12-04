@@ -107,6 +107,10 @@ public class Item implements Bundlable {
 		return curDurability/MAXIMUM_DURABILITY;
 	}
 
+	public void fullyRepair() {
+		curDurability = MAXIMUM_DURABILITY;
+	}
+
 	public void use(float amount) {
 		if (curUser instanceof Hero) {
 			curDurability *= Math.pow(0.95, ((Hero)curUser).CombatSkill);
@@ -119,6 +123,10 @@ public class Item implements Bundlable {
 		} else if (curDurability <= 100) {
 			GLog.w(Messages.get(this,"almost_break",this.name()));
 		}
+	}
+
+	public int defaultDegradeAmount() {
+		return Random.NormalIntRange(3,6);
 	}
 	
 	public ArrayList<String> actions( Hero hero ) {
@@ -335,6 +343,8 @@ public class Item implements Bundlable {
 		this.level++;
 
 		updateQuickslot();
+
+		fullyRepair();
 		
 		return this;
 	}

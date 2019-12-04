@@ -89,13 +89,13 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	public float effectiveness (Hero hero) {
-		return level() + hero.Focus/3f;
+		return level() + hero.Focus/5f;
 	}
 
-	public int actualLevel() {
-		int level;
+	public float actualLevel() {
+		float level;
 		if (curUser instanceof Hero) {
-			level = Math.round(effectiveness((Hero) curUser));
+			level = effectiveness((Hero) curUser);
 		} else {
 			level = 2*level();
 		}
@@ -382,7 +382,7 @@ public abstract class Wand extends KindofMisc {
 		if (curUser instanceof Hero && ((Hero)curUser).heroClass == HeroClass.MAGE) levelKnown = true;
 		updateQuickslot();
 
-		use(Random.Int(10));
+		use(defaultDegradeAmount());
 
 		curUser.spendAndNext( TIME_TO_ZAP );
 	}

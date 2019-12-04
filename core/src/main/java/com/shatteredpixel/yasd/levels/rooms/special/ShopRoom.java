@@ -55,6 +55,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.stones.Runestone;
 import com.shatteredpixel.yasd.items.stones.StoneOfAugmentation;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Greatsword;
@@ -205,6 +206,8 @@ public class ShopRoom extends SpecialRoom {
 			itemsToSpawn.add( new Torch() );
 			break;
 		}
+
+		itemsToSpawn.add(new StoneOfRepair().quantity(Random.IntRange(2,3)));
 		
 		itemsToSpawn.add( TippedDart.randomTipped(2) );
 

@@ -30,17 +30,17 @@ import com.watabou.utils.Random;
 public abstract class DamageWand extends Wand{
 
 	public int min() {
-		return min(actualLevel());
+		return (int) min(actualLevel());
 	}
 
 
-	public abstract int min(int lvl);
+	public abstract float min(float lvl);
 
 	public int max(){
-		return max(actualLevel());
+		return (int) max(actualLevel());
 	}
 
-	public abstract int max(int lvl);
+	public abstract float max(float lvl);
 
 	@Override
 	protected int initialCharges() {
@@ -51,8 +51,8 @@ public abstract class DamageWand extends Wand{
 		return damageRoll(actualLevel());
 	}
 
-	public int damageRoll(int lvl){
-		return Random.NormalIntRange(min(lvl), max(lvl));
+	public int damageRoll(float lvl){
+		return Random.NormalIntRange((int)min(lvl), (int)max(lvl));
 	}
 
 	@Override

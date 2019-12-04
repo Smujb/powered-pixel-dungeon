@@ -57,7 +57,7 @@ public class WandOfBlastWave extends DamageWand {
 		return 1+lvl;
 	}
 
-	public int max(int lvl){
+	public float max(float lvl){
 		return 5+3*lvl;
 	}
 

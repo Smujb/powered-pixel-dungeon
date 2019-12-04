@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Adrenaline;
+import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Charm;
@@ -45,6 +46,7 @@ import com.shatteredpixel.yasd.effects.Surprise;
 import com.shatteredpixel.yasd.effects.Wound;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.rings.Ring;
@@ -200,10 +202,10 @@ public abstract class Mob extends Char {
 		//if we are an enemy, and have no target or current target isn't affected by aggression
 		//then auto-prioritize a target that is affected by aggression, even another enemy
 		if (alignment == Alignment.ENEMY
-				&& (enemy == null || enemy.buff(StoneOfRepair.Aggression.class) == null)) {
+				&& (enemy == null || enemy.buff(Aggression.class) == null)) {
 			for (Char ch : Actor.chars()) {
 				if (ch != this && fieldOfView[ch.pos] &&
-						ch.buff(StoneOfRepair.Aggression.class) != null) {
+						ch.buff(Aggression.class) != null) {
 					return ch;
 				}
 			}

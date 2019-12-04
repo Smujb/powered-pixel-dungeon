@@ -53,10 +53,10 @@ public class WandOfCorrosion extends Wand {
 
 	@Override
 	public void onZap(Ballistica bolt) {
-		int level = actualLevel();
-		CorrosiveGas gas = Blob.seed(bolt.collisionPos, 50 + 5 * level, CorrosiveGas.class);
+		float level = actualLevel();
+		CorrosiveGas gas = Blob.seed(bolt.collisionPos, (int) (50 + 5 * level), CorrosiveGas.class);
 		CellEmitter.center(bolt.collisionPos).burst( CorrosionParticle.SPLASH, 10 );
-		gas.setStrength(2 + level);
+		gas.setStrength(2 + (int)level);
 		GameScene.add(gas);
 
 		for (int i : PathFinder.NEIGHBOURS9) {

@@ -121,7 +121,7 @@ public class WandOfLifeDrain extends DamageWand {
         return (1+lvl) * chargesPerCast();
     }
 
-    public int max(int lvl){
+    public float max(float lvl){
         return (6+2*lvl) * chargesPerCast();
     }
 }

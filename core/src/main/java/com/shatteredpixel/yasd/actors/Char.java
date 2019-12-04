@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.actors.buffs.Adrenaline;
 import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
+import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.yasd.actors.buffs.Barkskin;
 import com.shatteredpixel.yasd.actors.buffs.Berserk;
@@ -68,6 +69,7 @@ import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
+import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
@@ -543,7 +545,7 @@ public abstract class Char extends Actor {
 	public int drRoll() {
 		int dr = 0;
 		if (usesBelongings) {
-			float amountToDegrade = Random.Int(10);
+			float amountToDegrade = new Item().defaultDegradeAmount();
 			if (belongings.getArmors() != null) {
 				ArrayList<Armor> Armors = belongings.getArmors();
 				for (int i = 0; i < Armors.size(); i++) {
@@ -579,7 +581,7 @@ public abstract class Char extends Actor {
 		if (usesBelongings) {
 			int dmg;
 			KindOfWeapon wep = getCurrentWeapon();
-			wep.use(Random.Int(10));
+			wep.use(wep.defaultDegradeAmount());
 			if (wep != null) {
 				dmg = wep.damageRoll(this);
 				if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
@@ -999,7 +1001,7 @@ public abstract class Char extends Actor {
 
 	public enum Property{
 		BOSS ( new HashSet<Class>( Arrays.asList(Grim.class, GrimTrap.class, ScrollOfRetribution.class, ScrollOfPsionicBlast.class)),
-				new HashSet<Class>( Arrays.asList(Corruption.class, StoneOfRepair.Aggression.class) )),
+				new HashSet<Class>( Arrays.asList(Corruption.class, Aggression.class) )),
 		MINIBOSS ( new HashSet<Class>(),
 				new HashSet<Class>( Arrays.asList(Corruption.class) )),
 		UNDEAD,

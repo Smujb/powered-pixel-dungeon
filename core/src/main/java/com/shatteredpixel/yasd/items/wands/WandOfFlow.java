@@ -37,12 +37,12 @@ public class WandOfFlow extends DamageWand {
     private int direction = 0;
 
     @Override
-    public int min(int lvl) {
+    public float min(float lvl) {
         return 1 + lvl;
     }
 
     @Override
-    public int max(int lvl) {
+    public float max(float lvl) {
         return 6 + lvl*3;
     }
 

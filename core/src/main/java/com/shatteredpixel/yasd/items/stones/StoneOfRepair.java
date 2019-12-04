@@ -22,31 +22,33 @@
 package com.shatteredpixel.yasd.items.stones;
 
 import com.shatteredpixel.yasd.Assets;
-import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
-import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
-import com.shatteredpixel.yasd.items.Heap;
-import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
-public class StoneOfRepair extends Runestone {
-	
+public class StoneOfRepair extends InventoryStone {
+
 	{
-		image = ItemSpriteSheet.STONE_REPAIR;
+		mode = WndBag.Mode.ENCHANTABLE;
+		image = ItemSpriteSheet.STONE_ENCHANT;
 	}
-	
+
+	private final float TIME_TO_REPAIR = 3f;
+
 	@Override
-	protected void activate(int cell) {
-
+	protected void onItemSelected(Item item) {
+		item.fullyRepair();
+		curUser.sprite.centerEmitter().start( Speck.factory( Speck.REPAIR ), 0.05f, 10 );
+		curUser.spend( TIME_TO_REPAIR );
+		curUser.busy();
+		curUser.sprite.operate( curUser.pos );
+		Sample.INSTANCE.play( Assets.SND_EVOKE );
 	}
-	
 
-	
+	@Override
+	public int price() {
+		return 30 * quantity;
+	}
 }

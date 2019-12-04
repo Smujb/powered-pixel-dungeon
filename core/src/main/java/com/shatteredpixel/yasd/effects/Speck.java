@@ -52,7 +52,7 @@ public class Speck extends Image {
 	public static final int DISCOVER    = 101;
 	public static final int EVOKE       = 102;
 	public static final int MASTERY     = 103;
-	public static final int KIT         = 104;
+	public static final int REPAIR = 104;
 	public static final int RATTLE      = 105;
 	public static final int JET         = 106;
 	public static final int TOXIC       = 107;
@@ -102,7 +102,7 @@ public class Speck extends Image {
 			break;
 		case EVOKE:
 		case MASTERY:
-		case KIT:
+		case REPAIR:
 		case FORGE:
 			frame( film.get( STAR ) );
 			break;
@@ -170,7 +170,7 @@ public class Speck extends Image {
 			lifespan = 1f;
 			break;
 			
-		case KIT:
+		case REPAIR:
 			speed.polar( index * 3.1415926f / 5, 50 );
 			acc.set( -speed.x, -speed.y );
 			angle = index * 36;
@@ -387,7 +387,7 @@ public class Speck extends Image {
 				am = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
 				break;
 				
-			case KIT:
+			case REPAIR:
 			case MASTERY:
 				am = 1 - p * p;
 				break;

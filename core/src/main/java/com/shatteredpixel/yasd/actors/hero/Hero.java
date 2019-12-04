@@ -359,7 +359,7 @@ public class Hero extends Char {
 
 	@Override
 	public int STR() {
-		STR = 9 + Power;
+		STR = 9 + Power/2;
 		return super.STR();
 	}
 
@@ -1273,7 +1273,7 @@ public class Hero extends Char {
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
 				gainMorale(0.5f + missingMoralePercent);//Gains more Morale on level up when on low Morale
 			}
-			DistributionPoints += 2;
+			DistributionPoints += 3;
 			Item.updateQuickslot();
 			
 			Badges.validateLevelReached();

@@ -299,10 +299,10 @@ public class Generator {
 			SCROLL.probs = new float[]{ 0, 6, 4, 3, 3, 3, 2, 2, 2, 2, 2, 1 };
 			
 			STONE.classes = new Class<?>[]{
-					StoneOfEnchantment.class,   //1 is guaranteed to drop on floors 6-19
-					StoneOfAugmentation.class,  //1 is sold in each shop
+					StoneOfEnchantment.class,   //1 drops per chapter, can rarely find more
+					StoneOfAugmentation.class,  //1 is sold in each shop, can rarely find more
 					StoneOfIntuition.class,     //1 additional stone is also dropped on floors 1-3
-					StoneOfRepair.class,
+					StoneOfRepair.class,		//2-3 are sold in each shop, can rarely find more
 					StoneOfAffection.class,
 					StoneOfBlast.class,
 					StoneOfBlink.class,
@@ -312,7 +312,7 @@ public class Generator {
 					StoneOfFlock.class,
 					StoneOfShock.class
 			};
-			STONE.probs = new float[]{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+			STONE.probs = new float[]{ 1, 1, 10, 2, 10, 10, 10, 10, 10, 10, 10, 10 };
 
 			WAND.classes = new Class<?>[]{
 					WandOfMagicMissile.class,

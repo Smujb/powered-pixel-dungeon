@@ -20,7 +20,7 @@ public class WandOfPlasmaBolt extends DamageWand {
     }
 
     @Override
-    public int max(int lvl) {
+    public float max(float lvl) {
         return 15 + 8*lvl;
     }
 
