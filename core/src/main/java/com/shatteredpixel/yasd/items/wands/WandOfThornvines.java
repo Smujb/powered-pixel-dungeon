@@ -74,14 +74,14 @@ public class WandOfThornvines extends Wand {
             alignment = Alignment.ALLY;
         }
 
-        int level;
+        float level;
         float charges;
 
         private final String LEVEL = "level";
         private final String CHARGES = "charges";
 
 
-        public ThornVine(int level, int charges, Char owner) {
+        public ThornVine(float level, int charges, Char owner) {
             this.level = level;
             this.charges = charges;
             this.alignment = owner.alignment;
@@ -117,7 +117,7 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public int damageRoll() {
-            return (int) (Random.Int(2,3 + level)*charges);
+            return (int) (Random.Int(2,(int) (3 + level))*charges);
         }
 
         @Override
@@ -131,7 +131,7 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return ((20 + this.level*20));
+            return (int) ((20 + this.level*20));
         }
 
         @Override
@@ -169,7 +169,7 @@ public class WandOfThornvines extends Wand {
 
         @Override
         public int drRoll() {
-            return 1 + level*2;
+            return (int) (1 + level*2);
         }
 
         @Override
@@ -179,7 +179,7 @@ public class WandOfThornvines extends Wand {
             return true;
         }
 
-        public ThornVine spawnAt(int pos, int level, int charges, Char owner ) {
+        public ThornVine spawnAt(int pos, float level, int charges, Char owner ) {
             if (Dungeon.level.passable[pos]) {
                 ThornVine TV = new ThornVine(level, charges, owner);
                 if (Actor.findChar(pos) == null) {
@@ -196,7 +196,7 @@ public class WandOfThornvines extends Wand {
                     }
 
                     if (closest == -1){
-                        curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level/2);
+                        curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + (int)level/2);
                         return null; //do not spawn Thorn Vine
                     } else {
                         TV.pos = closest;
@@ -204,11 +204,11 @@ public class WandOfThornvines extends Wand {
                 }
 
                 TV.HT = setHP();
-                TV.HP = Math.max(1,(int) (TV.HT*(charges/((float) new WandOfThornvines().initialCharges())+(float)level)));//Can't have 0 HP
+                TV.HP = Math.max(1,(int) (TV.HT*(charges/((float) new WandOfThornvines().initialCharges())+level)));//Can't have 0 HP
                 GameScene.add(TV);
                 TV.state = TV.HUNTING;
 
-                TV.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level / 2);
+                TV.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + (int)level / 2);
 
                 return TV;
             } else {

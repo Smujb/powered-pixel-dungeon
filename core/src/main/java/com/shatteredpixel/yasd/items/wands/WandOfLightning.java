@@ -54,10 +54,12 @@ public class WandOfLightning extends DamageWand {
 
 	ArrayList<Lightning.Arc> arcs = new ArrayList<>();
 
+	@Override
 	public float min(float lvl){
 		return 5+2*lvl;
 	}
 
+	@Override
 	public float max(float lvl){
 		return 10+6*lvl;
 	}

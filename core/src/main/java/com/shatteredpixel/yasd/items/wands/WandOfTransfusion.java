@@ -79,19 +79,19 @@ public class WandOfTransfusion extends Wand {
 				// 10% of max hp
 				int selfDmg = Math.round(curUser.HT*0.10f);
 				
-				int healing = selfDmg + 3*actualLevel();
-				int shielding = (ch.HP + healing) - ch.HT;
+				float healing = selfDmg + 3*actualLevel();
+				float shielding = (ch.HP + healing) - ch.HT;
 				if (shielding > 0){
 					healing -= shielding;
-					Buff.affect(ch, Barrier.class).setShield(shielding);
+					Buff.affect(ch, Barrier.class).setShield((int)shielding);
 				} else {
 					shielding = 0;
 				}
 				
 				ch.HP += healing;
 				
-				ch.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2 + actualLevel() / 2);
-				ch.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", healing + shielding);
+				ch.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2 + (int)actualLevel() / 2);
+				ch.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", (int) (healing + shielding));
 				
 				if (!freeCharge) {
 					damageHero(selfDmg);
@@ -101,21 +101,21 @@ public class WandOfTransfusion extends Wand {
 
 			//for enemies...
 			} else {
-				
+				int intLevel = (int) actualLevel();
 				//charms living enemies
 				if (!ch.properties().contains(Char.Property.UNDEAD)) {
 					Buff.affect(ch, Charm.class, 5).object = curUser.id();
-					ch.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 3 + actualLevel()/2 );
+					ch.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 3 + intLevel/2 );
 				
 				//harms the undead
 				} else {
-					ch.damage(Random.NormalIntRange(3 + actualLevel()/2, 6+actualLevel()), this);
-					ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + actualLevel());
+					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), this);
+					ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + intLevel);
 					Sample.INSTANCE.play(Assets.SND_BURNING);
 				}
 				
 				//and grants a self shield
-				Buff.affect(curUser, Barrier.class).setShield((5 + 4*actualLevel()));
+				Buff.affect(curUser, Barrier.class).setShield((5 + 4*intLevel));
 
 			}
 			

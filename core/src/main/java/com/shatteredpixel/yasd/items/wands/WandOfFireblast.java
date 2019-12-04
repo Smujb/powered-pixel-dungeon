@@ -54,11 +54,13 @@ public class WandOfFireblast extends DamageWand {
 	}
 
 	//1x/2x/3x damage
+	@Override
 	public float min(float lvl){
 		return (1+lvl) * chargesPerCast();
 	}
 
 	//1x/2x/3x damage
+	@Override
 	public float max(float lvl){
 		return (6+2*lvl) * chargesPerCast();
 	}

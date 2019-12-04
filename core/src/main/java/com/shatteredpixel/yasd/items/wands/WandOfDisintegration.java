@@ -45,11 +45,12 @@ public class WandOfDisintegration extends DamageWand {
 		collisionProperties = Ballistica.WONT_STOP;
 	}
 
-
+	@Override
 	public float min(float lvl){
 		return 2+lvl;
 	}
 
+	@Override
 	public float max(float lvl){
 		return 8+4*lvl;
 	}
@@ -59,7 +60,7 @@ public class WandOfDisintegration extends DamageWand {
 		
 		boolean terrainAffected = false;
 		
-		int level = actualLevel();
+		float level = actualLevel();
 		
 		int maxDistance = Math.min(distance(), beam.dist);
 		
@@ -97,7 +98,7 @@ public class WandOfDisintegration extends DamageWand {
 			Dungeon.observe();
 		}
 		
-		int lvl = level + (chars.size()-1) + terrainBonus;
+		float lvl = level + (chars.size()-1) + terrainBonus;
 		for (Char ch : chars) {
 			processSoulMark(ch, chargesPerCast());
 			ch.damage( damageRoll(lvl), this );

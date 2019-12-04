@@ -36,7 +36,7 @@ public class WandOfPlasmaBolt extends DamageWand {
                 processSoulMark(ch, chargesPerCast());
                 ch.damage(damage, this);
 
-                ch.sprite.burst(0xFFFFFFFF, actualLevel() / 2 + 2);
+                ch.sprite.burst(0xFFFFFFFF, (int) actualLevel() / 2 + 2);
             } else {
                 String defense = ch.defenseVerb();
                 ch.sprite.showStatus( CharSprite.NEUTRAL, defense );
