@@ -409,7 +409,7 @@ public class WndBag extends WndTabbed {
 						mode == Mode.TRANMSUTABLE && ScrollOfTransmutation.canTransmute(item) ||
 						mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
 						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
-						mode == Mode.REPAIRABLE && item.canDegrade() & item.curDurability < item.MAXIMUM_DURABILITY ||
+						mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
 						mode == Mode.ALL
 					);
 				}
