@@ -29,6 +29,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
+import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.items.wands.DamageWand;
@@ -122,7 +123,7 @@ public class Item implements Bundlable {
 		if (curUser == null) {//curUser may be null if activate() has not yet been called (such as on game start). This prevents the next check from throwing an error.
 			curUser = Dungeon.hero;
 		}
-		if (level() <= 0 | !isEquipped(curUser)) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
+		if (level() <= 0 |  !isEquipped(curUser)) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
 		if (curUser instanceof Hero) {

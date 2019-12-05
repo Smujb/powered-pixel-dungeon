@@ -528,6 +528,22 @@ public abstract class Char extends Actor {
 			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
 			enemy.sprite.flash();
 			enemy.damage(effectiveDamage,src);
+
+			if (!enemy.isAlive() && visibleFight) {
+				if (enemy == Dungeon.hero) {
+
+					if (this == Dungeon.hero) {
+						return true;
+					}
+
+					Dungeon.fail( getClass() );
+					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name)) );
+
+				} else if (this == Dungeon.hero) {
+					GLog.i( Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name)) );
+				}
+			}
+
 			return true;
 		} else {
 			if (visibleFight) {

@@ -22,7 +22,9 @@
 package com.shatteredpixel.yasd.sprites;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.actors.mobs.Statue;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.noosa.audio.Sample;
 
 public class StatueSprite extends MobSprite {
 	
@@ -51,5 +53,20 @@ public class StatueSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0xFFcdcdb7;
+	}
+
+	@Override
+	public void zap( int cell ) {
+		((Statue)ch).wandZap();
+		turnTo( ch.pos , cell );
+		Sample.INSTANCE.play( Assets.SND_ZAP );
+	}
+
+	@Override
+	public void onComplete( Animation anim ) {
+		if (anim == zap) {
+			idle();
+		}
+		super.onComplete( anim );
 	}
 }

@@ -125,7 +125,14 @@ public class Belongings implements Iterable<Item> {
 
 	public ArrayList<Item> getEquippedItemsOFType( Class type ) {//Find equipped items of a certain kind
 		ArrayList<Item> items = new ArrayList<>();
-		if (miscs[0].getClass() == type) {
+
+		for (int i = 0; i < miscs.length; i++) {
+			if (type.isInstance( miscs[i])) {
+				items.add(miscs[i]);
+			}
+		}
+
+		/*if (type.isInstance( miscs[0] )) {
 			items.add(miscs[0]);
 		}
 		if (miscs[1].getClass() == type) {
@@ -139,7 +146,7 @@ public class Belongings implements Iterable<Item> {
 		}
 		if (miscs[4].getClass() == type) {
 			items.add(miscs[4]);
-		}
+		}*/
 		return items;
 	}
 

@@ -28,7 +28,10 @@ import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
+import com.shatteredpixel.yasd.items.potions.Potion;
+import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.wands.Wand;
+import com.shatteredpixel.yasd.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
@@ -56,6 +59,7 @@ public class Statue extends Mob implements Callback {
 		usesBelongings = true;
 	}
 
+	public int HealingPotions = Dungeon.depth/5;//1 Potion per chapter
 	
 	public Statue() {
 		super();
@@ -70,6 +74,7 @@ public class Statue extends Mob implements Callback {
 			belongings.miscs[i].activate(this);
 		}
 
+		upgradeItems();
 		
 		HP = HT = 15 + Dungeon.depth * 5;
 		defenseSkill = 4 + Dungeon.depth;
@@ -77,7 +82,13 @@ public class Statue extends Mob implements Callback {
 
 	@Override
 	public boolean canAttack(Char enemy) {
-		return (new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos & wandToAttack(enemy) != null) | (Dungeon.level.adjacent( pos, enemy.pos ));
+		if (Dungeon.level.adjacent( pos, enemy.pos )) {
+			return super.canAttack( enemy );
+		} else if (belongings.getEquippedItemsOFType(Wand.class).size() > 0) {
+			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		} else {
+			return false;
+		}
 	}
 
 	public KindofMisc newItem() {
@@ -106,22 +117,34 @@ public class Statue extends Mob implements Callback {
 
 		item.level(0);
 		item.cursed = false;
+		item.identify();
 		return item;
 	}
-	
-	private static final String WEAPON	= "getWeapons";
-	
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
+
+	public void upgradeItems() {
+		int sous = (Dungeon.depth/5)*3;//(Dungeon.depth/5 [chapter]) * 3 [3 SoU per chapter]
+		KindofMisc Item;
+		if (belongings.miscs.length > 0) {
+			do {
+				do {
+					Item = Random.element(belongings.miscs);
+				} while (Item == null || !Item.isUpgradable());//If the item is not upgradeable (An artifact or +3) chose another. Also, if it is null (nothing equipped in that slot)
+				Item.upgrade();
+				sous--;
+			} while (sous > 0);
+		}
 	}
 
+	public void wandZap() {
+		if (enemy != null) {
+			Wand wand = wandToAttack(enemy);
+			wand.activate(this);
+			wand.zap(enemy.pos);
 
+		}
+		spend(1f);
+		next();
+	}
 
 	protected Wand wandToAttack(Char enemy ) {
 		if (enemy != null ) {
@@ -134,8 +157,7 @@ public class Statue extends Mob implements Callback {
 				}
 			}
 			if (UsableWands.size() > 0) {
-				return ((Wand)Wands.get(Random.Int(Wands.size() - 1)));
-
+				return Random.element(UsableWands);
 			}
 		}
 		return null;
@@ -157,6 +179,10 @@ public class Statue extends Mob implements Callback {
 			state = HUNTING;
 			return;
 		}
+		if (dmg > HP & HealingPotions > 0) {
+			new PotionOfHealing().drink(this);
+			HealingPotions--;
+		}
 		super.damage( dmg, src );
 	}
 
@@ -170,14 +196,12 @@ public class Statue extends Mob implements Callback {
 	}
 
 	protected boolean doAttack( Char enemy ) {
-		if ( wandToAttack(enemy) != null) {
-			zap(enemy);
-			spend(1f);
-			return true;
-		} else {
-
+		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.doAttack( enemy );
-
+		} else if (belongings.getEquippedItemsOFType(Wand.class).size() > 0) {
+			return doMagicAttack( enemy );
+		} else {
+			return false;
 		}
 	}
 
@@ -190,6 +214,8 @@ public class Statue extends Mob implements Callback {
 	public void die( Object cause ) {
 		for (int i=0; i < belongings.miscs.length; i++) {
 			if (belongings.miscs[i] != null) {
+				if (belongings.miscs[i] instanceof Wand) {
+				}
 				Dungeon.level.drop(belongings.miscs[i].identify(), pos).sprite.drop();
 			}
 		}

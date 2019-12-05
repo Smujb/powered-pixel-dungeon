@@ -31,7 +31,27 @@ import com.watabou.utils.Point;
 
 public class StatueRoom extends SpecialRoom {
 
-	public void paint( Level level ) {
+	@Override
+	public int minHeight() {
+		return 6;
+	}
+
+	@Override
+	public int minWidth() {
+		return 6;
+	}
+
+	@Override
+	public int maxHeight() {
+		return 12;
+	}
+
+	@Override
+	public int maxWidth() {
+		return 12;
+	}
+
+	public void paint(Level level ) {
 
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY );

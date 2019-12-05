@@ -36,9 +36,10 @@ public class WandOfThornvines extends Wand {
     private ThornVine thornVine = null;
 
     public ThornVine findThornVine() {
+        thornVine = null;
         if (Dungeon.level != null) {
             for (Mob m : Dungeon.level.mobs) {
-                if (m instanceof ThornVine) {
+                if (m instanceof ThornVine && m.alignment == curUser.alignment) {//Checks for alignment so that Statues can use ThornVines wand even if hero has spawned one
                     thornVine = (ThornVine) m;
                 }
             }
