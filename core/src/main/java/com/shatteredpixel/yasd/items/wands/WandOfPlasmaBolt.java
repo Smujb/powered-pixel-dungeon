@@ -4,11 +4,13 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Callback;
 
 public class WandOfPlasmaBolt extends DamageWand {
     {
@@ -22,6 +24,16 @@ public class WandOfPlasmaBolt extends DamageWand {
     @Override
     public float max(float lvl) {
         return 15 + 8*lvl;
+    }
+
+    @Override
+    protected void fx(Ballistica bolt, Callback callback) {
+        MagicMissile.boltFromChar(curUser.sprite.parent,
+                MagicMissile.PLASMA_BOLT,
+                curUser.sprite,
+                bolt.collisionPos,
+                callback);
+        Sample.INSTANCE.play(Assets.SND_ZAP);
     }
 
     @Override

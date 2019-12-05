@@ -382,7 +382,7 @@ public abstract class Wand extends KindofMisc {
 		if (curUser instanceof Hero && ((Hero)curUser).heroClass == HeroClass.MAGE) levelKnown = true;
 		updateQuickslot();
 
-		use(defaultDegradeAmount());
+		use(defaultDegradeAmount()*1.5f);
 
 		curUser.spendAndNext( TIME_TO_ZAP );
 	}

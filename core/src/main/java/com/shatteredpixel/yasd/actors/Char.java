@@ -545,11 +545,10 @@ public abstract class Char extends Actor {
 	public int drRoll() {
 		int dr = 0;
 		if (usesBelongings) {
-			float amountToDegrade = new Item().defaultDegradeAmount();
 			if (belongings.getArmors() != null) {
 				ArrayList<Armor> Armors = belongings.getArmors();
+				Armors.get(0).degrade(new Item().defaultDegradeAmount());
 				for (int i = 0; i < Armors.size(); i++) {
-					Armors.get(i).use(amountToDegrade/(float)Armors.size());
 					int armDr = Random.NormalIntRange(Armors.get(i).DRMin(), Armors.get(i).DRMax());
 					if (STR() < Armors.get(i).STRReq()) {
 						armDr -= 2 * (Armors.get(i).STRReq() - STR());

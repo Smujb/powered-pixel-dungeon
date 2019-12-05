@@ -207,7 +207,7 @@ public class ShopRoom extends SpecialRoom {
 			break;
 		}
 
-		itemsToSpawn.add(new StoneOfRepair().quantity(Random.IntRange(2,3)));
+		itemsToSpawn.add(new StoneOfRepair().quantity(2));
 		
 		itemsToSpawn.add( TippedDart.randomTipped(2) );
 

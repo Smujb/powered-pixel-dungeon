@@ -130,8 +130,8 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
-		new WandOfPlasmaBolt().identify().collect();
-		new WandOfFlow().identify().collect();
+		//new WandOfPlasmaBolt().identify().collect();
+		//new WandOfFlow().identify().collect();
 		//new WandOfThornvines().identify().collect();
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();

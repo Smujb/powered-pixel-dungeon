@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
+import com.shatteredpixel.yasd.items.wands.DamageWand;
 import com.shatteredpixel.yasd.journal.Catalog;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -73,8 +74,9 @@ public class Item implements Bundlable {
 	protected String name = Messages.get(this, "name");
 	public int image = 0;
 
-	public float MAXIMUM_DURABILITY = 1000;
+	public final float MAXIMUM_DURABILITY = 1000;
 	public float curDurability = MAXIMUM_DURABILITY;
+	public boolean saidAlmostBreak = false;
 	
 	public boolean stackable = false;
 	protected int quantity = 1;
@@ -109,10 +111,11 @@ public class Item implements Bundlable {
 
 	public void fullyRepair() {
 		curDurability = MAXIMUM_DURABILITY;
+		saidAlmostBreak = false;
 	}
 
 	public void use(float amount) {
-		if (level() <= 0) {
+		if (level() <= 0 | !isEquipped(curUser)) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
 		if (curUser instanceof Hero) {
@@ -120,16 +123,17 @@ public class Item implements Bundlable {
 		}
 		curDurability -= amount;
 		if (curDurability <= 0) {
-			curDurability = MAXIMUM_DURABILITY;
+			GLog.n(Messages.get(this,"broken"),this.name());
+			fullyRepair();
 			degrade();
-			cursed = true;
-		} else if (curDurability <= 100) {
+		} else if (curDurability <= 150 & !saidAlmostBreak) {
 			GLog.w(Messages.get(this,"almost_break",this.name()));
+			saidAlmostBreak = true;
 		}
 	}
 
 	public int defaultDegradeAmount() {
-		return Random.NormalIntRange(12,30);
+		return Random.NormalIntRange(10,20);
 	}
 	
 	public ArrayList<String> actions( Hero hero ) {
@@ -522,11 +526,7 @@ public class Item implements Bundlable {
 		curDurability = bundle.getFloat( DURABILITY );
 		
 		int level = bundle.getInt( LEVEL );
-		if (level > 0) {
-			upgrade( level );
-		} else if (level < 0) {
-			degrade( -level );
-		}
+		level(level);
 		
 		cursed	= bundle.getBoolean( CURSED );
 

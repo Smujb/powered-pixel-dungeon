@@ -64,6 +64,7 @@ public class MagicMissile extends Emitter {
 	public static final int RAINBOW         = 8;
 	public static final int EARTH           = 9;
 	public static final int WARD            = 10;
+	public static final int PLASMA_BOLT     = 11;
 
 	public static final int FIRE_CONE       = 100;
 	public static final int FOLIAGE_CONE    = 101;
@@ -115,6 +116,9 @@ public class MagicMissile extends Emitter {
 				break;
 			case FROST:
 				pour( MagicParticle.FACTORY, 0.01f );
+				break;
+			case PLASMA_BOLT:
+				pour( PlasmaParticle.FACTORY, 0.01f);
 				break;
 			case FIRE:
 				size( 4 );
@@ -202,6 +206,18 @@ public class MagicMissile extends Emitter {
 				on = false;
 				if (callback != null ) callback.call();
 			}
+		}
+	}
+
+	public static class PlasmaParticle extends MagicParticle {
+		public PlasmaParticle() {
+			super();
+
+			color( 0xffffff );
+			lifespan = 0.5f;
+
+			speed.set( Random.Float( -10, +10 ), Random.Float( -10, +10 ) );
+
 		}
 	}
 	

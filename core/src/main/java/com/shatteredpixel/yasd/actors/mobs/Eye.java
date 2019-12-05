@@ -125,13 +125,7 @@ public class Eye extends Mob {
 			return true;
 		} else {
 
-			beam = new Ballistica(pos, beamTarget, Ballistica.STOP_TERRAIN);
-			if (Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[beam.collisionPos] ) {
-				sprite.zap( beam.collisionPos );
-				return false;
-			} else {
-				return doMagicAttack(enemy);
-			}
+			return doMagicAttack(enemy);
 		}
 
 	}
@@ -143,64 +137,19 @@ public class Eye extends Mob {
 	}
 
 	@Override
+	public int magicalAttackProc(Char enemy, int damage) {
+		beamCharged = false;
+		beamCooldown = Random.IntRange(3, 6);
+		return super.magicalAttackProc(enemy, damage);
+	}
+
+	@Override
 	public int magicalDamageRoll() {
 		return Random.NormalIntRange( 30, 50 );
 	}
 
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DeathGaze{}
-
-	public void deathGaze(){
-		doMagicAttack(enemy);
-	}
-	/*
-		if (!beamCharged || beamCooldown > 0 || beam == null)
-			return;
-
-		beamCharged = false;
-		beamCooldown = Random.IntRange(3, 6);
-
-		boolean terrainAffected = false;
-
-		for (int pos : beam.subPath(1, beam.dist)) {
-
-			if (Dungeon.level.flamable[pos]) {
-
-				Dungeon.level.destroy( pos );
-				GameScene.updateMap( pos );
-				terrainAffected = true;
-
-			}
-
-			Char ch = Actor.findChar( pos );
-			if (ch == null) {
-				continue;
-			}
-
-			if (hit( this, ch, true )) {
-				ch.damage( Random.NormalIntRange( 30, 50 ), new DeathGaze() );
-
-				if (Dungeon.level.heroFOV[pos]) {
-					ch.sprite.flash();
-					CellEmitter.center( pos ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
-				}
-
-				if (!ch.isAlive() && ch == Dungeon.hero) {
-					Dungeon.fail( getClass() );
-					GLog.n( Messages.get(this, "deathgaze_kill") );
-				}
-			} else {
-				ch.sprite.showStatus( CharSprite.NEUTRAL,  ch.defenseVerb() );
-			}
-		}
-
-		if (terrainAffected) {
-			Dungeon.observe();
-		}
-
-		beam = null;
-		beamTarget = -1;
-	}*/
 
 	private static final String BEAM_TARGET     = "beamTarget";
 	private static final String BEAM_COOLDOWN   = "beamCooldown";
