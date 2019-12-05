@@ -81,8 +81,14 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
+	public void fullyRepair() {
+		wand.fullyRepair();
+		super.fullyRepair();
+	}
+
+	@Override
 	public int defaultDegradeAmount() {
-		return super.defaultDegradeAmount()/2;
+		return (int) (super.defaultDegradeAmount()/1.5f);
 	}
 
 	public MagesStaff(Wand wand){
@@ -93,6 +99,12 @@ public class MagesStaff extends MeleeWeapon {
 		updateWand(false);
 		wand.curCharges = wand.maxCharges;
 		name = Messages.get(wand, "staff_name");
+	}
+
+	@Override
+	public void level(int value) {
+		updateWand(false);
+		super.level(value);
 	}
 
 	@Override
@@ -205,6 +217,8 @@ public class MagesStaff extends MeleeWeapon {
 		}
 		
 		Badges.validateItemLevelAquired(this);
+
+		this.fullyRepair();
 
 		return this;
 	}

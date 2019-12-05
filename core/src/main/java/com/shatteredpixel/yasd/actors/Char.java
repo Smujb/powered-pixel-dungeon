@@ -547,7 +547,7 @@ public abstract class Char extends Actor {
 		if (usesBelongings) {
 			if (belongings.getArmors() != null) {
 				ArrayList<Armor> Armors = belongings.getArmors();
-				Armors.get(0).degrade(new Item().defaultDegradeAmount());
+				Armors.get(0).use();
 				for (int i = 0; i < Armors.size(); i++) {
 					int armDr = Random.NormalIntRange(Armors.get(i).DRMin(), Armors.get(i).DRMax());
 					if (STR() < Armors.get(i).STRReq()) {

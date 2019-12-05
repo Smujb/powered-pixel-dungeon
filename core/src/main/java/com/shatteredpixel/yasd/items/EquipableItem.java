@@ -135,5 +135,7 @@ public abstract class EquipableItem extends Item {
 		return doUnequip( hero, collect, true );
 	}
 
-	public void activate( Char ch ){}
-}
+	public void activate( Char ch ){
+		curUser = ch;
+
+	}}
