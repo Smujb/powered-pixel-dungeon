@@ -228,9 +228,8 @@ public class Statue extends Mob implements Callback {
 	public void beckon( int cell ) {
 		// Do nothing
 	}
-	
-	@Override
-	public void die( Object cause ) {
+
+	public void dropGear() {
 		for (int i=0; i < belongings.miscs.length; i++) {
 			if (belongings.miscs[i] != null) {
 				if (belongings.miscs[i] instanceof Wand) {
@@ -238,6 +237,11 @@ public class Statue extends Mob implements Callback {
 				Dungeon.level.drop(belongings.miscs[i].identify(), pos).sprite.drop();
 			}
 		}
+	}
+
+	@Override
+	public void die( Object cause ) {
+		dropGear();
 		super.die( cause );
 	}
 	

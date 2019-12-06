@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.mobs.ShopGuardian;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.items.Heap;
@@ -30,6 +31,7 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ShopkeeperSprite;
+import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndBag;
 import com.shatteredpixel.yasd.windows.WndTradeItem;
 import com.watabou.noosa.Game;
@@ -68,6 +70,9 @@ public class Shopkeeper extends NPC {
 		
 		sprite.killAndErase();
 		CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
+		GLog.n(Messages.get(this,"guards"));
+		new ShopGuardian().spawnAround(pos);
+		next();
 	}
 	
 	@Override
@@ -76,7 +81,7 @@ public class Shopkeeper extends NPC {
 		for (Heap heap: Dungeon.level.heaps.valueList()) {
 			if (heap.type == Heap.Type.FOR_SALE) {
 				CellEmitter.get( heap.pos ).burst( ElmoParticle.FACTORY, 4 );
-				heap.destroy();
+				heap.type = heap.type.HEAP;//Allow them to be picked up
 			}
 		}
 	}

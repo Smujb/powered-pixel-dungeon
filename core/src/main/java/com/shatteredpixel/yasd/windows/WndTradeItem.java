@@ -115,9 +115,9 @@ public class WndTradeItem extends Window {
 		float pos = createDescription( item, true );
 		
 		final int price = price( item );
-		
+
 		if (canBuy) {
-			
+
 			RedButton btnBuy = new RedButton( Messages.get(this, "buy", price) ) {
 				@Override
 				protected void onClick() {
