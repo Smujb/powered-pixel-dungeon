@@ -361,6 +361,19 @@ public abstract class Char extends Actor {
 				dmg = damageRoll();
 			}
 
+			if (this.alignment == Alignment.ENEMY) {
+				switch (Dungeon.difficulty) {
+					case 1://Easy = -25% damage
+						dmg*=0.75f;
+						break;
+					case 2: default://Medium = Normal damage
+						break;
+					case 3://Hard = +25% damage
+						dmg*=1.25f;
+						break;
+				}
+			}
+
 			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
 				Hero h = (Hero) this;
 				if (h.belongings.miscs[0] instanceof MissileWeapon) {

@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.ui.ActionIndicator;
 import com.shatteredpixel.yasd.ui.IconButton;
 import com.shatteredpixel.yasd.ui.Icons;
+import com.shatteredpixel.yasd.ui.OptionSlider;
 import com.shatteredpixel.yasd.ui.RedButton;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.ui.Window;
@@ -53,6 +54,8 @@ public class WndStartGame extends Window {
 	
 	private static final int WIDTH    = 120;
 	private static final int HEIGHT   = 140;
+	private static final int SLIDER_HEIGHT	= 20;
+	private static final int GAP_TINY 		= 2;
 
 	public WndStartGame(final int slot){
 		
@@ -96,7 +99,7 @@ public class WndStartGame extends Window {
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-				
+				Dungeon.difficulty = SPDSettings.difficulty();//I could just call SPDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
 				if (SPDSettings.intro()) {
 					SPDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
@@ -116,7 +119,18 @@ public class WndStartGame extends Window {
 		start.visible = false;
 		start.setRect(0, HEIGHT - 20, WIDTH, 20);
 		add(start);
-		
+
+		OptionSlider difficulty = new OptionSlider(Messages.get(this, "difficulty"),
+				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, 3) {
+			@Override
+			protected void onChange() {
+				SPDSettings.difficulty(getSelectedValue());
+			}
+		};
+		difficulty.setSelectedValue(SPDSettings.difficulty());
+		difficulty.setRect(0, start.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
+		add(difficulty);
+
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
 			IconButton challengeButton = new IconButton(
 					Icons.get( SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
@@ -148,7 +162,7 @@ public class WndStartGame extends Window {
 			SPDSettings.challenges(0);
 		}
 		
-		resize(WIDTH, HEIGHT);
+		resize(WIDTH, (int) difficulty.bottom());
 		
 	}
 	

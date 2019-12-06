@@ -447,8 +447,21 @@ public abstract class Level implements Bundlable {
 		if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
 			mobsToSpawn = Bestiary.getMobRotation(Dungeon.depth);
 		}
-		
-		return Reflection.newInstance(mobsToSpawn.remove(0));
+		Mob mob = Reflection.newInstance(mobsToSpawn.remove(0));
+		if (mob == null) {
+			return null;
+		}
+		switch (Dungeon.difficulty) {
+			case 1://Easy = -25% max HP
+				mob.HP = mob.HT*=0.75f;
+				break;
+			case 2: default://Medium = Normal max HP
+				break;
+			case 3://Hard = +25% max HP
+				mob.HP = mob.HT*=1.25f;
+				break;
+		}
+		return mob;
 	}
 
 	abstract protected void createMobs();

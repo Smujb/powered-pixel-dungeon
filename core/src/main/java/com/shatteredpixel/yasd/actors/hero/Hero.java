@@ -252,9 +252,24 @@ public class Hero extends Char {
 
 	public void loseMorale(float Amount, boolean say) {
 		Amount *= MoraleMultiplier;
+		float DifficultyMultiplier;
+		switch (Dungeon.difficulty) {
+			case 1:// -33% Morale loss in Easy
+				DifficultyMultiplier = 0.67f;
+				break;
+			case 2:
+			default://Normal Morale loss in Medium
+				DifficultyMultiplier = 1f;
+				break;
+			case 3://+50% Morale loss in Hard
+				DifficultyMultiplier = 1.5f;
+				break;
+
+		}
+		morale *= DifficultyMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
-		this.sprite.showStatus( CharSprite.NEGATIVE, "-morale" );
+		this.sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Morale.class, "loss") );
 		if (say) {
 			moraleCheck();
 		}
@@ -267,7 +282,7 @@ public class Hero extends Char {
 	public void gainMorale(float Amount) {
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
-		this.sprite.showStatus( CharSprite.NEUTRAL, "+morale" );
+		this.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Morale.class, "gain") );
 	}
 
 	public void speedMoraleLoss(float Multiplier) {

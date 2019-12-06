@@ -92,7 +92,7 @@ public class Statue extends Mob implements Callback {
 	public boolean canAttack(Char enemy) {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.canAttack( enemy );
-		} else if (belongings.getEquippedItemsOFType(Wand.class).size() > 0) {
+		} else if (wandToAttack(enemy) != null) {
 			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		} else {
 			return false;

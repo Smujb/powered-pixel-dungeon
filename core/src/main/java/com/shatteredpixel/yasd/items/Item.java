@@ -141,7 +141,14 @@ public class Item implements Bundlable {
 	}
 
 	public int defaultDegradeAmount() {
-		return Random.NormalIntRange(10,20);
+		switch (Dungeon.difficulty) {
+			case 1://Easy = 5 (0.5%) drop in durability per hit (200 hits until break)
+				return 5;
+			case 2: default://Medium = 10 (1%) drop in durability per hit (100 hits until break)
+				return 10;
+			case 3://Hard = 20 (2%) drop in durability per hit (about 50 hits until break)
+				return 20;
+		}
 	}
 	
 	public ArrayList<String> actions( Hero hero ) {

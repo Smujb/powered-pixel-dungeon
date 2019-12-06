@@ -158,6 +158,8 @@ public class Dungeon {
 
 	public static int version;
 
+	public static int difficulty = 2;//1 = easy, 2 = medium, 3 = hard, 4 = endless (when I add). I could use strings, but numbers will probably be better in the long run
+
 	public static long seed;
 	
 	public static void init() {
@@ -441,6 +443,7 @@ public class Dungeon {
 	private static final String CHAPTERS	= "chapters";
 	private static final String QUESTS		= "quests";
 	private static final String BADGES		= "badges";
+	private static final String DIFFICULTY  = "difficulty";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -453,6 +456,7 @@ public class Dungeon {
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
+			bundle.put( DIFFICULTY, difficulty );
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -537,6 +541,8 @@ public class Dungeon {
 		version = bundle.getInt( VERSION );
 
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
+
+		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
 
 		Actor.restoreNextID( bundle );
 

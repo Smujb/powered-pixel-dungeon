@@ -237,7 +237,7 @@ public class SPDSettings extends GameSettings {
 		Sample.INSTANCE.volume(value/10f);
 		put( KEY_SFX_VOL, value );
 	}
-	
+
 	public static int SFXVol() {
 		return getInt( KEY_SFX_VOL, 10, 0, 10 );
 	}
@@ -246,6 +246,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static final String KEY_LANG         = "language";
 	public static final String KEY_SYSTEMFONT	= "system_font";
+	public static final String KEY_DIFFICULTY	= "difficulty";
 	
 	public static void language(Languages lang) {
 		put( KEY_LANG, lang.code());
@@ -267,6 +268,14 @@ public class SPDSettings extends GameSettings {
 	public static boolean systemFont(){
 		return getBoolean(KEY_SYSTEMFONT,
 				(language() == Languages.KOREAN || language() == Languages.CHINESE || language() == Languages.JAPANESE));
+	}
+
+	public static void difficulty( int value ) {
+		put( KEY_DIFFICULTY, value );
+	}
+
+	public static int difficulty() {
+		return getInt( KEY_DIFFICULTY, 10, 0, 10 );
 	}
 	
 }
