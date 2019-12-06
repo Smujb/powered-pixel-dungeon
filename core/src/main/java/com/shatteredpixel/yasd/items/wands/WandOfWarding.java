@@ -175,7 +175,7 @@ public class WandOfWarding extends Wand {
 		{
 			spriteClass = WardSprite.class;
 
-			alignment = Alignment.ALLY;
+			alignment = curUser.alignment;
 
 			properties.add(Property.IMMOVABLE);
 

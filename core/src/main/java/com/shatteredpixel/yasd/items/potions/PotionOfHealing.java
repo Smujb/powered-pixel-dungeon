@@ -43,10 +43,10 @@ public class PotionOfHealing extends Potion {
 	@Override
 	public void apply( Hero hero ) {
 		setKnown();
-		drink( hero );
+		applybuff( hero );
 	}
 
-	public void drink( Char ch ) {
+	public void applybuff( Char ch ) {
 		//starts out healing 30 hp, equalizes with hero health total at level 11
 		Buff.affect( ch, Healing.class ).setHeal((int)(0.8f*ch.HT + 14), 0.25f, 0);
 		cure( ch );

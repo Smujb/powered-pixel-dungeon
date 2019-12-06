@@ -22,8 +22,10 @@
 package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
@@ -31,15 +33,18 @@ import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.wands.Wand;
+import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.StatueSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -69,6 +74,9 @@ public class Statue extends Mob implements Callback {
 		belongings.miscs[2] = newItem();
 		belongings.miscs[3] = newItem();
 		belongings.miscs[4] = newItem();
+
+		belongings.miscs[0] = new WandOfThornvines();
+		belongings.miscs[1] = new WandOfWarding();
 
 		for (int i = 0; i < belongings.miscs.length; i++) {
 			belongings.miscs[i].activate(this);
@@ -139,7 +147,18 @@ public class Statue extends Mob implements Callback {
 		if (enemy != null) {
 			Wand wand = wandToAttack(enemy);
 			wand.activate(this);
-			wand.zap(enemy.pos);
+			if (wand instanceof WandOfWarding) {//Wand of Warding cannot zap directly
+				int closest = findClosest(this,enemy,this.pos);
+
+				if (closest == -1){
+					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
+					return; //do not spawn guardian or detach buff
+				} else {
+					wand.zap(closest);
+				}
+			} else {
+				wand.zap(enemy.pos);
+			}
 
 		}
 		spend(1f);
@@ -180,7 +199,7 @@ public class Statue extends Mob implements Callback {
 			return;
 		}
 		if (dmg > HP & HealingPotions > 0) {
-			new PotionOfHealing().drink(this);
+			new PotionOfHealing().applybuff(this);
 			HealingPotions--;
 		}
 		super.damage( dmg, src );

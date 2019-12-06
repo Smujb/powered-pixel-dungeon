@@ -153,6 +153,20 @@ public abstract class Mob extends Char {
 
 		target = bundle.getInt( TARGET );
 	}
+
+	public int findClosest( Char attacker, Char enemy, int pos) {
+		int closest = -1;
+		boolean[] passable = Dungeon.level.passable;
+
+		for (int n : PathFinder.NEIGHBOURS9) {
+			int c = pos + n;
+			if (passable[c] && Actor.findChar( c ) == null
+					&& (closest == -1 || (Dungeon.level.trueDistance(c, enemy.pos) < (Dungeon.level.trueDistance(closest, enemy.pos))))) {
+				closest = c;
+			}
+		}
+		return closest;
+	}
 	
 	public CharSprite sprite() {
 		return Reflection.newInstance(spriteClass);
