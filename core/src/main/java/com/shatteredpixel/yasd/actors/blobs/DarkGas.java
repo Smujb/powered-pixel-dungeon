@@ -6,6 +6,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -37,14 +38,18 @@ public class DarkGas extends Blob {
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                         int actualStrength = strength*volumeAt(cell, this.getClass())/30;//Multiply by volume (stronger at the center)
                         if (!ch.isImmune(this.getClass())) {
-                            Buff.affect(ch, Aggression.class, 1 + actualStrength);
+                            if (!(ch instanceof Hero)) {
+                                Buff.affect(ch, Aggression.class, 1 + actualStrength);
+                            } else {
+                                ch.damage(Random.Int(Math.max(1,actualStrength / 3), Math.min(actualStrength*2,ch.HT/10)), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                            }
 
                             for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-                                if (l.distance(mob.pos, cell) < 5) {//All mobs within 5-tile radius are attracted to the location
+                                if (l.distance(mob.pos, cell) < 6) {//All mobs within 5-tile radius are attracted to the location
                                     mob.beckon(cell);
                                 }
                             }
-                            ch.damage(Random.Int(Math.max(1,actualStrength / 3), Math.min(actualStrength*2,ch.HT/4)), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+
                             Char owner = (Char) Actor.findById(ownerID);
                             if (owner != null) {
                                 int existingShield = 0;
