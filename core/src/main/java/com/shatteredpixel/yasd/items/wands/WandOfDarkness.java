@@ -6,6 +6,7 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.DarkGas;
+import com.shatteredpixel.yasd.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.effects.CellEmitter;
@@ -33,11 +34,17 @@ public class WandOfDarkness extends Wand {
     @Override
     public void onZap(Ballistica bolt) {
         float level = actualLevel();
-        DarkGas gas = Blob.seed(bolt.collisionPos, (int) (200 + 50 * level), DarkGas.class);
-        CellEmitter.center(bolt.collisionPos).burst(SmokeParticle.SPEW, 10 );
-        gas.setStrength(2 + (int)level);
-        gas.setOwner(curUser);
-        GameScene.add(gas);
+        int pos = bolt.collisionPos;
+        for( int i : PathFinder.NEIGHBOURS9) {
+            if (!Dungeon.level.solid[pos + i]) {
+                DarkGas gas = Blob.seed(pos + i, (int) (30 + 5 * level), DarkGas.class);
+                CellEmitter.center(bolt.collisionPos).burst(SmokeParticle.SPEW, 10 );
+                gas.setStrength(2 + (int)level);
+                gas.setOwner(curUser);
+                GameScene.add(gas);
+            }
+        }
+
 
         for (int i : PathFinder.NEIGHBOURS9) {
             Char ch = Actor.findChar(bolt.collisionPos + i);

@@ -38,7 +38,7 @@ public class DarkGas extends Blob {
                     cell = i + j*l.width();
                     l.losBlocking[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.LOS_BLOCKING) != 0;
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
-                        int actualStrength = strength*volumeAt(cell, this.getClass())/50;//Multiply by volume (stronger at the center)
+                        int actualStrength = strength*volumeAt(cell, this.getClass())/30;//Multiply by volume (stronger at the center)
                         if (!ch.isImmune(this.getClass())) {
                             Buff.affect(ch, Aggression.class, 1 + actualStrength);
 
@@ -47,7 +47,7 @@ public class DarkGas extends Blob {
                                     mob.beckon(cell);
                                 }
                             }
-                            ch.damage(Random.Int(actualStrength / 3, actualStrength), this);//Take some direct damage. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                            ch.damage(Random.Int(actualStrength / 3, actualStrength+2), this);//Take some direct damage. Also prevents the hero standing in it for bonus shielding/stealth without consequence
                             Char owner = (Char) Actor.findById(ownerID);
                             if (owner != null) {
                                 int existingShield = 0;
