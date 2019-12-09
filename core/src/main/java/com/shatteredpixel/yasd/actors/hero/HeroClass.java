@@ -58,6 +58,7 @@ import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
 import com.shatteredpixel.yasd.items.wands.WandOfDarkness;
 import com.shatteredpixel.yasd.items.wands.WandOfFlow;
 import com.shatteredpixel.yasd.items.wands.WandOfLifeDrain;
+import com.shatteredpixel.yasd.items.wands.WandOfLightning;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.wands.WandOfPlasmaBolt;
 import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
@@ -131,6 +132,7 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 		new WandOfDarkness().identify().collect();
+		new WandOfLightning().identify().collect();
 		//new PotionOfHealing().collect();
 		//new WandOfPlasmaBolt().identify().collect();
 		//new WandOfFlow().identify().collect();

@@ -6,6 +6,9 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Haste;
+import com.shatteredpixel.yasd.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -38,22 +41,23 @@ public class DarkGas extends Blob {
                         int actualStrength = strength*volumeAt(cell, this.getClass())/50;//Multiply by volume (stronger at the center)
                         if (!ch.isImmune(this.getClass())) {
                             Buff.affect(ch, Aggression.class, 1 + actualStrength);
+
                             for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
                                 if (l.distance(mob.pos, cell) < 5) {//All mobs within 5-tile radius are attracted to the location
                                     mob.beckon(cell);
                                 }
                             }
-                            ch.damage(Random.Int(actualStrength / 5, actualStrength / 2), this);
+                            ch.damage(Random.Int(actualStrength / 3, actualStrength), this);//Take some direct damage. Also prevents the hero standing in it for bonus shielding/stealth without consequence
                             Char owner = (Char) Actor.findById(ownerID);
                             if (owner != null) {
                                 int existingShield = 0;
                                 Barrier barrier = owner.buff(Barrier.class);
-                                if (barrier != null) {
+                                if (barrier != null) {//Extend shield if possible
                                     existingShield = barrier.shielding();
                                 }
-                                int shield = owner.HT / 10 + existingShield;
+                                int shield = owner.HT / Random.IntRange(10,20) + existingShield;
                                 if (shield > 1f) {//If it won't even last a turn, adding it is useless
-                                    Buff.affect(owner, Barrier.class).setShield(shield);//Extend shield if possible
+                                    Buff.affect(owner, Barrier.class).setShield(shield);
                                 }
                             }
                         }

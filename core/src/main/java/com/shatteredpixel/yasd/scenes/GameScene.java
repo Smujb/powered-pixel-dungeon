@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.effects.EmoIcon;
 import com.shatteredpixel.yasd.effects.Flare;
 import com.shatteredpixel.yasd.effects.FloatingText;
 import com.shatteredpixel.yasd.effects.Ripple;
+import com.shatteredpixel.yasd.effects.RippleShock;
 import com.shatteredpixel.yasd.effects.SpellSprite;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Honeypot;
@@ -782,6 +783,12 @@ public class GameScene extends PixelScene {
 	
 	public static SpellSprite spellSprite() {
 		return (SpellSprite)scene.spells.recycle( SpellSprite.class );
+	}
+
+	public static RippleShock electrify( int pos ) {
+		RippleShock ripple = (RippleShock)scene.ripples.recycle( RippleShock.class );
+		ripple.reset(pos);
+		return ripple;
 	}
 	
 	public static Emitter emitter() {

@@ -106,6 +106,7 @@ import com.shatteredpixel.yasd.items.wands.WandOfBlastWave;
 import com.shatteredpixel.yasd.items.wands.WandOfCorrosion;
 import com.shatteredpixel.yasd.items.wands.WandOfCorruption;
 import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
+import com.shatteredpixel.yasd.items.wands.WandOfDarkness;
 import com.shatteredpixel.yasd.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.items.wands.WandOfFireblast;
 import com.shatteredpixel.yasd.items.wands.WandOfFlow;
@@ -335,8 +336,9 @@ public class Generator {
 					WandOfDamnation.class,
 					WandOfThornvines.class,
 					WandOfPlasmaBolt.class,
-					WandOfFlow.class};
-			WAND.probs = new float[]{ 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 4, 3 };
+					WandOfFlow.class,
+					WandOfDarkness.class};
+			WAND.probs = new float[]{ 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 4, 3, 3 };
 			
 			//see generator.randomWeapon
 			WEAPON.classes = new Class<?>[]{};

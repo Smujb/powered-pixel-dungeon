@@ -6,11 +6,11 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.DarkGas;
+import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.MagicMissile;
-import com.shatteredpixel.yasd.effects.particles.CorrosionParticle;
+import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
@@ -33,7 +33,7 @@ public class WandOfDarkness extends Wand {
     @Override
     public void onZap(Ballistica bolt) {
         float level = actualLevel();
-        DarkGas gas = Blob.seed(bolt.collisionPos, (int) (100 + 50 * level), DarkGas.class);
+        DarkGas gas = Blob.seed(bolt.collisionPos, (int) (200 + 50 * level), DarkGas.class);
         CellEmitter.center(bolt.collisionPos).burst(SmokeParticle.SPEW, 10 );
         gas.setStrength(2 + (int)level);
         gas.setOwner(curUser);
@@ -68,16 +68,15 @@ public class WandOfDarkness extends Wand {
         // lvl 1 - 50%
         // lvl 2 - 60%
         if (Random.Int( level() + 3 ) >= 2) {
-
-            Buff.affect( defender, Ooze.class ).set( 20f );
-            CellEmitter.center(defender.pos).burst( CorrosionParticle.SPLASH, 5 );
+            Buff.affect( defender, Aggression.class, Aggression.DURATION);
+            CellEmitter.center(defender.pos).start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
 
         }
     }
 
     @Override
     public void staffFx(MagesStaff.StaffParticle particle) {
-        particle.color( ColorMath.random( 0xAAAAAA, 0xFF8800) );
+        particle.color( ColorMath.random( 0x000000, 0x382d2d) );
         particle.am = 0.6f;
         particle.setLifespan( 1f );
         particle.acc.set(0, 20);
