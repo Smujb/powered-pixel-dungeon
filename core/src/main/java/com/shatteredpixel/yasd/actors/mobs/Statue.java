@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
+import com.shatteredpixel.yasd.items.rings.Ring;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
@@ -75,9 +76,6 @@ public class Statue extends Mob implements Callback {
 		belongings.miscs[3] = newItem();
 		belongings.miscs[4] = newItem();
 
-		belongings.miscs[0] = new WandOfThornvines();
-		belongings.miscs[1] = new WandOfWarding();
-
 		for (int i = 0; i < belongings.miscs.length; i++) {
 			belongings.miscs[i].activate(this);
 		}
@@ -100,28 +98,43 @@ public class Statue extends Mob implements Callback {
 	}
 
 	public KindofMisc newItem() {
-		int type = Random.Int(4);
+		boolean Continue = false;
 		KindofMisc item;
-		switch (type) {
-			default:
-				item = ((MeleeWeapon)Generator.random(Generator.Category.WEAPON));
-				if (((MeleeWeapon)item).hasCurseEnchant()) {
-					((MeleeWeapon)item).enchant(Enchantment.random());
-				}
-				break;
-			case 1:
-				item = ((KindofMisc)Generator.random(Generator.Category.RING));
-				break;
-			case 2:
-				item = ((Armor)Generator.random(Generator.Category.ARMOR));
-				if (((Armor)item).hasCurseGlyph()) {
-					((Armor)item).inscribe(Armor.Glyph.random());
-				}
-				break;
-			case 3:
-				item = ((KindofMisc)Generator.random(Generator.Category.WAND));
-				break;
-		}
+		do {
+			int type = Random.Int(4);
+			switch (type) {
+				default:
+					item = ((MeleeWeapon) Generator.random(Generator.Category.WEAPON));
+					if (((MeleeWeapon) item).hasCurseEnchant()) {
+						((MeleeWeapon) item).enchant(Enchantment.random());
+					}
+					if (belongings.getWeapons().size() <= 2) {
+						Continue = true;
+					}
+					break;
+				case 1:
+					item = ((KindofMisc) Generator.random(Generator.Category.RING));
+					if (belongings.getEquippedItemsOFType(Ring.class).size() <= 2) {
+						Continue = true;
+					}
+					break;
+				case 2:
+					item = ((Armor) Generator.random(Generator.Category.ARMOR));
+					if (((Armor) item).hasCurseGlyph()) {
+						((Armor) item).inscribe(Armor.Glyph.random());
+					}
+					if (belongings.getEquippedItemsOFType(Armor.class).size() <= 2) {
+						Continue = true;
+					}
+					break;
+				case 3:
+					item = ((KindofMisc) Generator.random(Generator.Category.WAND));
+					if (belongings.getEquippedItemsOFType(Wand.class).size() <= 2) {
+						Continue = true;
+					}
+					break;
+			}
+		} while (!Continue);
 
 		item.level(0);
 		item.cursed = false;
@@ -201,6 +214,7 @@ public class Statue extends Mob implements Callback {
 		if (dmg > HP & HealingPotions > 0) {
 			new PotionOfHealing().applybuff(this);
 			HealingPotions--;
+			HP = dmg + 1;
 		}
 		super.damage( dmg, src );
 	}

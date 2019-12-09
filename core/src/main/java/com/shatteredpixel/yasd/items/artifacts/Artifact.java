@@ -236,5 +236,10 @@ public class Artifact extends KindofMisc {
 		if (chargeCap > 0)  charge = Math.min( chargeCap, bundle.getInt( CHARGE ));
 		else                charge = bundle.getInt( CHARGE );
 		partialCharge = bundle.getFloat( PARTIALCHARGE );
+		int actualLevel = level();
+		level(0);
+		for (int i = 0; i < actualLevel; i++) {
+			upgrade();
+		}
 	}
 }

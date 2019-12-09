@@ -5,16 +5,20 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.sprites.StatueSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.PathFinder;
 
 public class ShopGuardian extends Statue {
 
     private static final float SPAWN_DELAY	= 2f;
+    {
+        spriteClass = ShopGuardianSprite.class;
+    }
 
     public ShopGuardian() {
         super();
-        HT = HP*=2;//Double health
+        HealingPotions++;//Extra HP potion
     }
 
     public void spawnAround( int pos ) {
@@ -44,5 +48,19 @@ public class ShopGuardian extends Statue {
 
     @Override
     public void dropGear() {//Doesn't drop it's equipment
+    }
+
+    public static class ShopGuardianSprite extends StatueSprite {
+
+        public ShopGuardianSprite(){
+            super();
+            tint(1, 1, 0, 0.2f);
+        }
+
+        @Override
+        public void resetColor() {
+            super.resetColor();
+            tint(1, 1, 0, 0.2f);
+        }
     }
 }
