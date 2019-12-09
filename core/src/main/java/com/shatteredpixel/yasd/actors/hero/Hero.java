@@ -164,6 +164,7 @@ public class Hero extends Char {
 		attackSkill = 10;
 		defenseSkill = 4;
 		usesBelongings = true;
+		immunities.add(Amok.class);
 	}
 	
 	public static final int MAX_LEVEL = 30;

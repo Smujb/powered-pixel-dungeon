@@ -199,7 +199,7 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			//evasion *= CurArmour.evasionMultiplier(owner);
+			//evasion *= CurArmour.evasionMultiplier(ownerID);
 			if (CurArmour.hasGlyph(Stone.class, owner) && !((Stone) CurArmour.glyph).testingEvasion()) {
 				return 0;
 			}
@@ -227,7 +227,7 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			//speed *= CurArmour.speedMultiplier(owner);
+			//speed *= CurArmour.speedMultiplier(ownerID);
 			int aEnc = CurArmour.STRReq() - owner.STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 
@@ -261,7 +261,7 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			//stealth *= CurArmour.stealthMultiplier(owner);
+			//stealth *= CurArmour.stealthMultiplier(ownerID);
 
 			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
 				stealth += 1 + CurArmour.level()/3f;

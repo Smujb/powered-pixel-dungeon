@@ -28,11 +28,13 @@ import com.shatteredpixel.yasd.effects.Beam;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.particles.PurpleParticle;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
 import com.watabou.utils.Callback;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ import java.util.ArrayList;
 public class WandOfDisintegration extends DamageWand {
 
 	{
-		image = ItemSpriteSheet.WAND_DISINTEGRATION;
+		image = ItemSpriteSheet.WAND_DISINTEGRATION_YAPD;
 
 		collisionProperties = Ballistica.WONT_STOP;
 	}
@@ -105,6 +107,63 @@ public class WandOfDisintegration extends DamageWand {
 			ch.sprite.centerEmitter().burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
 			ch.sprite.flash();
 		}
+	}
+
+	private int getReflectTo( int sourcePos, int targetPos ) {
+
+		int sourceX = sourcePos % Dungeon.level.width();
+		int sourceY = sourcePos / Dungeon.level.width();
+
+		int targetX = targetPos % Dungeon.level.width();
+		int targetY = targetPos / Dungeon.level.width();
+
+		int reflectX = targetX;
+		int reflectY = targetY;
+
+		int deltaX = targetX - sourceX;
+		int deltaY = targetY - sourceY;
+
+		// right angles would reflect everything right back at ya so they are ignored
+		if( deltaX != 0 && deltaY != 0 ){
+
+			boolean horizontWall = Dungeon.level.solid[ targetPos - ( deltaX > 0 ? 1 : -1 ) ];
+			boolean verticalWall = Dungeon.level.solid[ targetPos - ( deltaY > 0 ? Dungeon.level.width() : -Dungeon.level.width() ) ];
+
+			if( !horizontWall || !verticalWall ) {
+
+				// convex corners reflect in random direction
+				boolean reflectHorizontally = horizontWall || ( !verticalWall && Random.Int( 2 ) == 0 );
+
+				if( reflectHorizontally ) {
+					// perform horizontal reflection
+					reflectX += deltaX;
+					reflectY -= deltaY;
+				} else {
+					// perform vertical reflection
+					reflectX -= deltaX;
+					reflectY += deltaY;
+				}
+			} else {
+
+				// concave corners reflect everything by both axes, unless hit from 45 degrees angle
+				if( Math.abs( deltaX ) != Math.abs( deltaY ) ){
+
+					if( deltaX > 0 == deltaY > 0 ){
+						reflectX -= deltaY;
+						reflectY -= deltaX;
+					} else {
+						reflectX += deltaY;
+						reflectY += deltaX;
+					}
+				}
+			}
+		}
+
+		reflectX = (int) GameMath.gate( 0, reflectX, Dungeon.level.width() );
+		reflectY = (int) GameMath.gate( 0, reflectY, Dungeon.level.height() );
+
+		return reflectX + reflectY * Dungeon.level.width();
+
 	}
 
 	@Override

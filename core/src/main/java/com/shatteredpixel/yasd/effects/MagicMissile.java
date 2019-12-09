@@ -23,11 +23,11 @@ package com.shatteredpixel.yasd.effects;
 
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.effects.particles.CorrosionParticle;
-import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.effects.particles.StenchParticle;
 import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
@@ -66,7 +66,7 @@ public class MagicMissile extends Emitter {
 	public static final int EARTH           = 9;
 	public static final int WARD            = 10;
 	public static final int PLASMA_BOLT     = 11;
-	public static final int STENCH          = 12;
+	public static final int DARK = 12;
 
 	public static final int FIRE_CONE       = 100;
 	public static final int FOLIAGE_CONE    = 101;
@@ -169,9 +169,9 @@ public class MagicMissile extends Emitter {
 				size( 10 );
 				pour( LeafParticle.GENERAL, 0.03f );
 				break;
-			case STENCH:
+			case DARK:
 				size( 8 );
-				pour(StenchParticle.FACTORY, 0.01f );
+				pour(SmokeParticle.FACTORY, 0.01f );
 				break;
 		}
 	}

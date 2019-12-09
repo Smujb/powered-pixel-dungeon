@@ -14,7 +14,7 @@ import com.watabou.utils.Callback;
 
 public class WandOfPlasmaBolt extends DamageWand {
     {
-        image = ItemSpriteSheet.WAND_DISINTIGRATION_YAPD;
+        image = ItemSpriteSheet.WAND_PLASMA;
     }
     @Override
     public float min(float lvl) {

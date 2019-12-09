@@ -55,7 +55,7 @@ public class Bee extends Mob {
 
 	//-1 refers to a pot that has gone missing.
 	private int potPos;
-	//-1 for no owner
+	//-1 for no ownerID
 	private int potHolder;
 	
 	private static final String LEVEL	    = "level";

@@ -185,11 +185,11 @@ public abstract class Wand extends KindofMisc {
 	/*@Override
 	public boolean collect( Bag container ) {
 		if (super.collect( container )) {
-			if (container.owner != null) {
+			if (container.ownerID != null) {
 				if (container instanceof MagicalHolster)
-					charge( container.owner, ((MagicalHolster) container).HOLSTER_SCALE_FACTOR );
+					charge( container.ownerID, ((MagicalHolster) container).HOLSTER_SCALE_FACTOR );
 				else
-					charge( container.owner );
+					charge( container.ownerID );
 			}
 			return true;
 		} else {
