@@ -44,7 +44,7 @@ public class DarkGas extends Blob {
                                     mob.beckon(cell);
                                 }
                             }
-                            ch.damage(Random.Int(actualStrength / 3, actualStrength+2), this);//Take some direct damage. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                            ch.damage(Random.Int(Math.max(1,actualStrength / 3), Math.min(actualStrength*2,ch.HT/4)), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
                             Char owner = (Char) Actor.findById(ownerID);
                             if (owner != null) {
                                 int existingShield = 0;

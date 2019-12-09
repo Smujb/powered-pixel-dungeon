@@ -44,6 +44,12 @@ public class DeferredDeath extends FlavourBuff {
         return super.act();
     }
 
+    public void recover(float amount) {
+        spend(-amount);
+        if (cooldown() <= 0){
+            detach();
+        }
+    }
     @Override
     public void detach() {
         super.detach();

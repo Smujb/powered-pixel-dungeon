@@ -85,23 +85,9 @@ public class WandOfDamnation extends Wand {
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
         Char ch = defender;
-        int buff = Random.Int(3);
-        if (Dungeon.level.heroFOV[ ch.pos ]){
-            CellEmitter.get(ch.pos).burst(ShadowParticle.UP, 5);
-        }
-        switch (buff) {//Has random chaotic effects
-            default:
-                break;
-            case 1:
-                Buff.affect(ch, Ooze.class).set( 20f );
-                Splash.at( ch.pos, 0x000000, 5);
-                break;
-            case 2:
-                Buff.prolong( ch, Weakness.class, Weakness.DURATION/2f );
-                break;
-            case 3:
-                ch.damage(ch.HT/20, this);
-                break;
+        DeferredDeath buff = ch.buff(DeferredDeath.class);
+        if (buff != null) {
+            buff.recover(Random.Int(staff.level()*2+2));
         }
     }
 
