@@ -89,6 +89,10 @@ public class HighGrass {
 				if (Random.Int(20 - (naturalismLevel * 4)) == 0) {
 					level.drop(Generator.random(Generator.Category.SEED), pos).sprite.drop();
 				}
+
+				if (Random.Int(30 - (naturalismLevel * 5)) == 0) {//Stones more rarely drop
+					level.drop(Generator.random(Generator.Category.STONE), pos).sprite.drop();
+				}
 				
 				// Dew, scales from 1/6 to 1/3
 				if (Random.Int(24 - naturalismLevel*3) <= 3) {

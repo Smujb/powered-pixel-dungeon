@@ -6,6 +6,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.DeferredDeath;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
@@ -36,12 +37,11 @@ public class DarkGas extends Blob {
                     cell = i + j*l.width();
                     l.losBlocking[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.LOS_BLOCKING) != 0;
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
-                        int actualStrength = strength*volumeAt(cell, this.getClass())/30;//Multiply by volume (stronger at the center)
                         if (!ch.isImmune(this.getClass())) {
                             if (!(ch instanceof Hero)) {
-                                Buff.affect(ch, Aggression.class, 1 + actualStrength);
+                                Buff.affect(ch, Aggression.class, 1 + strength);
                             } else {
-                                ch.damage(Random.Int(Math.max(1,actualStrength / 3), Math.min(actualStrength*2,ch.HT/10)), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                                ch.damage(Random.Int(Math.max(1,strength/2), strength), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
                             }
 
                             for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
@@ -58,6 +58,14 @@ public class DarkGas extends Blob {
                                     existingShield = barrier.shielding();
                                 }
                                 int shield = owner.HT / Random.IntRange(10,20) + existingShield;
+                                int healing = shield/3;
+                                if (shield > strength/2 + 2 & healing > 0 & !(owner.HP >= owner.HT)) {//Converts some shielding to HP if it grows enough
+                                    healing = Math.min(owner.missingHP(),healing);
+                                    shield -= healing;
+                                    owner.sprite.emitter().burst( Speck.factory(Speck.HEALING), 4 );
+                                    owner.HP += healing;
+                                }
+                                shield = Math.min(shield,strength*2);//Caps at current strength * 2
                                 if (shield > 1f) {//If it won't even last a turn, adding it is useless
                                     Buff.affect(owner, Barrier.class).setShield(shield);
                                 }

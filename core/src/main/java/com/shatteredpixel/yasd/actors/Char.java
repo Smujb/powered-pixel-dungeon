@@ -169,9 +169,9 @@ public abstract class Char extends Actor {
 
 	public boolean isFlying() {
 		return ((flying || buff(Levitation.class) != null)
-				& buff(Paralysis.class) != null
-		 		&(buff(Vertigo.class) != null) & Random.Int(2) == 0)
-				& buff(Frost.class) != null;
+				& buff(Paralysis.class) == null
+		 		&(buff(Vertigo.class) == null) & Random.Int(2) == 0)
+				& buff(Frost.class) == null;
 	}
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
@@ -194,6 +194,18 @@ public abstract class Char extends Actor {
 		if (currentWeapon > (numberOfWeapons() - 1)) {
 			currentWeapon = 0;
 		}
+	}
+
+	public int missingHP() {
+		return HT - HP;
+	}
+
+	public float hpPercent() {
+		return HP/(float)HT;
+	}
+
+	public float missingHPPercent() {
+		return 1f - hpPercent();
 	}
 
 	public KindOfWeapon getCurrentWeapon() {
