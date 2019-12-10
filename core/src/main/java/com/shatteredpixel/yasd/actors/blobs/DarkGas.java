@@ -41,7 +41,7 @@ public class DarkGas extends Blob {
                             if (!(ch instanceof Hero)) {
                                 Buff.affect(ch, Aggression.class, 1 + strength);
                             } else {
-                                ch.damage(Random.Int(Math.max(1,strength/2), strength), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                                ch.damage(Random.Int(Math.max(1,strength/2), strength+2), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
                             }
 
                             for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
