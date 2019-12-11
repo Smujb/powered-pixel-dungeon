@@ -28,22 +28,16 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
-import com.shatteredpixel.yasd.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndBag;
-import com.shatteredpixel.yasd.windows.WndItem;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
 public class BrokenSeal extends Item {
 
-	public static final String AC_AFFIX = "AFFIX";
-
-	//only to be used from the quickslot, for tutorial purposes mostly.
-	public static final String AC_INFO = "INFO_WINDOW";
+	private static final String AC_AFFIX = "AFFIX";
 
 	{
 		image = ItemSpriteSheet.SEAL;
@@ -70,35 +64,28 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
-		} else if (action.equals(AC_INFO)) {
-			//GameScene.show(new WndItem(null, this, true));
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-			Game.switchScene( InterlevelScene.class );
 		}
 	}
 
 	@Override
-	//scroll of upgrade can be used directly once, same as upgrading getArmors the seal is affixed to then removing it.
+	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
 	public boolean isUpgradable() {
 		return level() == 0;
 	}
 
-	protected static WndBag.Listener armorSelector = new WndBag.Listener() {
-		@Override
-		public void onSelect( Item item ) {
-			if (item != null && item instanceof Armor) {
-				Armor armor = (Armor)item;
-				if (!armor.levelKnown){
-					GLog.w(Messages.get(BrokenSeal.class, "unknown_armor"));
-				} else if (armor.cursed || armor.level() < 0){
-					GLog.w(Messages.get(BrokenSeal.class, "degraded_armor"));
-				} else {
-					GLog.p(Messages.get(BrokenSeal.class, "affix"));
-					Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-					Sample.INSTANCE.play(Assets.SND_UNLOCK);
-					armor.affixSeal((BrokenSeal)curItem);
-					curItem.detach(Dungeon.hero.belongings.backpack);
-				}
+	private static WndBag.Listener armorSelector = item -> {
+		if (item instanceof Armor) {
+			Armor armor = (Armor)item;
+			if (!armor.levelKnown){
+				GLog.w(Messages.get(BrokenSeal.class, "unknown_armor"));
+			} else if (armor.cursed || armor.level() < 0){
+				GLog.w(Messages.get(BrokenSeal.class, "degraded_armor"));
+			} else {
+				GLog.p(Messages.get(BrokenSeal.class, "affix"));
+				Dungeon.hero.sprite.operate(Dungeon.hero.pos);
+				Sample.INSTANCE.play(Assets.SND_UNLOCK);
+				armor.affixSeal((BrokenSeal)curItem);
+				curItem.detach(Dungeon.hero.belongings.backpack);
 			}
 		}
 	};
@@ -138,7 +125,7 @@ public class BrokenSeal extends Item {
 		}
 
 		public synchronized int maxShield() {
-			if (armor != null && armor.isEquipped((Hero)target)) {
+			if (armor != null && armor.isEquipped(target)) {
 				return 1 + armor.tier + armor.level();
 			} else {
 				return 0;

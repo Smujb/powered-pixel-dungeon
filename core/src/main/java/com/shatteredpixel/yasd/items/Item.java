@@ -39,11 +39,13 @@ import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Sungrass;
 import com.shatteredpixel.yasd.scenes.CellSelector;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.sprites.ItemSprite;
 import com.shatteredpixel.yasd.sprites.MissileSprite;
 import com.shatteredpixel.yasd.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndItem;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
@@ -94,6 +96,8 @@ public class Item implements Bundlable {
 
 	// whether an item can be included in heroes remains
 	public boolean bones = false;
+
+	private final boolean testing = false;
 	
 	private static Comparator<Item> itemComparator = new Comparator<Item>() {
 		@Override
@@ -204,7 +208,12 @@ public class Item implements Bundlable {
 			}
 			
 		} else if (action.equals(AC_INFO)) {
-			GameScene.show(new WndItem(null, this, true));
+			if (!testing) {
+				GameScene.show(new WndItem(null, this, true));
+			} else {
+				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;//Used for testing, currently deactivated
+				Game.switchScene( InterlevelScene.class );
+			}
 		}
 	}
 	
