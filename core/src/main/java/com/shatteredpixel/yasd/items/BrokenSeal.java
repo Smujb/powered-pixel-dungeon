@@ -28,10 +28,12 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndBag;
 import com.shatteredpixel.yasd.windows.WndItem;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
@@ -69,7 +71,9 @@ public class BrokenSeal extends Item {
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
 		} else if (action.equals(AC_INFO)) {
-			GameScene.show(new WndItem(null, this, true));
+			//GameScene.show(new WndItem(null, this, true));
+			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+			Game.switchScene( InterlevelScene.class );
 		}
 	}
 

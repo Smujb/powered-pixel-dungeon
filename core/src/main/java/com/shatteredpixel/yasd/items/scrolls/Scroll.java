@@ -192,7 +192,7 @@ public abstract class Scroll extends Item {
 	
 	public abstract void doRead();
 	
-	//currently unused. Used to be used for unstable spellbook prior to 0.7.0
+	//currently unused. Used to be used for unstable spellbook prior to 0.7.0 [Evan]. I [SmuJamesB] may add a subclass focusing on these...
 	public void empoweredRead(){}
 
 	protected void readAnimation() {
@@ -266,7 +266,7 @@ public abstract class Scroll extends Item {
 	
 	@Override
 	public int price() {
-		return 30 * quantity;
+		return 60 * quantity;
 	}
 	
 	public static class PlaceHolder extends Scroll {

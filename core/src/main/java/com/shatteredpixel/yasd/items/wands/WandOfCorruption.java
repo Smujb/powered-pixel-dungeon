@@ -136,7 +136,7 @@ public class WandOfCorruption extends Wand {
 			//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
 			float enemyResist = 1 + enemy.EXP;
 			if (ch instanceof Mimic || ch instanceof Statue){
-				enemyResist = 1 + Dungeon.depth;
+				enemyResist = 3 + Dungeon.depth*2;
 			} else if (ch instanceof Piranha || ch instanceof Bee) {
 				enemyResist = 1 + Dungeon.depth/2f;
 			} else if (ch instanceof Wraith) {

@@ -134,7 +134,11 @@ public class Dart extends MissileWeapon {
 
 	@Override
 	public float castDelay(Char user, int dst) {
-		return super.castDelay(user, dst)/(float) numberOfBows();
+		int bows = numberOfBows();
+		if (bows <= 0) {
+			bows = 1;
+		}
+		return super.castDelay(user, dst)/bows;
 	}
 
 	@Override

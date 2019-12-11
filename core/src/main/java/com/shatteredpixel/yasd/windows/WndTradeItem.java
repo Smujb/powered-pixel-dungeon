@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.ui.ItemSlot;
 import com.shatteredpixel.yasd.ui.RedButton;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.ui.Window;
+import com.watabou.utils.Random;
 
 public class WndTradeItem extends Window {
 	
@@ -118,56 +119,55 @@ public class WndTradeItem extends Window {
 
 		if (canBuy) {
 
-			RedButton btnBuy = new RedButton( Messages.get(this, "buy", price) ) {
+			RedButton btnBuy = new RedButton(Messages.get(this, "buy", price)) {
 				@Override
 				protected void onClick() {
 					hide();
-					buy( heap );
+					buy(heap);
 				}
 			};
-			btnBuy.setRect( 0, pos + GAP, WIDTH, BTN_HEIGHT );
-			btnBuy.enable( price <= Dungeon.gold );
-			add( btnBuy );
+			btnBuy.setRect(0, pos + GAP, WIDTH, BTN_HEIGHT);
+			btnBuy.enable(price <= Dungeon.gold);
+			add(btnBuy);
 
-			RedButton btnCancel = new RedButton( Messages.get(this, "cancel") ) {
+			RedButton btnCancel = new RedButton(Messages.get(this, "cancel")) {
 				@Override
 				protected void onClick() {
 					hide();
 				}
 			};
 
-			final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
-			if (thievery != null && !thievery.isCursed()) {
-				final float chance = thievery.stealChance(price);
-				RedButton btnSteal = new RedButton( Messages.get(this, "steal", Math.min(100, (int)(chance*100)))) {
-					@Override
-					protected void onClick() {
-						if(thievery.steal(price)){
-							Hero hero = Dungeon.hero;
-							Item item = heap.pickUp();
-							hide();
+			//final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
+			float stealth = Dungeon.hero.stealth();
+			final float chance = Math.max(0f,1f - (float)Math.pow(0.80, stealth*2));
+			RedButton btnSteal = new RedButton(Messages.get(this, "steal", Math.min(100, (int) (chance * 100)))) {
+				@Override
+				protected void onClick() {
+					if (Random.Float() < chance) {
+						Hero hero = Dungeon.hero;
+						Item item = heap.pickUp();
+						hide();
 
-							if (!item.doPickUp( hero )) {
-								Dungeon.level.drop( item, heap.pos ).sprite.drop();
-							}
-						} else {
-							for (Mob mob : Dungeon.level.mobs){
-								if (mob instanceof Shopkeeper) {
-									mob.yell(Messages.get(mob, "thief"));
-									((Shopkeeper) mob).flee();
-									break;
-								}
-							}
-							hide();
+						if (!item.doPickUp(hero)) {
+							Dungeon.level.drop(item, heap.pos).sprite.drop();
 						}
+					} else {
+						for (Mob mob : Dungeon.level.mobs) {
+							if (mob instanceof Shopkeeper) {
+								mob.yell(Messages.get(mob, "thief"));
+								((Shopkeeper) mob).flee();
+								break;
+							}
+						}
+						hide();
 					}
-				};
-				btnSteal.setRect(0, btnBuy.bottom() + GAP, WIDTH, BTN_HEIGHT);
-				add(btnSteal);
+				}
+			};
+			btnSteal.setRect(0, btnBuy.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			add(btnSteal);
 
-				btnCancel.setRect( 0, btnSteal.bottom() + GAP, WIDTH, BTN_HEIGHT );
-			} else
-				btnCancel.setRect( 0, btnBuy.bottom() + GAP, WIDTH, BTN_HEIGHT );
+			btnCancel.setRect(0, btnSteal.bottom() + GAP, WIDTH, BTN_HEIGHT);
+
 
 			add( btnCancel );
 			
@@ -253,7 +253,7 @@ public class WndTradeItem extends Window {
 	}
 	
 	private int price( Item item ) {
-		int price = item.price() * 5 * (Dungeon.depth / 5 + 1);
+		int price = item.price() * 3 * (Dungeon.depth / 7 + 1);
 		return price;
 	}
 	

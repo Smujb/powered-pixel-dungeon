@@ -1340,11 +1340,13 @@ public class Hero extends Char {
 	
 	@Override
 	public float stealth() {
-		float stealth = super.stealth();
+		float stealth = super.stealth() + 2;
+		if (this.buff(Invisibility.class) != null) {
+			stealth += 8;
+		}
 		if (belongings != null) {
 			stealth = belongings.StealthFactor(stealth);
 		}
-
 		
 		return stealth;
 	}

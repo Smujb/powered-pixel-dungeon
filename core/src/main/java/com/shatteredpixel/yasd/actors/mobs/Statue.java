@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.rings.Ring;
+import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
@@ -62,10 +63,14 @@ public class Statue extends Mob implements Callback {
 
 		STR = Integer.MAX_VALUE;
 
+		loot = new StoneOfRepair();
+
+		lootChance = 1f;//Guaranteed in Animated Statues
+
 		usesBelongings = true;
 	}
 
-	public int HealingPotions = Dungeon.depth/5;//1 Potion per chapter
+	public int HealingPotions = Math.max(1,Dungeon.depth/5);//1 Potion per chapter
 	
 	public Statue() {
 		super();

@@ -266,8 +266,16 @@ public class Belongings implements Iterable<Item> {
 			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
 				stealth += 1 + CurArmour.level()/3f;
 			}
+			int penalty = CurArmour.tier;
 			if (CurArmour instanceof RogueArmor) {
-				stealth*=1.25;
+				stealth += CurArmour.level() + 1;
+			} else {
+				if (owner instanceof Hero) {
+					if (((Hero)owner).heroClass == HeroClass.ROGUE) {
+						penalty /= 2;
+					}
+				}
+				stealth -= penalty;
 			}
 			if (CurArmour instanceof WarriorArmor) {
 				stealth*=0.75;
@@ -275,8 +283,6 @@ public class Belongings implements Iterable<Item> {
 		}
 		return stealth;
 	}
-	
-	private static final String WEAPON		= "getWeapons";
 	private static final String ARMOR		= "getArmors";
 	private static final String MISC1       = "misc1";
 	private static final String MISC2       = "misc2";
@@ -293,6 +299,7 @@ public class Belongings implements Iterable<Item> {
 		bundle.put( MISC3, miscs[2]);
 		bundle.put( MISC4, miscs[3]);
 		bundle.put( MISC5, miscs[4]);
+		bundle.put( ARMOR, getArmors().get(0));//Used for previewing games.
 	}
 	
 	public void restoreFromBundle( Bundle bundle ) {

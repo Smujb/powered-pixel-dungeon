@@ -434,7 +434,7 @@ public class Potion extends Item {
 	
 	@Override
 	public int price() {
-		return 30 * quantity;
+		return 60 * quantity;
 	}
 	
 	public static class PlaceHolder extends Potion {
