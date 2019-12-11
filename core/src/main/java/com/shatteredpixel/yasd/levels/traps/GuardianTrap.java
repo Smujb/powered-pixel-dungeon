@@ -71,10 +71,12 @@ public class GuardianTrap extends Trap {
 
 			EXP = 0;
 			state = WANDERING;
+			lootChance = 0.5f;
 		}
 
-		public Guardian(){
-			super();
+
+		@Override
+		public void dropGear() {
 		}
 
 		@Override

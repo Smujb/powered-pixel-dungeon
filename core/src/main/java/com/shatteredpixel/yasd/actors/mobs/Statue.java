@@ -70,7 +70,7 @@ public class Statue extends Mob implements Callback {
 		usesBelongings = true;
 	}
 
-	public int HealingPotions = Math.max(1,Dungeon.depth/5);//1 Potion per chapter
+	int HealingPotions = Math.max(1,Dungeon.depth/5);//1 Potion per chapter
 	
 	public Statue() {
 		super();
