@@ -73,19 +73,25 @@ public class BrokenSeal extends Item {
 		return level() == 0;
 	}
 
-	private static WndBag.Listener armorSelector = item -> {
-		if (item instanceof Armor) {
-			Armor armor = (Armor)item;
-			if (!armor.levelKnown){
-				GLog.w(Messages.get(BrokenSeal.class, "unknown_armor"));
-			} else if (armor.cursed || armor.level() < 0){
-				GLog.w(Messages.get(BrokenSeal.class, "degraded_armor"));
-			} else {
-				GLog.p(Messages.get(BrokenSeal.class, "affix"));
-				Dungeon.hero.sprite.operate(Dungeon.hero.pos);
-				Sample.INSTANCE.play(Assets.SND_UNLOCK);
-				armor.affixSeal((BrokenSeal)curItem);
-				curItem.detach(Dungeon.hero.belongings.backpack);
+	protected static WndBag.Listener armorSelector = new WndBag.Listener() {
+		@Override
+		public void onSelect( Item item ) {
+			if (item != null && item instanceof Armor) {
+				Armor armor = (Armor)item;
+				if (!armor.levelKnown){
+					GLog.w(Messages.get(BrokenSeal.class, "unknown_armor"));
+				} else if (armor.cursed || armor.level() < 0){
+					GLog.w(Messages.get(BrokenSeal.class, "degraded_armor"));
+				} else {
+					GLog.p(Messages.get(BrokenSeal.class, "affix"));
+					Dungeon.hero.sprite.operate(Dungeon.hero.pos);
+					Sample.INSTANCE.play(Assets.SND_UNLOCK);
+					armor.affixSeal((BrokenSeal)curItem);
+					if (armor.level() > 20) {
+						armor.degrade(armor.level() - 20);
+					}
+					curItem.detach(Dungeon.hero.belongings.backpack);
+				}
 			}
 		}
 	};
