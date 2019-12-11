@@ -71,7 +71,8 @@ public enum Icons {
 	//misc icons
 	LIBGDX,
 	WATA,
-	WARNING;
+	WARNING,
+	DISCORD;
 
 	public Image get() {
 		return get( this );
@@ -191,6 +192,9 @@ public enum Icons {
 			break;
 		case WARNING:
 			icon.frame( icon.texture.uvRect( 34, 81, 48, 95 ) );
+			break;
+		case DISCORD:
+			icon.frame( icon.texture.uvRect( 105, 64, 117, 80 ) );
 			break;
 		}
 		return icon;

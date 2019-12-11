@@ -33,9 +33,9 @@ import com.shatteredpixel.yasd.ui.Archs;
 import com.shatteredpixel.yasd.ui.ExitButton;
 import com.shatteredpixel.yasd.ui.Icons;
 import com.shatteredpixel.yasd.ui.LanguageButton;
-import com.shatteredpixel.yasd.ui.PrefsButton;
+import com.shatteredpixel.yasd.ui.DiscordButton;
 import com.shatteredpixel.yasd.ui.StyledButton;
-import com.shatteredpixel.yasd.windows.WndOptions;
+import com.shatteredpixel.yasd.windows.WndSettings;
 import com.shatteredpixel.yasd.windows.WndStartGame;
 import com.watabou.glwrap.Blending;
 import com.watabou.noosa.BitmapText;
@@ -44,8 +44,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.DeviceCompat;
-
-import static com.shatteredpixel.yasd.scenes.AboutScene.POPUP_YASD;
 
 public class TitleScene extends PixelScene {
 	
@@ -123,23 +121,18 @@ public class TitleScene extends PixelScene {
 		};
 		btnPlay.icon(Icons.get(Icons.ENTER));
 		add(btnPlay);
+		/*@Override
+
+		 */
 		
-		TitleButton btnSupport = new TitleButton(Messages.get(this, "discord")){
+		TitleButton btnSettings = new TitleButton(Messages.get(this, "settings")){
 			@Override
 			protected void onClick() {
-				WndOptions wnd = new WndOptions(Messages.get(TitleScene.class, "discord"),
-						Messages.get(TitleScene.class, "discord_body"),
-						Messages.get(TitleScene.class, "discord_button")){
-					@Override
-					protected void onSelect(int index) {
-						DeviceCompat.openURI("https://" + POPUP_YASD);
-					}
-				};
-				parent.add(wnd);
+				parent.add( new WndSettings() );
 			}
 		};
-		btnSupport.icon(Icons.get(Icons.GOLD));
-		add(btnSupport);
+		btnSettings.icon(Icons.get(Icons.PREFS));
+		add(btnSettings);
 		
 		TitleButton btnRankings = new TitleButton(Messages.get(this, "rankings")){
 			@Override
@@ -186,7 +179,7 @@ public class TitleScene extends PixelScene {
 		if (SPDSettings.landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
-			btnSupport.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
+			btnSettings.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);
 			btnRankings.setRect(btnPlay.left() + (btnPlay.width()*.33f)+1, btnPlay.bottom()+ GAP, (btnPlay.width()*.67f)-1, BTN_HEIGHT);
 			btnBadges.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
 			btnChanges.setRect(btnRankings.left(), btnRankings.bottom() + GAP, btnRankings.width(), BTN_HEIGHT);
@@ -198,7 +191,7 @@ public class TitleScene extends PixelScene {
 			btnBadges.setRect(btnRankings.right()+2, btnRankings.top(), btnRankings.width(), BTN_HEIGHT);
 			btnChanges.setRect(btnRankings.left(), btnRankings.bottom()+ GAP, btnRankings.width(), BTN_HEIGHT);
 			btnAbout.setRect(btnChanges.right()+2, btnChanges.top(), btnChanges.width(), BTN_HEIGHT);
-			btnSupport.setRect(btnPlay.left(), btnAbout.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
+			btnSettings.setRect(btnPlay.left(), btnAbout.bottom()+ GAP, btnPlay.width(), BTN_HEIGHT);
 		}
 
 		BitmapText version = new BitmapText( "v" + Game.version, pixelFont);
@@ -210,11 +203,11 @@ public class TitleScene extends PixelScene {
 		
 		int pos = 2;
 		
-		PrefsButton btnPrefs = new PrefsButton();
-		btnPrefs.setRect( pos, 0, 16, 20 );
-		add( btnPrefs );
+		DiscordButton btnDiscord = new DiscordButton();
+		btnDiscord.setRect( pos, 0, 16, 20 );
+		add( btnDiscord );
 		
-		pos += btnPrefs.width();
+		pos += btnDiscord.width();
 
 		LanguageButton btnLang = new LanguageButton();
 		btnLang.setRect(pos, 0, 16, 20);

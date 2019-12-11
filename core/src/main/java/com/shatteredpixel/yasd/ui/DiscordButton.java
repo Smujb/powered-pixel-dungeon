@@ -22,13 +22,18 @@
 package com.shatteredpixel.yasd.ui;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
-import com.shatteredpixel.yasd.windows.WndSettings;
+import com.shatteredpixel.yasd.scenes.TitleScene;
+import com.shatteredpixel.yasd.windows.WndOptions;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
+import com.watabou.utils.DeviceCompat;
 
-public class PrefsButton extends Button {
+import static com.shatteredpixel.yasd.scenes.AboutScene.POPUP_YASD;
+
+public class DiscordButton extends Button {
 	
 	private Image image;
 	
@@ -36,7 +41,7 @@ public class PrefsButton extends Button {
 	protected void createChildren() {
 		super.createChildren();
 		
-		image = Icons.PREFS.get();
+		image = Icons.DISCORD.get();
 		add( image );
 	}
 	
@@ -62,6 +67,14 @@ public class PrefsButton extends Button {
 	
 	@Override
 	protected void onClick() {
-		parent.add( new WndSettings() );
+		WndOptions wnd = new WndOptions(Messages.get(TitleScene.class, "discord"),
+				Messages.get(TitleScene.class, "discord_body"),
+				Messages.get(TitleScene.class, "discord_button")){
+			@Override
+			protected void onSelect(int index) {
+				DeviceCompat.openURI("https://" + POPUP_YASD);
+			}
+		};
+		parent.add(wnd);
 	}
 }
