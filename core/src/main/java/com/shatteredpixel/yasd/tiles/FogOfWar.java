@@ -37,9 +37,9 @@ public class FogOfWar extends Image {
 	//first index is visibility type, second is brightness level
 	private static final int FOG_COLORS[][] = new int[][]{{
 			//visible
-			0xAA000000, 0x99000000, //-2 and -1 brightness
-			0x77000000, //0 brightness
-			0x55000000, 0x33000000 //1 and 2 brightness
+			0xAA000000, 0x88000000, //-2 and -1 brightness
+			0x66000000, //0 brightness
+			0x44000000, 0x22000000 //1 and 2 brightness
 			}, {
 			//visited
 			0xDD000000, 0xBB000000,
