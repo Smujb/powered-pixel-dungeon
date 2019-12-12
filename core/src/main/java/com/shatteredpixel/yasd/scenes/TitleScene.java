@@ -105,7 +105,7 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					TitleScene.this.add( new WndStartGame(1) );
 				} else {
-					ShatteredPixelDungeon.switchNoFade( StartScene.class );
+					ShatteredPixelDungeon.switchScene( StartScene.class );
 				}
 			}
 			
@@ -137,7 +137,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnRankings = new TitleButton(Messages.get(this, "rankings")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( RankingsScene.class );
+				ShatteredPixelDungeon.switchScene( RankingsScene.class );
 			}
 		};
 		btnRankings.icon(Icons.get(Icons.RANKINGS));
@@ -146,7 +146,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnBadges = new TitleButton(Messages.get(this, "badges")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( BadgesScene.class );
+				ShatteredPixelDungeon.switchScene( BadgesScene.class );
 			}
 		};
 		btnBadges.icon(Icons.get(Icons.BADGES));
@@ -156,7 +156,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				ChangesScene.changesSelected = 0;
-				ShatteredPixelDungeon.switchNoFade( ChangesScene.class );
+				ShatteredPixelDungeon.switchScene( ChangesScene.class );
 			}
 		};
 		btnChanges.icon(Icons.get(Icons.CHANGES));
@@ -165,7 +165,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnAbout = new TitleButton(Messages.get(this, "about")){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.switchNoFade( AboutScene.class );
+				ShatteredPixelDungeon.switchScene( AboutScene.class );
 			}
 		};
 		btnAbout.icon(Icons.get(Icons.SHPX));

@@ -36,11 +36,19 @@ public abstract class DamageWand extends Wand{
 
 	public abstract float min(float lvl);
 
+	public int defaultMin() {
+		return (int) min(0);
+	}
+
 	public int max(){
 		return (int) max(actualLevel());
 	}
 
 	public abstract float max(float lvl);
+
+	public int defaultMax() {
+		return (int) max(0);
+	}
 
 	@Override
 	protected int initialCharges() {
@@ -60,6 +68,6 @@ public abstract class DamageWand extends Wand{
 		if (levelKnown)
 			return Messages.get(this, "stats_desc",  min(), max());
 		else
-			return Messages.get(this, "stats_desc", (int) min(0), (int) max(0));
+			return Messages.get(this, "stats_desc", defaultMin(), defaultMax());
 	}
 }

@@ -120,7 +120,7 @@ public class BadgesScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		ShatteredPixelDungeon.switchScene( TitleScene.class );
 	}
 
 	private static class BadgeButton extends Button {

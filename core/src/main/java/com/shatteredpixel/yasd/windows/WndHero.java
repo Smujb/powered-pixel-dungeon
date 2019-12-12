@@ -61,6 +61,11 @@ public class WndHero extends WndTabbed {
 	
 	private SmartTexture icons;
 	private TextureFilm film;
+
+	public void switchToAbilities() {
+		abilities.visible = abilities.active = true;
+		buffs.visible = buffs.active = stats.visible = stats.active = false;
+	}
 	
 	public WndHero() {
 		

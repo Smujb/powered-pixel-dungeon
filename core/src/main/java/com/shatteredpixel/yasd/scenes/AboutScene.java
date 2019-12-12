@@ -168,6 +168,6 @@ public class AboutScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		ShatteredPixelDungeon.switchScene(TitleScene.class);
 	}
 }

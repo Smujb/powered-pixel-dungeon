@@ -143,7 +143,7 @@ public class RankingsScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		ShatteredPixelDungeon.switchScene(TitleScene.class);
 	}
 	
 	public static class Record extends Button {

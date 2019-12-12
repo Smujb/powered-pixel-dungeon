@@ -138,6 +138,7 @@ import com.shatteredpixel.yasd.ui.AttackIndicator;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.utils.GLog;
+import com.shatteredpixel.yasd.windows.WndHero;
 import com.shatteredpixel.yasd.windows.WndMessage;
 import com.shatteredpixel.yasd.windows.WndResurrect;
 import com.shatteredpixel.yasd.windows.WndTradeItem;
@@ -1290,6 +1291,9 @@ public class Hero extends Char {
 				gainMorale(0.5f + missingMoralePercent);//Gains more Morale on level up when on low Morale
 			}
 			DistributionPoints += 3;
+			WndHero window = new WndHero();
+			window.switchToAbilities();
+			GameScene.show(window);
 			Item.updateQuickslot();
 			
 			Badges.validateLevelReached();
