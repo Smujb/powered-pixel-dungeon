@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -115,7 +116,12 @@ public class Item implements Bundlable {
 	}
 
 	public void fullyRepair() {
-		curDurability = MAXIMUM_DURABILITY;
+		if (!Dungeon.isChallenged(Challenges.NO_REPAIR)) {
+			curDurability = MAXIMUM_DURABILITY;
+		} else {
+			curDurability += MAXIMUM_DURABILITY/2;
+			curDurability = Math.min(curDurability,MAXIMUM_DURABILITY);
+		}
 		saidAlmostBreak = false;
 	}
 

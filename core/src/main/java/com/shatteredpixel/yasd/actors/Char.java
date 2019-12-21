@@ -530,7 +530,7 @@ public abstract class Char extends Actor {
 		return 1f;
 	}
 
-	public boolean magicalAttack( Char enemy) {
+	public boolean magicalAttack( Char enemy ) {
 		return magicalAttack(enemy, this);
 	}
 
@@ -588,8 +588,9 @@ public abstract class Char extends Actor {
 		if (usesBelongings) {
 			if (belongings.getArmors() != null) {
 				ArrayList<Armor> Armors = belongings.getArmors();
-				Armors.get(0).use();
+				int degradeAmount = new Item().defaultDegradeAmount();
 				for (int i = 0; i < Armors.size(); i++) {
+					Armors.get(i).use(degradeAmount/Armors.size());
 					int armDr = Random.NormalIntRange(Armors.get(i).DRMin(), Armors.get(i).DRMax());
 					if (STR() < Armors.get(i).STRReq()) {
 						armDr -= 2 * (Armors.get(i).STRReq() - STR());

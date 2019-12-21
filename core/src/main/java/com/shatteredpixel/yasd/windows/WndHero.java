@@ -58,12 +58,19 @@ public class WndHero extends WndTabbed {
 	private StatsTab stats;
 	private BuffsTab buffs;
 	private AbilitiesTab abilities;
+
+	private LabeledTab abilitiesTab = new LabeledTab( Messages.get(this, "abilities") ) {
+		protected void select( boolean value ) {
+			super.select( value );
+			abilities.visible = abilities.active = selected;
+		}
+	} ;
 	
 	private SmartTexture icons;
 	private TextureFilm film;
 
 	public void switchToAbilities() {
-		abilities.visible = abilities.active = true;
+		abilities.visible = abilities.active = abilitiesTab.selected = true;
 		buffs.visible = buffs.active = stats.visible = stats.active = false;
 	}
 	
@@ -100,12 +107,7 @@ public class WndHero extends WndTabbed {
 			}
 		} );
 
-		add( new LabeledTab( Messages.get(this, "abilities") ) {
-			protected void select( boolean value ) {
-				super.select( value );
-				abilities.visible = abilities.active = selected;
-			}
-		} );
+		add( abilitiesTab );
 		layoutTabs();
 		
 		select( 0 );
@@ -119,7 +121,7 @@ public class WndHero extends WndTabbed {
 		private static final int BTN_WIDTH  = 20;
 		private static final int BTN_HEIGHT	= 20;
 
-		private class statIncreaseButton extends RedButton {
+		private abstract class statIncreaseButton extends RedButton {
 
 			public statIncreaseButton() {
 				super("+");
@@ -132,13 +134,14 @@ public class WndHero extends WndTabbed {
 					Dungeon.hero.DistributionPoints--;
 					onBackPressed();
 					increaseStat();
+					WndHero window = new WndHero();
+					window.switchToAbilities();
+					GameScene.show(window);
 				} else {
 					GLog.w(Messages.get(WndHero.class,"no_points"));
 				}
 			}
-			protected void increaseStat() {
-
-			}
+			protected abstract void increaseStat();
 		}
 
 		public AbilitiesTab() {
