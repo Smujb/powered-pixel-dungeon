@@ -1288,7 +1288,7 @@ public class Hero extends Char {
 				sprite.showStatus( CharSprite.POSITIVE, Messages.get(Hero.class, "level_up") );
 				Sample.INSTANCE.play( Assets.SND_LEVELUP );
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
-				gainMorale(0.5f + missingMoralePercent);//Gains more Morale on level up when on low Morale
+				gainMorale(missingMoralePercent);//Gains more Morale on level up when on low Morale (up to 1)
 			}
 			DistributionPoints += 3;
 			WndHero window = new WndHero();
@@ -1344,7 +1344,7 @@ public class Hero extends Char {
 	
 	@Override
 	public float stealth() {
-		float stealth = super.stealth() + 2;
+		float stealth = super.stealth();
 		if (this.buff(Invisibility.class) != null) {
 			stealth += 5;
 		}

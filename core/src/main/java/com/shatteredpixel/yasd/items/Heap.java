@@ -223,8 +223,7 @@ public class Heap implements Bundlable {
 		boolean evaporated = false;
 		
 		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof Scroll
-					&& !(item instanceof ScrollOfUpgrade)) {
+			if (item instanceof Scroll) {
 				items.remove( item );
 				burnt = true;
 			} else if (item instanceof Dewdrop) {

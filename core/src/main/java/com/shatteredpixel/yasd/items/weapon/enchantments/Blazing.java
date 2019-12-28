@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.items.weapon.enchantments;
 
-import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
@@ -46,8 +45,8 @@ public class Blazing extends Weapon.Enchantment {
 			
 			if (defender.buff(Burning.class) != null){
 				Buff.affect(defender, Burning.class).reignite(defender, 8f);
-				int burnDamage = Random.NormalIntRange( 1, 3 + Dungeon.depth/4 );
-				defender.damage( Math.round(burnDamage * 0.67f), this );
+				int burnDamage = Random.NormalIntRange( weapon.level() + 1, 2*weapon.level() + 4 );
+				defender.damage( burnDamage, this );
 			} else {
 				Buff.affect(defender, Burning.class).reignite(defender, 8f);
 			}

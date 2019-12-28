@@ -54,7 +54,7 @@ public class DeferredDeath extends FlavourBuff {
     public void detach() {
         super.detach();
         GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
-        target.damage(target.HP, Grim.class);
-        CellEmitter.get(target.pos).burst(ShadowParticle.UP, 5);
+        target.damage(target.HP, new Grim());
+        CellEmitter.get(target.pos).burst(ShadowParticle.UP, 20);
     }
 }

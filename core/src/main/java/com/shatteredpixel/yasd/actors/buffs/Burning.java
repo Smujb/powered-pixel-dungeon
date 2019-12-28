@@ -31,11 +31,16 @@ import com.shatteredpixel.yasd.actors.mobs.Thief;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.LeatherArmor;
 import com.shatteredpixel.yasd.items.food.ChargrilledMeat;
+import com.shatteredpixel.yasd.items.food.Food;
+import com.shatteredpixel.yasd.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.plants.Plant;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
@@ -98,8 +103,10 @@ public class Burning extends Buff implements Hero.Doom {
 					ArrayList<Item> burnable = new ArrayList<>();
 					//does not reach inside of containers
 					for (Item i : hero.belongings.backpack.items){
-						if ((i instanceof Scroll && !(i instanceof ScrollOfUpgrade))
-								|| i instanceof MysteryMeat){
+						if (i instanceof Scroll||
+								i instanceof Food || //All food can burn
+								(i instanceof ClothArmor || i instanceof LeatherArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
+								i instanceof Plant.Seed){
 							burnable.add(i);
 						}
 					}
@@ -111,6 +118,11 @@ public class Burning extends Buff implements Hero.Doom {
 							ChargrilledMeat steak = new ChargrilledMeat();
 							if (!steak.collect( hero.belongings.backpack )) {
 								Dungeon.level.drop( steak, hero.pos ).sprite.drop();
+							}
+						} else if (toBurn instanceof FrozenCarpaccio) {//Frozen Carpaccio turns back into mystery meat ;)
+							MysteryMeat meat = new MysteryMeat();
+							if (!meat.collect( hero.belongings.backpack )) {
+								Dungeon.level.drop( meat, hero.pos ).sprite.drop();
 							}
 						}
 						Heap.burnFX( hero.pos );
@@ -125,8 +137,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 				Item item = ((Thief) target).item;
 
-				if (item instanceof Scroll &&
-						!(item instanceof ScrollOfUpgrade)) {
+				if (item instanceof Scroll) {
 					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
 					((Thief)target).item = null;
 				} else if (item instanceof MysteryMeat) {

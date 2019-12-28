@@ -139,7 +139,7 @@ public class WndTradeItem extends Window {
 
 			//final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
 			float stealth = Dungeon.hero.stealth();
-			final float chance = Math.max(0f,1f - (float)Math.pow(0.80, stealth*2));
+			final float chance = Math.max(0f,((1f - (float)Math.pow(0.80, stealth*2))/2) + 0.5f);
 			RedButton btnSteal = new RedButton(Messages.get(this, "steal", Math.min(100, (int) (chance * 100)))) {
 				@Override
 				protected void onClick() {

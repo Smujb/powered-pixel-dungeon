@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Thief;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.items.potions.Potion;
@@ -61,8 +62,8 @@ public class Frost extends FlavourBuff {
 				ArrayList<Item> freezable = new ArrayList<>();
 				//does not reach inside of containers
 				for (Item i : hero.belongings.backpack.items){
-					if ((i instanceof Potion && !(i instanceof PotionOfStrength))
-						|| i instanceof MysteryMeat){
+					if ((i instanceof Potion)
+						|| i instanceof MysteryMeat || i instanceof ChargrilledMeat){
 						freezable.add(i);
 					}
 				}
@@ -76,6 +77,11 @@ public class Frost extends FlavourBuff {
 						FrozenCarpaccio carpaccio = new FrozenCarpaccio();
 						if (!carpaccio.collect( hero.belongings.backpack )) {
 							Dungeon.level.drop( carpaccio, target.pos ).sprite.drop();
+						}
+					} else if (toFreeze instanceof ChargrilledMeat) {
+						MysteryMeat meat = new MysteryMeat();
+						if (!meat.collect(hero.belongings.backpack)) {
+							Dungeon.level.drop(meat, hero.pos).sprite.drop();
 						}
 					}
 				}

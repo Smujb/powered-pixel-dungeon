@@ -71,6 +71,7 @@ public class WndHero extends WndTabbed {
 
 	public void switchToAbilities() {
 		abilities.visible = abilities.active = abilitiesTab.selected = true;
+		abilitiesTab.select(true);
 		buffs.visible = buffs.active = stats.visible = stats.active = false;
 	}
 	
