@@ -114,7 +114,7 @@ public class StartScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+		ShatteredPixelDungeon.switchScene( TitleScene.class );
 	}
 	
 	private static class SaveSlotButton extends Button {
