@@ -185,9 +185,10 @@ public enum Rankings {
 		Dungeon.hero = (Hero)data.get(HERO);
 
 		Statistics.restoreFromBundle(data.getBundle(STATS));
-		
+
 		Dungeon.challenges = data.getInt(CHALLENGES);
 
+		Dungeon.difficulty = -1;//This is in case the bundle doesn't contain the difficulty flag, ensuring difficulty displays as "??" rather than the difficulty of most recently accessed run.
 		Dungeon.difficulty = data.getInt(DIFFICULTY);
 
 	}
