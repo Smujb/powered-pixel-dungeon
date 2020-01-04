@@ -215,6 +215,18 @@ public class Dungeon {
 		GamesInProgress.selectedClass.initHero( hero );
 	}
 
+	public static String getDifficultyTitle() {
+		if (difficulty == 1) {
+			return Messages.get(Dungeon.class, "easy");
+		} else if (difficulty == 2) {
+			return Messages.get(Dungeon.class, "medium");
+		} else if (difficulty == 3) {
+			return Messages.get(Dungeon.class, "hard");
+		} else {
+			return "??";
+		}
+	}
+
 	public static boolean isChallenged( int mask ) {
 		return (challenges & mask) != 0;
 	}

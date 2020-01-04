@@ -104,7 +104,8 @@ public enum Rankings {
 	}
 
 	private int score( boolean win ) {
-		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.depth ) * 100) * (win ? 2 : 1);
+		int bonus = 0;
+		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.depth ) * 100) * (win ? 2 : 1) * Dungeon.difficulty;
 	}
 
 	public static final String HERO = "hero";
@@ -112,6 +113,7 @@ public enum Rankings {
 	public static final String BADGES = "badges";
 	public static final String HANDLERS = "handlers";
 	public static final String CHALLENGES = "challenges";
+	public static final String DIFFICULTY  = "difficulty";
 
 	public void saveGameData(Record rec){
 		rec.gameData = new Bundle();
@@ -155,6 +157,8 @@ public enum Rankings {
 
 		//restore items now that we're done saving
 		belongings.backpack.items = allItems;
+
+		rec.gameData.put(DIFFICULTY, Dungeon.difficulty);
 		
 		//save challenges
 		rec.gameData.put( CHALLENGES, Dungeon.challenges );
@@ -183,6 +187,8 @@ public enum Rankings {
 		Statistics.restoreFromBundle(data.getBundle(STATS));
 		
 		Dungeon.challenges = data.getInt(CHALLENGES);
+
+		Dungeon.difficulty = data.getInt(DIFFICULTY);
 
 	}
 	

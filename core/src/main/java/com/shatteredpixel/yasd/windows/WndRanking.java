@@ -189,6 +189,10 @@ public class WndRanking extends WndTabbed {
 			}
 
 			pos += GAP;
+
+			pos = statSlot( this, Messages.get(this, "diff"), Dungeon.getDifficultyTitle(), pos );
+
+			pos += GAP;
 			
 			pos = statSlot( this, Messages.get(this, "str"), Integer.toString( Dungeon.hero.STR() ), pos );
 			pos = statSlot( this, Messages.get(this, "health"), Integer.toString( Dungeon.hero.HT ), pos );

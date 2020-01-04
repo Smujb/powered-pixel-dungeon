@@ -169,7 +169,7 @@ public abstract class Actor implements Bundlable {
 		
 		add( Dungeon.hero );
 		
-		for (Mob mob : Dungeon.level.mobs) {
+		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			add( mob );
 		}
 		

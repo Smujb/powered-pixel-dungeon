@@ -163,7 +163,7 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.miscs[0] = new WornShortsword().enchant(new Sacrificial())).identify();
+		(hero.belongings.miscs[0] = new WornShortsword()).identify();
 		(hero.belongings.miscs[1] = new WarriorArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
