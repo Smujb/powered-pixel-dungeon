@@ -112,7 +112,7 @@ public class WandOfBlastWave extends DamageWand {
 		if (ch.properties().contains(Char.Property.BOSS))
 			dist /= 2;
 
-		if (dist == 0 || ch.properties().contains(Char.Property.IMMOVABLE)) return;
+		if (dist <= 1 || ch.properties().contains(Char.Property.IMMOVABLE)) return;
 
 		if (Actor.findChar(trajectory.path.get(dist)) != null){
 			dist--;

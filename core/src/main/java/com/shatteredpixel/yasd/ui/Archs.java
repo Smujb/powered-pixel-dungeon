@@ -33,7 +33,7 @@ import com.watabou.noosa.ui.Component;
 
 public class Archs extends Component {
 
-	private static final float SCROLL_SPEED	= 20f;
+	private static final float SCROLL_SPEED	= 10f;
 
 	private SkinnedBlock arcsBg;
 	private SkinnedBlock arcsFg;
