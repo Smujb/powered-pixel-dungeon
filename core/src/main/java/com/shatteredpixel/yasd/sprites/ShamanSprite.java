@@ -61,9 +61,19 @@ public class ShamanSprite extends MobSprite {
 		Char enemy = Actor.findChar(pos);
 
 		if (enemy != null) {
-			parent.add(new Lightning(center(), enemy.sprite.destinationCenter(), (Shaman) ch));
+			parent.add(new Lightning(center(), enemy.sprite.destinationCenter(), new Callback() {
+				@Override
+				public void call() {
+					ch.onZapComplete();
+				}
+			}));
 		} else {
-			parent.add(new Lightning(center(), pos, (Shaman) ch));
+			parent.add(new Lightning(center(), pos, new Callback() {
+				@Override
+				public void call() {
+					ch.onZapComplete();
+				}
+			}));
 		}
 		Sample.INSTANCE.play( Assets.SND_LIGHTNING );
 
