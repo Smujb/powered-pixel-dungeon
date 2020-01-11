@@ -110,7 +110,7 @@ public class EyeSprite extends MobSprite {
 			} else {
 				parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(zapPos)));
 			}
-			ch.next();
+			ch.onZapComplete();
 		} else if (anim == die){
 			chargeParticles.killAndErase();
 		}

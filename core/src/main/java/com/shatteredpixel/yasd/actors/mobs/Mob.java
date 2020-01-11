@@ -202,6 +202,12 @@ public abstract class Mob extends Char {
 	
 	//FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
 	protected boolean intelligentAlly = false;
+
+	@Override
+	public void onZapComplete() {
+		super.onZapComplete();
+		magicalAttack(enemy);
+	}
 	
 	protected Char chooseEnemy() {
 
@@ -494,7 +500,7 @@ public abstract class Mob extends Char {
 
 		boolean visible = Dungeon.level.heroFOV[pos];
 
-		magicalAttack(enemy);
+		sprite.zap(enemy.pos);
 
 		spend( magicalAttackDelay() );
 

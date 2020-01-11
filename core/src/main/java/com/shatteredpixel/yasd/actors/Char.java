@@ -530,6 +530,10 @@ public abstract class Char extends Actor {
 		return 1f;
 	}
 
+	public void onZapComplete() {
+		next();
+	}
+
 	public boolean magicalAttack( Char enemy ) {
 		return magicalAttack(enemy, this);
 	}
@@ -549,7 +553,6 @@ public abstract class Char extends Actor {
 			if (!enemy.isAlive()){
 				return true;
 			}
-			this.sprite.zap(enemy.pos);
 			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
 			enemy.sprite.flash();
 			enemy.damage(effectiveDamage,src);

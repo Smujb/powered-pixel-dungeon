@@ -123,13 +123,9 @@ public class Warlock extends Mob implements Callback {
 		}
 	}*/
 	
-	public void onZapComplete() {
-		next();
-	}
-	
 	@Override
 	public void call() {
-		next();
+		onZapComplete();
 	}
 
 	@Override

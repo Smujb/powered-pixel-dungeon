@@ -38,7 +38,13 @@ public class MobSprite extends CharSprite {
 		sleeping = ch != null && ((Mob)ch).state == ((Mob)ch).SLEEPING;
 		super.update();
 	}
-	
+
+	@Override
+	public void zap(int cell) {
+		super.zap(cell);
+		ch.onZapComplete();
+	}
+
 	@Override
 	public void onComplete( Animation anim ) {
 		

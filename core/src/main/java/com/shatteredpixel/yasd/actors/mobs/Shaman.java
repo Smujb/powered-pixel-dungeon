@@ -104,7 +104,7 @@ public class Shaman extends Mob implements Callback {
 	
 	@Override
 	public void call() {
-		next();
+		onZapComplete();
 	}
 	
 }
