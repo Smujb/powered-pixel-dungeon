@@ -7,6 +7,8 @@ import com.watabou.utils.Callback;
 
 public abstract class RangedMob extends Mob implements Callback {
 
+    public boolean magical = true;
+
     public abstract boolean canHit(Char enemy);
 
     public abstract boolean fleesAtMelee();
@@ -22,7 +24,7 @@ public abstract class RangedMob extends Mob implements Callback {
 
     protected boolean doAttack(Char enemy ) {
 
-        if (Dungeon.level.adjacent( pos, enemy.pos )) {
+        if (Dungeon.level.adjacent( pos, enemy.pos ) || !magical) {
 
             return super.doAttack( enemy );
 

@@ -24,11 +24,12 @@ package com.shatteredpixel.yasd.sprites;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.actors.mobs.Warlock;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
-public class WarlockSprite extends MobSprite {
+public class WarlockSprite extends MagicalMobSprite {
 	
 	public WarlockSprite() {
 		super();
@@ -53,30 +54,16 @@ public class WarlockSprite extends MobSprite {
 		
 		play( idle );
 	}
-	@Override
-	public void zap( int cell ) {
-		
-		turnTo( ch.pos , cell );
-		play( zap );
 
-		MagicMissile.boltFromChar( parent,
+
+	@Override
+	public void FX(Group group, int cell, Callback c) {
+		MagicMissile.boltFromChar( group,
 				MagicMissile.SHADOW,
 				this,
 				cell,
-				new Callback() {
-					@Override
-					public void call() {
-						ch.onZapComplete();
-					}
-				} );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+				c);
 	}
-	
-	@Override
-	public void onComplete( Animation anim ) {
-		if (anim == zap) {
-			idle();
-		}
-		super.onComplete( anim );
-	}
+
+
 }

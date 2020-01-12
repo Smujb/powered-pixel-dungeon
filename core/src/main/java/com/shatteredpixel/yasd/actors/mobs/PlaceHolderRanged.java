@@ -3,8 +3,12 @@ package com.shatteredpixel.yasd.actors.mobs;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.MagicalSleep;
+import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
+import com.shatteredpixel.yasd.sprites.GnollTricksterSprite;
 import com.shatteredpixel.yasd.sprites.WarlockSprite;
+import com.watabou.noosa.Group;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class PlaceHolderRanged extends RangedMob {
@@ -13,7 +17,7 @@ public class PlaceHolderRanged extends RangedMob {
         spriteClass = WarlockSprite.class;
         HP = HT = 8;
         defenseSkill = 2;
-
+        //magical = false;
         maxLvl = 5;
     }
 
@@ -43,12 +47,7 @@ public class PlaceHolderRanged extends RangedMob {
     }
 
     @Override
-    public int magicalDamageRoll() {
-        return Random.Int( 1, 4 );
-    }
-
-    @Override
-    public int magicalAttackProc(Char enemy, int damage) {
+    public int attackProc(Char enemy, int damage) {
         if (Random.Int( 2 ) == 0) {
             Buff.affect( enemy, MagicalSleep.class );
         }
