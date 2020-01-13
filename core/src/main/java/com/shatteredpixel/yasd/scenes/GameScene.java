@@ -457,6 +457,8 @@ public class GameScene extends PixelScene {
 				case DARK:
 					GLog.w(Messages.get(this, "dark"));
 					break;
+				case EVIL:
+					GLog.w(Messages.get(this, "evil"));
 				default:
 			}
 			if (Dungeon.level instanceof RegularLevel &&

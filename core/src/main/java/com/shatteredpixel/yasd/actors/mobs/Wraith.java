@@ -65,7 +65,9 @@ public class Wraith extends RangedMob {
 		flying = true;
 
 		properties.add(Property.UNDEAD);
+		//Resistant to physical weapons.
 		resistances.add(KindOfWeapon.class);
+		resistances.add(Char.class);
 	}
 	
 	private static final String LEVEL = "level";
@@ -201,16 +203,11 @@ public class Wraith extends RangedMob {
 	@Override
 	protected boolean doAttack( Char enemy ) {
 
-		if ( !rooted && Random.Float() < BLINK_CHANCE ) {
-
+		if (!rooted && Random.Float() < BLINK_CHANCE) {
 			blink();
-			return true;
-
-		} else {
-
-			return super.doAttack( enemy );
-
 		}
+
+		return super.doAttack(enemy);
 	}
 
 	@Override

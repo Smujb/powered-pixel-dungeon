@@ -21,7 +21,10 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
+import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.traps.GuardianTrap;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -47,11 +50,11 @@ public class Bestiary {
 				return new ArrayList<>(Arrays.asList(
                         Wraith.class));
 			// Sewers
-			/*case 1:
+			case 1:
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
-						Snake.class));*/
+						Snake.class));
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,
@@ -214,9 +217,11 @@ public class Bestiary {
 	
 	//switches out regular mobs for their alt versions when appropriate
 	private static void swapMobAlts(ArrayList<Class<?extends Mob>> rotation){
+
+
 		for (int i = 0; i < rotation.size(); i++){
+			Class<? extends Mob> cl = rotation.get(i);
 			if (Random.Int( 5 ) == 0) {
-				Class<? extends Mob> cl = rotation.get(i);
 				if (cl == Rat.class) {
 					cl = Albino.class;
 				} else if (cl == Slime.class) {
@@ -230,8 +235,10 @@ public class Bestiary {
 				} else if (cl == Scorpio.class) {
 					cl = Acidic.class;
 				}
-				rotation.set(i, cl);
+			} else if (Random.Int(3) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
+				cl = Wraith.class;
 			}
+			rotation.set(i, cl);
 		}
 	}
 }
