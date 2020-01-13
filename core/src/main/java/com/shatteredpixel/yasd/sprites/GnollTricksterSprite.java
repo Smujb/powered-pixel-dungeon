@@ -77,4 +77,12 @@ public class GnollTricksterSprite extends MobSprite {
 
 		}
 	}
+
+	@Override
+	public void onComplete(Animation anim) {
+		super.onComplete(anim);
+		if (anim == cast) {
+			idle();
+		}
+	}
 }

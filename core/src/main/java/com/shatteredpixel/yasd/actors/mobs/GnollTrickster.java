@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.sprites.GnollTricksterSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class GnollTrickster extends Gnoll {
+public class GnollTrickster extends RangedMob {
 
 	{
 		spriteClass = GnollTricksterSprite.class;
@@ -50,6 +50,8 @@ public class GnollTrickster extends Gnoll {
 
 		state = WANDERING;
 
+		magical = false;
+
 		//at half quantity, see createLoot()
 		loot = Generator.Category.MISSILE;
 		lootChance = 1f;
@@ -60,14 +62,23 @@ public class GnollTrickster extends Gnoll {
 	private int combo = 0;
 
 	@Override
+	public int damageRoll() {
+		return new Gnoll().damageRoll();
+	}
+
+	@Override
 	public int attackSkill( Char target ) {
 		return 16;
 	}
 
 	@Override
-    public boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);
-		return !Dungeon.level.adjacent(pos, enemy.pos) && attack.collisionPos == enemy.pos;
+	public boolean canHit(Char enemy) {
+		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+	}
+
+	@Override
+	public boolean fleesAtMelee() {
+		return true;
 	}
 
 	@Override
@@ -95,11 +106,7 @@ public class GnollTrickster extends Gnoll {
 	@Override
 	protected boolean getCloser( int target ) {
 		combo = 0; //if he's moving, he isn't attacking, reset combo.
-		if (state == HUNTING) {
-			return enemySeen && getFurther( target );
-		} else {
-			return super.getCloser( target );
-		}
+		return super.getCloser(target);
 	}
 	
 	@Override

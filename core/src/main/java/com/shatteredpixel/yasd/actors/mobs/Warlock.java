@@ -37,7 +37,9 @@ import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-public class Warlock extends Mob implements Callback {
+import java.awt.RadialGradientPaint;
+
+public class Warlock extends RangedMob {
 	
 	private static final float TIME_TO_ZAP	= 1f;
 	
@@ -70,15 +72,20 @@ public class Warlock extends Mob implements Callback {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 8);
 	}
-	
+
 	@Override
-    public boolean canAttack(Char enemy) {
+	public boolean canHit(Char enemy) {
 		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
+	public boolean fleesAtMelee() {
+		return false;
+	}
+
+	@Override
 	public int magicalDamageRoll() {
-		return Random.Int( 12, 24 );
+		return Random.Int(12, 24);
 	}
 
 	@Override
@@ -87,17 +94,6 @@ public class Warlock extends Mob implements Callback {
 			Buff.prolong( enemy, Weakness.class, Weakness.DURATION );
 		}
 		return super.magicalAttackProc(enemy, damage);
-	}
-
-	protected boolean doAttack(Char enemy ) {
-
-		if (Dungeon.level.adjacent( pos, enemy.pos )) {
-			
-			return super.doAttack( enemy );
-			
-		} else {
-			return doMagicAttack( enemy );
-		}
 	}
 	
 	//used so resistances can differentiate between melee and magical attacks
@@ -122,11 +118,6 @@ public class Warlock extends Mob implements Callback {
 			enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
 		}
 	}*/
-	
-	@Override
-	public void call() {
-		onZapComplete();
-	}
 
 	@Override
 	public Item createLoot(){

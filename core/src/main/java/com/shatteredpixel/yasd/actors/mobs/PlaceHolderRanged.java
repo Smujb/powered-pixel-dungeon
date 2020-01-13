@@ -3,18 +3,15 @@ package com.shatteredpixel.yasd.actors.mobs;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.MagicalSleep;
-import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
-import com.shatteredpixel.yasd.sprites.GnollTricksterSprite;
+import com.shatteredpixel.yasd.sprites.ShamanSprite;
 import com.shatteredpixel.yasd.sprites.WarlockSprite;
-import com.watabou.noosa.Group;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class PlaceHolderRanged extends RangedMob {
 
     {
-        spriteClass = WarlockSprite.class;
+        spriteClass = ShamanSprite.class;
         HP = HT = 8;
         defenseSkill = 2;
         //magical = false;

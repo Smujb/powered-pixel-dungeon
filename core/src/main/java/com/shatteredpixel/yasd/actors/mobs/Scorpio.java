@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.ScorpioSprite;
 import com.watabou.utils.Random;
 
-public class Scorpio extends Mob {
+public class Scorpio extends RangedMob {
 	
 	{
 		spriteClass = ScorpioSprite.class;
@@ -44,7 +44,10 @@ public class Scorpio extends Mob {
 		
 		EXP = 14;
 		maxLvl = 25;
-		
+
+
+		magical = false;
+
 		loot = new PotionOfHealing();
 		lootChance = 0.2f;
 
@@ -65,11 +68,15 @@ public class Scorpio extends Mob {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 16);
 	}
-	
+
 	@Override
-    public boolean canAttack(Char enemy) {
-		Ballistica attack = new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE);
-		return !Dungeon.level.adjacent( pos, enemy.pos ) && attack.collisionPos == enemy.pos;
+	public boolean canHit(Char enemy) {
+		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+	}
+
+	@Override
+	public boolean fleesAtMelee() {
+		return true;
 	}
 	
 	@Override
@@ -80,15 +87,6 @@ public class Scorpio extends Mob {
 		}
 		
 		return damage;
-	}
-	
-	@Override
-	protected boolean getCloser( int target ) {
-		if (state == HUNTING) {
-			return enemySeen && getFurther( target );
-		} else {
-			return super.getCloser( target );
-		}
 	}
 	
 	@Override

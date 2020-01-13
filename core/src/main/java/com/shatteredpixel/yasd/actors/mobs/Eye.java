@@ -21,22 +21,14 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
-import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Light;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
-import com.shatteredpixel.yasd.effects.CellEmitter;
-import com.shatteredpixel.yasd.effects.particles.PurpleParticle;
 import com.shatteredpixel.yasd.items.Dewdrop;
 import com.shatteredpixel.yasd.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
-import com.shatteredpixel.yasd.messages.Messages;
-import com.shatteredpixel.yasd.scenes.GameScene;
-import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.EyeSprite;
-import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -62,10 +54,10 @@ public class Eye extends Mob {
 		properties.add(Property.DEMONIC);
 	}
 
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(20, 30);
-	}
+	}*/
 
 	@Override
 	public int attackSkill( Char target ) {
@@ -143,10 +135,10 @@ public class Eye extends Mob {
 		return super.magicalAttackProc(enemy, damage);
 	}
 
-	@Override
+	/*@Override
 	public int magicalDamageRoll() {
 		return Random.NormalIntRange( 30, 50 );
-	}
+	}*/
 
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DeathGaze{}

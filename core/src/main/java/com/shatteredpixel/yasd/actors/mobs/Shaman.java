@@ -34,7 +34,7 @@ import com.watabou.noosa.Camera;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-public class Shaman extends Mob implements Callback {
+public class Shaman extends RangedMob {
 
 	private static final float TIME_TO_ZAP	= 1f;
 	
@@ -67,10 +67,15 @@ public class Shaman extends Mob implements Callback {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 4);
 	}
-	
+
 	@Override
-    public boolean canAttack(Char enemy) {
+	public boolean canHit(Char enemy) {
 		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+	}
+
+	@Override
+	public boolean fleesAtMelee() {
+		return false;
 	}
 
 	@Override
@@ -82,29 +87,11 @@ public class Shaman extends Mob implements Callback {
 	public int magicalAttackProc(Char enemy, int damage) {
 		damage = super.magicalAttackProc(enemy, damage);
 		if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
-			damage *= 2f;
+			damage *= 1.5f;
 		}
 		return damage;
 	}
 
 	//used so resistances can differentiate between melee and magical attacks
 	public static class LightningBolt{}
-
-	@Override
-	protected boolean doAttack( Char enemy ) {
-
-		if (Dungeon.level.distance( pos, enemy.pos ) <= 1) {
-			
-			return super.doAttack( enemy );
-			
-		} else {
-			return doMagicAttack( enemy );
-		}
-	}
-	
-	@Override
-	public void call() {
-		onZapComplete();
-	}
-	
 }

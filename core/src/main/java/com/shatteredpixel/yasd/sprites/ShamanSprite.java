@@ -26,11 +26,12 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.mobs.Shaman;
 import com.shatteredpixel.yasd.effects.Lightning;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
-public class ShamanSprite extends MobSprite {
+public class ShamanSprite extends MagicalMobSprite {
 	
 	public ShamanSprite() {
 		super();
@@ -55,7 +56,12 @@ public class ShamanSprite extends MobSprite {
 		
 		play( idle );
 	}
+
 	@Override
+	public void FX(Group group, int cell, Callback c) {
+		group.add(new Lightning(center(), cell, c));
+	}
+	/*@Override
 	public void zap( int pos ) {
 
 		Char enemy = Actor.findChar(pos);
@@ -79,5 +85,5 @@ public class ShamanSprite extends MobSprite {
 
 		turnTo( ch.pos, pos );
 		play( zap );
-	}
+	}*/
 }

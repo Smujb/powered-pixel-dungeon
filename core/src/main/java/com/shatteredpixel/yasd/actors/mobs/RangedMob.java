@@ -2,7 +2,6 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.watabou.utils.Callback;
 
 public abstract class RangedMob extends Mob implements Callback {
@@ -44,6 +43,10 @@ public abstract class RangedMob extends Mob implements Callback {
 
     @Override
     public void call() {
-        onZapComplete();
+        if (magical) {
+            onZapComplete();
+        } else {
+            onAttackComplete();
+        }
     }
 }
