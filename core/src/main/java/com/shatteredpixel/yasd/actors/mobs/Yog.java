@@ -283,7 +283,7 @@ public class Yog extends Mob {
 		}
 	}
 	
-	public static class BurningFist extends Mob {
+	public static class BurningFist extends RangedMob {
 		
 		{
 			spriteClass = BurningFistSprite.class;
@@ -314,45 +314,36 @@ public class Yog extends Mob {
 		public int drRoll() {
 			return Random.NormalIntRange(0, 15);
 		}
-		
+
 		@Override
-        public boolean canAttack(Char enemy) {
+		public int magicalDamageRoll() {
+			return damageRoll();
+		}
+
+		@Override
+		public int magicalAttackProc(Char enemy, int damage) {
+			Buff.affect(enemy, Burning.class).reignite(enemy);
+			return super.magicalAttackProc(enemy, damage);
+		}
+
+		@Override
+		public boolean canHit(Char enemy) {
 			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		}
+
+		@Override
+		public boolean fleesAtMelee() {
+			return false;
 		}
 		
 		//used so resistances can differentiate between melee and magical attacks
-		public static class DarkBolt{}
-		
+		public static class DarkBolt extends MagicalDamage{}
+
 		@Override
-		public boolean attack( Char enemy ) {
-			
-			if (!Dungeon.level.adjacent( pos, enemy.pos )) {
-				spend( attackDelay() );
-				
-				if (hit( this, enemy, true )) {
-					
-					int dmg =  damageRoll();
-					enemy.damage( dmg, new DarkBolt() );
-					
-					enemy.sprite.bloodBurstA( sprite.center(), dmg );
-					enemy.sprite.flash();
-					
-					if (!enemy.isAlive() && enemy == Dungeon.hero) {
-						Dungeon.fail( getClass() );
-						GLog.n( Messages.get(Char.class, "kill", name) );
-					}
-					return true;
-					
-				} else {
-					
-					enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
-					return false;
-				}
-			} else {
-				return super.attack( enemy );
-			}
+		public MagicalDamage magicalSrc() {
+			return new DarkBolt();
 		}
-		
+
 		@Override
 		public boolean act() {
 			

@@ -2,15 +2,24 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.watabou.utils.Callback;
 
 public abstract class RangedMob extends Mob implements Callback {
 
     public boolean magical = true;
 
-    public abstract boolean canHit(Char enemy);
+    public boolean canHit(Char enemy) {
+        return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+    }
 
     public abstract boolean fleesAtMelee();
+
+    public static class MagicalDamage{}
+
+    public MagicalDamage magicalSrc() {
+        return new MagicalDamage();
+    }
 
     @Override
     public boolean canAttack(Char enemy) {

@@ -69,6 +69,7 @@ import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
+import com.shatteredpixel.yasd.actors.mobs.RangedMob;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.KindofMisc;
@@ -555,6 +556,12 @@ public abstract class Char extends Actor {
 			}
 			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
 			enemy.sprite.flash();
+
+			if (this instanceof RangedMob) {
+				RangedMob RM = ((RangedMob)this);
+				src = RM.magicalSrc();
+			}
+
 			enemy.damage(effectiveDamage,src);
 
 			if (!enemy.isAlive() && visibleFight) {

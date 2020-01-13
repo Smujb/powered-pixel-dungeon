@@ -425,6 +425,7 @@ public class Hero extends Char {
 
 	@Override
 	public int magicalDefenseProc(Char enemy, int damage) {
+		damage *= RingOfElements.resist(this);
 		return super.magicalDefenseProc(enemy, damage);
 	}
 

@@ -496,7 +496,11 @@ public abstract class Mob extends Char {
 		return !visible;
 	}
 
-	protected boolean doMagicAttack( Char enemy ) {
+	protected boolean doMagicAttack(Char enemy) {
+		return doMagicAttack(enemy, this);
+	}
+
+	protected boolean doMagicAttack( Char enemy, Object src ) {
 
 		boolean visible = Dungeon.level.heroFOV[pos];
 

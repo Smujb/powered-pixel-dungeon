@@ -24,9 +24,18 @@ package com.shatteredpixel.yasd.actors.mobs;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
+import com.shatteredpixel.yasd.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.effects.CellEmitter;
+import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.items.KindOfWeapon;
+import com.shatteredpixel.yasd.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
+import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.WraithSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
@@ -34,10 +43,15 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-public class Wraith extends Mob {
+import java.util.ArrayList;
+
+public class Wraith extends RangedMob {
 
 	private static final float SPAWN_DELAY	= 2f;
-	
+
+
+	private static final float BLINK_CHANCE	= 0.125f;
+
 	private int level;
 	
 	{
@@ -51,6 +65,7 @@ public class Wraith extends Mob {
 		flying = true;
 
 		properties.add(Property.UNDEAD);
+		resistances.add(KindOfWeapon.class);
 	}
 	
 	private static final String LEVEL = "level";
@@ -70,7 +85,7 @@ public class Wraith extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 1 + level/2, 2 + level );
+		return Random.NormalIntRange( 2 + (int) (level*0.67), 3 + (int) (level*1.5) );
 	}
 	
 	@Override
@@ -80,7 +95,8 @@ public class Wraith extends Mob {
 	
 	public void adjustStats( int level ) {
 		this.level = level;
-		defenseSkill = attackSkill( null ) * 5;
+		defenseSkill = (int) (attackSkill( null ) * 1.5f);
+		HP = HT = 4 + level * 2;
 		enemySeen = true;
 	}
 
@@ -122,5 +138,83 @@ public class Wraith extends Mob {
 	{
 		immunities.add( Grim.class );
 		immunities.add( Terror.class );
+	}
+
+	private void blink() {
+
+		ArrayList<Integer> cells = new ArrayList<>();
+
+		for( Integer cell : Dungeon.level.getPassableCellsList() ){
+			if( pos != cell && Dungeon.hero.fieldOfView[ cell ] ) {
+				cells.add( cell );
+			}
+		}
+
+		int newPos = !cells.isEmpty() ? Random.element( cells ) : pos ;
+
+		if (Dungeon.hero.fieldOfView[pos]) {
+			CellEmitter.get(pos).start( ShadowParticle.UP, 0.01f, Random.IntRange(5, 10) );
+		}
+
+		if (Dungeon.hero.fieldOfView[newPos]) {
+			CellEmitter.get(newPos).start(ShadowParticle.MISSILE, 0.01f, Random.IntRange(5, 10));
+		}
+
+		ScrollOfTeleportation.appear( this, newPos );
+
+		move( newPos );
+	}
+
+	@Override
+	public int magicalDamageRoll() {
+		return damageRoll()/2;
+	}
+
+	@Override
+	public int magicalAttackProc(Char enemy, int damage) {
+		if (Random.Int(3) == 0) {
+			Buff.prolong(enemy, Weakness.class, Weakness.DURATION/4f);
+		}
+		return super.magicalAttackProc(enemy, damage);
+	}
+
+	@Override
+	public int attackProc( Char enemy, int damage ) {
+
+		if ( distance( enemy ) <= 1 && isAlive() ) {
+
+			int healed = damage/2;
+
+			if (healed > 0) {
+
+				HP += Math.min(missingHP(), healed);
+
+				if( sprite.visible ) {
+					sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+				}
+			}
+		}
+
+		return damage;
+	}
+
+	@Override
+	protected boolean doAttack( Char enemy ) {
+
+		if ( !rooted && Random.Float() < BLINK_CHANCE ) {
+
+			blink();
+			return true;
+
+		} else {
+
+			return super.doAttack( enemy );
+
+		}
+	}
+
+	@Override
+	public boolean fleesAtMelee() {
+		return false;
 	}
 }

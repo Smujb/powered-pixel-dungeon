@@ -31,23 +31,22 @@ import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.EyeSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
 public class Eye extends Mob {
-	
+
 	{
 		spriteClass = EyeSprite.class;
-		
+
 		HP = HT = 100;
 		defenseSkill = 20;
 		viewDistance = Light.DISTANCE;
-		
+
 		EXP = 13;
 		maxLvl = 25;
-		
+
 		flying = true;
 
 		HUNTING = new Hunting();
-		
+
 		loot = new Dewdrop();
 		lootChance = 0.5f;
 

@@ -22,12 +22,14 @@
 package com.shatteredpixel.yasd.sprites;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.actors.mobs.Warlock;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
 
-public class BurningFistSprite extends MobSprite {
+public class BurningFistSprite extends MagicalMobSprite {
 	
 	public BurningFistSprite() {
 		super();
@@ -47,38 +49,18 @@ public class BurningFistSprite extends MobSprite {
 		
 		die = new Animation( 10, false );
 		die.frames( frames, 0, 2, 3, 4 );
+
+		zap = attack.clone();
 		
 		play( idle );
 	}
-	
-	private int posToShoot;
-	
-	@Override
-	public void attack( int cell ) {
-		posToShoot = cell;
-		super.attack( cell );
-	}
-	
-	@Override
-	public void onComplete( Animation anim ) {
-		if (anim == attack) {
 
-			Sample.INSTANCE.play( Assets.SND_ZAP );
-			MagicMissile.boltFromChar( parent,
-					MagicMissile.SHADOW,
-					this,
-					posToShoot,
-					new Callback() {
-						@Override
-						public void call() {
-							ch.onAttackComplete();
-						}
-					} );
-
-			idle();
-			
-		} else {
-			super.onComplete( anim );
-		}
+	@Override
+	public void FX(Group group, int cell, Callback c) {
+		MagicMissile.boltFromChar( group,
+				MagicMissile.FIRE_CONE,
+				this,
+				cell,
+				c);
 	}
 }

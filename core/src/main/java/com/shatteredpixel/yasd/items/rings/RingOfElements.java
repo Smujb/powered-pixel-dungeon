@@ -98,22 +98,25 @@ public class RingOfElements extends Ring {
 		RESISTS.add( ToxicGas.class );
 		RESISTS.add( Electricity.class );
 		
-		RESISTS.add( Shaman.LightningBolt.class );
+		/*RESISTS.add( Shaman.LightningBolt.class );
 		RESISTS.add( Warlock.DarkBolt.class );
 		RESISTS.add( Eye.DeathGaze.class );
-		RESISTS.add( Yog.BurningFist.DarkBolt.class );
+		RESISTS.add( Yog.BurningFist.DarkBolt.class );*/
 	}
 	
 	public static float resist( Char target, Class effect ){
-		if (getBonus(target, Resistance.class) == 0) return 1f;
 		
 		for (Class c : RESISTS){
 			if (c.isAssignableFrom(effect)){
-				return (float)Math.pow(0.80, getBonus(target, Resistance.class));
+				return resist(target);
 			}
 		}
-		
 		return 1f;
+	}
+	public static float resist(Char target){
+		if (getBonus(target, Resistance.class) == 0) return 1f;
+
+		return (float)Math.pow(0.80, getBonus(target, Resistance.class));
 	}
 	
 	public class Resistance extends RingBuff {

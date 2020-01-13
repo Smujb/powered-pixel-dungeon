@@ -464,6 +464,20 @@ public abstract class Level implements Bundlable {
 		return mob;
 	}
 
+	public ArrayList<Integer> getPassableCellsList() {
+
+		ArrayList<Integer> result = new ArrayList<>();
+
+		for( int cell = 0 ; cell < length() ; cell++ ){
+
+			if( !solid[cell] && passable[cell] && Actor.findChar(cell) == null ) {
+				result.add( cell );
+			}
+		}
+
+		return result;
+	}
+
 	abstract protected void createMobs();
 
 	abstract protected void createItems();

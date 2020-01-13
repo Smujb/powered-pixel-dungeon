@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Light;
 import com.shatteredpixel.yasd.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
@@ -93,5 +94,10 @@ public class Shaman extends RangedMob {
 	}
 
 	//used so resistances can differentiate between melee and magical attacks
-	public static class LightningBolt{}
+	public static class LightningBolt extends MagicalDamage{}
+
+	@Override
+	public MagicalDamage magicalSrc() {
+		return new LightningBolt();
+	}
 }

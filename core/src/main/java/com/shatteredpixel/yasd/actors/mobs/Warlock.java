@@ -97,27 +97,12 @@ public class Warlock extends RangedMob {
 	}
 	
 	//used so resistances can differentiate between melee and magical attacks
-	public static class DarkBolt{}
+	public static class DarkBolt extends MagicalDamage{}
 
-	/*private void zap() {
-		spend( TIME_TO_ZAP );
-		
-		if (hit( this, enemy, true )) {
-			if (enemy == Dungeon.hero && Random.Int( 2 ) == 0) {
-				Buff.prolong( enemy, Weakness.class, Weakness.DURATION );
-			}
-			
-			int dmg = Random.Int( 12, 20 );
-			enemy.damage( dmg, new DarkBolt() );
-			
-			if (!enemy.isAlive() && enemy == Dungeon.hero) {
-				Dungeon.fail( getClass() );
-				GLog.n( Messages.get(this, "bolt_kill") );
-			}
-		} else {
-			enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
-		}
-	}*/
+	@Override
+	public MagicalDamage magicalSrc() {
+		return new DarkBolt();
+	}
 
 	@Override
 	public Item createLoot(){

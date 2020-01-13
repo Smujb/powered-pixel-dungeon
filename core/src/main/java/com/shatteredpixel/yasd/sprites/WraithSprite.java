@@ -22,9 +22,13 @@
 package com.shatteredpixel.yasd.sprites;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.utils.Callback;
 
-public class WraithSprite extends MobSprite {
+public class WraithSprite extends MagicalMobSprite {
+	private Animation blink;
 	
 	public WraithSprite() {
 		super();
@@ -44,6 +48,9 @@ public class WraithSprite extends MobSprite {
 		
 		die = new Animation( 8, false );
 		die.frames( frames, 0, 4, 5, 6, 7 );
+
+		blink = new Animation( 15, false );
+		blink.frames( frames, 7, 6, 5, 4, 0 );
 		
 		play( idle );
 	}
@@ -51,5 +58,26 @@ public class WraithSprite extends MobSprite {
 	@Override
 	public int blood() {
 		return 0x88000000;
+	}
+
+	public void blink( int from, int to ) {
+
+		place( to );
+
+		play( blink );
+		turnTo( from , to );
+
+		isMoving = true;
+
+		ch.onMotionComplete();
+	}
+
+	@Override
+	public void FX(Group group, int cell, Callback c) {
+		MagicMissile.boltFromChar( group,
+				MagicMissile.SHADOW,
+				this,
+				cell,
+				c);
 	}
 }
