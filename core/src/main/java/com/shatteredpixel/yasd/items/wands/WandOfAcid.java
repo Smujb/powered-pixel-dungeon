@@ -36,8 +36,7 @@ public class WandOfAcid extends DamageWand {
         int pos = attack.collisionPos;
         if (ch != null) {
 
-            processSoulMark(ch, chargesPerCast());
-            ch.damage(damageRoll(), this);
+            hit(ch);
 
             ch.sprite.emitter().burst( Speck.factory(Speck.BUBBLE), 3 );
 

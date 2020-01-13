@@ -132,12 +132,12 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return (int) ((20 + this.level*20));
+            return (int) ((20 + this.level*10));
         }
 
         @Override
         public void damage(int dmg, Object src) {
-            dmg = (int)(Math.sqrt(8*(dmg) + 1) - 1)/2;
+            dmg = (int)(Math.sqrt(dmg));
 
             super.damage(dmg, src);
         }

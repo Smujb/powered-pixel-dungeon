@@ -84,7 +84,6 @@ public class WandOfPrismaticLight extends DamageWand {
 	}
 
 	private void affectTarget(Char ch){
-		int dmg = damageRoll();
 
 		//three in (5+lvl) chance of failing
 		if (Random.Int(5+level()) >= 3) {
@@ -96,11 +95,11 @@ public class WandOfPrismaticLight extends DamageWand {
 			ch.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10+level() );
 			Sample.INSTANCE.play(Assets.SND_BURNING);
 
-			ch.damage(Math.round(dmg*1.333f), this);
+			hit(ch, actualLevel() + 1f);
 		} else {
 			ch.sprite.centerEmitter().burst( RainbowParticle.BURST, 10+level() );
 
-			ch.damage(dmg, this);
+			hit(ch);
 		}
 
 	}

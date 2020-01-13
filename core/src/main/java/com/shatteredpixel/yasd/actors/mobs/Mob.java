@@ -503,8 +503,12 @@ public abstract class Mob extends Char {
 	protected boolean doMagicAttack( Char enemy, Object src ) {
 
 		boolean visible = Dungeon.level.heroFOV[pos];
-
-		sprite.zap(enemy.pos);
+		if (visible) {
+			sprite.zap(enemy.pos);
+		} else {
+			this.enemy = enemy;
+			onZapComplete();
+		}
 
 		spend( magicalAttackDelay() );
 

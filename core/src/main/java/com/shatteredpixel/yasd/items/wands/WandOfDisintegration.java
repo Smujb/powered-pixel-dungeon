@@ -103,7 +103,7 @@ public class WandOfDisintegration extends DamageWand {
 		float lvl = level + (chars.size()-1) + terrainBonus;
 		for (Char ch : chars) {
 			processSoulMark(ch, chargesPerCast());
-			ch.damage( damageRoll(lvl), this );
+			hit(ch, lvl);
 			ch.sprite.centerEmitter().burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
 			ch.sprite.flash();
 		}

@@ -109,7 +109,7 @@ public class WandOfLivingEarth extends DamageWand {
 				ch.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level()/2);
 
 				processSoulMark(ch, chargesPerCast());
-				ch.damage(damage, this);
+				hit(ch);
 
 				int closest = -1;
 				boolean[] passable = Dungeon.level.passable;

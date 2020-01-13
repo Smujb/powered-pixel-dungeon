@@ -126,7 +126,7 @@ public abstract class Char extends Actor {
 
 	public CharSprite sprite;
 
-	public String name = "mob";
+	public String name;
 	public int defenseSkill = 0;
 	public int attackSkill = 0;
 
@@ -171,8 +171,8 @@ public abstract class Char extends Actor {
 	public boolean isFlying() {
 		return ((flying || buff(Levitation.class) != null)
 				& buff(Paralysis.class) == null
-		 		&(buff(Vertigo.class) == null) & Random.Int(2) == 0)
-				& buff(Frost.class) == null;
+		 		& buff(Vertigo.class) == null
+				& buff(Frost.class) == null);
 	}
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {

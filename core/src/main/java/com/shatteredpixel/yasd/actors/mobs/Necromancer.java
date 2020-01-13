@@ -263,7 +263,7 @@ public class Necromancer extends Mob {
 					
 					sprite.zap( summoningPos );
 					
-					spend( firstSummon ? TICK : 2*TICK );
+					spend( firstSummon ? TICK*2 : 3*TICK );
 				} else {
 					//wait for a turn
 					spend(TICK);
@@ -341,12 +341,12 @@ public class Necromancer extends Mob {
 			maxLvl = -5;
 			
 			//Less HP than Shattered, more damage
-			HP = 15;
+			HP = 20;
 		}
 
 		@Override
 		public int damageRoll() {//Better kill the Necromancer fast :P
-			return (int) (super.damageRoll()*1.5f);
+			return (int) (super.damageRoll()*1.35f);
 		}
 
 		private void teleportSpend(){

@@ -59,7 +59,7 @@ public class WandOfMagicMissile extends DamageWand {
 		if (ch != null) {
 
 			processSoulMark(ch, chargesPerCast());
-			ch.damage(damageRoll(), this);
+			hit(ch);
 
 			ch.sprite.burst(0xFFFFFFFF, level() / 2 + 2);
 

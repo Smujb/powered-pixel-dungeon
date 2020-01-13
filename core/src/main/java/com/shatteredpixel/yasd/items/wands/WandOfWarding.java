@@ -7,6 +7,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
+import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
@@ -165,7 +166,7 @@ public class WandOfWarding extends Wand {
 			return Messages.get(this, "stats_desc", 3);
 	}
 
-	public static class Ward extends NPC {
+	public static class Ward extends Mob {
 
 		public int tier = 1;
 		private int wandLevel = 1;

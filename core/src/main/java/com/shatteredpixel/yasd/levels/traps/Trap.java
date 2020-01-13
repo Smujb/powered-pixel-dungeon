@@ -92,7 +92,7 @@ public abstract class Trap implements Bundlable {
 				Sample.INSTANCE.play(Assets.SND_TRAP);
 			}
 			if (!this.visible && Dungeon.hero.pos == this.pos) {//Did the Hero trigger the trap, is it visible?
-				Dungeon.hero.loseMorale((float)Random.Int(1,2));//Lose 1 or 2 Morale
+				Dungeon.hero.loseMorale(0.5f);
 			}
 			disarm();
 			reveal();

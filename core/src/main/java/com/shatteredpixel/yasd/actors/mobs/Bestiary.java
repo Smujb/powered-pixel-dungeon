@@ -235,7 +235,7 @@ public class Bestiary {
 				} else if (cl == Scorpio.class) {
 					cl = Acidic.class;
 				}
-			} else if (Random.Int(3) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
+			} else if (Dungeon.level != null && Random.Int(3) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
 				cl = Wraith.class;
 			}
 			rotation.set(i, cl);

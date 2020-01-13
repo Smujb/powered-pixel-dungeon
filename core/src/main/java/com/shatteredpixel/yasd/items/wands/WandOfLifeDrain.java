@@ -65,8 +65,10 @@ public class WandOfLifeDrain extends DamageWand {
         if (ch != null) {
 
             processSoulMark(ch, chargesPerCast());
-            int damage = damageRoll();
-            ch.damage(damage, this);
+            int HPBeforeHit = ch.HP;
+            hit(ch);
+            int HPAfterHit = ch.HP;
+            int damage = HPBeforeHit - HPAfterHit;//This ensures that resistances/immunities also affect the wand's healing.
             int healAmt = damage/2;
             if (!ch.properties().contains(Char.Property.UNDEAD) & curUser instanceof Hero) {
                 curUser.HP += Math.min(curUser.HT - curUser.HP, healAmt);//Heal the hero

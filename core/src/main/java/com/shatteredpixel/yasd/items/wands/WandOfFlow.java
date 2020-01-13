@@ -64,7 +64,7 @@ public class WandOfFlow extends DamageWand {
 
         for ( Char ch : affectedChars ) {
             processSoulMark(ch,chargesPerCast());
-            ch.damage(damageRoll(), this);
+            hit(ch);
             if (Random.Int(2) == 0) {
                 Buff.affect(ch, Slow.class, Slow.DURATION / 3);
             }
