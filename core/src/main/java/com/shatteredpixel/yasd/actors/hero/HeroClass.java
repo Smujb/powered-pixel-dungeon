@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
+import com.shatteredpixel.yasd.items.armor.LeadArmour;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.armor.WarriorArmor;
@@ -132,6 +133,8 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify().collect();
 		new StoneOfRepair().collect();
 		new Beer().collect();
+
+		new LeadArmour().collect();
 		//new WandOfDarkness().identify().collect();
 		//new WandOfLightning().identify().collect();
 		//new PotionOfHealing().collect();

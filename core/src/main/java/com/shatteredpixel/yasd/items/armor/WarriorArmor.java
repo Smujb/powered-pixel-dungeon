@@ -26,7 +26,7 @@ import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 public class WarriorArmor extends ClothArmor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_LEATHER;
+		image = ItemSpriteSheet.ARMOR_STUDDED;
 		magicalDRFactor = 0.5f;
 		STE = 0.75f;
 		EVA = 0.75f;

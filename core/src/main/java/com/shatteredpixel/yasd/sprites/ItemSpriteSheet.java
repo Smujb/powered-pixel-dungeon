@@ -329,16 +329,23 @@ public class ItemSpriteSheet {
 			assignItemRect(i, 15, 15);
 	}
 	
-	private static final int ARMOR          =                               xy(1, 12);  //16 slots
-	public static final int ARMOR_CLOTH     = ARMOR+0;
-	public static final int ARMOR_LEATHER   = ARMOR+1;
-	public static final int ARMOR_MAIL      = ARMOR+2;
-	public static final int ARMOR_SCALE     = ARMOR+3;
-	public static final int ARMOR_PLATE     = ARMOR+4;
-	public static final int ARMOR_WARRIOR   = ARMOR+5;
-	public static final int ARMOR_MAGE      = ARMOR+6;
-	public static final int ARMOR_ROGUE     = ARMOR+7;
-	public static final int ARMOR_HUNTRESS  = ARMOR+8;
+	private static final int ARMOR                  =                               xy(1, 12);  //16 slots
+	public static final int ARMOR_CLOTH             = ARMOR+0;
+	public static final int ARMOR_LEATHER           = ARMOR+1;
+	public static final int ARMOR_MAIL              = ARMOR+2;
+	public static final int ARMOR_SCALE             = ARMOR+3;
+	public static final int ARMOR_PLATE             = ARMOR+4;
+	public static final int ARMOR_WARRIOR           = ARMOR+5;
+	public static final int ARMOR_MAGE              = ARMOR+6;
+	public static final int ARMOR_ROGUE             = ARMOR+7;
+	public static final int ARMOR_HUNTRESS          = ARMOR+8;
+	public static final int ARMOR_STUDDED           = ARMOR+9;
+	public static final int ARMOR_HIDE				= ARMOR+10;
+	public static final int ARMOR_BANDED			= ARMOR+11;
+	public static final int ARMOR_CHAINMAIL_ELVISH  = ARMOR+12;
+	public static final int ARMOR_CHAINMAIL_DWARVISH= ARMOR+13;
+	public static final int ARMOR_CHAINMAIL_ORCISH  = ARMOR+14;
+	public static final int ARMOR_RINGMAIL 			= ARMOR+15;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
