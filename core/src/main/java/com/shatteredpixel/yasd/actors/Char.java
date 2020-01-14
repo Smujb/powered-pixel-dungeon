@@ -147,6 +147,11 @@ public abstract class Char extends Actor {
 	public boolean flying		= false;
 	public int invisible		= 0;
 
+	public float DLY = 1f;
+	public float ACC = 1f;
+	public float EVA = 1f;
+	public float STE = 1f;
+
 	//these are relative to the hero
 	public enum Alignment{
 		ENEMY,
@@ -177,7 +182,7 @@ public abstract class Char extends Actor {
 
 	public boolean shoot( Char enemy, MissileWeapon wep ) {
 
-		//temporarily set the hero's getWeapons to the missile getWeapons being used
+		//temporarily set the hero's weapon to the missile weapon being used
 		KindofMisc equipped = belongings.miscs[0];
 		belongings.miscs[0] = wep;
 		boolean hit = attack( enemy );
@@ -191,7 +196,7 @@ public abstract class Char extends Actor {
 		return belongings.getWeapons().size();
 	}
 
-	public void resetWeapon() {//After hitting with each getWeapons, return to first
+	public void resetWeapon() {//After hitting with each weapon, return to first
 		if (currentWeapon > (numberOfWeapons() - 1)) {
 			currentWeapon = 0;
 		}
@@ -482,14 +487,14 @@ public abstract class Char extends Actor {
 				attackSkill *=  wep.accuracyFactor(this);
 			}
 		}
-		return (int) accuracy;
+		return (int) (accuracy * ACC);
 	}
 
 
 	public int defenseSkill( Char enemy ) {
 		float evasion = this.defenseSkill;
-		if (buff( Wet.class ) != null) {
-			evasion *= buff( Wet.class ).evasionFactor();
+		if (buff(Wet.class) != null) {
+			evasion *= buff(Wet.class).evasionFactor();
 		}
 		if (usesBelongings) {
 
@@ -504,7 +509,7 @@ public abstract class Char extends Actor {
 			}
 
 		}
-			return Math.round(evasion);
+		return Math.round(evasion*EVA);
 	}
 
 	public String defenseVerb() {
@@ -714,10 +719,10 @@ public abstract class Char extends Actor {
 				//Normally putting furor speed on unarmed attacks would be unnecessary
 				//But there's going to be that one guy who gets a furor+force ring combo
 				//This is for that one guy, you shall get your fists of fury!
-				return RingOfFuror.attackDelayMultiplier(this);
+				return RingOfFuror.attackDelayMultiplier(this) * DLY;
 			}
 		} else {
-			return 1f;
+			return DLY;
 		}
 	}
 
@@ -956,7 +961,7 @@ public abstract class Char extends Actor {
 	}
 
 	public float stealth() {
-		return 0;
+		return STE;
 	}
 
 	public void move( int step ) {

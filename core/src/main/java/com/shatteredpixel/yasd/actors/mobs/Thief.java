@@ -39,29 +39,31 @@ import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class Thief extends Mob {
+public class Thief extends RangedMob {
 	
 	public Item item;
 	
 	{
 		spriteClass = ThiefSprite.class;
 		
-		HP = HT = 20;
-		defenseSkill = 12;
+		HP = HT = 11;
+		defenseSkill = 6;
 		
-		EXP = 5;
-		maxLvl = 10;
-		
-		loot = Random.oneOf(Generator.Category.RING, Generator.Category.ARTIFACT);
-		lootChance = 0.01f;
+		EXP = 2;
+		maxLvl = 6;
 
-		WANDERING = new Wandering();
-		FLEEING = new Fleeing();
+		magical = false;
+
+		loot = Gold.class;
+		lootChance = 0.25f;
+
+		//WANDERING = new Wandering();
+		//FLEEING = new Fleeing();
 
 		properties.add(Property.UNDEAD);
 	}
 
-	private static final String ITEM = "item";
+	/*private static final String ITEM = "item";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -73,25 +75,20 @@ public class Thief extends Mob {
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		item = (Item)bundle.get( ITEM );
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public float speed() {
 		if (item != null) return (5*super.speed())/6;
 		else return super.speed();
-	}
+	}*/
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 5, 12 );
-	}
-
-	@Override
-    public float attackDelay() {
-		return super.attackDelay()*0.5f;
+		return Random.NormalIntRange( 2, 5 );
 	}
 	
-	@Override
+	/*@Override
 	public void rollToDropLoot() {
 		if (item != null) {
 			Dungeon.level.drop( item, pos ).sprite.drop();
@@ -100,19 +97,19 @@ public class Thief extends Mob {
 			item = null;
 		}
 		super.rollToDropLoot();
-	}
+	}*/
 
 	@Override
 	public int attackSkill( Char target ) {
-		return 12;
+		return 8;
 	}
 
 	@Override
 	public int drRoll() {
-		return Random.NormalIntRange(0, 3);
+		return Random.NormalIntRange(0, 2);
 	}
 
-	@Override
+	/*@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		
@@ -122,18 +119,18 @@ public class Thief extends Mob {
 		}
 
 		return damage;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int defenseProc(Char enemy, int damage) {
 		if (state == FLEEING) {
 			Dungeon.level.drop( new Gold(), pos ).sprite.drop();
 		}
 
 		return super.defenseProc(enemy, damage);
-	}
+	}*/
 
-	protected boolean steal( Hero hero ) {
+	/*protected boolean steal( Hero hero ) {
 
 		Item item = hero.belongings.randomUnequipped();
 
@@ -158,9 +155,9 @@ public class Thief extends Mob {
 		} else {
 			return false;
 		}
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public String description() {
 		String desc = super.description();
 
@@ -169,9 +166,14 @@ public class Thief extends Mob {
 		}
 
 		return desc;
+	}*/
+
+	@Override
+	public boolean fleesAtMelee() {
+		return false;
 	}
-	
-	private class Wandering extends Mob.Wandering {
+
+	/*private class Wandering extends Mob.Wandering {
 		
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
@@ -184,9 +186,9 @@ public class Thief extends Mob {
 			
 			return true;
 		}
-	}
+	}*/
 
-	private class Fleeing extends Mob.Fleeing {
+	/*private class Fleeing extends Mob.Fleeing {
 		@Override
 		protected void nowhereToRun() {
 			if (buff( Terror.class ) == null && buff( Corruption.class ) == null) {
@@ -226,5 +228,5 @@ public class Thief extends Mob {
 				super.nowhereToRun();
 			}
 		}
-	}
+	}*/
 }

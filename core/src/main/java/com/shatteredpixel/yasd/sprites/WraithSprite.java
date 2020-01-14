@@ -22,7 +22,9 @@
 package com.shatteredpixel.yasd.sprites;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.utils.Callback;
@@ -58,6 +60,14 @@ public class WraithSprite extends MagicalMobSprite {
 	@Override
 	public int blood() {
 		return 0x88000000;
+	}
+
+	@Override
+	public void die() {
+		super.die();
+		if (Dungeon.hero.fieldOfView[ch.pos]) {
+			emitter().burst( ShadowParticle.CURSE, 10 );
+		}
 	}
 
 	public void blink( int from, int to ) {

@@ -48,13 +48,13 @@ public class Bestiary {
 
 			default:
 				return new ArrayList<>(Arrays.asList(
-                        Wraith.class));
+                        Thief.class));
 			// Sewers
-			case 1:
+			/*case 1:
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
-						Snake.class));
+						Snake.class));*/
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,
@@ -65,12 +65,12 @@ public class Bestiary {
 				return new ArrayList<>(Arrays.asList(Rat.class,
 						Snake.class,
 						Gnoll.class, Gnoll.class, Gnoll.class,
-						Swarm.class,
+						Thief.class,
 						Crab.class));
 			case 4: case 5:
 				//1x gnoll, 1x swarm, 2x crab, 2x slime
 				return new ArrayList<>(Arrays.asList(Gnoll.class,
-						Swarm.class,
+						Thief.class,
 						Crab.class, Crab.class,
 						Slime.class, Slime.class));
 				
@@ -83,20 +83,20 @@ public class Bestiary {
 			case 7:
 				//3x skeleton, 1x thief, 1x shaman, 1x guard
 				return new ArrayList<>(Arrays.asList(Skeleton.class, Skeleton.class, Skeleton.class,
-						Thief.class,
+						Swarm.class,
 						Shaman.class,
 						Guard.class));
 			case 8:
 				//2x skeleton, 1x thief, 2x shaman, 2x guard, 1x necromancer
 				return new ArrayList<>(Arrays.asList(Skeleton.class, Skeleton.class,
-						Thief.class,
+						Swarm.class,
 						Shaman.class, Shaman.class,
 						Guard.class, Guard.class,
 						Necromancer.class));
 			case 9: case 10:
 				//1x skeleton, 1x thief, 2x shaman, 2x guard, 2x necromancer
 				return new ArrayList<>(Arrays.asList(Skeleton.class,
-						Thief.class,
+						Swarm.class,
 						Shaman.class, Shaman.class,
 						Guard.class, Guard.class,
 						Necromancer.class, Necromancer.class));
@@ -235,7 +235,7 @@ public class Bestiary {
 				} else if (cl == Scorpio.class) {
 					cl = Acidic.class;
 				}
-			} else if (Dungeon.level != null && Random.Int(3) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
+			} else if (Dungeon.level != null && Random.Int(5) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
 				cl = Wraith.class;
 			}
 			rotation.set(i, cl);

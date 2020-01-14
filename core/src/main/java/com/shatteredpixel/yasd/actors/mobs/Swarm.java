@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Corruption;
+import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Poison;
 import com.shatteredpixel.yasd.effects.Pushing;
 import com.shatteredpixel.yasd.items.Item;
@@ -43,7 +44,7 @@ public class Swarm extends Mob {
 	{
 		spriteClass = SwarmSprite.class;
 		
-		HP = HT = 50;
+		HP = HT = 60;
 		defenseSkill = 5;
 
 		EXP = 3;
@@ -76,9 +77,22 @@ public class Swarm extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 1, 4 );
+		return Random.NormalIntRange( 1, 6 );
 	}
-	
+
+	@Override
+	public int attackProc(Char enemy, int damage) {
+		Hunger hunger = enemy.buff( Hunger.class );
+
+		if( hunger != null ){
+
+			hunger.reduceHunger( -5 );
+
+		}
+		return super.attackProc(enemy, damage);
+	}
+
+
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
 
