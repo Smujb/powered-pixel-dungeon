@@ -33,4 +33,8 @@ public class PlateArmor extends Armor {
 		super( 5 );
 	}
 
+	@Override
+	public int appearance() {
+		return 5;
+	}
 }

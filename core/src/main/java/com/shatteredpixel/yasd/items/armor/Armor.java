@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -215,6 +216,10 @@ public class Armor extends KindofMisc {
 		}
 	}
 
+	public int appearance() {
+		return 1;
+	}
+
 	public BrokenSeal checkSeal(){
 		return seal;
 	}
@@ -351,7 +356,18 @@ public class Armor extends KindofMisc {
 	@Override
 	public boolean doEquip(Hero hero) {
 		boolean equipped = super.doEquip(hero);
-		((HeroSprite)hero.sprite).updateArmor();
+		if (hero instanceof Hero) {
+			((HeroSprite) hero.sprite).updateArmor();
+		}
+		return equipped;
+	}
+
+	@Override
+	public boolean doUnequip(Char hero, boolean collect, boolean single) {
+		boolean equipped = super.doUnequip(hero, collect, single);
+		if (hero instanceof Hero) {
+			((HeroSprite) hero.sprite).updateArmor();
+		}
 		return equipped;
 	}
 
@@ -418,20 +434,20 @@ public class Armor extends KindofMisc {
 		String info = desc();
 		
 		if (levelKnown) {
-			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", DRMin(), DRMax(), STRReq());
+			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, DRMin(), DRMax(), STRReq());
 
 			if (magicalDRMax() > 0) {
-				info += " " + Messages.get(Armor.class, "curr_absorb_magic", DRMin(), DRMax());
+				info += " " + Messages.get(Armor.class, "curr_absorb_magic",  DRMin(), DRMax());
 			}
 			
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
 			}
 		} else {
-			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", DRMin(0), DRMax(0), STRReq(0));
+			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, DRMin(0), DRMax(0), STRReq(0));
 
 			if (magicalDRMax() > 0) {
-				info += " " +  Messages.get(Armor.class, "avg_absorb_magic", DRMin(0), DRMax(0));
+				info += " " +  Messages.get(Armor.class, "avg_absorb_magic", magicalDRMin(0), magicalDRMax(0));
 			}
 
 			if (STRReq(0) > Dungeon.hero.STR()) {
@@ -450,12 +466,26 @@ public class Armor extends KindofMisc {
 		}
 
 		if (EVA != 1f || STE != 1f || speedFactor != 1f) {
-			if (EVA > 1f) {
-				info += "\n" + Messages.get(Armor.class, "eva_increase", EVA-1f);
-			} else if (EVA < 1f) {
-				info += "\n" + Messages.get(Armor.class, "eva_decrease", 1f-EVA);
-			}
+
 			info += "\n";
+
+			if (EVA > 1f) {
+				info += "\n" + Messages.get(Armor.class, "eva_increase", (double) (EVA-1f)*100);
+			} else if (EVA < 1f) {
+				info += "\n" + Messages.get(Armor.class, "eva_decrease", (double) (1f-EVA)*100);
+			}
+
+			if (STE > 1f) {
+				info += "\n" + Messages.get(Armor.class, "ste_increase", (double) (STE-1f)*100);
+			} else if (STE < 1f) {
+				info += "\n" + Messages.get(Armor.class, "ste_decrease", (double) (1f-STE)*100);
+			}
+
+			if (speedFactor > 1f) {
+				info += "\n" + Messages.get(Armor.class, "speed_increase", (double) (speedFactor-1f)*100);
+			} else if (speedFactor < 1f) {
+				info += "\n" + Messages.get(Armor.class, "speed_decrease", (double) (1f-speedFactor)*100);
+			}
 		}
 		
 		if (glyph != null  && (cursedKnown || !glyph.curse())) {

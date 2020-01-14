@@ -47,4 +47,9 @@ public class MageArmor extends ClothArmor {
 	public int DRMax(int lvl) {
 		return (int) (super.DRMax(lvl) * 0.75f);
 	}
+
+	@Override
+	public int appearance() {
+		return 6;
+	}
 }

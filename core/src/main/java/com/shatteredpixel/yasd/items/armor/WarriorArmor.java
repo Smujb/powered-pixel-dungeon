@@ -31,4 +31,9 @@ public class WarriorArmor extends ClothArmor {
 		STE = 0.75f;
 		EVA = 0.75f;
 	}
+
+	@Override
+	public int appearance() {
+		return 2;
+	}
 }

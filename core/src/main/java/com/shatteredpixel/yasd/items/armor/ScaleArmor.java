@@ -33,4 +33,8 @@ public class ScaleArmor extends Armor {
 		super( 4 );
 	}
 
+	@Override
+	public int appearance() {
+		return 4;
+	}
 }

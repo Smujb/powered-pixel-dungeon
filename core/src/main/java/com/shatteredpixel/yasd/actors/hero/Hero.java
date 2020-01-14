@@ -406,7 +406,7 @@ public class Hero extends Char {
 	}
 	
 	public int tier() {
-		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).tier;
+		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).appearance();
 	}
 
 	@Override

@@ -40,20 +40,13 @@ public class HuntressArmor extends ClothArmor {
 	
 	{
 		image = ItemSpriteSheet.ARMOR_HUNTRESS;
+		EVA = 1.25f;
+		speedFactor = 1.25f;
+		DRfactor = 0.75f;
 	}
 
 	@Override
-	public float evasionMultiplier(Char owner) {
-		return super.evasionMultiplier(owner)*1.25f;
-	}
-
-	@Override
-	public float speedMultiplier(Char owner) {
-		return super.speedMultiplier(owner)*1.25f;
-	}
-
-	@Override
-	public int DRMax(int lvl) {
-		return (int) (super.DRMax(lvl) * 0.75f);
+	public int appearance() {
+		return 6;
 	}
 }

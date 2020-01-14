@@ -44,4 +44,9 @@ public class RogueArmor extends ClothArmor {
 		EVA = 1.25f;
 		STE = 1.25f;
 	}
+
+	@Override
+	public int appearance() {
+		return 6;
+	}
 }
