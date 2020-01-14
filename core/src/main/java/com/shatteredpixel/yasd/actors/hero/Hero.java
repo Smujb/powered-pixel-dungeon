@@ -271,20 +271,24 @@ public class Hero extends Char {
 		morale *= DifficultyMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
-		this.sprite.showStatus( CharSprite.NEGATIVE, Messages.get(Morale.class, "loss") );
+		if (this.sprite != null) {
+			this.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, "loss"));
+		}
 		if (say) {
 			moraleCheck();
 		}
 		if (morale == 0f & isAlive()) {
 			Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP/6));
-			morale += Random.Float() + 1;
+			morale += Random.Float() + 2;
 		}
 	}
 
 	public void gainMorale(float Amount) {
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
-		this.sprite.showStatus( CharSprite.NEUTRAL, Messages.get(Morale.class, "gain") );
+		if (this.sprite != null) {
+			this.sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Morale.class, "gain"));
+		}
 	}
 
 	public void speedMoraleLoss(float Multiplier) {

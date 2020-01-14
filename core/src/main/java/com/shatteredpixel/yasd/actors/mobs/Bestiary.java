@@ -50,11 +50,11 @@ public class Bestiary {
 				return new ArrayList<>(Arrays.asList(
                         Thief.class));
 			// Sewers
-			/*case 1:
+			case 1:
 				//3x rat, 1x snake
 				return new ArrayList<>(Arrays.asList(
 						Rat.class, Rat.class, Rat.class,
-						Snake.class));*/
+						Snake.class));
 			case 2:
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,

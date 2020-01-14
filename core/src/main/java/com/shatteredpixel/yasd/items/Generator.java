@@ -27,10 +27,15 @@ import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.HuntressArmor;
+import com.shatteredpixel.yasd.items.armor.LeadArmour;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
+import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.armor.MailArmor;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
+import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.armor.ScaleArmor;
+import com.shatteredpixel.yasd.items.armor.WarriorArmor;
 import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
@@ -197,6 +202,11 @@ public class Generator {
 		WEP_T5	( 0,    MeleeWeapon.class),
 		
 		ARMOR	( 4,    Armor.class ),
+		ARM_T1  (0,     Armor.class ),
+		ARM_T2  (0,     Armor.class ),
+		ARM_T3  (0,     Armor.class ),
+		ARM_T4  (0,     Armor.class ),
+		ARM_T5  (0,     Armor.class ),
 		
 		MISSILE ( 3,    MissileWeapon.class ),
 		MIS_T1  ( 0,    MissileWeapon.class ),
@@ -399,6 +409,39 @@ public class Generator {
 					ScaleArmor.class,
 					PlateArmor.class };
 			ARMOR.probs = new float[]{ 0, 0, 0, 0, 0 };
+
+			ARM_T1.classes = new Class<?>[]{
+					ClothArmor.class,
+					WarriorArmor.class,
+					HuntressArmor.class,
+					RogueArmor.class,
+					MageArmor.class
+			};
+			ARM_T1.probs = new float[]{ 1, 1, 1, 1, 1 };
+
+			ARM_T2.classes = new Class<?>[]{
+					LeatherArmor.class
+			};
+
+			ARM_T2.probs = new float[]{ 1 };
+
+			ARM_T3.classes = new Class<?>[]{
+					MailArmor.class
+			};
+
+			ARM_T3.probs = new float[]{ 1 };
+
+			ARM_T4.classes = new Class<?>[]{
+					ScaleArmor.class
+			};
+
+			ARM_T4.probs = new float[]{ 1 };
+
+			ARM_T5.classes = new Class<?>[]{
+					PlateArmor.class,
+					LeadArmour.class
+			};
+			ARM_T5.probs = new float[]{ 2, 1 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
@@ -531,11 +574,23 @@ public class Generator {
 	public static Armor randomArmor(int floorSet) {
 
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
+
+		int tier = Random.chances(floorSetTierProbs[floorSet]);
+
+		Category c = armorTiers[tier];
 		
-		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(floorSetTierProbs[floorSet])]);
+		Armor a = (Armor)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
 		a.random();
 		return a;
 	}
+
+	public static final Category[] armorTiers = new Category[]{
+			Category.ARM_T1,
+			Category.ARM_T2,
+			Category.ARM_T3,
+			Category.ARM_T4,
+			Category.ARM_T5
+	};
 
 	public static final Category[] wepTiers = new Category[]{
 			Category.WEP_T1,
