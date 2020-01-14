@@ -96,10 +96,10 @@ public class Corrosion extends Buff implements Hero.Doom {
 				int index = Random.Int(5);
 				Item item = target.belongings.miscs[index];
 				if (item != null && item.canDegrade()) {
-					item.use(damage);
+					item.use(damage*10);
 				}
 			}
-			if (damage < (Dungeon.depth/2)+2) {
+			if (damage < (Dungeon.depth/2f)+2) {
 				damage++;
 			} else {
 				damage += 0.5f;

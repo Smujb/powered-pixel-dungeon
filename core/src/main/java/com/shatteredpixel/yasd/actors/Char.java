@@ -139,13 +139,13 @@ public abstract class Char extends Actor {
 	public int HT;
 	public int HP;
 
-	protected float baseSpeed	= 1;
+	protected float baseSpeed = 1;
 	protected PathFinder.Path path;
 
-	public int paralysed	    = 0;
-	public boolean rooted		= false;
-	public boolean flying		= false;
-	public int invisible		= 0;
+	public int paralysed = 0;
+	public boolean rooted = false;
+	public boolean flying = false;
+	public int invisible = 0;
 
 	public float DLY = 1f;
 	public float ACC = 1f;
@@ -153,14 +153,15 @@ public abstract class Char extends Actor {
 	public float STE = 1f;
 
 	//these are relative to the hero
-	public enum Alignment{
+	public enum Alignment {
 		ENEMY,
 		NEUTRAL,
 		ALLY
 	}
+
 	public Alignment alignment;
 
-	public int viewDistance	= 8;
+	public int viewDistance = 8;
 
 	public boolean[] fieldOfView = null;
 
@@ -170,22 +171,22 @@ public abstract class Char extends Actor {
 		super();
 		name = Messages.get(this, "name");
 
-		belongings = new Belongings( this );
+		belongings = new Belongings(this);
 	}
 
 	public boolean isFlying() {
 		return ((flying || buff(Levitation.class) != null)
 				& buff(Paralysis.class) == null
-		 		& buff(Vertigo.class) == null
+				& buff(Vertigo.class) == null
 				& buff(Frost.class) == null);
 	}
 
-	public boolean shoot( Char enemy, MissileWeapon wep ) {
+	public boolean shoot(Char enemy, MissileWeapon wep) {
 
 		//temporarily set the hero's weapon to the missile weapon being used
 		KindofMisc equipped = belongings.miscs[0];
 		belongings.miscs[0] = wep;
-		boolean hit = attack( enemy );
+		boolean hit = attack(enemy);
 		Invisibility.dispel();
 		belongings.miscs[0] = equipped;
 
@@ -207,7 +208,7 @@ public abstract class Char extends Actor {
 	}
 
 	public float hpPercent() {
-		return HP/(float)HT;
+		return HP / (float) HT;
 	}
 
 	public float missingHPPercent() {
@@ -217,7 +218,7 @@ public abstract class Char extends Actor {
 	public KindOfWeapon getCurrentWeapon() {
 		resetWeapon();
 		if (belongings.miscs[0] instanceof MissileWeapon) {
-			return ((MissileWeapon)belongings.miscs[0]);
+			return ((MissileWeapon) belongings.miscs[0]);
 		}
 		return belongings.getWeapons().get(currentWeapon);
 	}
@@ -225,17 +226,17 @@ public abstract class Char extends Actor {
 	public int STR() {
 		int STR = this.STR;
 
-		STR += RingOfMight.strengthBonus( this );
+		STR += RingOfMight.strengthBonus(this);
 
 		AdrenalineSurge buff = buff(AdrenalineSurge.class);
-		if (buff != null){
+		if (buff != null) {
 			STR += buff.boost();
 		}
 
 		return (buff(Weakness.class) != null) ? STR - 1 : STR;
 	}
 
-	public boolean canAttack(Char enemy){
+	public boolean canAttack(Char enemy) {
 		if (enemy == null || pos == enemy.pos) {
 			return false;
 		}
@@ -247,24 +248,24 @@ public abstract class Char extends Actor {
 
 		KindOfWeapon wep = getCurrentWeapon();
 
-		if (wep != null){
+		if (wep != null) {
 			return wep.canReach(this, enemy.pos);
 		} else {
 			return false;
 		}
 	}
 
-	public void updateHT( boolean boostHP ){
+	public void updateHT(boolean boostHP) {
 		int curHT = HT;
 
 		float multiplier = RingOfMight.HTMultiplier(this);
 		HT = Math.round(multiplier * HT);
 
-		if (buff(ElixirOfMight.HTBoost.class) != null){
+		if (buff(ElixirOfMight.HTBoost.class) != null) {
 			HT += buff(ElixirOfMight.HTBoost.class).boost();
 		}
 
-		if (boostHP){
+		if (boostHP) {
 			HP += Math.max(HT - curHT, 0);
 		}
 		HP = Math.min(HP, HT);
@@ -272,108 +273,108 @@ public abstract class Char extends Actor {
 
 	@Override
 	protected boolean act() {
-		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
+		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()) {
 			fieldOfView = new boolean[Dungeon.level.length()];
 		}
-		Dungeon.level.updateFieldOfView( this, fieldOfView );
+		Dungeon.level.updateFieldOfView(this, fieldOfView);
 		return false;
 	}
 
-	public boolean canInteract( Hero h ){
-		return Dungeon.level.adjacent( pos, h.pos );
+	public boolean canInteract(Hero h) {
+		return Dungeon.level.adjacent(pos, h.pos);
 	}
 
 	//swaps places by default
-	public boolean interact(){
+	public boolean interact() {
 
-		if (!Dungeon.level.passable[pos] && !Dungeon.hero.flying){
+		if (!Dungeon.level.passable[pos] && !Dungeon.hero.flying) {
 			return true;
 		}
 
 		int curPos = pos;
 
-		moveSprite( pos, Dungeon.hero.pos );
-		move( Dungeon.hero.pos );
+		moveSprite(pos, Dungeon.hero.pos);
+		move(Dungeon.hero.pos);
 
-		Dungeon.hero.sprite.move( Dungeon.hero.pos, curPos );
-		Dungeon.hero.move( curPos );
+		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
+		Dungeon.hero.move(curPos);
 
-		Dungeon.hero.spend( 1 / Dungeon.hero.speed() );
+		Dungeon.hero.spend(1 / Dungeon.hero.speed());
 		Dungeon.hero.busy();
 
 		return true;
 	}
 
-	protected boolean moveSprite( int from, int to ) {
+	protected boolean moveSprite(int from, int to) {
 
 		if (sprite.isVisible() && (Dungeon.level.heroFOV[from] || Dungeon.level.heroFOV[to])) {
-			sprite.move( from, to );
+			sprite.move(from, to);
 			return true;
 		} else {
 			sprite.turnTo(from, to);
-			sprite.place( to );
+			sprite.place(to);
 			return true;
 		}
 	}
 
-	protected static final String POS       = "pos";
-	protected static final String TAG_HP    = "HP";
-	protected static final String TAG_HT    = "HT";
-	protected static final String TAG_SHLD  = "SHLD";
-	protected static final String BUFFS	    = "buffs";
+	protected static final String POS = "pos";
+	protected static final String TAG_HP = "HP";
+	protected static final String TAG_HT = "HT";
+	protected static final String TAG_SHLD = "SHLD";
+	protected static final String BUFFS = "buffs";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(Bundle bundle) {
 
-		super.storeInBundle( bundle );
+		super.storeInBundle(bundle);
 
-		bundle.put( POS, pos );
-		bundle.put( TAG_HP, HP );
-		bundle.put( TAG_HT, HT );
-		bundle.put( BUFFS, buffs );
+		bundle.put(POS, pos);
+		bundle.put(TAG_HP, HP);
+		bundle.put(TAG_HT, HT);
+		bundle.put(BUFFS, buffs);
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(Bundle bundle) {
 
-		super.restoreFromBundle( bundle );
+		super.restoreFromBundle(bundle);
 
-		pos = bundle.getInt( POS );
-		HP = bundle.getInt( TAG_HP );
-		HT = bundle.getInt( TAG_HT );
+		pos = bundle.getInt(POS);
+		HP = bundle.getInt(TAG_HP);
+		HT = bundle.getInt(TAG_HT);
 
-		for (Bundlable b : bundle.getCollection( BUFFS )) {
+		for (Bundlable b : bundle.getCollection(BUFFS)) {
 			if (b != null) {
-				((Buff)b).attachTo( this );
+				((Buff) b).attachTo(this);
 			}
 		}
 
 		//pre-0.7.0
 	}
 
-	public boolean attack( Char enemy ) {
+	public boolean attack(Char enemy) {
 		currentWeapon += 1;
 
 		if (enemy == null) return false;
 
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
-		if (hit( this, enemy, false )) {
+		if (hit(this, enemy, false)) {
 
 			int dr = enemy.drRoll();
 
-			if (this instanceof Hero){//Missile Weapons are always equipped in slot 1
-				Hero h = (Hero)this;
+			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
+				Hero h = (Hero) this;
 				if (h.belongings.miscs[0] instanceof MissileWeapon
 						&& h.subClass == HeroSubClass.SNIPER
-						&& !Dungeon.level.adjacent(h.pos, enemy.pos)){
+						&& !Dungeon.level.adjacent(h.pos, enemy.pos)) {
 					dr = 0;
 				}
 			}
 
 			int dmg;
 			Preparation prep = buff(Preparation.class);
-			if (prep != null){
+			if (prep != null) {
 				dmg = prep.damageRoll(this, enemy);
 			} else {
 				dmg = damageRoll();
@@ -382,12 +383,13 @@ public abstract class Char extends Actor {
 			if (this.alignment == Alignment.ENEMY) {
 				switch (Dungeon.difficulty) {
 					case 1://Easy = -25% damage
-						dmg*=0.75f;
+						dmg *= 0.75f;
 						break;
-					case 2: default://Medium = Normal damage
+					case 2:
+					default://Medium = Normal damage
 						break;
 					case 3://Hard = +25% damage
-						dmg*=1.25f;
+						dmg *= 1.25f;
 						break;
 				}
 			}
@@ -395,27 +397,27 @@ public abstract class Char extends Actor {
 			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
 				Hero h = (Hero) this;
 				if (h.belongings.miscs[0] instanceof MissileWeapon) {
-					dmg = ((MissileWeapon)h.belongings.miscs[0]).damageRoll(h);
+					dmg = ((MissileWeapon) h.belongings.miscs[0]).damageRoll(h);
 				}
 			}
-			int effectiveDamage = enemy.defenseProc( this, dmg );
-			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
-			effectiveDamage = attackProc( enemy, effectiveDamage );
+			int effectiveDamage = enemy.defenseProc(this, dmg);
+			effectiveDamage = Math.max(effectiveDamage - dr, 0);
+			effectiveDamage = attackProc(enemy, effectiveDamage);
 
 			if (visibleFight) {
-				Sample.INSTANCE.play( Assets.SND_HIT, 1, 1, Random.Float( 0.8f, 1.25f ) );
+				Sample.INSTANCE.play(Assets.SND_HIT, 1, 1, Random.Float(0.8f, 1.25f));
 			}
 
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as getArmors glyphs.
-			if (!enemy.isAlive()){
+			if (!enemy.isAlive()) {
 				return true;
 			}
 
 			//TODO: consider revisiting this and shaking in more cases.
 
 
-			enemy.damage( effectiveDamage, this );
+			enemy.damage(effectiveDamage, this);
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -423,7 +425,7 @@ public abstract class Char extends Actor {
 			if (buff(FrostImbue.class) != null)
 				buff(FrostImbue.class).proc(enemy);
 
-			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
+			enemy.sprite.bloodBurstA(sprite.center(), effectiveDamage);
 			enemy.sprite.flash();
 
 			if (!enemy.isAlive() && visibleFight) {
@@ -433,11 +435,11 @@ public abstract class Char extends Actor {
 						return true;
 					}
 
-					Dungeon.fail( getClass() );
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name)) );
+					Dungeon.fail(getClass());
+					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name)));
 
 				} else if (this == Dungeon.hero) {
-					GLog.i( Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name)) );
+					GLog.i(Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name)));
 				}
 			}
 
@@ -447,7 +449,7 @@ public abstract class Char extends Actor {
 
 			if (visibleFight) {
 				String defense = enemy.defenseVerb();
-				enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
+				enemy.sprite.showStatus(CharSprite.NEUTRAL, defense);
 
 				Sample.INSTANCE.play(Assets.SND_MISS);
 			}
@@ -457,24 +459,24 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public static boolean hit( Char attacker, Char defender, boolean magic ) {
-		float acuRoll = Random.Float( attacker.attackSkill( defender ) );
-		float defRoll = Random.Float( defender.defenseSkill( attacker ) );
+	public static boolean hit(Char attacker, Char defender, boolean magic) {
+		float acuRoll = Random.Float(attacker.attackSkill(defender));
+		float defRoll = Random.Float(defender.defenseSkill(attacker));
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.20f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.20f;
 		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
 	}
 
-	public void spendAndNext( float time ) {
-		spend( time );
+	public void spendAndNext(float time) {
+		spend(time);
 		next();
 	}
 
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		float accuracy = attackSkill;
 		if (usesBelongings) {
 			KindOfWeapon wep = getCurrentWeapon();
-			accuracy *= RingOfAccuracy.accuracyMultiplier( this );
+			accuracy *= RingOfAccuracy.accuracyMultiplier(this);
 			if (wep instanceof MissileWeapon) {
 				if (Dungeon.level.adjacent(pos, target.pos)) {
 					accuracy *= 0.5f;
@@ -484,14 +486,14 @@ public abstract class Char extends Actor {
 			}
 
 			if (wep != null) {
-				attackSkill *=  wep.accuracyFactor(this);
+				attackSkill *= wep.accuracyFactor(this);
 			}
 		}
 		return (int) (accuracy * ACC);
 	}
 
 
-	public int defenseSkill( Char enemy ) {
+	public int defenseSkill(Char enemy) {
 		float evasion = this.defenseSkill;
 		if (buff(Wet.class) != null) {
 			evasion *= buff(Wet.class).evasionFactor();
@@ -509,7 +511,7 @@ public abstract class Char extends Actor {
 			}
 
 		}
-		return Math.round(evasion*EVA);
+		return Math.round(evasion * EVA);
 	}
 
 	public String defenseVerb() {
@@ -517,8 +519,24 @@ public abstract class Char extends Actor {
 	}
 
 	public int magicalDR() {
-		return 0;
+		int dr = 0;
+		if (usesBelongings) {
+			if (belongings.getArmors() != null) {
+				ArrayList<Armor> Armors = belongings.getArmors();
+				int degradeAmount = new Item().defaultDegradeAmount();
+				for (int i = 0; i < Armors.size(); i++) {
+					Armors.get(i).use(degradeAmount / Armors.size());
+					int armDr = Armors.get(i).magicalDRRoll();
+					if (STR() < Armors.get(i).STRReq()) {
+						armDr -= 2 * (Armors.get(i).STRReq() - STR());
+					}
+					if (armDr > 0) dr += armDr;
+				}
+			}
+		}
+		return dr;
 	}
+
 
 	public int magicalDefenseProc(Char enemy, int damage) {
 		return damage;
@@ -606,7 +624,7 @@ public abstract class Char extends Actor {
 				int degradeAmount = new Item().defaultDegradeAmount();
 				for (int i = 0; i < Armors.size(); i++) {
 					Armors.get(i).use(degradeAmount/Armors.size());
-					int armDr = Random.NormalIntRange(Armors.get(i).DRMin(), Armors.get(i).DRMax());
+					int armDr = Armors.get(i).DRRoll();
 					if (STR() < Armors.get(i).STRReq()) {
 						armDr -= 2 * (Armors.get(i).STRReq() - STR());
 					}

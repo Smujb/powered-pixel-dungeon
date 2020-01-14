@@ -40,11 +40,7 @@ public class MageArmor extends ClothArmor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_MAGE;
-	}
-
-	@Override
-	public float evasionMultiplier(Char owner) {
-		return super.evasionMultiplier(owner)*1.25f;
+		EVA = 1.25f;
 	}
 
 	@Override

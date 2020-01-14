@@ -72,10 +72,11 @@ import java.util.Arrays;
 
 public class Armor extends KindofMisc {
 
-	{
-		//MAXIMUM_DURABILITY = super.MAXIMUM_DURABILITY/2;
-		//curDurability = MAXIMUM_DURABILITY;
-	}
+	public float EVA = 1f;
+	public float STE = 1f;
+	public float speedFactor = 1f;
+	public float DRfactor = 1f;
+	public float magicalDRFactor = 0f;
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -164,7 +165,7 @@ public class Armor extends KindofMisc {
 		super.reset();
 		usesLeftToID = USES_TO_ID;
 		availableUsesToID = USES_TO_ID/2f;
-		//getArmors can be kept in bones between runs, the seal cannot.
+		//armours can be kept in bones between runs, the seal cannot.
 		seal = null;
 	}
 
@@ -228,7 +229,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRMax(int lvl){
-		return (tier*3) + (tier * lvl);
+		return Math.round(((tier*3) + (tier * lvl)) * DRfactor);
 	}
 
 	public final int DRMin(){
@@ -236,7 +237,42 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRMin(int lvl){
-		return tier + lvl;
+		return Math.round((tier + lvl) * DRfactor);
+	}
+
+	public int DRRoll() {
+		return Random.NormalIntRange(DRMin(), DRMax());
+	}
+
+	public int DRRoll(int lvl) {
+		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
+	}
+
+
+
+
+	public final int magicalDRMax(){
+		return magicalDRMax(level());
+	}
+
+	public int magicalDRMax(int lvl){
+		return Math.round(((tier*3) + (tier * lvl)) * magicalDRFactor);
+	}
+
+	public final int magicalDRMin(){
+		return magicalDRMin(level());
+	}
+
+	public int magicalDRMin(int lvl){
+		return Math.round((tier + lvl) * magicalDRFactor);
+	}
+
+	public int magicalDRRoll() {
+		return Random.NormalIntRange(DRMin(), DRMax());
+	}
+
+	public int magicalDRRoll(int lvl) {
+		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
 	}
 
 	public float evasionMultiplier(Char owner) {
@@ -260,7 +296,7 @@ public class Armor extends KindofMisc {
 			}
 		}
 		
-		return evasion + augment.evasionFactor(level());
+		return Math.round(evasion + augment.evasionFactor(level()) * EVA);
 	}
 
 	public float speedMultiplier(Char owner) {
@@ -294,7 +330,7 @@ public class Armor extends KindofMisc {
 			speed /= 3f;
 		}
 		
-		return speed;
+		return Math.round(speed * speedFactor);
 		
 	}
 
@@ -309,7 +345,7 @@ public class Armor extends KindofMisc {
 			stealth += 1 + level()/3f;
 		}
 		
-		return stealth;
+		return Math.round(stealth * STE);
 	}
 
 	@Override
@@ -383,12 +419,20 @@ public class Armor extends KindofMisc {
 		
 		if (levelKnown) {
 			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", DRMin(), DRMax(), STRReq());
+
+			if (magicalDRMax() > 0) {
+				info += " " + Messages.get(Armor.class, "curr_absorb_magic", DRMin(), DRMax());
+			}
 			
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
 			}
 		} else {
 			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", DRMin(0), DRMax(0), STRReq(0));
+
+			if (magicalDRMax() > 0) {
+				info += " " +  Messages.get(Armor.class, "avg_absorb_magic", DRMin(0), DRMax(0));
+			}
 
 			if (STRReq(0) > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "probably_too_heavy");
@@ -403,6 +447,15 @@ public class Armor extends KindofMisc {
 				info += "\n\n" + Messages.get(Armor.class, "defense");
 				break;
 			case NONE:
+		}
+
+		if (EVA != 1f || STE != 1f || speedFactor != 1f) {
+			if (EVA > 1f) {
+				info += "\n" + Messages.get(Armor.class, "eva_increase", EVA-1f);
+			} else if (EVA < 1f) {
+				info += "\n" + Messages.get(Armor.class, "eva_decrease", 1f-EVA);
+			}
+			info += "\n";
 		}
 		
 		if (glyph != null  && (cursedKnown || !glyph.curse())) {

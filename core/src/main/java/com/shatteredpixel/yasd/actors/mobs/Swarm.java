@@ -45,10 +45,10 @@ public class Swarm extends Mob {
 		spriteClass = SwarmSprite.class;
 		
 		HP = HT = 60;
-		defenseSkill = 5;
+		defenseSkill = 7;
 
-		EXP = 3;
-		maxLvl = 9;
+		EXP = 6;
+		maxLvl = 10;
 		
 		flying = true;
 
@@ -58,7 +58,7 @@ public class Swarm extends Mob {
 	
 	private static final float SPLIT_DELAY	= 1f;
 	
-	int generation	= 0;
+	private int generation	= 0;
 	
 	private static final String GENERATION	= "generation";
 	
@@ -128,7 +128,7 @@ public class Swarm extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 10;
+		return 12;
 	}
 	
 	private Swarm split() {

@@ -21,39 +21,14 @@
 
 package com.shatteredpixel.yasd.items.armor;
 
-import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.items.Item;
-import com.shatteredpixel.yasd.items.alcohol.Alcohol;
-import com.shatteredpixel.yasd.items.weapon.missiles.Shuriken;
-import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.sprites.MissileSprite;
-import com.shatteredpixel.yasd.utils.GLog;
-import com.watabou.utils.Callback;
-
-import java.util.HashMap;
 
 public class WarriorArmor extends ClothArmor {
 
-
 	{
 		image = ItemSpriteSheet.ARMOR_LEATHER;
-	}
-
-	@Override
-	public float evasionMultiplier(Char owner) {
-		return super.evasionMultiplier(owner)*0.75f;
-	}
-
-	@Override
-	public float stealthMultiplier(Char owner) {
-		return super.stealthMultiplier(owner)*0.75f;
-	}
-
-	@Override
-	public int DRMax(int lvl) {
-		return (int) (super.DRMax(lvl) * 1.5f);
+		magicalDRFactor = 0.5f;
+		STE = 0.75f;
+		EVA = 0.75f;
 	}
 }

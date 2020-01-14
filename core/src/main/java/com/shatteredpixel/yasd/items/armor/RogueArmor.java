@@ -40,20 +40,8 @@ public class RogueArmor extends ClothArmor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_ROGUE;
-	}
-
-	@Override
-	public float evasionMultiplier(Char owner) {
-		return super.evasionMultiplier(owner)*1.25f;
-	}
-
-	@Override
-	public float stealthMultiplier(Char owner) {
-		return super.stealthMultiplier(owner)*1.25f;
-	}
-
-	@Override
-	public int DRMax(int lvl) {
-		return (int) (super.DRMax(lvl) * 0.75f);
+		DRfactor = 0.75f;
+		EVA = 1.25f;
+		STE = 1.25f;
 	}
 }
