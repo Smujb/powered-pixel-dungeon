@@ -6,7 +6,7 @@ public class Beer extends Alcohol {
     {
         image = ItemSpriteSheet.BEER;
         MoraleGain = 5f;
-        MoraleMultiplier = 1.5f;
+        drunkTurns = 50f;
     }
 
     @Override

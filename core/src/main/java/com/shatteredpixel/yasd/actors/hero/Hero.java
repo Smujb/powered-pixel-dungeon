@@ -32,9 +32,7 @@ import com.shatteredpixel.yasd.ShatteredPixelDungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Alchemy;
-import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.actors.buffs.Barkskin;
@@ -43,34 +41,23 @@ import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Bless;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
-import com.shatteredpixel.yasd.actors.buffs.Charm;
-import com.shatteredpixel.yasd.actors.buffs.Chill;
 import com.shatteredpixel.yasd.actors.buffs.Combo;
-import com.shatteredpixel.yasd.actors.buffs.Corrosion;
-import com.shatteredpixel.yasd.actors.buffs.Drowsy;
+import com.shatteredpixel.yasd.actors.buffs.Drunk;
 import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.actors.buffs.Foresight;
-import com.shatteredpixel.yasd.actors.buffs.Frost;
-import com.shatteredpixel.yasd.actors.buffs.Fury;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
-import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
-import com.shatteredpixel.yasd.actors.buffs.Poison;
-import com.shatteredpixel.yasd.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.actors.buffs.Regeneration;
-import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
-import com.shatteredpixel.yasd.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.CheckedCell;
 import com.shatteredpixel.yasd.effects.Flare;
 import com.shatteredpixel.yasd.effects.Speck;
-import com.shatteredpixel.yasd.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.items.Amulet;
 import com.shatteredpixel.yasd.items.Ankh;
 import com.shatteredpixel.yasd.items.Dewdrop;
@@ -78,13 +65,10 @@ import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Heap.Type;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
-import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
-import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.EtherealChains;
 import com.shatteredpixel.yasd.items.artifacts.HornOfPlenty;
@@ -100,25 +84,12 @@ import com.shatteredpixel.yasd.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight;
-import com.shatteredpixel.yasd.items.rings.RingOfAccuracy;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
-import com.shatteredpixel.yasd.items.rings.RingOfEvasion;
-import com.shatteredpixel.yasd.items.rings.RingOfForce;
-import com.shatteredpixel.yasd.items.rings.RingOfFuror;
-import com.shatteredpixel.yasd.items.rings.RingOfHaste;
-import com.shatteredpixel.yasd.items.rings.RingOfMight;
-import com.shatteredpixel.yasd.items.rings.RingOfTenacity;
 import com.shatteredpixel.yasd.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.yasd.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
-import com.shatteredpixel.yasd.items.weapon.Weapon;
-import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
-import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.Glaive;
-import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.levels.Level;
@@ -126,14 +97,12 @@ import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.features.Chasm;
 import com.shatteredpixel.yasd.levels.traps.Trap;
 import com.shatteredpixel.yasd.messages.Messages;
-import com.shatteredpixel.yasd.plants.Earthroot;
 import com.shatteredpixel.yasd.plants.Swiftthistle;
 import com.shatteredpixel.yasd.scenes.AlchemyScene;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.scenes.SurfaceScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
-import com.shatteredpixel.yasd.sprites.HeroSprite;
 import com.shatteredpixel.yasd.ui.AttackIndicator;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.ui.QuickSlotButton;
@@ -153,7 +122,6 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 public class Hero extends Char {
 
@@ -253,7 +221,6 @@ public class Hero extends Char {
 	}
 
 	public void loseMorale(float Amount, boolean say) {
-		Amount *= MoraleMultiplier;
 		float DifficultyMultiplier;
 		switch (Dungeon.difficulty) {
 			case 1:// -33% Morale loss in Easy
@@ -271,15 +238,17 @@ public class Hero extends Char {
 		morale *= DifficultyMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
-		if (this.sprite != null) {
-			this.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, "loss"));
-		}
-		if (say) {
-			moraleCheck();
-		}
-		if (morale == 0f & isAlive()) {
-			Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP/6));
-			morale += Random.Float() + 2;
+		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk
+			if (this.sprite != null) {
+				this.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, "loss"));
+			}
+			if (say) {
+				moraleCheck();
+			}
+			if (morale == 0f & isAlive()) {
+				Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP / 6));
+				morale += Random.Float() + 2;
+			}
 		}
 	}
 
@@ -289,10 +258,6 @@ public class Hero extends Char {
 		if (this.sprite != null) {
 			this.sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Morale.class, "gain"));
 		}
-	}
-
-	public void speedMoraleLoss(float Multiplier) {
-		MoraleMultiplier *= Multiplier;
 	}
 
 	@Override
@@ -307,7 +272,6 @@ public class Hero extends Char {
 	private static final String EXPERIENCE	= "exp";
 	private static final String HTBOOST     = "htboost";
 	private static final String MORALE      = "morale";
-	private static final String MORALE_MULTIPLIER  = "morale-multiplier";
 	private static final String POWER       = "power";
 	private static final String FOCUS       = "focus";
 	private static final String EXPERTISE   = "expertise";
@@ -334,7 +298,6 @@ public class Hero extends Char {
 
 		//Morale
 		bundle.put( MORALE, morale );
-		bundle.put( MORALE_MULTIPLIER, MoraleMultiplier);
 
 
 		//Hero stats
@@ -366,7 +329,6 @@ public class Hero extends Char {
 
 		//Morale
 		morale = bundle.getFloat(MORALE);
-		MoraleMultiplier = bundle.getFloat(MORALE_MULTIPLIER);
 
 		//Hero stats
 		Power = bundle.getInt( POWER );
@@ -377,6 +339,7 @@ public class Hero extends Char {
 		
 		belongings.restoreFromBundle( bundle );
 	}
+
 
 	@Override
 	public int STR() {
@@ -430,21 +393,22 @@ public class Hero extends Char {
 	@Override
 	public int magicalDefenseProc(Char enemy, int damage) {
 		damage *= RingOfElements.resist(this);
+		damageMorale(damage- magicalDRRoll());
 		return super.magicalDefenseProc(enemy, damage);
 	}
 
 	@Override
 	public int attackSkill( Char target ) {
-		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		attackSkill = 9 + Expertise;
+		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
 	@Override
 	public int defenseSkill(Char enemy) {
+		defenseSkill = 3 + Expertise;
 		float evasion = super.defenseSkill(enemy);
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
-		defenseSkill = 3 + Expertise;
 		return (int) (evasion*moraleMultiplier);
 	}
 
@@ -979,22 +943,17 @@ public class Hero extends Char {
 		}
 
 		damage = super.defenseProc(enemy,damage);
+
+		damageMorale(damage-drRoll());
 		
 		return damage;
 	}
-	
-	@Override
-	public void damage( int dmg, Object src ) {
-		if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
-			interrupt();
-			resting = false;
-		}
 
-		super.damage( dmg, src );
-
+	private void damageMorale(int dmg) {
 		float shake;
 
-		shake = ((float) dmg / (float) HP) * 4f;
+		int effectiveHP = Math.max(HT/2, HP);
+		shake = ((float) dmg / (float) effectiveHP) * 4f;
 
 		if (shake > 0.7f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
@@ -1007,6 +966,16 @@ public class Hero extends Char {
 				loseMorale(shake*0.33f,false);
 			}
 		}
+	}
+	
+	@Override
+	public void damage( int dmg, Object src ) {
+		if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
+			interrupt();
+			resting = false;
+		}
+
+		super.damage( dmg, src );
 	}
 	
 	public void checkVisibleMobs() {

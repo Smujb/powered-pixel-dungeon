@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.actors.buffs.Doom;
 import com.shatteredpixel.yasd.actors.buffs.Drowsy;
+import com.shatteredpixel.yasd.actors.buffs.Drunk;
 import com.shatteredpixel.yasd.actors.buffs.EarthImbue;
 import com.shatteredpixel.yasd.actors.buffs.FireImbue;
 import com.shatteredpixel.yasd.actors.buffs.Frost;
@@ -89,7 +90,6 @@ import com.shatteredpixel.yasd.items.rings.RingOfMight;
 import com.shatteredpixel.yasd.items.rings.RingOfTenacity;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfFireblast;
 import com.shatteredpixel.yasd.items.wands.WandOfLightning;
 import com.shatteredpixel.yasd.items.wands.WandOfLivingEarth;
@@ -489,6 +489,10 @@ public abstract class Char extends Actor {
 				attackSkill *= wep.accuracyFactor(this);
 			}
 		}
+		Drunk drunk = buff(Drunk.class);
+		if (drunk != null) {
+			accuracy *= drunk.accuracyFactor();
+		}
 		return (int) (accuracy * ACC);
 	}
 
@@ -511,6 +515,10 @@ public abstract class Char extends Actor {
 			}
 
 		}
+		Drunk drunk = buff(Drunk.class);
+		if (drunk != null) {
+			evasion *= drunk.evasionFactor();
+		}
 		return Math.round(evasion * EVA);
 	}
 
@@ -518,7 +526,7 @@ public abstract class Char extends Actor {
 		return Messages.get(this, "def_verb");
 	}
 
-	public int magicalDR() {
+	public int magicalDRRoll() {
 		int dr = 0;
 		if (usesBelongings) {
 			if (belongings.getArmors() != null) {
@@ -566,7 +574,7 @@ public abstract class Char extends Actor {
 		if (enemy == null) return false;
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 		if (hit( this, enemy, true )) {
-			int dr = enemy.magicalDR();
+			int dr = enemy.magicalDRRoll();
 			int dmg = magicalDamageRoll();
 			int effectiveDamage = enemy.magicalDefenseProc( this, dmg );
 			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
@@ -984,7 +992,7 @@ public abstract class Char extends Actor {
 
 	public void move( int step ) {
 
-		if (Dungeon.level.adjacent( step, pos ) && buff( Vertigo.class ) != null) {
+		if (Dungeon.level.adjacent( step, pos ) && buff( Vertigo.class ) != null || (buff(Drunk.class) != null && Random.Int(5) == 0)) {
 			sprite.interruptMotion();
 			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
 			if (!(Dungeon.level.passable[newPos] || Dungeon.level.avoid[newPos]) || Actor.findChar( newPos ) != null)

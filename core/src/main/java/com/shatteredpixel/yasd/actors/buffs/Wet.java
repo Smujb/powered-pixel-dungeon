@@ -35,9 +35,8 @@ public class Wet extends FlavourBuff {
         }
     }
 
-    //reduces speed by 10% for every turn remaining, capping at 50%
     public float evasionFactor(){
-        return (float) Math.pow( 1.15, -cooldown());
+        return (float) Math.pow( 0.85, cooldown());
     }
 
     @Override

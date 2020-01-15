@@ -1,6 +1,8 @@
 package com.shatteredpixel.yasd.items.alcohol;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Drunk;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.potions.Potion;
@@ -20,7 +22,7 @@ public abstract class Alcohol extends Item {
     public static final String AC_DRINK = "DRINK";
     private static final float TIME_TO_DRINK = 1f;
     float MoraleGain;
-    float MoraleMultiplier;
+    float drunkTurns;
 
     @Override
     public boolean isUpgradable() {
@@ -52,7 +54,8 @@ public abstract class Alcohol extends Item {
         hero.spend(TIME_TO_DRINK);
         hero.busy();
         hero.gainMorale(MoraleGain);
-        hero.speedMoraleLoss(MoraleMultiplier);
+
+        Buff.affect(hero, Drunk.class, drunkTurns);
 
         Sample.INSTANCE.play(Assets.SND_DRINK);
 

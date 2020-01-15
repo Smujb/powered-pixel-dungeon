@@ -23,7 +23,6 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Random;
 
@@ -45,7 +44,7 @@ public abstract class DamageWand extends Wand{
 		}
 		int damage = damageRoll(lvl);
 		damage = enemy.magicalDefenseProc(curUser, damage);
-		damage -= enemy.magicalDR();
+		damage -= enemy.magicalDRRoll();
 		if (damage > 0) {
 			enemy.damage(damage, this);
 		}
