@@ -2,15 +2,20 @@ package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
+import com.watabou.utils.Random;
 
 public class Drunk extends FlavourBuff {
 
     public float accuracyFactor() {
-        return (float) Math.max(Math.pow( 0.90, cooldown()), 0.5f);
+        return (float) Math.max(Math.pow( 0.95, cooldown()), 0.5f);
     }
 
     public float evasionFactor() {
-        return (float) Math.max(Math.pow( 0.90, cooldown()), 0.5f);
+        return (float) Math.max(Math.pow( 0.95, cooldown()), 0.5f);
+    }
+
+    public boolean stumbleChance() {
+        return Random.Int(5 + Math.round(cooldown()/10)) < cooldown()/10;
     }
 
     @Override
