@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.DiscArmor;
 import com.shatteredpixel.yasd.items.armor.HideArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.items.armor.LeadArmor;
@@ -428,16 +429,17 @@ public class Generator {
 			ARM_T2.probs = new float[]{ 1, 1 };
 
 			ARM_T3.classes = new Class<?>[]{
-					MailArmor.class,
+					MailArmor.class
 			};
 
 			ARM_T3.probs = new float[]{ 1 };
 
 			ARM_T4.classes = new Class<?>[]{
-					ScaleArmor.class
+					ScaleArmor.class,
+					DiscArmor.class
 			};
 
-			ARM_T4.probs = new float[]{ 1 };
+			ARM_T4.probs = new float[]{ 1, 1 };
 
 			ARM_T5.classes = new Class<?>[]{
 					PlateArmor.class,

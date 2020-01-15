@@ -346,6 +346,7 @@ public class ItemSpriteSheet {
 	public static final int ARMOR_CHAINMAIL_DWARVISH= ARMOR+13;
 	public static final int ARMOR_CHAINMAIL_ORCISH  = ARMOR+14;
 	public static final int ARMOR_RINGMAIL 			= ARMOR+15;
+	public static final int ARMOR_DISC              = TIPPED_DARTS+12;
 	static{
 		assignItemRect(ARMOR_CLOTH,     15, 12);
 		assignItemRect(ARMOR_LEATHER,   14, 13);
