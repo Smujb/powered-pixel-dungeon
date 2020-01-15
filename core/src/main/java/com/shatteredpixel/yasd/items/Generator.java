@@ -27,8 +27,9 @@ import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.HideArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
-import com.shatteredpixel.yasd.items.armor.LeadArmour;
+import com.shatteredpixel.yasd.items.armor.LeadArmor;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.armor.MailArmor;
@@ -420,13 +421,14 @@ public class Generator {
 			ARM_T1.probs = new float[]{ 1, 1, 1, 1, 1 };
 
 			ARM_T2.classes = new Class<?>[]{
-					LeatherArmor.class
+					LeatherArmor.class,
+					HideArmor.class
 			};
 
-			ARM_T2.probs = new float[]{ 1 };
+			ARM_T2.probs = new float[]{ 1, 1 };
 
 			ARM_T3.classes = new Class<?>[]{
-					MailArmor.class
+					MailArmor.class,
 			};
 
 			ARM_T3.probs = new float[]{ 1 };
@@ -439,9 +441,9 @@ public class Generator {
 
 			ARM_T5.classes = new Class<?>[]{
 					PlateArmor.class,
-					LeadArmour.class
+					LeadArmor.class
 			};
-			ARM_T5.probs = new float[]{ 2, 1 };
+			ARM_T5.probs = new float[]{ 3, 2 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};

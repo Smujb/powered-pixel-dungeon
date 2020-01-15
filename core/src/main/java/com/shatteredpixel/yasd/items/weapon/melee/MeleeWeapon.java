@@ -33,6 +33,7 @@ public class MeleeWeapon extends Weapon {
 	public int tier;
 
 	public float damageMultiplier = 1f;
+	public float defenseFactorMultiplier = 0f;
 
 	public boolean dualWieldpenalty = false;
 
@@ -63,8 +64,8 @@ public class MeleeWeapon extends Weapon {
 	public int damageRoll(Char owner) {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 
-		if (owner instanceof Hero) {
-			int exStr = ((Hero)owner).STR() - STRReq();
+		if (owner instanceof Hero & owner.STR() != Integer.MAX_VALUE) {
+			int exStr = owner.STR() - STRReq();
 			if (exStr > 0) {
 				damage += Random.IntRange( 0, exStr );
 			}

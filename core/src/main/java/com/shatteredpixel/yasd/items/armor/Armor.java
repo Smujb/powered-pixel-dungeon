@@ -246,7 +246,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRRoll() {
-		return Random.NormalIntRange(DRMin(), DRMax());
+		return DRRoll(level());
 	}
 
 	public int DRRoll(int lvl) {
@@ -273,11 +273,11 @@ public class Armor extends KindofMisc {
 	}
 
 	public int magicalDRRoll() {
-		return Random.NormalIntRange(DRMin(), DRMax());
+		return magicalDRRoll(level());
 	}
 
 	public int magicalDRRoll(int lvl) {
-		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
+		return Random.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl));
 	}
 	
 	public float evasionFactor( Char owner, float evasion ){

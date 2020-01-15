@@ -199,7 +199,7 @@ public class NewPrisonBossLevel extends Level {
 		
 		Painter.set(this, tenguCell.left+4, tenguCell.top, Terrain.LOCKED_DOOR);
 		
-		drop(new IronKey(10), randomPrisonCellPos());
+		drop(new IronKey(Dungeon.depth), randomPrisonCellPos());
 		
 		for (Point p : startTorches){
 			Painter.set(this, p, Terrain.WALL_DECO);
@@ -249,7 +249,7 @@ public class NewPrisonBossLevel extends Level {
 		Painter.set(this, mazeHallway.left+1, mazeHallway.top+10, Terrain.LOCKED_DOOR);
 		
 		for (Point p : mazeKeySpawns){
-			drop(new IronKey(10), pointToCell(p));
+			drop(new IronKey(Dungeon.depth), pointToCell(p));
 		}
 		
 		for (Point p : mazeTorches){

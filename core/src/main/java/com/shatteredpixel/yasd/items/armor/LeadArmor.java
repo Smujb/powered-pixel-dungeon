@@ -2,7 +2,7 @@ package com.shatteredpixel.yasd.items.armor;
 
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class LeadArmour extends Armor {
+public class LeadArmor extends Armor {
     {
         image = ItemSpriteSheet.ARMOR_BANDED;
 
@@ -11,7 +11,7 @@ public class LeadArmour extends Armor {
         DRfactor = 1.2f;
         speedFactor = 2/3f;
     }
-    public LeadArmour() {
+    public LeadArmor() {
         super(5);
     }
 
