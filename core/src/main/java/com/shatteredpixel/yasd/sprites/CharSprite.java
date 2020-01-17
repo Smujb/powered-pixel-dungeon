@@ -400,7 +400,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			case POISONED:
 				poisoned = emitter();
-				poisoned.pour(Speck.factory(Speck.BUBBLE_PURPLE), 1f);
+				poisoned.pour(Speck.factory(Speck.BUBBLE_PURPLE), 0.5f);
 				break;
 			case WEAKENED:
 				weakened = emitter();
@@ -416,7 +416,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			case OOZE:
 				ooze = emitter();
-				ooze.pour(Speck.factory(Speck.BUBBLE_GREEN), 1f);
+				ooze.pour(Speck.factory(Speck.BUBBLE_GREEN), 0.5f);
 				break;
 			case BLESSED:
 				blessed = emitter();

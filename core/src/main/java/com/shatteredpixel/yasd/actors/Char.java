@@ -663,8 +663,10 @@ public abstract class Char extends Actor {
 		if (usesBelongings) {
 			int dmg;
 			KindOfWeapon wep = getCurrentWeapon();
-			wep.use(wep.defaultDegradeAmount());
 			if (wep != null) {
+				if (wep instanceof MeleeWeapon) {
+					wep.use();
+				}
 				dmg = wep.damageRoll(this);
 				if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
 			} else {
