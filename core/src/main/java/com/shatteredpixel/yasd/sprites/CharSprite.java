@@ -32,9 +32,11 @@ import com.shatteredpixel.yasd.effects.ShieldHalo;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.TorchHalo;
+import com.shatteredpixel.yasd.effects.particles.BloodParticle;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.effects.particles.SnowParticle;
+import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -79,7 +81,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, POISONED, BLEEDING, WEAKENED, BLESSED, OOZE, VERTIGO, WET
 	}
 	
 	protected Animation idle;
@@ -98,6 +100,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter marked;
 	protected Emitter levitation;
 	protected Emitter healing;
+	protected Emitter poisoned;
+	protected Emitter bleeding;
+	protected Emitter weakened;
+	protected Emitter blessed;
+	protected Emitter ooze;
+	protected Emitter vertigo;
+	protected Emitter wet;
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
@@ -382,6 +391,34 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case SHIELDED:
 				GameScene.effect( shield = new ShieldHalo( this ));
 				break;
+			case POISONED:
+				poisoned = emitter();
+				poisoned.pour(Speck.factory(Speck.BUBBLE_PURPLE), 0.1f);
+				break;
+			case WEAKENED:
+				weakened = emitter();
+				weakened.pour(GooSprite.GooParticle.FACTORY, 0.1f );
+				break;
+			case BLEEDING:
+				bleeding = emitter();
+				bleeding.pour( BloodParticle.FACTORY, 0.1f );
+				break;
+			case WET:
+				wet = emitter();
+				wet.pour(SewerLevel.WaterParticle.FACTORY, 0.1f);
+				break;
+			case OOZE:
+				ooze = emitter();
+				ooze.pour(Speck.factory(Speck.BUBBLE_GREEN), 0.1f);
+				break;
+			case BLESSED:
+				blessed = emitter();
+				blessed.pour(Speck.factory(Speck.HALO), 0.1f);
+				break;
+			case VERTIGO:
+				vertigo = emitter();
+				vertigo.pour(Speck.factory(Speck.REPAIR), 0.1f);
+				break;
 		}
 	}
 	
@@ -448,6 +485,48 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case SHIELDED:
 				if (shield != null){
 					shield.putOut();
+				}
+				break;
+			case POISONED:
+				if (poisoned != null) {
+					poisoned.on = false;
+					poisoned = null;
+				}
+				break;
+			case WEAKENED:
+				if (weakened != null) {
+					weakened.on = false;
+					weakened = null;
+				}
+				break;
+			case BLEEDING:
+				if (bleeding != null) {
+					bleeding.on = false;
+					bleeding = null;
+				}
+				break;
+			case VERTIGO:
+				if (vertigo != null) {
+					vertigo.on = false;
+					vertigo = null;
+				}
+				break;
+			case BLESSED:
+				if (blessed != null) {
+					blessed.on = false;
+					blessed = null;
+				}
+				break;
+			case OOZE:
+				if (ooze != null) {
+					ooze.on = false;
+					ooze = null;
+				}
+				break;
+			case WET:
+				if (wet != null) {
+					wet.on = false;
+					wet = null;
 				}
 				break;
 		}

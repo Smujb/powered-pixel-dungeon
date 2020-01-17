@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.actors.buffs;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -53,6 +54,12 @@ public class Bleeding extends Buff {
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		level = bundle.getFloat( LEVEL );
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.BLEEDING );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.BLEEDING );
 	}
 	
 	public void set( float level ) {

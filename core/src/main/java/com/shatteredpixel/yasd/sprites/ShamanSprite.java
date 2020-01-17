@@ -59,7 +59,8 @@ public class ShamanSprite extends MagicalMobSprite {
 
 	@Override
 	public void FX(Group group, int cell, Callback c) {
-		group.add(new Lightning(center(), cell, c));
+		c.call();//Callback is called immediately. Waiting for end of effect looks bad.
+		group.add(new Lightning(center(), cell, null));
 	}
 	/*@Override
 	public void zap( int pos ) {

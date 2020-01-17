@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -53,6 +54,12 @@ public class Ooze extends Buff {
 		} else {
 			left = 20;
 		}
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.OOZE );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.OOZE );
 	}
 	
 	@Override

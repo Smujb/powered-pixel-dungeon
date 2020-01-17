@@ -35,6 +35,12 @@ public class Wet extends FlavourBuff {
         }
     }
 
+    @Override
+    public void fx(boolean on) {
+        if (on) target.sprite.add( CharSprite.State.WET );
+        else if (target.invisible == 0) target.sprite.remove( CharSprite.State.WET );
+    }
+
     public float evasionFactor(){
         return (float) Math.pow( 0.85, cooldown());
     }

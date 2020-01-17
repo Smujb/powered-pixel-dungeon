@@ -41,15 +41,21 @@ import com.shatteredpixel.yasd.items.food.Food;
 import com.shatteredpixel.yasd.items.food.SmallRation;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.potions.PotionOfInvisibility;
+import com.shatteredpixel.yasd.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.items.potions.PotionOfMindVision;
+import com.shatteredpixel.yasd.items.potions.exotic.PotionOfHolyFuror;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
+import com.shatteredpixel.yasd.items.wands.WandOfAcid;
+import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
+import com.shatteredpixel.yasd.items.wands.WandOfDarkness;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
+import com.shatteredpixel.yasd.items.wands.WandOfPlasmaBolt;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Gloves;
@@ -117,6 +123,8 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
+		new WandOfDamnation().identify().collect();
+		new PotionOfHolyFuror().identify().collect();
 
 		//new PotionOfExperience().quantity(10).collect();
 		//new MailArmor().upgrade(3).collect();

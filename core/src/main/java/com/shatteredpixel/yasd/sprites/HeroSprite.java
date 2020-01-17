@@ -125,17 +125,17 @@ public class HeroSprite extends CharSprite {
 		play( read );
 	}
 
-	@Override
+	/*@Override
 	public void bloodBurstA(PointF from, int damage) {
-		//Does nothing.
+		//Fuck being PG. Blood is back on for hero.
 
 		/*
 		 * This is both for visual clarity, and also for content ratings regarding violence
 		 * towards human characters. The heroes are the only human or human-like characters which
 		 * participate in combat, so removing all blood associated with them is a simple way to
 		 * reduce the violence rating of the game.
-		 */
-	}
+
+	}*/
 
 	@Override
 	public void update() {

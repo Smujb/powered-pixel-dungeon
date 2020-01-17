@@ -15,7 +15,7 @@ public class Drunk extends FlavourBuff {
     }
 
     public boolean stumbleChance() {
-        return Random.Int(5 + Math.round(cooldown()/10)) < cooldown()/10;
+        return Random.Int(5 + Math.round(cooldown()/15)) < cooldown()/15;
     }
 
     @Override

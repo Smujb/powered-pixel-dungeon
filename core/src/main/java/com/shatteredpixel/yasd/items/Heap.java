@@ -93,7 +93,7 @@ public class Heap implements Bundlable {
 			}
 			break;
 		case TOMB:
-			Wraith.spawnAround( hero.pos );
+			Wraith.spawnAt( pos );
 			break;
 		case REMAINS:
 		case SKELETON:

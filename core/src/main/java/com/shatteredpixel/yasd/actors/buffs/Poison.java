@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.particles.PoisonParticle;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.noosa.Image;
@@ -55,6 +56,12 @@ public class Poison extends Buff implements Hero.Doom {
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		left = bundle.getFloat( LEFT );
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.POISONED );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.POISONED );
 	}
 	
 	public void set( float duration ) {

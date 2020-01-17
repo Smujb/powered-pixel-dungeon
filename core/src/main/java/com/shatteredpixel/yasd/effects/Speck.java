@@ -52,7 +52,7 @@ public class Speck extends Image {
 	public static final int DISCOVER    = 101;
 	public static final int EVOKE       = 102;
 	public static final int MASTERY     = 103;
-	public static final int REPAIR = 104;
+	public static final int REPAIR      = 104;
 	public static final int RATTLE      = 105;
 	public static final int JET         = 106;
 	public static final int TOXIC       = 107;
@@ -69,6 +69,9 @@ public class Speck extends Image {
 	public static final int INFERNO     = 118;
 	public static final int BLIZZARD    = 119;
 	public static final int BUBBLE_GREEN= 120;
+	public static final int BUBBLE_PURPLE=121;
+	public static final int HALO        = 122;
+
 	
 	private static final int SIZE = 7;
 	
@@ -104,6 +107,7 @@ public class Speck extends Image {
 		case MASTERY:
 		case REPAIR:
 		case FORGE:
+		case HALO:
 			frame( film.get( STAR ) );
 			break;
 		case RATTLE:
@@ -125,6 +129,11 @@ public class Speck extends Image {
 		case CALM:
 			frame( film.get( SCREAM ) );
 			break;
+		case BUBBLE:
+		case BUBBLE_GREEN:
+		case BUBBLE_PURPLE:
+			frame( film.get( BUBBLE ) );
+			break;
 		default:
 			frame( film.get( type ) );
 		}
@@ -142,6 +151,8 @@ public class Speck extends Image {
 		switch (type) {
 			
 		case HEALING:
+		case UP:
+		case HALO:
 			speed.set( 0, -20 );
 			lifespan = 1f;
 			break;
@@ -203,12 +214,7 @@ public class Speck extends Image {
 		case QUESTION:
 			lifespan = 0.8f;
 			break;
-			
-		case UP:
-			speed.set( 0, -20 );
-			lifespan = 1f;
-			break;
-			
+
 		case CALM:
 			color(0, 1, 1);
 		case SCREAM:
@@ -266,6 +272,8 @@ public class Speck extends Image {
 			break;
 			
 		case BUBBLE:
+		case BUBBLE_PURPLE:
+		case BUBBLE_GREEN:
 			speed.set( 0, -15 );
 			scale.set( Random.Float( 0.8f, 1 ) );
 			lifespan = Random.Float( 0.8f, 1.5f );
@@ -286,14 +294,14 @@ public class Speck extends Image {
 			lifespan = 0.5f;
 			break;
 			
-		case TOXIC:  case BUBBLE_GREEN:
+		case TOXIC:
 			hardlight( 0x50FF60 );
 			angularSpeed = 30;
 			angle = Random.Float( 360 );
 			lifespan = Random.Float( 1f, 3f );
 			break;
 
-		case CORROSION:
+			case CORROSION:
 			hardlight( 0xAAAAAA );
 			angularSpeed = 30;
 			angle = Random.Float( 360 );
@@ -378,112 +386,124 @@ public class Speck extends Image {
 		} else {
 			
 			float p = 1 - left / lifespan;	// 0 -> 1
-			
+
 			switch (type) {
-				
-			case STAR:
-			case FORGE:
-				scale.set( 1 - p );
-				am = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
-				break;
-				
-			case REPAIR:
-			case MASTERY:
-				am = 1 - p * p;
-				break;
-				
-			case EVOKE:
-				
-			case HEALING:
-				am = p < 0.5f ? 1 : 2 - p * 2;
-				break;
+				case HALO:
+					scale.set(1 - p);
+					am = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
+					hardlight(0xffe600);
+					break;
 
-			case RED_LIGHT:
-			case LIGHT:
-				am = scale.set( p < 0.2f ? p * 5f : (1 - p) * 1.25f ).x;
-				break;
-				
-			case DISCOVER:
-				am = 1 - p;
-				scale.set( (p < 0.5f ? p : 1 - p) * 2 );
-				break;
-				
-			case QUESTION:
-				scale.set( (float)(Math.sqrt( p < 0.5f ? p : 1 - p ) * 3) );
-				break;
-				
-			case UP:
-				scale.set( (float)(Math.sqrt( p < 0.5f ? p : 1 - p ) * 2) );
-				break;
-				
-			case CALM:
-			case SCREAM:
-				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) * 2f );
-				scale.set( p * 7 );
-				break;
-				
-			case BONE:
-			case RATTLE:
-				am = p < 0.9f ? 1 : (1 - p) * 10;
-				break;
-				
-			case ROCK:
-				am = p < 0.2f ? p * 5 : 1 ;
-				break;
-				
-			case NOTE:
-				am = 1 - p * p;
-				break;
-				
-			case WOOL:
-				scale.set( 1 - p );
-				break;
-				
-			case CHANGE:
-				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) * 2);
-				scale.y = (1 + p) * 0.5f;
-				scale.x = scale.y * (float)Math.cos( left * 15 );
-				break;
-				
-			case HEART:
-				scale.set( 1 - p );
-				am = 1 - p * p;
-				break;
-				
-			case BUBBLE: case BUBBLE_GREEN:
-				am = p < 0.2f ? p * 5 : 1;
-				break;
-				
-			case STEAM:
-			case TOXIC:
-			case PARALYSIS:
-			case CONFUSION:
-			case STORM:
-			case BLIZZARD:
-			case INFERNO:
-			case DUST:
-				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) * 0.5f );
-				scale.set( 1 + p );
-				break;
+				case STAR:
+				case FORGE:
+					scale.set(1 - p);
+					am = p < 0.2f ? p * 5f : (1 - p) * 1.25f;
+					break;
 
-			case CORROSION:
-				hardlight( ColorMath.interpolate( 0xAAAAAA, 0xFF8800 , p ));
-			case STENCH:
-			case SMOKE:
-				am = (float)Math.sqrt( (p < 0.5f ? p : 1 - p) );
-				scale.set( 1 + p );
-				break;
-				
-			case JET:
-				am = (p < 0.5f ? p : 1 - p) * 2;
-				scale.set( p * 1.5f );
-				break;
-				
-			case COIN:
-				scale.x = (float)Math.cos( left * 5 );
-				rm = gm = bm = (Math.abs( scale.x ) + 1) * 0.5f;
-				am = p < 0.9f ? 1 : (1 - p) * 10;
-				break;
+				case REPAIR:
+				case MASTERY:
+					am = 1 - p * p;
+					break;
+
+				case EVOKE:
+
+				case HEALING:
+					am = p < 0.5f ? 1 : 2 - p * 2;
+					break;
+
+				case RED_LIGHT:
+				case LIGHT:
+					am = scale.set(p < 0.2f ? p * 5f : (1 - p) * 1.25f).x;
+					break;
+
+				case DISCOVER:
+					am = 1 - p;
+					scale.set((p < 0.5f ? p : 1 - p) * 2);
+					break;
+
+				case QUESTION:
+					scale.set((float) (Math.sqrt(p < 0.5f ? p : 1 - p) * 3));
+					break;
+
+				case UP:
+					scale.set((float) (Math.sqrt(p < 0.5f ? p : 1 - p) * 2));
+					break;
+
+				case CALM:
+				case SCREAM:
+					am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2f);
+					scale.set(p * 7);
+					break;
+
+				case BONE:
+				case RATTLE:
+					am = p < 0.9f ? 1 : (1 - p) * 10;
+					break;
+
+				case ROCK:
+					am = p < 0.2f ? p * 5 : 1;
+					break;
+
+				case NOTE:
+					am = 1 - p * p;
+					break;
+
+				case WOOL:
+					scale.set(1 - p);
+					break;
+
+				case CHANGE:
+					am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 2);
+					scale.y = (1 + p) * 0.5f;
+					scale.x = scale.y * (float) Math.cos(left * 15);
+					break;
+
+				case HEART:
+					scale.set(1 - p);
+					am = 1 - p * p;
+					break;
+
+				case BUBBLE:
+					am = p < 0.2f ? p * 5 : 1;
+					break;
+				case BUBBLE_GREEN:
+					hardlight(0x00FF00);
+					am = p < 0.2f ? p * 5 : 1;
+					break;
+				case BUBBLE_PURPLE:
+					hardlight(0xFF00FF);
+					am = p < 0.2f ? p * 5 : 1;
+					break;
+				case STEAM:
+				case TOXIC:
+				case PARALYSIS:
+				case CONFUSION:
+				case STORM:
+				case BLIZZARD:
+				case INFERNO:
+				case DUST:
+					am = (float) Math.sqrt((p < 0.5f ? p : 1 - p) * 0.5f);
+					scale.set(1 + p);
+					break;
+
+				case CORROSION:
+					hardlight(ColorMath.interpolate(0xAAAAAA, 0xFF8800, p));
+				case STENCH:
+				case SMOKE:
+					am = (float) Math.sqrt((p < 0.5f ? p : 1 - p));
+					scale.set(1 + p);
+					break;
+
+				case JET:
+					am = (p < 0.5f ? p : 1 - p) * 2;
+					scale.set(p * 1.5f);
+					break;
+
+				case COIN:
+					scale.x = (float) Math.cos(left * 5);
+					rm = gm = bm = (Math.abs(scale.x) + 1) * 0.5f;
+					am = p < 0.9f ? 1 : (1 - p) * 10;
+					break;
 			}
 		}
 	}

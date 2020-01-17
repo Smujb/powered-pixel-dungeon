@@ -38,10 +38,10 @@ public class DarkGas extends Blob {
                     l.losBlocking[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.LOS_BLOCKING) != 0;
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                         if (!ch.isImmune(this.getClass())) {
-                            if (!(ch instanceof Hero)) {
-                                Buff.affect(ch, Aggression.class, 1 + strength);
-                            } else {
+                            if (ch instanceof Hero) {
                                 ch.damage(Random.Int(Math.max(1,strength/2), strength+2), this);//Take some direct damage, cap scaling with max HP and never 0. Also prevents the hero standing in it for bonus shielding/stealth without consequence
+                            } else {
+                                Buff.prolong(ch, Aggression.class, 3);
                             }
 
                             for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {

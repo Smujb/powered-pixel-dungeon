@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
@@ -37,6 +38,12 @@ public class Bless extends FlavourBuff {
 	@Override
 	public int icon() {
 		return BuffIndicator.BLESS;
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.BLESSED );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.BLESSED );
 	}
 	
 	@Override

@@ -87,7 +87,7 @@ public class Wraith extends RangedMob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2 + (int) (level*0.67), 3 + (int) (level*1.5) );
+		return Random.NormalIntRange( 2 + (int) (level*0.67), 3 + level );
 	}
 	
 	@Override

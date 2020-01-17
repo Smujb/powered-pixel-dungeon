@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 
 public class Weakness extends FlavourBuff {
@@ -36,6 +37,12 @@ public class Weakness extends FlavourBuff {
 	@Override
 	public int icon() {
 		return BuffIndicator.WEAKNESS;
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.WEAKENED );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.WEAKENED );
 	}
 	
 	@Override
