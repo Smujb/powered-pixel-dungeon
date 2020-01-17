@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.yasd.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.items.potions.PotionOfMindVision;
+import com.shatteredpixel.yasd.items.potions.PotionOfPurity;
 import com.shatteredpixel.yasd.items.potions.exotic.PotionOfHolyFuror;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
@@ -123,8 +124,8 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
-		new WandOfDamnation().identify().collect();
-		new PotionOfHolyFuror().identify().collect();
+		//new WandOfDamnation().identify().collect();
+		new PotionOfPurity().identify().collect();
 
 		//new PotionOfExperience().quantity(10).collect();
 		//new MailArmor().upgrade(3).collect();

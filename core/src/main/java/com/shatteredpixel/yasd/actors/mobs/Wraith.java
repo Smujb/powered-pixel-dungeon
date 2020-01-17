@@ -71,6 +71,15 @@ public class Wraith extends RangedMob {
 	}
 	
 	private static final String LEVEL = "level";
+
+	public Wraith() {
+		this(Dungeon.depth);
+	}
+
+	public Wraith(int level) {
+		this.level = level;
+		adjustStats(level);
+	}
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {

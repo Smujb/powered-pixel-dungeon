@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.effects.SpellSprite;
 import com.shatteredpixel.yasd.items.BrokenSeal.WarriorShield;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
@@ -40,7 +41,7 @@ public class Berserk extends Buff {
 	}
 	private State state = State.NORMAL;
 
-	private static final float LEVEL_RECOVER_START = 2f;
+	private static final float LEVEL_RECOVER_START = 1.5f;
 	private float levelRecovery;
 	
 	private float power = 0;
@@ -104,6 +105,11 @@ public class Berserk extends Buff {
 				detach();
 			}
 			BuffIndicator.refreshHero();
+		}
+		if (state == State.BERSERK) {
+			target.sprite.add( CharSprite.State.BERSERK );
+		} else {
+			target.sprite.remove( CharSprite.State.BERSERK );
 		}
 		spend(TICK);
 		return true;

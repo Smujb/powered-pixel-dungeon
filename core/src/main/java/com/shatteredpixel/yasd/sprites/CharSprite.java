@@ -28,6 +28,8 @@ import com.shatteredpixel.yasd.effects.DarkBlock;
 import com.shatteredpixel.yasd.effects.EmoIcon;
 import com.shatteredpixel.yasd.effects.FloatingText;
 import com.shatteredpixel.yasd.effects.IceBlock;
+import com.shatteredpixel.yasd.effects.RedBlock;
+import com.shatteredpixel.yasd.effects.RedShieldHalo;
 import com.shatteredpixel.yasd.effects.ShieldHalo;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.Splash;
@@ -81,7 +83,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, POISONED, BLEEDING, WEAKENED, BLESSED, OOZE, VERTIGO, WET
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, POISONED, BLEEDING, WEAKENED, BLESSED, OOZE, VERTIGO, WET, BERSERK, PURITY
 	}
 	
 	protected Animation idle;
@@ -110,8 +112,10 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
+	protected RedBlock redBlock;
 	protected TorchHalo light;
 	protected ShieldHalo shield;
+	protected RedShieldHalo redShield;
 	protected AlphaTweener invisible;
 	
 	protected EmoIcon emo;
@@ -393,7 +397,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			case POISONED:
 				poisoned = emitter();
-				poisoned.pour(Speck.factory(Speck.BUBBLE_PURPLE), 0.1f);
+				poisoned.pour(Speck.factory(Speck.BUBBLE_PURPLE), 1f);
 				break;
 			case WEAKENED:
 				weakened = emitter();
@@ -409,7 +413,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				break;
 			case OOZE:
 				ooze = emitter();
-				ooze.pour(Speck.factory(Speck.BUBBLE_GREEN), 0.1f);
+				ooze.pour(Speck.factory(Speck.BUBBLE_GREEN), 1f);
 				break;
 			case BLESSED:
 				blessed = emitter();
@@ -418,6 +422,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case VERTIGO:
 				vertigo = emitter();
 				vertigo.pour(Speck.factory(Speck.REPAIR), 0.1f);
+				break;
+			case BERSERK:
+				redBlock = RedBlock.darken(this);
+				break;
+			case PURITY:
+				GameScene.effect( redShield = new RedShieldHalo( this ));
 				break;
 		}
 	}
@@ -527,6 +537,17 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				if (wet != null) {
 					wet.on = false;
 					wet = null;
+				}
+				break;
+			case BERSERK:
+				if (redBlock != null) {
+					redBlock.lighten();
+					redBlock = null;
+				}
+				break;
+			case PURITY:
+				if (redShield != null){
+					redShield.putOut();
 				}
 				break;
 		}
