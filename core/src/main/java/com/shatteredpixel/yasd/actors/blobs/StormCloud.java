@@ -22,6 +22,10 @@
 package com.shatteredpixel.yasd.actors.blobs;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.Actor;
+import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.levels.Level;
@@ -36,7 +40,7 @@ public class StormCloud extends Blob {
 		super.evolve();
 		
 		int cell;
-		
+		Char ch;
 		for (int i = area.left; i < area.right; i++){
 			for (int j = area.top; j < area.bottom; j++){
 				cell = i + j*Dungeon.level.width();
@@ -52,6 +56,13 @@ public class StormCloud extends Blob {
 						Level.set(cell, Terrain.WATER);
 						Dungeon.level.traps.remove(cell);
 						GameScene.updateMap(cell);
+					}
+					if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
+						if (!ch.isImmune(this.getClass())) {
+
+							Buff.prolong(ch, Wet.class, 3f);
+
+						}
 					}
 				}
 			}

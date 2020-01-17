@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.actors.blobs.StormCloud;
 import com.shatteredpixel.yasd.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.actors.blobs.Web;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
@@ -80,6 +81,12 @@ public class BlobImmunity extends FlavourBuff {
 		immunities.add( ToxicGas.class );
 		immunities.add( Web.class );
 		immunities.add( Miasma.class );
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.PURITY );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.PURITY );
 	}
 
 	@Override

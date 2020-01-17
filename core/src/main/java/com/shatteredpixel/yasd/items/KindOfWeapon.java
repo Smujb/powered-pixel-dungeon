@@ -40,8 +40,8 @@ abstract public class KindOfWeapon extends KindofMisc {
 		return max(level());
 	}
 
-	abstract public int min(int lvl);
-	abstract public int max(int lvl);
+	abstract public int min(float lvl);
+	abstract public int max(float lvl);
 
 	public int damageRoll( Char owner ) {
 		return Random.NormalIntRange( min(), max() );

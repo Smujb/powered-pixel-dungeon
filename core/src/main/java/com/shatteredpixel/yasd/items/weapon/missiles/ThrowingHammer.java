@@ -31,11 +31,7 @@ public class ThrowingHammer extends MissileWeapon {
 		tier = 5;
 		baseUses = 15;
 		sticky = false;
-	}
-	
-	@Override
-	public int max(int lvl) {
-		return  4 * tier +                  //20 base, down from 25
-				(tier) * lvl;               //scaling unchanged
+
+		damageMultiplier = 0.8f;
 	}
 }

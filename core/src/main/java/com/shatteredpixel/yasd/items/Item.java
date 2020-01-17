@@ -34,7 +34,10 @@ import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.items.wands.DamageWand;
+import com.shatteredpixel.yasd.items.wands.Wand;
+import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Catalog;
+import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Sungrass;
@@ -418,8 +421,16 @@ public class Item implements Bundlable {
 	}
 
 	public boolean isUpgradable() {
-		return level() < 3;
+		return level() < upgradeLimit();
 	}//Hard +3 cap for all items
+
+	public int upgradeLimit() {
+		int limit = 3;
+		if ((this instanceof Armor && ((Armor)this).curseInfusionBonus) || (this instanceof MeleeWeapon && ((MeleeWeapon)this).curseInfusionBonus) || (this instanceof Wand && ((Wand)this).curseInfusionBonus)) {
+			limit++;
+		}
+		return limit;
+	}
 	
 	public boolean isIdentified() {
 		return levelKnown && cursedKnown;

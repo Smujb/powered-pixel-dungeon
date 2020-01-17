@@ -24,7 +24,6 @@ package com.shatteredpixel.yasd.items.weapon.missiles;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.actors.buffs.PinCushion;
@@ -60,6 +59,8 @@ abstract public class MissileWeapon extends Weapon {
 	protected static final float MAX_DURABILITY = 100;
 	protected float durability = MAX_DURABILITY;
 	protected float baseUses = 10;
+
+	public float damageMultiplier = 1f;
 	
 	public boolean holster;
 	
@@ -67,6 +68,7 @@ abstract public class MissileWeapon extends Weapon {
 	protected MissileWeapon parent;
 	
 	public int tier;
+
 
 	@Override
 	public float degradedPercent() {
@@ -77,22 +79,27 @@ abstract public class MissileWeapon extends Weapon {
 	public int min() {
 		return Math.max(0, min( level() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
 	}
-	
+
 	@Override
-	public int min(int lvl) {
-		return  2 * tier +                      //base
-				(tier == 1 ? lvl : 2*lvl);      //level scaling
+	public int min(float lvl) {
+		return  Math.round(tier +  //base
+				lvl);    //level scaling
 	}
-	
+
+	@Override
+	public int max(float lvl) {
+		return (int) ((5*(tier+1) +    //base
+				lvl*(tier*2))*damageMultiplier);   //level scaling
+	}
+
+	@Override
+	public int upgradeLimit() {
+		return 1;
+	}
+
 	@Override
 	public int max() {
 		return Math.max(0, max( level() + RingOfSharpshooting.levelDamageBonus(Dungeon.hero) ));
-	}
-	
-	@Override
-	public int max(int lvl) {
-		return  5 * tier +                      //base
-				(tier == 1 ? 2*lvl : tier*lvl); //level scaling
 	}
 	
 	public int STRReq(int lvl){
@@ -231,8 +238,8 @@ abstract public class MissileWeapon extends Weapon {
 		
 		usages *= RingOfSharpshooting.durabilityMultiplier( Dungeon.hero );
 		
-		//at 100 uses, items just last forever.
-		if (usages >= 100f) return 0;
+		//when upgraded, items just last forever.
+		if (level() > 0) return 0;
 		
 		//add a tiny amount to account for rounding error for calculations like 1/3
 		return (MAX_DURABILITY/usages) + 0.001f;

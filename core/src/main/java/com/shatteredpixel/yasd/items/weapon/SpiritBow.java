@@ -25,7 +25,6 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.items.rings.RingOfFuror;
@@ -132,17 +131,17 @@ public class SpiritBow extends Weapon {
 	}
 	
 	@Override
-	public int min(int lvl) {
-		return 1 + Dungeon.hero.lvl/5
+	public int min(float lvl) {
+		return Math.round(1 + Dungeon.hero.lvl/5f
 				+ RingOfSharpshooting.levelDamageBonus(Dungeon.hero)
-				+ (curseInfusionBonus ? 1 : 0);
+				+ (curseInfusionBonus ? 1 : 0));
 	}
 	
 	@Override
-	public int max(int lvl) {
-		return 6 + (int)(Dungeon.hero.lvl/2.5f)
+	public int max(float lvl) {
+		return 6 + (int)(Dungeon.hero.lvl/2.5f
 				+ 2*RingOfSharpshooting.levelDamageBonus(Dungeon.hero)
-				+ (curseInfusionBonus ? 2 : 0);
+				+ (curseInfusionBonus ? 2 : 0));
 	}
 	
 	private int targetPos;

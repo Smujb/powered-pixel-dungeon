@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
@@ -42,6 +43,12 @@ public class Haste extends FlavourBuff {
 	public void tintIcon(Image icon) {
 		icon.tint(1, 1, 0, 0.5f);
 		if (cooldown() < 5f) greyIcon(icon, 5f, cooldown());
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.ADRENALINE );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.ADRENALINE );
 	}
 	
 	@Override

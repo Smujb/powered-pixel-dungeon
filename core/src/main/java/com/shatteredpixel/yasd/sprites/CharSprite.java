@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.effects.ShieldHalo;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.Splash;
 import com.shatteredpixel.yasd.effects.TorchHalo;
+import com.shatteredpixel.yasd.effects.YellowBlock;
 import com.shatteredpixel.yasd.effects.particles.BloodParticle;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -83,7 +84,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected float shadowOffset    = 0.25f;
 
 	public enum State {
-		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, POISONED, BLEEDING, WEAKENED, BLESSED, OOZE, VERTIGO, WET, BERSERK, PURITY
+		BURNING, LEVITATING, INVISIBLE, PARALYSED, FROZEN, ILLUMINATED, CHILLED, DARKENED, MARKED, HEALING, SHIELDED, POISONED, BLEEDING, WEAKENED, BLESSED, OOZE, VERTIGO, WET, BERSERK, PURITY, ADRENALINE, AMOK
 	}
 	
 	protected Animation idle;
@@ -109,10 +110,12 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter ooze;
 	protected Emitter vertigo;
 	protected Emitter wet;
+	protected Emitter amok;
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
 	protected RedBlock redBlock;
+	protected YellowBlock yellowBlock;
 	protected TorchHalo light;
 	protected ShieldHalo shield;
 	protected RedShieldHalo redShield;
@@ -429,6 +432,13 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case PURITY:
 				GameScene.effect( redShield = new RedShieldHalo( this ));
 				break;
+			case ADRENALINE:
+				yellowBlock = YellowBlock.darken(this);
+				break;
+			case AMOK:
+				amok = emitter();
+				amok.pour(Speck.factory(Speck.ANGRY), 0.5f);
+				break;
 		}
 	}
 	
@@ -548,6 +558,18 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			case PURITY:
 				if (redShield != null){
 					redShield.putOut();
+				}
+				break;
+			case ADRENALINE:
+				if (yellowBlock != null) {
+					yellowBlock.lighten();
+					yellowBlock = null;
+				}
+				break;
+			case AMOK:
+				if (amok != null) {
+					amok.on = false;
+					amok = null;
 				}
 				break;
 		}

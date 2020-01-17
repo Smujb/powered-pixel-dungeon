@@ -127,6 +127,7 @@ public enum HeroClass {
 		//new WandOfDamnation().identify().collect();
 		new PotionOfPurity().identify().collect();
 
+		new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
 		//new MailArmor().upgrade(3).collect();
 		//new WandOfLightning().upgrade(3).collect();

@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.buffs;
 
 import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
@@ -38,6 +39,12 @@ public class Adrenaline extends FlavourBuff {
 	@Override
 	public int icon() {
 		return BuffIndicator.AMOK;
+	}
+
+	@Override
+	public void fx(boolean on) {
+		if (on) target.sprite.add( CharSprite.State.ADRENALINE );
+		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.ADRENALINE );
 	}
 	
 	@Override

@@ -43,13 +43,13 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	@Override
-	public int min(int lvl) {
-		return  tier +  //base
-				lvl;    //level scaling
+	public int min(float lvl) {
+		return  Math.round(tier +  //base
+				lvl);    //level scaling
 	}
 
 	@Override
-	public int max(int lvl) {
+	public int max(float lvl) {
 		return (int) ((5*(tier+1) +    //base
 				lvl*(tier*2))*damageMultiplier);   //level scaling
 	}

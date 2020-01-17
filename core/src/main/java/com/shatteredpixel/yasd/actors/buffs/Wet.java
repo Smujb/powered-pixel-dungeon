@@ -18,12 +18,11 @@ public class Wet extends FlavourBuff {
 
     @Override
     public boolean attachTo(Char target) {
-        //can't chill what's frozen!
         if (target.buff(Frost.class) != null) return false;
         Buff chill = target.buff(Chill.class);
         if (chill != null) {//If enemy is chilled, freeze them instead.
             chill.detach();
-            Buff.affect(target,Frost.class,3f);
+            Buff.affect( target, Frost.class, DURATION );
             return false;
         }
 

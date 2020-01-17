@@ -37,13 +37,10 @@ public class ThrowingKnife extends MissileWeapon {
 		
 		tier = 1;
 		baseUses = 5;
+
+		damageMultiplier = 1.2f;
 	}
-	
-	@Override
-	public int max(int lvl) {
-		return  6 * tier +                      //6 base, up from 5
-				(tier == 1 ? 2*lvl : tier*lvl); //scaling unchanged
-	}
+
 	
 	private Char enemy;
 	

@@ -68,10 +68,12 @@ public class BrokenSeal extends Item {
 	}
 
 	@Override
-	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
-	public boolean isUpgradable() {
-		return level() == 0;
+	public int upgradeLimit() {
+		return 1;
 	}
+
+	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
+
 
 	protected static WndBag.Listener armorSelector = new WndBag.Listener() {
 		@Override
