@@ -539,6 +539,9 @@ public abstract class Char extends Actor {
 						armDr -= 2 * (Armors.get(i).STRReq() - STR());
 					}
 					if (armDr > 0) dr += armDr;
+					if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)) {
+						dr += AntiMagic.drRoll(Armors.get(i).level());
+					}
 				}
 			}
 		}
@@ -798,7 +801,7 @@ public abstract class Char extends Actor {
 
 			dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
 
-			//TODO improve this when I have proper damage source logic
+			/*//Yay no stupid checking for src!
 			//checks if *any* equipped armour has Anti Magic
 			ArrayList<Armor> Armors = belongings.getArmors();
 			for (int i = 0; i < Armors.size(); i++) {
@@ -806,7 +809,7 @@ public abstract class Char extends Actor {
 						&& AntiMagic.RESISTS.contains(src.getClass())) {
 					dmg -= AntiMagic.drRoll(Armors.get(i).level());
 				}
-			}
+			}*/
 		}
 
 		if (!isAlive() || dmg < 0) {

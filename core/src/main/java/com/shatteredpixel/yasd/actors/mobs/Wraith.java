@@ -106,7 +106,7 @@ public class Wraith extends RangedMob {
 	
 	public void adjustStats( int level ) {
 		this.level = level;
-		defenseSkill = (int) (attackSkill( null ) * 1.5f);
+		defenseSkill = attackSkill(null) - 3;
 		HP = HT = 4 + level * 2;
 		enemySeen = true;
 	}
@@ -117,16 +117,26 @@ public class Wraith extends RangedMob {
 		return true;
 	}
 	
-	public static void spawnAround( int pos ) {
-		for (int n : PathFinder.NEIGHBOURS4) {
+	public static Wraith spawnNeighbor( int pos ) {
+		ArrayList<Integer> locations = new ArrayList<>();
+		for (int n : PathFinder.NEIGHBOURS8) {
 			int cell = pos + n;
 			if (Dungeon.level.passable[cell] && Actor.findChar( cell ) == null) {
-				spawnAt( cell );
+				locations.add(cell);
 			}
 		}
+		if (locations.size() > 0) {
+			return spawnAt(Random.element(locations), false);
+		} else {
+			return null;
+		}
+	}
+
+	public static Wraith spawnAt( int pos ) {
+		return spawnAt(pos, true);
 	}
 	
-	public static Wraith spawnAt( int pos ) {
+	public static Wraith spawnAt( int pos, boolean useNeighbors ) {
 		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
 			
 			Wraith w = new Wraith();
@@ -142,7 +152,11 @@ public class Wraith extends RangedMob {
 			
 			return w;
 		} else {
-			return null;
+			if (useNeighbors) {
+				return spawnNeighbor(pos);
+			} else {
+				return null;
+			}
 		}
 	}
 	

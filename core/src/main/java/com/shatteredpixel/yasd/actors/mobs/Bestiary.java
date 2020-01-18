@@ -59,20 +59,23 @@ public class Bestiary {
 				//2x rat, 1x snake, 2x gnoll
 				return new ArrayList<>(Arrays.asList(Rat.class, Rat.class,
 						Snake.class,
-						Gnoll.class, Gnoll.class));
+						Gnoll.class, Thief.class));
 			case 3:
 				//1x rat, 1x snake, 3x gnoll, 1x swarm, 1x crab
 				return new ArrayList<>(Arrays.asList(Rat.class,
 						Snake.class,
-						Gnoll.class, Gnoll.class, Gnoll.class,
+						Gnoll.class, Gnoll.class, Thief.class,
 						Thief.class,
 						Crab.class));
-			case 4: case 5:
+			case 4:
 				//1x gnoll, 1x swarm, 2x crab, 2x slime
-				return new ArrayList<>(Arrays.asList(Gnoll.class,
+				return new ArrayList<>(Arrays.asList(Thief.class,
 						Thief.class,
 						Crab.class, Crab.class,
 						Slime.class, Slime.class));
+
+			case 5://Caustic Slime spawn on Goo floor.
+				return new ArrayList<>(Arrays.asList(CausticSlime.class));
 				
 			// Prison
 			case 6:

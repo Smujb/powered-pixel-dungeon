@@ -127,7 +127,7 @@ public enum HeroClass {
 		//new WandOfDamnation().identify().collect();
 		new PotionOfPurity().identify().collect();
 
-		new ScrollOfUpgrade().quantity(5).collect();
+		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
 		//new MailArmor().upgrade(3).collect();
 		//new WandOfLightning().upgrade(3).collect();
@@ -142,7 +142,6 @@ public enum HeroClass {
 		//new WandOfThornvines().identify().collect();
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
-
 		new Spear().identify().collect();
 		new Crossbow().identify().collect();
 		new Dart().quantity(5).collect();

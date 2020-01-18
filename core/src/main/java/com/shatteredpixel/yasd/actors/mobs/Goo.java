@@ -34,9 +34,11 @@ import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
+import com.shatteredpixel.yasd.items.armor.LeatherArmor;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.items.quest.GooBlob;
+import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
@@ -111,6 +113,13 @@ public class Goo extends Mob {
 				((GooSprite)sprite).spray(false);
 			}
 			HP++;
+		}
+
+		if (HP < HT/2 && Random.Int(10) == 0) {
+			Level l = Dungeon.level;
+			Mob mob = l.createMob();
+			mob.pos = l.randomRespawnCell();
+			GameScene.add( mob );
 		}
 		
 		if (state != SLEEPING){

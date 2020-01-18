@@ -65,7 +65,12 @@ public class Elemental extends Mob {
 	public int drRoll() {
 		return Random.NormalIntRange(0, 5);
 	}
-	
+
+	@Override
+	public int magicalDRRoll() {
+		return Random.NormalIntRange(3, 12);
+	}
+
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );

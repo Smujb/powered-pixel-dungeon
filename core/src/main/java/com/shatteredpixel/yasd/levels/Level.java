@@ -512,6 +512,8 @@ public abstract class Level implements Bundlable {
 				if (i >= width() && water[i-width()]) {
 					visuals.add( new FlowParticle.Flow( i - width() ) );
 				}
+			} else if ( map[i] == Terrain.EMBERS ) {
+				visuals.add( new CityLevel.Smoke( i ) );
 			}
 		}
 		return visuals;
