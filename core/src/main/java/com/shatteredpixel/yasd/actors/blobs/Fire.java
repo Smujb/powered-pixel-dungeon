@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
+import com.shatteredpixel.yasd.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Plant;

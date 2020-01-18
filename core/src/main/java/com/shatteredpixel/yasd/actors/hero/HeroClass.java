@@ -125,7 +125,7 @@ public enum HeroClass {
 		new Beer().collect();
 
 		//new WandOfDamnation().identify().collect();
-		new PotionOfPurity().identify().collect();
+		new PotionOfLiquidFlame().identify().collect();
 
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();

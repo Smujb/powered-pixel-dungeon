@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.effects.YellowBlock;
 import com.shatteredpixel.yasd.effects.particles.BloodParticle;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.effects.particles.SnowParticle;
 import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -111,6 +112,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Emitter vertigo;
 	protected Emitter wet;
 	protected Emitter amok;
+	protected Emitter burningSmoke;
 	
 	protected IceBlock iceBlock;
 	protected DarkBlock darkBlock;
@@ -355,6 +357,8 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				if (visible) {
 					Sample.INSTANCE.play( Assets.SND_BURNING );
 				}
+				burningSmoke = emitter();
+				burningSmoke.pour( SmokeParticle.FACTORY, 0.2f );
 				break;
 			case LEVITATING:
 				levitation = emitter();
@@ -448,6 +452,11 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				if (burning != null) {
 					burning.on = false;
 					burning = null;
+				}
+				if (burningSmoke != null) {
+					burningSmoke.on = false;
+					burningSmoke.burst(SmokeParticle.FACTORY, 20);
+					burningSmoke = null;
 				}
 				break;
 			case LEVITATING:

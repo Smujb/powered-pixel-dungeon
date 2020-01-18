@@ -139,7 +139,7 @@ public class MagesStaff extends MeleeWeapon {
 				return;
 			}
 
-			use(defaultDegradeAmount());
+			use();
 
 			if (cursed || hasCurseEnchant()) wand.cursed = true;
 			else                             wand.cursed = false;
@@ -152,10 +152,16 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand != null &&
 				attacker instanceof Hero && ((Hero)attacker).subClass == HeroSubClass.BATTLEMAGE) {
 			if (wand.curCharges < wand.maxCharges) wand.partialCharge += 0.33f;
-			ScrollOfRecharging.charge((Hero)attacker);
+			ScrollOfRecharging.charge(attacker);
 			wand.onHit(this, attacker, defender, damage);
 		}
 		return super.proc(attacker, defender, damage);
+	}
+
+	@Override
+	public void use(float amount) {
+		super.use(amount);
+		wand.use(amount, true);
 	}
 
 	@Override

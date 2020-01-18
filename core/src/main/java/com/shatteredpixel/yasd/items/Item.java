@@ -133,10 +133,14 @@ public class Item implements Bundlable {
 	}
 
 	public void use(float amount) {
+		use(amount, false);
+	}
+
+	public void use(float amount, boolean override) {
 		if (curUser == null) {//curUser may be null if activate() has not yet been called (such as on game start). This prevents the next check from throwing an error.
 			curUser = Dungeon.hero;
 		}
-		if (level() <= 0 |  !isEquipped(curUser)) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
+		if (level() <= 0 | !isEquipped(curUser) & !override) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
 		if (curUser instanceof Hero) {
@@ -145,6 +149,7 @@ public class Item implements Bundlable {
 		curDurability -= amount;
 		if (curDurability <= 0) {
 			GLog.n(Messages.get(this,"broken"),this.name());
+			Sample.INSTANCE.play(Assets.SND_DEGRADE);
 			fullyRepair();
 			degrade();
 		} else if (curDurability <= 150 & !saidAlmostBreak) {
