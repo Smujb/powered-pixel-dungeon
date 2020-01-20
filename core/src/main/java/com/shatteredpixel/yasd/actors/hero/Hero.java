@@ -136,10 +136,8 @@ public class Hero extends Char {
 		usesBelongings = true;
 		immunities.add(Amok.class);
 	}
-	
-	public static final int MAX_LEVEL = 30;
 
-	public float MAX_MORALE = 10f;
+	public final float MAX_MORALE = 10f;
 	public float morale = MAX_MORALE;
 
 	public static final int STARTING_STR = 10;
@@ -222,6 +220,9 @@ public class Hero extends Char {
 	}
 
 	public void loseMorale(float Amount, boolean say) {
+		if (!Constants.MORALE) {
+			return;
+		}
 		float DifficultyMultiplier;
 		switch (Dungeon.difficulty) {
 			case 1:// -33% Morale loss in Easy
@@ -254,6 +255,9 @@ public class Hero extends Char {
 	}
 
 	public void gainMorale(float Amount) {
+		if (!Constants.MORALE) {
+			return;
+		}
 		morale += Amount;
 		morale = Math.min(morale, MAX_MORALE);
 		if (this.sprite != null) {
@@ -1236,7 +1240,7 @@ public class Hero extends Char {
 		boolean levelUp = false;
 		while (this.exp >= maxExp()) {
 			this.exp -= maxExp();
-			if (lvl < MAX_LEVEL) {
+			if (lvl < Constants.HERO_EXP_CAP) {
 				lvl++;
 				levelUp = true;
 				

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
@@ -99,7 +100,7 @@ public abstract class Mob extends Char {
 
 	
 	public int EXP = 1;
-	public int maxLvl = Hero.MAX_LEVEL;
+	public int maxLvl = Constants.HERO_EXP_CAP;
 	
 	protected Char enemy;
 	protected boolean enemySeen;

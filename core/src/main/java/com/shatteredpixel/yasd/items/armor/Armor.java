@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.items.armor;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
@@ -57,6 +58,7 @@ import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.items.armor.glyphs.Thorns;
 import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
+import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.HeroSprite;
@@ -106,7 +108,7 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public boolean canDegrade() {
-		return true;
+		return Constants.DEGRADATION;
 	}
 
 	public Augment augment = Augment.NONE;
@@ -132,6 +134,7 @@ public class Armor extends KindofMisc {
 	private static final String CURSE_INFUSION_BONUS = "curse_infusion_bonus";
 	private static final String SEAL            = "seal";
 	private static final String AUGMENT			= "augment";
+	private static final String TIER = "tier";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -142,6 +145,7 @@ public class Armor extends KindofMisc {
 		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
 		bundle.put( SEAL, seal);
 		bundle.put( AUGMENT, augment);
+		bundle.put( TIER, tier );
 	}
 
 	@Override
@@ -160,6 +164,10 @@ public class Armor extends KindofMisc {
 		}
 		
 		augment = bundle.getEnum(AUGMENT, Augment.class);
+
+		if (Dungeon.version >= YASD.v0_2_0) {//Support older saves
+			tier = bundle.getInt(TIER);
+		}
 	}
 
 	@Override
@@ -717,5 +725,19 @@ public class Armor extends KindofMisc {
 			}
 		}
 		
+	}
+	public Armor setTier(int tier) {
+		this.tier = tier;
+		return this;
+	}
+
+	public Armor upgradeTier(int tier) {
+		this.tier += tier;
+		return this;
+	}
+
+	public Armor degradeTier(int tier) {
+		this.tier -= tier;
+		return this;
 	}
 }

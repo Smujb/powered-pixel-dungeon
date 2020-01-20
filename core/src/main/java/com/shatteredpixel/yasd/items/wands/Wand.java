@@ -135,7 +135,7 @@ public abstract class Wand extends KindofMisc {
 
 	@Override
 	public boolean canDegrade() {
-		return true;
+		return Constants.DEGRADATION;
 	}
 
 	@Override

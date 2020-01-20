@@ -21,11 +21,14 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.messages.Messages;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class MeleeWeapon extends Weapon {
@@ -39,7 +42,7 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public boolean canDegrade() {
-		return true;
+		return Constants.DEGRADATION;
 	}
 
 	@Override
@@ -157,4 +160,34 @@ public class MeleeWeapon extends Weapon {
 		return price;
 	}
 
+	public MeleeWeapon setTier(int tier) {
+		this.tier = tier;
+		return this;
+	}
+
+	public MeleeWeapon upgradeTier(int tier) {
+		this.tier += tier;
+		return this;
+	}
+
+	public MeleeWeapon degradeTier(int tier) {
+		this.tier -= tier;
+		return this;
+	}
+
+	public static String TIER = "tier";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(TIER, tier);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		if (Dungeon.version >= YASD.v0_2_0) {//Support older saves
+			tier = bundle.getInt(TIER);
+		}
+	}
 }

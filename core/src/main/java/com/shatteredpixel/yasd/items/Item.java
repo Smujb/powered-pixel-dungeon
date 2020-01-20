@@ -427,11 +427,10 @@ public class Item implements Bundlable {
 	}
 
 	public boolean isUpgradable() {
-		if (Constants.UPGRADE_LIMIT >= 0) {
-			return level() < upgradeLimit();
-		} else {
+		if (Constants.UPGRADE_LIMIT == -1) {
 			return true;
 		}
+		return level() < upgradeLimit();
 	}
 
 	public int upgradeLimit() {

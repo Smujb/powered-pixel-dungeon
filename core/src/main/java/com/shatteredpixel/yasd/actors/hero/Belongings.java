@@ -22,12 +22,14 @@
 package com.shatteredpixel.yasd.actors.hero;
 
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
+import com.shatteredpixel.yasd.actors.mobs.CausticSlime;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
@@ -182,7 +184,7 @@ public class Belongings implements Iterable<Item> {
 		return TotalRequirement;
 	}
 
-	public KindofMisc[] miscs = new KindofMisc[5];
+	public KindofMisc[] miscs = new KindofMisc[Constants.MISC_SLOTS];
 
 
 	public Belongings( Char owner ) {
@@ -284,6 +286,7 @@ public class Belongings implements Iterable<Item> {
 		return stealth;
 	}
 	private static final String ARMOR		= "getArmors";
+	private static final String MISC        = "misc";
 	private static final String MISC1       = "misc1";
 	private static final String MISC2       = "misc2";
 	private static final String MISC3       = "misc3";
@@ -294,11 +297,14 @@ public class Belongings implements Iterable<Item> {
 	public void storeInBundle( Bundle bundle ) {
 		
 		backpack.storeInBundle( bundle );
-		bundle.put( MISC1, miscs[0]);
+		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Store all miscs
+			bundle.put( MISC + i, miscs[i]);
+		}
+		/*bundle.put( MISC1, miscs[0]);
 		bundle.put( MISC2, miscs[1]);
 		bundle.put( MISC3, miscs[2]);
 		bundle.put( MISC4, miscs[3]);
-		bundle.put( MISC5, miscs[4]);
+		bundle.put( MISC5, miscs[4]);*/
 		bundle.put( ARMOR, getArmors().get(0));//Used for previewing games.
 	}
 	
@@ -306,8 +312,14 @@ public class Belongings implements Iterable<Item> {
 		
 		backpack.clear();
 		backpack.restoreFromBundle( bundle );
+		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Restore all miscs
+			miscs[i] = (KindofMisc)bundle.get(MISC + i);
+			if (miscs[i] != null) {
+				miscs[i].activate( owner );
+			}
+		}
 		
-		miscs[0] = (KindofMisc)bundle.get(MISC1);
+		/*miscs[0] = (KindofMisc)bundle.get(MISC1);
 		if (miscs[0] != null) {
 			miscs[0].activate( owner );
 		}
@@ -330,7 +342,7 @@ public class Belongings implements Iterable<Item> {
 		miscs[4] = (KindofMisc)bundle.get(MISC5);
 		if (miscs[4] != null) {
 			miscs[4].activate( owner );
-		}
+		}*/
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {

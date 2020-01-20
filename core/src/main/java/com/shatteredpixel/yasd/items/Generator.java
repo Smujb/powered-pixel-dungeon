@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.alcohol.Alcohol;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
@@ -572,7 +573,7 @@ public class Generator {
 	}
 
 	public static Armor randomArmor(){
-		return randomArmor(Dungeon.depth / 5);
+		return randomArmor(Dungeon.depth / Constants.CHAPTER_LENGTH);
 	}
 	
 	public static Armor randomArmor(int floorSet) {
@@ -605,7 +606,7 @@ public class Generator {
 	};
 
 	public static MeleeWeapon randomWeapon(){
-		return randomWeapon(Dungeon.depth / 5);
+		return randomWeapon(Dungeon.depth / Constants.CHAPTER_LENGTH);
 	}
 	
 	public static MeleeWeapon randomWeapon(int floorSet) {
@@ -627,7 +628,7 @@ public class Generator {
 	};
 	
 	public static MissileWeapon randomMissile(){
-		return randomMissile(Dungeon.depth / 5);
+		return randomMissile(Dungeon.depth / Constants.CHAPTER_LENGTH);
 	}
 	
 	public static MissileWeapon randomMissile(int floorSet) {
