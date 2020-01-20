@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.mechanics;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ public class Ballistica {
 			end = Math.min( end, path.size()-1);
 			return path.subList(start, end+1);
 		} catch (Exception e){
-			ShatteredPixelDungeon.reportException(e);
+			YASD.reportException(e);
 			return new ArrayList<>();
 		}
 	}

@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Challenges;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.ui.CheckBox;
@@ -82,7 +82,7 @@ public class WndChallenges extends Window {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					ShatteredPixelDungeon.scene().add(
+					YASD.scene().add(
 							new WndMessage(Messages.get(Challenges.class, challenge+"_desc"))
 					);
 				}
@@ -106,7 +106,7 @@ public class WndChallenges extends Window {
 					value |= Challenges.MASKS[i];
 				}
 			}
-			SPDSettings.challenges( value );
+			YASDSettings.challenges( value );
 		}
 
 		super.onBackPressed();

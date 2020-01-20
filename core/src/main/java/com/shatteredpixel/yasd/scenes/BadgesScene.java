@@ -23,8 +23,8 @@ package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.effects.BadgeBanner;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.ui.Archs;
@@ -83,8 +83,8 @@ public class BadgesScene extends PixelScene {
 		blankBadges = Math.max(0, blankBadges);
 
 		//guarantees a max of 5 rows in landscape, and 8 in portrait, assuming a max of 40 buttons
-		int nCols = SPDSettings.landscape() ? 7 : 4;
-		if (badges.size() + blankBadges > 32 && !SPDSettings.landscape())	nCols++;
+		int nCols = YASDSettings.landscape() ? 7 : 4;
+		if (badges.size() + blankBadges > 32 && !YASDSettings.landscape())	nCols++;
 
 		int nRows = 1 + (blankBadges + badges.size())/nCols;
 
@@ -120,7 +120,7 @@ public class BadgesScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene( TitleScene.class );
+		YASD.switchScene( TitleScene.class );
 	}
 
 	private static class BadgeButton extends Button {

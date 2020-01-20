@@ -24,8 +24,8 @@ package com.shatteredpixel.yasd.scenes;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Chrome;
 import com.shatteredpixel.yasd.Rankings;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.effects.BannerSprites;
 import com.shatteredpixel.yasd.effects.Fireball;
 import com.shatteredpixel.yasd.journal.Document;
@@ -43,16 +43,16 @@ import com.watabou.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static int LATEST_UPDATE = ShatteredPixelDungeon.v0_7_5;
+	private static int LATEST_UPDATE = YASD.v0_7_5;
 
 	@Override
 	public void create() {
 		super.create();
 
-		final int previousVersion = SPDSettings.version();
+		final int previousVersion = YASDSettings.version();
 
-		if (ShatteredPixelDungeon.versionCode == previousVersion) {
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+		if (YASD.versionCode == previousVersion) {
+			YASD.switchNoFade(TitleScene.class);
 			return;
 		}
 
@@ -68,7 +68,7 @@ public class WelcomeScene extends PixelScene {
 		float topRegion = Math.max(title.height, h*0.45f);
 		
 		title.x = (w - title.width()) / 2f;
-		if (SPDSettings.landscape()) {
+		if (YASDSettings.landscape()) {
 			title.y = (topRegion - title.height()) / 2f;
 		} else {
 			title.y = 20 + (topRegion - title.height() - 20) / 2f;
@@ -100,11 +100,11 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					SPDSettings.version(ShatteredPixelDungeon.versionCode);
+					YASDSettings.version(YASD.versionCode);
 					WelcomeScene.this.add(new WndStartGame(1));
 				} else {
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(TitleScene.class);
+					YASD.switchScene(TitleScene.class);
 				}
 			}
 		};
@@ -116,7 +116,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					ShatteredPixelDungeon.switchScene(ChangesScene.class);
+					YASD.switchScene(ChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, h-25, (title.width()/2)-2, 21);
@@ -136,7 +136,7 @@ public class WelcomeScene extends PixelScene {
 		String message;
 		if (previousVersion == 0) {
 			message = Messages.get(this, "welcome_msg");
-		} else if (previousVersion <= ShatteredPixelDungeon.versionCode) {
+		} else if (previousVersion <= YASD.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
@@ -173,7 +173,7 @@ public class WelcomeScene extends PixelScene {
 		}
 		
 		//give classes to people with saves that have previously unlocked them
-		if (previousVersion <= ShatteredPixelDungeon.v0_7_0c){
+		if (previousVersion <= YASD.v0_7_0c){
 			Badges.loadGlobal();
 			Badges.addGlobal(Badges.Badge.UNLOCK_MAGE);
 			Badges.addGlobal(Badges.Badge.UNLOCK_ROGUE);
@@ -183,7 +183,7 @@ public class WelcomeScene extends PixelScene {
 			Badges.saveGlobal();
 		}
 		
-		if (previousVersion <= ShatteredPixelDungeon.v0_6_5c){
+		if (previousVersion <= YASD.v0_6_5c){
 			Journal.loadGlobal();
 			Document.ALCHEMY_GUIDE.addPage("Potions");
 			Document.ALCHEMY_GUIDE.addPage("Stones");
@@ -191,7 +191,7 @@ public class WelcomeScene extends PixelScene {
 			Journal.saveGlobal();
 		}
 		
-		SPDSettings.version(ShatteredPixelDungeon.versionCode);
+		YASDSettings.version(YASD.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {

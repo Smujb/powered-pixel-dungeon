@@ -24,8 +24,8 @@ package com.shatteredpixel.yasd.scenes;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Chrome;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.journal.Journal;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -80,12 +80,12 @@ public class StartScene extends PixelScene {
 		
 		ArrayList<GamesInProgress.Info> games = GamesInProgress.checkAll();
 		
-		int slotGap = SPDSettings.landscape() ? 5 : 10;
+		int slotGap = YASDSettings.landscape() ? 5 : 10;
 		int slotCount = Math.min(GamesInProgress.MAX_SLOTS, games.size()+1);
 		int slotsHeight = slotCount*SLOT_HEIGHT + (slotCount-1)* slotGap;
 		
 		float yPos = (h - slotsHeight)/2f;
-		if (SPDSettings.landscape()) yPos += 8;
+		if (YASDSettings.landscape()) yPos += 8;
 		
 		for (GamesInProgress.Info game : games) {
 			SaveSlotButton existingGame = new SaveSlotButton();
@@ -114,7 +114,7 @@ public class StartScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene( TitleScene.class );
+		YASD.switchScene( TitleScene.class );
 	}
 	
 	private static class SaveSlotButton extends Button {
@@ -259,9 +259,9 @@ public class StartScene extends PixelScene {
 		@Override
 		protected void onClick() {
 			if (newGame) {
-				ShatteredPixelDungeon.scene().add( new WndStartGame(slot));
+				YASD.scene().add( new WndStartGame(slot));
 			} else {
-				ShatteredPixelDungeon.scene().add( new WndGameInProgress(slot));
+				YASD.scene().add( new WndGameInProgress(slot));
 			}
 		}
 	}

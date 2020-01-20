@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Chrome;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.messages.Languages;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -68,10 +68,10 @@ public class WndLangs extends Window {
 				protected void onClick() {
 					super.onClick();
 					Messages.setup(langs.get(langIndex));
-					ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
+					YASD.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
-							SPDSettings.language(langs.get(langIndex));
+							YASDSettings.language(langs.get(langIndex));
 							Game.platform.resetGenerators();
 						}
 						@Override
@@ -94,18 +94,18 @@ public class WndLangs extends Window {
 				}
 			}
 			btn.setSize(BTN_WIDTH, BTN_HEIGHT);
-			if (SPDSettings.landscape() && i % 2 == 1){
+			if (YASDSettings.landscape() && i % 2 == 1){
 				btn.setPos(BTN_WIDTH+1, y-(BTN_HEIGHT + 1));
 			} else {
 				btn.setPos(0, y);
 				y += BTN_HEIGHT;
-				if (SPDSettings.landscape()) y++;
+				if (YASDSettings.landscape()) y++;
 			}
 
 			add(btn);
 		}
 		y = Math.max(MIN_HEIGHT, y);
-		resize(SPDSettings.landscape() ? WIDTH_L : WIDTH_P, y);
+		resize(YASDSettings.landscape() ? WIDTH_L : WIDTH_P, y);
 
 		int textLeft = width - 65;
 		int textWidth = width - textLeft;
@@ -155,7 +155,7 @@ public class WndLangs extends Window {
 					String[] translators = currLang.translators();
 					
 					boolean wide = false;
-					if (SPDSettings.landscape() && (reviewers.length + translators.length) > 10){
+					if (YASDSettings.landscape() && (reviewers.length + translators.length) > 10){
 						wide = true;
 					}
 					
@@ -242,7 +242,7 @@ public class WndLangs extends Window {
 	public void hide() {
 		super.hide();
 		//resets generators because there's no need to retain chars for languages not selected
-		ShatteredPixelDungeon.seamlessResetScene(new Game.SceneChangeCallback() {
+		YASD.seamlessResetScene(new Game.SceneChangeCallback() {
 			@Override
 			public void beforeCreate() {
 				Game.platform.resetGenerators();

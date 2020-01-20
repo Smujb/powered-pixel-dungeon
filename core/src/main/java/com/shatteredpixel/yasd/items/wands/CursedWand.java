@@ -23,9 +23,8 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.ConfusionGas;
@@ -423,7 +422,7 @@ public class CursedWand {
 						);
 					}
 				} catch(IOException e){
-					ShatteredPixelDungeon.reportException(e);
+					YASD.reportException(e);
 					//oookay maybe don't kill the game if the save failed.
 					GLog.i(Messages.get(CursedWand.class, "nothing"));
 					afterZap.call();

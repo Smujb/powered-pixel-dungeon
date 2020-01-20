@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd;
 
-import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.messages.Languages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.watabou.noosa.Game;
@@ -31,7 +30,7 @@ import com.watabou.utils.GameSettings;
 
 import java.util.Locale;
 
-public class SPDSettings extends GameSettings {
+public class YASDSettings extends GameSettings {
 	
 	//Version info
 	
@@ -58,7 +57,7 @@ public class SPDSettings extends GameSettings {
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
 		
-		ShatteredPixelDungeon.updateSystemUI();
+		YASD.updateSystemUI();
 	}
 	
 	public static boolean fullscreen() {
@@ -67,7 +66,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void landscape( boolean value ){
 		put( KEY_LANDSCAPE, value );
-		((ShatteredPixelDungeon)ShatteredPixelDungeon.instance).updateDisplaySize();
+		((YASD) YASD.instance).updateDisplaySize();
 	}
 	
 	//FIXME in certain multi-window cases this can disagree with the actual screen size
@@ -86,7 +85,7 @@ public class SPDSettings extends GameSettings {
 	
 	public static void powerSaver( boolean value ){
 		put( KEY_POWER_SAVER, value );
-		((ShatteredPixelDungeon)ShatteredPixelDungeon.instance).updateDisplaySize();
+		((YASD) YASD.instance).updateDisplaySize();
 	}
 	
 	public static boolean powerSaver(){
@@ -155,7 +154,7 @@ public class SPDSettings extends GameSettings {
 	}
 	
 	public static String toolbarMode() {
-		return getString(KEY_BARMODE, !SPDSettings.landscape() ? "SPLIT" : "GROUP");
+		return getString(KEY_BARMODE, !YASDSettings.landscape() ? "SPLIT" : "GROUP");
 	}
 	
 	//Game State

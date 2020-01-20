@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.armor.ClassArmor;
 import com.shatteredpixel.yasd.items.potions.Potion;
@@ -71,8 +71,8 @@ public class WndJournal extends WndTabbed {
 	
 	public WndJournal(){
 		
-		int width = SPDSettings.landscape() ? WIDTH_L : WIDTH_P;
-		int height = SPDSettings.landscape() ? HEIGHT_L : HEIGHT_P;
+		int width = YASDSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int height = YASDSettings.landscape() ? HEIGHT_L : HEIGHT_P;
 		
 		resize(width, height);
 		
@@ -342,7 +342,7 @@ public class WndJournal extends WndTabbed {
 		protected void layout() {
 			super.layout();
 			
-			if (SPDSettings.landscape()){
+			if (YASDSettings.landscape()){
 				float buttonWidth = width()/pageButtons.length;
 				for (int i = 0; i < NUM_BUTTONS; i++) {
 					pageButtons[i].setRect(i*buttonWidth, 0, buttonWidth, ITEM_HEIGHT);

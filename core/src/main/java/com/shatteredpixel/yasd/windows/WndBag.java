@@ -23,11 +23,9 @@ package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
-import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Gold;
 import com.shatteredpixel.yasd.items.Item;
@@ -134,7 +132,7 @@ public class WndBag extends WndTabbed {
 		lastMode = mode;
 		lastBag = bag;
 
-		nCols = SPDSettings.landscape() ? COLS_L : COLS_P;
+		nCols = YASDSettings.landscape() ? COLS_L : COLS_P;
 		nRows = (int)Math.ceil((Belongings.BACKPACK_SIZE + 4) / (float)nCols);
 
 		int slotsWidth = SLOT_WIDTH * nCols + SLOT_MARGIN * (nCols - 1);

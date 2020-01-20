@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -76,7 +76,7 @@ public class WndGameInProgress extends Window {
 			protected boolean onLongClick() {
 				try {
 					Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));
-					ShatteredPixelDungeon.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
+					YASD.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
 							"Version: " + Game.version + " (" + Game.versionCode + ")\n" +
 							"Seed: " + bundle.getLong("seed") + "\n" +
 							"Challenge Mask: " + info.challenges));
@@ -128,7 +128,7 @@ public class WndGameInProgress extends Window {
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
 				InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-				ShatteredPixelDungeon.switchScene(InterlevelScene.class);
+				YASD.switchScene(InterlevelScene.class);
 			}
 		};
 		
@@ -137,7 +137,7 @@ public class WndGameInProgress extends Window {
 			protected void onClick() {
 				super.onClick();
 				
-				ShatteredPixelDungeon.scene().add(new WndOptions(
+				YASD.scene().add(new WndOptions(
 						Messages.get(WndGameInProgress.class, "erase_warn_title"),
 						Messages.get(WndGameInProgress.class, "erase_warn_body"),
 						Messages.get(WndGameInProgress.class, "erase_warn_yes"),
@@ -147,7 +147,7 @@ public class WndGameInProgress extends Window {
 						if (index == 0) {
 							FileUtils.deleteDir(GamesInProgress.gameFolder(slot));
 							GamesInProgress.setUnknown(slot);
-							ShatteredPixelDungeon.switchNoFade(StartScene.class);
+							YASD.switchNoFade(StartScene.class);
 						}
 					}
 				} );

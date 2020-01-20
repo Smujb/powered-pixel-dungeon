@@ -27,8 +27,8 @@ import com.shatteredpixel.yasd.Bones;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -642,7 +642,7 @@ public class Hero extends Char {
 				alch.alchPos = dst;
 				AlchemyScene.setProvider( alch );
 			}
-			ShatteredPixelDungeon.switchScene(AlchemyScene.class);
+			YASD.switchScene(AlchemyScene.class);
 			return false;
 
 		} else if (getCloser( dst )) {
@@ -957,8 +957,8 @@ public class Hero extends Char {
 
 		if (shake > 0.7f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
-			if (SPDSettings.vibrate()) {
-				ShatteredPixelDungeon.vibrate(Math.min(500,(int) (shake * 50)));
+			if (YASDSettings.vibrate()) {
+				YASD.vibrate(Math.min(500,(int) (shake * 50)));
 			}
 			if (shake > 1f) {//This is to prevent the game being flooded with messages if you take small amounts of damage repeatedly on low health (eg Poison, Bleeding). May add a cooldown in future.
 				loseMorale(shake*0.33f);
@@ -1106,7 +1106,7 @@ public class Hero extends Char {
 			
 			float speed = speed();
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & !(Dungeon.level.map[pos] == Terrain.EXIT || Dungeon.level.map[pos] == Terrain.DOOR || Dungeon.level.map[pos] == Terrain.ENTRANCE|| Dungeon.level.map[pos] == Terrain.OPEN_DOOR) & !Dungeon.bossLevel()) {
-				if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+				if (YASD.scene() instanceof GameScene) {
 					if (!isFlying()) {
 						Level.set(pos, Terrain.CHASM);
 					}

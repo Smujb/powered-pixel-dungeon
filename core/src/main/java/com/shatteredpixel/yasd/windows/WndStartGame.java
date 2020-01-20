@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.journal.Journal;
@@ -99,9 +99,9 @@ public class WndStartGame extends Window {
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
 				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-				Dungeon.difficulty = SPDSettings.difficulty();//I could just call SPDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
-				if (SPDSettings.intro()) {
-					SPDSettings.intro( false );
+				Dungeon.difficulty = YASDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				if (YASDSettings.intro()) {
+					YASDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
 					Game.switchScene( InterlevelScene.class );
@@ -124,22 +124,22 @@ public class WndStartGame extends Window {
 				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, 3) {
 			@Override
 			protected void onChange() {
-				SPDSettings.difficulty(getSelectedValue());
+				YASDSettings.difficulty(getSelectedValue());
 			}
 		};
-		difficulty.setSelectedValue(SPDSettings.difficulty());
+		difficulty.setSelectedValue(YASDSettings.difficulty());
 		difficulty.setRect(0, start.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 		add(difficulty);
 
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
 			IconButton challengeButton = new IconButton(
-					Icons.get( SPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+					Icons.get( YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 				@Override
 				protected void onClick() {
-					ShatteredPixelDungeon.scene().add(new WndChallenges(SPDSettings.challenges(), true) {
+					YASD.scene().add(new WndChallenges(YASDSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
-							icon( Icons.get( SPDSettings.challenges() > 0 ?
+							icon( Icons.get( YASDSettings.challenges() > 0 ?
 									Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF ) );
 						}
 					} );
@@ -159,7 +159,7 @@ public class WndStartGame extends Window {
 			
 		} else {
 			Dungeon.challenges = 0;
-			SPDSettings.challenges(0);
+			YASDSettings.challenges(0);
 		}
 		
 		resize(WIDTH, (int) difficulty.bottom());
@@ -222,7 +222,7 @@ public class WndStartGame extends Window {
 			super.onClick();
 			
 			if( !cl.isUnlocked() ){
-				ShatteredPixelDungeon.scene().add(
+				YASD.scene().add(
 						new WndMessage(cl.unlockMsg()));
 			} else {
 				GamesInProgress.selectedClass = cl;
@@ -257,7 +257,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					ShatteredPixelDungeon.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
+					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
 				}
 			};
 			heroItem.setSize(BTN_SIZE, BTN_SIZE);
@@ -267,7 +267,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					ShatteredPixelDungeon.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
+					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
 				}
 			};
 			heroLoadout.setSize(BTN_SIZE, BTN_SIZE);
@@ -277,7 +277,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					ShatteredPixelDungeon.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
+					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
 				}
 			};
 			heroMisc.setSize(BTN_SIZE, BTN_SIZE);
@@ -291,7 +291,7 @@ public class WndStartGame extends Window {
 					for (HeroSubClass sub : cl.subClasses()){
 						msg += "\n\n" + sub.desc();
 					}
-					ShatteredPixelDungeon.scene().add(new WndMessage(msg));
+					YASD.scene().add(new WndMessage(msg));
 				}
 			};
 			heroSubclass.setSize(BTN_SIZE, BTN_SIZE);

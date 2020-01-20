@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -93,7 +93,7 @@ public class Amulet extends Item {
 			AmuletScene.noText = !showText;
 			Game.switchScene( AmuletScene.class );
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			YASD.reportException(e);
 		}
 	}
 	

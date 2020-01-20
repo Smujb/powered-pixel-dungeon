@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.effects.BadgeBanner;
 import com.shatteredpixel.yasd.messages.Languages;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -74,7 +74,7 @@ public class PixelScene extends Scene {
 		GameScene.scene = null;
 
 		float minWidth, minHeight;
-		if (SPDSettings.landscape()) {
+		if (YASDSettings.landscape()) {
 			minWidth = MIN_WIDTH_L;
 			minHeight = MIN_HEIGHT_L;
 		} else {
@@ -84,7 +84,7 @@ public class PixelScene extends Scene {
 
 		maxDefaultZoom = (int)Math.min(Game.width/minWidth, Game.height/minHeight);
 		maxScreenZoom = (int)Math.min(Game.dispWidth/minWidth, Game.dispHeight/minHeight);
-		defaultZoom = SPDSettings.scale();
+		defaultZoom = YASDSettings.scale();
 
 		if (defaultZoom < Math.ceil( Game.density * 2 ) || defaultZoom > maxDefaultZoom){
 			defaultZoom = (int)Math.ceil( Game.density * 2.5 );
@@ -130,7 +130,7 @@ public class PixelScene extends Scene {
 				Messages.lang() == Languages.JAPANESE){
 			renderedTextPageSize *= 2;
 		}
-		Game.platform.setupFontGenerators(renderedTextPageSize, SPDSettings.systemFont());
+		Game.platform.setupFontGenerators(renderedTextPageSize, YASDSettings.systemFont());
 		
 	}
 	

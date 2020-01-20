@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.windows;
 
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -57,7 +57,7 @@ public class WndInfoItem extends Window {
 	
 	private void fillFields( Heap heap ) {
 		
-		int width = SPDSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int width = YASDSettings.landscape() ? WIDTH_L : WIDTH_P;
 		
 		IconTitle titlebar = new IconTitle( heap );
 		titlebar.color( TITLE_COLOR );
@@ -81,7 +81,7 @@ public class WndInfoItem extends Window {
 			color = ItemSlot.DEGRADED;
 		}
 		
-		int width = SPDSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int width = YASDSettings.landscape() ? WIDTH_L : WIDTH_P;
 
 		IconTitle titlebar = new IconTitle( item );
 		titlebar.color( color );

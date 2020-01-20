@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.ui;
 
 import com.shatteredpixel.yasd.Assets;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.scenes.TitleScene;
 import com.watabou.noosa.Game;
@@ -74,7 +74,7 @@ public class ExitButton extends Button {
 		if (Game.scene() instanceof TitleScene) {
 			Game.instance.finish();
 		} else {
-			ShatteredPixelDungeon.switchNoFade( TitleScene.class );
+			YASD.switchNoFade( TitleScene.class );
 		}
 	}
 }

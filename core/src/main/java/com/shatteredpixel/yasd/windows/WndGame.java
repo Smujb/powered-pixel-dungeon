@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.scenes.InterlevelScene;
@@ -97,7 +97,7 @@ public class WndGame extends Window {
 						try {
 							Dungeon.saveAll();
 						} catch (IOException e) {
-							ShatteredPixelDungeon.reportException(e);
+							YASD.reportException(e);
 						}
 						Game.switchScene(TitleScene.class);
 					}
@@ -109,7 +109,7 @@ public class WndGame extends Window {
 						try {
 							Dungeon.saveAll();
 						} catch (IOException e) {
-							ShatteredPixelDungeon.reportException(e);
+							YASD.reportException(e);
 						}
 						Game.instance.finish();
 					}

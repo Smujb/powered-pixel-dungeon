@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Rankings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.effects.Flare;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -143,7 +143,7 @@ public class RankingsScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene(TitleScene.class);
+		YASD.switchScene(TitleScene.class);
 	}
 	
 	public static class Record extends Button {

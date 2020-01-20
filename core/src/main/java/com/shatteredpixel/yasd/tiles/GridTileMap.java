@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.tiles;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.levels.Terrain;
 
 public class GridTileMap extends DungeonTilemap {
@@ -37,7 +37,7 @@ public class GridTileMap extends DungeonTilemap {
 
 	@Override
 	public synchronized void updateMap() {
-		gridSetting = SPDSettings.visualGrid();
+		gridSetting = YASDSettings.visualGrid();
 		super.updateMap();
 	}
 

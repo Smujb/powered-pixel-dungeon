@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
@@ -82,7 +82,7 @@ public class CellSelector extends PointerArea {
 	private float zoom( float value ) {
 
 		value = GameMath.gate( PixelScene.minZoom, value, PixelScene.maxZoom );
-		SPDSettings.zoom((int) (value - PixelScene.defaultZoom));
+		YASDSettings.zoom((int) (value - PixelScene.defaultZoom));
 		camera.zoom( value );
 
 		//Resets character sprite positions with the new camera zoom

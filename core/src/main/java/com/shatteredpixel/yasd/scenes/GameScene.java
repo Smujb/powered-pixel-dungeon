@@ -24,8 +24,8 @@ package com.shatteredpixel.yasd.scenes;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -167,26 +167,26 @@ public class GameScene extends PixelScene {
 	public void create() {
 		
 		if (Dungeon.hero == null){
-			ShatteredPixelDungeon.switchNoFade(TitleScene.class);
+			YASD.switchNoFade(TitleScene.class);
 			return;
 		}
 		
 		Music.INSTANCE.play( Assets.TUNE, true );
 
-		SPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + SPDSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + YASDSettings.zoom(), maxZoom));
 
 		scene = this;
 
 		terrain = new Group();
 		add( terrain );
-
+		String waterTex = Dungeon.level.waterTex();
 		water = new SkinnedBlock(
 			Dungeon.level.width() * DungeonTilemap.SIZE,
 			Dungeon.level.height() * DungeonTilemap.SIZE,
-			Dungeon.level.waterTex() ){
+			waterTex ){
 
 			@Override
 			protected NoosaScript script() {
@@ -486,7 +486,7 @@ public class GameScene extends PixelScene {
 				try {
 					GameScene.class.wait(5000);
 				} catch (InterruptedException e) {
-					ShatteredPixelDungeon.reportException(e);
+					YASD.reportException(e);
 				}
 				synchronized (actorThread) {
 					if (Actor.processing()) {
@@ -514,7 +514,7 @@ public class GameScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			YASD.reportException(e);
 		}
 	}
 
@@ -588,9 +588,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = SPDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = YASDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (SPDSettings.flipTags()) {
+		if (YASDSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

@@ -38,8 +38,8 @@ import android.widget.TextView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.android.AndroidGame;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.ui.RedButton;
@@ -71,14 +71,14 @@ public class WndAndroidTextInput extends Window {
 		super();
 
 		//need to offset to give space for the soft keyboard
-		if (SPDSettings.landscape()) {
+		if (YASDSettings.landscape()) {
 			offset( multiLine ? -45 : -45 );
 		} else {
 			offset( multiLine ? -60 : -45 );
 		}
 
 		final int width;
-		if (SPDSettings.landscape() && multiLine){
+		if (YASDSettings.landscape() && multiLine){
 			width = W_LAND_MULTI; //more editing space for landscape users
 		} else {
 			width = WIDTH;
@@ -119,7 +119,7 @@ public class WndAndroidTextInput extends Window {
 
 				textInput = new EditText((AndroidApplication)Gdx.app);
 				textInput.setText( initialValue );
-				if (!SPDSettings.systemFont()){
+				if (!YASDSettings.systemFont()){
 					textInput.setTypeface( Typeface.createFromAsset(AndroidGame.instance.getAssets(), "pixel_font.ttf") );
 				}
 				textInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
@@ -220,7 +220,7 @@ public class WndAndroidTextInput extends Window {
 					imm.hideSoftInputFromWindow(((AndroidGraphics)Gdx.app.getGraphics()).getView().getWindowToken(), 0);
 
 					//Soft keyboard sometimes triggers software buttons, so make sure to reassert immersive
-					ShatteredPixelDungeon.updateSystemUI();
+					YASD.updateSystemUI();
 
 					textInput = null;
 				}

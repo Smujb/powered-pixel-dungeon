@@ -32,8 +32,8 @@ import android.telephony.TelephonyManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 
@@ -63,11 +63,11 @@ public class AndroidGame extends AndroidApplication {
 		
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
-		SPDSettings.setPrefsFromInstance(instance);
+		YASDSettings.setPrefsFromInstance(instance);
 		
 		//set desired orientation (if it exists) before initializing the app.
-		if (SPDSettings.landscapeFromSettings() != null) {
-			if (SPDSettings.landscapeFromSettings()){
+		if (YASDSettings.landscapeFromSettings() != null) {
+			if (YASDSettings.landscapeFromSettings()){
 				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			} else {
 				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
@@ -90,7 +90,7 @@ public class AndroidGame extends AndroidApplication {
 		
 		support.updateSystemUI();
 		
-		initialize(new ShatteredPixelDungeon(support), config);
+		initialize(new YASD(support), config);
 		
 		view = (GLSurfaceView)graphics.getView();
 		

@@ -21,8 +21,8 @@
 
 package com.shatteredpixel.yasd.messages;
 
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -74,7 +74,7 @@ public class Messages {
 	};
 
 	static{
-		setup(SPDSettings.language());
+		setup(YASDSettings.language());
 	}
 
 	public static void setup( Languages lang ){
@@ -141,7 +141,7 @@ public class Messages {
 		try {
 			return String.format(Locale.ENGLISH, format, args);
 		} catch (IllegalFormatException e) {
-			ShatteredPixelDungeon.reportException( e );
+			YASD.reportException( e );
 			return format;
 		}
 	}

@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Chrome;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.ui.Archs;
 import com.shatteredpixel.yasd.ui.ExitButton;
@@ -41,7 +41,6 @@ import com.shatteredpixel.yasd.ui.changelist.v0_6_X_Changes;
 import com.shatteredpixel.yasd.ui.changelist.v0_7_X_Changes;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.NinePatch;
-import com.watabou.noosa.RenderedText;
 import com.watabou.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -156,7 +155,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 0) {
 					changesSelected = 0;
-					ShatteredPixelDungeon.seamlessResetScene();
+					YASD.seamlessResetScene();
 				}
 			}
 		};
@@ -170,7 +169,7 @@ public class ChangesScene extends PixelScene {
 				super.onClick();
 				if (changesSelected != 1) {
 					changesSelected = 1;
-					ShatteredPixelDungeon.seamlessResetScene();
+					YASD.seamlessResetScene();
 				}
 			}
 		};
@@ -184,7 +183,7 @@ public class ChangesScene extends PixelScene {
 //				super.onClick();
 //				if (changesSelected != 2) {
 //					changesSelected = 2;
-//					ShatteredPixelDungeon.seamlessResetScene();
+//					YASD.seamlessResetScene();
 //				}
 //			}
 //		};
@@ -201,7 +200,7 @@ public class ChangesScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		ShatteredPixelDungeon.switchScene(TitleScene.class);
+		YASD.switchScene(TitleScene.class);
 	}
 
 }

@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.windows;
 
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.ui.Window;
@@ -44,7 +44,7 @@ public class WndTitledMessage extends Window {
 
 		super();
 
-		int width = SPDSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int width = YASDSettings.landscape() ? WIDTH_L : WIDTH_P;
 
 		titlebar.setRect( 0, 0, width, 0 );
 		add(titlebar);

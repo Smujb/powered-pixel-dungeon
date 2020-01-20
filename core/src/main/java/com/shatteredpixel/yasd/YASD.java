@@ -28,7 +28,7 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PlatformSupport;
 
-public class ShatteredPixelDungeon extends Game {
+public class YASD extends Game {
 	
 	//variable constants for specific older versions of shattered, used for data conversion
 	//versions older than v0.6.5c are no longer supported, and data from them is ignored
@@ -41,7 +41,7 @@ public class ShatteredPixelDungeon extends Game {
 	public static final int v0_7_4c = 362;
 	public static final int v0_7_5  = 371;
 	
-	public ShatteredPixelDungeon( PlatformSupport platform ) {
+	public YASD(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 		
 		//v0.7.0
@@ -117,10 +117,10 @@ public class ShatteredPixelDungeon extends Game {
 
 		updateSystemUI();
 		
-		Music.INSTANCE.enable( SPDSettings.music() );
-		Music.INSTANCE.volume( SPDSettings.musicVol()/10f );
-		Sample.INSTANCE.enable( SPDSettings.soundFx() );
-		Sample.INSTANCE.volume( SPDSettings.SFXVol()/10f );
+		Music.INSTANCE.enable( YASDSettings.music() );
+		Music.INSTANCE.volume( YASDSettings.musicVol()/10f );
+		Sample.INSTANCE.enable( YASDSettings.soundFx() );
+		Sample.INSTANCE.volume( YASDSettings.SFXVol()/10f );
 
 		Sample.INSTANCE.load(
 				Assets.SND_CLICK,

@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.journal.Document;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -54,8 +54,8 @@ public class WndDocument extends Window {
 	
 	public WndDocument( Document doc ){
 		
-		int w = SPDSettings.landscape() ? WIDTH_L : WIDTH_P;
-		int h = SPDSettings.landscape() ? HEIGHT_L : HEIGHT_P;
+		int w = YASDSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int h = YASDSettings.landscape() ? HEIGHT_L : HEIGHT_P;
 		
 		resize(w, h);
 		
@@ -132,7 +132,7 @@ public class WndDocument extends Window {
 		
 		public boolean onClick( float x, float y ) {
 			if (inside( x, y ) && found) {
-				ShatteredPixelDungeon.scene().addToFront( new WndStory( doc.pageBody(page) ));
+				YASD.scene().addToFront( new WndStory( doc.pageBody(page) ));
 				return true;
 			} else {
 				return false;

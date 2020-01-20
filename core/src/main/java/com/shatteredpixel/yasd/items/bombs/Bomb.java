@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.items.bombs;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -319,7 +319,7 @@ public class Bomb extends Item {
 			bomb.quantity(2);
 			if (bomb.doPickUp(hero)) {
 				//isaaaaac.... (don't bother doing this when not in english)
-				if (SPDSettings.language() == Languages.ENGLISH)
+				if (YASDSettings.language() == Languages.ENGLISH)
 					hero.sprite.showStatus(CharSprite.NEUTRAL, "1+1 free!");
 				return true;
 			}

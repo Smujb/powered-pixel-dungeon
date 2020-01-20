@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Chrome;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASDSettings;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.Item;
@@ -85,7 +85,7 @@ public class AlchemyScene extends PixelScene {
 	@Override
 	public void create() {
 		super.create();
-		
+
 		water = new SkinnedBlock(
 				Camera.main.width, Camera.main.height,
 				Dungeon.level.waterTex() ){
@@ -258,7 +258,7 @@ public class AlchemyScene extends PixelScene {
 					{
 						WndJournal.AlchemyTab t = new WndJournal.AlchemyTab();
 						int w, h;
-						if (SPDSettings.landscape()) {
+						if (YASDSettings.landscape()) {
 							w = WndJournal.WIDTH_L; h = WndJournal.HEIGHT_L;
 						} else {
 							w = WndJournal.WIDTH_P; h = WndJournal.HEIGHT_P;
@@ -291,7 +291,7 @@ public class AlchemyScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			YASD.reportException(e);
 		}
 	}
 	
@@ -409,7 +409,7 @@ public class AlchemyScene extends PixelScene {
 			try {
 				Dungeon.saveAll();
 			} catch (IOException e) {
-				ShatteredPixelDungeon.reportException(e);
+				YASD.reportException(e);
 			}
 			
 			synchronized (inputs) {
@@ -469,7 +469,7 @@ public class AlchemyScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			ShatteredPixelDungeon.reportException(e);
+			YASD.reportException(e);
 		}
 		super.destroy();
 	}

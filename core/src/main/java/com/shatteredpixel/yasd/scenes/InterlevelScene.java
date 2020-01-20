@@ -24,12 +24,10 @@ package com.shatteredpixel.yasd.scenes;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.Rankings;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.hero.HeroAction;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.features.Chasm;
@@ -49,7 +47,6 @@ import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.DeviceCompat;
-import com.watabou.utils.Random;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -312,7 +309,7 @@ public class InterlevelScene extends PixelScene {
 					s += "\n";
 					s += t.toString();
 				}
-				ShatteredPixelDungeon.reportException(
+				YASD.reportException(
 						new RuntimeException("waited more than 10 seconds on levelgen. " +
 								"Seed:" + Dungeon.seed + " depth:" + Dungeon.depth + " trace:" +
 								s)

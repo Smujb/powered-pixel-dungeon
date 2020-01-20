@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.ui;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.Recipe;
@@ -102,7 +102,7 @@ public class QuickRecipe extends Component {
 			curr = new ItemSlot(in) {
 				@Override
 				protected void onClick() {
-					ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(in));
+					YASD.scene().addToFront(new WndInfoItem(in));
 				}
 			};
 			
@@ -130,7 +130,7 @@ public class QuickRecipe extends Component {
 		}
 		if (hasInputs) {
 			arrow.icon.tint(1, 1, 0, 1);
-			if (!(ShatteredPixelDungeon.scene() instanceof AlchemyScene)) {
+			if (!(YASD.scene() instanceof AlchemyScene)) {
 				arrow.enable(false);
 			}
 		} else {
@@ -143,7 +143,7 @@ public class QuickRecipe extends Component {
 		this.output = new ItemSlot(output){
 			@Override
 			protected void onClick() {
-				ShatteredPixelDungeon.scene().addToFront(new WndInfoItem(output));
+				YASD.scene().addToFront(new WndInfoItem(output));
 			}
 		};
 		if (!hasInputs){
@@ -227,7 +227,7 @@ public class QuickRecipe extends Component {
 				}
 			}
 			
-			((AlchemyScene)ShatteredPixelDungeon.scene()).populate(ingredients, Dungeon.hero.belongings);
+			((AlchemyScene) YASD.scene()).populate(ingredients, Dungeon.hero.belongings);
 		}
 		
 		public void hardlightText(int color ){

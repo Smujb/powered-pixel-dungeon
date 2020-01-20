@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.levels.features;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -121,7 +121,7 @@ public class HighGrass {
 		
 		freezeTrample = false;
 		
-		if (ShatteredPixelDungeon.scene() instanceof GameScene) {
+		if (YASD.scene() instanceof GameScene) {
 			GameScene.updateMap(pos);
 			
 			CellEmitter.get(pos).burst(LeafParticle.LEVEL_SPECIFIC, 4);

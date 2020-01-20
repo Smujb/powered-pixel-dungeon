@@ -58,64 +58,6 @@ public class WandOfAcid extends DamageWand {
         Buff.affect(defender, Corrosion.class).set(2f, 1 + staff.level()/2);
     }
 
-    public static class AcidPuddle implements Bundlable {
-
-        public int pos;
-        private int damageOnTrigger;
-
-        public void trigger(){
-
-            Char ch = Actor.findChar(pos);
-
-            if (ch instanceof Hero){
-                ((Hero) ch).interrupt();
-            }
-
-            dispel();
-            activate( ch );
-        }
-
-        public AcidPuddle setDamageOnTrigger(int damage) {
-            damageOnTrigger = damage;
-            return this;
-        }
-
-        public void activate( Char ch ) {
-            if (ch != null) {
-                ch.damage( damageOnTrigger, this );
-                Buff.affect( ch, Ooze.class ).set( 20f );
-            }
-        }
-
-        public void dispel() {
-            //Dungeon.level.uproot( pos );
-
-            if (Dungeon.level.heroFOV[pos]) {
-                CellEmitter.get( pos ).burst( Speck.factory(Speck.BUBBLE_GREEN), 6 );
-            }
-
-        }
-
-        private static final String POS	= "pos";
-        private static final String DAMAGE = "damage";
-
-        @Override
-        public void restoreFromBundle( Bundle bundle ) {
-            damageOnTrigger = bundle.getInt( DAMAGE );
-            pos = bundle.getInt( POS );
-        }
-
-        @Override
-        public void storeInBundle( Bundle bundle ) {
-            bundle.put( DAMAGE, damageOnTrigger );
-            bundle.put( POS, pos );
-        }
-
-        public String desc() {
-            return Messages.get(this, "desc");
-        }
-    }
-
     @Override
     protected int initialCharges() {
         return 4;

@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.levels;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -54,7 +54,6 @@ import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.food.SmallRation;
 import com.shatteredpixel.yasd.items.potions.PotionOfLevitation;
-import com.shatteredpixel.yasd.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.items.stones.StoneOfIntuition;
@@ -314,7 +313,7 @@ public abstract class Level implements Bundlable {
 		version = bundle.getInt( VERSION );
 		
 		//saves from before 0.6.5c are not supported
-		if (version < ShatteredPixelDungeon.v0_6_5c){
+		if (version < YASD.v0_6_5c){
 			throw new RuntimeException("old save");
 		}
 

@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.ui.changelist;
 
-import com.shatteredpixel.yasd.ShatteredPixelDungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -53,7 +53,7 @@ public class ChangeButton extends Component {
 	}
 	
 	protected void onClick() {
-		ShatteredPixelDungeon.scene().add(new ChangesWindow(new Image(icon), title, message));
+		YASD.scene().add(new ChangesWindow(new Image(icon), title, message));
 	}
 	
 	@Override

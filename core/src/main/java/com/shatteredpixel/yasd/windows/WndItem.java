@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.SPDSettings;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -67,7 +67,7 @@ public class WndItem extends Window {
 		info.maxWidth(width);
 		
 		//info box can go out of the screen on landscape, so widen it
-		while (SPDSettings.landscape()
+		while (YASDSettings.landscape()
 				&& info.height() > 100
 				&& width < WIDTH_MAX){
 			width += 20;
