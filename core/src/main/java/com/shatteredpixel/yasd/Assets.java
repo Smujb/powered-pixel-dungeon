@@ -25,32 +25,30 @@ public class Assets {
 
 	public static final String ARCS_BG		= "arcs1.png";
 	public static final String ARCS_FG		= "arcs2.png";
-	public static final String DASHBOARD	= "dashboard.png";
-	
+
 	public static final String BANNERS	= "banners.png";
 	public static final String BADGES	= "badges.png";
 	public static final String LOCKED	= "locked_badge.png";
 	public static final String AMULET	= "amulet.png";
 	
-	public static final String CHROME	= "chrome.png";
-	public static final String ICONS	= "icons.png";
-	public static final String STATUS	= "status_pane_2.png";
-	public static final String MENU		= "menu_button.png";
-	public static final String HP_BAR	= "hp_bar.png";
+	static final        String CHROME	 = "chrome.png";
+	public static final String ICONS	 = "icons.png";
+	public static final String STATUS	 = "status_pane_2.png";
+	public static final String MENU		 = "menu_button.png";
+	public static final String HP_BAR	 = "hp_bar.png";
 	public static final String MORALE_BAR= "morale_bar.png";
-	public static final String SHLD_BAR = "shield_bar.png";
-	public static final String XP_BAR	= "exp_bar.png";
-	public static final String TOOLBAR	= "toolbar.png";
-	public static final String SHADOW   = "shadow.png";
-	public static final String BOSSHP   = "boss_hp.png";
+	public static final String SHLD_BAR  = "shield_bar.png";
+	public static final String XP_BAR	 = "exp_bar.png";
+	public static final String TOOLBAR	 = "toolbar.png";
+	public static final String SHADOW    = "shadow.png";
+	public static final String BOSSHP    = "boss_hp.png";
 
 	public static final String WARRIOR	= "warrior.png";
 	public static final String MAGE		= "mage.png";
 	public static final String ROGUE	= "rogue.png";
 	public static final String HUNTRESS	= "huntress.png";
 	public static final String AVATARS	= "avatars.png";
-	public static final String PET		= "pet.png";
-	
+
 	public static final String SURFACE	= "surface.png";
 	
 	public static final String FIREBALL		= "fireball.png";
@@ -138,9 +136,7 @@ public class Assets {
 	public static final String CONS_ICONS   = "consumable_icons.png";
 	
 	public static final String PIXELFONT    = "pixel_font.png";
-	public static final String FONT1X       = "font1x.png";
-	public static final String FONT2X       = "font2x.png";
-	
+
 	public static final String THEME	= "theme.ogg";
 	public static final String TUNE		= "game.ogg";
 	public static final String HAPPY	= "surface.ogg";

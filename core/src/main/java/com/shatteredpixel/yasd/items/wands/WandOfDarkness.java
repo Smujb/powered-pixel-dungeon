@@ -8,6 +8,7 @@ import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.DarkGas;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -74,9 +75,7 @@ public class WandOfDarkness extends Wand {
         // lvl 1 - 50%
         // lvl 2 - 60%
         if (Random.Int( level() + 3 ) >= 2) {
-            Buff.affect( defender, Aggression.class, Aggression.DURATION);
-            CellEmitter.center(defender.pos).start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
-
+            Buff.affect( defender, Terror.class, 3 + staff.level() * 2);
         }
     }
 

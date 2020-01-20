@@ -30,18 +30,10 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
-import com.shatteredpixel.yasd.messages.Messages;
-import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.WarlockSprite;
-import com.shatteredpixel.yasd.utils.GLog;
-import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-import java.awt.RadialGradientPaint;
-
 public class Warlock extends RangedMob {
-	
-	private static final float TIME_TO_ZAP	= 1f;
 	
 	{
 		spriteClass = WarlockSprite.class;

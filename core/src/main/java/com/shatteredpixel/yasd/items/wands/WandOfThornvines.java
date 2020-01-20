@@ -136,13 +136,6 @@ public class WandOfThornvines extends Wand {
         }
 
         @Override
-        public void damage(int dmg, Object src) {
-            dmg = (int)(Math.sqrt(dmg));
-
-            super.damage(dmg, src);
-        }
-
-        @Override
         public int defenseProc(Char enemy, int damage) {
             if (Random.Int(  3 ) >= 2) {
 

@@ -8,9 +8,11 @@ import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.Fire;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
+import com.shatteredpixel.yasd.actors.buffs.Chill;
 import com.shatteredpixel.yasd.actors.buffs.Slow;
 import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Chilling;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -149,6 +151,6 @@ public class WandOfFlow extends DamageWand {
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-
+        new Chilling().proc(staff, attacker, defender, damage);
     }
 }

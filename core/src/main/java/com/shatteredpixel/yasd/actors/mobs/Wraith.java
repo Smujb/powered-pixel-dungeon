@@ -104,7 +104,7 @@ public class Wraith extends RangedMob {
 		return 10 + level;
 	}
 	
-	public void adjustStats( int level ) {
+	private void adjustStats(int level) {
 		this.level = level;
 		defenseSkill = attackSkill(null) - 3;
 		HP = HT = 4 + level * 2;
@@ -117,7 +117,7 @@ public class Wraith extends RangedMob {
 		return true;
 	}
 	
-	public static Wraith spawnNeighbor( int pos ) {
+	private static Wraith spawnNeighbor(int pos) {
 		ArrayList<Integer> locations = new ArrayList<>();
 		for (int n : PathFinder.NEIGHBOURS8) {
 			int cell = pos + n;

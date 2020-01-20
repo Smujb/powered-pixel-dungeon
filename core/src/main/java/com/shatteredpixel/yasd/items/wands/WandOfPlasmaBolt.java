@@ -5,6 +5,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.shatteredpixel.yasd.items.weapon.enchantments.Unstable;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.sprites.CharSprite;
@@ -73,6 +74,6 @@ public class WandOfPlasmaBolt extends DamageWand {
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
-
+        new Unstable().proc(staff, attacker, defender, damage);
     }
 }
