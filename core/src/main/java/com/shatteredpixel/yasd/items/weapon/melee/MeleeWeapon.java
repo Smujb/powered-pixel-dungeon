@@ -162,17 +162,24 @@ public class MeleeWeapon extends Weapon {
 
 	public MeleeWeapon setTier(int tier) {
 		this.tier = tier;
+		updateTier();
 		return this;
 	}
 
 	public MeleeWeapon upgradeTier(int tier) {
 		this.tier += tier;
+		updateTier();
 		return this;
 	}
 
 	public MeleeWeapon degradeTier(int tier) {
 		this.tier -= tier;
+		updateTier();
 		return this;
+	}
+
+	private void updateTier() {
+
 	}
 
 	public static String TIER = "tier";

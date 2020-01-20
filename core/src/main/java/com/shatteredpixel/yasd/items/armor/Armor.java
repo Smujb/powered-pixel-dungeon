@@ -728,16 +728,22 @@ public class Armor extends KindofMisc {
 	}
 	public Armor setTier(int tier) {
 		this.tier = tier;
+		updateTier();
 		return this;
 	}
 
 	public Armor upgradeTier(int tier) {
 		this.tier += tier;
+		updateTier();
 		return this;
 	}
 
 	public Armor degradeTier(int tier) {
 		this.tier -= tier;
+		updateTier();
 		return this;
+	}
+	public void updateTier() {
+
 	}
 }

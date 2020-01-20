@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.BrokenSeal;
+import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
@@ -126,8 +127,8 @@ public enum HeroClass {
 		new Beer().collect();
 
 		//new WandOfDamnation().identify().collect();
-		new PotionOfLiquidFlame().identify().collect();
-		new WandOfAcid().collect();
+
+		//Generator.randomWeapon().collect();
 
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();

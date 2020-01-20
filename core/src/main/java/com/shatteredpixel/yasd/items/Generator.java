@@ -354,8 +354,37 @@ public class Generator {
 			WAND.probs = new float[]{ 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 4, 3, 3 };
 			
 			//see generator.randomWeapon
-			WEAPON.classes = new Class<?>[]{};
-			WEAPON.probs = new float[]{};
+			WEAPON.classes = new Class<?>[]{
+					Shortsword.class,
+					HandAxe.class,
+					Spear.class,
+					Quarterstaff.class,
+					Dirk.class,
+					WornShortsword.class,
+					Gloves.class,
+					Dagger.class,
+					MagesStaff.class,
+					Sword.class,
+					Mace.class,
+					Scimitar.class,
+					RoundShield.class,
+					Sai.class,
+					Whip.class,
+					Longsword.class,
+					BattleAxe.class,
+					Flail.class,
+					RunicBlade.class,
+					AssassinsBlade.class,
+					Crossbow.class,
+					Greatsword.class,
+					WarHammer.class,
+					Glaive.class,
+					Greataxe.class,
+					Greatshield.class,
+					Gauntlet.class
+
+			};
+			WEAPON.probs = new float[]{ 1, 1, 1, 0, 6, 5, 5, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4, 4, 4 };
 			
 			WEP_T1.classes = new Class<?>[]{
 					WornShortsword.class,
@@ -610,12 +639,14 @@ public class Generator {
 	}
 	
 	public static MeleeWeapon randomWeapon(int floorSet) {
-
+		MeleeWeapon w;
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
-		
-		Category c = wepTiers[Random.chances(floorSetTierProbs[floorSet])];
-		MeleeWeapon w = (MeleeWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+
+		floorSet += (Random.chances(new float[]{1, 4, 2, 2, 1})) - 1;
+		floorSet = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
+		w = (MeleeWeapon) Reflection.newInstance(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
 		w.random();
+		w.setTier(floorSet);
 		return w;
 	}
 	
@@ -626,7 +657,6 @@ public class Generator {
 			Category.MIS_T4,
 			Category.MIS_T5
 	};
-	
 	public static MissileWeapon randomMissile(){
 		return randomMissile(Dungeon.depth / Constants.CHAPTER_LENGTH);
 	}
