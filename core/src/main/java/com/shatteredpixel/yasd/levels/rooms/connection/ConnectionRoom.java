@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.levels.rooms.connection;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.levels.rooms.Room;
 import com.watabou.utils.Point;
@@ -64,8 +65,11 @@ public abstract class ConnectionRoom extends Room {
 		rooms.add(RingBridgeRoom.class);
 	}
 	
-	private static float[][] chances = new float[27][];
+	private static float[][] chances = new float[Constants.NUM_FLOORS + 1][];
 	static {
+		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {//Default to Sewer levelgen.
+			chances[i] = new float[]{20, 1,    0, 2,       2, 1};
+		}
 		chances[1] =  new float[]{20, 1,    0, 2,       2, 1};
 		chances[4] =  chances[3] = chances[2] = chances[1];
 		chances[5] =  new float[]{20, 0,    0, 0,       0, 0};

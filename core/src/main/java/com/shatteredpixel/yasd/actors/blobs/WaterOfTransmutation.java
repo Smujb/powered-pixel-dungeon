@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.blobs;
 
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
@@ -123,7 +124,7 @@ public class WaterOfTransmutation extends WellWater {
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 
 		int level = w.level();
-		if (w.curseInfusionBonus) level--;
+		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
 		if (level > 0) {
 			n.upgrade( level );
 		} else if (level < 0) {
@@ -186,7 +187,7 @@ public class WaterOfTransmutation extends WellWater {
 		
 		n.level( 0 );
 		int level = w.level();
-		if (w.curseInfusionBonus) level--;
+		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
 		n.upgrade( level );
 		
 		n.levelKnown = w.levelKnown;

@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Bones;
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.YASDSettings;
@@ -1184,11 +1185,11 @@ public class Hero extends Char {
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.depth < 26) {
+				&& Dungeon.depth < Constants.NUM_FLOORS && !Constants.FLOORS_NO_DESCEND.contains(Dungeon.depth)) {
 			
 			curAction = new HeroAction.Descend( cell );
 			
-		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE) {
+		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && !Constants.FLOORS_NO_ASCEND.contains(Dungeon.depth)) {
 			
 			curAction = new HeroAction.Ascend( cell );
 			

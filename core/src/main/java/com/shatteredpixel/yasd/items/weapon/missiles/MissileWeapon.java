@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items.weapon.missiles;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -94,7 +95,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public int upgradeLimit() {
-		return 1;
+		return Constants.UPGRADE_LIMIT/3;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -303,7 +304,7 @@ public abstract class Wand extends KindofMisc {
 			curseInfusionBonus = false;
 			updateLevel();
 		}
-		return super.level() + (curseInfusionBonus ? 1 : 0);
+		return super.level() + (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0);
 	}
 	
 	@Override
@@ -337,7 +338,7 @@ public abstract class Wand extends KindofMisc {
 	}
 	
 	public void updateLevel() {
-		maxCharges = Math.min( initialCharges() + level()*chargesScaling(), 10 );
+		maxCharges = Math.min( initialCharges() + level()*chargesScaling(), Constants.WAND_CHARGE_CAP );
 		curCharges = Math.min( curCharges, maxCharges );
 	}
 	

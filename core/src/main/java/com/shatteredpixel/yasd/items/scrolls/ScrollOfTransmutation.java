@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.scrolls;
 
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Generator;
@@ -154,7 +155,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 		
 		int level = w.level();
-		if (w.curseInfusionBonus) level--;
+		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
 		if (level > 0) {
 			n.upgrade( level );
 		} else if (level < 0) {
@@ -217,7 +218,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		
 		n.level( 0 );
 		int level = w.level();
-		if (w.curseInfusionBonus) level--;
+		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
 		n.upgrade( level );
 		
 		n.levelKnown = w.levelKnown;

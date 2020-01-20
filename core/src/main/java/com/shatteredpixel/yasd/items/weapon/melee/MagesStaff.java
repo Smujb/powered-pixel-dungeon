@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -197,10 +198,12 @@ public class MagesStaff extends MeleeWeapon {
 		this.wand = null;
 
 		//syncs the level of the two items.
-		int targetLevel = Math.max(this.level() - (curseInfusionBonus ? 1 : 0), wand.level());
-
+		int targetLevel = Math.max(this.level() - (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0), wand.level());
+		if (targetLevel > upgradeLimit()) {
+			targetLevel = upgradeLimit();
+		}
 		//if the staff's level is being overridden by the wand, preserve 1 upgrade
-		if (wand.level() >= this.level() && this.level() > (curseInfusionBonus ? 1 : 0)) targetLevel++;
+		if (wand.level() >= this.level() && this.level() > (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0)) targetLevel++;
 		if (owner instanceof Hero && wand.isEquipped(((Hero)owner))) {
 			wand.doUnequip(((Hero)owner), false);
 		}
@@ -312,7 +315,7 @@ public class MagesStaff extends MeleeWeapon {
 		super.restoreFromBundle(bundle);
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {
-			wand.maxCharges = Math.min(wand.maxCharges, 10);
+			wand.maxCharges = Math.min(wand.maxCharges, Constants.WAND_CHARGE_CAP);
 			name = Messages.get(wand, "staff_name");
 		}
 	}

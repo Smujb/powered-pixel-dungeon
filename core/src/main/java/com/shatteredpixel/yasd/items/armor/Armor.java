@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.armor;
 
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -363,7 +364,7 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public int level() {
-		return super.level() + (curseInfusionBonus ? 1 : 0);
+		return super.level() + (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0);
 	}
 	
 	@Override

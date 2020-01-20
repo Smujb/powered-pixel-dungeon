@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.items;
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -426,11 +427,15 @@ public class Item implements Bundlable {
 	}
 
 	public boolean isUpgradable() {
-		return level() < upgradeLimit();
-	}//Hard +3 cap for all items
+		if (Constants.UPGRADE_LIMIT >= 0) {
+			return level() < upgradeLimit();
+		} else {
+			return true;
+		}
+	}
 
 	public int upgradeLimit() {
-		int limit = 3;
+		int limit = Constants.UPGRADE_LIMIT;
 		if ((this instanceof Armor && ((Armor)this).curseInfusionBonus) || (this instanceof MeleeWeapon && ((MeleeWeapon)this).curseInfusionBonus) || (this instanceof Wand && ((Wand)this).curseInfusionBonus)) {
 			limit++;
 		}

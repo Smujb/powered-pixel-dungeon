@@ -1,25 +1,18 @@
 package com.shatteredpixel.yasd.items.wands;
 
-import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.AcidPool;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.actors.buffs.Ooze;
-import com.shatteredpixel.yasd.actors.hero.Hero;
-import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
-import com.shatteredpixel.yasd.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
-import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
 
-import static com.shatteredpixel.yasd.actors.blobs.Blob.*;
+import static com.shatteredpixel.yasd.actors.blobs.Blob.seed;
 
 public class WandOfAcid extends DamageWand {
     {

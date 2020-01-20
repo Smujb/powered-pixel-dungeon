@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -69,7 +70,7 @@ public class BrokenSeal extends Item {
 
 	@Override
 	public int upgradeLimit() {
-		return 1;
+		return Constants.UPGRADE_LIMIT/3;
 	}
 
 	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
