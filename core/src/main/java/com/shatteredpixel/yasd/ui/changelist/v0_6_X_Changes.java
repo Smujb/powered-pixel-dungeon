@@ -870,7 +870,7 @@ public class v0_6_X_Changes {
 		
 		changes.addButton( new ChangeButton(new ItemSprite(new Greataxe()), "Tier-5 Weapon Buffs",
 				"_-_ Greataxe base damage increased by ~22%\n" +
-				"_-_ Greatshield base damage increased by ~17%"));
+				"_-_ Shield base damage increased by ~17%"));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(new StoneOfEnchantment()), "Enchant and Glyph Balance Changes",
 				"_-_ Vampiric enchant lifesteal reduced by 20%\n\n" +

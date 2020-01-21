@@ -135,11 +135,10 @@ import com.shatteredpixel.yasd.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
 import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Dirk;
+import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.Gauntlet;
-import com.shatteredpixel.yasd.items.weapon.melee.Gloves;
 import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
-import com.shatteredpixel.yasd.items.weapon.melee.Greatshield;
+import com.shatteredpixel.yasd.items.weapon.melee.Shield;
 import com.shatteredpixel.yasd.items.weapon.melee.HandAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Mace;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
@@ -353,7 +352,7 @@ public class Generator {
 					HandAxe.class,
 					Quarterstaff.class,
 					Dirk.class,
-					Gloves.class,
+					Fist.class,
 					Dagger.class,
 					MagesStaff.class,
 					Mace.class,
@@ -370,14 +369,13 @@ public class Generator {
 					WarHammer.class,
 					Polearm.class,
 					Greataxe.class,
-					Greatshield.class,
-					Gauntlet.class
+					Shield.class,
 
 			};
-			WEAPON.probs = new float[]{ 1, 1, 1, 6, 5, 0, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5 };
+			WEAPON.probs = new float[]{ 1, 1, 1, 6, 5, 0, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6 };
 			
 			WEP_T1.classes = new Class<?>[]{
-					Gloves.class,
+					Fist.class,
 					Dagger.class,
 					MagesStaff.class
 			};
@@ -413,10 +411,9 @@ public class Generator {
 					WarHammer.class,
 					Polearm.class,
 					Greataxe.class,
-					Greatshield.class,
-					Gauntlet.class
+					Shield.class
 			};
-			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4, 4 };
+			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4 };
 			
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{

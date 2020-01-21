@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd;
 
+import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.scenes.PixelScene;
 import com.shatteredpixel.yasd.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
@@ -65,7 +66,7 @@ public class YASD extends Game {
 				"com.shatteredpixel.yasd.items.getWeapons.missiles.Boomerang" );
 		
 		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.yasd.items.weapon.melee.Gloves.class,
+				Fist.class,
 				"com.shatteredpixel.yasd.items.getWeapons.melee.Knuckles" );
 		
 		//v0.7.2

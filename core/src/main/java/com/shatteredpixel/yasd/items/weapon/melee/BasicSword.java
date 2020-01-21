@@ -82,6 +82,7 @@ public class BasicSword extends MeleeWeapon {
 		}
 	}
 
+	//Placeholders for tiers
 	private class WornShortsword extends MeleeWeapon {}
 	private class Shortsword extends MeleeWeapon {}
 	private class Sword extends MeleeWeapon {}

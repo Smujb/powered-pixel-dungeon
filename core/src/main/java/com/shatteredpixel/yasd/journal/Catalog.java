@@ -97,11 +97,10 @@ import com.shatteredpixel.yasd.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
 import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Dirk;
+import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.Gauntlet;
-import com.shatteredpixel.yasd.items.weapon.melee.Gloves;
 import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
-import com.shatteredpixel.yasd.items.weapon.melee.Greatshield;
+import com.shatteredpixel.yasd.items.weapon.melee.Shield;
 import com.shatteredpixel.yasd.items.weapon.melee.HandAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Mace;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
@@ -148,7 +147,7 @@ public enum Catalog {
 	
 	static {
 		//WEAPONS.seen.put( WornShortsword.class,             false);
-		WEAPONS.seen.put( Gloves.class,                     false);
+		WEAPONS.seen.put( Fist.class,                     false);
 		WEAPONS.seen.put( Dagger.class,                     false);
 		WEAPONS.seen.put( MagesStaff.class,                 false);
 		//WEAPONS.seen.put( Boomerang.class,                  false);
@@ -173,8 +172,8 @@ public enum Catalog {
 		WEAPONS.seen.put( WarHammer.class,                  false);
 		WEAPONS.seen.put( Polearm.class,                     false);
 		WEAPONS.seen.put( Greataxe.class,                   false);
-		WEAPONS.seen.put( Greatshield.class,                false);
-		WEAPONS.seen.put( Gauntlet.class,                   false);
+		WEAPONS.seen.put( Shield.class,                false);
+		//WEAPONS.seen.put( Gauntlet.class,                   false);
 	
 		ARMOR.seen.put( ClothArmor.class,                   false);
 		ARMOR.seen.put( LeatherArmor.class,                 false);

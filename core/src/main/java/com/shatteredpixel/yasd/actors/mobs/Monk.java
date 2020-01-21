@@ -29,8 +29,7 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.food.Food;
-import com.shatteredpixel.yasd.items.weapon.melee.Gauntlet;
-import com.shatteredpixel.yasd.items.weapon.melee.Gloves;
+import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.MonkSprite;
 import com.shatteredpixel.yasd.utils.GLog;
@@ -93,8 +92,7 @@ public class Monk extends Mob {
 			KindofMisc item = hero.belongings.miscs[0];
 			
 			if ((item != null)
-					&& !(item instanceof Gloves)
-					&& !(item instanceof Gauntlet)
+					&& !(item instanceof Fist)
 					&& !item.cursed) {
 				if (hitsToDisarm == 0) hitsToDisarm = Random.NormalIntRange(4, 8);
 

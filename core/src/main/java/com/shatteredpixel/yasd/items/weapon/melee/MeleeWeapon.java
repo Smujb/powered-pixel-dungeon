@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
+import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
@@ -88,6 +89,11 @@ public class MeleeWeapon extends Weapon {
 		} else {
 			return defaultSTRReq();
 		}
+	}
+
+	@Override
+	public void use(float amount) {
+		super.use(amount*damageMultiplier);
 	}
 
 	@Override

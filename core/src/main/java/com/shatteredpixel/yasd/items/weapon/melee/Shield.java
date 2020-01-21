@@ -25,26 +25,61 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Greatshield extends MeleeWeapon {
+public class Shield extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.GREATSHIELD;
+		//image = ItemSpriteSheet.GREATSHIELD;
 
-		tier = 5;
+		tier = 1;
 
 		damageMultiplier = 0.6f;
 	}
 
 	@Override
+	public int image() {
+		if (tier >= 4) {
+			return ItemSpriteSheet.GREATSHIELD;
+		} else {
+			return ItemSpriteSheet.ROUND_SHIELD;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier >= 4) {
+			return Messages.get(Greatshield.class, "desc");
+		} else {
+			return Messages.get(RoundShield.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier >= 4) {
+			return Messages.get(Greatshield.class, "name");
+		} else {
+			return Messages.get(RoundShield.class, "name");
+		}
+	}
+
+	@Override
 	public int defenseFactor( Char owner ) {
-		return 10+3*level();    //10 extra defence, plus 3 per level;
+		return defenseFactor();
+	}
+
+	public int defenseFactor() {
+		return Math.round(tier*2 + (tier/2f)*level());    //2*tier extra defence, plus tier/2 per level;
 	}
 	
 	public String statsInfo(){
 		if (isIdentified()){
-			return Messages.get(this, "stats_desc", 10+3*level());
+			return Messages.get(this, "stats_desc", defenseFactor());
 		} else {
-			return Messages.get(this, "typical_stats_desc", 10);
+			return Messages.get(this, "typical_stats_desc", tier*2);
 		}
 	}
+
+	//Placeholders for tiers.
+	private static class Greatshield extends MeleeWeapon {}
+	private static class RoundShield extends MeleeWeapon {}
 }

@@ -21,43 +21,12 @@
 
 package com.shatteredpixel.yasd.ui.changelist;
 
-import com.shatteredpixel.yasd.Assets;
-import com.shatteredpixel.yasd.Badges;
-import com.shatteredpixel.yasd.Challenges;
-import com.shatteredpixel.yasd.effects.BadgeBanner;
-import com.shatteredpixel.yasd.items.Ankh;
-import com.shatteredpixel.yasd.items.Honeypot;
-import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
-import com.shatteredpixel.yasd.items.artifacts.DriedRose;
-import com.shatteredpixel.yasd.items.artifacts.UnstableSpellbook;
-import com.shatteredpixel.yasd.items.food.Blandfruit;
-import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
-import com.shatteredpixel.yasd.items.quest.CorpseDust;
-import com.shatteredpixel.yasd.items.quest.Embers;
-import com.shatteredpixel.yasd.items.rings.RingOfWealth;
-import com.shatteredpixel.yasd.items.scrolls.ScrollOfMirrorImage;
-import com.shatteredpixel.yasd.items.scrolls.ScrollOfRetribution;
-import com.shatteredpixel.yasd.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.yasd.items.scrolls.ScrollOfTerror;
-import com.shatteredpixel.yasd.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.items.wands.WandOfRegrowth;
-import com.shatteredpixel.yasd.items.wands.WandOfTransfusion;
-import com.shatteredpixel.yasd.items.wands.WandOfWarding;
-import com.shatteredpixel.yasd.items.weapon.melee.Gauntlet;
-import com.shatteredpixel.yasd.items.weapon.missiles.Shuriken;
-import com.shatteredpixel.yasd.items.weapon.missiles.Tomahawk;
-import com.shatteredpixel.yasd.items.weapon.missiles.darts.Dart;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.ChangesScene;
-import com.shatteredpixel.yasd.sprites.AlbinoSprite;
-import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.ItemSprite;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.sprites.SwarmSprite;
-import com.shatteredpixel.yasd.ui.BuffIndicator;
 import com.shatteredpixel.yasd.ui.Icons;
 import com.shatteredpixel.yasd.ui.Window;
-import com.watabou.noosa.Image;
 
 import java.util.ArrayList;
 
