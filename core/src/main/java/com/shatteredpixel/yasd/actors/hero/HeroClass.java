@@ -119,9 +119,6 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
-
-		new AccurateWeapon().collect();
-		new MagicalInfusion().quantity(5).collect();
 		//new WandOfDamnation().identify().collect();
 
 		//Generator.randomWeapon().collect();
