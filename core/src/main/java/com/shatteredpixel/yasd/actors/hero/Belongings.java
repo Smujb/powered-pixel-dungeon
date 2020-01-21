@@ -27,9 +27,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
-import com.shatteredpixel.yasd.actors.mobs.CausticSlime;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
@@ -49,8 +47,8 @@ import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.keys.Key;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.wands.Wand;
+import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
@@ -119,7 +117,7 @@ public class Belongings implements Iterable<Item> {
 			weapons.add((KindOfWeapon) miscs[4]);
 		}
 		if (weapons.isEmpty()) {
-			weapons.add(new WornShortsword());
+			weapons.add(new BasicSword());
 		}
 		return weapons;
 

@@ -23,8 +23,8 @@ package com.shatteredpixel.yasd.ui.changelist;
 
 import com.shatteredpixel.yasd.items.Stylus;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
-import com.shatteredpixel.yasd.items.weapon.melee.Glaive;
-import com.shatteredpixel.yasd.items.weapon.melee.Longsword;
+import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
+import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
 import com.shatteredpixel.yasd.items.weapon.melee.RunicBlade;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.ChangesScene;
@@ -96,8 +96,8 @@ public class v0_4_X_Changes {
 				"_-_ Framerate improvements for older devices\n" +
 				"_-_ Game size reduced by ~10%"));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new Glaive()), "Balance Changes",
-				"_-_ Spear and Glaive damage reduced\n" +
+		changes.addButton( new ChangeButton(new ItemSprite(new Polearm()), "Balance Changes",
+				"_-_ Spear and Polearm damage reduced\n" +
 				"_-_ Runic blade damage reduced\n" +
 				"_-_ Grim enchant now procs more often\n" +
 				"_-_ Glyph of stone adds more weight\n" +
@@ -187,7 +187,7 @@ public class v0_4_X_Changes {
 				"\n" +
 				"Dev commentary will be added here in the future."));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new Longsword()), "Equipment Overhaul!",
+		changes.addButton( new ChangeButton(new ItemSprite(new BasicSword()), "Equipment Overhaul!",
 				"_-_ 13 new weapons, 12 rebalanced weapons\n" +
 				"\n" +
 				"Equipment Balance:\n" +

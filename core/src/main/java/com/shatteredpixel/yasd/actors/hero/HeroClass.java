@@ -26,7 +26,6 @@ import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.BrokenSeal;
-import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
@@ -42,28 +41,21 @@ import com.shatteredpixel.yasd.items.food.Food;
 import com.shatteredpixel.yasd.items.food.SmallRation;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.potions.PotionOfInvisibility;
-import com.shatteredpixel.yasd.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.items.potions.PotionOfMindVision;
-import com.shatteredpixel.yasd.items.potions.PotionOfPurity;
-import com.shatteredpixel.yasd.items.potions.exotic.PotionOfHolyFuror;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
-import com.shatteredpixel.yasd.items.wands.Wand;
-import com.shatteredpixel.yasd.items.wands.WandOfAcid;
-import com.shatteredpixel.yasd.items.wands.WandOfDamnation;
-import com.shatteredpixel.yasd.items.wands.WandOfDarkness;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
-import com.shatteredpixel.yasd.items.wands.WandOfPlasmaBolt;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
+import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
 import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Gloves;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.items.weapon.melee.WornShortsword;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -126,6 +118,9 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
+
+		new BasicSword().collect();
+		new MagicalInfusion().quantity(5).collect();
 		//new WandOfDamnation().identify().collect();
 
 		//Generator.randomWeapon().collect();
@@ -167,7 +162,7 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.miscs[0] = new WornShortsword()).identify();
+		(hero.belongings.miscs[0] = new BasicSword()).identify();
 		(hero.belongings.miscs[1] = new WarriorArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();

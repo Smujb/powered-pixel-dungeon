@@ -145,7 +145,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		Weapon n;
 		Generator.Category c;
 		if (w instanceof MeleeWeapon) {
-			c = Generator.wepTiers[((MeleeWeapon)w).tier - 1];
+			c = Generator.Category.WEAPON;
 		} else {
 			c = Generator.misTiers[((MissileWeapon)w).tier - 1];
 		}
@@ -156,12 +156,13 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		
 		int level = w.level();
 		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
-		if (level > 0) {
-			n.upgrade( level );
-		} else if (level < 0) {
-			n.degrade( -level );
+
+
+		n.level(level);
+
+		if (n instanceof MeleeWeapon && w instanceof MeleeWeapon) {
+			((MeleeWeapon) n).setTier(((MeleeWeapon) w).tier);
 		}
-		
 		n.enchantment = w.enchantment;
 		n.curseInfusionBonus = w.curseInfusionBonus;
 		n.levelKnown = w.levelKnown;

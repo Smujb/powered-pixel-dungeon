@@ -21,14 +21,50 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Sword extends MeleeWeapon {
-	
-	{
-		image = ItemSpriteSheet.SWORD;
+public class Polearm extends MeleeWeapon {
 
-		tier = 3;
+	{
+		tier = 1;
+		DLY = 1.5f;   //0.5x speed
+		RCH = 2;    //extra reach
+
+		damageMultiplier = 1.5f;
+
+		dualWieldpenalty = true;
 	}
 
+	@Override
+	public int image() {
+		if (tier >= 4) {
+			return ItemSpriteSheet.GLAIVE;
+		} else {
+			return ItemSpriteSheet.SPEAR;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier >= 4) {
+			return Messages.get(Glaive.class, "desc");
+		} else {
+			return Messages.get(Spear.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier >= 4) {
+			return Messages.get(Glaive.class, "name");
+		} else {
+			return Messages.get(Spear.class, "name");
+		}
+	}
+
+	//Placeholders for tiers.
+	private static class Glaive extends MeleeWeapon {}
+
+	private static class Spear extends MeleeWeapon {}
 }

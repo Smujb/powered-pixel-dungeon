@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.windows;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.actors.Char;
@@ -29,6 +30,7 @@ import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Gold;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.Recipe;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.bags.Bag;
@@ -90,7 +92,8 @@ public class WndBag extends WndTabbed {
 		ALCHEMY,
 		RECYCLABLE,
 		NOT_EQUIPPED,
-		REPAIRABLE
+		REPAIRABLE,
+		INCREASE_TIER
 	}
 
 	protected static final int COLS_P    = 4;
@@ -215,11 +218,14 @@ public class WndBag extends WndTabbed {
 		
 		// Equipped items
 		Belongings stuff = Dungeon.hero.belongings;
-		placeItem( stuff.miscs[0] != null ? stuff.miscs[0] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
+		for (KindofMisc item : stuff.miscs) {
+			placeItem(item != null ? item : new Placeholder( ItemSpriteSheet.RING_HOLDER ));
+		}
+		/*placeItem( stuff.miscs[0] != null ? stuff.miscs[0] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
 		placeItem( stuff.miscs[1] != null ? stuff.miscs[1] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
 		placeItem( stuff.miscs[2] != null ? stuff.miscs[2] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
 		placeItem( stuff.miscs[3] != null ? stuff.miscs[3] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		placeItem( stuff.miscs[4] != null ? stuff.miscs[4] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
+		placeItem( stuff.miscs[4] != null ? stuff.miscs[4] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );*/
 
 		// Items in the bag
 		for (Item item : container.items.toArray(new Item[0])) {
@@ -408,7 +414,8 @@ public class WndBag extends WndTabbed {
 						mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
 						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
 						mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
-						mode == Mode.ALL
+						mode == Mode.ALL ||
+						mode == Mode.INCREASE_TIER && item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER
 					);
 				}
 			} else {
