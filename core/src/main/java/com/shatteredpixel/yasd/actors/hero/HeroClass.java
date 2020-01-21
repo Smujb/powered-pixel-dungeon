@@ -52,11 +52,11 @@ import com.shatteredpixel.yasd.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
+import com.shatteredpixel.yasd.items.weapon.melee.AccurateWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
-import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.items.weapon.melee.Shield;
+import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -120,7 +120,7 @@ public enum HeroClass {
 		new Beer().collect();
 
 
-		new Shield().collect();
+		new AccurateWeapon().collect();
 		new MagicalInfusion().quantity(5).collect();
 		//new WandOfDamnation().identify().collect();
 
@@ -200,7 +200,7 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
-		(hero.belongings.miscs[0] = new Dagger()).identify();
+		(hero.belongings.miscs[0] = new SneakWeapon()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();

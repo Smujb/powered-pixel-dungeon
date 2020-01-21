@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.weapon.melee;
 
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
 public class Quarterstaff extends MeleeWeapon {
@@ -36,6 +37,11 @@ public class Quarterstaff extends MeleeWeapon {
 
 	@Override
 	public int defenseFactor( Char owner ) {
-		return 3;	//3 extra defence
+		return 2*tier;	//2*tier extra defence
+	}
+
+	@Override
+	public String statsInfo() {
+		return Messages.get(this, "stats_desc", 2*tier);
 	}
 }

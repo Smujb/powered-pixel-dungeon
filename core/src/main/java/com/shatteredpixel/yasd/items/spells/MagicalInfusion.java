@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.items.scrolls.exotic.ScrollOfConfusion;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -68,7 +69,7 @@ public class MagicalInfusion extends InventorySpell {
 	public static class Recipe extends com.shatteredpixel.yasd.items.Recipe.SimpleRecipe {
 
 		{
-			inputs =  new Class[]{ScrollOfUpgrade.class, ScrollOfTransmutation.class};//Scroll of Upgrade + Scroll of Transmutation
+			inputs =  new Class[]{ScrollOfUpgrade.class, ScrollOfConfusion.class};//Scroll of Upgrade + Scroll of Confusion
 			inQuantity = new int[]{1, 1};
 
 			cost = 4;

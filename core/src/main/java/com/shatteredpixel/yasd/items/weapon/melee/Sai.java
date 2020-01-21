@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Sai extends MeleeWeapon {
+public class Sai extends MeleeWeapon {//Sai will get reworked.
 
 	{
 		image = ItemSpriteSheet.SAI;

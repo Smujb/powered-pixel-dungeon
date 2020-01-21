@@ -24,29 +24,30 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-public class Dirk extends MeleeWeapon {
+public class SneakWeapon extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.DIRK;
+		image = ItemSpriteSheet.ASSASSINS_BLADE;
 
-		tier = 2;
-
+		tier = 1;
 		damageMultiplier = 0.80f;
 	}
-	
+
+
 	@Override
 	public int damageRoll(Char owner) {
 		if (owner instanceof Hero) {
 			Hero hero = (Hero)owner;
 			Char enemy = hero.enemy();
 			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(hero)) {
-				//deals 67% toward max to max on surprise, instead of min to max.
+				//deals 50% toward max to max on surprise, instead of min to max.
 				int diff = max() - min();
 				int damage = augment.damageFactor(Random.NormalIntRange(
-						min() + Math.round(diff*0.67f),
+						min() + Math.round(diff*0.75f),
 						max()));
 				int exStr = hero.STR() - STRReq();
 				if (exStr > 0) {
@@ -57,5 +58,42 @@ public class Dirk extends MeleeWeapon {
 		}
 		return super.damageRoll(owner);
 	}
+
+	@Override
+	public int image() {
+		if (tier < 2) {
+			return ItemSpriteSheet.DAGGER;
+		} else if (tier < 3) {
+			return ItemSpriteSheet.DIRK;
+		} else {
+			return ItemSpriteSheet.ASSASSINS_BLADE;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier < 2) {
+			return Messages.get(Dagger.class, "desc");
+		} else if (tier < 3) {
+			return Messages.get(Dirk.class, "desc");
+		} else {
+			return Messages.get(AssassinsBlade.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 2) {
+			return Messages.get(Dagger.class, "name");
+		} else if (tier < 3) {
+			return Messages.get(Dirk.class, "name");
+		} else {
+			return Messages.get(AssassinsBlade.class, "name");
+		}
+	}
+
+	private static class Dirk extends MeleeWeapon {}
+	private static class Dagger extends MeleeWeapon {}
+	private static class AssassinsBlade extends MeleeWeapon {}
 
 }

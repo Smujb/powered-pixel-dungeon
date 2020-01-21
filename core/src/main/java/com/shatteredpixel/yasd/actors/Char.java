@@ -464,7 +464,7 @@ public abstract class Char extends Actor {
 		float defRoll = Random.Float(defender.defenseSkill(attacker));
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.20f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.20f;
-		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
+		return (magic ? acuRoll * 3 : acuRoll) >= defRoll;
 	}
 
 	public void spendAndNext(float time) {

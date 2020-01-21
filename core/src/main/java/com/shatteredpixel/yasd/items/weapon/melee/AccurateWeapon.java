@@ -21,30 +21,53 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class RoundShield extends MeleeWeapon {
+public class AccurateWeapon extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.ROUND_SHIELD;
+		image = ItemSpriteSheet.BATTLE_AXE;
 
-		tier = 3;
-
-		damageMultiplier = 0.6f;
+		tier = 1;
+		ACC = 1.33f; //33% boost to accuracy
+		damageMultiplier = 0.80f;
 	}
 
 	@Override
-	public int defenseFactor( Char owner ) {
-		return 5+2*level();     //5 extra defence, plus 2 per level;
-	}
-	
-	public String statsInfo(){
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", 5+2*level());
+	public int image() {
+		if (tier < 3) {
+			return ItemSpriteSheet.HAND_AXE;
+		} else if (tier < 5) {
+			return ItemSpriteSheet.MACE;
 		} else {
-			return Messages.get(this, "typical_stats_desc", 5);
+			return ItemSpriteSheet.BATTLE_AXE;
 		}
 	}
+
+	@Override
+	public String desc() {
+		if (tier < 3) {
+			return Messages.get(HandAxe.class, "desc");
+		} else if (tier < 5) {
+			return Messages.get(Mace.class, "desc");
+		} else {
+			return Messages.get(BattleAxe.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 3) {
+			return Messages.get(HandAxe.class, "name");
+		} else if (tier < 5) {
+			return Messages.get(Mace.class, "name");
+		} else {
+			return Messages.get(BattleAxe.class, "name");
+		}
+	}
+
+	private static class BattleAxe extends MeleeWeapon {}
+	private static class Mace extends MeleeWeapon {}
+	private static class HandAxe extends MeleeWeapon {}
 }

@@ -303,9 +303,9 @@ public class Ghost extends NPC {
 					wepTier = 5;
 					armor = new PlateArmor();
 				}
-				
-				Generator.Category c = Generator.wepTiers[wepTier - 1];
-				weapon = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+
+				weapon = Generator.randomWeapon();
+				((MeleeWeapon) weapon).setTier(wepTier);
 
 				//50%:+0, 30%:+1, 15%:+2, 5%:+3
 				float itemLevelRoll = Random.Float();
@@ -323,7 +323,7 @@ public class Ghost extends NPC {
 				armor.upgrade(itemLevel);
 
 				//10% to be enchanted
-				if (Random.Int(10) == 0){
+				if (Random.Int(3) == 0){
 					weapon.enchant();
 					armor.inscribe();
 				}

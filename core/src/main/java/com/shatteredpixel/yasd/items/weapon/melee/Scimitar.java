@@ -34,5 +34,4 @@ public class Scimitar extends MeleeWeapon {
 		damageMultiplier = 0.80f;
 	}
 
-
 }

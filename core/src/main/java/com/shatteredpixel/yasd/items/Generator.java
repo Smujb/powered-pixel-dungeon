@@ -129,26 +129,21 @@ import com.shatteredpixel.yasd.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfTransfusion;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
-import com.shatteredpixel.yasd.items.weapon.melee.AssassinsBlade;
+import com.shatteredpixel.yasd.items.weapon.melee.AccurateWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
-import com.shatteredpixel.yasd.items.weapon.melee.BattleAxe;
 import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
-import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
-import com.shatteredpixel.yasd.items.weapon.melee.Dirk;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
-import com.shatteredpixel.yasd.items.weapon.melee.Shield;
-import com.shatteredpixel.yasd.items.weapon.melee.HandAxe;
-import com.shatteredpixel.yasd.items.weapon.melee.Mace;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
 import com.shatteredpixel.yasd.items.weapon.melee.Quarterstaff;
-import com.shatteredpixel.yasd.items.weapon.melee.RoundShield;
 import com.shatteredpixel.yasd.items.weapon.melee.RunicBlade;
 import com.shatteredpixel.yasd.items.weapon.melee.Sai;
 import com.shatteredpixel.yasd.items.weapon.melee.Scimitar;
+import com.shatteredpixel.yasd.items.weapon.melee.Shield;
+import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.WarHammer;
 import com.shatteredpixel.yasd.items.weapon.melee.Whip;
 import com.shatteredpixel.yasd.items.weapon.missiles.Bolas;
@@ -349,21 +344,16 @@ public class Generator {
 			
 			//see generator.randomWeapon
 			WEAPON.classes = new Class<?>[]{
-					HandAxe.class,
 					Quarterstaff.class,
-					Dirk.class,
 					Fist.class,
-					Dagger.class,
 					MagesStaff.class,
-					Mace.class,
 					Scimitar.class,
-					RoundShield.class,
 					Sai.class,
 					Whip.class,
-					BattleAxe.class,
+					AccurateWeapon.class,
 					Flail.class,
 					RunicBlade.class,
-					AssassinsBlade.class,
+					SneakWeapon.class,
 					Crossbow.class,
 					BasicSword.class,
 					WarHammer.class,
@@ -372,36 +362,31 @@ public class Generator {
 					Shield.class,
 
 			};
-			WEAPON.probs = new float[]{ 1, 1, 1, 6, 5, 0, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6 };
+			WEAPON.probs = new float[]{ 1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4 };
 			
 			WEP_T1.classes = new Class<?>[]{
 					Fist.class,
-					Dagger.class,
 					MagesStaff.class
 			};
-			WEP_T1.probs = new float[]{  1, 1, 0 };
+			WEP_T1.probs = new float[]{  1, 0 };
 			
 			WEP_T2.classes = new Class<?>[]{
-					HandAxe.class,
-					Quarterstaff.class,
-					Dirk.class
+					Quarterstaff.class
 			};
-			WEP_T2.probs = new float[]{  5, 4, 4 };
+			WEP_T2.probs = new float[]{  5 };
 			
 			WEP_T3.classes = new Class<?>[]{
-					Mace.class,
 					Scimitar.class,
-					RoundShield.class,
 					Sai.class,
 					Whip.class
 			};
-			WEP_T3.probs = new float[]{  5, 5, 4, 4, 4 };
+			WEP_T3.probs = new float[]{  5, 5, 4 };
 			
 			WEP_T4.classes = new Class<?>[]{
-					BattleAxe.class,
+					AccurateWeapon.class,
 					Flail.class,
 					RunicBlade.class,
-					AssassinsBlade.class,
+					SneakWeapon.class,
 					Crossbow.class
 			};
 			WEP_T4.probs = new float[]{  5, 5, 4, 4, 4 };

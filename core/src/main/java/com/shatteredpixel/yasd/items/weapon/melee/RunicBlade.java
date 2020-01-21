@@ -31,7 +31,7 @@ public class RunicBlade extends MeleeWeapon {
 		tier = 4;
 	}
 
-	//Essentially it's a tier 4 getWeapons, with tier 3 base max damage, and tier 5 scaling.
+	//Essentially it's a tier 4 weapon, with tier 3 base max damage, and tier 5 scaling.
 	//equal to tier 4 in damage at +5
 
 	@Override

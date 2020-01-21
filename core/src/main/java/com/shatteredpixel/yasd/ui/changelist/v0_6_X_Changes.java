@@ -48,9 +48,9 @@ import com.shatteredpixel.yasd.items.wands.WandOfCorrosion;
 import com.shatteredpixel.yasd.items.wands.WandOfCorruption;
 import com.shatteredpixel.yasd.items.weapon.curses.Wayward;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Lucky;
-import com.shatteredpixel.yasd.items.weapon.melee.Dagger;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
+import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.ChangesScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
@@ -460,7 +460,7 @@ public class v0_6_X_Changes {
 				"_-_ Flail accuracy penalty reduced by 10%\n" +
 				"_-_ Handaxe accuracy bonus increased by 9.5%\n" +
 				"_-_ Mace accuracy bonus increased by 8%\n" +
-				"_-_ BattleAxe accuracy bonus increased by 6.5%\n" +
+				"_-_ AccurateWeapon accuracy bonus increased by 6.5%\n" +
 				"_-_ WarHammer accuracy bonus increased by 5%\n\n" +
 				"Glyph Buffs:\n" +
 				"_-_ Glyph of obfuscation no longer reduces damage blocking, but is also less powerful.\n" +
@@ -634,7 +634,7 @@ public class v0_6_X_Changes {
 				"_-_ Cloak levelling progression changed, it is now much more dependant on hero level\n\n" +
 				"These changes should let the rogue go invisible more often, and with more flexibility."));
 		
-		changes.addButton( new ChangeButton(new Dagger(),
+		changes.addButton( new ChangeButton(new SneakWeapon(),
 				"As part of the rogue rework, sneak attack weapons have been buffed:\n\n" +
 				"_-_ Dagger sneak attack minimum damage increased to 75% from 50%.\n" +
 				"_-_ Dirk sneak attack minimum damage increased to 67% from 50%\n" +

@@ -69,8 +69,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int min(float lvl) {
 		if (bow != null){
-			return  Math.round(4 +                 //4 base
-					bow.level() + lvl);  //+1 per level or bow level
+			return  bow.min(lvl);  //+1 per level or bow level
 		} else {
 			return  Math.round(1 +     //1 base, down from 2
 					lvl);    //scaling unchanged
@@ -80,8 +79,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public int max(float lvl) {
 		if (bow != null){
-			return Math.round( 12 +                    //12 base
-					3*bow.level() + 2*lvl);  //+3 per bow level, +2 per level (default scaling +2)
+			return bow.max(lvl);  //+3 per bow level, +2 per level (default scaling +2)
 		} else {
 			return  Math.round(2 +     //2 base, down from 5
 					2*lvl);  //scaling unchanged

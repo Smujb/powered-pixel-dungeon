@@ -46,6 +46,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.yasd.items.spells.Recycle;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
+import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -415,7 +416,7 @@ public class WndBag extends WndTabbed {
 						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
 						mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
 						mode == Mode.ALL ||
-						mode == Mode.INCREASE_TIER && item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER
+						mode == Mode.INCREASE_TIER && item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)
 					);
 				}
 			} else {

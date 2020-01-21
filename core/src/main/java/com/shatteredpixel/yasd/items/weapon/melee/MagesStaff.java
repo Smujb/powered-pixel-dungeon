@@ -30,6 +30,7 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.armor.HideArmor;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.items.wands.Wand;
@@ -155,7 +156,9 @@ public class MagesStaff extends MeleeWeapon {
 			if (wand.curCharges < wand.maxCharges) wand.partialCharge += 0.33f;
 			ScrollOfRecharging.charge(attacker);
 			wand.onHit(this, attacker, defender, damage);
+			defender.damage(Random.NormalIntRange(1, 2 * ((Hero)attacker).Focus), this);
 		}
+
 		return super.proc(attacker, defender, damage);
 	}
 
