@@ -21,17 +21,30 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Scimitar extends MeleeWeapon {
+public class Heavy extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.SCIMITAR;
+		image = ItemSpriteSheet.GREATAXE;
 
-		tier = 3;
-		DLY = 0.8f; //1.25x speed
+		tier = 1;
 
-		damageMultiplier = 0.80f;
+		damageMultiplier = 1.3f;
+
+		dualWieldpenalty = true;
 	}
 
+	@Override
+	public String desc() {
+		return Messages.get(Greataxe.class, "desc");
+	}
+
+	@Override
+	public String name() {
+		return Messages.get(Greataxe.class, "name");
+	}
+
+	private static class Greataxe extends MeleeWeapon {}
 }

@@ -129,23 +129,23 @@ import com.shatteredpixel.yasd.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfTransfusion;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
-import com.shatteredpixel.yasd.items.weapon.melee.AccurateWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
-import com.shatteredpixel.yasd.items.weapon.melee.BluntWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
-import com.shatteredpixel.yasd.items.weapon.melee.DualSwords;
+import com.shatteredpixel.yasd.items.weapon.melee.Axe;
+import com.shatteredpixel.yasd.items.weapon.melee.Basic;
+import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
+import com.shatteredpixel.yasd.items.weapon.melee.Dual;
+import com.shatteredpixel.yasd.items.weapon.melee.Projectile;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
+import com.shatteredpixel.yasd.items.weapon.melee.Heavy;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
 import com.shatteredpixel.yasd.items.weapon.melee.Staff;
-import com.shatteredpixel.yasd.items.weapon.melee.RunicBlade;
-import com.shatteredpixel.yasd.items.weapon.melee.Scimitar;
+import com.shatteredpixel.yasd.items.weapon.melee.Magical;
+import com.shatteredpixel.yasd.items.weapon.melee.Sharp;
 import com.shatteredpixel.yasd.items.weapon.melee.Shield;
-import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.Whip;
+import com.shatteredpixel.yasd.items.weapon.melee.Sneak;
+import com.shatteredpixel.yasd.items.weapon.melee.Long;
 import com.shatteredpixel.yasd.items.weapon.missiles.Bolas;
 import com.shatteredpixel.yasd.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.yasd.items.weapon.missiles.ForceCube;
@@ -347,18 +347,18 @@ public class Generator {
 					Staff.class,
 					Fist.class,
 					MagesStaff.class,
-					Scimitar.class,
-					DualSwords.class,
-					Whip.class,
-					AccurateWeapon.class,
+					Sharp.class,
+					Dual.class,
+					Long.class,
+					Axe.class,
 					Flail.class,
-					RunicBlade.class,
-					SneakWeapon.class,
-					Crossbow.class,
-					BasicSword.class,
-					BluntWeapon.class,
+					Magical.class,
+					Sneak.class,
+					Projectile.class,
+					Basic.class,
+					Blunt.class,
 					Polearm.class,
-					Greataxe.class,
+					Heavy.class,
 					Shield.class,
 
 			};
@@ -376,26 +376,26 @@ public class Generator {
 			WEP_T2.probs = new float[]{  5 };
 			
 			WEP_T3.classes = new Class<?>[]{
-					Scimitar.class,
-					DualSwords.class,
-					Whip.class
+					Sharp.class,
+					Dual.class,
+					Long.class
 			};
 			WEP_T3.probs = new float[]{  5, 5, 4 };
 			
 			WEP_T4.classes = new Class<?>[]{
-					AccurateWeapon.class,
+					Axe.class,
 					Flail.class,
-					RunicBlade.class,
-					SneakWeapon.class,
-					Crossbow.class
+					Magical.class,
+					Sneak.class,
+					Projectile.class
 			};
 			WEP_T4.probs = new float[]{  5, 5, 4, 4, 4 };
 			
 			WEP_T5.classes = new Class<?>[]{
-					BasicSword.class,
-					BluntWeapon.class,
+					Basic.class,
+					Blunt.class,
 					Polearm.class,
-					Greataxe.class,
+					Heavy.class,
 					Shield.class
 			};
 			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4 };

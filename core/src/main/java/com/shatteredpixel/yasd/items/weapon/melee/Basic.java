@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class BasicSword extends MeleeWeapon {
+public class Basic extends MeleeWeapon {
 
 	{
 		image = ItemSpriteSheet.GREATSWORD;

@@ -47,7 +47,7 @@ import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.keys.Key;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.wands.Wand;
-import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
+import com.shatteredpixel.yasd.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -117,7 +117,7 @@ public class Belongings implements Iterable<Item> {
 			weapons.add((KindOfWeapon) miscs[4]);
 		}
 		if (weapons.isEmpty()) {
-			weapons.add(new BasicSword());
+			weapons.add(new Basic());
 		}
 		return weapons;
 

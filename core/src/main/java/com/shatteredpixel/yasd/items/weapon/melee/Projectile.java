@@ -21,18 +21,29 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Greataxe extends MeleeWeapon {
-
+public class Projectile extends MeleeWeapon {
+	
 	{
-		image = ItemSpriteSheet.GREATAXE;
-
-		tier = 5;
-
-		damageMultiplier = 1.3f;
-
-		dualWieldpenalty = true;
+		image = ItemSpriteSheet.CROSSBOW;
+		
+		//check Dart.class for additional properties
+		
+		tier = 1;
+		damageMultiplier = 0.75f;
 	}
 
+	@Override
+	public String desc() {
+		return Messages.get(Crossbow.class, "desc");
+	}
+
+	@Override
+	public String name() {
+		return Messages.get(Crossbow.class, "name");
+	}
+
+	private static class Crossbow extends MeleeWeapon {}
 }

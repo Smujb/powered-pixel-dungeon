@@ -98,7 +98,7 @@ import com.shatteredpixel.yasd.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Shocking;
-import com.shatteredpixel.yasd.items.weapon.melee.BluntWeapon;
+import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
@@ -373,7 +373,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (usesBelongings && getCurrentWeapon() instanceof BluntWeapon) {
+			if (usesBelongings && getCurrentWeapon() instanceof Blunt) {
 				dr = 0;
 			}
 

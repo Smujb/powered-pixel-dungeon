@@ -52,13 +52,12 @@ import com.shatteredpixel.yasd.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
-import com.shatteredpixel.yasd.items.weapon.melee.AccurateWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
-import com.shatteredpixel.yasd.items.weapon.melee.BluntWeapon;
-import com.shatteredpixel.yasd.items.weapon.melee.DualSwords;
+import com.shatteredpixel.yasd.items.weapon.melee.Basic;
+import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
+import com.shatteredpixel.yasd.items.weapon.melee.Dual;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
+import com.shatteredpixel.yasd.items.weapon.melee.Sneak;
 import com.shatteredpixel.yasd.items.weapon.melee.Staff;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingStone;
@@ -126,8 +125,8 @@ public enum HeroClass {
 
 		//Generator.randomWeapon().collect();
 		new MagicalInfusion().quantity(100).collect();
-		new DualSwords().collect();
-		new BluntWeapon().collect();
+		new Dual().collect();
+		new Blunt().collect();
 		new Staff().collect();
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
@@ -145,7 +144,7 @@ public enum HeroClass {
 		//new TomeOfMastery().collect();
 		/*new WornShortsword().identify().collect();
 		new Spear().identify().collect();
-		new Crossbow().identify().collect();
+		new Projectile().identify().collect();
 		new Dart().quantity(5).collect();
 		Generator.random(Generator.Category.ARTIFACT).identify().collect();
 		new PotionOfStrength().quantity(10).identify().collect();*/
@@ -166,7 +165,7 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.miscs[0] = new BasicSword()).identify();
+		(hero.belongings.miscs[0] = new Basic()).identify();
 		(hero.belongings.miscs[1] = new WarriorArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
@@ -203,7 +202,7 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
-		(hero.belongings.miscs[0] = new SneakWeapon()).identify();
+		(hero.belongings.miscs[0] = new Sneak()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();

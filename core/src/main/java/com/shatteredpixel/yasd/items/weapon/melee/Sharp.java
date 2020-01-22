@@ -21,22 +21,41 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Bleeding;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
+import com.watabou.utils.Random;
 
-public class RunicBlade extends MeleeWeapon {
+public class Sharp extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.RUNIC_BLADE;
+		image = ItemSpriteSheet.SCIMITAR;
 
-		tier = 4;
+		tier = 1;
+		DLY = 1f;
+
+		damageMultiplier = 0.80f;
 	}
-
-	//Essentially it's a tier 4 weapon, with tier 3 base max damage, and tier 5 scaling.
-	//equal to tier 4 in damage at +5
 
 	@Override
-	public int max(float lvl) {
-		return  (int) (5*(tier) +                	//20 base, down from 25
-				Math.round(lvl*(tier*2.5)));	//+6 per level, up from +5
+	public String desc() {
+		return Messages.get(Scimitar.class, "desc");
 	}
+
+	@Override
+	public String name() {
+		return Messages.get(Scimitar.class, "name");
+	}
+
+	@Override
+	public int proc(Char attacker, Char defender, int damage) {
+		if (Random.Int(3) == 0) {
+			Buff.affect( defender, Bleeding.class ).set( damage/3 );
+		}
+		return super.proc(attacker, defender, damage);
+	}
+
+	private static class Scimitar extends MeleeWeapon {}
 }

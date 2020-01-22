@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class AccurateWeapon extends MeleeWeapon {
+public class Axe extends MeleeWeapon {
 
 	{
 		image = ItemSpriteSheet.BATTLE_AXE;
@@ -38,7 +38,7 @@ public class AccurateWeapon extends MeleeWeapon {
 	public int image() {
 		if (tier < 4) {
 			return ItemSpriteSheet.HAND_AXE;
-		} else  {
+		} else {
 			return ItemSpriteSheet.BATTLE_AXE;
 		}
 	}

@@ -28,7 +28,7 @@ import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-public class SneakWeapon extends MeleeWeapon {
+public class Sneak extends MeleeWeapon {
 
 	{
 		image = ItemSpriteSheet.ASSASSINS_BLADE;

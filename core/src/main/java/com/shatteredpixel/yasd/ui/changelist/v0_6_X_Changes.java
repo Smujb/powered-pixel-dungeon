@@ -49,8 +49,8 @@ import com.shatteredpixel.yasd.items.wands.WandOfCorruption;
 import com.shatteredpixel.yasd.items.weapon.curses.Wayward;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.Greataxe;
-import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
+import com.shatteredpixel.yasd.items.weapon.melee.Heavy;
+import com.shatteredpixel.yasd.items.weapon.melee.Sneak;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.ChangesScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
@@ -460,8 +460,8 @@ public class v0_6_X_Changes {
 				"_-_ Flail accuracy penalty reduced by 10%\n" +
 				"_-_ Handaxe accuracy bonus increased by 9.5%\n" +
 				"_-_ Mace accuracy bonus increased by 8%\n" +
-				"_-_ AccurateWeapon accuracy bonus increased by 6.5%\n" +
-				"_-_ BluntWeapon accuracy bonus increased by 5%\n\n" +
+				"_-_ Axe accuracy bonus increased by 6.5%\n" +
+				"_-_ Blunt accuracy bonus increased by 5%\n\n" +
 				"Glyph Buffs:\n" +
 				"_-_ Glyph of obfuscation no longer reduces damage blocking, but is also less powerful.\n" +
 				"_-_ Glyph of entanglement now gives more herbal getArmors, and root duration decreases at higher getArmors levels."));
@@ -634,7 +634,7 @@ public class v0_6_X_Changes {
 				"_-_ Cloak levelling progression changed, it is now much more dependant on hero level\n\n" +
 				"These changes should let the rogue go invisible more often, and with more flexibility."));
 		
-		changes.addButton( new ChangeButton(new SneakWeapon(),
+		changes.addButton( new ChangeButton(new Sneak(),
 				"As part of the rogue rework, sneak attack weapons have been buffed:\n\n" +
 				"_-_ Dagger sneak attack minimum damage increased to 75% from 50%.\n" +
 				"_-_ Dirk sneak attack minimum damage increased to 67% from 50%\n" +
@@ -868,8 +868,8 @@ public class v0_6_X_Changes {
 				"_-_ Meat and small rations are 50% more filling\n" +
 				"_-_ Pasties and blandfruit are 12.5% more filling"));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new Greataxe()), "Tier-5 Weapon Buffs",
-				"_-_ Greataxe base damage increased by ~22%\n" +
+		changes.addButton( new ChangeButton(new ItemSprite(new Heavy()), "Tier-5 Weapon Buffs",
+				"_-_ Heavy base damage increased by ~22%\n" +
 				"_-_ Shield base damage increased by ~17%"));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(new StoneOfEnchantment()), "Enchant and Glyph Balance Changes",

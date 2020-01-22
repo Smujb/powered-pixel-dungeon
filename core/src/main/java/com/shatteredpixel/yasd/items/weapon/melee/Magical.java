@@ -24,44 +24,29 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class BluntWeapon extends MeleeWeapon {//War Hammer will get reworked.
+public class Magical extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.WAR_HAMMER;
+		image = ItemSpriteSheet.RUNIC_BLADE;
 
 		tier = 1;
-		//ACC = 1.33f; //33% boost to accuracy
-
-		damageMultiplier = 0.80f;
-	}
-
-	@Override
-	public int image() {
-		if (tier < 4) {
-			return ItemSpriteSheet.MACE;
-		} else  {
-			return ItemSpriteSheet.WAR_HAMMER;
-		}
 	}
 
 	@Override
 	public String desc() {
-		if (tier < 4) {
-			return Messages.get(Mace.class, "desc");
-		} else {
-			return Messages.get(WarHammer.class, "desc");
-		}
+		return Messages.get(RunicBlade.class, "desc");
 	}
 
 	@Override
 	public String name() {
-		if (tier < 4) {
-			return Messages.get(Mace.class, "name");
-		} else  {
-			return Messages.get(WarHammer.class, "name");
-		}
+		return Messages.get(RunicBlade.class, "name");
 	}
 
-	private static class Mace extends MeleeWeapon {}
-	private static class WarHammer extends MeleeWeapon {}
+	@Override
+	public int max(float lvl) {
+		return  (int) (5*(tier) +
+				Math.round(lvl*(tier*2.5)));
+	}
+
+	private static class RunicBlade extends MeleeWeapon {}
 }

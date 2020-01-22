@@ -21,17 +21,29 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Crossbow extends MeleeWeapon {
-	
+public class Long extends MeleeWeapon {
+
 	{
-		image = ItemSpriteSheet.CROSSBOW;
-		
-		//check Dart.class for additional properties
-		
-		tier = 4;
-		damageMultiplier = 0.75f;
+		image = ItemSpriteSheet.WHIP;
+
+		tier = 3;
+		RCH = 3;    //lots of extra reach
+
+		damageMultiplier = 0.6f;
 	}
 
+	@Override
+	public String desc() {
+		return Messages.get(Whip.class, "desc");
+	}
+
+	@Override
+	public String name() {
+		return Messages.get(Whip.class, "name");
+	}
+
+	private static class Whip extends MeleeWeapon {}
 }

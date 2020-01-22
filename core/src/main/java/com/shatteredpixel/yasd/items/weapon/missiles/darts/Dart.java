@@ -26,7 +26,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.Item;
-import com.shatteredpixel.yasd.items.weapon.melee.Crossbow;
+import com.shatteredpixel.yasd.items.weapon.melee.Projectile;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Plant;
@@ -86,16 +86,16 @@ public class Dart extends MissileWeapon {
 		}
 	}
 	
-	private static Crossbow bow;
+	private static Projectile bow;
 	
 	private ArrayList<Item> getCrossbows(){
-		return Dungeon.hero.belongings.getEquippedItemsOFType( Crossbow.class );
+		return Dungeon.hero.belongings.getEquippedItemsOFType( Projectile.class );
 	}
 
-	private Crossbow getCrossbow() {
+	private Projectile getCrossbow() {
 		resetCrossbow();
 		if (numberOfBows() > 0) {
-			return ((Crossbow) getCrossbows().get(CurrentCrossbow));
+			return ((Projectile) getCrossbows().get(CurrentCrossbow));
 		} else {
 			return null;
 		}

@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.weapon.melee;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class DualSwords extends MeleeWeapon {
+public class Dual extends MeleeWeapon {
 
 	{
 		//image = ItemSpriteSheet.SAI;

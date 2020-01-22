@@ -23,9 +23,9 @@ package com.shatteredpixel.yasd.ui.changelist;
 
 import com.shatteredpixel.yasd.items.Stylus;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
-import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
+import com.shatteredpixel.yasd.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
-import com.shatteredpixel.yasd.items.weapon.melee.RunicBlade;
+import com.shatteredpixel.yasd.items.weapon.melee.Magical;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.ChangesScene;
 import com.shatteredpixel.yasd.sprites.ItemSprite;
@@ -143,7 +143,7 @@ public class v0_4_X_Changes {
 				"_-_ Corrupted enemies live longer & no longer attack eachother\n" +
 				"_-_ Wands in the holster now charge faster"));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new RunicBlade()), "Item Changes pt.2",
+		changes.addButton( new ChangeButton(new ItemSprite(new Magical()), "Item Changes pt.2",
 				"Ring Balance Changes:\n" +
 				"_-_ Ring of Force weaker at 18+ strength, stronger otherwise\n" +
 				"_-_ Ring of Tenacity reduces more damage\n" +
@@ -187,7 +187,7 @@ public class v0_4_X_Changes {
 				"\n" +
 				"Dev commentary will be added here in the future."));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new BasicSword()), "Equipment Overhaul!",
+		changes.addButton( new ChangeButton(new ItemSprite(new Basic()), "Equipment Overhaul!",
 				"_-_ 13 new weapons, 12 rebalanced weapons\n" +
 				"\n" +
 				"Equipment Balance:\n" +
