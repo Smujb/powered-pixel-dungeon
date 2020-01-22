@@ -461,7 +461,7 @@ public class v0_6_X_Changes {
 				"_-_ Handaxe accuracy bonus increased by 9.5%\n" +
 				"_-_ Mace accuracy bonus increased by 8%\n" +
 				"_-_ AccurateWeapon accuracy bonus increased by 6.5%\n" +
-				"_-_ WarHammer accuracy bonus increased by 5%\n\n" +
+				"_-_ BluntWeapon accuracy bonus increased by 5%\n\n" +
 				"Glyph Buffs:\n" +
 				"_-_ Glyph of obfuscation no longer reduces damage blocking, but is also less powerful.\n" +
 				"_-_ Glyph of entanglement now gives more herbal getArmors, and root duration decreases at higher getArmors levels."));

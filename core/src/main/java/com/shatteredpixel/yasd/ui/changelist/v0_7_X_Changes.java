@@ -203,7 +203,7 @@ public class v0_7_X_Changes {
 				"_-_ Area-based effects behaving oddly in rare cases\n" +
 				"_-_ Thieves not escaping when they should in many cases\n" +
 				"_-_ A rare crash bug involving boomerangs\n" +
-				"_-_ Sai and gauntlets giving 1 more defense than what their descriptions stated\n" +
+				"_-_ DualSwords and gauntlets giving 1 more defense than what their descriptions stated\n" +
 				"_-_ Players rarely opening containers/doors from a distance"));
 		
 		changes.addButton( new ChangeButton(Icons.get(Icons.LANGS), Messages.get(ChangesScene.class, "language"),
@@ -784,7 +784,7 @@ public class v0_7_X_Changes {
 		
 		changes.addButton( new ChangeButton( new Fist().setTier(5),
 				"As furor now works much better with fast weapons, I've taken the opportunity to very slightly nerf sai and gauntlets\n\n" +
-				"_-_ Sai blocking down to 0-2 from 0-3\n" +
+				"_-_ DualSwords blocking down to 0-2 from 0-3\n" +
 				"_-_ Gauntlet blocking down to 0-4 from 0-5"));
 		
 		changes.addButton( new ChangeButton( new Shuriken(),

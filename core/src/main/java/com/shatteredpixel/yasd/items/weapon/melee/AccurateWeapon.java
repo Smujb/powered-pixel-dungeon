@@ -36,21 +36,17 @@ public class AccurateWeapon extends MeleeWeapon {
 
 	@Override
 	public int image() {
-		if (tier < 3) {
+		if (tier < 4) {
 			return ItemSpriteSheet.HAND_AXE;
-		} else if (tier < 5) {
-			return ItemSpriteSheet.MACE;
-		} else {
+		} else  {
 			return ItemSpriteSheet.BATTLE_AXE;
 		}
 	}
 
 	@Override
 	public String desc() {
-		if (tier < 3) {
+		if (tier < 4) {
 			return Messages.get(HandAxe.class, "desc");
-		} else if (tier < 5) {
-			return Messages.get(Mace.class, "desc");
 		} else {
 			return Messages.get(BattleAxe.class, "desc");
 		}
@@ -58,16 +54,13 @@ public class AccurateWeapon extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		if (tier < 3) {
+		if (tier < 4) {
 			return Messages.get(HandAxe.class, "name");
-		} else if (tier < 5) {
-			return Messages.get(Mace.class, "name");
-		} else {
+		} else  {
 			return Messages.get(BattleAxe.class, "name");
 		}
 	}
 
 	private static class BattleAxe extends MeleeWeapon {}
-	private static class Mace extends MeleeWeapon {}
 	private static class HandAxe extends MeleeWeapon {}
 }

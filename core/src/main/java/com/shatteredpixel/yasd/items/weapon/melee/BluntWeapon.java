@@ -21,23 +21,47 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
-import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Sai extends MeleeWeapon {//Sai will get reworked.
+public class BluntWeapon extends MeleeWeapon {//War Hammer will get reworked.
 
 	{
-		image = ItemSpriteSheet.SAI;
+		image = ItemSpriteSheet.WAR_HAMMER;
 
-		tier = 3;
-		DLY = 0.5f; //2x speed
+		tier = 1;
+		//ACC = 1.33f; //33% boost to accuracy
 
-		damageMultiplier = 0.6f;
+		damageMultiplier = 0.80f;
 	}
-
 
 	@Override
-	public int defenseFactor( Char owner ) {
-		return 2;	//2 extra defence
+	public int image() {
+		if (tier < 4) {
+			return ItemSpriteSheet.MACE;
+		} else  {
+			return ItemSpriteSheet.WAR_HAMMER;
+		}
 	}
+
+	@Override
+	public String desc() {
+		if (tier < 4) {
+			return Messages.get(Mace.class, "desc");
+		} else {
+			return Messages.get(WarHammer.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 4) {
+			return Messages.get(Mace.class, "name");
+		} else  {
+			return Messages.get(WarHammer.class, "name");
+		}
+	}
+
+	private static class Mace extends MeleeWeapon {}
+	private static class WarHammer extends MeleeWeapon {}
 }

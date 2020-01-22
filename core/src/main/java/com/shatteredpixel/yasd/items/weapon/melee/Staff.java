@@ -25,14 +25,41 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class Quarterstaff extends MeleeWeapon {
+public class Staff extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.QUARTERSTAFF;
+		//image = ItemSpriteSheet.QUARTERSTAFF;
 
-		tier = 2;
+		tier = 1;
 
 		damageMultiplier = 0.7f;
+	}
+
+	@Override
+	public int image() {
+		if (tier < 4) {
+			return ItemSpriteSheet.QUARTERSTAFF;
+		} else  {
+			return ItemSpriteSheet.ROD;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier < 4) {
+			return Messages.get(Quarterstaff.class, "desc");
+		} else {
+			return Messages.get(Rod.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 4) {
+		return Messages.get(Quarterstaff.class, "name");
+		} else  {
+			return Messages.get(Rod.class, "name");
+		}
 	}
 
 	@Override
@@ -42,6 +69,9 @@ public class Quarterstaff extends MeleeWeapon {
 
 	@Override
 	public String statsInfo() {
-		return Messages.get(this, "stats_desc", 2*tier);
+		return Messages.get(this, "stats_desc", 2 * tier);
 	}
+
+	private static class Rod extends MeleeWeapon {}
+	private static class Quarterstaff extends MeleeWeapon {}
 }

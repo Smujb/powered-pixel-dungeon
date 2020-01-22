@@ -21,16 +21,49 @@
 
 package com.shatteredpixel.yasd.items.weapon.melee;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class WarHammer extends MeleeWeapon {//War Hammer will get reworked.
+public class DualSwords extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.WAR_HAMMER;
+		//image = ItemSpriteSheet.SAI;
 
-		tier = 5;
-		ACC = 1.33f; //20% boost to accuracy
+		tier = 1;
+		DLY = 0.33f; //3x speed
 
-		damageMultiplier = 0.80f;
+		damageMultiplier = 0.5f;
+
+		dualWieldpenalty = true;
 	}
+
+	@Override
+	public int image() {
+		if (tier >= 4) {
+			return ItemSpriteSheet.KATANA;
+		} else {
+			return ItemSpriteSheet.SAI;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier >= 4) {
+			return Messages.get(Katana.class, "desc");
+		} else {
+			return Messages.get(Sai.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier >= 4) {
+			return Messages.get(Katana.class, "name");
+		} else {
+			return Messages.get(Sai.class, "name");
+		}
+	}
+
+	private static class Sai extends MeleeWeapon {}
+	private static class Katana extends MeleeWeapon {}
 }

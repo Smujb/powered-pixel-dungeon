@@ -98,6 +98,7 @@ import com.shatteredpixel.yasd.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Shocking;
+import com.shatteredpixel.yasd.items.weapon.melee.BluntWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
@@ -370,6 +371,10 @@ public abstract class Char extends Actor {
 						&& !Dungeon.level.adjacent(h.pos, enemy.pos)) {
 					dr = 0;
 				}
+			}
+
+			if (usesBelongings && getCurrentWeapon() instanceof BluntWeapon) {
+				dr = 0;
 			}
 
 			int dmg;

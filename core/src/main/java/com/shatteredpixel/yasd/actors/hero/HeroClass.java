@@ -54,9 +54,12 @@ import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.melee.AccurateWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.BasicSword;
+import com.shatteredpixel.yasd.items.weapon.melee.BluntWeapon;
+import com.shatteredpixel.yasd.items.weapon.melee.DualSwords;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.items.weapon.melee.SneakWeapon;
+import com.shatteredpixel.yasd.items.weapon.melee.Staff;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -122,7 +125,10 @@ public enum HeroClass {
 		//new WandOfDamnation().identify().collect();
 
 		//Generator.randomWeapon().collect();
-
+		new MagicalInfusion().quantity(100).collect();
+		new DualSwords().collect();
+		new BluntWeapon().collect();
+		new Staff().collect();
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
 		//new MailArmor().upgrade(3).collect();
