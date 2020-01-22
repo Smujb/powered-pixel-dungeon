@@ -28,10 +28,7 @@ public class PlateArmor extends Armor {
 	{
 		image = ItemSpriteSheet.ARMOR_PLATE;
 	}
-	
-	public PlateArmor() {
-		super( 5 );
-	}
+
 
 	@Override
 	public int appearance() {

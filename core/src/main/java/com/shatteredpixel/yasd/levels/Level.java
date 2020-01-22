@@ -458,7 +458,7 @@ public abstract class Level implements Bundlable {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;
 				break;
-			case 2: default://Medium = Normal max HP
+			case 2: default://Medium = LightMetal max HP
 				break;
 			case 3://Hard = +25% max HP
 				mob.HP = mob.HT*=1.25f;

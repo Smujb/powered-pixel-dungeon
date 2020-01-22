@@ -8,9 +8,6 @@ public class HideArmor extends Armor {
         DRfactor = 0.7f;
         EVA = 1.25f;
     }
-    public HideArmor() {
-        super(2);
-    }
 
     @Override
     public int appearance() {

@@ -30,9 +30,9 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
+import com.shatteredpixel.yasd.items.armor.LightMetal;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
-import com.shatteredpixel.yasd.items.armor.WarriorArmor;
 import com.shatteredpixel.yasd.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.yasd.items.bags.PotionBandolier;
 import com.shatteredpixel.yasd.items.bags.ScrollHolder;
@@ -53,12 +53,9 @@ import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.items.weapon.melee.Basic;
-import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
-import com.shatteredpixel.yasd.items.weapon.melee.Dual;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.items.weapon.melee.Sneak;
-import com.shatteredpixel.yasd.items.weapon.melee.Staff;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.messages.Messages;
@@ -122,15 +119,12 @@ public enum HeroClass {
 		new Beer().collect();
 
 		//new WandOfDamnation().identify().collect();
-
+		new LightMetal().collect();
 		//Generator.randomWeapon().collect();
 		new MagicalInfusion().quantity(100).collect();
-		new Dual().collect();
-		new Blunt().collect();
-		new Staff().collect();
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
-		//new MailArmor().upgrade(3).collect();
+		//new LightMetal().upgrade(3).collect();
 		//new WandOfLightning().upgrade(3).collect();
 		//new RingOfElements().upgrade(3).identify().collect();
 		//new Flail().upgrade(3).collect();
@@ -166,7 +160,7 @@ public enum HeroClass {
 
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.miscs[0] = new Basic()).identify();
-		(hero.belongings.miscs[1] = new WarriorArmor()).identify();
+		(hero.belongings.miscs[1] = new LightMetal()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);

@@ -50,6 +50,8 @@ public class MagicalInfusion extends InventorySpell {
 			if (((MeleeWeapon) item).tier <= 5 ) {
 				((MeleeWeapon) item).upgradeTier(1);
 			}
+		} else if (item instanceof Armor) {
+			((Armor)item).upgradeTier(1);
 		}
 
 		GLog.p( Messages.get(this, "infuse", item.name()) );

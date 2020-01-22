@@ -30,9 +30,4 @@ public class ClothArmor extends Armor {
 
 		bones = false; //Finding them in bones would be semi-frequent and disappointing.
 	}
-	
-	public ClothArmor() {
-		super( 1 );
-	}
-
 }

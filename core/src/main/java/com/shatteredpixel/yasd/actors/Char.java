@@ -391,7 +391,7 @@ public abstract class Char extends Actor {
 						dmg *= 0.75f;
 						break;
 					case 2:
-					default://Medium = Normal damage
+					default://Medium = LightMetal damage
 						break;
 					case 3://Hard = +25% damage
 						dmg *= 1.25f;

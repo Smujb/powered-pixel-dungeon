@@ -8,9 +8,6 @@ public class DiscArmor extends Armor{
         DRfactor = 0.7f;
         EVA = 1.35f;
     }
-    public DiscArmor() {
-        super(4);
-    }
 
     @Override
     public int appearance() {

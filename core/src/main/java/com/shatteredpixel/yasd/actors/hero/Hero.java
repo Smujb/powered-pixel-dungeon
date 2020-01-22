@@ -229,7 +229,7 @@ public class Hero extends Char {
 				DifficultyMultiplier = 0.67f;
 				break;
 			case 2:
-			default://Normal Morale loss in Medium
+			default://LightMetal Morale loss in Medium
 				DifficultyMultiplier = 1f;
 				break;
 			case 3://+50% Morale loss in Hard

@@ -28,10 +28,7 @@ public class LeatherArmor extends Armor {
 	{
 		image = ItemSpriteSheet.ARMOR_LEATHER;
 	}
-	
-	public LeatherArmor() {
-		super( 2 );
-	}
+
 
 	@Override
 	public int appearance() {

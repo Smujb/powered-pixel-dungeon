@@ -36,7 +36,7 @@ import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
-import com.shatteredpixel.yasd.items.armor.MailArmor;
+import com.shatteredpixel.yasd.items.armor.LightMetal;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
 import com.shatteredpixel.yasd.items.armor.ScaleArmor;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
@@ -54,7 +54,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class Ghost extends NPC {
 
@@ -295,7 +294,7 @@ public class Ghost extends NPC {
 					armor = new LeatherArmor();
 				} else if (itemTierRoll < 0.8f) {
 					wepTier = 3;
-					armor = new MailArmor();
+					armor = new LightMetal();
 				} else if (itemTierRoll < 0.95f) {
 					wepTier = 4;
 					armor = new ScaleArmor();

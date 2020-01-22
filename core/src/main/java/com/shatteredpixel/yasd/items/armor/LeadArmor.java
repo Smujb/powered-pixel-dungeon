@@ -11,9 +11,6 @@ public class LeadArmor extends Armor {
         DRfactor = 1.2f;
         speedFactor = 2/3f;
     }
-    public LeadArmor() {
-        super(5);
-    }
 
     @Override
     public int appearance() {

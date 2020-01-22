@@ -33,12 +33,11 @@ import com.shatteredpixel.yasd.items.armor.HideArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.items.armor.LeadArmor;
 import com.shatteredpixel.yasd.items.armor.LeatherArmor;
+import com.shatteredpixel.yasd.items.armor.LightMetal;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
-import com.shatteredpixel.yasd.items.armor.MailArmor;
 import com.shatteredpixel.yasd.items.armor.PlateArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.armor.ScaleArmor;
-import com.shatteredpixel.yasd.items.armor.WarriorArmor;
 import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
@@ -133,19 +132,19 @@ import com.shatteredpixel.yasd.items.weapon.melee.Axe;
 import com.shatteredpixel.yasd.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
 import com.shatteredpixel.yasd.items.weapon.melee.Dual;
-import com.shatteredpixel.yasd.items.weapon.melee.Projectile;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.items.weapon.melee.Flail;
 import com.shatteredpixel.yasd.items.weapon.melee.Heavy;
+import com.shatteredpixel.yasd.items.weapon.melee.Long;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.yasd.items.weapon.melee.Magical;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
-import com.shatteredpixel.yasd.items.weapon.melee.Staff;
-import com.shatteredpixel.yasd.items.weapon.melee.Magical;
+import com.shatteredpixel.yasd.items.weapon.melee.Projectile;
 import com.shatteredpixel.yasd.items.weapon.melee.Sharp;
 import com.shatteredpixel.yasd.items.weapon.melee.Shield;
 import com.shatteredpixel.yasd.items.weapon.melee.Sneak;
-import com.shatteredpixel.yasd.items.weapon.melee.Long;
+import com.shatteredpixel.yasd.items.weapon.melee.Staff;
 import com.shatteredpixel.yasd.items.weapon.missiles.Bolas;
 import com.shatteredpixel.yasd.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.yasd.items.weapon.missiles.ForceCube;
@@ -405,26 +404,24 @@ public class Generator {
 					ClothArmor.class,
 					RogueArmor.class,
 					MageArmor.class,
-					WarriorArmor.class,
 					HuntressArmor.class,
 					LeatherArmor.class,
-					MailArmor.class,
+					LightMetal.class,
 					ScaleArmor.class,
 					PlateArmor.class,
 					LeadArmor.class,
 					DiscArmor.class,
 					HideArmor.class
 			};
-			ARMOR.probs = new float[]{ 4, 0, 0, 0, 0, 5, 5, 5, 5, 3 };
+			ARMOR.probs = new float[]{ 4, 0, 0, 0, 5, 5, 5, 5, 3 };
 
 			ARM_T1.classes = new Class<?>[]{
 					ClothArmor.class,
-					WarriorArmor.class,
 					HuntressArmor.class,
 					RogueArmor.class,
 					MageArmor.class
 			};
-			ARM_T1.probs = new float[]{ 1, 1, 1, 1, 1 };
+			ARM_T1.probs = new float[]{ 1, 1, 1, 1 };
 
 			ARM_T2.classes = new Class<?>[]{
 					LeatherArmor.class,
@@ -434,7 +431,7 @@ public class Generator {
 			ARM_T2.probs = new float[]{ 1, 1 };
 
 			ARM_T3.classes = new Class<?>[]{
-					MailArmor.class
+					LightMetal.class
 			};
 
 			ARM_T3.probs = new float[]{ 1 };
