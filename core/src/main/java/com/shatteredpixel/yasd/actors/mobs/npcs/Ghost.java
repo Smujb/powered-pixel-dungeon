@@ -35,10 +35,10 @@ import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.items.armor.LeatherArmor;
-import com.shatteredpixel.yasd.items.armor.LightMetal;
-import com.shatteredpixel.yasd.items.armor.PlateArmor;
-import com.shatteredpixel.yasd.items.armor.ScaleArmor;
+import com.shatteredpixel.yasd.items.armor.LightArmor;
+import com.shatteredpixel.yasd.items.armor.ChainArmor;
+import com.shatteredpixel.yasd.items.armor.HeavyArmor;
+import com.shatteredpixel.yasd.items.armor.BasicArmor;
 import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
@@ -291,16 +291,16 @@ public class Ghost extends NPC {
 
 				if (itemTierRoll < 0.5f) {
 					wepTier = 2;
-					armor = new LeatherArmor();
+					armor = new LightArmor();
 				} else if (itemTierRoll < 0.8f) {
 					wepTier = 3;
-					armor = new LightMetal();
+					armor = new ChainArmor();
 				} else if (itemTierRoll < 0.95f) {
 					wepTier = 4;
-					armor = new ScaleArmor();
+					armor = new BasicArmor();
 				} else {
 					wepTier = 5;
-					armor = new PlateArmor();
+					armor = new HeavyArmor();
 				}
 
 				weapon = Generator.randomWeapon();

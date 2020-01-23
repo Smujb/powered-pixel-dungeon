@@ -32,13 +32,12 @@ import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
-import com.shatteredpixel.yasd.items.armor.LeatherArmor;
+import com.shatteredpixel.yasd.items.armor.LightArmor;
 import com.shatteredpixel.yasd.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.items.food.Food;
 import com.shatteredpixel.yasd.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.items.scrolls.Scroll;
-import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Plant;
 import com.shatteredpixel.yasd.scenes.GameScene;
@@ -105,7 +104,7 @@ public class Burning extends Buff implements Hero.Doom {
 					for (Item i : hero.belongings.backpack.items){
 						if (i instanceof Scroll||
 								i instanceof Food || //All food can burn
-								(i instanceof ClothArmor || i instanceof LeatherArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
+								(i instanceof ClothArmor || i instanceof LightArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
 								i instanceof Plant.Seed){
 							burnable.add(i);
 						}

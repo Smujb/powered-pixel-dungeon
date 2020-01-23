@@ -21,13 +21,44 @@
 
 package com.shatteredpixel.yasd.items.armor;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class ScaleArmor extends Armor {
+public class BasicArmor extends Armor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_SCALE;
 	}
+
+	@Override
+	public int image() {
+		if (tier < 4) {
+			return ItemSpriteSheet.ARMOR_DISC;
+		} else  {
+			return ItemSpriteSheet.ARMOR_SCALE;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier < 4) {
+			return Messages.get(Disc.class, "desc");
+		} else {
+			return Messages.get(Scale.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 4) {
+			return Messages.get(Disc.class, "name");
+		} else  {
+			return Messages.get(Scale.class, "name");
+		}
+	}
+
+	private static class Disc extends Armor {}
+	private static class Scale extends Armor {}
 
 	@Override
 	public int appearance() {

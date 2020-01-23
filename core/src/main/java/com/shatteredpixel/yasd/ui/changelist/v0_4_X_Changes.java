@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.ui.changelist;
 
 import com.shatteredpixel.yasd.items.Stylus;
-import com.shatteredpixel.yasd.items.armor.PlateArmor;
+import com.shatteredpixel.yasd.items.armor.HeavyArmor;
 import com.shatteredpixel.yasd.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.items.weapon.melee.Polearm;
 import com.shatteredpixel.yasd.items.weapon.melee.Magical;
@@ -119,7 +119,7 @@ public class v0_4_X_Changes {
 				"\n" +
 				"Dev commentary will be added here in the future."));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(new PlateArmor()), "Item Changes pt.1",
+		changes.addButton( new ChangeButton(new ItemSprite(new HeavyArmor()), "Item Changes pt.1",
 				"Armor and Enemy Balance Changes:\n" +
 				"_-_ Armor now has a min damage block value\n" +
 				"_-_ Armor gains more blocking from upgrades\n" +

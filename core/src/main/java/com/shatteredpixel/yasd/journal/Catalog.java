@@ -23,14 +23,14 @@ package com.shatteredpixel.yasd.journal;
 
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
-import com.shatteredpixel.yasd.items.armor.LeatherArmor;
-import com.shatteredpixel.yasd.items.armor.LightMetal;
+import com.shatteredpixel.yasd.items.armor.LightArmor;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
-import com.shatteredpixel.yasd.items.armor.PlateArmor;
+import com.shatteredpixel.yasd.items.armor.HeavyArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
-import com.shatteredpixel.yasd.items.armor.ScaleArmor;
+import com.shatteredpixel.yasd.items.armor.BasicArmor;
 import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.items.artifacts.ChaliceOfBlood;
 import com.shatteredpixel.yasd.items.artifacts.CloakOfShadows;
@@ -170,10 +170,10 @@ public enum Catalog {
 		//WEAPONS.seen.put( Gauntlet.class,                   false);
 	
 		ARMOR.seen.put( ClothArmor.class,                   false);
-		ARMOR.seen.put( LeatherArmor.class,                 false);
-		ARMOR.seen.put( LightMetal.class,                    false);
-		ARMOR.seen.put( ScaleArmor.class,                   false);
-		ARMOR.seen.put( PlateArmor.class,                   false);
+		ARMOR.seen.put( LightArmor.class,                 false);
+		ARMOR.seen.put( ChainArmor.class,                    false);
+		ARMOR.seen.put( BasicArmor.class,                   false);
+		ARMOR.seen.put( HeavyArmor.class,                   false);
 		//ARMOR.seen.put( WarriorArmor.class,                 false);
 		ARMOR.seen.put( MageArmor.class,                    false);
 		ARMOR.seen.put( RogueArmor.class,                   false);

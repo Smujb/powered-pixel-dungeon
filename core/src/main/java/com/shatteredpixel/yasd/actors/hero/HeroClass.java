@@ -30,7 +30,7 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.alcohol.Beer;
 import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
-import com.shatteredpixel.yasd.items.armor.LightMetal;
+import com.shatteredpixel.yasd.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.artifacts.CloakOfShadows;
@@ -48,7 +48,6 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.yasd.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.items.weapon.SpiritBow;
@@ -119,12 +118,12 @@ public enum HeroClass {
 		new Beer().collect();
 
 		//new WandOfDamnation().identify().collect();
-		new LightMetal().collect();
+		//new ChainArmor().collect();
 		//Generator.randomWeapon().collect();
-		new MagicalInfusion().quantity(100).collect();
+		//new MagicalInfusion().quantity(100).collect();
 		//new ScrollOfUpgrade().quantity(5).collect();
 		//new PotionOfExperience().quantity(10).collect();
-		//new LightMetal().upgrade(3).collect();
+		//new ChainArmor().upgrade(3).collect();
 		//new WandOfLightning().upgrade(3).collect();
 		//new RingOfElements().upgrade(3).identify().collect();
 		//new Flail().upgrade(3).collect();
@@ -160,7 +159,7 @@ public enum HeroClass {
 
 	private static void initWarrior( Hero hero ) {
 		(hero.belongings.miscs[0] = new Basic()).identify();
-		(hero.belongings.miscs[1] = new LightMetal()).identify();
+		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
 		Dungeon.quickslot.setSlot(0, stones);

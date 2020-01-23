@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Poison;
 import com.shatteredpixel.yasd.effects.Pushing;
 import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.food.SmallRation;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.SwarmSprite;
@@ -52,7 +53,7 @@ public class Swarm extends Mob {
 		
 		flying = true;
 
-		loot = new PotionOfHealing();
+		loot = new SmallRation();
 		lootChance = 0.1667f; //by default, see rollToDropLoot()
 	}
 	
@@ -145,18 +146,5 @@ public class Swarm extends Mob {
 			Buff.affect( clone, Corruption.class);
 		}
 		return clone;
-	}
-	
-	@Override
-	public void rollToDropLoot() {
-		lootChance = 1f/(6 * (generation+1) );
-		lootChance *= (5f - Dungeon.LimitedDrops.SWARM_HP.count) / 5f;
-		super.rollToDropLoot();
-	}
-	
-	@Override
-	protected Item createLoot(){
-		Dungeon.LimitedDrops.SWARM_HP.count++;
-		return super.createLoot();
 	}
 }

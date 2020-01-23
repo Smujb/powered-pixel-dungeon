@@ -21,14 +21,46 @@
 
 package com.shatteredpixel.yasd.items.armor;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class LeatherArmor extends Armor {
+public class LightArmor extends Armor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_LEATHER;
+		DRfactor = 0.7f;
+		EVA = 1.33f;
 	}
 
+	@Override
+	public int image() {
+		if (tier < 4) {
+			return ItemSpriteSheet.ARMOR_HIDE;
+		} else  {
+			return ItemSpriteSheet.ARMOR_LEATHER;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier < 4) {
+			return Messages.get(Hide.class, "desc");
+		} else {
+			return Messages.get(Leather.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 4) {
+			return Messages.get(Hide.class, "name");
+		} else  {
+			return Messages.get(Leather.class, "name");
+		}
+	}
+
+	private static class Leather extends Armor {}
+	private static class Hide extends Armor {}
 
 	@Override
 	public int appearance() {

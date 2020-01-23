@@ -21,14 +21,49 @@
 
 package com.shatteredpixel.yasd.items.armor;
 
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class PlateArmor extends Armor {
+public class HeavyArmor extends Armor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_PLATE;
+
+		EVA = 0.6f;
+		magicalDRFactor = 0.5f;
+		DRfactor = 1.2f;
+		speedFactor = 2/3f;
 	}
 
+	@Override
+	public int image() {
+		if (tier < 4) {
+			return ItemSpriteSheet.ARMOR_PLATE;
+		} else  {
+			return ItemSpriteSheet.ARMOR_BANDED;
+		}
+	}
+
+	@Override
+	public String desc() {
+		if (tier < 4) {
+			return Messages.get(Plate.class, "desc");
+		} else {
+			return Messages.get(Lead.class, "desc");
+		}
+	}
+
+	@Override
+	public String name() {
+		if (tier < 4) {
+			return Messages.get(Plate.class, "name");
+		} else  {
+			return Messages.get(Lead.class, "name");
+		}
+	}
+
+	private static class Plate extends Armor {}
+	private static class Lead extends Armor {}
 
 	@Override
 	public int appearance() {

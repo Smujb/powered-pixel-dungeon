@@ -45,6 +45,7 @@ public class Scorpio extends RangedMob {
 		EXP = 14;
 		maxLvl = 25;
 
+		baseSpeed = 0.8f;
 
 		magical = false;
 
@@ -78,7 +79,17 @@ public class Scorpio extends RangedMob {
 	public boolean fleesAtMelee() {
 		return true;
 	}
-	
+
+	@Override
+	public int defenseProc(Char enemy, int damage) {
+		damage = super.defenseProc(enemy, damage);
+		if (Random.Int( 2 ) == 0) {
+			Buff.prolong( enemy, Cripple.class, Cripple.DURATION );
+		}
+
+		return damage;
+	}
+
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );

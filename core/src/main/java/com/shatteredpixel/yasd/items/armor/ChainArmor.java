@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.items.armor;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-public class LightMetal extends Armor {
+public class ChainArmor extends Armor {
 
 	{
 		image = ItemSpriteSheet.ARMOR_MAIL;

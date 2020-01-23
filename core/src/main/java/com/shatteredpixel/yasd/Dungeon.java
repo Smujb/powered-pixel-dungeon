@@ -29,6 +29,7 @@ import com.shatteredpixel.yasd.actors.buffs.Light;
 import com.shatteredpixel.yasd.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.actors.mobs.Statue;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Imp;
@@ -87,7 +88,7 @@ public class Dungeon {
 
 		//Health potion sources
 		//enemies
-		SWARM_HP,
+		CRAB_HP,
 		NECRO_HP,
 		BAT_HP,
 		WARLOCK_HP,
@@ -161,6 +162,8 @@ public class Dungeon {
 	public static int difficulty = 2;//1 = easy, 2 = medium, 3 = hard, 4 = endless (when I add). I could use strings, but numbers will probably be better in the long run
 
 	public static long seed;
+
+	public static boolean [] loadedDepths = new boolean [Constants.NUM_FLOORS];
 	
 	public static void init() {
 
@@ -213,6 +216,10 @@ public class Dungeon {
 		Badges.reset();
 		
 		GamesInProgress.selectedClass.initHero( hero );
+
+		for (int i = 0; i < Constants.NUM_FLOORS; i++) {
+			loadedDepths[i] = false;
+		}
 	}
 
 	public static String getDifficultyTitle() {
@@ -243,10 +250,44 @@ public class Dungeon {
 			Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
 		}
 		
-		Level level;
-		int floorset = depth/Constants.CHAPTER_LENGTH;
+		Level level = new DeadEndLevel();
+		if (depth <= Constants.CHAPTER_LENGTH) {
+			if (bossLevel()) {
+				level = new SewerBossLevel();
+			} else {
+				level = new SewerLevel();
+			}
+		} else if (depth <= Constants.CHAPTER_LENGTH*2) {
+			if (bossLevel()) {
+				level = new NewPrisonBossLevel();
+			} else {
+				level = new PrisonLevel();
+			}
+		} else if (depth <= Constants.CHAPTER_LENGTH*3) {
+			if (bossLevel()) {
+				level = new CavesBossLevel();
+			} else {
+				level = new CavesLevel();
+			}
+		} else if (depth <= Constants.CHAPTER_LENGTH*4) {
+			if (bossLevel()) {
+				level = new CityBossLevel();
+			} else {
+				level = new CityLevel();
+			}
+		} else if (depth <= Constants.CHAPTER_LENGTH*5) {
+			if (bossLevel()) {
+				level = new HallsBossLevel();
+			} else {
+				level = new HallsLevel();
+			}
+		}
 
-		switch (depth) {
+		if (depth == 21) {
+			level = new LastShopLevel();
+		}
+
+		/*switch (depth) {
 			case 1:
 			case 2:
 			case 3:
@@ -300,12 +341,14 @@ public class Dungeon {
 			default:
 				level = new DeadEndLevel();
 				Statistics.deepestFloor--;
-		}
+		}*/
 		
 		level.create();
 		
 		Statistics.qualifiedForNoKilling = !bossLevel();
-		
+		if (level instanceof DeadEndLevel) {
+			Statistics.deepestFloor--;
+		}
 		return level;
 	}
 	
@@ -339,7 +382,7 @@ public class Dungeon {
 	}
 	
 	public static boolean bossLevel( int depth ) {
-		return depth == 5 || depth == 10 || depth == 15 || depth == 20 || depth == 25;
+		return depth % 5 == 0;
 	}
 	
 	public static void switchLevel( final Level level, int pos ) {
@@ -454,6 +497,7 @@ public class Dungeon {
 	private static final String QUESTS		= "quests";
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
+	private static final String LEVELSLOADED= "levels-loaded";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -467,6 +511,7 @@ public class Dungeon {
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
 			bundle.put( DIFFICULTY, difficulty );
+			bundle.put( LEVELSLOADED, loadedDepths);
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -553,6 +598,14 @@ public class Dungeon {
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
+		if (Dungeon.version >= YASD.v0_2_1) {
+			loadedDepths = bundle.getBooleanArray( LEVELSLOADED );
+		} else {
+			for (int i = 0; i < Constants.NUM_FLOORS; i++) {
+				loadedDepths[i] = false;
+			}
+		}
+
 
 		Actor.restoreNextID( bundle );
 

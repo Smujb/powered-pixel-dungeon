@@ -97,7 +97,8 @@ public abstract class Level implements Bundlable {
 		WATER,
 		GRASS,
 		DARK,
-		EVIL
+		EVIL,
+		OPEN
 	}
 
 	protected int width;
@@ -278,7 +279,13 @@ public abstract class Level implements Bundlable {
 		length = w * h;
 		
 		map = new int[length];
-		Arrays.fill( map, feeling == Level.Feeling.CHASM ? Terrain.CHASM : Terrain.WALL );
+		int terrain = Terrain.WALL;
+		if (feeling == Feeling.CHASM) {
+			terrain = Terrain.CHASM;
+		} else if (feeling == Feeling.OPEN) {
+			terrain = Terrain.EMPTY;
+		}
+		Arrays.fill( map, terrain );
 		
 		visited     = new boolean[length];
 		mapped      = new boolean[length];
@@ -458,7 +465,7 @@ public abstract class Level implements Bundlable {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;
 				break;
-			case 2: default://Medium = LightMetal max HP
+			case 2: default://Medium = ChainArmor max HP
 				break;
 			case 3://Hard = +25% max HP
 				mob.HP = mob.HT*=1.25f;

@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
-import com.shatteredpixel.yasd.items.armor.LeatherArmor;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.items.quest.GooBlob;

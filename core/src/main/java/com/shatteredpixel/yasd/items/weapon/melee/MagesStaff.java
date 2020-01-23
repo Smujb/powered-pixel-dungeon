@@ -30,7 +30,6 @@ import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.items.Item;
-import com.shatteredpixel.yasd.items.armor.HideArmor;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.items.wands.Wand;

@@ -33,6 +33,8 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.Recipe;
 import com.shatteredpixel.yasd.items.armor.Armor;
+import com.shatteredpixel.yasd.items.armor.ClassArmor;
+import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.bags.MagicalHolster;
 import com.shatteredpixel.yasd.items.bags.PotionBandolier;
@@ -398,7 +400,7 @@ public class WndBag extends WndTabbed {
 						mode == Mode.UPGRADEABLE && item.isUpgradable() ||
 						mode == Mode.UNIDENTIFED && !item.isIdentified() ||
 						mode == Mode.UNCURSABLE && ScrollOfRemoveCurse.uncursable(item) ||
-						mode == Mode.CURSABLE && ((item instanceof EquipableItem && !(item instanceof MissileWeapon)) || item instanceof Wand) ||
+						mode == Mode.CURSABLE && ((item instanceof EquipableItem && !(item instanceof MissileWeapon))) ||
 						mode == Mode.QUICKSLOT && (item.defaultAction != null) ||
 						mode == Mode.WEAPON && (item instanceof MeleeWeapon) ||
 						mode == Mode.ARMOR && (item instanceof Armor) ||
@@ -409,14 +411,14 @@ public class WndBag extends WndTabbed {
 						mode == Mode.POTION && (item instanceof Potion) ||
 						mode == Mode.SCROLL && (item instanceof Scroll) ||
 						mode == Mode.UNIDED_POTION_OR_SCROLL && (!item.isIdentified() && (item instanceof Scroll || item instanceof Potion)) ||
-						mode == Mode.EQUIPMENT && (item instanceof EquipableItem || item instanceof Wand) ||
+						mode == Mode.EQUIPMENT && (item instanceof EquipableItem) ||
 						mode == Mode.ALCHEMY && Recipe.usableInRecipe(item) ||
 						mode == Mode.TRANMSUTABLE && ScrollOfTransmutation.canTransmute(item) ||
 						mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
 						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
 						mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
 						mode == Mode.ALL ||
-						mode == Mode.INCREASE_TIER && (item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor)item).tier < Constants.MAXIMUM_TIER)
+						mode == Mode.INCREASE_TIER && (item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor)item).tier < Constants.MAXIMUM_TIER & !(item instanceof ClothArmor))
 					);
 				}
 			} else {
