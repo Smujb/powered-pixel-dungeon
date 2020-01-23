@@ -59,11 +59,18 @@ public class InterlevelScene extends PixelScene {
 	private static final float NORM_FADE = 0.67f; //.33 in, .67 steady, .33 out, 1.33 seconds total
 	//fast fade when ascending, or descending to a floor you've been on
 	private static final float FAST_FADE = 0.50f; //.33 in, .33 steady, .33 out, 1 second total
+
+	public static final String FALL_NAME = "FALL_NAME";
+	public static final String DESCEND_NAME = "DESCEND_NAME";
+	public static final String ASCEND_NAME = "ASCEND_NAME";
+	public static final String RESET_NAME = "RESET_NAME";
+	public static final String RESURRECT_NAME = "RESURRECT_NAME";
+	public static final String RETURNTO_NAME = "returnto_name";
 	
 	private static float fadeTime;
 	
 	public enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT
 	}
 	public static Mode mode;
 	
@@ -208,29 +215,33 @@ public class InterlevelScene extends PixelScene {
 
 						switch (mode) {
 							case DESCEND:
-								descend();
+								if (Dungeon.hero != null) {
+									goToDepth(Dungeon.depth + 1, DESCEND_NAME);
+								} else {
+									goToDepth(1, DESCEND_NAME);
+								}
 								break;
 							case ASCEND:
-								ascend();
+								goToDepth(Dungeon.depth - 1, ASCEND_NAME);
 								break;
 							case CONTINUE:
 								restore();
 								break;
 							case RESURRECT:
-								resurrect();
+								goToDepth(Dungeon.depth, RESURRECT_NAME);
 								break;
 							case RETURN:
-								returnTo();
+								goToDepth(returnDepth, RETURNTO_NAME);
 								break;
 							case FALL:
-								fall();
+								goToDepth(Dungeon.depth + 1, FALL_NAME);
 								break;
 							case RESET:
-								reset();
+								goToDepth(Dungeon.depth, RESET_NAME);
 								break;
 						}
 						
-						if ((Dungeon.depth % 5) == 0) {
+						if (Dungeon.bossLevel()) {
 							Sample.INSTANCE.load(Assets.SND_BOSS);
 						}
 						
@@ -319,7 +330,77 @@ public class InterlevelScene extends PixelScene {
 		}
 	}
 
-	private void descend() throws IOException {
+	private static void goToDepth(int depthToAccess, final String typeOfDescend) throws IOException {
+		if (Dungeon.hero == null) {
+			Mob.clearHeldAllies();
+			Dungeon.init();
+			if (noStory) {
+				Dungeon.chapters.add( WndStory.ID_SEWERS );
+				noStory = false;
+			}
+			GameLog.wipe();
+		} else {
+			Mob.holdAllies( Dungeon.level );
+			Dungeon.saveAll();
+		}
+		if (typeOfDescend.equals(FALL_NAME)) {
+			Buff.affect( Dungeon.hero, Chasm.Falling.class );
+		}
+		Dungeon.depth = depthToAccess;
+		if (typeOfDescend.equals(RESURRECT_NAME)) {
+			if (Dungeon.level.locked) {
+				Dungeon.hero.resurrect( Dungeon.depth );
+			} else {
+				Dungeon.hero.resurrect( -1 );
+				Dungeon.resetLevel();
+				return;
+			}
+		}
+		Level level;
+		if (Dungeon.loadedDepths[depthToAccess]) {
+
+			level = Dungeon.loadLevel(GamesInProgress.curSlot);
+
+		} else  {
+
+			level = Dungeon.newLevel(Dungeon.depth);
+
+		}
+
+		switch (typeOfDescend) {
+			default:
+				Dungeon.switchLevel(level, level.entrance);
+				break;
+			case FALL_NAME:
+				Dungeon.switchLevel(level, level.fallCell(fallIntoPit));
+				break;
+			case ASCEND_NAME:
+				Dungeon.switchLevel(level, level.exit);
+				break;
+			case RETURNTO_NAME:
+				Dungeon.switchLevel(level, returnPos);
+				break;
+		}
+
+	}
+
+	private void restore() throws IOException {
+
+		Mob.clearHeldAllies();
+
+		GameLog.wipe();
+
+		Dungeon.loadGame( GamesInProgress.curSlot );
+		if (Dungeon.depth == -1) {
+			Dungeon.depth = Statistics.deepestFloor;
+			Dungeon.switchLevel( Dungeon.loadLevel( GamesInProgress.curSlot ), -1 );
+		} else {
+			Level level = Dungeon.loadLevel( GamesInProgress.curSlot );
+			Dungeon.switchLevel( level, Dungeon.hero.pos );
+		}
+	}
+
+	/*private void descend() throws IOException {
 
 		if (Dungeon.hero == null) {
 			Mob.clearHeldAllies();
@@ -380,23 +461,7 @@ public class InterlevelScene extends PixelScene {
 		Level level = Dungeon.loadLevel( GamesInProgress.curSlot );
 		Dungeon.switchLevel( level, returnPos );
 	}
-	
-	private void restore() throws IOException {
-		
-		Mob.clearHeldAllies();
 
-		GameLog.wipe();
-
-		Dungeon.loadGame( GamesInProgress.curSlot );
-		if (Dungeon.depth == -1) {
-			Dungeon.depth = Statistics.deepestFloor;
-			Dungeon.switchLevel( Dungeon.loadLevel( GamesInProgress.curSlot ), -1 );
-		} else {
-			Level level = Dungeon.loadLevel( GamesInProgress.curSlot );
-			Dungeon.switchLevel( level, Dungeon.hero.pos );
-		}
-	}
-	
 	private void resurrect() throws IOException {
 		
 		Mob.holdAllies( Dungeon.level );
@@ -421,7 +486,7 @@ public class InterlevelScene extends PixelScene {
 		Dungeon.depth--;
 		Level level = Dungeon.newLevel();
 		Dungeon.switchLevel( level, level.entrance );
-	}
+	}*/
 	
 	@Override
 	protected void onBackPressed() {

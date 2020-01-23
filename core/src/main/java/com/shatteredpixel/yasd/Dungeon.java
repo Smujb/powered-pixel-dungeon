@@ -237,13 +237,17 @@ public class Dungeon {
 	public static boolean isChallenged( int mask ) {
 		return (challenges & mask) != 0;
 	}
-	
+
 	public static Level newLevel() {
+		return newLevel(Dungeon.depth + 1);
+	}
+	
+	public static Level newLevel(int depth) {
 		
 		Dungeon.level = null;
 		Actor.clear();
 		
-		depth++;
+		Dungeon.depth = depth;
 		if (depth > Statistics.deepestFloor) {
 			Statistics.deepestFloor = depth;
 
@@ -285,6 +289,8 @@ public class Dungeon {
 
 		if (depth == 21) {
 			level = new LastShopLevel();
+		} else if (depth == 26) {
+			level = new LastLevel();
 		}
 
 		/*switch (depth) {
@@ -344,7 +350,7 @@ public class Dungeon {
 		}*/
 		
 		level.create();
-		
+		loadedDepths[depth] = true;
 		Statistics.qualifiedForNoKilling = !bossLevel();
 		if (level instanceof DeadEndLevel) {
 			Statistics.deepestFloor--;
@@ -374,7 +380,7 @@ public class Dungeon {
 	}
 	
 	public static boolean shopOnLevel() {
-		return depth == 6 || depth == 11 || depth == 16;
+		return bossLevel(depth+1) & depth + 1 != Constants.CHAPTER_LENGTH*4;
 	}
 	
 	public static boolean bossLevel() {
@@ -382,7 +388,7 @@ public class Dungeon {
 	}
 	
 	public static boolean bossLevel( int depth ) {
-		return depth % 5 == 0;
+		return depth % Constants.NUM_FLOORS == 0;
 	}
 	
 	public static void switchLevel( final Level level, int pos ) {

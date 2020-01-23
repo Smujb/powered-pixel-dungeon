@@ -63,14 +63,37 @@ public abstract class ConnectionRoom extends Room {
 		
 		rooms.add(RingTunnelRoom.class);
 		rooms.add(RingBridgeRoom.class);
+
+		rooms.add(NonHiddenMazeConnectionRoom.class);
 	}
 	
 	private static float[][] chances = new float[Constants.NUM_FLOORS + 1][];
 	static {
+		float [] sewerChances      = new float[]{20, 1,    0, 2,       2, 1, 1};
+		float [] prisonChances     = new float[]{0, 0,     22, 3,      0, 0, 1};
+		float [] cavesChances      = new float[]{12, 0,    0, 5,       5, 3, 1};
+		float [] cityChances       = new float[]{0, 0,     18, 3,      3, 1, 1};
+		float [] hallsChances      = new float[]{15, 4,    0, 2,       3, 2, 1};
+		float [] restrictedChances = new float[]{20, 0,    0, 0,       0, 0, 0};
 		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {//Default to Sewer levelgen.
-			chances[i] = new float[]{20, 1,    0, 2,       2, 1};
+			chances[i] = restrictedChances;
 		}
-		chances[1] =  new float[]{20, 1,    0, 2,       2, 1};
+		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {
+			if (Dungeon.depth <= Constants.CHAPTER_LENGTH) {
+				chances[i] = sewerChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*2) {
+				chances[i] = prisonChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*3) {
+				chances[i] = cavesChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*4) {
+				chances[i] = cityChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*5) {
+				chances[i] = hallsChances;
+			}
+		}
+		chances[Constants.CHAPTER_LENGTH] = restrictedChances;//First boss
+		chances[Constants.CHAPTER_LENGTH*4+1]= restrictedChances;//Floor after 4th boss
+		/*chances[1] =  new float[]{20, 1,    0, 2,       2, 1};
 		chances[4] =  chances[3] = chances[2] = chances[1];
 		chances[5] =  new float[]{20, 0,    0, 0,       0, 0};
 		
@@ -86,7 +109,7 @@ public abstract class ConnectionRoom extends Room {
 		chances[21] = chances[5];
 		
 		chances[22] = new float[]{15, 4,    0, 2,       3, 2};
-		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];
+		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];*/
 	}
 	
 	public static ConnectionRoom createRoom(){

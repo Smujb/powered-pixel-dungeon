@@ -23,6 +23,16 @@ package com.shatteredpixel.yasd.levels.rooms.standard;
 
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.levels.CavesBossLevel;
+import com.shatteredpixel.yasd.levels.CavesLevel;
+import com.shatteredpixel.yasd.levels.CityBossLevel;
+import com.shatteredpixel.yasd.levels.CityLevel;
+import com.shatteredpixel.yasd.levels.HallsBossLevel;
+import com.shatteredpixel.yasd.levels.HallsLevel;
+import com.shatteredpixel.yasd.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.levels.PrisonLevel;
+import com.shatteredpixel.yasd.levels.SewerBossLevel;
+import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.levels.rooms.Room;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -135,15 +145,32 @@ public abstract class StandardRoom extends Room {
 	
 	private static float[][] chances = new float[Constants.NUM_FLOORS + 1][];
 	static {
+		float [] sewerChances      = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
+		float [] prisonChances     = new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
+		float [] cavesChances      = new float[]{20,  0,0, 0,0, 15,5, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
+		float [] cityChances       = new float[]{20,  0,0, 0,0, 0,0, 15,5, 0,0,    1,1,1,1,1,1,1,1,1,1};
+		float [] hallsChances      = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
+		float [] restrictedChances = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    0,0,0,0,0,0,0,0,0,0};
 		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {//Default to Sewer levelgen.
-			chances[i] = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,0,1,0,1,0,1,1,0,0};
+			chances[i] = restrictedChances;
 		}
-		chances[1] =  new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,0,1,0,1,0,1,1,0,0};
-		chances[2] =  new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		chances[4] =  chances[3] = chances[2];
-		chances[5] =  new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    0,0,0,0,0,0,0,0,0,0};
+		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {
+			if (Dungeon.depth <= Constants.CHAPTER_LENGTH) {
+				chances[i] = sewerChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*2) {
+				chances[i] = prisonChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*3) {
+				chances[i] = cavesChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*4) {
+				chances[i] = cityChances;
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*5) {
+				chances[i] = hallsChances;
+			}
+		}
+		chances[Constants.CHAPTER_LENGTH] = restrictedChances;//First boss
+		chances[Constants.CHAPTER_LENGTH*4+1]= restrictedChances;//Floor after 4th boss
 		
-		chances[6] =  new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
+		/*chances[6] =  new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
 		chances[10] = chances[9] = chances[8] = chances[7] = chances[6];
 		
 		chances[11] = new float[]{20,  0,0, 0,0, 15,5, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
@@ -155,7 +182,7 @@ public abstract class StandardRoom extends Room {
 		chances[21] = chances[5];
 		
 		chances[22] = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
-		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];
+		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];*/
 	}
 	
 	

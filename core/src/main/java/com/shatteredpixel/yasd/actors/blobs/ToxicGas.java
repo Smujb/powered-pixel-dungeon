@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.blobs;
 
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -37,7 +38,7 @@ public class ToxicGas extends Blob implements Hero.Doom {
 	protected void evolve() {
 		super.evolve();
 
-		int damage = 1 + Dungeon.depth/5;
+		int damage = 1 + Dungeon.depth/Constants.CHAPTER_LENGTH;
 
 		Char ch;
 		int cell;
