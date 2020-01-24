@@ -1,6 +1,22 @@
 package com.shatteredpixel.yasd;
 
+import com.shatteredpixel.yasd.levels.CavesBossLevel;
+import com.shatteredpixel.yasd.levels.CavesLevel;
+import com.shatteredpixel.yasd.levels.CityBossLevel;
+import com.shatteredpixel.yasd.levels.CityLevel;
+import com.shatteredpixel.yasd.levels.DeadEndLevel;
+import com.shatteredpixel.yasd.levels.HallsBossLevel;
+import com.shatteredpixel.yasd.levels.HallsLevel;
+import com.shatteredpixel.yasd.levels.LastLevel;
+import com.shatteredpixel.yasd.levels.LastShopLevel;
+import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.levels.PrisonLevel;
+import com.shatteredpixel.yasd.levels.SewerBossLevel;
+import com.shatteredpixel.yasd.levels.SewerLevel;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Constants {
     /*
@@ -60,5 +76,36 @@ public class Constants {
     //Number of floors.
     public static final int NUM_FLOORS = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
     public static final int HERO_EXP_CAP = NUM_FLOORS + 4;
+
+
+    public static ArrayList<Class <? extends Level>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
+            DeadEndLevel.class,//Floor 0
+            SewerLevel.class,
+            SewerLevel.class,
+            SewerLevel.class,
+            SewerLevel.class,
+            SewerBossLevel.class,//Floor 5, boss
+            PrisonLevel.class,
+            PrisonLevel.class,
+            PrisonLevel.class,
+            PrisonLevel.class,
+            NewPrisonBossLevel.class,//Floor 10, boss.
+            CavesLevel.class,
+            CavesLevel.class,
+            CavesLevel.class,
+            CavesLevel.class,
+            CavesBossLevel.class,//Floor 15, boss
+            CityLevel.class,
+            CityLevel.class,
+            CityLevel.class,
+            CityLevel.class,
+            CityBossLevel.class,//Floor 20, boss
+            LastShopLevel.class,//Floor 21, Imp
+            HallsLevel.class,
+            HallsLevel.class,
+            HallsLevel.class,
+            HallsBossLevel.class,//Floor 25, boss
+            LastLevel.class//Floor 26, last level
+    ));
 
 }

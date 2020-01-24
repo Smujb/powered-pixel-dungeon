@@ -29,7 +29,6 @@ import com.shatteredpixel.yasd.actors.buffs.Light;
 import com.shatteredpixel.yasd.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.actors.mobs.Statue;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Imp;
@@ -42,20 +41,8 @@ import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.rings.Ring;
 import com.shatteredpixel.yasd.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.journal.Notes;
-import com.shatteredpixel.yasd.levels.CavesBossLevel;
-import com.shatteredpixel.yasd.levels.CavesLevel;
-import com.shatteredpixel.yasd.levels.CityBossLevel;
-import com.shatteredpixel.yasd.levels.CityLevel;
 import com.shatteredpixel.yasd.levels.DeadEndLevel;
-import com.shatteredpixel.yasd.levels.HallsBossLevel;
-import com.shatteredpixel.yasd.levels.HallsLevel;
-import com.shatteredpixel.yasd.levels.LastLevel;
-import com.shatteredpixel.yasd.levels.LastShopLevel;
 import com.shatteredpixel.yasd.levels.Level;
-import com.shatteredpixel.yasd.levels.NewPrisonBossLevel;
-import com.shatteredpixel.yasd.levels.PrisonLevel;
-import com.shatteredpixel.yasd.levels.SewerBossLevel;
-import com.shatteredpixel.yasd.levels.SewerLevel;
 import com.shatteredpixel.yasd.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.yasd.mechanics.ShadowCaster;
@@ -254,100 +241,18 @@ public class Dungeon {
 			Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
 		}
 		
-		Level level = new DeadEndLevel();
-		if (depth <= Constants.CHAPTER_LENGTH) {
-			if (bossLevel(depth)) {
-				level = new SewerBossLevel();
-			} else {
-				level = new SewerLevel();
+		Level level = null;
+		Class <? extends Level> levelClass = Constants.LEVEL_TYPES.get(depth);
+		do {
+			try {
+				level = levelClass.newInstance();
+			} catch (InstantiationException e) {
+				YASD.reportException(e);
+			} catch (IllegalAccessException e) {
+				YASD.reportException(e);
 			}
-		} else if (depth <= Constants.CHAPTER_LENGTH*2) {
-			if (bossLevel(depth)) {
-				level = new NewPrisonBossLevel();
-			} else {
-				level = new PrisonLevel();
-			}
-		} else if (depth <= Constants.CHAPTER_LENGTH*3) {
-			if (bossLevel(depth)) {
-				level = new CavesBossLevel();
-			} else {
-				level = new CavesLevel();
-			}
-		} else if (depth <= Constants.CHAPTER_LENGTH*4) {
-			if (bossLevel(depth)) {
-				level = new CityBossLevel();
-			} else {
-				level = new CityLevel();
-			}
-		} else if (depth <= Constants.CHAPTER_LENGTH*5) {
-			if (bossLevel(depth)) {
-				level = new HallsBossLevel();
-			} else {
-				level = new HallsLevel();
-			}
-		}
+		} while (level == null);
 
-		if (depth == 21) {
-			level = new LastShopLevel();
-		} else if (depth == 26) {
-			level = new LastLevel();
-		}
-
-		/*switch (depth) {
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-				level = new SewerLevel();
-				break;
-			case 5:
-				level = new SewerBossLevel();
-				break;
-			case 6:
-			case 7:
-			case 8:
-			case 9:
-				level = new PrisonLevel();
-				break;
-			case 10:
-				level = new NewPrisonBossLevel();
-				break;
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-				level = new CavesLevel();
-				break;
-			case 15:
-				level = new CavesBossLevel();
-				break;
-			case 16:
-			case 17:
-			case 18:
-			case 19:
-				level = new CityLevel();
-				break;
-			case 20:
-				level = new CityBossLevel();
-				break;
-			case 21:
-				level = new LastShopLevel();
-				break;
-			case 22:
-			case 23:
-			case 24:
-				level = new HallsLevel();
-				break;
-			case 25:
-				level = new HallsBossLevel();
-				break;
-			case 26:
-				level = new LastLevel();
-				break;
-			default:
-				level = new DeadEndLevel();
-				Statistics.deepestFloor--;
-		}*/
 		
 		level.create();
 		loadedDepths[depth] = true;

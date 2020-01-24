@@ -190,7 +190,7 @@ public class Bestiary {
 			default:
 				return;
 			case 4:
-				if (Random.Float() < 0.025f) rotation.add(Thief.class);
+				if (Random.Float() < 0.025f) rotation.add(Swarm.class);
 				return;
 				
 			// Prison
