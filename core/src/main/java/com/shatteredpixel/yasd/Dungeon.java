@@ -256,31 +256,31 @@ public class Dungeon {
 		
 		Level level = new DeadEndLevel();
 		if (depth <= Constants.CHAPTER_LENGTH) {
-			if (bossLevel()) {
+			if (bossLevel(depth)) {
 				level = new SewerBossLevel();
 			} else {
 				level = new SewerLevel();
 			}
 		} else if (depth <= Constants.CHAPTER_LENGTH*2) {
-			if (bossLevel()) {
+			if (bossLevel(depth)) {
 				level = new NewPrisonBossLevel();
 			} else {
 				level = new PrisonLevel();
 			}
 		} else if (depth <= Constants.CHAPTER_LENGTH*3) {
-			if (bossLevel()) {
+			if (bossLevel(depth)) {
 				level = new CavesBossLevel();
 			} else {
 				level = new CavesLevel();
 			}
 		} else if (depth <= Constants.CHAPTER_LENGTH*4) {
-			if (bossLevel()) {
+			if (bossLevel(depth)) {
 				level = new CityBossLevel();
 			} else {
 				level = new CityLevel();
 			}
 		} else if (depth <= Constants.CHAPTER_LENGTH*5) {
-			if (bossLevel()) {
+			if (bossLevel(depth)) {
 				level = new HallsBossLevel();
 			} else {
 				level = new HallsLevel();
@@ -388,7 +388,7 @@ public class Dungeon {
 	}
 	
 	public static boolean bossLevel( int depth ) {
-		return depth % Constants.NUM_FLOORS == 0;
+		return depth % Constants.CHAPTER_LENGTH == 0;
 	}
 	
 	public static void switchLevel( final Level level, int pos ) {

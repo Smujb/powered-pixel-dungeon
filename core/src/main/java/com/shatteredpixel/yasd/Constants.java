@@ -40,13 +40,13 @@ public class Constants {
     //
 
     //Floors where descending is blocked.
-    public static final ArrayList<Integer> FLOORS_NO_DESCEND = new ArrayList<>();
+    public static ArrayList<Integer> FLOORS_NO_DESCEND = new ArrayList<>();
     static {
         FLOORS_NO_DESCEND.add(26);
     }
 
     //Floors where ascending is blocked.
-    public static final ArrayList<Integer> FLOORS_NO_ASCEND = new ArrayList<>();
+    public static ArrayList<Integer> FLOORS_NO_ASCEND = new ArrayList<>();
 
     //Chapter length. WIP.
     public static final int CHAPTER_LENGTH = 5;
