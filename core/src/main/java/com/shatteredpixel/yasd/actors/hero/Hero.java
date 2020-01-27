@@ -1269,10 +1269,16 @@ public class Hero extends Char {
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
 				gainMorale(missingMoralePercent*0.5f);//Gains more Morale on level up when on low Morale (up to 1)
 			}
+
 			DistributionPoints += 3;
-			WndHero window = new WndHero();
-			window.switchToAbilities();
-			GameScene.show(window);
+			YASD.runOnRenderThread(new Callback() {
+				@Override
+				public void call() {
+					WndHero window = new WndHero();
+					window.switchToAbilities();
+					GameScene.show(window);
+				}
+			});
 			Item.updateQuickslot();
 			
 			Badges.validateLevelReached();

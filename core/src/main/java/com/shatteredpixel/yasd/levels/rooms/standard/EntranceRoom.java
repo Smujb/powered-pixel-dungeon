@@ -59,9 +59,9 @@ public class EntranceRoom extends StandardRoom {
 		} while (level.findMob(level.entrance) != null);
 
 		if (Constants.FLOORS_NO_ASCEND.contains(Dungeon.depth)) {
-			Painter.set(level, level.exit, Terrain.EMPTY);
+			Painter.set(level, level.entrance, Terrain.EMPTY);
 		} else {
-			Painter.set(level, level.exit, Terrain.ENTRANCE);
+			Painter.set(level, level.entrance, Terrain.ENTRANCE);
 		}
 
 		if (Dungeon.depth == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
