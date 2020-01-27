@@ -79,6 +79,10 @@ public abstract class SecretRoom extends SpecialRoom {
 		int floor = depth%Constants.CHAPTER_LENGTH;
 		
 		int floorsLeft = Constants.CHAPTER_LENGTH - floor;
+
+		if (region > regionSecretsThisRun.length - 1) {//Return zero instead of index out of bounds error.
+			return 0;
+		}
 		
 		float secrets;
 		if (floorsLeft == 0) {

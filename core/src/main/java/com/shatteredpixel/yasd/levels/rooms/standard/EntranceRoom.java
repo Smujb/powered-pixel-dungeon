@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.levels.rooms.standard;
 
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.journal.GuidePage;
 import com.shatteredpixel.yasd.journal.Document;
@@ -56,7 +57,12 @@ public class EntranceRoom extends StandardRoom {
 		do {
 			level.entrance = level.pointToCell(random(2));
 		} while (level.findMob(level.entrance) != null);
-		Painter.set( level, level.entrance, Terrain.ENTRANCE );
+
+		if (Constants.FLOORS_NO_ASCEND.contains(Dungeon.depth)) {
+			Painter.set(level, level.exit, Terrain.EMPTY);
+		} else {
+			Painter.set(level, level.exit, Terrain.ENTRANCE);
+		}
 
 		if (Dungeon.depth == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
 			int pos;

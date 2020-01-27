@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd;
 
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.actors.buffs.Light;
@@ -225,9 +226,9 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
-	public static Level newLevel() {
+	/*public static Level newLevel() {//Not needed atm
 		return newLevel(Dungeon.depth + 1);
-	}
+	}*/
 	
 	public static Level newLevel(int depth) {
 		
@@ -242,7 +243,10 @@ public class Dungeon {
 		}
 		
 		Level level = null;
-		Class <? extends Level> levelClass = Constants.LEVEL_TYPES.get(depth);
+		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
+		if (depth < Constants.LEVEL_TYPES.size()) {
+			levelClass = Constants.LEVEL_TYPES.get(depth);
+		}
 		do {
 			try {
 				level = levelClass.newInstance();
