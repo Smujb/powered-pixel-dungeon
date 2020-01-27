@@ -32,6 +32,7 @@ import android.telephony.TelephonyManager;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.rohitss.uceh.UCEHandler;
 import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.YASD;
 import com.watabou.noosa.Game;
@@ -60,7 +61,7 @@ public class AndroidGame extends AndroidApplication {
 		} catch (PackageManager.NameNotFoundException e) {
 			Game.versionCode = 0;
 		}
-		
+		new UCEHandler.Builder(this).build();
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
 		YASDSettings.setPrefsFromInstance(instance);

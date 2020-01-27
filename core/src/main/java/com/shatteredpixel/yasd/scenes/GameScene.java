@@ -170,7 +170,7 @@ public class GameScene extends PixelScene {
 			YASD.switchNoFade(TitleScene.class);
 			return;
 		}
-		
+
 		Music.INSTANCE.play( Assets.TUNE, true );
 
 		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
