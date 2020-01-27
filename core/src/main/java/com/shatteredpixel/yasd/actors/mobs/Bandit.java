@@ -47,7 +47,7 @@ public class Bandit extends Thief {
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(5) == 0) {
 			Buff.prolong(enemy, Blindness.class, Random.Int(2, 5));
-			Buff.affect(enemy, Poison.class).set(Random.Int(5, 7));
+			Buff.affect(enemy, Poison.class).set(Random.Int(2, 3));
 			Buff.prolong(enemy, Cripple.class, Random.Int(3, 8));
 			Dungeon.observe();
 		}

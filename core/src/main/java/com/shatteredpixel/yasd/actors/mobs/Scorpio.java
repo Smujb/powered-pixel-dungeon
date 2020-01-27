@@ -39,7 +39,7 @@ public class Scorpio extends RangedMob {
 		spriteClass = ScorpioSprite.class;
 		
 		HP = HT = 95;
-		defenseSkill = 24;
+		defenseSkill = 29;
 		viewDistance = Light.DISTANCE;
 		
 		EXP = 14;
@@ -62,7 +62,7 @@ public class Scorpio extends RangedMob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 36;
+		return 40;
 	}
 	
 	@Override

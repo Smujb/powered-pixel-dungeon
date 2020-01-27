@@ -81,7 +81,7 @@ public class NewTengu extends Mob {
 		
 		HP = HT = 160;
 		EXP = 20;
-		defenseSkill = 15;
+		defenseSkill = 18;
 		
 		HUNTING = new Hunting();
 		

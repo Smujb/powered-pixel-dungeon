@@ -50,7 +50,6 @@ import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.BurningFistSprite;
-import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.LarvaSprite;
 import com.shatteredpixel.yasd.sprites.RottingFistSprite;
 import com.shatteredpixel.yasd.sprites.YogSprite;
@@ -68,7 +67,7 @@ public class Yog extends Mob {
 	{
 		spriteClass = YogSprite.class;
 		
-		HP = HT = 300;
+		HP = HT = 600;
 		
 		EXP = 50;
 		
@@ -100,8 +99,8 @@ public class Yog extends Mob {
 
 	@Override
 	protected boolean act() {
-		//heals 1 health per turn
-		HP = Math.min( HT, HP+1 );
+		//heals 10 health per turn
+		HP = Math.min( HT, HP+10 );
 
 		return super.act();
 	}
@@ -122,36 +121,38 @@ public class Yog extends Mob {
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg*0.5f);
 
-	}
-	
-	@Override
-	public int defenseProc( Char enemy, int damage ) {
-
 		ArrayList<Integer> spawnPoints = new ArrayList<>();
-		
+
 		for (int i=0; i < PathFinder.NEIGHBOURS8.length; i++) {
 			int p = pos + PathFinder.NEIGHBOURS8[i];
 			if (Actor.findChar( p ) == null && (Dungeon.level.passable[p] || Dungeon.level.avoid[p])) {
 				spawnPoints.add( p );
 			}
 		}
-		
+
 		if (spawnPoints.size() > 0) {
 			Larva larva = new Larva();
 			larva.pos = Random.element( spawnPoints );
-			
+
 			GameScene.add( larva );
 			Actor.addDelayed( new Pushing( larva, pos, larva.pos ), -1 );
 		}
 
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
-			if (mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof Larva) {
+			if ((mob instanceof BurningFist || mob instanceof RottingFist || mob instanceof Larva) & enemy != null) {
 				mob.aggro( enemy );
 			}
 		}
 
-		return super.defenseProc(enemy, damage);
 	}
+	
+	/*@Override
+	public int defenseProc( Char enemy, int damage ) {
+
+
+
+		return super.defenseProc(enemy, damage);
+	}*/
 	
 	@Override
 	public void beckon( int cell ) {

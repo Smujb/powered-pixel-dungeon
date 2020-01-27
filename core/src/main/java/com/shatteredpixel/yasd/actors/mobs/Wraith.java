@@ -107,7 +107,7 @@ public class Wraith extends RangedMob {
 	private void adjustStats(int level) {
 		this.level = level;
 		defenseSkill = attackSkill(null) - 3;
-		HP = HT = 4 + level * 2;
+		HP = HT = 5 + Math.round(level * 1.5f);
 		enemySeen = true;
 	}
 

@@ -90,7 +90,7 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	public float effectiveness (Hero hero) {
-		return level() + hero.Focus/5f;
+		return level() + hero.Focus/6f;
 	}
 
 	public float actualLevel() {

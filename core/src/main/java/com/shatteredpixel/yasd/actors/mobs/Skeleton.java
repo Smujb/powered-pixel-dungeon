@@ -41,7 +41,7 @@ public class Skeleton extends Mob {
 		spriteClass = SkeletonSprite.class;
 		
 		HP = HT = 25;
-		defenseSkill = 9;
+		defenseSkill = 11;
 		
 		EXP = 5;
 		maxLvl = 10;
@@ -101,7 +101,7 @@ public class Skeleton extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 12;
+		return 14;
 	}
 	
 	@Override

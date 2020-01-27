@@ -51,7 +51,7 @@ public class Succubus extends Mob {
 		spriteClass = SuccubusSprite.class;
 		
 		HP = HT = 80;
-		defenseSkill = 25;
+		defenseSkill = 29;
 		viewDistance = Light.DISTANCE;
 		
 		EXP = 12;
@@ -140,7 +140,7 @@ public class Succubus extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 40;
+		return 43;
 	}
 	
 	@Override

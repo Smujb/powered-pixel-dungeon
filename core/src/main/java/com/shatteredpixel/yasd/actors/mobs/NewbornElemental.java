@@ -36,7 +36,7 @@ public class NewbornElemental extends Elemental {
 		HT = 65;
 		HP = HT/2; //32
 
-		defenseSkill = 12;
+		defenseSkill = 14;
 
 		EXP = 7;
 

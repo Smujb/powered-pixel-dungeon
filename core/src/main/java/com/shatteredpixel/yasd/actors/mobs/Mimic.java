@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -91,7 +92,7 @@ public class Mimic extends Mob {
 		this.level = level;
 		
 		HP = HT = (1 + level) * 6;
-		EXP = 2 + 2 * (level - 1) / 5;
+		EXP = 2 + 2 * (level - 1) / Constants.CHAPTER_LENGTH;
 		defenseSkill = attackSkill( null ) / 2;
 		
 		enemySeen = true;

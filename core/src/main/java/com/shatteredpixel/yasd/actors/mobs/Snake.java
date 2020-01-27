@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.sprites.SnakeSprite;
 import com.watabou.utils.Random;
 
@@ -36,7 +37,8 @@ public class Snake extends Mob {
 		EXP = 2;
 		maxLvl = 7;
 		
-		//TODO loot?
+		loot = Generator.random(Generator.Category.SEED);
+		lootChance = 0.33f;
 	}
 	
 	@Override

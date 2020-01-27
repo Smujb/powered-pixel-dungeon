@@ -21,15 +21,20 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
+import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.Web;
+import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Poison;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
+import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.SpinnerSprite;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 public class Spinner extends Mob {
@@ -56,7 +61,7 @@ public class Spinner extends Mob {
 
 	@Override
 	public int attackSkill(Char target) {
-		return 20;
+		return 23;
 	}
 
 	@Override
@@ -88,9 +93,13 @@ public class Spinner extends Mob {
 
 	@Override
 	public void move(int step) {
-		int curWeb = Blob.volumeAt(pos, Web.class);
-		if (state == FLEEING && curWeb < 5) {
-			GameScene.add(Blob.seed(pos, Random.Int(5, 7) - curWeb, Web.class));
+		if (state == FLEEING && Random.Int(3) == 0) {
+			//GameScene.add(Blob.seed(pos, Random.Int(5, 7) - curWeb, Web.class));
+			for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+				mob.beckon( enemy.pos );
+				sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
+				Sample.INSTANCE.play( Assets.SND_CHALLENGE );
+			}
 		}
 		super.move(step);
 	}

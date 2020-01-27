@@ -42,7 +42,7 @@ public class Monk extends Mob {
 		spriteClass = MonkSprite.class;
 		
 		HP = HT = 70;
-		defenseSkill = 30;
+		defenseSkill = 34;
 		
 		EXP = 11;
 		maxLvl = 21;
@@ -60,7 +60,7 @@ public class Monk extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 30;
+		return defenseSkill;
 	}
 	
 	@Override

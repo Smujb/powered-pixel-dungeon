@@ -43,7 +43,7 @@ public class Shaman extends RangedMob {
 		spriteClass = ShamanSprite.class;
 		
 		HP = HT = 20;
-		defenseSkill = 8;
+		defenseSkill = 10;
 		
 		EXP = 6;
 		maxLvl = 14;
@@ -55,8 +55,9 @@ public class Shaman extends RangedMob {
 	}
 	public Shaman() {
 		super();
-		if (Dungeon.depth > 10) {
-			HP = HT *= 1.5f;
+		if (Dungeon.depth > 12) {
+			HP = HT *= 2;
+			defenseSkill *= 1.5f;
 		}
 	}
 	@Override
@@ -92,7 +93,10 @@ public class Shaman extends RangedMob {
 	@Override
 	public int magicalAttackProc(Char enemy, int damage) {
 		damage = super.magicalAttackProc(enemy, damage);
-		if (Dungeon.level.water[enemy.pos] && !enemy.flying || Dungeon.depth > 10) {
+		if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
+			damage *= 1.5f;
+		}
+		if (Dungeon.depth > 12) {//Use a separate statement so they can stack
 			damage *= 1.5f;
 		}
 		return damage;

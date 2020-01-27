@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.actors.mobs;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
+import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
@@ -41,7 +42,7 @@ public class RotHeart extends Mob {
 	{
 		spriteClass = RotHeartSprite.class;
 
-		HP = HT = 80;
+		HP = HT = 160;
 		defenseSkill = 0;
 
 		EXP = 4;
@@ -50,6 +51,14 @@ public class RotHeart extends Mob {
 
 		properties.add(Property.IMMOVABLE);
 		properties.add(Property.MINIBOSS);
+	}
+
+	@Override
+	protected boolean act() {
+		if (enemy == null || !Dungeon.level.adjacent(pos, enemy.pos)) {
+			HP = Math.min(HT, HP + 6);
+		}
+		return super.act();
 	}
 
 	@Override
@@ -65,7 +74,7 @@ public class RotHeart extends Mob {
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {
-		GameScene.add(Blob.seed(pos, 20, ToxicGas.class));
+		GameScene.add(Blob.seed(pos, 20, CorrosiveGas.class).setStrength(3));
 
 		return super.defenseProc(enemy, damage);
 	}

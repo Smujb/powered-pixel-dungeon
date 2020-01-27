@@ -21,12 +21,10 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
-import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.messages.Messages;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.sprites.AcidicSprite;
-import com.shatteredpixel.yasd.utils.GLog;
-import com.watabou.utils.Random;
 
 public class Acidic extends Scorpio {
 
@@ -38,15 +36,8 @@ public class Acidic extends Scorpio {
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
-		
-		int dmg = Random.IntRange( 0, damage );
-		if (dmg > 0) {
-			enemy.damage( dmg, this );
-			if (!enemy.isAlive() && enemy == Dungeon.hero) {
-				Dungeon.fail(getClass());
-				GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name)));
-			}
-		}
+
+		Buff.affect(enemy, Ooze.class).set(20f);
 		
 		return super.defenseProc( enemy, damage );
 	}

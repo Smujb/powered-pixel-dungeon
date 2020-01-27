@@ -35,7 +35,7 @@ public class Crab extends Mob {
 		spriteClass = CrabSprite.class;
 		
 		HP = HT = 15;
-		defenseSkill = 3;
+		defenseSkill = 4;
 		baseSpeed = 2f;
 		
 		EXP = 4;
@@ -52,7 +52,7 @@ public class Crab extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 12;
+		return 13;
 	}
 	
 	@Override

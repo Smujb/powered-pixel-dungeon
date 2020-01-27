@@ -35,7 +35,7 @@ public class Bat extends Mob {
 		spriteClass = BatSprite.class;
 		
 		HP = HT = 35;
-		defenseSkill = 15;
+		defenseSkill = 18;
 		baseSpeed = 2f;
 		
 		EXP = 7;
@@ -54,7 +54,7 @@ public class Bat extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 18;
+		return 21;
 	}
 	
 	@Override

@@ -39,7 +39,7 @@ public class Warlock extends RangedMob {
 		spriteClass = WarlockSprite.class;
 		
 		HP = HT = 80;
-		defenseSkill = 18;
+		defenseSkill = 21;
 		
 		EXP = 11;
 		maxLvl = 21;
@@ -52,12 +52,12 @@ public class Warlock extends RangedMob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 16, 22 );
+		return Random.NormalIntRange( 16, 24 );
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 25;
+		return 30;
 	}
 	
 	@Override

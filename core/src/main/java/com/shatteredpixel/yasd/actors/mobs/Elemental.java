@@ -38,7 +38,7 @@ public class Elemental extends Mob {
 		spriteClass = ElementalSprite.class;
 		
 		HP = HT = 65;
-		defenseSkill = 20;
+		defenseSkill = 24;
 		
 		EXP = 10;
 		maxLvl = 20;
@@ -58,7 +58,7 @@ public class Elemental extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 25;
+		return 29;
 	}
 	
 	@Override

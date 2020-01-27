@@ -35,7 +35,7 @@ public class Golem extends Mob {
 		spriteClass = GolemSprite.class;
 		
 		HP = HT = 85;
-		defenseSkill = 18;
+		defenseSkill = 22;
 		
 		EXP = 12;
 		maxLvl = 22;
@@ -50,7 +50,7 @@ public class Golem extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 28;
+		return 32;
 	}
 	
 	@Override

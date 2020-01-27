@@ -22,7 +22,10 @@
 package com.shatteredpixel.yasd.sprites;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.items.weapon.missiles.ThrowingKnife;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.utils.Callback;
 
 public class BanditSprite extends MobSprite {
 	
@@ -45,5 +48,35 @@ public class BanditSprite extends MobSprite {
 		attack.frames( film, 31, 32, 33 );
 		
 		idle();
+	}
+
+	@Override
+	public void attack( int cell ) {
+		if (!Dungeon.level.adjacent(cell, ch.pos)) {
+
+			((MissileSprite)parent.recycle( MissileSprite.class )).
+					reset( ch.pos, cell, new ThrowingKnife(), new Callback() {
+						@Override
+						public void call() {
+							ch.onAttackComplete();
+						}
+					} );
+
+			play( zap );
+			turnTo( ch.pos , cell );
+
+		} else {
+
+			super.attack( cell );
+
+		}
+	}
+
+	@Override
+	public void onComplete(Animation anim) {
+		super.onComplete(anim);
+		if (anim == zap) {
+			idle();
+		}
 	}
 }

@@ -37,7 +37,7 @@ public class Eye extends Mob {
 		spriteClass = EyeSprite.class;
 
 		HP = HT = 100;
-		defenseSkill = 20;
+		defenseSkill = 25;
 		viewDistance = Light.DISTANCE;
 
 		EXP = 13;
@@ -60,7 +60,7 @@ public class Eye extends Mob {
 
 	@Override
 	public int attackSkill( Char target ) {
-		return 30;
+		return 35;
 	}
 	
 	@Override

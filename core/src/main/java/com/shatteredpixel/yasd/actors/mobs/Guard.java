@@ -47,7 +47,7 @@ public class Guard extends Mob {
 		spriteClass = GuardSprite.class;
 
 		HP = HT = 50;
-		defenseSkill = 10;
+		defenseSkill = 12;
 
 		EXP = 7;
 		maxLvl = 14;
@@ -115,7 +115,7 @@ public class Guard extends Mob {
 
 	@Override
 	public int attackSkill( Char target ) {
-		return 14;
+		return 16;
 	}
 
 	@Override

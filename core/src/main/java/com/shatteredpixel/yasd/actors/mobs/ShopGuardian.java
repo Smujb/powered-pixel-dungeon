@@ -31,14 +31,14 @@ public class ShopGuardian extends Statue {
         immunities.add(Paralysis.class);
         immunities.add(Bleeding.class);
         immunities.add(Poison.class);
-        resistances.add( Frost.class );
+        resistances.add(Frost.class);
         resistances.add(Vertigo.class);
         resistances.add(Blindness.class);
     }
 
     public ShopGuardian() {
         super();
-        HealingPotions++;//Extra HP potion
+        HealingPotions = 0;
     }
 
     public void spawnAround( int pos ) {

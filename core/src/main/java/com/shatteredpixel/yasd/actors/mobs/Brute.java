@@ -39,7 +39,7 @@ public class Brute extends Mob {
 		spriteClass = BruteSprite.class;
 		
 		HP = HT = 50;
-		defenseSkill = 15;
+		defenseSkill = 18;
 		
 		EXP = 8;
 		maxLvl = 16;
@@ -65,7 +65,7 @@ public class Brute extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 20;
+		return 23;
 	}
 	
 	@Override
