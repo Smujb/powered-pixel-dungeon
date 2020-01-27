@@ -65,7 +65,7 @@ abstract public class MissileWeapon extends Weapon {
 	
 	public boolean holster;
 	
-	//used to reduce durability from the source getWeapons stack, rather than the one being thrown.
+	//used to reduce durability from the source weapon stack, rather than the one being thrown.
 	protected MissileWeapon parent;
 	
 	public int tier;
@@ -73,7 +73,17 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public float degradedPercent() {
-		return durability/MAX_DURABILITY;
+		return durability / MAX_DURABILITY;
+	}
+
+	@Override
+	public boolean canDegrade() {
+		return true;
+	}
+
+	@Override
+	public void fullyRepair() {
+		durability = MAX_DURABILITY;
 	}
 
 	@Override
