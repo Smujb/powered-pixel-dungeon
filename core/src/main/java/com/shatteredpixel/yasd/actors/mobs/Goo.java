@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
+import com.shatteredpixel.yasd.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.items.quest.GooBlob;
@@ -113,16 +114,30 @@ public class Goo extends Mob {
 			}
 			HP++;
 		}
-
-		if (HP < HT/2 && Random.Int(10) == 0) {
-			Level l = Dungeon.level;
-			Mob mob = l.createMob();
-			mob.pos = l.randomRespawnCell();
-			GameScene.add( mob );
-		}
 		
 		if (state != SLEEPING){
 			Dungeon.level.seal();
+		}
+		boolean flee = false;
+		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+			if (mob instanceof CausticSlime) {
+				flee = true;
+			}
+		}
+
+		if (flee && state != FLEEING) {
+			state = FLEEING;
+		} else {
+			if (state != SLEEPING && state != HUNTING && state != WANDERING) {
+				state = HUNTING;
+			}
+			if (HP < HT/2 && Random.Int(10) == 0) {
+				Level l = Dungeon.level;
+				Mob mob = new CausticSlime();
+				mob.pos = l.randomRespawnCell();
+				GameScene.add( mob );
+				mob.aggro(enemy);
+			}
 		}
 
 		return super.act();

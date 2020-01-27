@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.levels;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.Torch;
 import com.shatteredpixel.yasd.levels.painters.HallsPainter;
@@ -56,7 +57,7 @@ public class HallsLevel extends RegularLevel {
 
 	{
 		
-		viewDistance = Math.min( 26 - Dungeon.depth, viewDistance );
+		viewDistance = Math.min( Constants.NUM_FLOORS - Dungeon.depth, viewDistance );
 		
 		color1 = 0x801500;
 		color2 = 0xa68521;

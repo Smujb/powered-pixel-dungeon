@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.levels.rooms.special;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.blobs.Alchemy;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
@@ -61,7 +62,7 @@ public class LaboratoryRoom extends SpecialRoom {
 		}
 		Painter.set( level, pot, Terrain.ALCHEMY );
 		
-		int chapter = 1 + Dungeon.depth/5;
+		int chapter = 1 + Dungeon.depth/Constants.CHAPTER_LENGTH;
 		Blob.seed( pot.x + level.width() * pot.y, 1 + chapter*10 + Random.NormalIntRange(0, 10), Alchemy.class, level );
 		
 		int n = Random.NormalIntRange( 1, 3 );

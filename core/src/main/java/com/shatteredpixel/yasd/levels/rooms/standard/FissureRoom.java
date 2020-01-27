@@ -42,11 +42,16 @@ public class FissureRoom extends StandardRoom {
 			door.set( Door.Type.REGULAR );
 		}
 		Painter.fill( level, this, 1, Terrain.EMPTY );
-		
+		int terrainType = Terrain.CHASM;
+		if (Random.Int(3) == 0) {
+			terrainType = Terrain.BOOKSHELF;
+		} else if (Random.Int(2) == 0) {
+			terrainType = Terrain.HIGH_GRASS;
+		}
 		if (square() <= 25){
 			//just fill in one tile if the room is tiny
 			Point p = center();
-			Painter.set( level, p.x, p.y, Terrain.CHASM);
+			Painter.set( level, p.x, p.y, terrainType);
 			
 		} else {
 			int smallestDim = Math.min(width(), height());
@@ -62,7 +67,7 @@ public class FissureRoom extends StandardRoom {
 					int h = Math.min( j - left, right - j );
 					if (Math.min( v, h ) > floorW
 							|| (Math.min( v, h ) == floorW && Random.Float() > edgeFloorChance)) {
-						Painter.set( level, j, i, Terrain.CHASM );
+						Painter.set( level, j, i, terrainType );
 					}
 				}
 			}

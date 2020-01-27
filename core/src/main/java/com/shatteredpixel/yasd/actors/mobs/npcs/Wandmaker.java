@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.actors.mobs.npcs;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -295,7 +296,7 @@ public class Wandmaker extends NPC {
 		
 		public static ArrayList<Room> spawnRoom( ArrayList<Room> rooms) {
 			questRoomSpawned = false;
-			if (!spawned && (type != 0 || (Dungeon.depth > 6 && Random.Int( 10 - Dungeon.depth ) == 0))) {
+			if (!spawned && (type != 0 || (Dungeon.depth > Constants.CHAPTER_LENGTH + 1 && Random.Int( 10 - Dungeon.depth ) == 0))) {
 				
 				// decide between 1,2, or 3 for quest type.
 				if (type == 0) type = Random.Int(3)+1;

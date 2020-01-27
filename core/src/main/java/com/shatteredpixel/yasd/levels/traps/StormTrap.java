@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
 import com.shatteredpixel.yasd.actors.blobs.Electricity;
+import com.shatteredpixel.yasd.actors.blobs.StormCloud;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.utils.BArray;
 import com.watabou.noosa.audio.Sample;
@@ -48,6 +49,7 @@ public class StormTrap extends Trap {
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				GameScene.add(Blob.seed(i, 20, Electricity.class));
+				GameScene.add(Blob.seed(i, 20, StormCloud.class));
 			}
 		}
 	}

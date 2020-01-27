@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.levels;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
@@ -172,7 +173,7 @@ public abstract class Level implements Bundlable {
 
 		Random.seed( Dungeon.seedCurDepth() );
 		
-		if (!(Dungeon.bossLevel() || Dungeon.depth == 21) /*final shop floor*/) {
+		if (!Dungeon.bossLevel()) {
 
 			if (Dungeon.isChallenged(Challenges.NO_FOOD)){
 				addItemToSpawn( new SmallRation() );
@@ -199,8 +200,8 @@ public abstract class Level implements Bundlable {
 			}
 			//one scroll of transmutation is guaranteed to spawn somewhere on chapter 2-4
 			int enchChapter = (int)((Dungeon.seed / 10) % 3) + 1;
-			if ( Dungeon.depth / 5 == enchChapter &&
-					Dungeon.seed % 4 + 1 == Dungeon.depth % 5){
+			if ( Dungeon.depth / Constants.CHAPTER_LENGTH == enchChapter &&
+					Dungeon.seed % 4 + 1 == Dungeon.depth % Constants.CHAPTER_LENGTH){
 				addItemToSpawn( new StoneOfEnchantment() );
 			}
 			
@@ -227,25 +228,25 @@ public abstract class Level implements Bundlable {
 			
 			if (Dungeon.depth > 1) {
 				switch (Random.Int( 10 )) {
-				case 0:
-					if (!Dungeon.bossLevel( Dungeon.depth + 1 )) {
-						feeling = Feeling.CHASM;
-					}
-					break;
-				case 1:
-					feeling = Feeling.WATER;
-					break;
-				case 2:
-					feeling = Feeling.GRASS;
-					break;
-				case 3:
-					feeling = Feeling.DARK;
-					addItemToSpawn(new Torch());
-					viewDistance = Math.round(viewDistance/2f);
-					break;
-				case 4:
-					feeling = Feeling.EVIL;
-					break;
+					case 0:
+						if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
+							feeling = Feeling.CHASM;
+						}
+						break;
+					case 1:
+						feeling = Feeling.WATER;
+						break;
+					case 2:
+						feeling = Feeling.GRASS;
+						break;
+					case 3:
+						feeling = Feeling.DARK;
+						addItemToSpawn(new Torch());
+						viewDistance = Math.round(viewDistance / 2f);
+						break;
+					case 4:
+						feeling = Feeling.EVIL;
+						break;
 				}
 			}
 		}
@@ -454,7 +455,7 @@ public abstract class Level implements Bundlable {
 	private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
 	
 	public Mob createMob() {
-		if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
+		/*if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
 			mobsToSpawn = Bestiary.getMobRotation(Dungeon.depth);
 		}
 		Mob mob = Reflection.newInstance(mobsToSpawn.remove(0));
@@ -465,13 +466,14 @@ public abstract class Level implements Bundlable {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;
 				break;
-			case 2: default://Medium = ChainArmor max HP
+			case 2: default://Medium = normal max HP
 				break;
 			case 3://Hard = +25% max HP
 				mob.HP = mob.HT*=1.25f;
 				break;
 		}
-		return mob;
+		return mob;*/
+		return Bestiary.getMob();
 	}
 
 	public ArrayList<Integer> getPassableCellsList() {

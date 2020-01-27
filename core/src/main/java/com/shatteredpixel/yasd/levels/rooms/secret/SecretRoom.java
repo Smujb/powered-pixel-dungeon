@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.levels.rooms.secret;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.hero.HeroClass;
@@ -74,10 +75,10 @@ public abstract class SecretRoom extends SpecialRoom {
 	public static int secretsForFloor(int depth){
 		if (depth == 1) return 0;
 		
-		int region = depth/5;
-		int floor = depth%5;
+		int region = depth/Constants.CHAPTER_LENGTH;
+		int floor = depth%Constants.CHAPTER_LENGTH;
 		
-		int floorsLeft = 5 - floor;
+		int floorsLeft = Constants.CHAPTER_LENGTH - floor;
 		
 		float secrets;
 		if (floorsLeft == 0) {

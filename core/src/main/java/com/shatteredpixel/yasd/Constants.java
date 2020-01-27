@@ -65,7 +65,7 @@ public class Constants {
     public static ArrayList<Integer> FLOORS_NO_ASCEND = new ArrayList<>();
 
     //Chapter length. WIP.
-    public static final int CHAPTER_LENGTH = 5;
+    public static final int CHAPTER_LENGTH = 6;
 
     //Number of chapters.
     public static final int NUM_CHAPTERS = 5;
@@ -77,6 +77,7 @@ public class Constants {
     public static final int NUM_FLOORS = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
     public static final int HERO_EXP_CAP = NUM_FLOORS + 4;
 
+    public static final int SOU_PER_CHAPTER = 3;
 
     public static ArrayList<Class <? extends Level>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
             DeadEndLevel.class,//Floor 0
@@ -84,28 +85,33 @@ public class Constants {
             SewerLevel.class,
             SewerLevel.class,
             SewerLevel.class,
-            SewerBossLevel.class,//Floor 5, boss
+            SewerLevel.class,
+            SewerBossLevel.class,//Floor 6, boss
             PrisonLevel.class,
             PrisonLevel.class,
             PrisonLevel.class,
             PrisonLevel.class,
-            NewPrisonBossLevel.class,//Floor 10, boss.
+            PrisonLevel.class,
+            NewPrisonBossLevel.class,//Floor 12, boss.
             CavesLevel.class,
             CavesLevel.class,
             CavesLevel.class,
             CavesLevel.class,
-            CavesBossLevel.class,//Floor 15, boss
+            CavesLevel.class,
+            CavesBossLevel.class,//Floor 18, boss
             CityLevel.class,
             CityLevel.class,
             CityLevel.class,
             CityLevel.class,
-            CityBossLevel.class,//Floor 20, boss
-            LastShopLevel.class,//Floor 21, Imp
+            CityLevel.class,
+            CityBossLevel.class,//Floor 24, boss
+            LastShopLevel.class,//Floor 25, Imp
             HallsLevel.class,
             HallsLevel.class,
             HallsLevel.class,
-            HallsBossLevel.class,//Floor 25, boss
-            LastLevel.class//Floor 26, last level
+            HallsLevel.class,
+            HallsBossLevel.class,//Floor 30, boss
+            LastLevel.class//Floor 31, last level
     ));
 
 }

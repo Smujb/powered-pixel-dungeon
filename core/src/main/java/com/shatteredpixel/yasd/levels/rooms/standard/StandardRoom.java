@@ -155,15 +155,15 @@ public abstract class StandardRoom extends Room {
 			chances[i] = restrictedChances;
 		}
 		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {
-			if (Dungeon.depth < Constants.CHAPTER_LENGTH) {
+			if (Dungeon.depth <= Constants.CHAPTER_LENGTH) {
 				chances[i] = sewerChances;
-			} else if (Dungeon.depth < Constants.CHAPTER_LENGTH*2) {
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*2) {
 				chances[i] = prisonChances;
-			} else if (Dungeon.depth < Constants.CHAPTER_LENGTH*3) {
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*3) {
 				chances[i] = cavesChances;
-			} else if (Dungeon.depth < Constants.CHAPTER_LENGTH*4) {
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*4) {
 				chances[i] = cityChances;
-			} else if (Dungeon.depth < Constants.CHAPTER_LENGTH*5) {
+			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*5) {
 				chances[i] = hallsChances;
 			}
 		}

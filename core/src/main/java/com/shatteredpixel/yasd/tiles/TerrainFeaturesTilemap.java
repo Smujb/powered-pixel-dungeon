@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.tiles;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.traps.Trap;
@@ -63,8 +64,8 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		if (plants.get(pos) != null){
 			return plants.get(pos).image + 7*16;
 		}
-
-		int stage = (Dungeon.depth-1)/5;
+		//TODO:Support depths beyond Constants.NUM_DEPTHS
+		int stage = (Dungeon.depth-1)/Constants.CHAPTER_LENGTH;
 		if (Dungeon.depth == 21) stage--;
 		if (tile == Terrain.HIGH_GRASS){
 			return 9 + 16*stage + (DungeonTileSheet.tileVariance[pos] >= 50 ? 1 : 0);

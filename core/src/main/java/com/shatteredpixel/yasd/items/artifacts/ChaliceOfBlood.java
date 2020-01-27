@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.artifacts;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -144,7 +145,7 @@ public class ChaliceOfBlood extends Artifact {
 	
 	@Override
 	public void charge(Hero target) {
-		target.HP = Math.min( target.HT, target.HP + 1 + Dungeon.depth/5);
+		target.HP = Math.min( target.HT, target.HP + 1 + Dungeon.depth/Constants.CHAPTER_LENGTH);
 	}
 	
 	@Override

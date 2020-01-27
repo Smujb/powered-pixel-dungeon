@@ -355,7 +355,7 @@ public class Dungeon {
 
 	public static boolean posNeeded() {
 		//2 POS each floor set
-		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (depth / 5) * 2);
+		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (depth / Constants.CHAPTER_LENGTH) * 2);
 		if (posLeftThisSet <= 0) return false;
 
 		int floorThisSet = (depth % 5);
@@ -373,9 +373,9 @@ public class Dungeon {
 		int souLeftThisSet;
 		//3 SOU each floor set, 1.5 (rounded) on forbidden runes challenge
 		if (isChallenged(Challenges.NO_SCROLLS)){
-			souLeftThisSet = 0;
+			return false;
 		} else {
-			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / 5) * 3);
+			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / Constants.CHAPTER_LENGTH) * Constants.SOU_PER_CHAPTER);
 		}
 		if (souLeftThisSet <= 0) return false;
 
@@ -386,7 +386,7 @@ public class Dungeon {
 	
 	public static boolean esNeeded() {
 		//1 AS each floor set
-		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (depth / 5));
+		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (depth / Constants.CHAPTER_LENGTH));
 		if (asLeftThisSet <= 0) return false;
 
 		int floorThisSet = (depth % 5);

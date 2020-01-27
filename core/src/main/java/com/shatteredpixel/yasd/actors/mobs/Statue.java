@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.actors.mobs;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
@@ -70,7 +71,7 @@ public class Statue extends Mob implements Callback {
 		usesBelongings = true;
 	}
 
-	int HealingPotions = Math.max(1,Dungeon.depth/5);//1 Potion per chapter
+	int HealingPotions = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Potion per chapter
 	
 	public Statue() {
 		super();
@@ -148,7 +149,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	public void upgradeItems() {
-		int sous = (Dungeon.depth/5)*3;//(Dungeon.depth/5 [chapter]) * 3 [3 SoU per chapter]
+		int sous = (Dungeon.depth/Constants.CHAPTER_LENGTH)*Constants.SOU_PER_CHAPTER;//(Dungeon.depth/5 [chapter]) * 3 [3 SoU per chapter]
 		KindofMisc Item;
 		if (belongings.miscs.length > 0) {
 			do {

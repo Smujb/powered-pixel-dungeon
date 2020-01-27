@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.items.rings;
 
 import com.shatteredpixel.yasd.Challenges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.items.Generator;
@@ -203,14 +204,14 @@ public class RingOfWealth extends Ring {
 			return result;
 		} else { //10% chance
 			if (Random.Int(3) != 0){
-				Weapon weapon = Generator.randomWeapon((Dungeon.depth / 5) + 1);
+				Weapon weapon = Generator.randomWeapon((Dungeon.depth / Constants.CHAPTER_LENGTH) + 1);
 				weapon.upgrade(1);
 				weapon.enchant(Weapon.Enchantment.random());
 				weapon.cursed = false;
 				weapon.cursedKnown = true;
 				return weapon;
 			} else {
-				Armor armor = Generator.randomArmor((Dungeon.depth / 5) + 1);
+				Armor armor = Generator.randomArmor((Dungeon.depth / Constants.CHAPTER_LENGTH) + 1);
 				armor.upgrade();
 				armor.inscribe(Armor.Glyph.random());
 				armor.cursed = false;

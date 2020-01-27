@@ -92,7 +92,7 @@ public class Food extends Item {
 	
 	protected void satisfy( Hero hero ){//Eating food satisfies morale as well as hunger.
 		Buff.affect(hero, Hunger.class).satisfy( energy );
-		hero.gainMorale(0.5f);
+		hero.gainMorale(0.3f);
 	}
 	
 	public static void foodProc( Hero hero ){

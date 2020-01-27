@@ -53,7 +53,12 @@ public class Shaman extends RangedMob {
 		
 		properties.add(Property.ELECTRIC);
 	}
-	
+	public Shaman() {
+		super();
+		if (Dungeon.depth > 10) {
+			HP = HT *= 1.5f;
+		}
+	}
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 2, 12 );
@@ -87,7 +92,7 @@ public class Shaman extends RangedMob {
 	@Override
 	public int magicalAttackProc(Char enemy, int damage) {
 		damage = super.magicalAttackProc(enemy, damage);
-		if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
+		if (Dungeon.level.water[enemy.pos] && !enemy.flying || Dungeon.depth > 10) {
 			damage *= 1.5f;
 		}
 		return damage;

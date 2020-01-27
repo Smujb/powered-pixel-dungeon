@@ -37,6 +37,7 @@ public abstract class RangedMob extends Mob implements Callback {
             return super.doAttack( enemy );
 
         } else {
+
             return doMagicAttack( enemy );
         }
     }

@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.levels.rooms.special;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.Terrain;
@@ -82,7 +83,7 @@ public class WeakFloorRoom extends SpecialRoom {
 		@Override
 		public Tilemap create() {
 			Tilemap v = super.create();
-			v.map( new int[]{Dungeon.depth/5}, 1);
+			v.map( new int[]{Dungeon.depth/Constants.CHAPTER_LENGTH}, 1);
 			return v;
 		}
 

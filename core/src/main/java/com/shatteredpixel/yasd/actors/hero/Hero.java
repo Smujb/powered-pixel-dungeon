@@ -229,7 +229,7 @@ public class Hero extends Char {
 				DifficultyMultiplier = 0.67f;
 				break;
 			case 2:
-			default://ChainArmor Morale loss in Medium
+			default://Normal Morale loss in Medium
 				DifficultyMultiplier = 1f;
 				break;
 			case 3://+50% Morale loss in Hard
@@ -237,7 +237,7 @@ public class Hero extends Char {
 				break;
 
 		}
-		morale *= DifficultyMultiplier;
+		Amount *= DifficultyMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
 		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk
@@ -1267,7 +1267,7 @@ public class Hero extends Char {
 				sprite.showStatus( CharSprite.POSITIVE, Messages.get(Hero.class, "level_up") );
 				Sample.INSTANCE.play( Assets.SND_LEVELUP );
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
-				gainMorale(missingMoralePercent);//Gains more Morale on level up when on low Morale (up to 1)
+				gainMorale(missingMoralePercent*0.5f);//Gains more Morale on level up when on low Morale (up to 1)
 			}
 			DistributionPoints += 3;
 			WndHero window = new WndHero();

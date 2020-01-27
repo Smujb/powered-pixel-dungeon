@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.actors.buffs;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.artifacts.ChaliceOfBlood;
+import com.shatteredpixel.yasd.levels.HallsBossLevel;
 
 public class Regeneration extends Buff {
 	
@@ -39,7 +40,7 @@ public class Regeneration extends Buff {
 	public boolean act() {
 		if (target.isAlive()) {
 
-			if (target.HP < regencap() && !((Hero)target).isStarving()) {
+			if (target.HP < regencap() && !(target instanceof Hero && ((Hero)target).isStarving())) {
 				LockedFloor lock = target.buff(LockedFloor.class);
 				if (target.HP > 0 && (lock == null || lock.regenOn())) {
 					target.HP += 1;

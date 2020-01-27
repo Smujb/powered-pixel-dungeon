@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items.spells;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.Item;
@@ -52,7 +53,7 @@ public class MagicalPorter extends InventorySpell {
 	protected void onItemSelected(Item item) {
 		
 		Item result = item.detachAll(curUser.belongings.backpack);
-		int portDepth = 5 * (1 + Dungeon.depth/5);
+		int portDepth = 5 * (1 + Dungeon.depth/Constants.CHAPTER_LENGTH);
 		ArrayList<Item> ported = Dungeon.portedItems.get(portDepth);
 		if (ported == null) {
 			Dungeon.portedItems.put(portDepth, ported = new ArrayList<>());
