@@ -22,6 +22,8 @@ public class Constants {
     /*
     Purpose of this file is to have constants that can be used to quickly tweak in-game things.
     Makes modding easier and also helps me in future.
+
+    (I may rework some of my other mods off this in the future as I'm quite happy with engine functionality atm)
      */
     //
     //############################## EQUIPMENT STUFF ##############################
@@ -77,8 +79,10 @@ public class Constants {
     public static final int NUM_FLOORS = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
     public static final int HERO_EXP_CAP = NUM_FLOORS + 4;
 
+    //SoU per chapter
     public static final int SOU_PER_CHAPTER = 3;
 
+    //Level types. Change it if you want to change depth system.
     public static ArrayList<Class <? extends Level>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
             DeadEndLevel.class,//Floor 0
             SewerLevel.class,
