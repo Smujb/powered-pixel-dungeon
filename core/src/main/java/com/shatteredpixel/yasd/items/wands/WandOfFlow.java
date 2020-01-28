@@ -2,6 +2,7 @@ package com.shatteredpixel.yasd.items.wands;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
@@ -64,15 +65,19 @@ public class WandOfFlow extends DamageWand {
             }
         }
 
-        for ( Char ch : affectedChars ) {
-            processSoulMark(ch,chargesPerCast());
-            hit(ch);
-            if (Random.Int(2) == 0) {
-                Buff.affect(ch, Slow.class, Slow.DURATION / 3);
+        for ( Char ch : affectedChars.toArray( new Char[0] ) ) {
+            try {
+                processSoulMark(ch, chargesPerCast());
+                hit(ch);
+                if (Random.Int(2) == 0) {
+                    Buff.affect(ch, Slow.class, Slow.DURATION / 3);
+                }
+                Ballistica trajectory = new Ballistica(ch.pos, bolt.path.get(bolt.dist + 1), Ballistica.MAGIC_BOLT);
+                WandOfBlastWave.throwChar(ch, trajectory, 2);
+                Buff.affect(ch, Wet.class, Wet.DURATION);
+            } catch (Exception e) {
+                YASD.reportException(e);
             }
-            Ballistica trajectory = new Ballistica(ch.pos, bolt.path.get(bolt.dist + 1), Ballistica.MAGIC_BOLT);
-            WandOfBlastWave.throwChar(ch, trajectory, 2);
-            Buff.affect(ch, Wet.class, Wet.DURATION);
         }
     }
 

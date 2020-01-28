@@ -45,11 +45,11 @@ public class Amok extends FlavourBuff {
 			((Mob)target).aggro( null );
 	}
 
-	@Override
+	/*@Override
 	public void fx(boolean on) {
 		if (on) target.sprite.add( CharSprite.State.AMOK );
 		else if (target.invisible == 0) target.sprite.remove( CharSprite.State.AMOK );
-	}
+	}*/
 
 	@Override
 	public String toString() {
