@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
+import com.shatteredpixel.yasd.actors.blobs.StormCloud;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.actors.buffs.Light;
@@ -151,7 +152,7 @@ public class Dungeon {
 
 	public static long seed;
 
-	public static boolean [] loadedDepths = new boolean [Constants.NUM_FLOORS];
+	public static boolean [] loadedDepths = new boolean [Constants.NUM_FLOORS+1];
 	
 	public static void init() {
 
@@ -205,7 +206,7 @@ public class Dungeon {
 		
 		GamesInProgress.selectedClass.initHero( hero );
 
-		for (int i = 0; i < Constants.NUM_FLOORS; i++) {
+		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
 			loadedDepths[i] = false;
 		}
 	}
@@ -515,9 +516,12 @@ public class Dungeon {
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
 		if (Dungeon.version >= YASD.v0_2_1) {
 			loadedDepths = bundle.getBooleanArray( LEVELSLOADED );
+			if (Dungeon.version < YASD.v0_2_2) {
+				loadedDepths[31] = false;//0.2.1 had a bug where the arraylist only went to 30, meaning 31 would crash the game. Old saves will not have data for floor 31, so we set it to false so they can load it.
+			}
 		} else {
 			for (int i = 0; i < Constants.NUM_FLOORS; i++) {
-				loadedDepths[i] = false;
+				loadedDepths[i] = i < Statistics.deepestFloor;//If loading an old game, assume only depths below the deepest floor are unloaded.
 			}
 		}
 

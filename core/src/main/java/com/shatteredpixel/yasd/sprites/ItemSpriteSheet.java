@@ -695,8 +695,6 @@ public class ItemSpriteSheet {
 		assignItemRect(HOLSTER,     15, 16);
 	}
 
-	                                                                                    //16 free slots
-
 
 	private static void assignItemRect( int item, int width, int height){
 		int x = (item % WIDTH) * WIDTH;
