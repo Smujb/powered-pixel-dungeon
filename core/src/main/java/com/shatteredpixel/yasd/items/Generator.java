@@ -398,7 +398,6 @@ public class Generator {
 			
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{
-					ClothArmor.class,
 					RogueArmor.class,
 					MageArmor.class,
 					HuntressArmor.class,
@@ -407,7 +406,7 @@ public class Generator {
 					BasicArmor.class,
 					HeavyArmor.class,
 			};
-			ARMOR.probs = new float[]{  4, 0, 0, 0, 5, 5, 5, 5 };
+			ARMOR.probs = new float[]{  0, 0, 0, 5, 5, 5, 5 };
 
 			ARM_T1.classes = new Class<?>[]{
 					ClothArmor.class,

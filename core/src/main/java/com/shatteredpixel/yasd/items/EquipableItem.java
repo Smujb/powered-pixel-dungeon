@@ -31,36 +31,37 @@ import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
 public abstract class EquipableItem extends Item {
 
-	public static final String AC_EQUIP		= "EQUIP";
-	public static final String AC_UNEQUIP	= "UNEQUIP";
+	public static final String AC_EQUIP = "EQUIP";
+	public static final String AC_UNEQUIP = "UNEQUIP";
 
 	{
 		bones = true;
-		defaultAction=AC_EQUIP;
+		defaultAction = AC_EQUIP;
 	}
 
 	@Override
-	public ArrayList<String> actions(Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( isEquipped( hero ) ? AC_UNEQUIP : AC_EQUIP );
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
+		actions.add(isEquipped(hero) ? AC_UNEQUIP : AC_EQUIP);
 		return actions;
 	}
 
 	@Override
-	public void execute( Hero hero, String action ) {
+	public void execute(Hero hero, String action) {
 
-		super.execute( hero, action );
+		super.execute(hero, action);
 
-		if (action.equals( AC_EQUIP )) {
+		if (action.equals(AC_EQUIP)) {
 			//In addition to equipping itself, item reassigns itself to the quickslot
 			//This is a special case as the item is being removed from inventory, but is staying with the hero.
 			if (isEquipped(hero)) {
-				execute(hero,AC_UNEQUIP);
+				execute(hero, AC_UNEQUIP);
 			} else {
 				int slot = Dungeon.quickslot.getSlot(this);
 				doEquip(hero);
@@ -69,73 +70,83 @@ public abstract class EquipableItem extends Item {
 					updateQuickslot();
 				}
 			}
-		} else if (action.equals( AC_UNEQUIP )) {
-			doUnequip( hero, true );
+		} else if (action.equals(AC_UNEQUIP)) {
+			doUnequip(hero, true);
 		}
 	}
 
 	@Override
-	public void doDrop( Hero hero ) {
-		if (!isEquipped( hero ) || doUnequip( hero, false, false )) {
-			super.doDrop( hero );
+	public void doDrop(Hero hero) {
+		if (!isEquipped(hero) || doUnequip(hero, false, false)) {
+			super.doDrop(hero);
 		}
 	}
 
 	@Override
-	public void cast( final Char user, int dst ) {
-		if (isEquipped( user )) {
-			if (quantity == 1 && !this.doUnequip( user, false, false )) {
+	public void cast(final Char user, int dst) {
+		if (isEquipped(user)) {
+			if (quantity == 1 && !this.doUnequip(user, false, false)) {
 				return;
 			}
 		}
 
-		super.cast( user, dst );
+		super.cast(user, dst);
 	}
 
-	public static void equipCursed(Char hero ) {
-		hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-		Sample.INSTANCE.play( Assets.SND_CURSED );
+	public static void equipCursed(Char hero) {
+		hero.sprite.emitter().burst(ShadowParticle.CURSE, 6);
+		Sample.INSTANCE.play(Assets.SND_CURSED);
 	}
 
-	protected float time2equip( Char hero ) {
+	protected float time2equip(Char hero) {
 		return 1;
 	}
 
-	public abstract boolean doEquip( Hero hero );
+	public abstract boolean doEquip(Hero hero);
 
-	public boolean doUnequip( Char hero, boolean collect, boolean single ) {
+	public boolean doUnequip(Char hero, boolean collect, boolean single) {
 
 		if (cursed && hero.buff(MagicImmune.class) == null) {
 			GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
 			if (hero instanceof Hero) {
-				((Hero)hero).loseMorale(2f);
+				((Hero) hero).loseMorale(2f);
 			}
 
 			return false;
 		}
 
 		if (single) {
-			hero.spendAndNext( time2equip( hero ) );
+			hero.spendAndNext(time2equip(hero));
 		} else {
 			if (hero instanceof Hero)
-				((Hero)hero).spend( time2equip( hero ) );
+				((Hero) hero).spend(time2equip(hero));
 		}
 
-		if (!collect || !collect( hero.belongings.backpack )) {
+		if (!collect || !collect(hero.belongings.backpack)) {
 			onDetach();
 			Dungeon.quickslot.clearItem(this);
 			updateQuickslot();
-			if (collect) Dungeon.level.drop( this, hero.pos );
+			if (collect) Dungeon.level.drop(this, hero.pos);
 		}
 
 		return true;
 	}
 
-	final public boolean doUnequip( Hero hero, boolean collect ) {
-		return doUnequip( hero, collect, true );
+	final public boolean doUnequip(Hero hero, boolean collect) {
+		return doUnequip(hero, collect, true);
 	}
 
-	public void activate( Char ch ){
+	public void activate(Char ch) {
 		curUser = ch;
+	}
 
-	}}
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+	}
+}

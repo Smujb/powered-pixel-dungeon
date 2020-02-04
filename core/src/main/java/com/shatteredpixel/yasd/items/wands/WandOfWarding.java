@@ -99,6 +99,7 @@ public class WandOfWarding extends Wand {
 			GameScene.add(ward, 1f);
 			Dungeon.level.occupyCell(ward);
 			ward.sprite.emitter().burst(MagicMissile.WardParticle.UP, ward.tier);
+			ward.alignment = curUser.alignment;
 		} else {
 			GLog.w( Messages.get(this, "bad_location"));
 		}

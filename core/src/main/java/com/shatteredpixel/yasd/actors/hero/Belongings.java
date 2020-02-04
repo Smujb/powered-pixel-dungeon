@@ -243,9 +243,7 @@ public class Belongings implements Iterable<Item> {
 							|| Dungeon.level.map[owner.pos] == Terrain.OPEN_DOOR )) {
 				speed /= 3f;
 			}
-			if (CurArmour instanceof HuntressArmor) {
-				speed*=1.25;
-			}
+			speed *= CurArmour.speedFactor;
 
 		}
 		return speed;

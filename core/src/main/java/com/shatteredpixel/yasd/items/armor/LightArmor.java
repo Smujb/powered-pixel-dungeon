@@ -34,7 +34,9 @@ public class LightArmor extends Armor {
 
 	@Override
 	public int image() {
-		if (tier < 4) {
+		if (tier == 0) {
+			return ItemSpriteSheet.ARMOR_CLOTH;
+		} else if (tier < 4) {
 			return ItemSpriteSheet.ARMOR_HIDE;
 		} else  {
 			return ItemSpriteSheet.ARMOR_LEATHER;
@@ -43,7 +45,9 @@ public class LightArmor extends Armor {
 
 	@Override
 	public String desc() {
-		if (tier < 4) {
+		if (tier == 0) {
+			return Messages.get(Cloth.class, "desc");
+		} else if (tier < 4) {
 			return Messages.get(Hide.class, "desc");
 		} else {
 			return Messages.get(Leather.class, "desc");
@@ -52,18 +56,25 @@ public class LightArmor extends Armor {
 
 	@Override
 	public String name() {
-		if (tier < 4) {
+		if (tier == 0) {
+			return Messages.get(Cloth.class, "name");
+		} else if (tier < 4) {
 			return Messages.get(Hide.class, "name");
 		} else  {
 			return Messages.get(Leather.class, "name");
 		}
 	}
 
+	private static class Cloth extends Armor {}
 	private static class Leather extends Armor {}
 	private static class Hide extends Armor {}
 
 	@Override
 	public int appearance() {
-		return 2;
+		if (tier == 0) {
+			return 1;
+		} else {
+			return 2;
+		}
 	}
 }

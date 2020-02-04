@@ -304,7 +304,8 @@ public class Blacksmith extends NPC {
 			Bundle node = bundle.getBundle( NODE );
 			
 			if (!node.isNull() && (spawned = node.getBoolean( SPAWNED ))) {
-				alternative	=  node.getBoolean( ALTERNATIVE );
+				//alternative	=  node.getBoolean( ALTERNATIVE );
+				alternative = false;
 				given = node.getBoolean( GIVEN );
 				completed = node.getBoolean( COMPLETED );
 				reforged = node.getBoolean( REFORGED );
@@ -318,7 +319,7 @@ public class Blacksmith extends NPC {
 				
 				rooms.add(new BlacksmithRoom());
 				spawned = true;
-				alternative = Random.Int( 2 ) == 0;
+				alternative = false;
 				
 				given = false;
 				
