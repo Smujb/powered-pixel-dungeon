@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Adrenaline;
@@ -59,6 +60,7 @@ import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.features.Chasm;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Swiftthistle;
+import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -346,6 +348,51 @@ public abstract class Mob extends Char {
 			state = HUNTING;
 		}
 	}
+
+	public static void spawnAround4(Class<? extends Mob> type, int pos) {
+		spawnAtList(type, pos, PathFinder.NEIGHBOURS4);
+	}
+
+	public static void spawnAround8(Class<? extends Mob> type, int pos) {
+		spawnAtList(type, pos, PathFinder.NEIGHBOURS8);
+	}
+
+	public static void spawnAround9(Class<? extends Mob> type, int pos) {
+		spawnAtList(type, pos, PathFinder.NEIGHBOURS9);
+	}
+
+	public static void spawnAtList(Class<? extends Mob> type, int pos, int[] relativePositions) {
+		for (int n : relativePositions) {
+			int cell = pos + n;
+			if (Dungeon.level.passable[cell] && Actor.findChar(cell) == null) {
+				Mob.spawnAt(type, cell);
+			}
+		}
+	}
+
+	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
+		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
+
+			Mob mob = null;
+			do {
+				try {
+					mob = type.newInstance();
+				} catch (IllegalAccessException e) {
+					YASD.reportException(e);
+				} catch (InstantiationException e) {
+					YASD.reportException(e);
+				}
+			} while (mob == null);
+			mob.pos = pos;
+			mob.state = mob.HUNTING;
+			GameScene.add( mob, 1f );
+
+			return mob;
+		} else {
+			return null;
+		}
+	}
+
 	@Override
 	public boolean canAttack(Char enemy) {
 		return Dungeon.level.adjacent( pos, enemy.pos );

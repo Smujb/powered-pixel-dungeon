@@ -144,6 +144,15 @@ public class Goo extends Mob {
 	}
 
 	@Override
+	public float speed() {
+		float speed = super.speed();
+		if (state == FLEEING) {
+			speed *= 3;
+		}
+		return speed;
+	}
+
+	@Override
     public boolean canAttack(Char enemy) {
 		return (pumpedUp > 0) ? distance( enemy ) <= 2 : super.canAttack(enemy);
 	}

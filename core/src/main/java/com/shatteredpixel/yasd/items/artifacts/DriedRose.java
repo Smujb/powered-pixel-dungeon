@@ -609,6 +609,7 @@ public class DriedRose extends Artifact {
 		public int attackProc(Char enemy, int damage) {
 			damage = super.attackProc(enemy, damage);
 			if (rose != null && rose.weapon != null) {
+				rose.weapon.use();
 				damage = rose.weapon.proc( this, enemy, damage );
 			}
 			return damage;
@@ -617,6 +618,7 @@ public class DriedRose extends Artifact {
 		@Override
 		public int defenseProc(Char enemy, int damage) {
 			if (rose != null && rose.armor != null) {
+				rose.armor.use();
 				return rose.armor.proc( enemy, this, damage );
 			} else {
 				return super.defenseProc(enemy, damage);

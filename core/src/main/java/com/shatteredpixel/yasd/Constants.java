@@ -115,4 +115,11 @@ public class Constants {
             LastLevel.class//Floor 31, last level
     ));
 
+    //
+    //############################## UI STUFF ##############################
+    //
+
+    public static final int MAX_QUICKSLOTS = 6;
+    public static final int MIN_QUICKSLOTS = 2;
+
 }

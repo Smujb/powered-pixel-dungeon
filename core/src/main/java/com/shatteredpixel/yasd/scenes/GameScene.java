@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.YASD;
@@ -344,36 +345,36 @@ public class GameScene extends PixelScene {
 		counter.show(this, busy.center(), 0f);
 		
 		switch (InterlevelScene.mode) {
-		case RESURRECT:
-			ScrollOfTeleportation.appear( Dungeon.hero, Dungeon.level.entrance );
-			new Flare( 8, 32 ).color( 0xFFFF66, true ).show( hero, 2f ) ;
-			break;
-		case RETURN:
-			ScrollOfTeleportation.appear(  Dungeon.hero, Dungeon.hero.pos );
-			break;
-		case DESCEND:
-			switch (Dungeon.depth) {
-			case 1:
-				WndStory.showChapter( WndStory.ID_SEWERS );
+			case RESURRECT:
+				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.level.entrance);
+				new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
 				break;
-			case 6:
-				WndStory.showChapter( WndStory.ID_PRISON );
+			case RETURN:
+				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
-			case 11:
-				WndStory.showChapter( WndStory.ID_CAVES );
+			case DESCEND:
+				switch (Dungeon.depth) {
+					case 1:
+						WndStory.showChapter(WndStory.ID_SEWERS);
+						break;
+					case Constants.CHAPTER_LENGTH + 1:
+						WndStory.showChapter(WndStory.ID_PRISON);
+						break;
+					case Constants.CHAPTER_LENGTH * 2 + 1:
+						WndStory.showChapter(WndStory.ID_CAVES);
+						break;
+					case Constants.CHAPTER_LENGTH * 3 + 1:
+						WndStory.showChapter(WndStory.ID_CITY);
+						break;
+					case Constants.CHAPTER_LENGTH * 4 + 1:
+						WndStory.showChapter(WndStory.ID_HALLS);
+						break;
+				}
+				if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
+					Badges.validateNoKilling();
+				}
 				break;
-			case 16:
-				WndStory.showChapter( WndStory.ID_CITY );
-				break;
-			case 22:
-				WndStory.showChapter( WndStory.ID_HALLS );
-				break;
-			}
-			if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
-				Badges.validateNoKilling();
-			}
-			break;
-		default:
+			default:
 		}
 
 		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth );

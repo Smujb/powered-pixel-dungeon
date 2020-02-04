@@ -388,10 +388,6 @@ public class Item implements Bundlable {
 		
 		this.level++;
 
-		if (this.level() > upgradeLimit()) {
-			level(upgradeLimit());
-		}
-
 		updateQuickslot();
 
 		fullyRepair();

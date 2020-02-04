@@ -53,10 +53,10 @@ public class Eye extends Mob {
 		properties.add(Property.DEMONIC);
 	}
 
-	/*@Override
+	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(20, 30);
-	}*/
+	}
 
 	@Override
 	public int attackSkill( Char target ) {
@@ -134,10 +134,10 @@ public class Eye extends Mob {
 		return super.magicalAttackProc(enemy, damage);
 	}
 
-	/*@Override
+	@Override
 	public int magicalDamageRoll() {
 		return Random.NormalIntRange( 30, 50 );
-	}*/
+	}
 
 	//used so resistances can differentiate between melee and magical attacks
 	public static class DeathGaze{}

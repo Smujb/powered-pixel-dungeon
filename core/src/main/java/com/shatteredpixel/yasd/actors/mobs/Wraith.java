@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.PrisonLevel;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.WraithSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
@@ -65,6 +66,7 @@ public class Wraith extends RangedMob {
 		flying = true;
 
 		properties.add(Property.UNDEAD);
+		properties.add(Property.BLOB_IMMUNE);
 		//Resistant to physical weapons.
 		resistances.add(KindOfWeapon.class);
 		resistances.add(Char.class);
