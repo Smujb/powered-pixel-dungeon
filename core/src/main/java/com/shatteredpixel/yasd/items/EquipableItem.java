@@ -145,7 +145,7 @@ public abstract class EquipableItem extends Item {
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put( USERID, curUser.id());
+		//bundle.put( USERID, curUser.id());
 	}
 
 	@Override

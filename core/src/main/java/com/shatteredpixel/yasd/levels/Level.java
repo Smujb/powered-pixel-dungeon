@@ -102,6 +102,14 @@ public abstract class Level implements Bundlable {
 		OPEN
 	}
 
+	public enum State {
+		REGULAR,
+		PAST,
+		FUTURE
+	}
+
+	private State state;
+
 	protected int width;
 	protected int height;
 	protected int length;
@@ -168,6 +176,7 @@ public abstract class Level implements Bundlable {
 	private static final String MOBS		= "mobs";
 	private static final String BLOBS		= "blobs";
 	private static final String FEELING		= "feeling";
+	private static final String STATE		= "state";
 
 	public void create() {
 
@@ -326,6 +335,12 @@ public abstract class Level implements Bundlable {
 		}
 
 		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
+
+		if (version < YASD.v0_2_3) {
+			state = State.REGULAR;
+		} else {
+			state = bundle.getEnum(STATE, State.class);
+		}
 		
 		mobs = new HashSet<>();
 		heaps = new SparseArray<>();
@@ -424,6 +439,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
 		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
+		bundle.put( STATE, state );
 	}
 	
 	public int tunnelTile() {

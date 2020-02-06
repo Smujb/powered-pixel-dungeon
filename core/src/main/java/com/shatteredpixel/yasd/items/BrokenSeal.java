@@ -27,11 +27,14 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.armor.Armor;
+import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndBag;
+import com.shatteredpixel.yasd.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ import java.util.ArrayList;
 public class BrokenSeal extends Item {
 
 	private static final String AC_AFFIX = "AFFIX";
+	private static final String AC_DEBUG = "debug";//Used for debugging. Should do nothing in public releases.
 
 	{
 		image = ItemSpriteSheet.SEAL;
@@ -54,6 +58,7 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
+		actions.add(AC_DEBUG);
 		return actions;
 	}
 
@@ -65,6 +70,25 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
+		} else if (action.equals(AC_DEBUG)) {
+			GameScene.show(new WndOptions(Messages.get(KindofMisc.class, "unequip_title"),
+					Messages.get(KindofMisc.class, "unequip_message"),
+					Messages.titleCase("PAST"),
+					Messages.titleCase("PRESENT"),
+					Messages.titleCase("FUTURE")) {
+				@Override
+				protected void onSelect(int index) {
+
+					if (index == 0) {
+						Terrain.swapLevelState( Dungeon.level, Level.State.PAST );
+					} else if (index == 1) {
+						Terrain.swapLevelState( Dungeon.level, Level.State.REGULAR );
+					} else  if (index == 2){
+						Terrain.swapLevelState( Dungeon.level, Level.State.FUTURE );
+					}
+				}
+
+			});
 		}
 	}
 

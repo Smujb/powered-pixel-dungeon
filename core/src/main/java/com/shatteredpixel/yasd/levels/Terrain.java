@@ -21,6 +21,9 @@
 
 package com.shatteredpixel.yasd.levels;
 
+import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.scenes.GameScene;
+
 public class Terrain {
 
 	public static final int CHASM			= 0;
@@ -40,6 +43,12 @@ public class Terrain {
 	public static final int EMPTY_SP		= 14;
 	public static final int HIGH_GRASS		= 15;
 	public static final int FURROWED_GRASS	= 30;
+	public static final int DRY 			= 31;
+	public static final int WALL_ANCIENT	= 32;
+	public static final int WALL_MODERN	    = 33;
+
+	public static final int WALL_ANCIENT_PLACEHOLDER= 34;//Placeholders if they aren't visible
+	public static final int WALL_MODERN_PLACEHOLDER = 35;
 
 	public static final int SECRET_DOOR	    = 16;
 	public static final int SECRET_TRAP     = 17;
@@ -80,6 +89,7 @@ public class Terrain {
 		flags[ENTRANCE]		= PASSABLE/* | SOLID*/;
 		flags[EXIT]			= PASSABLE;
 		flags[EMBERS]		= PASSABLE;
+		flags[DRY]          = PASSABLE;
 		flags[LOCKED_DOOR]	= LOS_BLOCKING | SOLID;
 		flags[PEDESTAL]		= PASSABLE;
 		flags[WALL_DECO]	= flags[WALL];
@@ -102,7 +112,8 @@ public class Terrain {
 		flags[STATUE_SP]	= flags[STATUE];
 		flags[BOOKSHELF]	= flags[BARRICADE];
 		flags[ALCHEMY]		= SOLID;
-
+		flags[WALL_ANCIENT] = flags[WALL_MODERN] = flags[WALL];
+		flags[WALL_ANCIENT_PLACEHOLDER] = flags[WALL_MODERN_PLACEHOLDER] = flags[EMPTY];
 	}
 
 	public static int discover( int terr ) {
@@ -114,6 +125,55 @@ public class Terrain {
 		default:
 			return terr;
 		}
+	}
+
+	public static void swapLevelState(Level level, Level.State state) {
+		for (int i = 0; i < level.map.length; i++) {
+			Level.set(i, swapTerrainState(level.map[i], state));
+		}
+		GameScene.updateMap();
+		Dungeon.observe();
+	}
+
+	public static int swapTerrainState(int terr, Level.State state) {
+		if (state == Level.State.FUTURE) {
+			switch (terr) {
+				case WATER:
+					terr = DRY;
+					break;
+				case WALL_ANCIENT:
+					terr = WALL_ANCIENT_PLACEHOLDER;
+					break;
+				case WALL_MODERN_PLACEHOLDER:
+					terr = WALL_MODERN;
+					break;
+			}
+		} else if (state == Level.State.REGULAR) {
+			switch (terr) {
+				case DRY:
+					terr = WATER;
+					break;
+				case WALL_ANCIENT:
+					terr = WALL_ANCIENT_PLACEHOLDER;
+					break;
+				case WALL_MODERN:
+					terr = WALL_MODERN_PLACEHOLDER;
+					break;
+			}
+		} else if (state == Level.State.PAST) {
+			switch (terr) {
+				case DRY:
+					terr = WATER;
+					break;
+				case WALL_ANCIENT_PLACEHOLDER:
+					terr = WALL_ANCIENT;
+					break;
+				case WALL_MODERN:
+					terr = WALL_MODERN_PLACEHOLDER;
+					break;
+			}
+		}
+		return terr;
 	}
 
 	//removes signs, places floors instead

@@ -396,29 +396,29 @@ public class WndBag extends WndTabbed {
 					enable( false );
 				} else {
 					enable(
-						mode == Mode.FOR_SALE && !item.unique && (item.price() > 0) && !(item.isEquipped(Dungeon.hero) && item.cursed) ||
-						mode == Mode.UPGRADEABLE && item.isUpgradable() ||
-						mode == Mode.UNIDENTIFED && !item.isIdentified() ||
-						mode == Mode.UNCURSABLE && ScrollOfRemoveCurse.uncursable(item) ||
-						mode == Mode.CURSABLE && ((item instanceof EquipableItem && !(item instanceof MissileWeapon))) ||
-						mode == Mode.QUICKSLOT && (item.defaultAction != null) ||
-						mode == Mode.WEAPON && (item instanceof MeleeWeapon) ||
-						mode == Mode.ARMOR && (item instanceof Armor) ||
-						mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof SpiritBow || item instanceof Armor) ||
-						mode == Mode.WAND && (item instanceof Wand) ||
-						mode == Mode.SEED && (item instanceof Seed) ||
-						mode == Mode.FOOD && (item instanceof Food) ||
-						mode == Mode.POTION && (item instanceof Potion) ||
-						mode == Mode.SCROLL && (item instanceof Scroll) ||
-						mode == Mode.UNIDED_POTION_OR_SCROLL && (!item.isIdentified() && (item instanceof Scroll || item instanceof Potion)) ||
-						mode == Mode.EQUIPMENT && (item instanceof EquipableItem) ||
-						mode == Mode.ALCHEMY && Recipe.usableInRecipe(item) ||
-						mode == Mode.TRANMSUTABLE && ScrollOfTransmutation.canTransmute(item) ||
-						mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
-						mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
-						mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
-						mode == Mode.ALL ||
-						mode == Mode.INCREASE_TIER && (item instanceof MeleeWeapon && ((MeleeWeapon)item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor)item).tier < Constants.MAXIMUM_TIER & !(item instanceof ClothArmor))
+							mode == Mode.FOR_SALE && !item.unique && (item.price() > 0) && (!item.isEquipped(Dungeon.hero) || !item.cursed) ||
+									mode == Mode.UPGRADEABLE && item.isUpgradable() ||
+									mode == Mode.UNIDENTIFED && !item.isIdentified() ||
+									mode == Mode.UNCURSABLE && ScrollOfRemoveCurse.uncursable(item) ||
+									mode == Mode.CURSABLE && ((item instanceof EquipableItem && !(item instanceof MissileWeapon)) || item instanceof Wand) ||
+									mode == Mode.QUICKSLOT && (item.defaultAction != null) ||
+									mode == Mode.WEAPON && (item instanceof MeleeWeapon) ||
+									mode == Mode.ARMOR && (item instanceof Armor) ||
+									mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof SpiritBow || item instanceof Armor) ||
+									mode == Mode.WAND && (item instanceof Wand) ||
+									mode == Mode.SEED && (item instanceof Seed) ||
+									mode == Mode.FOOD && (item instanceof Food) ||
+									mode == Mode.POTION && (item instanceof Potion) ||
+									mode == Mode.SCROLL && (item instanceof Scroll) ||
+									mode == Mode.UNIDED_POTION_OR_SCROLL && (!item.isIdentified() && (item instanceof Scroll || item instanceof Potion)) ||
+									mode == Mode.EQUIPMENT && (item instanceof EquipableItem || item instanceof Wand) ||
+									mode == Mode.ALCHEMY && Recipe.usableInRecipe(item) ||
+									mode == Mode.TRANMSUTABLE && ScrollOfTransmutation.canTransmute(item) ||
+									mode == Mode.NOT_EQUIPPED && !item.isEquipped(Dungeon.hero) ||
+									mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
+									mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
+									mode == Mode.ALL ||
+									mode == Mode.INCREASE_TIER && (item instanceof MeleeWeapon && ((MeleeWeapon) item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor) item).tier < Constants.MAXIMUM_TIER)
 					);
 				}
 			} else {
