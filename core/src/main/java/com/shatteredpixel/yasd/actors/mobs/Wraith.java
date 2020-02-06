@@ -26,8 +26,12 @@ import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
+import com.shatteredpixel.yasd.actors.buffs.Chill;
+import com.shatteredpixel.yasd.actors.buffs.Frost;
+import com.shatteredpixel.yasd.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.actors.buffs.Wet;
 import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
@@ -82,7 +86,14 @@ public class Wraith extends RangedMob {
 		this.level = level;
 		adjustStats(level);
 	}
-	
+
+	@Override
+	public void add(Buff buff) {
+		if (!(buff.type == Buff.buffType.NEGATIVE)) {
+			super.add( buff );
+		}
+	}
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );

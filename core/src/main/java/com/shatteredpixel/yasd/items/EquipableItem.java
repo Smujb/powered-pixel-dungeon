@@ -140,9 +140,12 @@ public abstract class EquipableItem extends Item {
 		curUser = ch;
 	}
 
+	private static final String USERID =       "userID";
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
+		bundle.put( USERID, curUser.id());
 	}
 
 	@Override
