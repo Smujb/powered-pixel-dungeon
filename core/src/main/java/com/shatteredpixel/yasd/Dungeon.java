@@ -139,6 +139,7 @@ public class Dungeon {
 	public static QuickSlot quickslot = new QuickSlot();
 	
 	public static int depth;
+	public static int path;
 	public static int gold;
 	
 	public static HashSet<Integer> chapters;
@@ -152,7 +153,7 @@ public class Dungeon {
 
 	public static long seed;
 
-	public static boolean [] loadedDepths = new boolean [Constants.NUM_FLOORS+1];
+	private static boolean [][] loadedDepths = new boolean [Constants.NUM_PATHS+1][Constants.NUM_FLOORS+1];
 	
 	public static void init() {
 
@@ -182,6 +183,7 @@ public class Dungeon {
 		QuickSlotButton.reset();
 		
 		depth = 1;
+		path = 0;
 		gold = 0;
 
 		droppedItems = new SparseArray<>();
@@ -205,9 +207,10 @@ public class Dungeon {
 		Badges.reset();
 		
 		GamesInProgress.selectedClass.initHero( hero );
-
-		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
-			loadedDepths[i] = false;
+		for (int j = 0; j <= Constants.NUM_PATHS; j++) {
+			for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
+				loadedDepths[j][i] = false;
+			}
 		}
 	}
 
@@ -227,11 +230,11 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
-	/*public static Level newLevel() {//Not needed atm
-		return newLevel(Dungeon.depth + 1);
-	}*/
-	
 	public static Level newLevel(int depth) {
+		return newLevel(depth, path);
+	}
+	
+	public static Level newLevel(int depth, int path) {
 		
 		Dungeon.level = null;
 		Actor.clear();
@@ -260,12 +263,20 @@ public class Dungeon {
 
 		
 		level.create();
-		loadedDepths[depth] = true;
+		loadDepth(path, depth);
 		Statistics.qualifiedForNoKilling = !bossLevel();
 		if (level instanceof DeadEndLevel) {
 			Statistics.deepestFloor--;
 		}
 		return level;
+	}
+
+	public static void loadDepth(int path, int depth) {
+		loadedDepths[path][depth] = true;
+	}
+
+	public static boolean depthLoaded(int path, int depth) {
+		return loadedDepths[path][depth];
 	}
 	
 	public static void resetLevel() {
@@ -427,7 +438,10 @@ public class Dungeon {
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
 			bundle.put( DIFFICULTY, difficulty );
-			bundle.put( LEVELSLOADED, loadedDepths);
+
+			for (int i = 0; i < Constants.NUM_PATHS; i++) {
+				bundle.put( LEVELSLOADED+i, loadedDepths[i]);
+			}
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -444,7 +458,7 @@ public class Dungeon {
 			bundle.put ( LIMDROPS, limDrops );
 			
 			int count = 0;
-			int ids[] = new int[chapters.size()];
+			int[] ids = new int[chapters.size()];
 			for (Integer id : chapters) {
 				ids[count++] = id;
 			}
@@ -486,7 +500,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile(GamesInProgress.depthFile( save, depth), bundle);
+		FileUtils.bundleToFile(GamesInProgress.depthFile( save, depth, path), bundle);
 	}
 	
 	public static void saveAll() throws IOException {
@@ -514,17 +528,14 @@ public class Dungeon {
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
-		if (Dungeon.version >= YASD.v0_2_1) {
-			loadedDepths = bundle.getBooleanArray( LEVELSLOADED );
-			if (Dungeon.version < YASD.v0_2_2) {
-				loadedDepths[31] = false;//0.2.1 had a bug where the arraylist only went to 30, meaning 31 would crash the game. Old saves will not have data for floor 31, so we set it to false so they can load it.
-			}
-		} else {
-			for (int i = 0; i < Constants.NUM_FLOORS; i++) {
-				loadedDepths[i] = i < Statistics.deepestFloor;//If loading an old game, assume only depths below the deepest floor are unloaded.
-			}
-		}
 
+		for (int i = 0; i < Constants.NUM_PATHS; i++) {
+			if (!bundle.contains(LEVELSLOADED+i)) {
+				throw new IOException("Level data has failed to save");
+			}
+			loadedDepths[i] = bundle.getBooleanArray( LEVELSLOADED+i );
+
+		}
 
 		Actor.restoreNextID( bundle );
 
@@ -631,7 +642,7 @@ public class Dungeon {
 		Dungeon.level = null;
 		Actor.clear();
 		
-		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, depth)) ;
+		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, depth, path )) ;
 		
 		Level level = (Level)bundle.get( LEVEL );
 		

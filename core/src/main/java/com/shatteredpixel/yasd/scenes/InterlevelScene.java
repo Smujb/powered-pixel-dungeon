@@ -71,7 +71,7 @@ public class InterlevelScene extends PixelScene {
 	private static float fadeTime;
 	
 	public enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT, PATH1, PATH2, PATH3
 	}
 	public static Mode mode;
 	
@@ -240,6 +240,15 @@ public class InterlevelScene extends PixelScene {
 							case RESET:
 								goToDepth(Dungeon.depth, RESET_NAME);
 								break;
+							case PATH2:
+								goToDepth(Dungeon.depth, 2, DESCEND_NAME);
+								break;
+							case PATH1:
+								goToDepth(Dungeon.depth, 1, DESCEND_NAME);
+								break;
+							case PATH3:
+								goToDepth(Dungeon.depth, 3, DESCEND_NAME);
+								break;
 						}
 						
 						if (Dungeon.bossLevel()) {
@@ -332,6 +341,10 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	private static void goToDepth(int depthToAccess, final String typeOfDescend) throws IOException {
+		goToDepth(depthToAccess, Dungeon.path, typeOfDescend);
+	}
+
+	private static void goToDepth(int depthToAccess, int path, final String typeOfDescend) throws IOException {
 		if (Dungeon.hero == null) {
 			Mob.clearHeldAllies();
 			Dungeon.init();
@@ -348,6 +361,7 @@ public class InterlevelScene extends PixelScene {
 			Buff.affect( Dungeon.hero, Chasm.Falling.class );
 		}
 		Dungeon.depth = depthToAccess;
+		Dungeon.path = path;
 		if (typeOfDescend.equals(RESURRECT_NAME)) {
 			if (Dungeon.level.locked) {
 				Dungeon.hero.resurrect( Dungeon.depth );
@@ -358,7 +372,7 @@ public class InterlevelScene extends PixelScene {
 			}
 		}
 		Level level;
-		if (Dungeon.loadedDepths[depthToAccess]) {
+		if (Dungeon.depthLoaded(path, depthToAccess)) {
 
 			level = Dungeon.loadLevel(GamesInProgress.curSlot);
 

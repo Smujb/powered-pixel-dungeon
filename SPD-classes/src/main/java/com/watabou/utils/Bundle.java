@@ -188,7 +188,7 @@ public class Bundle {
 			return null;
 		}
 	}
-	
+
 	public String[] getStringArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -349,6 +349,22 @@ public class Bundle {
 			JSONArray jsonArray = new JSONArray();
 			for (int i=0; i < array.length; i++) {
 				jsonArray.put( i, array[i] );
+			}
+			data.put( key, jsonArray );
+		} catch (JSONException e) {
+			Game.reportException(e);
+		}
+	}
+
+	public void put( String key, boolean[][] array ) {
+		try {
+			JSONArray jsonArray = new JSONArray();
+			for (int i=0; i < array.length; i++) {
+				JSONArray jsonArray2 = new JSONArray();
+				for (int j=0; j < array[i].length; j++) {
+					jsonArray2.put( j, array[i][j] );
+				}
+				jsonArray.put(i, jsonArray2);
 			}
 			data.put( key, jsonArray );
 		} catch (JSONException e) {

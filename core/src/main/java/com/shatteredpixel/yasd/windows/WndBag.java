@@ -418,7 +418,7 @@ public class WndBag extends WndTabbed {
 									mode == Mode.RECYCLABLE && Recycle.isRecyclable(item) ||
 									mode == Mode.REPAIRABLE && item.canDegrade() && item.curDurability < item.MAXIMUM_DURABILITY ||
 									mode == Mode.ALL ||
-									mode == Mode.INCREASE_TIER && (item instanceof MeleeWeapon && ((MeleeWeapon) item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor) item).tier < Constants.MAXIMUM_TIER)
+									mode == Mode.INCREASE_TIER && ((item instanceof MeleeWeapon && ((MeleeWeapon) item).tier < Constants.MAXIMUM_TIER && !(item instanceof MagesStaff)) || (item instanceof Armor && ((Armor) item).tier < Constants.MAXIMUM_TIER))
 					);
 				}
 			} else {

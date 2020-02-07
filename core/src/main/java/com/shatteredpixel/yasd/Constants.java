@@ -74,6 +74,11 @@ public class Constants {
 
     //Number of floors.
     public static final int NUM_FLOORS = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
+
+    //Number of paths.
+    public static final int NUM_PATHS = 3;
+
+    //Hero exp cap
     public static final int HERO_EXP_CAP = NUM_FLOORS + 4;
 
     //SoU per chapter

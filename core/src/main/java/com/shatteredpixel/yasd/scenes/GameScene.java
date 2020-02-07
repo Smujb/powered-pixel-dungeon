@@ -109,6 +109,7 @@ import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
@@ -430,7 +431,7 @@ public class GameScene extends PixelScene {
 		if (InterlevelScene.mode != InterlevelScene.Mode.NONE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
+				GLog.h(Messages.get(this, "descend"), Dungeon.path+1, Dungeon.depth);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -442,7 +443,7 @@ public class GameScene extends PixelScene {
 			} else if (InterlevelScene.mode == InterlevelScene.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.depth);
+				GLog.h(Messages.get(this, "return"), Dungeon.path+1, Dungeon.depth);
 			}
 
 			switch (Dungeon.level.feeling) {

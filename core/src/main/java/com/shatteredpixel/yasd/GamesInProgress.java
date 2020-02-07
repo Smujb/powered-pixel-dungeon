@@ -45,6 +45,7 @@ public class GamesInProgress {
 	public static HeroClass selectedClass;
 	
 	private static final String GAME_FOLDER = "game%d";
+	private static final String PATH_FOLDER = "path%d";
 	private static final String GAME_FILE	= "game.dat";
 	private static final String DEPTH_FILE	= "depth%d.dat";
 	
@@ -55,13 +56,21 @@ public class GamesInProgress {
 	public static String gameFolder( int slot ){
 		return Messages.format(GAME_FOLDER, slot);
 	}
+
+	public static String pathFolder(int path ){
+		return Messages.format(PATH_FOLDER, path);
+	}
 	
 	public static String gameFile( int slot ){
 		return gameFolder(slot) + "/" + GAME_FILE;
 	}
 	
-	public static String depthFile( int slot, int depth ) {
+	/*public static String depthFile( int slot, int depth ) {
 		return gameFolder(slot) + "/" + Messages.format(DEPTH_FILE, depth);
+	}*/
+
+	public static String depthFile( int slot, int depth, int path ) {
+		return gameFolder(slot) + "/" + pathFolder(path) + "/" + Messages.format(DEPTH_FILE, depth);
 	}
 	
 	public static int firstEmpty(){

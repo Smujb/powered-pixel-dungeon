@@ -182,7 +182,7 @@ public abstract class Level implements Bundlable {
 
 		Random.seed( Dungeon.seedCurDepth() );
 		
-		if (!Dungeon.bossLevel()) {
+		if (!Dungeon.bossLevel() && Dungeon.path == 0) {
 
 			if (Dungeon.isChallenged(Challenges.NO_FOOD)){
 				addItemToSpawn( new SmallRation() );

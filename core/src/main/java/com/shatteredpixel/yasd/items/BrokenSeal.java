@@ -27,15 +27,16 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.levels.Level;
-import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndBag;
 import com.shatteredpixel.yasd.windows.WndOptions;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 
@@ -58,7 +59,9 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
-		actions.add(AC_DEBUG);
+		if (DeviceCompat.isDebug()) {
+			actions.add(AC_DEBUG);
+		}
 		return actions;
 	}
 
@@ -70,40 +73,40 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
-		} else if (action.equals(AC_DEBUG)) {
-			GameScene.show(new WndOptions(Messages.get(KindofMisc.class, "unequip_title"),
-					Messages.get(KindofMisc.class, "unequip_message"),
-					Messages.titleCase("PAST"),
-					Messages.titleCase("PRESENT"),
-					Messages.titleCase("FUTURE")) {
+		} else if (action.equals(AC_DEBUG) && DeviceCompat.isDebug()) {
+			GameScene.show(new WndOptions("DEBUG: Choose Dungeon path",
+					"",
+					Messages.titleCase("PATH 1"),
+					Messages.titleCase("PATH 2"),
+					Messages.titleCase("PATH 3")) {
 				@Override
 				protected void onSelect(int index) {
 
 					if (index == 0) {
-						Terrain.swapLevelState( Dungeon.level, Level.State.PAST );
+						InterlevelScene.mode = InterlevelScene.Mode.PATH1;
 					} else if (index == 1) {
-						Terrain.swapLevelState( Dungeon.level, Level.State.REGULAR );
+						InterlevelScene.mode = InterlevelScene.Mode.PATH2;
 					} else  if (index == 2){
-						Terrain.swapLevelState( Dungeon.level, Level.State.FUTURE );
+						InterlevelScene.mode = InterlevelScene.Mode.PATH3;
 					}
+					Game.switchScene(InterlevelScene.class);
 				}
 
 			});
 		}
 	}
 
+	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
 	@Override
 	public int upgradeLimit() {
 		return Constants.UPGRADE_LIMIT/3;
 	}
 
-	//scroll of upgrade can be used directly once, same as upgrading armour the seal is affixed to then removing it.
-
 
 	protected static WndBag.Listener armorSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof Armor) {
+			if (item instanceof Armor) {
 				Armor armor = (Armor)item;
 				if (!armor.levelKnown){
 					GLog.w(Messages.get(BrokenSeal.class, "unknown_armor"));
