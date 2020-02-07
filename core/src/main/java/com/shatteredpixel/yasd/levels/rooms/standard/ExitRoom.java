@@ -52,7 +52,7 @@ public class ExitRoom extends StandardRoom {
 		}
 		
 		level.exit = level.pointToCell(random( 2 ));
-		if (Constants.FLOORS_NO_DESCEND.contains(Dungeon.depth)) {
+		if (!Dungeon.canDescend(Dungeon.path, Dungeon.depth)) {
 			Painter.set(level, level.exit, Terrain.EMPTY);
 		} else {
 			Painter.set(level, level.exit, Terrain.EXIT);

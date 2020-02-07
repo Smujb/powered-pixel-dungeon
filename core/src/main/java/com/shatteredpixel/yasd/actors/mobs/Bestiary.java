@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.actors.mobs;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.items.weapon.melee.Magical;
+import com.shatteredpixel.yasd.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.traps.GuardianTrap;
 import com.watabou.utils.DeviceCompat;
@@ -36,7 +37,7 @@ public class Bestiary {
 
 	public static Mob getMob() {
 		Mob mob = null;
-		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth);
+		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
 		mobClass = swapMobAlt(mobClass);
 		do {
 			try {
@@ -83,23 +84,24 @@ public class Bestiary {
 		return cl;
 	}
 
-	private static Class<? extends Mob> getMobClass( int depth ) {
-		if (depth == Constants.CHAPTER_LENGTH) {
-			return CausticSlime.class;
+	private static Class<? extends Mob> getMobClass( int depth, int path ) {
+		if (path == 0) {
+			if (depth == Constants.CHAPTER_LENGTH) {
+				return CausticSlime.class;
+			}
+			if (depth < Constants.CHAPTER_LENGTH) {
+				return getSewerMobClass(depth % Constants.CHAPTER_LENGTH);
+			} else if (depth <= Constants.CHAPTER_LENGTH * 2) {
+				return getPrisonMobClass(depth % Constants.CHAPTER_LENGTH);
+			} else if (depth <= Constants.CHAPTER_LENGTH * 3) {
+				return getCavesMobClass(depth % Constants.CHAPTER_LENGTH);
+			} else if (depth <= Constants.CHAPTER_LENGTH * 4) {
+				return getCityMobClass(depth % Constants.CHAPTER_LENGTH);
+			} else if (depth <= Constants.CHAPTER_LENGTH * 5) {
+				return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
+			}
 		}
-		if (depth < Constants.CHAPTER_LENGTH) {
-			return getSewerMobClass(depth % Constants.CHAPTER_LENGTH);
-		} else if (depth <= Constants.CHAPTER_LENGTH*2) {
-			return getPrisonMobClass(depth % Constants.CHAPTER_LENGTH);
-		} else if (depth <= Constants.CHAPTER_LENGTH*3) {
-			return getCavesMobClass(depth % Constants.CHAPTER_LENGTH);
-		} else if (depth <= Constants.CHAPTER_LENGTH*4) {
-			return getCityMobClass(depth % Constants.CHAPTER_LENGTH);
-		} else if (depth <= Constants.CHAPTER_LENGTH*5) {
-			return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
-		} else {
-			return Wraith.class;//Wraiths are default mob
-		}
+		return Wraith.class;
 	}
 
 	private static Class<? extends Mob> getSewerMobClass(int depth) {

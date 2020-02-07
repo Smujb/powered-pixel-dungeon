@@ -10,7 +10,9 @@ import com.shatteredpixel.yasd.levels.HallsLevel;
 import com.shatteredpixel.yasd.levels.LastLevel;
 import com.shatteredpixel.yasd.levels.LastShopLevel;
 import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.levels.LootLevel;
 import com.shatteredpixel.yasd.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.levels.OldPrisonBossLevel;
 import com.shatteredpixel.yasd.levels.PrisonLevel;
 import com.shatteredpixel.yasd.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.levels.SewerLevel;
@@ -57,11 +59,6 @@ public class Constants {
     //############################## DUNGEON STUFF ##############################
     //
 
-    //Floors where descending is blocked.
-    public static final ArrayList<Integer> FLOORS_NO_DESCEND = new ArrayList<>(Arrays.asList(26));
-
-    //Floors where ascending is blocked.
-    public static ArrayList<Integer> FLOORS_NO_ASCEND = new ArrayList<>(Arrays.asList(0));
 
     //Chapter length. WIP.
     public static final int CHAPTER_LENGTH = 6;
@@ -85,7 +82,7 @@ public class Constants {
     public static final int SOU_PER_CHAPTER = 3;
 
     //Level types. Change it if you want to change depth system.
-    public static ArrayList<Class <? extends Level>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
+    public static ArrayList<Class <? extends Level>> LEVEL_TYPES_PATH_1 = new ArrayList<>(Arrays.asList(
             DeadEndLevel.class,//Floor 0
             SewerLevel.class,
             SewerLevel.class,
@@ -118,6 +115,59 @@ public class Constants {
             HallsLevel.class,
             HallsBossLevel.class,//Floor 30, boss
             LastLevel.class//Floor 31, last level
+    ));
+
+    public static final ArrayList<ArrayList<Class <? extends Level>>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
+            new ArrayList<>(Arrays.asList(
+                    DeadEndLevel.class,//Floor 0
+                    SewerLevel.class,
+                    SewerLevel.class,
+                    SewerLevel.class,
+                    SewerLevel.class,
+                    SewerLevel.class,
+                    SewerBossLevel.class,//Floor 6, boss
+                    PrisonLevel.class,
+                    PrisonLevel.class,
+                    PrisonLevel.class,
+                    PrisonLevel.class,
+                    PrisonLevel.class,
+                    NewPrisonBossLevel.class,//Floor 12, boss.
+                    CavesLevel.class,
+                    CavesLevel.class,
+                    CavesLevel.class,
+                    CavesLevel.class,
+                    CavesLevel.class,
+                    CavesBossLevel.class,//Floor 18, boss
+                    CityLevel.class,
+                    CityLevel.class,
+                    CityLevel.class,
+                    CityLevel.class,
+                    CityLevel.class,
+                    CityBossLevel.class,//Floor 24, boss
+                    LastShopLevel.class,//Floor 25, Imp
+                    HallsLevel.class,
+                    HallsLevel.class,
+                    HallsLevel.class,
+                    HallsLevel.class,
+                    HallsBossLevel.class,//Floor 30, boss
+                    LastLevel.class//Floor 31, last level
+            )),
+            new ArrayList<>(Arrays.asList(
+                    LootLevel.class,
+                    LootLevel.class,
+                    LootLevel.class,
+                    LootLevel.class,
+                    LootLevel.class
+            )),
+            new ArrayList<>(Arrays.asList(
+                    SewerBossLevel.class,
+                    NewPrisonBossLevel.class,
+                    OldPrisonBossLevel.class,
+                    CavesBossLevel.class,
+                    CityBossLevel.class,
+                    HallsBossLevel.class
+            ))
+
     ));
 
     //

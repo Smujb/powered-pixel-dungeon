@@ -1189,11 +1189,11 @@ public class Hero extends Char {
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.depth < Constants.NUM_FLOORS && !Constants.FLOORS_NO_DESCEND.contains(Dungeon.depth)) {
+				&& Dungeon.depth < Constants.NUM_FLOORS && Dungeon.canDescend(Dungeon.path, Dungeon.depth)) {
 			
 			curAction = new HeroAction.Descend( cell );
 			
-		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && !Constants.FLOORS_NO_ASCEND.contains(Dungeon.depth)) {
+		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && Dungeon.canAscend(Dungeon.path, Dungeon.depth)) {
 			
 			curAction = new HeroAction.Ascend( cell );
 			

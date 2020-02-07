@@ -23,8 +23,6 @@ package com.shatteredpixel.yasd;
 
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.blobs.CorrosiveGas;
-import com.shatteredpixel.yasd.actors.blobs.StormCloud;
 import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.actors.buffs.Light;
@@ -247,9 +245,11 @@ public class Dungeon {
 		}
 		
 		Level level = null;
-		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
-		if (depth < Constants.LEVEL_TYPES.size()) {
-			levelClass = Constants.LEVEL_TYPES.get(depth);
+		Class <? extends Level> levelClass;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
+		try {
+			levelClass = Constants.LEVEL_TYPES.get(path).get(depth);
+		} catch (Exception e) {
+			levelClass = DeadEndLevel.class;
 		}
 		do {
 			try {
@@ -263,7 +263,7 @@ public class Dungeon {
 
 		
 		level.create();
-		loadDepth(path, depth);
+		setLoaded(path, depth);
 		Statistics.qualifiedForNoKilling = !bossLevel();
 		if (level instanceof DeadEndLevel) {
 			Statistics.deepestFloor--;
@@ -271,12 +271,24 @@ public class Dungeon {
 		return level;
 	}
 
-	public static void loadDepth(int path, int depth) {
+	public static void setLoaded(int path, int depth) {
 		loadedDepths[path][depth] = true;
 	}
 
 	public static boolean depthLoaded(int path, int depth) {
 		return loadedDepths[path][depth];
+	}
+
+	public static boolean canDescend(int path, int depth) {
+		if (path == 0 && depth == 26) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public static boolean canAscend(int path, int depth) {
+		return true;
 	}
 	
 	public static void resetLevel() {
@@ -530,10 +542,11 @@ public class Dungeon {
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
 
 		for (int i = 0; i < Constants.NUM_PATHS; i++) {
-			if (!bundle.contains(LEVELSLOADED+i)) {
-				throw new IOException("Level data has failed to save");
+			if (version < YASD.v0_2_4) {
+				loadedDepths[i] = bundle.getBooleanArray( LEVELSLOADED );
+			} else {
+				loadedDepths[i] = bundle.getBooleanArray(LEVELSLOADED + i);
 			}
-			loadedDepths[i] = bundle.getBooleanArray( LEVELSLOADED+i );
 
 		}
 

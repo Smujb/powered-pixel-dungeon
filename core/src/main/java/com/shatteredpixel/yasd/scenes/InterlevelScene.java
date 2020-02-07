@@ -241,13 +241,13 @@ public class InterlevelScene extends PixelScene {
 								goToDepth(Dungeon.depth, RESET_NAME);
 								break;
 							case PATH2:
-								goToDepth(Dungeon.depth, 2, DESCEND_NAME);
-								break;
-							case PATH1:
 								goToDepth(Dungeon.depth, 1, DESCEND_NAME);
 								break;
+							case PATH1:
+								goToDepth(Dungeon.depth, 0, DESCEND_NAME);
+								break;
 							case PATH3:
-								goToDepth(Dungeon.depth, 3, DESCEND_NAME);
+								goToDepth(Dungeon.depth, 2, DESCEND_NAME);
 								break;
 						}
 						
