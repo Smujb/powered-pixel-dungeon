@@ -540,14 +540,17 @@ public class Dungeon {
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
-
-		for (int i = 0; i < Constants.NUM_PATHS; i++) {
-			if (version < YASD.v0_2_4) {
-				loadedDepths[i] = bundle.getBooleanArray( LEVELSLOADED );
-			} else {
+		if (version < YASD.v0_2_4) {
+			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
+			for (int j = 0; j <= Constants.NUM_PATHS; j++) {
+				for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
+					loadedDepths[j][i] = false;
+				}
+			}
+		} else {
+			for (int i = 0; i < Constants.NUM_PATHS; i++) {
 				loadedDepths[i] = bundle.getBooleanArray(LEVELSLOADED + i);
 			}
-
 		}
 
 		Actor.restoreNextID( bundle );

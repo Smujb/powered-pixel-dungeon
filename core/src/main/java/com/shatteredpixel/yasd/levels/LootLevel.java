@@ -8,7 +8,7 @@ public class LootLevel extends SewerLevel {
 
     @Override
     protected void createItems() {
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < 5; i++) {
             addItemToSpawn(new ScrollOfUpgrade());
             addItemToSpawn(new PotionOfExperience());
             addItemToSpawn(Generator.randomWeapon().identify());
@@ -21,5 +21,10 @@ public class LootLevel extends SewerLevel {
             addItemToSpawn(Generator.random().identify());
         }
         super.createItems();
+    }
+
+    @Override
+    protected int standardRooms() {
+        return 20;
     }
 }
