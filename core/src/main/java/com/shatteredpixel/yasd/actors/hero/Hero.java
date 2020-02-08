@@ -872,8 +872,6 @@ public class Hero extends Char {
 
 		enemy = action.target;
 
-
-
 		if (enemy.isAlive() && canAttack( enemy ) && !isCharmedBy( enemy )) {
 			
 			sprite.attack( enemy.pos );
@@ -926,7 +924,7 @@ public class Hero extends Char {
 						if (enemy.isAlive()) {
 							Buff.prolong(Hero.this, SnipersMark.class, 2f).object = enemy.id();
 						}
-						Actor.remove(this);
+			 			Actor.remove(this);
 						return true;
 					}
 				});
@@ -956,7 +954,9 @@ public class Hero extends Char {
 
 	private void damageMorale(int dmg) {
 		float shake;
-
+		if (dmg <= 0) {
+			return;
+		}
 		int effectiveHP = Math.max(HT/2, HP);
 		shake = ((float) dmg / (float) effectiveHP) * 4f;
 
@@ -965,10 +965,10 @@ public class Hero extends Char {
 			if (YASDSettings.vibrate()) {
 				YASD.vibrate(Math.min(500,(int) (shake * 50)));
 			}
-			if (shake > 1f) {//This is to prevent the game being flooded with messages if you take small amounts of damage repeatedly on low health (eg Poison, Bleeding). May add a cooldown in future.
-				loseMorale(shake*0.33f);
+			if (shake > 1f) {
+				loseMorale(shake*0.5f);
 			} else {
-				loseMorale(shake*0.33f,false);
+				loseMorale(shake*0.5f,false);
 			}
 		}
 	}
