@@ -21,6 +21,8 @@
 
 package com.shatteredpixel.yasd.messages;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.YASD;
 
@@ -88,6 +90,18 @@ public class Messages {
 			while (keys.hasMoreElements()) {
 				String key = keys.nextElement();
 				String value = bundle.getString(key);
+
+
+				//TODO do all desktop platforms read as ISO, or only windows?
+				// should also move this to platform support, probably.
+				if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+					try {
+						value = new String(value.getBytes("ISO-8859-1"), "UTF-8");
+					} catch (Exception e) {
+						YASD.reportException(e);
+					}
+				}
+
 
 				strings.put(key, value);
 			}
