@@ -131,10 +131,9 @@ public abstract class Char extends Actor {
 	public int defenseSkill = 0;
 	public int attackSkill = 0;
 
-	public Belongings belongings;
-	public int currentWeapon = 0;
+	public Belongings belongings = null;
 	public int STR;
-	public boolean usesBelongings = false;
+	//public boolean usesBelongings = false;
 
 
 	public int HT;
@@ -168,13 +167,6 @@ public abstract class Char extends Actor {
 
 	private HashSet<Buff> buffs = new HashSet<>();
 
-	public Char() {
-		super();
-		name = Messages.get(this, "name");
-
-		belongings = new Belongings(this);
-	}
-
 	public boolean isFlying() {
 		return ((flying || buff(Levitation.class) != null)
 				& buff(Paralysis.class) == null
@@ -183,25 +175,7 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean shoot(Char enemy, MissileWeapon wep) {
-
-		//temporarily set the hero's weapon to the missile weapon being used
-		KindofMisc equipped = belongings.miscs[0];
-		belongings.miscs[0] = wep;
-		boolean hit = attack(enemy);
-		Invisibility.dispel();
-		belongings.miscs[0] = equipped;
-
-		return hit;
-	}
-
-	public int numberOfWeapons() {
-		return belongings.getWeapons().size();
-	}
-
-	public void resetWeapon() {//After hitting with each weapon, return to first
-		if (currentWeapon > (numberOfWeapons() - 1)) {
-			currentWeapon = 0;
-		}
+		return belongings.shoot(enemy, wep);
 	}
 
 	public int missingHP() {
@@ -216,12 +190,8 @@ public abstract class Char extends Actor {
 		return 1f - hpPercent();
 	}
 
-	public KindOfWeapon getCurrentWeapon() {
-		resetWeapon();
-		if (belongings.miscs[0] instanceof MissileWeapon) {
-			return ((MissileWeapon) belongings.miscs[0]);
-		}
-		return belongings.getWeapons().get(currentWeapon);
+	public boolean usesBelongings() {
+		return belongings != null;
 	}
 
 	public int STR() {
@@ -247,13 +217,13 @@ public abstract class Char extends Actor {
 			return true;
 		}
 
-		KindOfWeapon wep = getCurrentWeapon();
-
-		if (wep != null) {
-			return wep.canReach(this, enemy.pos);
-		} else {
-			return false;
+		if (belongings != null) {
+			KindOfWeapon wep = belongings.getCurrentWeapon();
+			if (wep != null) {
+				return wep.canReach(this, enemy.pos);
+			}
 		}
+		return false;
 	}
 
 	public void updateHT(boolean boostHP) {
@@ -354,7 +324,7 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean attack(Char enemy) {
-		currentWeapon += 1;
+		belongings.nextWeapon();
 
 		if (enemy == null) return false;
 
@@ -373,7 +343,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (usesBelongings && getCurrentWeapon() instanceof Blunt) {
+			if (usesBelongings() && belongings.getCurrentWeapon() instanceof Blunt) {
 				dr = 0;
 			}
 
@@ -467,8 +437,8 @@ public abstract class Char extends Actor {
 	public static boolean hit(Char attacker, Char defender, boolean magic) {
 		float acuRoll = Random.Float(attacker.attackSkill(defender));
 		float defRoll = Random.Float(defender.defenseSkill(attacker));
-		if (attacker.buff(Bless.class) != null) acuRoll *= 1.20f;
-		if (defender.buff(Bless.class) != null) defRoll *= 1.20f;
+		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
+		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		return (magic ? acuRoll * 3 : acuRoll) >= defRoll;
 	}
 
@@ -479,20 +449,8 @@ public abstract class Char extends Actor {
 
 	public int attackSkill(Char target) {
 		float accuracy = attackSkill;
-		if (usesBelongings) {
-			KindOfWeapon wep = getCurrentWeapon();
-			accuracy *= RingOfAccuracy.accuracyMultiplier(this);
-			if (wep instanceof MissileWeapon) {
-				if (Dungeon.level.adjacent(pos, target.pos)) {
-					accuracy *= 0.5f;
-				} else {
-					accuracy *= 1.5f;
-				}
-			}
-
-			if (wep != null) {
-				attackSkill *= wep.accuracyFactor(this);
-			}
+		if (usesBelongings()) {
+			accuracy = belongings.accuracyFactor(accuracy, target);
 		}
 		Drunk drunk = buff(Drunk.class);
 		if (drunk != null) {
@@ -507,18 +465,16 @@ public abstract class Char extends Actor {
 		if (buff(Wet.class) != null) {
 			evasion *= buff(Wet.class).evasionFactor();
 		}
-		if (usesBelongings) {
-
-
+		if (usesBelongings()) {
 			evasion *= RingOfEvasion.evasionMultiplier(this);
 
-			if (paralysed > 0) {
-				evasion /= 2;
-			}
 			if (belongings != null) {
 				evasion = belongings.EvasionFactor(evasion);
 			}
 
+		}
+		if (paralysed > 0) {
+			evasion /= 2;
 		}
 		Drunk drunk = buff(Drunk.class);
 		if (drunk != null) {
@@ -533,22 +489,8 @@ public abstract class Char extends Actor {
 
 	public int magicalDRRoll() {
 		int dr = 0;
-		if (usesBelongings) {
-			if (belongings.getArmors() != null) {
-				ArrayList<Armor> Armors = belongings.getArmors();
-				int degradeAmount = new Item().defaultDegradeAmount();
-				for (int i = 0; i < Armors.size(); i++) {
-					Armors.get(i).use(degradeAmount / Armors.size());
-					int armDr = Armors.get(i).magicalDRRoll();
-					if (STR() < Armors.get(i).STRReq()) {
-						armDr -= 2 * (Armors.get(i).STRReq() - STR());
-					}
-					if (armDr > 0) dr += armDr;
-					if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)) {
-						dr += AntiMagic.drRoll(Armors.get(i).level());
-					}
-				}
-			}
+		if (usesBelongings()) {
+			dr += belongings.magicalDR();
 		}
 		return dr;
 	}
@@ -634,66 +576,29 @@ public abstract class Char extends Actor {
 
 	public int drRoll() {
 		int dr = 0;
-		if (usesBelongings) {
-			if (belongings.getArmors() != null) {
-				ArrayList<Armor> Armors = belongings.getArmors();
-				int degradeAmount = new Item().defaultDegradeAmount();
-				for (int i = 0; i < Armors.size(); i++) {
-					Armors.get(i).use(degradeAmount/Armors.size());
-					int armDr = Armors.get(i).DRRoll();
-					if (STR() < Armors.get(i).STRReq()) {
-						armDr -= 2 * (Armors.get(i).STRReq() - STR());
-					}
-					if (armDr > 0) dr += armDr;
-				}
-			}
-			if (belongings.getWeapons() != null) {
-				ArrayList<KindOfWeapon> Weapons = belongings.getWeapons();
-				for (int i = 0; i < Weapons.size(); i++) {
-					int wepDr = Random.NormalIntRange(0, Weapons.get(i).defenseFactor(this));
-					if (Weapons.get(i) instanceof MeleeWeapon & STR() < ((MeleeWeapon) Weapons.get(i)).STRReq()) {
-						wepDr -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - STR();
-					}
-					if (wepDr > 0) dr += wepDr;
-				}
-			}
-			Barkskin bark = buff(Barkskin.class);
-			if (bark != null) dr += Random.NormalIntRange(0, bark.level());
-
-			Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
-			if (block != null) dr += block.blockingRoll();
+		if (usesBelongings()) {
+			dr += belongings.drRoll();
 		}
+		Barkskin bark = buff(Barkskin.class);
+		if (bark != null) dr += Random.NormalIntRange(0, bark.level());
+
+		Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
+		if (block != null) dr += block.blockingRoll();
 
 		return dr;
 	}
 
 	public int damageRoll() {
-		if (usesBelongings) {
-			int dmg;
-			KindOfWeapon wep = getCurrentWeapon();
-			if (wep != null) {
-				if (wep instanceof MeleeWeapon) {
-					wep.use();
-				}
-				dmg = wep.damageRoll(this);
-				if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(this);
-			} else {
-				dmg = RingOfForce.damageRoll(this);
-			}
-			if (dmg < 0) dmg = 0;
-
-			Berserk berserk = buff(Berserk.class);
-			if (berserk != null) dmg = berserk.damageFactor(dmg);
-
-			return buff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
+		if (usesBelongings()) {
+			return belongings.damageRoll();
 		} else {
 			return 1;
 		}
 	}
 
 	public int attackProc( Char enemy, int damage ) {
-		if (usesBelongings) {
-			KindOfWeapon wep = getCurrentWeapon();
+		if (usesBelongings()) {
+			KindOfWeapon wep = belongings.getCurrentWeapon();
 
 			if (wep != null) damage = wep.proc(this, enemy, damage);
 		}
@@ -701,21 +606,20 @@ public abstract class Char extends Actor {
 	}
 
 	public int defenseProc( Char enemy, int damage ) {
-		if (usesBelongings) {
+		if (usesBelongings()) {
 			ArrayList<Armor> Armors = belongings.getArmors();//Proc all armours 1 by 1
 			for (int i=0; i < Armors.size(); i++) {
 				damage = Armors.get(i).proc(enemy,this, damage);
 			}
+		}
+		Earthroot.Armor armor = buff( Earthroot.Armor.class );
+		if (armor != null) {
+			damage = armor.absorb( damage );
+		}
 
-			Earthroot.Armor armor = buff( Earthroot.Armor.class );
-			if (armor != null) {
-				damage = armor.absorb( damage );
-			}
-
-			WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
-			if (rockArmor != null) {
-				damage = rockArmor.absorb(damage);
-			}
+		WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
+		if (rockArmor != null) {
+			damage = rockArmor.absorb(damage);
 		}
 		return damage;
 	}
@@ -726,13 +630,10 @@ public abstract class Char extends Actor {
 		if ( buff( Stamina.class ) != null) speed *= 1.5f;
 		if ( buff( Adrenaline.class ) != null) speed *= 2f;
 		if ( buff( Haste.class ) != null) speed *= 3f;
-		if (usesBelongings) {
+		if (usesBelongings()) {
 			speed *= RingOfHaste.speedMultiplier(this);
 
-			if (belongings != null) {
-				speed = belongings.SpeedFactor(speed);
-			}
-
+			speed = belongings.SpeedFactor(speed);
 
 			Momentum momentum = buff(Momentum.class);
 			if (momentum != null) {
@@ -744,12 +645,12 @@ public abstract class Char extends Actor {
 	}
 
 	public float attackDelay() {
-		if (usesBelongings) {
+		if (usesBelongings()) {
 			float multiplier = 1f;
-			multiplier /= numberOfWeapons();
-			if (getCurrentWeapon() != null) {
+			multiplier /= belongings.numberOfWeapons();
+			if (belongings.getCurrentWeapon() != null) {
 
-				return getCurrentWeapon().speedFactor(this) * multiplier;//Two weapons = 1/2 attack speed
+				return belongings.getCurrentWeapon().speedFactor(this) * multiplier;//Two weapons = 1/2 attack speed
 
 			} else {
 				//Normally putting furor speed on unarmed attacks would be unnecessary
@@ -780,17 +681,17 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean canSurpriseAttack(){
-		resetWeapon();
-		KindOfWeapon curWep = getCurrentWeapon();
-		if (!(curWep instanceof Weapon))                      return true;
-		if (STR() < ((Weapon)curWep).STRReq())                return false;
-		if (curWep instanceof Flail)                          return false;
-
+		if (usesBelongings()) {
+			KindOfWeapon curWep = belongings.getCurrentWeapon();
+			if (!(curWep instanceof Weapon)) return true;
+			if (STR() < ((Weapon) curWep).STRReq()) return false;
+			return curWep.canSurpriseAttack;
+		}
 		return true;
 	}
 
 	public void damage( int dmg, Object src ) {
-		if (usesBelongings) {
+		if (usesBelongings()) {
 			if (buff(TimekeepersHourglass.timeStasis.class) != null)
 				return;
 
@@ -805,16 +706,6 @@ public abstract class Char extends Actor {
 			}
 
 			dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
-
-			/*//Yay no stupid checking for src!
-			//checks if *any* equipped armour has Anti Magic
-			ArrayList<Armor> Armors = belongings.getArmors();
-			for (int i = 0; i < Armors.size(); i++) {
-				if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
-						&& AntiMagic.RESISTS.contains(src.getClass())) {
-					dmg -= AntiMagic.drRoll(Armors.get(i).level());
-				}
-			}*/
 		}
 
 		if (!isAlive() || dmg < 0) {

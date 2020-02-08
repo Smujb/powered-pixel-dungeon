@@ -29,6 +29,9 @@ import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndOptions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public abstract class KindofMisc extends EquipableItem {
 
@@ -140,7 +143,7 @@ public abstract class KindofMisc extends EquipableItem {
 
 	@Override
 	public boolean isEquipped(Char owner ) {
-		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
+		return Arrays.asList(owner.belongings.miscs).contains(this);
 	}
 
 }

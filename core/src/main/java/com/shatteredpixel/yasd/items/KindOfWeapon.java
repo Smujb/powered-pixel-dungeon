@@ -32,6 +32,8 @@ abstract public class KindOfWeapon extends KindofMisc {
 	
 	protected static final float TIME_TO_EQUIP = 1f;
 
+	public boolean canSurpriseAttack = true;
+
 	public int min(){
 		return min(level());
 	}

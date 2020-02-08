@@ -27,6 +27,9 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Berserk;
+import com.shatteredpixel.yasd.actors.buffs.Fury;
+import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.items.EquipableItem;
 import com.shatteredpixel.yasd.items.Item;
@@ -37,20 +40,26 @@ import com.shatteredpixel.yasd.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.armor.curses.Bulk;
+import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.items.armor.glyphs.Flow;
 import com.shatteredpixel.yasd.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.keys.Key;
+import com.shatteredpixel.yasd.items.rings.RingOfAccuracy;
+import com.shatteredpixel.yasd.items.rings.RingOfForce;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.wands.Wand;
 import com.shatteredpixel.yasd.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+
+import org.omg.CORBA.ARG_IN;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,31 +71,14 @@ public class Belongings implements Iterable<Item> {
 	private Char owner;
 	
 	public Bag backpack;
+	public int currentWeapon = 0;
 
 	public ArrayList<Armor> getArmors() {
 		ArrayList<Armor> armors = new ArrayList<>();
-
-		if (miscs[0] instanceof Armor) {
-			armors.add((Armor) miscs[0]);
-		}
-
-		if (miscs[1] instanceof Armor) {
-			armors.add((Armor) miscs[1]);
-		}
-
-		if (miscs[2] instanceof Armor) {
-			armors.add((Armor) miscs[2]);
-		}
-
-		if (miscs[3] instanceof Armor) {
-			armors.add((Armor) miscs[3]);
-		}
-
-		if (miscs[4] instanceof Armor) {
-			armors.add((Armor) miscs[4]);
-		}
-		if (armors.isEmpty()) {
-			armors.add(new ClothArmor());
+		for (int i = 0; i < miscs.length; i++) {
+			if (miscs[i] instanceof Armor) {
+				armors.add((Armor) miscs[i]);
+			}
 		}
 		return armors;
 
@@ -94,28 +86,10 @@ public class Belongings implements Iterable<Item> {
 
 	public ArrayList<KindOfWeapon> getWeapons() {
 		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
-
-		if (miscs[0] instanceof MeleeWeapon) {
-			weapons.add((KindOfWeapon) miscs[0]);
-		}
-
-		if (miscs[1] instanceof MeleeWeapon) {
-			weapons.add((KindOfWeapon) miscs[1]);
-		}
-
-		if (miscs[2] instanceof MeleeWeapon) {
-			weapons.add((KindOfWeapon) miscs[2]);
-		}
-
-		if (miscs[3] instanceof MeleeWeapon) {
-			weapons.add((KindOfWeapon) miscs[3]);
-		}
-
-		if (miscs[4] instanceof MeleeWeapon) {
-			weapons.add((KindOfWeapon) miscs[4]);
-		}
-		if (weapons.isEmpty()) {
-			weapons.add(new Basic());
+		for (int i = 0; i < miscs.length; i++) {
+			if (miscs[i] instanceof MeleeWeapon) {
+				weapons.add((KindOfWeapon) miscs[i]);
+			}
 		}
 		return weapons;
 
@@ -123,28 +97,11 @@ public class Belongings implements Iterable<Item> {
 
 	public ArrayList<Item> getEquippedItemsOFType( Class type ) {//Find equipped items of a certain kind
 		ArrayList<Item> items = new ArrayList<>();
-
 		for (int i = 0; i < miscs.length; i++) {
 			if (type.isInstance( miscs[i])) {
 				items.add(miscs[i]);
 			}
 		}
-
-		/*if (type.isInstance( miscs[0] )) {
-			items.add(miscs[0]);
-		}
-		if (miscs[1].getClass() == type) {
-			items.add(miscs[1]);
-		}
-		if (miscs[2].getClass() == type) {
-			items.add(miscs[2]);
-		}
-		if (miscs[3].getClass() == type) {
-			items.add(miscs[3]);
-		}
-		if (miscs[4].getClass() == type) {
-			items.add(miscs[4]);
-		}*/
 		return items;
 	}
 
@@ -164,6 +121,120 @@ public class Belongings implements Iterable<Item> {
 
 		}
 		return TotalRequirement;
+	}
+
+	public boolean shoot(Char enemy, MissileWeapon wep) {
+
+		//temporarily set the hero's weapon to the missile weapon being used
+		KindofMisc equipped = miscs[0];
+		miscs[0] = wep;
+		boolean hit = owner.attack(enemy);
+		Invisibility.dispel();
+		miscs[0] = equipped;
+
+		return hit;
+	}
+
+	public int numberOfWeapons() {
+		return getWeapons().size();
+	}
+
+	public void resetWeapon() {
+		if (currentWeapon > (numberOfWeapons() - 1)) {
+			currentWeapon = 0;
+		}
+	}
+
+	public void nextWeapon() {
+		currentWeapon += 1;
+		resetWeapon();
+	}
+
+	public KindOfWeapon getCurrentWeapon() {
+		resetWeapon();
+		if (miscs[0] instanceof MissileWeapon) {
+			return ((MissileWeapon) miscs[0]);
+		}
+		return getWeapons().get(currentWeapon);
+	}
+
+	public float accuracyFactor(float accuracy, Char target) {
+		KindOfWeapon wep = getCurrentWeapon();
+		accuracy *= RingOfAccuracy.accuracyMultiplier(owner);
+		if (wep instanceof MissileWeapon) {
+			if (Dungeon.level.adjacent(owner.pos, target.pos)) {
+				accuracy *= 0.5f;
+			} else {
+				accuracy *= 1.5f;
+			}
+		}
+
+		if (wep != null) {
+			accuracy *= wep.accuracyFactor(owner);
+		}
+		return accuracy;
+	}
+
+	public int magicalDR() {
+		int dr = 0;
+		ArrayList<Armor> Armors = getArmors();
+		int degradeAmount = new Item().defaultDegradeAmount();
+		for (int i = 0; i < Armors.size(); i++) {
+			Armors.get(i).use(degradeAmount / Armors.size());
+			int armDr = Armors.get(i).magicalDRRoll();
+			if (owner.STR() < Armors.get(i).STRReq()) {
+				armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
+			}
+			if (armDr > 0) dr += armDr;
+			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, owner)) {
+				dr += AntiMagic.drRoll(Armors.get(i).level());
+			}
+		}
+		return dr;
+	}
+
+	public int drRoll() {
+		int dr = 0;
+		ArrayList<Armor> Armors = getArmors();
+		int degradeAmount = new Item().defaultDegradeAmount();
+		for (int i = 0; i < Armors.size(); i++) {
+			Armors.get(i).use(degradeAmount / Armors.size());
+			int armDr = Armors.get(i).DRRoll();
+			if (owner.STR() < Armors.get(i).STRReq()) {
+				armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
+			}
+			if (armDr > 0) dr += armDr;
+		}
+
+		ArrayList<KindOfWeapon> Weapons = getWeapons();
+		for (int i = 0; i < Weapons.size(); i++) {
+			int wepDr = Random.NormalIntRange(0, Weapons.get(i).defenseFactor(owner));
+			if (Weapons.get(i) instanceof MeleeWeapon & owner.STR() < ((MeleeWeapon) Weapons.get(i)).STRReq()) {
+				wepDr -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - owner.STR();
+			}
+			if (wepDr > 0) dr += wepDr;
+		}
+		return dr;
+	}
+
+	public int damageRoll() {
+		int dmg;
+		KindOfWeapon wep = getCurrentWeapon();
+		if (wep != null) {
+			if (wep instanceof MeleeWeapon) {
+				wep.use();
+			}
+			dmg = wep.damageRoll(owner);
+			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(owner);
+		} else {
+			dmg = RingOfForce.damageRoll(owner);
+		}
+		if (dmg < 0) dmg = 0;
+
+		Berserk berserk = owner.buff(Berserk.class);
+		if (berserk != null) dmg = berserk.damageFactor(dmg);
+
+		return owner.buff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
 	}
 
 	public int getArmorSTRReq() {
@@ -275,11 +346,6 @@ public class Belongings implements Iterable<Item> {
 	}
 	private static final String ARMOR		= "getArmors";
 	private static final String MISC        = "misc";
-	private static final String MISC1       = "misc1";
-	private static final String MISC2       = "misc2";
-	private static final String MISC3       = "misc3";
-	private static final String MISC4       = "misc4";
-	private static final String MISC5       = "misc5";
 
 
 	public void storeInBundle( Bundle bundle ) {
@@ -288,11 +354,6 @@ public class Belongings implements Iterable<Item> {
 		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Store all miscs
 			bundle.put( MISC + i, miscs[i]);
 		}
-		/*bundle.put( MISC1, miscs[0]);
-		bundle.put( MISC2, miscs[1]);
-		bundle.put( MISC3, miscs[2]);
-		bundle.put( MISC4, miscs[3]);
-		bundle.put( MISC5, miscs[4]);*/
 		bundle.put( ARMOR, getArmors().get(0));//Used for previewing games.
 	}
 	
@@ -306,31 +367,6 @@ public class Belongings implements Iterable<Item> {
 				miscs[i].activate( owner );
 			}
 		}
-		
-		/*miscs[0] = (KindofMisc)bundle.get(MISC1);
-		if (miscs[0] != null) {
-			miscs[0].activate( owner );
-		}
-		
-		miscs[1] = (KindofMisc)bundle.get(MISC2);
-		if (miscs[1] != null) {
-			miscs[1].activate( owner );
-		}
-
-		miscs[2] = (KindofMisc)bundle.get(MISC3);
-		if (miscs[2] != null) {
-			miscs[2].activate( owner );
-		}
-
-		miscs[3] = (KindofMisc)bundle.get(MISC4);
-		if (miscs[3] != null) {
-			miscs[3].activate( owner );
-		}
-
-		miscs[4] = (KindofMisc)bundle.get(MISC5);
-		if (miscs[4] != null) {
-			miscs[4].activate( owner );
-		}*/
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
@@ -394,7 +430,13 @@ public class Belongings implements Iterable<Item> {
 	}
 	
 	public void observe() {
-		if (miscs[0] != null) {
+		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Restore all miscs
+			if (miscs[i] != null) {
+				miscs[i].identify();
+				Badges.validateItemLevelAquired(miscs[i]);
+			}
+		}
+		/*if (miscs[0] != null) {
 			miscs[0].identify();
 			Badges.validateItemLevelAquired(miscs[0]);
 		}
@@ -416,9 +458,9 @@ public class Belongings implements Iterable<Item> {
 		if (miscs[4] != null) {
 			miscs[4].identify();
 			Badges.validateItemLevelAquired(miscs[4]);
-		}
+		}*/
 		for (Item item : backpack) {
-			if (item instanceof EquipableItem || item instanceof Wand) {
+			if (item instanceof EquipableItem) {
 				item.cursedKnown = true;
 			}
 		}
@@ -451,8 +493,15 @@ public class Belongings implements Iterable<Item> {
 			}
 		}
 
-		
-		if (miscs[0] != null) {
+		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Restore all miscs
+			if (miscs[i] != null) {
+				miscs[i].cursed = false;
+				miscs[i].activate( owner );
+			}
+		}
+
+
+		/*if (miscs[0] != null) {
 			miscs[0].cursed = false;
 			miscs[0].activate( owner );
 		}
@@ -473,7 +522,7 @@ public class Belongings implements Iterable<Item> {
 		if (miscs[4] != null) {
 			miscs[4].cursed = false;
 			miscs[4].activate( owner );
-		}
+		}*/
 	}
 	
 	public int charge( float charge ) {
@@ -530,26 +579,26 @@ public class Belongings implements Iterable<Item> {
 		@Override
 		public void remove() {
 			switch (index) {
-			case 0:
-				equipped[0] = miscs[0] = null;
-				break;
-			case 1:
-				equipped[1] = miscs[1] = null;
-				break;
-			case 2:
-				equipped[2] = miscs[2] = null;
-				break;
-			case 3:
-				equipped[3] = miscs[3] = null;
-				break;
-			case 4:
-				equipped[4] = miscs[4] = null;
-				break;
-			case 5:
-				equipped[5] = miscs[5] = null;
-				break;
-			default:
-				backpackIterator.remove();
+				case 0:
+					equipped[0] = miscs[0] = null;
+					break;
+				case 1:
+					equipped[1] = miscs[1] = null;
+					break;
+				case 2:
+					equipped[2] = miscs[2] = null;
+					break;
+				case 3:
+					equipped[3] = miscs[3] = null;
+					break;
+				case 4:
+					equipped[4] = miscs[4] = null;
+					break;
+				case 5:
+					equipped[5] = miscs[5] = null;
+					break;
+				default:
+					backpackIterator.remove();
 			}
 		}
 	}

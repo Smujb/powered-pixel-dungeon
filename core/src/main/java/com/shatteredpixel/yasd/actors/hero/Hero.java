@@ -133,7 +133,6 @@ public class Hero extends Char {
 
 		attackSkill = 10;
 		defenseSkill = 4;
-		usesBelongings = true;
 		immunities.add(Amok.class);
 	}
 
@@ -186,6 +185,7 @@ public class Hero extends Char {
 	public Hero() {
 		super();
 		name = Messages.get(this, "name");
+		belongings = new Belongings(this);
 		
 		HP = HT = 20;
 		STR = STARTING_STR;
@@ -908,7 +908,7 @@ public class Hero extends Char {
 	
 	@Override
 	public int attackProc( final Char enemy, int damage ) {
-		KindOfWeapon wep = getCurrentWeapon();
+		KindOfWeapon wep = belongings.getCurrentWeapon();
 		damage = super.attackProc(enemy,damage);
 		switch (subClass) {
 		case SNIPER:

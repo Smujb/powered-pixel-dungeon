@@ -26,6 +26,7 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
@@ -67,15 +68,13 @@ public class Statue extends Mob implements Callback {
 		loot = new StoneOfRepair();
 
 		lootChance = 1f;//Guaranteed in Animated Statues
-
-		usesBelongings = true;
 	}
 
 	int HealingPotions = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Potion per chapter
 	
 	public Statue() {
 		super();
-		
+		belongings = new Belongings(this);
 		belongings.miscs[0] = newItem();
 		belongings.miscs[1] = newItem();
 		belongings.miscs[2] = newItem();
