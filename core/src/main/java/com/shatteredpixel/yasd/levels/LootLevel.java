@@ -8,7 +8,7 @@ public class LootLevel extends SewerLevel {
 
     @Override
     protected void createItems() {
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 15; i++) {
             addItemToSpawn(new ScrollOfUpgrade());
             addItemToSpawn(new PotionOfExperience());
             addItemToSpawn(Generator.randomWeapon().identify());

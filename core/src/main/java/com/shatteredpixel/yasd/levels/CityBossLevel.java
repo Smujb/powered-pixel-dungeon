@@ -71,7 +71,12 @@ public class CityBossLevel extends Level {
 	public String waterTex() {
 		return Assets.WATER_CITY;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_CITY;
+	}
+
 	private static final String DOOR	= "door";
 	private static final String ENTERED	= "entered";
 	private static final String DROPPED	= "droppped";

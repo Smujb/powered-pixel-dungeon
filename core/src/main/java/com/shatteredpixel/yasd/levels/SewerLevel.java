@@ -91,7 +91,12 @@ public class SewerLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_SEWERS;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_SEWERS;
+	}
+
 	@Override
 	protected Class<?>[] trapClasses() {
 		return Dungeon.depth == 1 ?

@@ -77,7 +77,12 @@ public class CityLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_CITY;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_CITY;
+	}
+
 	@Override
 	protected Painter painter() {
 		return new CityPainter()

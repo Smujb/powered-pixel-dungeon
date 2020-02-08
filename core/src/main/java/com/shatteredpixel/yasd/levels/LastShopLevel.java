@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.levels.rooms.standard.ExitRoom;
 import com.shatteredpixel.yasd.levels.rooms.standard.ImpShopRoom;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.noosa.Group;
+import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,12 @@ public class LastShopLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_CITY;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_CITY;
+	}
+
 	@Override
 	protected boolean build() {
 		feeling = Feeling.CHASM;

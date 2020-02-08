@@ -54,6 +54,11 @@ public class LastLevel extends Level {
 	}
 
 	@Override
+	public String loadImg() {
+		return Assets.LOADING_HALLS;
+	}
+
+	@Override
 	public void create() {
 		super.create();
 		for (int i=0; i < length(); i++) {

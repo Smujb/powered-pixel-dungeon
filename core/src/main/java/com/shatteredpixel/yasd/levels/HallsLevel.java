@@ -98,7 +98,12 @@ public class HallsLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_HALLS;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_HALLS;
+	}
+
 	@Override
 	protected Class<?>[] trapClasses() {
 		return new Class[]{ FrostTrap.class, StormTrap.class, CorrosionTrap.class, BlazingTrap.class, DisintegrationTrap.class,

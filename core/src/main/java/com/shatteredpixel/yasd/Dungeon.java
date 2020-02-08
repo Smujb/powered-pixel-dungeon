@@ -437,6 +437,7 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
 	private static final String LEVELSLOADED= "levels-loaded";
+	private static final String PATH        = "path";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -450,6 +451,7 @@ public class Dungeon {
 			bundle.put( GOLD, gold );
 			bundle.put( DEPTH, depth );
 			bundle.put( DIFFICULTY, difficulty );
+			bundle.put( PATH, path );
 
 			for (int i = 0; i < Constants.NUM_PATHS; i++) {
 				bundle.put( LEVELSLOADED+i, loadedDepths[i]);
@@ -540,6 +542,9 @@ public class Dungeon {
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
+
+		path = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
+
 		if (version < YASD.v0_2_4) {
 			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
 			for (int j = 0; j <= Constants.NUM_PATHS; j++) {

@@ -93,7 +93,12 @@ public class CavesLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_CAVES;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_CAVES;
+	}
+
 	@Override
 	protected Class<?>[] trapClasses() {
 		return new Class[]{ BurningTrap.class, PoisonDartTrap.class, FrostTrap.class, StormTrap.class, CorrosionTrap.class,

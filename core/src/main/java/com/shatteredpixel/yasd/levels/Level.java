@@ -465,6 +465,10 @@ public abstract class Level implements Bundlable {
 	public String waterTex() {
 		return null;
 	}
+
+	public String loadImg() {
+		return null;
+	}
 	
 	abstract protected boolean build();
 	

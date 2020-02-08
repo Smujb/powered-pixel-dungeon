@@ -91,7 +91,12 @@ public class PrisonLevel extends RegularLevel {
 	public String waterTex() {
 		return Assets.WATER_PRISON;
 	}
-	
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_PRISON;
+	}
+
 	@Override
 	protected Class<?>[] trapClasses() {
 		return new Class[]{ ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, BurningTrap.class, PoisonDartTrap.class,

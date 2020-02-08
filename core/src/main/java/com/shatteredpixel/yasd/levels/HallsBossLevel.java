@@ -70,6 +70,11 @@ public class HallsBossLevel extends Level {
 	public String waterTex() {
 		return Assets.WATER_HALLS;
 	}
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_HALLS;
+	}
 	
 	private static final String STAIRS	= "stairs";
 	private static final String ENTERED	= "entered";

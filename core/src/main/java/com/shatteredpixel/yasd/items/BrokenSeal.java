@@ -59,9 +59,6 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
-		if (DeviceCompat.isDebug()) {
-			actions.add(AC_DEBUG);
-		}
 		return actions;
 	}
 
@@ -73,7 +70,7 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
-		} else if (action.equals(AC_DEBUG) && DeviceCompat.isDebug()) {
+		} else if (action.equals(AC_DEBUG)) {
 			GameScene.show(new WndOptions("DEBUG: Choose Dungeon path",
 					"",
 					Messages.titleCase("PATH 1"),
