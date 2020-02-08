@@ -44,6 +44,8 @@ public class Blob extends Actor {
 
 	public Rect area = new Rect();
 
+	public boolean alwaysVisible = false;
+
 	private static final String CUR		= "cur";
 	private static final String START	= "start";
 	private static final String LENGTH	= "length";

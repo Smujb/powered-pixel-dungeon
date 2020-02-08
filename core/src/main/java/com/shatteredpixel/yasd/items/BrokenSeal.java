@@ -59,6 +59,7 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
+		actions.add(AC_DEBUG);
 		return actions;
 	}
 
