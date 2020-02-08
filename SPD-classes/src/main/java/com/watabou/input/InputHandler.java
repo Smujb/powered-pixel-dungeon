@@ -23,12 +23,14 @@ package com.watabou.input;
 
 import com.badlogic.gdx.InputAdapter;
 import com.watabou.noosa.Game;
+import com.watabou.utils.PointF;
 
 public class InputHandler extends InputAdapter {
 	
 	public void processAllEvents(){
 		PointerEvent.processPointerEvents();
 		KeyEvent.processKeyEvents();
+		ScrollEvent.processScrollEvents();
 	}
 	
 	// *********************
@@ -58,6 +60,17 @@ public class InputHandler extends InputAdapter {
 		PointerEvent.addPointerEvent(new PointerEvent(screenX, screenY, pointer, true));
 		return true;
 	}
+
+	private static PointF pointerHoverPos = new PointF();
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		screenX /= (Game.dispWidth / (float)Game.width);
+		screenY /= (Game.dispHeight / (float)Game.height);
+		pointerHoverPos.x = screenX;
+		pointerHoverPos.y = screenY;
+		return true;
+	}
 	
 	// *****************
 	// *** Key Input ***
@@ -82,6 +95,16 @@ public class InputHandler extends InputAdapter {
 		}
 		
 		KeyEvent.addKeyEvent( new KeyEvent(keyCode, false) );
+		return true;
+	}
+
+	// ********************
+	// *** Scroll Input ***
+	// ********************
+
+	@Override
+	public boolean scrolled(int amount) {
+		ScrollEvent.addScrollEvent( new ScrollEvent(pointerHoverPos, amount));
 		return true;
 	}
 	
