@@ -24,7 +24,7 @@ apply plugin: "java"
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 ext {
-    mainClassName = "com.shatteredpixel.shatteredpixeldungeon.desktop.DesktopLauncher"
+    mainClassName = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
     //desktop-specific resources and shared resources
     //TODO shared resources can probably be moved out of android module, right?
     assetsDirs = ["../android/src/main/assets", "assets/"]
@@ -36,10 +36,9 @@ task runDebug(type: JavaExec) {
     main = mainClassName
     classpath = sourceSets.main.runtimeClasspath
     sourceSets.main.resources.srcDirs = assetsDirs
+
     ignoreExitValue = true
 }
-
-//TODO add dist task to generate a .JAR
 
 task releaseJAR(type: Jar) {
     from sourceSets.main.output
