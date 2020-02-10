@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.windows.WndBag;
 import com.shatteredpixel.yasd.windows.WndOptions;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 
@@ -59,7 +58,7 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
-		actions.add(AC_DEBUG);
+		//actions.add(AC_DEBUG);
 		return actions;
 	}
 

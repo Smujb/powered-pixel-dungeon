@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.items.wands.DamageWand;
 import com.shatteredpixel.yasd.items.wands.Wand;
+import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Catalog;
 import com.shatteredpixel.yasd.levels.SewerLevel;
@@ -141,19 +142,29 @@ public class Item implements Bundlable {
 		if (curUser == null) {//curUser may be null if activate() has not yet been called (such as on game start). This prevents the next check from throwing an error.
 			curUser = Dungeon.hero;
 		}
-		if (level() <= 0 | !isEquipped(curUser) & !override) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
+		if (level() < 0 | !isEquipped(curUser) & !override) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
-		if (curUser instanceof Hero) {
-			amount *= Math.pow(0.95f, ((Hero)curUser).CombatSkill);
-		}
+		/*if (curUser instanceof Hero) {
+			amount *= Math.pow(0.95f, ((Hero)curUser).Luck);
+		}*/
 		curDurability -= amount;
 		if (curDurability <= 0) {
 			GLog.n(Messages.get(this,"broken"),this.name());
 			Sample.INSTANCE.play(Assets.SND_DEGRADE);
 			fullyRepair();
-			degrade();
-		} else if (curDurability <= 150 & !saidAlmostBreak) {
+			if (level > 0) {
+				degrade();
+			} else {
+				cursed = true;
+				if (this instanceof MeleeWeapon) {
+					((MeleeWeapon)this).enchant(Weapon.Enchantment.randomCurse());
+				} else if (this instanceof Armor) {
+					((Armor)this).inscribe(Armor.Glyph.randomCurse());
+				}
+			}
+
+		} else if (curDurability <= MAXIMUM_DURABILITY*0.2f & !saidAlmostBreak) {
 			GLog.w(Messages.get(this,"almost_break",this.name()));
 			saidAlmostBreak = true;
 		}
@@ -161,12 +172,12 @@ public class Item implements Bundlable {
 
 	public int defaultDegradeAmount() {
 		switch (Dungeon.difficulty) {
-			case 1://Easy = 5 (0.5%) drop in durability per hit (200 hits until break)
-				return 5;
-			case 2: default://Medium = 10 (1%) drop in durability per hit (100 hits until break)
-				return 10;
-			case 3://Hard = 20 (2%) drop in durability per hit (about 50 hits until break)
-				return 20;
+			case 1://Easy = 3 drop in durability per hit (200 hits until break)
+				return 3;
+			case 2: default://Medium = 6 drop in durability per hit (100 hits until break)
+				return 6;
+			case 3://Hard = 12 drop in durability per hit (about 50 hits until break)
+				return 12;
 		}
 	}
 	

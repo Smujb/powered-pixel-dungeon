@@ -169,6 +169,9 @@ public class Belongings implements Iterable<Item> {
 	}
 
 	public KindOfWeapon getCurrentWeapon() {
+	    if (getWeapons().size() == 0) {
+	        return null;
+        }
 		resetWeapon();
 		if (miscs[0] instanceof MissileWeapon) {
 			return ((MissileWeapon) miscs[0]);
@@ -523,29 +526,7 @@ public class Belongings implements Iterable<Item> {
 				Badges.validateItemLevelAquired(miscs[i]);
 			}
 		}
-		/*if (miscs[0] != null) {
-			miscs[0].identify();
-			Badges.validateItemLevelAquired(miscs[0]);
-		}
-		if (miscs[1] != null) {
-			miscs[1].identify();
-			Badges.validateItemLevelAquired(miscs[1]);
-		}
 
-		if (miscs[2] != null) {
-			miscs[2].identify();
-			Badges.validateItemLevelAquired(miscs[2]);
-		}
-
-		if (miscs[3] != null) {
-			miscs[3].identify();
-			Badges.validateItemLevelAquired(miscs[3]);
-		}
-
-		if (miscs[4] != null) {
-			miscs[4].identify();
-			Badges.validateItemLevelAquired(miscs[4]);
-		}*/
 		for (Item item : backpack) {
 			if (item instanceof EquipableItem) {
 				item.cursedKnown = true;
@@ -586,30 +567,6 @@ public class Belongings implements Iterable<Item> {
 				miscs[i].activate( owner );
 			}
 		}
-
-
-		/*if (miscs[0] != null) {
-			miscs[0].cursed = false;
-			miscs[0].activate( owner );
-		}
-		if (miscs[1] != null) {
-			miscs[1].cursed = false;
-			miscs[1].activate( owner );
-		}
-
-		if (miscs[2] != null) {
-			miscs[2].cursed = false;
-			miscs[2].activate( owner );
-		}
-		if (miscs[3] != null) {
-			miscs[3].cursed = false;
-			miscs[3].activate( owner );
-		}
-
-		if (miscs[4] != null) {
-			miscs[4].cursed = false;
-			miscs[4].activate( owner );
-		}*/
 	}
 	
 	public int charge( float charge ) {

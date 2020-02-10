@@ -24,12 +24,11 @@ package com.shatteredpixel.yasd.items.armor;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.LuckyRandom;
 import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -58,7 +57,6 @@ import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.items.armor.glyphs.Thorns;
 import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
-import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.HeroSprite;
@@ -255,7 +253,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRRoll(int lvl) {
-		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
+		return LuckyRandom.NormalIntRange(DRMin(lvl), DRMax(lvl), DRMax(lvl));
 	}
 
 
@@ -282,7 +280,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int magicalDRRoll(int lvl) {
-		return Random.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl));
+		return LuckyRandom.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl), magicalDRMax(lvl));
 	}
 	
 	public float evasionFactor( Char owner, float evasion ){
@@ -536,9 +534,9 @@ public class Armor extends KindofMisc {
 		//+1: 20% (4/20)
 		//+2: 5%  (1/20)
 		int n = 0;
-		if (Random.Int(4) == 0) {
+		if (LuckyRandom.Int(4, 0) == 0) {
 			n++;
-			if (Random.Int(5) == 0) {
+			if (LuckyRandom.Int(5, 0) == 0) {
 				n++;
 			}
 		}
@@ -546,7 +544,7 @@ public class Armor extends KindofMisc {
 		
 		//30% chance to be cursed
 		//15% chance to be inscribed
-		float effectRoll = Random.Float();
+		float effectRoll = LuckyRandom.Float(1f);
 		if (effectRoll < 0.3f) {
 			inscribe(Glyph.randomCurse());
 			cursed = true;

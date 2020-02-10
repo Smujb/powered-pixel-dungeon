@@ -40,10 +40,9 @@ task runDebug(type: JavaExec) {
     ignoreExitValue = true
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_12
-    targetCompatibility = JavaVersion.VERSION_12
-}
+
+sourceCompatibility = JavaVersion.VERSION_12
+targetCompatibility = JavaVersion.VERSION_12
 
 task releaseJAR(type: Jar) {
     from sourceSets.main.output

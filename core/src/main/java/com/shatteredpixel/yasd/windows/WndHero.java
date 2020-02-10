@@ -27,9 +27,6 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.Statistics;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.hero.Hero;
-import com.shatteredpixel.yasd.actors.mobs.npcs.Wandmaker;
-import com.shatteredpixel.yasd.effects.RedLightning;
-import com.shatteredpixel.yasd.effects.particles.WindParticle;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.scenes.PixelScene;
@@ -195,11 +192,11 @@ public class WndHero extends WndTabbed {
 			add( btnExpertise );
 			pos += GAP;
 			//Resilience
-			statSlot( Messages.get(this, "combatskill"), hero.CombatSkill );
+			statSlot( Messages.get(this, "combatskill"), hero.Luck);
 			statIncreaseButton btnResilience = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.CombatSkill++;
+					Dungeon.hero.Luck++;
 				}
 			};
 			add( btnResilience );

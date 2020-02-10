@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.LuckyRandom;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
@@ -41,8 +41,6 @@ import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.MageArmor;
-import com.shatteredpixel.yasd.items.artifacts.Artifact;
-import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.bags.MagicalHolster;
 import com.shatteredpixel.yasd.items.rings.RingOfEnergy;
 import com.shatteredpixel.yasd.items.weapon.melee.MagesStaff;
@@ -394,16 +392,16 @@ public abstract class Wand extends KindofMisc {
 		//+1: 26.67% (4/15)
 		//+2: 6.67%  (1/15)
 		int n = 0;
-		if (Random.Int(3) == 0) {
+		if (LuckyRandom.Int(3, 0) == 0) {
 			n++;
-			if (Random.Int(5) == 0){
+			if (LuckyRandom.Int(5, 0) == 0){
 				n++;
 			}
 		}
 		level(n);
 		
 		//30% chance to be cursed
-		if (Random.Float() < 0.3f) {
+		if (LuckyRandom.Float(1f) < 0.3f) {
 			cursed = true;
 		}
 

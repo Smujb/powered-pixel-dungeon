@@ -216,7 +216,7 @@ public enum HeroClass {
 		
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();
-		hero.CombatSkill += 2;
+		hero.Luck += 2;
 	}
 
 	private static void initHuntress( Hero hero ) {
@@ -234,7 +234,7 @@ public enum HeroClass {
 		new PotionOfMindVision().identify();
 		new ScrollOfLullaby().identify();
 
-		hero.Focus += 2;
+		hero.Expertise += 2;
 	}
 	
 	public String title() {

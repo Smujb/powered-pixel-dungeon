@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.MagicImmune;
@@ -137,19 +138,28 @@ public abstract class EquipableItem extends Item {
 	}
 
 	public void activate(Char ch) {
+		userID = ch.id();
 		curUser = ch;
 	}
 
+	@Override
+	public boolean collect() {
+		curUser = (Char) Actor.findById(userID);
+		return super.collect();
+	}
+
+	private int userID = 0;
 	private static final String USERID =       "userID";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		//bundle.put( USERID, curUser.id());
+		bundle.put( USERID, userID );
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
+		userID = bundle.getInt( USERID );
 	}
 }

@@ -93,7 +93,7 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public void use(float amount) {
-		super.use(amount*damageMultiplier);
+		super.use(amount*DLY);
 	}
 
 	@Override

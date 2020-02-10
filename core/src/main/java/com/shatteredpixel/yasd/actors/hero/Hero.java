@@ -41,7 +41,6 @@ import com.shatteredpixel.yasd.actors.buffs.Berserk;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Bless;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Combo;
 import com.shatteredpixel.yasd.actors.buffs.Drunk;
 import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
@@ -66,8 +65,6 @@ import com.shatteredpixel.yasd.items.Heap;
 import com.shatteredpixel.yasd.items.Heap.Type;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
-import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.items.artifacts.DriedRose;
@@ -144,7 +141,7 @@ public class Hero extends Char {
 	public int Power = 1;
 	public int Focus = 1;
 	public int Expertise = 1;
-	public int CombatSkill = 1;
+	public int Luck = 1;
 	public int DistributionPoints = 0;
 
 	private static final float TIME_TO_REST		    = 1f;
@@ -280,7 +277,7 @@ public class Hero extends Char {
 	private static final String POWER       = "power";
 	private static final String FOCUS       = "focus";
 	private static final String EXPERTISE   = "expertise";
-	private static final String COMBATSKILL = "combatskill";
+	private static final String LUCK = "combatskill";
 	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
@@ -309,7 +306,7 @@ public class Hero extends Char {
 		bundle.put( POWER, Power );
 		bundle.put( FOCUS, Focus );
 		bundle.put( EXPERTISE, Expertise);
-		bundle.put( COMBATSKILL, CombatSkill );
+		bundle.put( LUCK, Luck );
 		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
 	}
 	
@@ -337,7 +334,7 @@ public class Hero extends Char {
 		Power = bundle.getInt( POWER );
 		Focus = bundle.getInt( FOCUS );
 		Expertise = bundle.getInt( EXPERTISE );
-		CombatSkill = bundle.getInt( COMBATSKILL );
+		Luck = bundle.getInt( LUCK );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 	}
 
@@ -374,7 +371,7 @@ public class Hero extends Char {
 	}
 	
 	public int tier() {
-		return belongings.getArmors().get(0) == null ? 0 : belongings.getArmors().get(0).appearance();
+		return belongings.getArmors().size() == 0 ? 0 : belongings.getArmors().get(0).appearance();
 	}
 
 	@Override
