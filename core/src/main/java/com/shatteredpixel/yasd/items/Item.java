@@ -270,7 +270,7 @@ public class Item implements Bundlable {
 			for (Item item:items) {
 				if (isSimilar( item )) {
 					item.merge( this );
-					item.updateQuickslot();
+					updateQuickslot();
 					return true;
 				}
 			}
@@ -597,7 +597,7 @@ public class Item implements Bundlable {
 		final int cell = throwPos( user, dst );
 		user.sprite.zap( cell );
 		if (user instanceof Hero) {
-			((Hero)user).busy();
+			user.busy();
 		}
 
 

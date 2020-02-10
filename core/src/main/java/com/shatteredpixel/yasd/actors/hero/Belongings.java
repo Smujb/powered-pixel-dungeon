@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Berserk;
+import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Fury;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.buffs.Momentum;
@@ -36,30 +37,33 @@ import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.items.armor.ClothArmor;
-import com.shatteredpixel.yasd.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.items.armor.curses.Bulk;
 import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
+import com.shatteredpixel.yasd.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Flow;
 import com.shatteredpixel.yasd.items.armor.glyphs.Obfuscation;
 import com.shatteredpixel.yasd.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.items.armor.glyphs.Swiftness;
+import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
+import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.bags.Bag;
 import com.shatteredpixel.yasd.items.keys.Key;
 import com.shatteredpixel.yasd.items.rings.RingOfAccuracy;
+import com.shatteredpixel.yasd.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.items.rings.RingOfForce;
+import com.shatteredpixel.yasd.items.rings.RingOfFuror;
+import com.shatteredpixel.yasd.items.rings.RingOfHaste;
+import com.shatteredpixel.yasd.items.rings.RingOfTenacity;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.items.wands.Wand;
-import com.shatteredpixel.yasd.items.weapon.melee.Basic;
+import com.shatteredpixel.yasd.items.weapon.Weapon;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import org.omg.CORBA.ARG_IN;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -72,7 +76,21 @@ public class Belongings implements Iterable<Item> {
 	
 	public Bag backpack;
 	public int currentWeapon = 0;
+	public KindofMisc[] miscs = new KindofMisc[Constants.MISC_SLOTS];
 
+	public Belongings( Char owner ) {
+		this.owner = owner;
+
+		backpack = new Bag() {{
+			name = Messages.get(Bag.class, "name");
+			size = BACKPACK_SIZE;
+		}};
+		backpack.owner = owner;
+	}
+
+	//##############################################################################################
+	//########################## Stuff for handling chars with belongings ##########################
+	//##############################################################################################
 	public ArrayList<Armor> getArmors() {
 		ArrayList<Armor> armors = new ArrayList<>();
 		for (int i = 0; i < miscs.length; i++) {
@@ -251,21 +269,71 @@ public class Belongings implements Iterable<Item> {
 		return TotalRequirement;
 	}
 
-	public KindofMisc[] miscs = new KindofMisc[Constants.MISC_SLOTS];
-
-
-	public Belongings( Char owner ) {
-		this.owner = owner;
-		
-		backpack = new Bag() {{
-			name = Messages.get(Bag.class, "name");
-			size = BACKPACK_SIZE;
-		}};
-		backpack.owner = owner;
+	public int defenseProc(Char enemy, int damage) {
+		ArrayList<Armor> Armors = getArmors();//Proc all armours 1 by 1
+		for (int i=0; i < Armors.size(); i++) {
+			damage = Armors.get(i).proc(enemy, owner, damage);
+		}
+		return damage;
 	}
+
+	public int attackProc(Char enemy, int damage) {
+		KindOfWeapon wep = getCurrentWeapon();
+
+		if (wep != null) damage = wep.proc(owner, enemy, damage);
+		return damage;
+	}
+
+	public int magicalAttackProc(Char enemy, int damage) {
+		return damage;
+	}
+
+	public int magicalDefenseProc(Char enemy, int damage) {
+		ArrayList<Armor> Armors = getArmors();//Proc all armours 1 by 1
+		for (int i=0; i < Armors.size(); i++) {
+			damage = Armors.get(i).magicalProc(enemy, owner, damage);
+		}
+		return damage;
+	}
+
+	public boolean canSurpriseAttack() {
+		KindOfWeapon curWep = getCurrentWeapon();
+		if (!(curWep instanceof Weapon)) return true;
+		if (owner.STR() < ((Weapon) curWep).STRReq()) return false;
+		return curWep.canSurpriseAttack;
+	}
+
+	public int affectDamage(int damage, Object src) {
+		if (owner.buff(TimekeepersHourglass.timeStasis.class) != null) {
+			return 0;
+		}
+		CapeOfThorns.Thorns thorns = owner.buff(CapeOfThorns.Thorns.class);
+		if (thorns != null) {
+			damage = thorns.proc(damage, (src instanceof Char ? (Char) src : null), owner);
+		}
+
+		damage = (int) Math.ceil(damage * RingOfTenacity.damageMultiplier(owner));
+
+		return damage;
+	}
+
+	public float attackDelay() {
+		float multiplier = 1f;
+		multiplier /= numberOfWeapons();
+		if (numberOfWeapons() > 0) {
+			return getCurrentWeapon().speedFactor(owner) * multiplier;//Two weapons = 1/2 attack speed
+		} else {
+			//Normally putting furor speed on unarmed attacks would be unnecessary
+			//But there's going to be that one guy who gets a furor+force ring combo
+			//This is for that one guy, you shall get your fists of fury!
+			return RingOfFuror.attackDelayMultiplier(owner);
+		}
+	}
+
 
 	public float EvasionFactor(float evasion) {
 		ArrayList<Armor> Armors = getArmors();
+		evasion *= RingOfEvasion.evasionMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
 			//evasion *= CurArmour.evasionMultiplier(ownerID);
@@ -290,6 +358,7 @@ public class Belongings implements Iterable<Item> {
 
 	public float SpeedFactor(float speed) {
 		ArrayList<Armor> Armors = getArmors();
+		speed *= RingOfHaste.speedMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
 			//speed *= CurArmour.speedMultiplier(ownerID);
@@ -344,6 +413,24 @@ public class Belongings implements Iterable<Item> {
 		}
 		return stealth;
 	}
+
+	public boolean isImmune(Class effect) {
+		//if *any* armour has Brimstone Glyph
+		ArrayList<Armor> Armors = getArmors();
+		for (int i=0; i < Armors.size(); i++) {
+			if (effect == Burning.class
+					&& Armors.get(i) != null
+					&& Armors.get(i).hasGlyph(Brimstone.class, owner)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//##############################################################################################
+	//####################### End of stuff for handling chars with belongings ######################
+	//##############################################################################################
+
 	private static final String ARMOR		= "getArmors";
 	private static final String MISC        = "misc";
 

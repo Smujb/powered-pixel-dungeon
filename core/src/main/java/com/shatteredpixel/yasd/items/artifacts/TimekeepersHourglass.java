@@ -225,7 +225,7 @@ public class TimekeepersHourglass extends Artifact {
 					}
 				}
 			} else if (cursed && Random.Int(10) == 0)
-				((Hero) target).spend( TICK );
+				target.spend( TICK );
 
 			updateQuickslot();
 
@@ -249,7 +249,7 @@ public class TimekeepersHourglass extends Artifact {
 				int usedCharge = Math.min(charge, 2);
 				//buffs always act last, so the stasis buff should end a turn early.
 				spend((5*usedCharge) - 1);
-				((Hero) target).spendAndNext(5*usedCharge);
+				target.spendAndNext(5*usedCharge);
 
 				//shouldn't punish the player for going into stasis frequently
 				Hunger hunger = Buff.affect(target, Hunger.class);

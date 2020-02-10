@@ -142,7 +142,7 @@ public abstract class Wand extends KindofMisc {
 	public void activate(Char ch) {//When equipped, start charging
 		super.activate(ch);
 		if (ch instanceof Char) {
-			curUser = (Char)ch;
+			curUser = ch;
 		}
 
 		if (ch instanceof Hero && ((Hero) ch).belongings.getItem(MagicalHolster.class) != null) {
@@ -505,7 +505,7 @@ public abstract class Wand extends KindofMisc {
 				
 				if (curWand.tryToZap(curUser, target)) {
 					if (curUser instanceof Hero) {
-						((Hero)curUser).busy();
+						curUser.busy();
 					}
 
 					Invisibility.dispel();

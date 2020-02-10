@@ -292,7 +292,7 @@ public class Armor extends KindofMisc {
 		}
 		
 		if (owner instanceof Hero){
-			int aEnc = STRReq() - ((Hero) owner).STR();
+			int aEnc = STRReq() - owner.STR();
 			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
 			
 			Momentum momentum = owner.buff(Momentum.class);
@@ -307,7 +307,7 @@ public class Armor extends KindofMisc {
 	public float speedFactor( Char owner, float speed ){
 		
 		if (owner instanceof Hero) {
-			int aEnc = STRReq() - ((Hero) owner).STR();
+			int aEnc = STRReq() - owner.STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 		}
 		
@@ -393,11 +393,11 @@ public class Armor extends KindofMisc {
 	}
 	
 	public int proc( Char attacker, Char defender, int damage ) {
-		
+
 		if (glyph != null && defender.buff(MagicImmune.class) == null) {
 			damage = glyph.proc( this, attacker, defender, damage );
 		}
-		
+
 		if (!levelKnown && defender == Dungeon.hero && availableUsesToID >= 1) {
 			availableUsesToID--;
 			usesLeftToID--;
@@ -407,7 +407,26 @@ public class Armor extends KindofMisc {
 				Badges.validateItemLevelAquired( this );
 			}
 		}
-		
+
+		return damage;
+	}
+
+	public int magicalProc( Char attacker, Char defender, int damage ) {
+
+		if (glyph != null && defender.buff(MagicImmune.class) == null) {
+			damage = glyph.magicalProc( this, attacker, defender, damage );
+		}
+
+		if (!levelKnown && defender == Dungeon.hero && availableUsesToID >= 1) {
+			availableUsesToID--;
+			usesLeftToID--;
+			if (usesLeftToID <= 0) {
+				identify();
+				GLog.p( Messages.get(Armor.class, "identify") );
+				Badges.validateItemLevelAquired( this );
+			}
+		}
+
 		return damage;
 	}
 	
@@ -635,6 +654,10 @@ public class Armor extends KindofMisc {
 		};
 		
 		public abstract int proc( Armor armor, Char attacker, Char defender, int damage );
+
+		public int magicalProc( Armor armor, Char attacker, Char defender, int damage ) {
+			return damage;
+		}
 		
 		public String name() {
 			if (!curse())

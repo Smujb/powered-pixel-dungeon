@@ -205,7 +205,7 @@ public class MagesStaff extends MeleeWeapon {
 		}
 		//if the staff's level is being overridden by the wand, preserve 1 upgrade
 		if (wand.level() >= this.level() && this.level() > (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0)) targetLevel++;
-		if (owner instanceof Hero && wand.isEquipped(((Hero)owner))) {
+		if (owner instanceof Hero && wand.isEquipped(owner)) {
 			wand.doUnequip(((Hero)owner), false);
 		}
 		level(targetLevel);

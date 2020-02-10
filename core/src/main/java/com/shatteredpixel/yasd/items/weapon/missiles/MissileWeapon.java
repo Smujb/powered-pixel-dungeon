@@ -285,7 +285,7 @@ abstract public class MissileWeapon extends Weapon {
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 		
 		if (owner instanceof Hero) {
-			int exStr = ((Hero)owner).STR() - STRReq();
+			int exStr = owner.STR() - STRReq();
 			if (exStr > 0) {
 				damage += Random.IntRange( 0, exStr );
 			}

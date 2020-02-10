@@ -81,7 +81,7 @@ public class Shopkeeper extends NPC {
 		for (Heap heap: Dungeon.level.heaps.valueList()) {
 			if (heap.type == Heap.Type.FOR_SALE) {
 				CellEmitter.get( heap.pos ).burst( ElmoParticle.FACTORY, 4 );
-				heap.type = heap.type.HEAP;//Allow them to be picked up
+				heap.type = Heap.Type.HEAP;//Allow them to be picked up
 			}
 		}
 	}

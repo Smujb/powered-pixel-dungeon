@@ -52,7 +52,7 @@ public class TeleportationTrap extends Trap {
 		Char ch = Actor.findChar( pos);
 		if (ch != null && !ch.flying) {
 			if (ch instanceof Hero) {
-				ScrollOfTeleportation.teleportUser((Hero) ch);
+				ScrollOfTeleportation.teleportUser(ch);
 			} else {
 				int count = 10;
 				int pos;

@@ -53,8 +53,8 @@ public class ScrollOfEnchantment extends ExoticScroll {
 		public void onSelect(final Item item) {
 			
 			if (item instanceof Weapon){
-				
-				final Weapon.Enchantment enchants[] = new Weapon.Enchantment[3];
+
+				final Weapon.Enchantment[] enchants = new Weapon.Enchantment[3];
 				
 				Class<? extends Weapon.Enchantment> existing = ((Weapon) item).enchantment != null ? ((Weapon) item).enchantment.getClass() : null;
 				enchants[0] = Weapon.Enchantment.randomCommon( existing );
@@ -90,8 +90,8 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				});
 			
 			} else if (item instanceof Armor) {
-				
-				final Armor.Glyph glyphs[] = new Armor.Glyph[3];
+
+				final Armor.Glyph[] glyphs = new Armor.Glyph[3];
 				
 				Class<? extends Armor.Glyph> existing = ((Armor) item).glyph != null ? ((Armor) item).glyph.getClass() : null;
 				glyphs[0] = Armor.Glyph.randomCommon( existing );

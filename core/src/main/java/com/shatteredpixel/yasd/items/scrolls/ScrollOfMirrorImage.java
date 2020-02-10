@@ -132,7 +132,7 @@ public class ScrollOfMirrorImage extends Scroll {
 		@Override
 		public boolean act() {
 			
-			int spawned = spawnImages((Hero)target,  Math.min(totImages, imPerRound));
+			int spawned = spawnImages(target,  Math.min(totImages, imPerRound));
 			
 			totImages -= spawned;
 			

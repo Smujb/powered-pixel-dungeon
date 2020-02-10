@@ -119,7 +119,7 @@ public abstract class EquipableItem extends Item {
 			hero.spendAndNext(time2equip(hero));
 		} else {
 			if (hero instanceof Hero)
-				((Hero) hero).spend(time2equip(hero));
+				hero.spend(time2equip(hero));
 		}
 
 		if (!collect || !collect(hero.belongings.backpack)) {

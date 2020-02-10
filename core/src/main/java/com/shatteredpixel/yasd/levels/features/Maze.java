@@ -158,10 +158,7 @@ public class Maze {
 			return false;
 		} else if (maze[x][y]){
 			return false;
-		} else if (!allowDiagonals && (maze[x + sideX][y + sideY] || maze[x - sideX][y - sideY])){
-			return false;
-		}
-		
-		return true;
-	}
+		} else return allowDiagonals || (!maze[x + sideX][y + sideY] && !maze[x - sideX][y - sideY]);
+
+    }
 }

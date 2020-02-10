@@ -311,8 +311,6 @@ public class Hero extends Char {
 		bundle.put( EXPERTISE, Expertise);
 		bundle.put( COMBATSKILL, CombatSkill );
 		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
-
-		belongings.storeInBundle( bundle );
 	}
 	
 	@Override
@@ -341,8 +339,6 @@ public class Hero extends Char {
 		Expertise = bundle.getInt( EXPERTISE );
 		CombatSkill = bundle.getInt( COMBATSKILL );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
-		
-		belongings.restoreFromBundle( bundle );
 	}
 
 
@@ -644,7 +640,7 @@ public class Hero extends Char {
 			Alchemy alch = (Alchemy) Dungeon.level.blobs.get(Alchemy.class);
 			//TODO logic for a well having dried up?
 			if (alch != null) {
-				alch.alchPos = dst;
+				Alchemy.alchPos = dst;
 				AlchemyScene.setProvider( alch );
 			}
 			YASD.switchScene(AlchemyScene.class);
@@ -1198,13 +1194,9 @@ public class Hero extends Char {
 			curAction = new HeroAction.Ascend( cell );
 			
 		} else  {
-			
-			if (!Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
-					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible) {
-				walkingToVisibleTrapInFog = true;
-			} else {
-				walkingToVisibleTrapInFog = false;
-			}
+
+			walkingToVisibleTrapInFog = !Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
+					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible;
 			
 			curAction = new HeroAction.Move( cell );
 			lastAction = null;
@@ -1325,19 +1317,6 @@ public class Hero extends Char {
 		super.remove( buff );
 
 		BuffIndicator.refreshHero();
-	}
-	
-	@Override
-	public float stealth() {
-		float stealth = super.stealth();
-		if (this.buff(Invisibility.class) != null) {
-			stealth += 5;
-		}
-		if (belongings != null) {
-			stealth = belongings.StealthFactor(stealth);
-		}
-		
-		return stealth;
 	}
 	
 	@Override
@@ -1569,21 +1548,6 @@ public class Hero extends Char {
 		super.onOperateComplete();
 	}
 
-	@Override
-	public boolean isImmune(Class effect) {
-		//if *any* armour has Brimstone Glyph
-		ArrayList<Armor> Armors = belongings.getArmors();
-		for (int i=0; i < Armors.size(); i++) {
-			if (effect == Burning.class
-					&& Armors.get(i) != null
-					&& Armors.get(i).hasGlyph(Brimstone.class, this)) {
-				return true;
-			}
-		}
-
-		return super.isImmune(effect);
-	}
-
 	public boolean search( boolean intentional ) {
 		
 		if (!isAlive()) return false;
@@ -1718,7 +1682,7 @@ public class Hero extends Char {
 			super.next();
 	}
 
-	public static interface Doom {
-		public void onDeath();
+	public interface Doom {
+		void onDeath();
 	}
 }

@@ -12,7 +12,7 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 
 public class WardSprite extends MobSprite {
 
-	private Animation tierIdles[] = new Animation[7];
+	private Animation[] tierIdles = new Animation[7];
 
 	public WardSprite(){
 		super();
@@ -49,7 +49,7 @@ public class WardSprite extends MobSprite {
 		} else {
 			parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
 		}
-		((WandOfWarding.Ward)ch).onZapComplete();
+		ch.onZapComplete();
 	}
 	
 	@Override

@@ -64,7 +64,7 @@ public class Multiplicity extends Armor.Glyph {
 				Mob m = null;
 				if (Random.Int(2) == 0 && defender instanceof Hero){
 					m = new MirrorImage();
-					((MirrorImage)m).duplicate( (Hero)defender );
+					((MirrorImage)m).duplicate(defender);
 
 				} else {
 					//FIXME should probably have a mob property for this

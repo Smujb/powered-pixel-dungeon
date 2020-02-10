@@ -73,7 +73,7 @@ public class WndBag extends WndTabbed {
 	private static WndBag INSTANCE;
 	
 	//FIXME this is getting cumbersome, there should be a better way to manage this
-	public static enum Mode {
+	public enum Mode {
 		ALL,
 		UNIDENTIFED,
 		UNCURSABLE,

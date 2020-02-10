@@ -197,8 +197,8 @@ public abstract class Scroll extends Item {
 
 	protected void readAnimation() {
 		if (curUser instanceof Hero) {
-			((Hero)curUser).spend(TIME_TO_READ);
-			((Hero)curUser).busy();
+			curUser.spend(TIME_TO_READ);
+			curUser.busy();
 			((HeroSprite) curUser.sprite).read();
 		}
 	}
@@ -334,14 +334,10 @@ public abstract class Scroll extends Item {
 		
 		@Override
 		public boolean testIngredients(ArrayList<Item> ingredients) {
-			if (ingredients.size() != 1
-					|| !ingredients.get(0).isIdentified()
-					|| !(ingredients.get(0) instanceof Scroll)
-					|| !stones.containsKey(ingredients.get(0).getClass())){
-				return false;
-			}
-			
-			return true;
+			return ingredients.size() == 1
+					&& ingredients.get(0).isIdentified()
+					&& ingredients.get(0) instanceof Scroll
+					&& stones.containsKey(ingredients.get(0).getClass());
 		}
 		
 		@Override

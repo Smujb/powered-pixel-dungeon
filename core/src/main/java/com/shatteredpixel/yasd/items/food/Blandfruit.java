@@ -73,10 +73,8 @@ public class Blandfruit extends Food {
 			Blandfruit other = (Blandfruit) item;
 			if (potionAttrib == null && other.potionAttrib == null) {
 					return true;
-			} else if (potionAttrib != null && other.potionAttrib != null
-					&& potionAttrib.isSimilar(other.potionAttrib)){
-					return true;
-			}
+			} else return potionAttrib != null && other.potionAttrib != null
+					&& potionAttrib.isSimilar(other.potionAttrib);
 		}
 		return false;
 	}
@@ -253,12 +251,8 @@ public class Blandfruit extends Food {
 			if (fruit.quantity() >= 1 && fruit.potionAttrib == null
 				&& seed.quantity() >= 1){
 
-				if (Dungeon.isChallenged(Challenges.NO_HEALING)
-						&& seed instanceof Sungrass.Seed){
-					return false;
-				}
-
-				return true;
+				return !Dungeon.isChallenged(Challenges.NO_HEALING)
+						|| !(seed instanceof Sungrass.Seed);
 			}
 			
 			return false;

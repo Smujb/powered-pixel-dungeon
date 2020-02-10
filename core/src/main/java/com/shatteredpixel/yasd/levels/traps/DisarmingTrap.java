@@ -72,7 +72,7 @@ public class DisarmingTrap extends Trap{
 				if (cell != -1) {
 					hero.belongings.miscs[0] = null;
 					Dungeon.quickslot.clearItem(weapon);
-					weapon.updateQuickslot();
+					Item.updateQuickslot();
 
 					Dungeon.level.drop(weapon, cell).seen = true;
 					for (int i : PathFinder.NEIGHBOURS9)

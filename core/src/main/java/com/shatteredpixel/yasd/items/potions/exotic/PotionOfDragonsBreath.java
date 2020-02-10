@@ -78,7 +78,7 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 					@Override
 					public void call() {
 						if (curUser instanceof Hero) {
-							((Hero)curUser).spend(1f);
+							curUser.spend(1f);
 						}
 						curUser.sprite.idle();
 						curUser.sprite.zap(cell);

@@ -111,7 +111,7 @@ public class CircleArc extends Visual {
 	private void updateTriangles(){
 		
 		dirty = false;
-		float v[] = new float[4];
+		float[] v = new float[4];
 		
 		indices.position( 0 );
 		vertices.position( 0 );

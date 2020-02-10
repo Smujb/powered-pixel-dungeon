@@ -99,7 +99,7 @@ public class PrismaticGuard extends Buff {
 	}
 	
 	public int maxHP(){
-		return maxHP((Hero)target);
+		return maxHP(target);
 	}
 	
 	public static int maxHP( Char hero ){

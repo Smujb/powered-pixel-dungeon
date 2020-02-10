@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.actors.buffs.Amok;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Imp;
+import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.food.Food;
 import com.shatteredpixel.yasd.items.weapon.melee.Fist;
@@ -46,6 +47,8 @@ public class Monk extends Mob {
 		
 		EXP = 11;
 		maxLvl = 21;
+
+		DLY = 0.5f;
 		
 		loot = new Food();
 		lootChance = 0.083f;
@@ -61,11 +64,6 @@ public class Monk extends Mob {
 	@Override
 	public int attackSkill( Char target ) {
 		return defenseSkill;
-	}
-	
-	@Override
-    public float attackDelay() {
-		return super.attackDelay()*0.5f;
 	}
 	
 	@Override
@@ -86,10 +84,9 @@ public class Monk extends Mob {
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		
-		if (enemy == Dungeon.hero) {
-			
-			Hero hero = Dungeon.hero;
-			KindofMisc item = hero.belongings.miscs[0];
+		if (enemy.hasBelongings()) {
+			int index = Random.Int(enemy.belongings.miscs.length);
+			KindofMisc item = enemy.belongings.miscs[index];
 			
 			if ((item != null)
 					&& !(item instanceof Fist)
@@ -97,11 +94,13 @@ public class Monk extends Mob {
 				if (hitsToDisarm == 0) hitsToDisarm = Random.NormalIntRange(4, 8);
 
 				if (--hitsToDisarm == 0) {
-					hero.belongings.miscs[0] = null;
+					enemy.belongings.miscs[index] = null;
 					Dungeon.quickslot.convertToPlaceholder(item);
-					item.updateQuickslot();
-					Dungeon.level.drop(item, hero.pos).sprite.drop();
-					GLog.w(Messages.get(this, "disarm", item.name()));
+					Item.updateQuickslot();
+					Dungeon.level.drop(item, enemy.pos).sprite.drop();
+					if (enemy == Dungeon.hero) {
+						GLog.w(Messages.get(this, "disarm", item.name()));
+					}
 				}
 			}
 		}

@@ -82,44 +82,9 @@ public class Constants {
     public static final int SOU_PER_CHAPTER = 3;
 
     //Level types. Change it if you want to change depth system.
-    public static ArrayList<Class <? extends Level>> LEVEL_TYPES_PATH_1 = new ArrayList<>(Arrays.asList(
-            DeadEndLevel.class,//Floor 0
-            SewerLevel.class,
-            SewerLevel.class,
-            SewerLevel.class,
-            SewerLevel.class,
-            SewerLevel.class,
-            SewerBossLevel.class,//Floor 6, boss
-            PrisonLevel.class,
-            PrisonLevel.class,
-            PrisonLevel.class,
-            PrisonLevel.class,
-            PrisonLevel.class,
-            NewPrisonBossLevel.class,//Floor 12, boss.
-            CavesLevel.class,
-            CavesLevel.class,
-            CavesLevel.class,
-            CavesLevel.class,
-            CavesLevel.class,
-            CavesBossLevel.class,//Floor 18, boss
-            CityLevel.class,
-            CityLevel.class,
-            CityLevel.class,
-            CityLevel.class,
-            CityLevel.class,
-            CityBossLevel.class,//Floor 24, boss
-            LastShopLevel.class,//Floor 25, Imp
-            HallsLevel.class,
-            HallsLevel.class,
-            HallsLevel.class,
-            HallsLevel.class,
-            HallsBossLevel.class,//Floor 30, boss
-            LastLevel.class//Floor 31, last level
-    ));
-
     public static final ArrayList<ArrayList<Class <? extends Level>>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
             new ArrayList<>(Arrays.asList(
-                    DeadEndLevel.class,//Floor 0
+                    DeadEndLevel.class,//Floor 0, shouldn't ever be here
                     SewerLevel.class,
                     SewerLevel.class,
                     SewerLevel.class,
@@ -174,6 +139,7 @@ public class Constants {
     //############################## UI STUFF ##############################
     //
 
+    //TODO: add ability for more quickslots
     public static final int MAX_QUICKSLOTS = 6;
     public static final int MIN_QUICKSLOTS = 2;
 

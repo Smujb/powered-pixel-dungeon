@@ -82,7 +82,7 @@ public class Game implements ApplicationListener {
 		sceneClass = c;
 		
 		instance = this;
-		this.platform = platform;
+		Game.platform = platform;
 	}
 	
 	private boolean paused;
@@ -176,7 +176,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void resetScene() {
-		switchScene( instance.sceneClass );
+		switchScene( sceneClass );
 	}
 
 	public static void switchScene(Class<? extends Scene> c) {
@@ -184,7 +184,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void switchScene(Class<? extends Scene> c, SceneChangeCallback callback) {
-		instance.sceneClass = c;
+		sceneClass = c;
 		instance.requestedReset = true;
 		instance.onChange = callback;
 	}

@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.yasd.actors.buffs.Barkskin;
-import com.shatteredpixel.yasd.actors.buffs.Berserk;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Bless;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
@@ -48,7 +47,6 @@ import com.shatteredpixel.yasd.actors.buffs.EarthImbue;
 import com.shatteredpixel.yasd.actors.buffs.FireImbue;
 import com.shatteredpixel.yasd.actors.buffs.Frost;
 import com.shatteredpixel.yasd.actors.buffs.FrostImbue;
-import com.shatteredpixel.yasd.actors.buffs.Fury;
 import com.shatteredpixel.yasd.actors.buffs.Haste;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
@@ -71,19 +69,15 @@ import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.actors.mobs.RangedMob;
-import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindOfWeapon;
-import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
 import com.shatteredpixel.yasd.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.items.armor.glyphs.Potential;
 import com.shatteredpixel.yasd.items.artifacts.CapeOfThorns;
 import com.shatteredpixel.yasd.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight;
-import com.shatteredpixel.yasd.items.rings.RingOfAccuracy;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.items.rings.RingOfEvasion;
-import com.shatteredpixel.yasd.items.rings.RingOfForce;
 import com.shatteredpixel.yasd.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.items.rings.RingOfHaste;
 import com.shatteredpixel.yasd.items.rings.RingOfMight;
@@ -99,8 +93,6 @@ import com.shatteredpixel.yasd.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.yasd.items.weapon.melee.Blunt;
-import com.shatteredpixel.yasd.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.yasd.levels.Terrain;
@@ -133,7 +125,7 @@ public abstract class Char extends Actor {
 
 	public Belongings belongings = null;
 	public int STR;
-	//public boolean usesBelongings = false;
+	//public boolean hasBelongings = false;
 
 
 	public int HT;
@@ -190,7 +182,7 @@ public abstract class Char extends Actor {
 		return 1f - hpPercent();
 	}
 
-	public boolean usesBelongings() {
+	public boolean hasBelongings() {
 		return belongings != null;
 	}
 
@@ -217,7 +209,7 @@ public abstract class Char extends Actor {
 			return true;
 		}
 
-		if (belongings != null) {
+		if (hasBelongings()) {
 			KindOfWeapon wep = belongings.getCurrentWeapon();
 			if (wep != null) {
 				return wep.canReach(this, enemy.pos);
@@ -303,6 +295,10 @@ public abstract class Char extends Actor {
 		bundle.put(TAG_HP, HP);
 		bundle.put(TAG_HT, HT);
 		bundle.put(BUFFS, buffs);
+
+		if (hasBelongings()) {
+			belongings.storeInBundle(bundle);
+		}
 	}
 
 	@Override
@@ -320,13 +316,19 @@ public abstract class Char extends Actor {
 			}
 		}
 
+		if (hasBelongings()) {
+			belongings.restoreFromBundle(bundle);
+		}
+
 		//pre-0.7.0
 	}
 
 	public boolean attack(Char enemy) {
-		belongings.nextWeapon();
+		if (hasBelongings()) {
+			belongings.nextWeapon();
+		}
 
-		if (enemy == null) return false;
+		if (enemy == null || enemy == this) return false;
 
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
@@ -343,7 +345,7 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (usesBelongings() && belongings.getCurrentWeapon() instanceof Blunt) {
+			if (hasBelongings() && belongings.getCurrentWeapon() instanceof Blunt) {
 				dr = 0;
 			}
 
@@ -361,7 +363,7 @@ public abstract class Char extends Actor {
 						dmg *= 0.75f;
 						break;
 					case 2:
-					default://Medium = ChainArmor damage
+					default://Medium = normal damage
 						break;
 					case 3://Hard = +25% damage
 						dmg *= 1.25f;
@@ -369,10 +371,9 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
-				Hero h = (Hero) this;
-				if (h.belongings.miscs[0] instanceof MissileWeapon) {
-					dmg = ((MissileWeapon) h.belongings.miscs[0]).damageRoll(h);
+			if (hasBelongings()) {
+				if (belongings.miscs[0] instanceof MissileWeapon) {//Missile Weapons are always equipped in slot 1
+					dmg = ((MissileWeapon) belongings.miscs[0]).damageRoll(this);
 				}
 			}
 			int effectiveDamage = enemy.defenseProc(this, dmg);
@@ -384,13 +385,10 @@ public abstract class Char extends Actor {
 			}
 
 			// If the enemy is already dead, interrupt the attack.
-			// This matters as defence procs can sometimes inflict self-damage, such as getArmors glyphs.
+			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
 				return true;
 			}
-
-			//TODO: consider revisiting this and shaking in more cases.
-
 
 			enemy.damage(effectiveDamage, this);
 			if (buff(FireImbue.class) != null)
@@ -405,10 +403,6 @@ public abstract class Char extends Actor {
 
 			if (!enemy.isAlive() && visibleFight) {
 				if (enemy == Dungeon.hero) {
-
-					if (this == Dungeon.hero) {
-						return true;
-					}
 
 					Dungeon.fail(getClass());
 					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name)));
@@ -449,7 +443,7 @@ public abstract class Char extends Actor {
 
 	public int attackSkill(Char target) {
 		float accuracy = attackSkill;
-		if (usesBelongings()) {
+		if (hasBelongings()) {
 			accuracy = belongings.accuracyFactor(accuracy, target);
 		}
 		Drunk drunk = buff(Drunk.class);
@@ -465,12 +459,8 @@ public abstract class Char extends Actor {
 		if (buff(Wet.class) != null) {
 			evasion *= buff(Wet.class).evasionFactor();
 		}
-		if (usesBelongings()) {
-			evasion *= RingOfEvasion.evasionMultiplier(this);
-
-			if (belongings != null) {
-				evasion = belongings.EvasionFactor(evasion);
-			}
+		if (hasBelongings()) {
+			evasion = belongings.EvasionFactor(evasion);
 
 		}
 		if (paralysed > 0) {
@@ -489,7 +479,7 @@ public abstract class Char extends Actor {
 
 	public int magicalDRRoll() {
 		int dr = 0;
-		if (usesBelongings()) {
+		if (hasBelongings()) {
 			dr += belongings.magicalDR();
 		}
 		return dr;
@@ -497,10 +487,16 @@ public abstract class Char extends Actor {
 
 
 	public int magicalDefenseProc(Char enemy, int damage) {
+		if (hasBelongings()) {
+			damage = belongings.magicalDefenseProc(enemy, damage);
+		}
 		return damage;
 	}
 
 	public int magicalAttackProc(Char enemy, int damage) {
+		if (hasBelongings()) {
+			damage = belongings.magicalAttackProc(enemy, damage);
+		}
 		return damage;
 	}
 
@@ -517,10 +513,6 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean magicalAttack( Char enemy ) {
-		return magicalAttack(enemy, this);
-	}
-
-	public boolean magicalAttack( Char enemy, Object src) {
 		if (enemy == null) return false;
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 		if (hit( this, enemy, true )) {
@@ -540,10 +532,10 @@ public abstract class Char extends Actor {
 
 			if (this instanceof RangedMob) {
 				RangedMob RM = ((RangedMob)this);
-				src = RM.magicalSrc();
+				enemy.damage(effectiveDamage,RM.magicalSrc());
+			} else {
+				enemy.damage(effectiveDamage, this);
 			}
-
-			enemy.damage(effectiveDamage,src);
 
 			if (!enemy.isAlive() && visibleFight) {
 				if (enemy == Dungeon.hero) {
@@ -576,7 +568,7 @@ public abstract class Char extends Actor {
 
 	public int drRoll() {
 		int dr = 0;
-		if (usesBelongings()) {
+		if (hasBelongings()) {
 			dr += belongings.drRoll();
 		}
 		Barkskin bark = buff(Barkskin.class);
@@ -589,7 +581,7 @@ public abstract class Char extends Actor {
 	}
 
 	public int damageRoll() {
-		if (usesBelongings()) {
+		if (hasBelongings()) {
 			return belongings.damageRoll();
 		} else {
 			return 1;
@@ -597,20 +589,15 @@ public abstract class Char extends Actor {
 	}
 
 	public int attackProc( Char enemy, int damage ) {
-		if (usesBelongings()) {
-			KindOfWeapon wep = belongings.getCurrentWeapon();
-
-			if (wep != null) damage = wep.proc(this, enemy, damage);
+		if (hasBelongings()) {
+			damage = belongings.attackProc(enemy, damage);
 		}
 		return damage;
 	}
 
 	public int defenseProc( Char enemy, int damage ) {
-		if (usesBelongings()) {
-			ArrayList<Armor> Armors = belongings.getArmors();//Proc all armours 1 by 1
-			for (int i=0; i < Armors.size(); i++) {
-				damage = Armors.get(i).proc(enemy,this, damage);
-			}
+		if (hasBelongings()) {
+			damage = belongings.defenseProc(enemy, damage);
 		}
 		Earthroot.Armor armor = buff( Earthroot.Armor.class );
 		if (armor != null) {
@@ -630,34 +617,20 @@ public abstract class Char extends Actor {
 		if ( buff( Stamina.class ) != null) speed *= 1.5f;
 		if ( buff( Adrenaline.class ) != null) speed *= 2f;
 		if ( buff( Haste.class ) != null) speed *= 3f;
-		if (usesBelongings()) {
-			speed *= RingOfHaste.speedMultiplier(this);
-
+		if (hasBelongings()) {
 			speed = belongings.SpeedFactor(speed);
-
-			Momentum momentum = buff(Momentum.class);
-			if (momentum != null) {
-				//((HeroSprite)sprite).sprint( 1f + 0.05f*momentum.stacks());
-				speed *= momentum.speedMultiplier();
-			}
+		}
+		Momentum momentum = buff(Momentum.class);
+		if (momentum != null) {
+			//((HeroSprite)sprite).sprint( 1f + 0.05f*momentum.stacks());
+			speed *= momentum.speedMultiplier();
 		}
 		return speed;
 	}
 
 	public float attackDelay() {
-		if (usesBelongings()) {
-			float multiplier = 1f;
-			multiplier /= belongings.numberOfWeapons();
-			if (belongings.getCurrentWeapon() != null) {
-
-				return belongings.getCurrentWeapon().speedFactor(this) * multiplier;//Two weapons = 1/2 attack speed
-
-			} else {
-				//Normally putting furor speed on unarmed attacks would be unnecessary
-				//But there's going to be that one guy who gets a furor+force ring combo
-				//This is for that one guy, you shall get your fists of fury!
-				return RingOfFuror.attackDelayMultiplier(this) * DLY;
-			}
+		if (hasBelongings()) {
+			return belongings.attackDelay();
 		} else {
 			return DLY;
 		}
@@ -681,31 +654,19 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean canSurpriseAttack(){
-		if (usesBelongings()) {
-			KindOfWeapon curWep = belongings.getCurrentWeapon();
-			if (!(curWep instanceof Weapon)) return true;
-			if (STR() < ((Weapon) curWep).STRReq()) return false;
-			return curWep.canSurpriseAttack;
+		if (hasBelongings()) {
+			return belongings.canSurpriseAttack();
 		}
 		return true;
 	}
 
 	public void damage( int dmg, Object src ) {
-		if (usesBelongings()) {
-			if (buff(TimekeepersHourglass.timeStasis.class) != null)
-				return;
-
-			if (this.buff(Drowsy.class) != null) {
-				Buff.detach(this, Drowsy.class);
-				GLog.w(Messages.get(this, "pain_resist"));
-			}
-
-			CapeOfThorns.Thorns thorns = buff(CapeOfThorns.Thorns.class);
-			if (thorns != null) {
-				dmg = thorns.proc(dmg, (src instanceof Char ? (Char) src : null), this);
-			}
-
-			dmg = (int) Math.ceil(dmg * RingOfTenacity.damageMultiplier(this));
+		if (this.buff(Drowsy.class) != null) {
+			Buff.detach(this, Drowsy.class);
+			GLog.w(Messages.get(this, "pain_resist"));
+		}
+		if (hasBelongings()) {
+			dmg = belongings.affectDamage(dmg, src);
 		}
 
 		if (!isAlive() || dmg < 0) {
@@ -888,7 +849,15 @@ public abstract class Char extends Actor {
 	}
 
 	public float stealth() {
-		return STE;
+		float stealth = STE;
+		if (hasBelongings()) {
+			stealth = belongings.StealthFactor(stealth);
+		}
+
+		if (this.buff(Invisibility.class) != null) {
+			stealth += 5;
+		}
+		return stealth;
 	}
 
 	public void move( int step ) {
@@ -973,7 +942,11 @@ public abstract class Char extends Actor {
 				return true;
 			}
 		}
-		return false;
+		if (hasBelongings()) {
+			return belongings.isImmune(effect);
+		} else {
+			return false;
+		}
 	}
 
 	protected HashSet<Property> properties = new HashSet<>();

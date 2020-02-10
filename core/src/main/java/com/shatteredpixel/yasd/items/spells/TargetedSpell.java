@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.CellSelector;
@@ -87,9 +88,9 @@ public abstract class TargetedSpell extends Spell {
 				
 				curSpell.fx(shot, new Callback() {
 					public void call() {
-						curSpell.affectTarget(shot, ((Hero)curUser));
+						curSpell.affectTarget(shot, curUser);
 						curSpell.detach( curUser.belongings.backpack );
-						curSpell.updateQuickslot();
+						updateQuickslot();
 						curUser.spendAndNext( 1f );
 					}
 				});

@@ -84,10 +84,8 @@ public class FigureEightBuilder extends RegularBuilder {
 		if (landmarkRoom == null){
 			landmarkRoom = Random.element(multiConnections);
 		}
-		
-		if (multiConnections.contains(landmarkRoom)){
-			multiConnections.remove(landmarkRoom);
-		}
+
+        multiConnections.remove(landmarkRoom);
 		
 		float startAngle = Random.Float(0, 180);
 		

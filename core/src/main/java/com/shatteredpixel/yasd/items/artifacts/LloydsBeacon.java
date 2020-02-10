@@ -217,7 +217,7 @@ public class LloydsBeacon extends Artifact {
 					Sample.INSTANCE.play( Assets.SND_ZAP );
 					curUser.sprite.zap(bolt.collisionPos);
 					if (curUser instanceof Hero) {
-						((Hero)curUser).busy();
+						curUser.busy();
 					}
 
 					MagicMissile.boltFromChar(curUser.sprite.parent,

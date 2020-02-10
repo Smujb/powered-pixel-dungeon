@@ -162,7 +162,7 @@ public class EtherealChains extends Artifact {
 			updateQuickslot();
 		}
 		if (user instanceof Hero) {
-			((Hero)user).busy();
+			user.busy();
 		}
 
 		user.sprite.parent.add(new Chains(user.sprite.center(), enemy.sprite.center(), new Callback() {
@@ -213,7 +213,7 @@ public class EtherealChains extends Artifact {
 			updateQuickslot();
 		}
 		if (user instanceof Hero) {
-			((Hero)user).busy();
+			user.busy();
 		}
 		user.sprite.parent.add(new Chains(user.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(newHeroPos), new Callback() {
 			public void call() {

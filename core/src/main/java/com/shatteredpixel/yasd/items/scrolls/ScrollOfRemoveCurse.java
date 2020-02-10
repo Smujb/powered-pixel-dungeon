@@ -111,7 +111,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 		if (procced) {
 			owner.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
 			if (owner instanceof Hero) {
-				((Hero)owner).updateHT(false); //for ring of might
+				owner.updateHT(false); //for ring of might
 			}
 			updateQuickslot();
 		}

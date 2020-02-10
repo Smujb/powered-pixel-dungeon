@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items;
 
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Hero;
@@ -41,28 +42,36 @@ public abstract class KindofMisc extends EquipableItem {
 	public boolean doEquip(final Hero hero) {
 
 		if (hero.belongings.miscs[0] != null && hero.belongings.miscs[1] != null && hero.belongings.miscs[2] != null && hero.belongings.miscs[3] != null && hero.belongings.miscs[4] != null) {
-
-			final KindofMisc m1 = hero.belongings.miscs[0];
+			final KindofMisc[] miscs = hero.belongings.miscs;
+			/*final KindofMisc m1 = hero.belongings.miscs[0];
 			final KindofMisc m2 = hero.belongings.miscs[1];
 			final KindofMisc m3 = hero.belongings.miscs[2];
 			final KindofMisc m4 = hero.belongings.miscs[3];
-			final KindofMisc m5 = hero.belongings.miscs[4];
+			final KindofMisc m5 = hero.belongings.miscs[4];*/
 
 			GameScene.show(
 					new WndOptions(Messages.get(KindofMisc.class, "unequip_title"),
 							Messages.get(KindofMisc.class, "unequip_message"),
-							Messages.titleCase(m1.toString()),
-							Messages.titleCase(m2.toString()),
-							Messages.titleCase(m3.toString()),
-							Messages.titleCase(m4.toString()),
-							Messages.titleCase(m5.toString())) {
+							Messages.titleCase(miscs[0].toString()),
+							Messages.titleCase(miscs[1].toString()),
+							Messages.titleCase(miscs[2].toString()),
+							Messages.titleCase(miscs[3].toString()),
+							Messages.titleCase(miscs[4].toString())) {
 
 						@Override
 						protected void onSelect(int index) {
 
-							KindofMisc equipped;
+							KindofMisc equipped = null;
 
-							if (index == 0) {
+							for (int i = 0; i < Constants.MISC_SLOTS; i++) {
+								if (index == i) {
+									equipped = miscs[i];
+									break;
+								}
+							}
+							if (equipped == null) return;
+
+							/*if (index == 0) {
 								equipped = m1;
 							} else if (index == 1) {
 								equipped = m2;
@@ -70,9 +79,9 @@ public abstract class KindofMisc extends EquipableItem {
 								equipped = m3;
 							} else if (index == 3) {
 								equipped = m4;
-							} else  {
+							} else {
 								equipped = m5;
-							}
+							}*/
 							//temporarily give 1 extra backpack spot to support swapping with a full inventory
 							hero.belongings.backpack.size++;
 							if (equipped.doUnequip(hero, true, false)) {
@@ -87,7 +96,14 @@ public abstract class KindofMisc extends EquipableItem {
 
 		} else {
 
-			if (hero.belongings.miscs[0] == null) {
+			for (int i = 0; i < Constants.MISC_SLOTS; i++) {
+				if (hero.belongings.miscs[i] == null) {
+					hero.belongings.miscs[i] = this;
+					break;
+				}
+			}
+
+			/*if (hero.belongings.miscs[0] == null) {
 				hero.belongings.miscs[0] = this;
 			} else if (hero.belongings.miscs[1] == null) {
 				hero.belongings.miscs[1] = this;
@@ -97,7 +113,7 @@ public abstract class KindofMisc extends EquipableItem {
 				hero.belongings.miscs[3] = this;
 			}  else if (hero.belongings.miscs[4] == null) {
 				hero.belongings.miscs[4] = this;
-			}
+			}*/
 
 			detach( hero.belongings.backpack );
 
@@ -120,7 +136,13 @@ public abstract class KindofMisc extends EquipableItem {
 	public boolean doUnequip(Char hero, boolean collect, boolean single) {
 		if (super.doUnequip(hero, collect, single)){
 
-			if (hero.belongings.miscs[0] == this) {
+			for (int i = 0; i < Constants.MISC_SLOTS; i++) {
+				if (hero.belongings.miscs[i] == this) {
+					hero.belongings.miscs[i] = null;
+				}
+			}
+
+			/*if (hero.belongings.miscs[0] == this) {
 				hero.belongings.miscs[0] = null;
 			} else if (hero.belongings.miscs[1] == this) {
 				hero.belongings.miscs[1] = null;
@@ -130,7 +152,7 @@ public abstract class KindofMisc extends EquipableItem {
 				hero.belongings.miscs[3] = null;
 			} else if (hero.belongings.miscs[4] == this) {
 				hero.belongings.miscs[4] = null;
-			}
+			}*/
 
 			return true;
 
@@ -142,8 +164,13 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean isEquipped(Char owner ) {
-		return Arrays.asList(owner.belongings.miscs).contains(this);
+	public boolean isEquipped( Char owner ) {
+		for (int i = 0; i < Constants.MISC_SLOTS; i++) {
+			if (owner.belongings.miscs[i] == this) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

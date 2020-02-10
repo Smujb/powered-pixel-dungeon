@@ -107,7 +107,6 @@ public class WandOfLightning extends DamageWand {
 					continue;
 				else if (n != null && !affected.contains( n )) {
 					hitThisArc.add(n);
-					affected.add( ch );
 				}
 			}
 		}

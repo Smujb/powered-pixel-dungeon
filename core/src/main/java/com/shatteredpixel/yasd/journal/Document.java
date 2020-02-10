@@ -162,7 +162,7 @@ public enum Document {
 		
 		for ( Document doc : values()){
 			if (docBundle.contains(doc.name())){
-				List<String> pages = Arrays.asList(docBundle.getStringArray(doc.name()));
+				String[] pages = docBundle.getStringArray(doc.name());
 				for (String page : pages){
 					if (doc.pages.containsKey(page)) {
 						doc.pages.put(page, true);

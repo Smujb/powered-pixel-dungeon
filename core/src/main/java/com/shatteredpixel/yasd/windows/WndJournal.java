@@ -555,8 +555,8 @@ public class WndJournal extends WndTabbed {
 		private static final int ARTIF_IDX  = 4;
 		private static final int POTION_IDX = 5;
 		private static final int SCROLL_IDX = 6;
-		
-		private static final int spriteIndexes[] = {1, 2, 4, 5, 6, 9, 11};
+
+		private static final int[] spriteIndexes = {1, 2, 4, 5, 6, 9, 11};
 		
 		private ScrollPane list;
 		

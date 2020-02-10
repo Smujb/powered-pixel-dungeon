@@ -415,12 +415,8 @@ public class NewTengu extends Mob {
 				//standard delay before ability use, 1-4 turns
 				if (abilityCooldown == -1) abilityCooldown = Random.IntRange(1, 4);
 			}
-			
-			if (abilityCooldown == 0){
-				return true;
-			} else {
-				return false;
-			}
+
+            return abilityCooldown == 0;
 		}
 	}
 	

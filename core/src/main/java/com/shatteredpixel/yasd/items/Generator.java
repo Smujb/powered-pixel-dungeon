@@ -225,7 +225,7 @@ public class Generator {
 		public float prob;
 		public Class<? extends Item> superClass;
 		
-		private Category( float prob, Class<? extends Item> superClass ) {
+		Category(float prob, Class<? extends Item> superClass) {
 			this.prob = prob;
 			this.superClass = superClass;
 		}
