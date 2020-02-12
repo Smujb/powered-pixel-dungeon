@@ -15,6 +15,7 @@ import com.shatteredpixel.yasd.effects.particles.SacrificialParticle;
 import com.shatteredpixel.yasd.items.Ankh;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.levels.Level;
+import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.ui.BuffIndicator;
@@ -25,17 +26,13 @@ import com.watabou.utils.Random;
 
 public class SacrificialFire extends Blob {
 
-    private static final String TXT_WORTHY		= "\"Your sacrifice is worthy...\" ";
-    private static final String TXT_UNWORTHY	= "\"Your sacrifice is unworthy...\" ";
-    private static final String TXT_REWARD		= "\"Your sacrifice is worthy and so you are!\" ";
-
     protected int pos;
 
     @Override
     public void restoreFromBundle( Bundle bundle ) {
         super.restoreFromBundle( bundle );
 
-        for (int i = 0; i < Dungeon.level.length(); i++) {
+        for (int i = 0; i < cur.length; i++) {
             if (cur[i] > 0) {
                 pos = i;
                 break;
@@ -98,18 +95,18 @@ public class SacrificialFire extends Blob {
                 int volume = fire.volume - exp;
                 if (volume > 0) {
                     fire.seed( Dungeon.level, fire.pos, volume );
-                    GLog.w( TXT_WORTHY );
+                    GLog.w(Messages.get(SacrificialFire.class, "worthy"));
                 } else {
                     fire.seed( Dungeon.level, fire.pos, 0 );
                     Notes.remove( Notes.Landmark.SACRIFICIAL_FIRE );
 
-                    GLog.w( TXT_REWARD );
+                    GLog.p(Messages.get(SacrificialFire.class, "reward"));
                     GameScene.effect( new Flare( 7, 32 ).color( 0x66FFFF, true ).show( ch.sprite.parent, DungeonTilemap.tileCenterToWorld( fire.pos ), 2f ) );
                     Dungeon.level.drop( new Ankh(), fire.pos ).sprite.drop();
                 }
             } else {
 
-                GLog.w( TXT_UNWORTHY );
+                GLog.n(Messages.get(SacrificialFire.class, "unworthy"));
 
             }
         }
@@ -117,7 +114,7 @@ public class SacrificialFire extends Blob {
 
     @Override
     public String tileDesc() {
-        return "Sacrificial fire burns here. Every creature touched by this fire is marked as an offering for the spirits of the dungeon.";
+        return Messages.get(this, "desc");
     }
 
     public static class Marked extends FlavourBuff {
@@ -131,7 +128,7 @@ public class SacrificialFire extends Blob {
 
         @Override
         public String toString() {
-            return "Marked for sacrifice";
+            return Messages.get(this, "name");
         }
 
         @Override

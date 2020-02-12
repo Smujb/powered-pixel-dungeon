@@ -156,7 +156,6 @@ public class Hero extends Char {
 	private boolean damageInterrupt = true;
 	public HeroAction curAction = null;
 	public HeroAction lastAction = null;
-	public float MoraleMultiplier = 1f;
 
 	private Char enemy;
 	

@@ -173,8 +173,7 @@ public class InterlevelScene extends PixelScene {
 					}
 
 					if (phase == Phase.STATIC && error == null) {
-						phase = Phase.FADE_OUT;
-						timeLeft = fadeTime;
+						fadeOut();
 					}
 				}
 			};
@@ -304,20 +303,20 @@ public class InterlevelScene extends PixelScene {
 		switch (phase) {
 
 		case FADE_IN:
-			PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
-				@Override
-				protected void onClick(PointerEvent event) {
-					phase = Phase.FADE_OUT;
-					timeLeft = fadeTime;
-					this.destroy();
-				}
-			};
-			add(hotArea);
+
 			message.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
-					//phase = Phase.FADE_OUT;
-					//timeLeft = fadeTime;
+					message.text(Messages.get(this, "tap"));
+					message.setPos((Camera.main.width - message.width()) / 2, (Camera.main.height - message.height()) / 2);
+					PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
+						@Override
+						protected void onClick(PointerEvent event) {
+							fadeOut();
+							destroy();
+						}
+					};
+					add(hotArea);
 				} else {
 					phase = Phase.STATIC;
 				}
@@ -459,11 +458,15 @@ public class InterlevelScene extends PixelScene {
 		return level;
 	}
 
-
+	public void fadeOut() {
+		phase = Phase.FADE_OUT;
+		timeLeft = fadeTime;
+	}
 
 	@Override
 	protected void onBackPressed() {
-		phase = Phase.FADE_OUT;
-		timeLeft = fadeTime;
+		if (thread != null && !thread.isAlive()) {
+			fadeOut();
+		}
 	}
 }
