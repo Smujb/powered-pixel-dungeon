@@ -181,21 +181,22 @@ public class InterlevelScene extends PixelScene {
 		}
 
 		int loadingDepth;
+		if (mode == Mode.CONTINUE) {
+			loadingDepth = GamesInProgress.check(GamesInProgress.curSlot).depth;
+		} else {
+			loadingDepth = Dungeon.depth;
+		}
 		switch (mode) {
 			default:
-				loadingDepth = Dungeon.depth;
 				scrollSpeed = 0;
 				break;
 			case CONTINUE:
-				loadingDepth = GamesInProgress.check(GamesInProgress.curSlot).depth;
 				scrollSpeed = 5;
 				break;
 			case DESCEND:
 				if (Dungeon.hero == null) {
-					loadingDepth = 1;
 					fadeTime = SLOW_FADE;
 				} else {
-					loadingDepth = Dungeon.depth + 1;
 					if (!(Statistics.deepestFloor < loadingDepth)) {
 						fadeTime = FAST_FADE;
 					} else if (loadingDepth == 6 || loadingDepth == 11
@@ -206,23 +207,20 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = 5;
 				break;
 			case FALL:
-				loadingDepth = Dungeon.depth + 1;
 				scrollSpeed = 50;
 				break;
 			case ASCEND:
 				fadeTime = FAST_FADE;
-				loadingDepth = Dungeon.depth - 1;
 				scrollSpeed = -5;
 				break;
 			case RETURN:
-				loadingDepth = returnDepth;
 				scrollSpeed = returnDepth > Dungeon.depth ? 15 : -15;
 				break;
 		}
 
 		Level level = null;
 		try {
-			level = Constants.LEVEL_TYPES.get(Dungeon.path).get(Dungeon.depth).newInstance();
+			level = Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth).newInstance();
 		} catch (Exception ignored) {}
 
 		if (level == null || level.loadImg() == null) {
@@ -230,7 +228,6 @@ public class InterlevelScene extends PixelScene {
 		} else {
 			loadingAsset = level.loadImg();
 		}
-		level = null;
 		/*if (loadingDepth <= Constants.CHAPTER_LENGTH)          loadingAsset = Assets.LOADING_SEWERS;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*2)    loadingAsset = Assets.LOADING_PRISON;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*3)    loadingAsset = Assets.LOADING_CAVES;
