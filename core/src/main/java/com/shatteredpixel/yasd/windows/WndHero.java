@@ -192,7 +192,7 @@ public class WndHero extends WndTabbed {
 			add( btnExpertise );
 			pos += GAP;
 			//Resilience
-			statSlot( Messages.get(this, "combatskill"), hero.Luck);
+			statSlot( Messages.get(this, "luck"), hero.Luck);
 			statIncreaseButton btnResilience = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {

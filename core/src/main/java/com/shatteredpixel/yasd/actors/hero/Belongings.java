@@ -217,23 +217,26 @@ public class Belongings implements Iterable<Item> {
 	public int drRoll() {
 		int dr = 0;
 		ArrayList<Armor> Armors = getArmors();
-		int degradeAmount = new Item().defaultDegradeAmount();
-		for (int i = 0; i < Armors.size(); i++) {
-			Armors.get(i).use(degradeAmount / Armors.size());
-			int armDr = Armors.get(i).DRRoll();
-			if (owner.STR() < Armors.get(i).STRReq()) {
-				armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
+		if (Armors.size() > 0) {
+			Armors.get(0).use();
+			for (int i = 0; i < Armors.size(); i++) {
+				int armDr = Armors.get(i).DRRoll();
+				if (owner.STR() < Armors.get(i).STRReq()) {
+					armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
+				}
+				if (armDr > 0) dr += armDr;
 			}
-			if (armDr > 0) dr += armDr;
 		}
 
 		ArrayList<KindOfWeapon> Weapons = getWeapons();
-		for (int i = 0; i < Weapons.size(); i++) {
-			int wepDr = Random.NormalIntRange(0, Weapons.get(i).defenseFactor(owner));
-			if (Weapons.get(i) instanceof MeleeWeapon & owner.STR() < ((MeleeWeapon) Weapons.get(i)).STRReq()) {
-				wepDr -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - owner.STR();
+		if (Weapons.size() > 0) {
+			for (int i = 0; i < Weapons.size(); i++) {
+				int wepDr = Random.NormalIntRange(0, Weapons.get(i).defenseFactor(owner));
+				if (Weapons.get(i) instanceof MeleeWeapon & owner.STR() < ((MeleeWeapon) Weapons.get(i)).STRReq()) {
+					wepDr -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - owner.STR();
+				}
+				if (wepDr > 0) dr += wepDr;
 			}
-			if (wepDr > 0) dr += wepDr;
 		}
 		return dr;
 	}

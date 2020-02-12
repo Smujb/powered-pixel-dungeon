@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
 apply plugin: "java"
+sourceCompatibility = targetCompatibility = 1.8
 
 sourceSets.main.java.srcDirs = [ "src/" ]
 
@@ -40,11 +40,9 @@ task runDebug(type: JavaExec) {
     ignoreExitValue = true
 }
 
-
-sourceCompatibility = JavaVersion.VERSION_12
-targetCompatibility = JavaVersion.VERSION_12
-
 task releaseJAR(type: Jar) {
+
+    sourceCompatibility = targetCompatibility = 1.8
     from sourceSets.main.output
     sourceSets.main.resources.srcDirs = assetsDirs
     from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }

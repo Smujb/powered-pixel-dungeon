@@ -3,12 +3,10 @@ package com.shatteredpixel.yasd.items.wands;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.actors.buffs.Recharging;
-import com.shatteredpixel.yasd.actors.hero.Hero;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
 import com.shatteredpixel.yasd.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.effects.MagicMissile;
@@ -24,8 +22,6 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
-
-import java.security.acl.Owner;
 
 public class WandOfThornvines extends Wand {
     {

@@ -1,6 +1,7 @@
 apply plugin: 'java-library'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceCompatibility = targetCompatibility = 1.8
 
 dependencies {
     //TODO migrate this to implementation from api
