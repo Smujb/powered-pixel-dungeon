@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.items.food;
 
+import com.shatteredpixel.yasd.Holiday;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.actors.buffs.Recharging;
@@ -34,40 +35,10 @@ import java.util.Calendar;
 
 public class Pasty extends Food {
 
-	//TODO: implement fun stuff for other holidays
-	//TODO: probably should externalize this if I want to add any more festive stuff.
-	private enum Holiday{
-		NONE,
-		EASTER, //TBD
-		HWEEN,//2nd week of october though first day of november
-		XMAS //3rd week of december through first week of january
-	}
-
 	private static Holiday holiday;
 
 	static{
-
-		holiday = Holiday.NONE;
-
-		final Calendar calendar = Calendar.getInstance();
-		switch(calendar.get(Calendar.MONTH)){
-			case Calendar.JANUARY:
-				if (calendar.get(Calendar.WEEK_OF_MONTH) == 1)
-					holiday = Holiday.XMAS;
-				break;
-			case Calendar.OCTOBER:
-				if (calendar.get(Calendar.WEEK_OF_MONTH) >= 2)
-					holiday = Holiday.HWEEN;
-				break;
-			case Calendar.NOVEMBER:
-				if (calendar.get(Calendar.DAY_OF_MONTH) == 1)
-					holiday = Holiday.HWEEN;
-				break;
-			case Calendar.DECEMBER:
-				if (calendar.get(Calendar.WEEK_OF_MONTH) >= 3)
-					holiday = Holiday.XMAS;
-				break;
-		}
+		holiday = Holiday.getHoliday();
 	}
 
 	{
