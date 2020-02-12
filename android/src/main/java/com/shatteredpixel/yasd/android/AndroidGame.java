@@ -61,7 +61,9 @@ public class AndroidGame extends AndroidApplication {
 		} catch (PackageManager.NameNotFoundException e) {
 			Game.versionCode = 0;
 		}
-		new UCEHandler.Builder(this).build();
+
+		UCEHandler.Builder builder = new UCEHandler.Builder(this);
+		builder.build();
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
 		YASDSettings.setPrefsFromInstance(instance);
