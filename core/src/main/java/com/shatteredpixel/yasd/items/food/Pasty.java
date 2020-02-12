@@ -31,15 +31,7 @@ import com.shatteredpixel.yasd.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.sprites.ItemSpriteSheet;
 
-import java.util.Calendar;
-
 public class Pasty extends Food {
-
-	private static Holiday holiday;
-
-	static{
-		holiday = Holiday.getHoliday();
-	}
 
 	{
 		reset();
@@ -52,7 +44,7 @@ public class Pasty extends Food {
 	@Override
 	public void reset() {
 		super.reset();
-		switch(holiday){
+		switch(Holiday.getHoliday()){
 			case NONE:
 				name = Messages.get(this, "pasty");
 				image = ItemSpriteSheet.PASTY;
@@ -72,7 +64,7 @@ public class Pasty extends Food {
 	protected void satisfy(Hero hero) {
 		super.satisfy(hero);
 		
-		switch(holiday){
+		switch(Holiday.getHoliday()){
 			case NONE:
 				break; //do nothing extra
 			case HWEEN:
@@ -89,7 +81,7 @@ public class Pasty extends Food {
 
 	@Override
 	public String info() {
-		switch(holiday){
+		switch(Holiday.getHoliday()){
 			case NONE: default:
 				return Messages.get(this, "pasty_desc");
 			case HWEEN:

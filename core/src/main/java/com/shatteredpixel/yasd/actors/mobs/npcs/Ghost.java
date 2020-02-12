@@ -287,24 +287,22 @@ public class Ghost extends NPC {
 
 				//50%:tier2, 30%:tier3, 15%:tier4, 5%:tier5
 				float itemTierRoll = Random.Float();
-				int wepTier;
+				int tier;
 
 				if (itemTierRoll < 0.5f) {
-					wepTier = 2;
-					armor = new LightArmor();
+					tier = 2;
 				} else if (itemTierRoll < 0.8f) {
-					wepTier = 3;
-					armor = new ChainArmor();
+					tier = 3;
 				} else if (itemTierRoll < 0.95f) {
-					wepTier = 4;
-					armor = new BasicArmor();
+					tier = 4;
 				} else {
-					wepTier = 5;
-					armor = new HeavyArmor();
+					tier = 5;
 				}
-
+				armor = Generator.randomArmor();
+				armor.setTier(tier);
 				weapon = Generator.randomWeapon();
-				((MeleeWeapon) weapon).setTier(wepTier);
+				((MeleeWeapon) weapon).setTier(tier);
+
 
 				//50%:+0, 30%:+1, 15%:+2, 5%:+3
 				float itemLevelRoll = Random.Float();
@@ -318,10 +316,10 @@ public class Ghost extends NPC {
 				} else {
 					itemLevel = 3;
 				}
-				weapon.upgrade(itemLevel);
-				armor.upgrade(itemLevel);
+				weapon.level(itemLevel);
+				armor.level(itemLevel);
 
-				//10% to be enchanted
+				//33% chance to be enchanted
 				if (Random.Int(3) == 0){
 					weapon.enchant();
 					armor.inscribe();

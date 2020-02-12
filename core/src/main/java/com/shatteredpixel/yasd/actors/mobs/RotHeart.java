@@ -51,6 +51,7 @@ public class RotHeart extends Mob {
 
 		properties.add(Property.IMMOVABLE);
 		properties.add(Property.MINIBOSS);
+		immunities.add( CorrosiveGas.class );
 	}
 
 	@Override

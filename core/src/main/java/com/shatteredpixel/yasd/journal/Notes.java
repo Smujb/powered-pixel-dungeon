@@ -70,7 +70,7 @@ public class Notes {
 		ALCHEMY,
 		GARDEN,
 		STATUE,
-		
+		SACRIFICIAL_FIRE,
 		GHOST,
 		WANDMAKER,
 		TROLL,

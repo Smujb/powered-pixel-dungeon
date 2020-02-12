@@ -102,10 +102,7 @@ public class Burning extends Buff implements Hero.Doom {
 					ArrayList<Item> burnable = new ArrayList<>();
 					//does not reach inside of containers
 					for (Item i : hero.belongings.backpack.items){
-						if (i instanceof Scroll||
-								i instanceof Food || //All food can burn
-								(i instanceof ClothArmor || i instanceof LightArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
-								i instanceof Plant.Seed){
+						if (Fire.canBurn(i)) {
 							burnable.add(i);
 						}
 					}

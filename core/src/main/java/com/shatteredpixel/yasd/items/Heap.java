@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.items;
 
 import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.blobs.Fire;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Burning;
 import com.shatteredpixel.yasd.actors.buffs.Frost;
@@ -223,21 +224,22 @@ public class Heap implements Bundlable {
 		boolean evaporated = false;
 		
 		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof Scroll) {
-				items.remove( item );
-				burnt = true;
-			} else if (item instanceof Dewdrop) {
-				items.remove( item );
-				evaporated = true;
-			} else if (item instanceof MysteryMeat) {
+			if (item instanceof MysteryMeat) {
 				replace( item, ChargrilledMeat.cook( (MysteryMeat)item ) );
-				burnt = true;
 			} else if (item instanceof Bomb) {
-				items.remove( item );
 				((Bomb) item).explode( pos );
 				if (((Bomb) item).explodesDestructively()) {
 					//stop processing the burning, it will be replaced by the explosion.
 					return;
+				} else {
+					burnt = true;
+				}
+			}
+
+			if (Fire.canBurn(item)) {
+				items.remove( item );
+				if (item instanceof Dewdrop) {
+					evaporated = true;
 				} else {
 					burnt = true;
 				}

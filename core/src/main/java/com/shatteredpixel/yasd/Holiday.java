@@ -1,12 +1,10 @@
 package com.shatteredpixel.yasd;
 
-import com.shatteredpixel.yasd.items.food.Pasty;
-
 import java.util.Calendar;
 
 public enum Holiday {
     NONE,
-    EASTER, //TBD
+    EASTER, //1st and 2nd week of April
     HWEEN,//2nd week of october though first day of november
     XMAS; //3rd week of december through first week of january
 

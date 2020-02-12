@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.levels.builders.LoopBuilder;
 import com.shatteredpixel.yasd.levels.painters.Painter;
 import com.shatteredpixel.yasd.levels.rooms.Room;
 import com.shatteredpixel.yasd.levels.rooms.secret.SecretRoom;
+import com.shatteredpixel.yasd.levels.rooms.special.AltarRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.PitRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.levels.rooms.special.SpecialRoom;

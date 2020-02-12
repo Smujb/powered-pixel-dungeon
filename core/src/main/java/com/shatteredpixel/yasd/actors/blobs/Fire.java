@@ -30,9 +30,15 @@ import com.shatteredpixel.yasd.effects.BlobEmitter;
 import com.shatteredpixel.yasd.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.items.Heap;
+import com.shatteredpixel.yasd.items.Item;
+import com.shatteredpixel.yasd.items.armor.ClothArmor;
+import com.shatteredpixel.yasd.items.armor.LightArmor;
+import com.shatteredpixel.yasd.items.food.Food;
+import com.shatteredpixel.yasd.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.plants.Plant;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.sprites.ItemSprite;
 
 public class Fire extends Blob {
 
@@ -112,6 +118,16 @@ public class Fire extends Blob {
 		if (plant != null){
 			plant.wither();
 		}
+	}
+
+	public static boolean canBurn(Item i) {
+		if (i instanceof Scroll ||
+				i instanceof Food || //All food can burn
+				(i instanceof ClothArmor || i instanceof LightArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
+				i instanceof Plant.Seed){
+			return true;
+		}
+		return false;
 	}
 	
 	@Override

@@ -141,7 +141,6 @@ public class WelcomeScene extends PixelScene {
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
 			} else {
-				//TODO: change the messages here in accordance with the type of patch.
 				message = Messages.get(this, "patch_intro");
 				message += "\n";
 				message += "\n" + Messages.get(this, "patch");
@@ -168,25 +167,6 @@ public class WelcomeScene extends PixelScene {
 				//if we encounter a fatal error, then just clear the rankings
 				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
 			}
-		}
-		
-		//give classes to people with saves that have previously unlocked them
-		if (previousVersion <= YASD.v0_7_0c){
-			Badges.loadGlobal();
-			Badges.addGlobal(Badges.Badge.UNLOCK_MAGE);
-			Badges.addGlobal(Badges.Badge.UNLOCK_ROGUE);
-			if (Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_3)){
-				Badges.addGlobal(Badges.Badge.UNLOCK_HUNTRESS);
-			}
-			Badges.saveGlobal();
-		}
-		
-		if (previousVersion <= YASD.v0_6_5c){
-			Journal.loadGlobal();
-			Document.ALCHEMY_GUIDE.addPage("Potions");
-			Document.ALCHEMY_GUIDE.addPage("Stones");
-			Document.ALCHEMY_GUIDE.addPage("Energy_Food");
-			Journal.saveGlobal();
 		}
 		
 		YASDSettings.version(YASD.versionCode);

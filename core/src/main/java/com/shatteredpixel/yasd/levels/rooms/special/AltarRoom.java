@@ -22,12 +22,11 @@
 package com.shatteredpixel.yasd.levels.rooms.special;
 
 import com.shatteredpixel.yasd.Dungeon;
+import com.shatteredpixel.yasd.actors.blobs.SacrificialFire;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.levels.painters.Painter;
 import com.watabou.utils.Point;
-
-//import com.shatteredpixel.yasd.actors.blobs.SacrificialFire;
 
 public class AltarRoom extends SpecialRoom {
 
@@ -53,13 +52,12 @@ public class AltarRoom extends SpecialRoom {
 		Painter.fill( level, c.x - 1, c.y - 1, 3, 3, Terrain.EMBERS );
 		Painter.set( level, c, Terrain.PEDESTAL );
 
-		//TODO: find some use for sacrificial fire... but not the vanilla one. scroll of wipe out is too strong.
-		/*SacrificialFire fire = (SacrificialFire)level.blobs.get( SacrificialFire.class );
+		SacrificialFire fire = (SacrificialFire)level.blobs.get( SacrificialFire.class );
 		if (fire == null) {
 			fire = new SacrificialFire();
 		}
-		fire.seed( c.x + c.y * Level.WIDTH, 5 + Dungeon.depth * 5 );
-		level.blobs.put( SacrificialFire.class, fire );*/
+		fire.seed( level, c.x + c.y * level.width(), 5 + Dungeon.depth * 5 );
+		level.blobs.put( SacrificialFire.class, fire );
 
 		door.set( Door.Type.EMPTY );
 	}
