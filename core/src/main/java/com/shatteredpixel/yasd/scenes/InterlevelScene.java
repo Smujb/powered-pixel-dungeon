@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.scenes;
 
 import com.shatteredpixel.yasd.Assets;
+import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
 import com.shatteredpixel.yasd.YASD;
@@ -40,11 +41,13 @@ import com.shatteredpixel.yasd.windows.WndError;
 import com.shatteredpixel.yasd.windows.WndStory;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
+import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.NoosaScriptNoLighting;
+import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.DeviceCompat;
@@ -53,13 +56,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class InterlevelScene extends PixelScene {
-	
+
 	//slow fade on entering a new region
-	private static final float SLOW_FADE = 2f; //.33 in, 1.33 steady, .33 out, 2 seconds total
+	private static final float SLOW_FADE = 1f; //.33 in, 1.33 steady, .33 out, 2 seconds total
 	//norm fade when loading, falling, returning, or descending to a new floor
-	private static final float NORM_FADE = 1.33f; //.33 in, .67 steady, .33 out, 1.33 seconds total
+	private static final float NORM_FADE = 0.67f; //.33 in, .67 steady, .33 out, 1.33 seconds total
 	//fast fade when ascending, or descending to a floor you've been on
-	private static final float FAST_FADE = 1f; //.33 in, .33 steady, .33 out, 1 second total
+	private static final float FAST_FADE = 0.50f; //.33 in, .33 steady, .33 out, 1 second total
 
 	public static final String FALL_NAME = "FALL_NAME";
 	public static final String DESCEND_NAME = "DESCEND_NAME";
@@ -217,22 +220,24 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = returnDepth > Dungeon.depth ? 15 : -15;
 				break;
 		}
+
+		Level level = null;
+		try {
+			level = Constants.LEVEL_TYPES.get(Dungeon.path).get(Dungeon.depth).newInstance();
+		} catch (Exception ignored) {}
+
 		if (level == null || level.loadImg() == null) {
 			loadingAsset = Assets.SHADOW;
 		} else {
 			loadingAsset = level.loadImg();
 		}
+		level = null;
 		/*if (loadingDepth <= Constants.CHAPTER_LENGTH)          loadingAsset = Assets.LOADING_SEWERS;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*2)    loadingAsset = Assets.LOADING_PRISON;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*3)    loadingAsset = Assets.LOADING_CAVES;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*4+1)    loadingAsset = Assets.LOADING_CITY;
 		else if (loadingDepth <= Constants.CHAPTER_LENGTH*5)    loadingAsset = Assets.LOADING_HALLS;
 		else*/
-		
-		//speed up transition when debugging
-		if (DeviceCompat.isDebug()) {
-			fadeTime /= 2;
-		}
 		
 		SkinnedBlock bg = new SkinnedBlock(Camera.main.width, Camera.main.height, loadingAsset ){
 			@Override
@@ -297,13 +302,22 @@ public class InterlevelScene extends PixelScene {
 		float p = timeLeft / fadeTime;
 		
 		switch (phase) {
-		
+
 		case FADE_IN:
+			PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
+				@Override
+				protected void onClick(PointerEvent event) {
+					phase = Phase.FADE_OUT;
+					timeLeft = fadeTime;
+					this.destroy();
+				}
+			};
+			add(hotArea);
 			message.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
-					phase = Phase.FADE_OUT;
-					timeLeft = fadeTime;
+					//phase = Phase.FADE_OUT;
+					//timeLeft = fadeTime;
 				} else {
 					phase = Phase.STATIC;
 				}
@@ -450,5 +464,6 @@ public class InterlevelScene extends PixelScene {
 	@Override
 	protected void onBackPressed() {
 		phase = Phase.FADE_OUT;
+		timeLeft = fadeTime;
 	}
 }
