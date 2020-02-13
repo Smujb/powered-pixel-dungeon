@@ -61,7 +61,7 @@ public class Spinner extends Mob {
 
 	@Override
 	public int attackSkill(Char target) {
-		return 23;
+		return 25;
 	}
 
 	@Override

@@ -47,6 +47,8 @@ public class YASD extends Game {
 	public static final int v0_2_3  = 403;
 	public static final int v0_2_4  = 404;
 	public static final int v0_2_5  = 405;
+	public static final int v0_2_6  = 406;
+	public static final int v0_2_7  = 407;
 	
 	public YASD(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );

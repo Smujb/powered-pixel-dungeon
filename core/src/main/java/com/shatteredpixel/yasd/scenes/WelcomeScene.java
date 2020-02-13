@@ -43,7 +43,7 @@ import com.watabou.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static int LATEST_UPDATE = YASD.v0_2_5;
+	private static int LATEST_UPDATE = YASD.v0_2_7;
 
 	@Override
 	public void create() {

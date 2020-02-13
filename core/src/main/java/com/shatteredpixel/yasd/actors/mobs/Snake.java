@@ -32,7 +32,7 @@ public class Snake extends Mob {
 		spriteClass = SnakeSprite.class;
 
 		HP = HT = 4;
-		defenseSkill = 25;
+		defenseSkill = 30;
 		
 		EXP = 2;
 		maxLvl = 7;
@@ -48,7 +48,7 @@ public class Snake extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 10;
+		return 12;
 	}
 	
 }

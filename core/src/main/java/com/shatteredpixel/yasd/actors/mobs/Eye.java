@@ -55,7 +55,7 @@ public class Eye extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(20, 30);
+		return Random.NormalIntRange(20, 33);
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class Eye extends Mob {
 
 	@Override
 	public int magicalDamageRoll() {
-		return Random.NormalIntRange( 30, 50 );
+		return Random.NormalIntRange( 30, 60 );
 	}
 
 	//used so resistances can differentiate between melee and magical attacks

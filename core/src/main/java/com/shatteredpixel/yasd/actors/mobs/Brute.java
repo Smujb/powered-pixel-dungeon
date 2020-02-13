@@ -23,6 +23,8 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Char;
+import com.shatteredpixel.yasd.actors.buffs.Barrier;
+import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.items.Gold;
@@ -83,6 +85,8 @@ public class Brute extends Mob {
 			if (Dungeon.level.heroFOV[pos]) {
 				sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged") );
 			}
+			Buff.affect(this, Barrier.class).setShield(HT/2);
+			HP = 1;
 		}
 	}
 	

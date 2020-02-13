@@ -64,7 +64,7 @@ public class Statue extends Mob implements Callback {
 		lootChance = 1f;//Guaranteed in Animated Statues
 	}
 
-	int ankhs = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Potion per chapter
+	int ankhs = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Ankh per chapter
 	
 	public Statue() {
 		super();
@@ -79,6 +79,7 @@ public class Statue extends Mob implements Callback {
 		
 		HP = HT = 15 + Dungeon.depth * 5;
 		defenseSkill = 4 + Dungeon.depth;
+		attackSkill  = 10 + Dungeon.depth;
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	public KindofMisc newItem() {
-		boolean Continue = false;
+		boolean con = false;
 		KindofMisc item;
 		do {
 			int type = Random.Int(4);
@@ -103,14 +104,14 @@ public class Statue extends Mob implements Callback {
 					if (((MeleeWeapon) item).hasCurseEnchant()) {
 						((MeleeWeapon) item).enchant(Enchantment.random());
 					}
-					if (belongings.getWeapons().size() <= 2) {
-						Continue = true;
+					if (belongings.getWeapons().size() < 3) {
+						con = true;
 					}
 					break;
 				case 1:
 					item = ((KindofMisc) Generator.random(Generator.Category.RING));
-					if (belongings.getEquippedItemsOFType(Ring.class).size() <= 2) {
-						Continue = true;
+					if (belongings.getEquippedItemsOFType(Ring.class).size() < 3) {
+						con = true;
 					}
 					break;
 				case 2:
@@ -118,18 +119,18 @@ public class Statue extends Mob implements Callback {
 					if (((Armor) item).hasCurseGlyph()) {
 						((Armor) item).inscribe(Armor.Glyph.random());
 					}
-					if (belongings.getEquippedItemsOFType(Armor.class).size() <= 2) {
-						Continue = true;
+					if (belongings.getEquippedItemsOFType(Armor.class).size() < 3) {
+						con = true;
 					}
 					break;
 				case 3:
 					item = ((KindofMisc) Generator.random(Generator.Category.WAND));
-					if (belongings.getEquippedItemsOFType(Wand.class).size() <= 2) {
-						Continue = true;
+					if (belongings.getEquippedItemsOFType(Wand.class).size() < 3) {
+						con = true;
 					}
 					break;
 			}
-		} while (!Continue);
+		} while (!con);
 
 		item.level(0);
 		item.cursed = false;

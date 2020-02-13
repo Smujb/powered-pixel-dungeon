@@ -52,7 +52,7 @@ public class Crab extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 13;
+		return 14;
 	}
 	
 	@Override

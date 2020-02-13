@@ -54,7 +54,7 @@ public class Bat extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 21;
+		return 24;
 	}
 	
 	@Override

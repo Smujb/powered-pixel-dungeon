@@ -101,12 +101,12 @@ public class NewTengu extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 6, 12 );
+		return Random.NormalIntRange( 6, 16 );
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 18;
+		return 20;
 	}
 	
 	@Override

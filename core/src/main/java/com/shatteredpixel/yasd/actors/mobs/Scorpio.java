@@ -67,7 +67,7 @@ public class Scorpio extends RangedMob {
 	
 	@Override
 	public int drRoll() {
-		return Random.NormalIntRange(0, 16);
+		return Random.NormalIntRange(0, 20);
 	}
 
 	@Override

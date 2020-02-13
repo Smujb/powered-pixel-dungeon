@@ -433,6 +433,8 @@ public abstract class Char extends Actor {
 		float defRoll = Random.Float(defender.defenseSkill(attacker));
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
+		//GLog.i(String.valueOf(defRoll));
+		//GLog.i(String.valueOf(acuRoll));
 		return (magic ? acuRoll * 3 : acuRoll) >= defRoll;
 	}
 
@@ -455,13 +457,12 @@ public abstract class Char extends Actor {
 
 
 	public int defenseSkill(Char enemy) {
-		float evasion = this.defenseSkill;
+		float evasion = defenseSkill;
 		if (buff(Wet.class) != null) {
 			evasion *= buff(Wet.class).evasionFactor();
 		}
 		if (hasBelongings()) {
 			evasion = belongings.EvasionFactor(evasion);
-
 		}
 		if (paralysed > 0) {
 			evasion /= 2;

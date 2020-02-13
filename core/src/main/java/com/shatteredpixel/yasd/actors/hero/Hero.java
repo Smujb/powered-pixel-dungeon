@@ -28,9 +28,8 @@ import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.YASD;
-import com.shatteredpixel.yasd.Statistics;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Alchemy;
@@ -54,10 +53,7 @@ import com.shatteredpixel.yasd.actors.buffs.Regeneration;
 import com.shatteredpixel.yasd.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.CheckedCell;
-import com.shatteredpixel.yasd.effects.Flare;
-import com.shatteredpixel.yasd.effects.Speck;
 import com.shatteredpixel.yasd.items.Amulet;
 import com.shatteredpixel.yasd.items.Ankh;
 import com.shatteredpixel.yasd.items.Dewdrop;
@@ -79,7 +75,6 @@ import com.shatteredpixel.yasd.items.keys.Key;
 import com.shatteredpixel.yasd.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.potions.PotionOfExperience;
-import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.items.rings.RingOfElements;
@@ -107,7 +102,6 @@ import com.shatteredpixel.yasd.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.utils.GLog;
 import com.shatteredpixel.yasd.windows.WndHero;
 import com.shatteredpixel.yasd.windows.WndMessage;
-import com.shatteredpixel.yasd.windows.WndResurrect;
 import com.shatteredpixel.yasd.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -402,11 +396,11 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public int defenseSkill(Char enemy) {
+	public int defenseSkill( Char enemy ) {
 		defenseSkill = 3 + Expertise;
-		float evasion = super.defenseSkill(enemy);
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
-		return (int) (evasion*moraleMultiplier);
+		//GLog.w(String.valueOf(evasion));
+		return (int) (super.defenseSkill(enemy)*(1+moraleMultiplier));
 	}
 
 	@Override

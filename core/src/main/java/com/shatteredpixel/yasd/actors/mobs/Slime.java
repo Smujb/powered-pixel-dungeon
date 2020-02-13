@@ -50,7 +50,7 @@ public class Slime extends Mob {
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 8;
+		return 10;
 	}
 	
 	@Override

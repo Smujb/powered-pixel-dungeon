@@ -77,7 +77,12 @@ public class Warlock extends RangedMob {
 
 	@Override
 	public int magicalDamageRoll() {
-		return Random.Int(12, 24);
+		return Random.Int(25, 50);
+	}
+
+	@Override
+	public float magicalAttackDelay() {
+		return super.magicalAttackDelay()*2;
 	}
 
 	@Override

@@ -346,13 +346,18 @@ public class Necromancer extends Mob {
 
 		@Override
 		public int damageRoll() {//Better kill the Necromancer fast :P
-			return (int) (super.damageRoll()*1.35f);
+			return (int) (super.damageRoll()*1.5f);
 		}
 
 		private void teleportSpend(){
 			spend(TICK);
 		}
-		
+
+		@Override
+		public int attackSkill(Char target) {
+			return (int) (super.attackSkill(target) * 1.5f);
+		}
+
 		public static class NecroSkeletonSprite extends SkeletonSprite{
 			
 			public NecroSkeletonSprite(){

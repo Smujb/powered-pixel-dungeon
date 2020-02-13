@@ -62,7 +62,7 @@ public class Shaman extends RangedMob {
 	}
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 12 );
+		return Random.NormalIntRange( 2, 3 + Dungeon.depth );
 	}
 	
 	@Override
@@ -72,7 +72,7 @@ public class Shaman extends RangedMob {
 	
 	@Override
 	public int drRoll() {
-		return Random.NormalIntRange(0, 4);
+		return Random.NormalIntRange(0, 6);
 	}
 
 	@Override
