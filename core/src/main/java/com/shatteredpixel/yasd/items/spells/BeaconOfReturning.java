@@ -143,10 +143,7 @@ public class BeaconOfReturning extends Spell {
 			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 			if (buff != null) buff.detach();
 			
-			InterlevelScene.mode = InterlevelScene.Mode.RETURN;
-			InterlevelScene.returnDepth = returnDepth;
-			InterlevelScene.returnPos = returnPos;
-			Game.switchScene( InterlevelScene.class );
+			InterlevelScene.returnTo(returnDepth, returnPos);
 		}
 		detach(hero.belongings.backpack);
 	}

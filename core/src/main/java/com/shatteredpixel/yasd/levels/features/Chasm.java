@@ -86,14 +86,13 @@ public class Chasm {
 		
 		if (Dungeon.hero.isAlive()) {
 			Dungeon.hero.interrupt();
-			InterlevelScene.mode = InterlevelScene.Mode.FALL;
 			if (Dungeon.level instanceof RegularLevel) {
 				Room room = ((RegularLevel)Dungeon.level).room( pos );
-				InterlevelScene.fallIntoPit = room != null && room instanceof WeakFloorRoom;
+				InterlevelScene.fallIntoPit = room instanceof WeakFloorRoom;
 			} else {
 				InterlevelScene.fallIntoPit = false;
 			}
-			Game.switchScene( InterlevelScene.class );
+			InterlevelScene.fall();
 		} else {
 			Dungeon.hero.sprite.visible = false;
 		}

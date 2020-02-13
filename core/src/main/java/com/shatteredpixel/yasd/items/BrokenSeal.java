@@ -78,17 +78,8 @@ public class BrokenSeal extends Item {
 					Messages.titleCase("PATH 3")) {
 				@Override
 				protected void onSelect(int index) {
-
-					if (index == 0) {
-						InterlevelScene.mode = InterlevelScene.Mode.PATH1;
-					} else if (index == 1) {
-						InterlevelScene.mode = InterlevelScene.Mode.PATH2;
-					} else  if (index == 2){
-						InterlevelScene.mode = InterlevelScene.Mode.PATH3;
-					}
-					Game.switchScene(InterlevelScene.class);
+					InterlevelScene.move(Dungeon.depth, index, "TEST", InterlevelScene.Mode.DESCEND);
 				}
-
 			});
 		}
 	}

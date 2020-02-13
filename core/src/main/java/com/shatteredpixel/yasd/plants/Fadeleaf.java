@@ -63,10 +63,12 @@ public class Fadeleaf extends Plant {
 				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 				if (buff != null) buff.detach();
 				
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
+				/*InterlevelScene.mode = InterlevelScene.Mode.RETURN;
 				InterlevelScene.returnDepth = Math.max(1, (Dungeon.depth - 1));
 				InterlevelScene.returnPos = -2;
-				Game.switchScene( InterlevelScene.class );
+				Game.switchScene( InterlevelScene.class );/
+				 */
+				InterlevelScene.returnTo(Math.max(1, (Dungeon.depth - 1)), -2);
 				
 			} else {
 				ScrollOfTeleportation.teleportUser(ch);

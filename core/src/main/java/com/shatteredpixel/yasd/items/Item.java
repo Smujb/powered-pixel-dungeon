@@ -237,8 +237,7 @@ public class Item implements Bundlable {
 			if (!testing) {
 				GameScene.show(new WndItem(null, this, true));
 			} else {
-				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;//Used for testing, currently deactivated
-				Game.switchScene( InterlevelScene.class );
+				InterlevelScene.descend();
 			}
 		}
 	}

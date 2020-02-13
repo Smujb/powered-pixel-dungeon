@@ -182,10 +182,7 @@ public class LloydsBeacon extends Artifact {
 				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 				if (buff != null) buff.detach();
 
-				InterlevelScene.mode = InterlevelScene.Mode.RETURN;
-				InterlevelScene.returnDepth = returnDepth;
-				InterlevelScene.returnPos = returnPos;
-				Game.switchScene( InterlevelScene.class );
+				InterlevelScene.returnTo(returnDepth, returnPos);
 			}
 			
 			

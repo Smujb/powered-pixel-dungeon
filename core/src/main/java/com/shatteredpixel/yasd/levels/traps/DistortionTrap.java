@@ -38,7 +38,7 @@ public class DistortionTrap extends Trap{
 
 	@Override
 	public void activate() {
-		InterlevelScene.returnDepth = Dungeon.depth;
+		//InterlevelScene.returnDepth = Dungeon.depth;
 		Belongings belongings = Dungeon.hero.belongings;
 		
 		for (Notes.Record rec : Notes.getRecords()){
@@ -52,7 +52,7 @@ public class DistortionTrap extends Trap{
 					((LloydsBeacon) i).returnDepth = -1;
 		}
 
-		InterlevelScene.mode = InterlevelScene.Mode.RESET;
-		Game.switchScene(InterlevelScene.class);
+		//InterlevelScene.mode = InterlevelScene.Mode.RESET;
+		InterlevelScene.reset();
 	}
 }

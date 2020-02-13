@@ -346,7 +346,7 @@ public class GameScene extends PixelScene {
 		counter.camera = uiCamera;
 		counter.show(this, busy.center(), 0f);
 		
-		switch (InterlevelScene.mode) {
+		switch (InterlevelScene.mode()) {
 			case RESURRECT:
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.level.entrance);
 				new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
@@ -417,7 +417,7 @@ public class GameScene extends PixelScene {
 
 		Dungeon.hero.next();
 
-		switch (InterlevelScene.mode){
+		switch (InterlevelScene.mode()){
 			case FALL: case DESCEND: case CONTINUE:
 				Camera.main.snapTo(hero.center().x, hero.center().y - DungeonTilemap.SIZE * (defaultZoom/Camera.main.zoom));
 				break;
@@ -429,9 +429,9 @@ public class GameScene extends PixelScene {
 		}
 		Camera.main.panTo(hero.center(), 2.5f);
 
-		if (InterlevelScene.mode != InterlevelScene.Mode.NONE) {
+		if (InterlevelScene.mode() != InterlevelScene.Mode.NONE) {
 			if (Dungeon.depth == Statistics.deepestFloor
-					&& (InterlevelScene.mode == InterlevelScene.Mode.DESCEND || InterlevelScene.mode == InterlevelScene.Mode.FALL)) {
+					&& (InterlevelScene.mode() == InterlevelScene.Mode.DESCEND || InterlevelScene.mode() == InterlevelScene.Mode.FALL)) {
 				GLog.h(Messages.get(this, "descend"), Dungeon.path+1, Dungeon.depth);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
@@ -441,7 +441,7 @@ public class GameScene extends PixelScene {
 					}
 				}
 				
-			} else if (InterlevelScene.mode == InterlevelScene.Mode.RESET) {
+			} else if (InterlevelScene.mode() == InterlevelScene.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
 				GLog.h(Messages.get(this, "return"), Dungeon.path+1, Dungeon.depth);
@@ -469,7 +469,7 @@ public class GameScene extends PixelScene {
 				GLog.w(Messages.get(this, "secrets"));
 			}
 
-			InterlevelScene.mode = InterlevelScene.Mode.NONE;
+			InterlevelScene.resetMode();
 
 			
 		}

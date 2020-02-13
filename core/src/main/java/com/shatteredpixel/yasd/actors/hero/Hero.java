@@ -799,8 +799,7 @@ public class Hero extends Char {
 			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 			if (buff != null) buff.detach();
 			
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-			Game.switchScene( InterlevelScene.class );
+			InterlevelScene.descend();
 
 			return false;
 
@@ -844,8 +843,7 @@ public class Hero extends Char {
 				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 				if (buff != null) buff.detach();
 
-				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
-				Game.switchScene( InterlevelScene.class );
+				InterlevelScene.ascend();
 			}
 
 			return false;
@@ -1126,7 +1124,7 @@ public class Hero extends Char {
 			//FIXME this is a fairly sloppy fix for a crash involving pitfall traps.
 			//really there should be a way for traps to specify whether action should continue or
 			//not when they are pressed.
-			return InterlevelScene.mode != InterlevelScene.Mode.FALL;
+			return InterlevelScene.mode() != InterlevelScene.Mode.FALL;
 
 		} else {
 
@@ -1325,42 +1323,21 @@ public class Hero extends Char {
 		//look for ankhs in player inventory, prioritize ones which are blessed.
 		for (Item item : belongings){
 			if (item instanceof Ankh) {
-				if (ankh == null || ((Ankh) item).isBlessed()) {
+				if (ankh == null) {
 					ankh = (Ankh) item;
 				}
 			}
 		}
 
-		if (ankh != null && ankh.isBlessed()) {
-			this.HP = HT/4;
-
-			//ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dieing again.
-			PotionOfHealing.cure(this);
-			Buff.detach(this, Paralysis.class);
-			spend(-cooldown());
-
-			new Flare(8, 32).color(0xFFFF66, true).show(sprite, 2f);
-			CellEmitter.get(this.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-
-			ankh.detach(belongings.backpack);
-
-			Sample.INSTANCE.play( Assets.SND_TELEPORT );
-			GLog.w( Messages.get(this, "revive") );
-			Statistics.ankhsUsed++;
-			
-			for (Char ch : Actor.chars()){
-				if (ch instanceof DriedRose.GhostHero){
-					((DriedRose.GhostHero) ch).sayAnhk();
-					return;
-				}
-			}
-
+		if (ankh != null) {
+			ankh.revive(this);
 			return;
 		}
 		
 		Actor.fixTime();
 		super.die( cause );
-
+		reallyDie( cause );
+		/*
 		if (ankh == null) {
 			
 			reallyDie( cause );
@@ -1376,7 +1353,7 @@ public class Hero extends Char {
 				}
 			});
 			
-		}
+		}*/
 	}
 	
 	public static void reallyDie( Object cause ) {

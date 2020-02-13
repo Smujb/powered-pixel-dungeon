@@ -83,7 +83,7 @@ public class WndGame extends Window {
 			addButton( new RedButton( Messages.get(this, "rankings") ) {
 				@Override
 				protected void onClick() {
-					InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
+					//InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 					Game.switchScene( RankingsScene.class );
 				}
 			} );

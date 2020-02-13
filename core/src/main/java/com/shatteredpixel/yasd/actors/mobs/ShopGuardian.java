@@ -2,7 +2,6 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.blobs.ConfusionGas;
 import com.shatteredpixel.yasd.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.actors.buffs.Blindness;
@@ -12,12 +11,8 @@ import com.shatteredpixel.yasd.actors.buffs.Poison;
 import com.shatteredpixel.yasd.actors.buffs.Terror;
 import com.shatteredpixel.yasd.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.effects.particles.ElmoParticle;
-import com.shatteredpixel.yasd.effects.particles.ShadowParticle;
-import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
-import com.shatteredpixel.yasd.levels.Terrain;
 import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.StatueSprite;
-import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.PathFinder;
 
 public class ShopGuardian extends Statue {
@@ -38,7 +33,7 @@ public class ShopGuardian extends Statue {
 
     public ShopGuardian() {
         super();
-        HealingPotions = 0;
+        ankhs = 0;
     }
 
     public void spawnAround( int pos ) {

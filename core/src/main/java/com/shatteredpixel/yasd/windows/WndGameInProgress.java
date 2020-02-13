@@ -127,8 +127,9 @@ public class WndGameInProgress extends Window {
 				
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-				YASD.switchScene(InterlevelScene.class);
+				//InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
+				//YASD.switchScene(InterlevelScene.class);
+				InterlevelScene.doRestore();
 			}
 		};
 		

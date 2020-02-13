@@ -53,10 +53,7 @@ public class ScrollOfPassage extends ExoticScroll {
 		if (buff != null) buff.detach();
 		buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
-		
-		InterlevelScene.mode = InterlevelScene.Mode.RETURN;
-		InterlevelScene.returnDepth = Math.max(1, (Dungeon.depth - 1 - (Dungeon.depth-2)%5));
-		InterlevelScene.returnPos = -1;
-		Game.switchScene( InterlevelScene.class );
+
+		InterlevelScene.returnTo(Math.max(1, (Dungeon.depth - 1 - (Dungeon.depth-2)%5)), -1);
 	}
 }

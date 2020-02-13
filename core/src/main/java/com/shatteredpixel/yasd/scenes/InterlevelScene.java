@@ -25,12 +25,11 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.GamesInProgress;
-import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
-import com.shatteredpixel.yasd.actors.mobs.Monk;
 import com.shatteredpixel.yasd.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.levels.Level;
 import com.shatteredpixel.yasd.levels.features.Chasm;
@@ -50,7 +49,6 @@ import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.DeviceCompat;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -63,27 +61,19 @@ public class InterlevelScene extends PixelScene {
 	private static final float NORM_FADE = 0.67f; //.33 in, .67 steady, .33 out, 1.33 seconds total
 	//fast fade when ascending, or descending to a floor you've been on
 	private static final float FAST_FADE = 0.50f; //.33 in, .33 steady, .33 out, 1 second total
-
-	public static final String FALL_NAME = "FALL_NAME";
-	public static final String DESCEND_NAME = "DESCEND_NAME";
-	public static final String ASCEND_NAME = "ASCEND_NAME";
-	public static final String RESET_NAME = "RESET_NAME";
-	public static final String RESURRECT_NAME = "RESURRECT_NAME";
-	public static final String RETURNTO_NAME = "returnto_name";
 	
 	private static float fadeTime;
 	
 	public enum Mode {
 		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT, PATH1, PATH2, PATH3
 	}
-	public static Mode mode;
+	private static Mode mode;
 
-	public static int depth;
-	public static int path;
-	public static String msg;
-	
-	public static int returnDepth;
-	public static int returnPos;
+	private static int depth;
+	private static int path;
+	private static String msg;
+
+	private static int returnPos;
 	
 	public static boolean noStory = false;
 
@@ -123,42 +113,47 @@ public class InterlevelScene extends PixelScene {
 						}
 						Actor.fixTime();
 
-						switch (mode) {
+						/*switch (mode) {
 							case DESCEND:
 								if (Dungeon.hero != null) {
-									level = switchDepth(Dungeon.depth + 1, DESCEND_NAME);
+									level = switchDepth(Dungeon.depth + 1, Mode.DESCEND);
 								} else {
-									level = switchDepth(1, 0, DESCEND_NAME);
+									level = switchDepth(1, 0, Mode.DESCEND);
 								}
 								break;
 							case ASCEND:
-								level = switchDepth(Dungeon.depth - 1, ASCEND_NAME);
+								level = switchDepth(Dungeon.depth - 1, Mode.ASCEND);
 								break;
 							case CONTINUE:
 								level = restore();
 								break;
 							case RESURRECT:
-								level = switchDepth(Dungeon.depth, RESURRECT_NAME);
+								level = switchDepth(Dungeon.depth, Mode.RESURRECT);
 								break;
 							case RETURN:
-								level = switchDepth(returnDepth, RETURNTO_NAME);
+								level = switchDepth(returnDepth, Mode.RETURN);
 								break;
 							case FALL:
-								level = switchDepth(Dungeon.depth + 1, FALL_NAME);
+								level = switchDepth(Dungeon.depth + 1, Mode.FALL);
 								break;
 							case RESET:
-								level = switchDepth(Dungeon.depth, RESET_NAME);
+								level = switchDepth(Dungeon.depth, Mode.RESET);
 								break;
 							case PATH1:
-								level = switchDepth(Dungeon.depth, 0, DESCEND_NAME);
+								level = switchDepth(Dungeon.depth, 0,  Mode.DESCEND);
 								break;
 							case PATH2:
-								level = switchDepth(Dungeon.depth, 1, DESCEND_NAME);
+								level = switchDepth(Dungeon.depth, 1,  Mode.DESCEND);
 								break;
 							case PATH3:
-								level = switchDepth(Dungeon.depth, 2, DESCEND_NAME);
+								level = switchDepth(Dungeon.depth, 2,  Mode.DESCEND);
 								break;
 
+						}*/
+						if (mode == Mode.CONTINUE) {
+							level = restore();
+						} else {
+							level = switchDepth(depth, path, mode);
 						}
 
 						if (Dungeon.bossLevel()) {
@@ -214,7 +209,7 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = -5;
 				break;
 			case RETURN:
-				scrollSpeed = returnDepth > Dungeon.depth ? 15 : -15;
+				scrollSpeed = depth > Dungeon.depth ? 15 : -15;
 				break;
 		}
 
@@ -272,7 +267,7 @@ public class InterlevelScene extends PixelScene {
 		im.scale.y = Camera.main.width;
 		add(im);
 
-		String text = Messages.get(Mode.class, mode.name());
+		String text = msg;
 		
 		message = PixelScene.renderTextBlock( text, 9 );
 		message.setPos(
@@ -304,13 +299,15 @@ public class InterlevelScene extends PixelScene {
 			message.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
-					message.text(Messages.get(this, "tap"));
+					message.text(msg + "\n\n" + Messages.get(this, "tap"));
 					message.setPos((Camera.main.width - message.width()) / 2, (Camera.main.height - message.height()) / 2);
 					PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 						@Override
 						protected void onClick(PointerEvent event) {
-							fadeOut();
-							destroy();
+							if (phase != Phase.FADE_OUT) {
+								fadeOut();
+								destroy();
+							}
 						}
 					};
 					add(hotArea);
@@ -366,11 +363,41 @@ public class InterlevelScene extends PixelScene {
 		}
 	}
 
-	public static void move(int depthToAccess, String msg, Mode mode) throws IOException {
-		move(depthToAccess, Dungeon.path, msg, mode);
+	public static Mode mode() {
+		return mode;
 	}
 
-	public static void move(int depthToAccess, int path, String msg, Mode mode) throws IOException {
+	public static void descend() {
+		move(Dungeon.depth + 1, Dungeon.path, Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND);
+	}
+
+	public static void ascend() {
+		move(Dungeon.depth - 1, Dungeon.path, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
+	}
+
+	public static void fall() {
+		move(Dungeon.depth + 1, Dungeon.path, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+	}
+
+	public static void reset() {
+		move(Dungeon.depth, Dungeon.path, Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET);
+	}
+
+	public static void resurrect() {
+		move(Dungeon.depth, Dungeon.path, Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT);
+	}
+
+	public static void returnTo(int depth, int pos) {
+		move(depth, Dungeon.path, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
+		returnPos = pos;
+	}
+
+	public static void doRestore() {
+		mode = Mode.CONTINUE;
+		YASD.switchScene(InterlevelScene.class);
+	}
+
+	public static void move(int depthToAccess, int path, String msg, Mode mode) {
 		InterlevelScene.depth = depthToAccess;
 		InterlevelScene.path = path;
 		InterlevelScene.msg = msg;
@@ -378,12 +405,11 @@ public class InterlevelScene extends PixelScene {
 		YASD.switchScene(InterlevelScene.class);
 	}
 
-
-	private static Level switchDepth(int depthToAccess, final String typeOfDescend) throws IOException {
-		return switchDepth(depthToAccess, Dungeon.path, typeOfDescend);
+	public static void resetMode() {
+		InterlevelScene.mode = Mode.NONE;
 	}
 
-	private static Level switchDepth(int depthToAccess, int path, final String typeOfDescend) throws IOException {
+	private static Level switchDepth(int depthToAccess, int path, final Mode mode) throws IOException {
 		if (Dungeon.hero == null) {
 			Mob.clearHeldAllies();
 			Dungeon.init();
@@ -396,12 +422,9 @@ public class InterlevelScene extends PixelScene {
 			Mob.holdAllies( Dungeon.level );
 			Dungeon.saveAll();
 		}
-		if (typeOfDescend.equals(FALL_NAME)) {
-			Buff.affect( Dungeon.hero, Chasm.Falling.class );
-		}
 		Dungeon.depth = depthToAccess;
 		Dungeon.path = path;
-		if (typeOfDescend.equals(RESURRECT_NAME)) {
+		if (mode.equals(Mode.RESURRECT)) {
 			if (Dungeon.level.locked) {
 				Dungeon.hero.resurrect( Dungeon.depth );
 			} else {
@@ -411,7 +434,7 @@ public class InterlevelScene extends PixelScene {
 			}
 		}
 		Level level;
-		if (Dungeon.depthLoaded(path, depthToAccess)) {
+		if (Dungeon.depthLoaded(path, depthToAccess) & mode != Mode.RESET) {
 
 			level = Dungeon.loadLevel(GamesInProgress.curSlot);
 
@@ -421,17 +444,18 @@ public class InterlevelScene extends PixelScene {
 
 		}
 
-		switch (typeOfDescend) {
+		switch (mode) {
 			default:
 				Dungeon.switchLevel(level, level.entrance);
 				break;
-			case FALL_NAME:
+			case FALL:
+				Buff.affect( Dungeon.hero, Chasm.Falling.class );
 				Dungeon.switchLevel(level, level.fallCell(fallIntoPit));
 				break;
-			case ASCEND_NAME:
+			case ASCEND:
 				Dungeon.switchLevel(level, level.exit);
 				break;
-			case RETURNTO_NAME:
+			case RETURN:
 				Dungeon.switchLevel(level, returnPos);
 				break;
 		}
@@ -462,7 +486,7 @@ public class InterlevelScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		if (thread != null && !thread.isAlive()) {
+		if (thread != null && !thread.isAlive() && phase != Phase.FADE_OUT) {
 			fadeOut();
 		}
 	}

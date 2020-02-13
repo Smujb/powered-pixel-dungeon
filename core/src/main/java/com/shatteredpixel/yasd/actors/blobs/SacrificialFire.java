@@ -118,6 +118,9 @@ public class SacrificialFire extends Blob {
     }
 
     public static class Marked extends FlavourBuff {
+        {
+            announced = true;
+        }
 
         public static final float DURATION	= 5f;
 
@@ -129,6 +132,11 @@ public class SacrificialFire extends Blob {
         @Override
         public String toString() {
             return Messages.get(this, "name");
+        }
+
+        @Override
+        public String desc() {
+            return Messages.get(this, "desc", dispTurns());
         }
 
         @Override

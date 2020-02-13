@@ -23,32 +23,26 @@ package com.shatteredpixel.yasd.actors.mobs;
 
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.actors.Actor;
-import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.hero.Belongings;
 import com.shatteredpixel.yasd.effects.MagicMissile;
+import com.shatteredpixel.yasd.items.Ankh;
 import com.shatteredpixel.yasd.items.Generator;
 import com.shatteredpixel.yasd.items.Item;
 import com.shatteredpixel.yasd.items.KindofMisc;
 import com.shatteredpixel.yasd.items.armor.Armor;
-import com.shatteredpixel.yasd.items.potions.Potion;
 import com.shatteredpixel.yasd.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.items.rings.Ring;
 import com.shatteredpixel.yasd.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.items.wands.Wand;
-import com.shatteredpixel.yasd.items.wands.WandOfThornvines;
 import com.shatteredpixel.yasd.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.journal.Notes;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
-import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.StatueSprite;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -70,18 +64,14 @@ public class Statue extends Mob implements Callback {
 		lootChance = 1f;//Guaranteed in Animated Statues
 	}
 
-	int HealingPotions = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Potion per chapter
+	int ankhs = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Potion per chapter
 	
 	public Statue() {
 		super();
 		belongings = new Belongings(this);
-		belongings.miscs[0] = newItem();
-		belongings.miscs[1] = newItem();
-		belongings.miscs[2] = newItem();
-		belongings.miscs[3] = newItem();
-		belongings.miscs[4] = newItem();
 
 		for (int i = 0; i < belongings.miscs.length; i++) {
+			belongings.miscs[i] = newItem();
 			belongings.miscs[i].activate(this);
 		}
 
@@ -166,7 +156,7 @@ public class Statue extends Mob implements Callback {
 			Wand wand = wandToAttack(enemy);
 			wand.activate(this);
 			if (wand instanceof WandOfWarding) {//Wand of Warding cannot zap directly
-				int closest = findClosest(this,enemy,this.pos);
+				int closest = findClosest(this, enemy, this.pos);
 
 				if (closest == -1){
 					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
@@ -216,10 +206,9 @@ public class Statue extends Mob implements Callback {
 			state = HUNTING;
 			return;
 		}
-		if (dmg > HP & HealingPotions > 0) {
-			new PotionOfHealing().applybuff(this);
-			HealingPotions--;
-			HP = dmg + 1;
+		if (dmg > HP & ankhs > 0) {
+			Ankh.revive(this, null);
+			ankhs--;
 		}
 		super.damage( dmg, src );
 	}
@@ -251,8 +240,6 @@ public class Statue extends Mob implements Callback {
 	public void dropGear() {
 		for (int i=0; i < belongings.miscs.length; i++) {
 			if (belongings.miscs[i] != null) {
-				if (belongings.miscs[i] instanceof Wand) {
-				}
 				Dungeon.level.drop(belongings.miscs[i].identify(), pos).sprite.drop();
 			}
 		}

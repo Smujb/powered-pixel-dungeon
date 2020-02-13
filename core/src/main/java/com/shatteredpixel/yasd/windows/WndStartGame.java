@@ -98,13 +98,12 @@ public class WndStartGame extends Window {
 				GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
 				Dungeon.difficulty = YASDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
 				if (YASDSettings.intro()) {
 					YASDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
-					Game.switchScene( InterlevelScene.class );
+					InterlevelScene.descend();
 				}
 			}
 			
