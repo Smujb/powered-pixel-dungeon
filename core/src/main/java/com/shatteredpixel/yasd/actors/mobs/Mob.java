@@ -385,7 +385,7 @@ public abstract class Mob extends Char {
 			} while (mob == null);
 			mob.pos = pos;
 			mob.state = mob.HUNTING;
-			GameScene.add( mob, 1f );
+			GameScene.add( mob );
 
 			return mob;
 		} else {
@@ -697,11 +697,11 @@ public abstract class Mob extends Char {
 			EXP /= 2;
 		}
 
-		if (alignment == Alignment.ENEMY){
+		if (alignment == Alignment.ENEMY && Dungeon.hero != null){
 			rollToDropLoot();
 		}
 		
-		if (Dungeon.hero.isAlive() && !Dungeon.level.heroFOV[pos]) {
+		if (Dungeon.hero != null && Dungeon.hero.isAlive() && !Dungeon.level.heroFOV[pos]) {
 			GLog.i( Messages.get(this, "died") );
 		}
 		

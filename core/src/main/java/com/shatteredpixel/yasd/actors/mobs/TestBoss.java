@@ -6,6 +6,8 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
+import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
+import com.shatteredpixel.yasd.actors.buffs.Frost;
 import com.shatteredpixel.yasd.effects.Beam;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.particles.SparkParticle;
@@ -30,7 +32,7 @@ public class TestBoss extends Mob {
 	{
 		spriteClass = TestBossSprite.class;
 
-		HP = HT = 500;
+		HP = HT = 250;
 		EXP = 30;
 		defenseSkill = 5;
 
@@ -71,7 +73,6 @@ public class TestBoss extends Mob {
 		time_to_summon--;
 		if (canSummon()) {
 			zap();
-			notice();
 		}
 		return super.act();
 	}
@@ -97,7 +98,6 @@ public class TestBoss extends Mob {
 			positions[i] = Dungeon.level.randomRespawnCell();
 		}
 		for (final int i : positions) {
-			sprite.zap(i);
 			MagicMissile.boltFromChar( sprite.parent,
 					MagicMissile.SHADOW,
 					this.sprite,
@@ -105,7 +105,10 @@ public class TestBoss extends Mob {
 					new Callback() {
 						@Override
 						public void call() {
-							Mob.spawnAt(Tower.class, i);
+							Mob tower = Mob.spawnAt(Tower.class, i);
+							if (tower != null) {
+								tower.spend(5f);
+							}
 						}
 					} );
 			Sample.INSTANCE.play( Assets.SND_ZAP );
@@ -142,11 +145,6 @@ public class TestBoss extends Mob {
 	}
 
 	static public class Tower extends Mob {
-
-		private static final float TIME_TO_ZAP = 2f;
-
-		private static final String TXT_LIGHTNING_KILLED = "%s's lightning bolt killed you...";
-
 		{
 			name = "lightning tower";
 			spriteClass = LitTowerSprite.class;
@@ -185,28 +183,37 @@ public class TestBoss extends Mob {
 		protected boolean act() {
 			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 				if (mob instanceof Tower) {
-					FX(mob.pos);
+					zap(mob.pos);
 				}
 			}
-			die(this);
+			new FlavourBuff(){
+				{actPriority = VFX_PRIO;}
+				public boolean act() {
+					target.die(this);
+					detach();
+					return true;
+				}
+			}.attachTo(this);//Can't die immediately, or won't be targeted by other towers.
 			sprite.kill();
 			return true;
 		}
 
-		private void FX(int cell) {
-			sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
-			zap(pos);
-		}
-
 		private void zap(int cell) {
+			sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 			Ballistica shot = new Ballistica(this.pos, cell, Ballistica.WONT_STOP);
 			for (int c : shot.path) {
 				Char ch = Actor.findChar(c);
 				if (ch != null && !(ch instanceof TestBoss)) {
-					ch.damage(10, this);
+					magicalAttack(ch);
 				}
 			}
 		}
+
+		@Override
+		public int magicalDamageRoll() {
+			return Random.Int(10, 25);
+		}
+
 		@Override
 		protected boolean doAttack(Char enemy) {
 			return true;

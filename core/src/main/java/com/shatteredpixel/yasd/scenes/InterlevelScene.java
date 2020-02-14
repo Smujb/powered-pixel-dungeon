@@ -299,7 +299,7 @@ public class InterlevelScene extends PixelScene {
 			message.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
 				if (!thread.isAlive() && error == null) {
-					message.text(msg + "\n\n" + Messages.get(this, "tap"));
+					message.text(Messages.get(this, "tap"));
 					message.setPos((Camera.main.width - message.width()) / 2, (Camera.main.height - message.height()) / 2);
 					PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 						@Override
@@ -394,6 +394,7 @@ public class InterlevelScene extends PixelScene {
 
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
+		msg = Messages.get(Mode.class, Mode.CONTINUE.name());
 		YASD.switchScene(InterlevelScene.class);
 	}
 

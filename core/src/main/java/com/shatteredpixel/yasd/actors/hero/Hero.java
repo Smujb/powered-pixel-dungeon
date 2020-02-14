@@ -1406,6 +1406,7 @@ public class Hero extends Char {
 		}
 		
 		Dungeon.deleteGame( GamesInProgress.curSlot, true );
+		Dungeon.hero = null;
 	}
 
 	//effectively cache this buff to prevent having to call buff(Berserk.class) a bunch.
