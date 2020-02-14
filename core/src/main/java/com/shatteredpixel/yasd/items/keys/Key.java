@@ -40,10 +40,12 @@ public abstract class Key extends Item {
 	}
 	
 	public int depth;
+
+	public int path;
 	
 	@Override
 	public boolean isSimilar( Item item ) {
-		return super.isSimilar(item) && ((Key)item).depth == depth;
+		return super.isSimilar(item) && ((Key)item).depth == depth && ((Key) item).path == path;
 	}
 
 	@Override
@@ -58,17 +60,20 @@ public abstract class Key extends Item {
 	}
 
 	private static final String DEPTH = "depth";
+	private static final String PATH  = "path";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DEPTH, depth );
+		bundle.put( PATH, path );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		depth = bundle.getInt( DEPTH );
+		path = bundle.getInt( PATH );
 	}
 	
 	@Override

@@ -21,15 +21,12 @@
 
 package com.shatteredpixel.yasd.scenes;
 
-import com.shatteredpixel.yasd.Badges;
 import com.shatteredpixel.yasd.Chrome;
 import com.shatteredpixel.yasd.Rankings;
-import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.YASD;
+import com.shatteredpixel.yasd.YASDSettings;
 import com.shatteredpixel.yasd.effects.BannerSprites;
 import com.shatteredpixel.yasd.effects.Fireball;
-import com.shatteredpixel.yasd.journal.Document;
-import com.shatteredpixel.yasd.journal.Journal;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.ui.Icons;
 import com.shatteredpixel.yasd.ui.RenderedTextBlock;

@@ -1,5 +1,6 @@
 package com.shatteredpixel.yasd;
 
+import com.shatteredpixel.yasd.actors.mobs.TestBoss;
 import com.shatteredpixel.yasd.levels.CavesBossLevel;
 import com.shatteredpixel.yasd.levels.CavesLevel;
 import com.shatteredpixel.yasd.levels.CityBossLevel;
@@ -16,6 +17,7 @@ import com.shatteredpixel.yasd.levels.OldPrisonBossLevel;
 import com.shatteredpixel.yasd.levels.PrisonLevel;
 import com.shatteredpixel.yasd.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.levels.SewerLevel;
+import com.shatteredpixel.yasd.levels.TestBossLevel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,7 +127,8 @@ public class Constants {
                     LootLevel.class
             )),
             new ArrayList<>(Arrays.asList(
-                    SewerBossLevel.class,
+                    DeadEndLevel.class,
+                    TestBossLevel.class,
                     NewPrisonBossLevel.class,
                     OldPrisonBossLevel.class,
                     CavesBossLevel.class,
