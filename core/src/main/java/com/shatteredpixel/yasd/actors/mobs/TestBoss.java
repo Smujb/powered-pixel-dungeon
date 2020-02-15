@@ -6,9 +6,8 @@ import com.shatteredpixel.yasd.Dungeon;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.buffs.Buff;
-import com.shatteredpixel.yasd.actors.buffs.FlavourBuff;
-import com.shatteredpixel.yasd.actors.buffs.Frost;
 import com.shatteredpixel.yasd.effects.Beam;
+import com.shatteredpixel.yasd.effects.CellEmitter;
 import com.shatteredpixel.yasd.effects.MagicMissile;
 import com.shatteredpixel.yasd.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.items.artifacts.LloydsBeacon;
@@ -20,6 +19,7 @@ import com.shatteredpixel.yasd.scenes.GameScene;
 import com.shatteredpixel.yasd.sprites.MobSprite;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.ui.BossHealthBar;
+import com.shatteredpixel.yasd.utils.GLog;
 import com.watabou.noosa.MovieClip;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
@@ -28,12 +28,14 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import java.util.ArrayList;
+
 public class TestBoss extends Mob {
 	{
 		spriteClass = TestBossSprite.class;
 
-		HP = HT = 250;
-		EXP = 30;
+		HP = HT = 100;
+		EXP = 10;
 		defenseSkill = 5;
 
 		viewDistance = 20;
@@ -45,6 +47,10 @@ public class TestBoss extends Mob {
 	private int time_to_summon = 0;
 	private int MAX_COOLDOWN = 10;
 
+	private boolean hint = true;
+
+	public static ArrayList<Integer> towerPositions = new ArrayList<>();
+
 	private int numBolts() {
 		return (int) (6 + (1 - (HP/(float)HT))*8);
 	}
@@ -55,7 +61,7 @@ public class TestBoss extends Mob {
 
 	@Override
 	public int damageRoll() {
-		return (int) (Random.NormalIntRange( 15, 23 ));
+		return (int) (Random.NormalIntRange( 3, 12 ));
 	}
 
 	@Override
@@ -64,8 +70,19 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public int drRoll() {
-		return (int) (Random.NormalIntRange(0, 10));
+	public void damage(int dmg, Object src) {
+		if (src instanceof Tower) {
+			super.damage(dmg, src);
+			if (hint) {
+				hint = false;
+				GLog.p("The boss takes heavy damage from the disintegration rays!");
+			}
+		} else {
+			super.damage(Random.Int(dmg/2), src);
+			if (Random.Int(5) == 0 || HP == HT) {
+				GLog.n("The boss is too strong to be damaged significantly by your weapons...");
+			}
+		}
 	}
 
 	@Override
@@ -84,15 +101,32 @@ public class TestBoss extends Mob {
 		yell( Messages.get(this, "notice") );
 	}
 
+	private static final String POSITIONS = "towerPositions";
+	private static final String HINT = "hint";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		for (int i = 0; i < towerPositions.size(); i++) {
+			bundle.put(POSITIONS+i, towerPositions.get(i));
+		}
+		bundle.put(HINT, hint);
+	}
+
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
+		for (int i = 0; i < towerPositions.size(); i++) {
+			towerPositions.set(i, bundle.getInt(POSITIONS+i));
+		}
+		hint = bundle.getBoolean(HINT);
 	}
 
 
 	public void zap() {
 		time_to_summon = MAX_COOLDOWN;
+		towerPositions.clear();
 		int[] positions = new int[numBolts()];
 		for (int i = 0; i < positions.length; i++) {
 			positions[i] = Dungeon.level.randomRespawnCell();
@@ -109,6 +143,7 @@ public class TestBoss extends Mob {
 							if (tower != null) {
 								tower.spend(5f);
 							}
+							TestBoss.towerPositions.add(i);
 						}
 					} );
 			Sample.INSTANCE.play( Assets.SND_ZAP );
@@ -181,20 +216,12 @@ public class TestBoss extends Mob {
 
 		@Override
 		protected boolean act() {
-			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-				if (mob instanceof Tower) {
-					zap(mob.pos);
+			for (int i : TestBoss.towerPositions) {
+				if (i != pos) {
+					zap(i);
 				}
 			}
-			new FlavourBuff(){
-				{actPriority = VFX_PRIO;}
-				public boolean act() {
-					target.die(this);
-					detach();
-					return true;
-				}
-			}.attachTo(this);//Can't die immediately, or won't be targeted by other towers.
-			sprite.kill();
+			die(this);
 			return true;
 		}
 
@@ -202,9 +229,10 @@ public class TestBoss extends Mob {
 			sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 			Ballistica shot = new Ballistica(this.pos, cell, Ballistica.WONT_STOP);
 			for (int c : shot.path) {
+				CellEmitter.get(c).burst(SparkParticle.FACTORY, 2);
 				Char ch = Actor.findChar(c);
-				if (ch != null && !(ch instanceof TestBoss)) {
-					magicalAttack(ch);
+				if (ch != null) {
+					ch.damage(magicalDamageRoll(), this);
 				}
 			}
 		}
@@ -223,6 +251,12 @@ public class TestBoss extends Mob {
 		public String description() {
 			return "The lightning shell crackles with electric power. "
 					+ "It's powerful lightning attack is drawn to all living things in the lair. ";
+		}
+
+		@Override
+		public void die(Object cause) {
+			super.die(cause);
+			sprite.emitter().burst(SparkParticle.FACTORY, 10);
 		}
 
 		@Override

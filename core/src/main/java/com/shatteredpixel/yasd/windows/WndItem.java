@@ -196,7 +196,7 @@ public class WndItem extends Window {
 					}
 				}
 
-				//finally set positions
+				//finally set towerPositions
 				float x = 0;
 				for (RedButton b : curRow){
 					b.setRect(x, y, b.width(), b.height());

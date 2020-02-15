@@ -23,7 +23,7 @@ public class TestBossLevel extends Level {
 		color2 = 0xb9d661;
 	}
 
-	public final int ENTRANCE_LOCATION = 23 + width * 11;
+	public final int ENTRANCE_LOCATION = 23 + width * 13;
 
 	public boolean bossSpawned = false;
 
@@ -54,7 +54,7 @@ public class TestBossLevel extends Level {
 	}
 
 	private boolean insideRoom(int cell) {
-		return (new EmptyRoom().set(19, 13, 30, 25)).inside(cellToPoint(cell));
+		return (new EmptyRoom().set(20, 14, 30, 25)).inside(cellToPoint(cell));
 	}
 
 	@Override
@@ -74,21 +74,6 @@ public class TestBossLevel extends Level {
 			Dungeon.observe();
 		}
 	}
-
-	/*@Override
-	public void press(int cell, Char ch) {
-		super.press(cell, ch);
-		if (ch == Dungeon.hero && insideRoom(cell) && !bossSpawned) {
-			TestFireChalBoss boss = new TestFireChalBoss();
-			boss.state = boss.WANDERING;
-			do {
-				boss.pos = randomRespawnCell();
-			} while (heroFOV[boss.pos]);
-			GameScene.add( boss );
-			bossSpawned = true;
-			Level.set(ENTRANCE_LOCATION, Terrain.WALL);
-		}
-	}*/
 
 	@Override
 	public void unseal() {
@@ -148,9 +133,16 @@ public class TestBossLevel extends Level {
 	@Override
 	public int randomRespawnCell() {
 		int cell;
+		boolean cont;
 		do {
 			cell = Random.Int(length());
-		} while (!insideRoom(cell) && solid[cell] && Actor.findChar(cell) == null);
+			cont = true;
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+				if (Dungeon.level.distance(cell, mob.pos) < 3) {
+					cont = false;
+				}
+			}
+		} while (!insideRoom(cell) || solid[cell] || Actor.findChar(cell) != null || !cont);
 		return cell;
 	}
 	public static final String BOSS = "boss";
@@ -185,8 +177,8 @@ public class TestBossLevel extends Level {
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	D, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	Q, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	Q, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
-			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	D, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
-			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W,  W,  W,  W,  W, 	W, 	W, 	W,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
+			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	Q, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
+			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W,  W,  D,  W,  W, 	W, 	W, 	W,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W, 	W, 	Q,  Q, 	Q,  Q, 	Q, 	Q, 	Q,  Q, 	Q, 	Q, 	Q,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	Q,  Q, 	Q,  Q, 	Q, 	Q,  Q,  Q, 	Q, 	Q, 	Q,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W, 	W, 	W, 	W, 	W, 	W, 	W,  W, 	W, 	Q,  Q, 	Q,  Q, 	Q, 	Q, 	Q,  Q, 	Q, 	Q, 	Q,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,  W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,

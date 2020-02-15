@@ -179,7 +179,7 @@ public class PixelScene extends Scene {
 
 	/**
 	 * These methods align UI elements to device pixels.
-	 * e.g. if we have a scale of 3x then valid positions are #.0, #.33, #.67
+	 * e.g. if we have a scale of 3x then valid towerPositions are #.0, #.33, #.67
 	 */
 
 	public static float align( float pos ) {

@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.Assets;
 import com.shatteredpixel.yasd.Challenges;
 import com.shatteredpixel.yasd.Constants;
 import com.shatteredpixel.yasd.Dungeon;
-import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.Statistics;
+import com.shatteredpixel.yasd.YASD;
 import com.shatteredpixel.yasd.actors.Actor;
 import com.shatteredpixel.yasd.actors.Char;
 import com.shatteredpixel.yasd.actors.blobs.Blob;
@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.actors.mobs.Bestiary;
 import com.shatteredpixel.yasd.actors.mobs.Mob;
+import com.shatteredpixel.yasd.actors.mobs.TestBoss;
 import com.shatteredpixel.yasd.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.effects.particles.FlowParticle;
 import com.shatteredpixel.yasd.effects.particles.WindParticle;
@@ -81,7 +82,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import java.util.ArrayList;
@@ -1038,6 +1038,12 @@ public abstract class Level implements Bundlable {
 					}
 				}
 			}
+			for (Mob mob : mobs) {
+				if (mob instanceof TestBoss.Tower) {
+					Dungeon.hero.mindVisionEnemies.add(mob);
+				}
+			}
+
 			
 			for (Mob m : Dungeon.hero.mindVisionEnemies) {
 				for (int i : PathFinder.NEIGHBOURS9) {

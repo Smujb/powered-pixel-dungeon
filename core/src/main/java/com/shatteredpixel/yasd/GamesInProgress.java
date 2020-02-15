@@ -133,8 +133,8 @@ public class GamesInProgress {
 	                       Hero hero) {
 		Info info = new Info();
 		info.slot = slot;
-		
 		info.depth = depth;
+
 		info.challenges = challenges;
 		
 		info.level = hero.lvl;
@@ -165,6 +165,7 @@ public class GamesInProgress {
 		public int slot;
 		
 		public int depth;
+		public int path;
 		public int version;
 		public int challenges;
 		

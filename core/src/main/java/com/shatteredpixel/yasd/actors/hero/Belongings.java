@@ -447,7 +447,9 @@ public class Belongings implements Iterable<Item> {
 		for (int i = 0; i < Constants.MISC_SLOTS; i++) {//Store all miscs
 			bundle.put( MISC + i, miscs[i]);
 		}
-		bundle.put( ARMOR, getArmors().get(0));//Used for previewing games.
+		if (getArmors().size() > 0) {
+			bundle.put(ARMOR, getArmors().get(0));//Used for previewing games.
+		}
 	}
 	
 	public void restoreFromBundle( Bundle bundle ) {

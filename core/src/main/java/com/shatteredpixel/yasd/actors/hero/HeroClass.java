@@ -123,7 +123,7 @@ public enum HeroClass {
 		new Beer().collect();
 
 		new WandOfDamnation().identify().collect();
-		new ChainArmor().setTier(3).collect();
+		Generator.randomArmor().setTier(2).collect();
 		Generator.randomWeapon().setTier(2).collect();
 		//new MagicalInfusion().quantity(100).collect();
 		new ScrollOfUpgrade().quantity(5).collect();

@@ -104,7 +104,7 @@ public class CellSelector extends ScrollArea {
 		YASDSettings.zoom((int) (value - PixelScene.defaultZoom));
 		camera.zoom( value );
 
-		//Resets character sprite positions with the new camera zoom
+		//Resets character sprite towerPositions with the new camera zoom
 		//This is important as characters are centered on a 16x16 tile, but may have any sprite size
 		//This can lead to none-whole coordinate, which need to be aligned with the zoom
 		for (Char c : Actor.chars()){

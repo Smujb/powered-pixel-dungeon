@@ -113,47 +113,14 @@ public class InterlevelScene extends PixelScene {
 						}
 						Actor.fixTime();
 
-						/*switch (mode) {
-							case DESCEND:
-								if (Dungeon.hero != null) {
-									level = switchDepth(Dungeon.depth + 1, Mode.DESCEND);
-								} else {
-									level = switchDepth(1, 0, Mode.DESCEND);
-								}
-								break;
-							case ASCEND:
-								level = switchDepth(Dungeon.depth - 1, Mode.ASCEND);
-								break;
-							case CONTINUE:
-								level = restore();
-								break;
-							case RESURRECT:
-								level = switchDepth(Dungeon.depth, Mode.RESURRECT);
-								break;
-							case RETURN:
-								level = switchDepth(returnDepth, Mode.RETURN);
-								break;
-							case FALL:
-								level = switchDepth(Dungeon.depth + 1, Mode.FALL);
-								break;
-							case RESET:
-								level = switchDepth(Dungeon.depth, Mode.RESET);
-								break;
-							case PATH1:
-								level = switchDepth(Dungeon.depth, 0,  Mode.DESCEND);
-								break;
-							case PATH2:
-								level = switchDepth(Dungeon.depth, 1,  Mode.DESCEND);
-								break;
-							case PATH3:
-								level = switchDepth(Dungeon.depth, 2,  Mode.DESCEND);
-								break;
-
-						}*/
 						if (mode == Mode.CONTINUE) {
 							level = restore();
 						} else {
-							level = switchDepth(depth, path, mode);
+							if (Dungeon.hero != null) {
+								level = switchDepth(depth, path, mode);
+							} else {
+								level = switchDepth(1, 0, Mode.DESCEND);
+							}
 						}
 
 						if (Dungeon.bossLevel()) {
@@ -223,12 +190,6 @@ public class InterlevelScene extends PixelScene {
 		} else {
 			loadingAsset = level.loadImg();
 		}
-		/*if (loadingDepth <= Constants.CHAPTER_LENGTH)          loadingAsset = Assets.LOADING_SEWERS;
-		else if (loadingDepth <= Constants.CHAPTER_LENGTH*2)    loadingAsset = Assets.LOADING_PRISON;
-		else if (loadingDepth <= Constants.CHAPTER_LENGTH*3)    loadingAsset = Assets.LOADING_CAVES;
-		else if (loadingDepth <= Constants.CHAPTER_LENGTH*4+1)    loadingAsset = Assets.LOADING_CITY;
-		else if (loadingDepth <= Constants.CHAPTER_LENGTH*5)    loadingAsset = Assets.LOADING_HALLS;
-		else*/
 		
 		SkinnedBlock bg = new SkinnedBlock(Camera.main.width, Camera.main.height, loadingAsset ){
 			@Override
