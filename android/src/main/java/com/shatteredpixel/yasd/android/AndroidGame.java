@@ -33,8 +33,8 @@ import android.telephony.TelephonyManager;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
-import com.shatteredpixel.yasd.YASDSettings;
-import com.shatteredpixel.yasd.YASD;
+import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.YASD;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 

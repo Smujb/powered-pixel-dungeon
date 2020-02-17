@@ -28,9 +28,9 @@ import android.app.backup.BackupDataOutput;
 import android.app.backup.FullBackupDataOutput;
 import android.os.ParcelFileDescriptor;
 
-import com.shatteredpixel.yasd.Badges;
-import com.shatteredpixel.yasd.Rankings;
-import com.shatteredpixel.yasd.journal.Journal;
+import com.shatteredpixel.yasd.general.Badges;
+import com.shatteredpixel.yasd.general.Rankings;
+import com.shatteredpixel.yasd.general.journal.Journal;
 
 import java.io.File;
 

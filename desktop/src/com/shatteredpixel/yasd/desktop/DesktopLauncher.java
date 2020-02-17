@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.desktop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.shatteredpixel.yasd.YASD;
+import com.shatteredpixel.yasd.general.YASD;
 import com.watabou.noosa.Game;
 
 import java.io.PrintWriter;

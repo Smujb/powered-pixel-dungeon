@@ -38,13 +38,13 @@ import android.widget.TextView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
-import com.shatteredpixel.yasd.YASDSettings;
-import com.shatteredpixel.yasd.YASD;
+import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.YASD;
 import com.shatteredpixel.yasd.android.AndroidGame;
-import com.shatteredpixel.yasd.scenes.PixelScene;
-import com.shatteredpixel.yasd.ui.RedButton;
-import com.shatteredpixel.yasd.ui.RenderedTextBlock;
-import com.shatteredpixel.yasd.ui.Window;
+import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.shatteredpixel.yasd.general.ui.RedButton;
+import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
+import com.shatteredpixel.yasd.general.ui.Window;
 import com.watabou.noosa.Game;
 
 //This class makes use of the android EditText component to handle text input
