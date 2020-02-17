@@ -91,11 +91,35 @@ public class Belongings implements Iterable<Item> {
 	//##############################################################################################
 	//########################## Stuff for handling chars with belongings ##########################
 	//##############################################################################################
+
+	public ArrayList<Integer> availibleSlots(KindofMisc misc) {
+		ArrayList<Integer> slots = new ArrayList<>();
+		slots.add(0);
+		slots.add(1);
+		slots.add(2);
+		slots.add(3);
+		slots.add(4);
+		return slots;
+	}
+
+	public boolean canEquip(KindofMisc misc, int slot) {//Use for setting specific properties for each slot.
+		return miscs[slot] == null && availibleSlots(misc).contains(slot);
+	}
+
+	public boolean canEquip(KindofMisc misc) {//Use for setting specific properties for each slot.
+		for (int i = 0; i < miscs.length; i++) {
+			if (canEquip(misc, i)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public ArrayList<Armor> getArmors() {
 		ArrayList<Armor> armors = new ArrayList<>();
-		for (int i = 0; i < miscs.length; i++) {
-			if (miscs[i] instanceof Armor) {
-				armors.add((Armor) miscs[i]);
+		for (KindofMisc misc : miscs) {
+			if (misc instanceof Armor) {
+				armors.add((Armor) misc);
 			}
 		}
 		return armors;
@@ -104,20 +128,20 @@ public class Belongings implements Iterable<Item> {
 
 	public ArrayList<KindOfWeapon> getWeapons() {
 		ArrayList<KindOfWeapon> weapons = new ArrayList<>();
-		for (int i = 0; i < miscs.length; i++) {
-			if (miscs[i] instanceof MeleeWeapon) {
-				weapons.add((KindOfWeapon) miscs[i]);
+		for (KindofMisc misc : miscs) {
+			if (misc instanceof MeleeWeapon) {
+				weapons.add((KindOfWeapon) misc);
 			}
 		}
 		return weapons;
 
 	}
 
-	public ArrayList<Item> getEquippedItemsOFType( Class type ) {//Find equipped items of a certain kind
-		ArrayList<Item> items = new ArrayList<>();
-		for (int i = 0; i < miscs.length; i++) {
-			if (type.isInstance( miscs[i])) {
-				items.add(miscs[i]);
+	public ArrayList<KindofMisc> getEquippedItemsOFType( Class type ) {//Find equipped items of a certain kind
+		ArrayList<KindofMisc> items = new ArrayList<>();
+		for (KindofMisc misc : miscs) {
+			if (type.isInstance(misc)) {
+				items.add(misc);
 			}
 		}
 		return items;

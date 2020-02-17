@@ -176,7 +176,7 @@ public class Statue extends Mob implements Callback {
 
 	protected Wand wandToAttack(Char enemy ) {
 		if (enemy != null ) {
-			ArrayList<Item> Wands = belongings.getEquippedItemsOFType(Wand.class);
+			ArrayList<KindofMisc> Wands = belongings.getEquippedItemsOFType(Wand.class);
 			ArrayList<Wand> UsableWands = new ArrayList<>();
 			for (int i = 0; i < Wands.size(); i++) {
 				Wand Wand = ((Wand) Wands.get(i));

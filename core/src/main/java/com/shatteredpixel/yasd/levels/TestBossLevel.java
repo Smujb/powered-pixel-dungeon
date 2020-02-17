@@ -21,6 +21,7 @@ public class TestBossLevel extends Level {
 	{
 		color1 = 0x534f3e;
 		color2 = 0xb9d661;
+		viewDistance = 12;
 	}
 
 	public final int ENTRANCE_LOCATION = 23 + width * 13;
@@ -64,9 +65,7 @@ public class TestBossLevel extends Level {
 		if (ch == Dungeon.hero && insideRoom(cell) && !bossSpawned) {
 			TestBoss boss = new TestBoss();
 			boss.state = boss.WANDERING;
-			do {
-				boss.pos = randomRespawnCell();
-			} while (heroFOV[boss.pos]);
+			boss.pos = randomRespawnCell();
 			GameScene.add( boss );
 			bossSpawned = true;
 			Level.set(ENTRANCE_LOCATION, Terrain.WALL);
@@ -137,8 +136,8 @@ public class TestBossLevel extends Level {
 		do {
 			cell = Random.Int(length());
 			cont = true;
-			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-				if (Dungeon.level.distance(cell, mob.pos) < 3) {
+			for (Mob mob : mobs.toArray(new Mob[0])) {
+				if (distance(cell, mob.pos) < 3) {
 					cont = false;
 				}
 			}

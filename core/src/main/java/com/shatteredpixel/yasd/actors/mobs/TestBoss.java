@@ -13,9 +13,11 @@ import com.shatteredpixel.yasd.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.items.wands.WandOfBlastWave;
 import com.shatteredpixel.yasd.mechanics.Ballistica;
 import com.shatteredpixel.yasd.messages.Messages;
 import com.shatteredpixel.yasd.scenes.GameScene;
+import com.shatteredpixel.yasd.sprites.CharSprite;
 import com.shatteredpixel.yasd.sprites.MobSprite;
 import com.shatteredpixel.yasd.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.ui.BossHealthBar;
@@ -34,7 +36,7 @@ public class TestBoss extends Mob {
 	{
 		spriteClass = TestBossSprite.class;
 
-		HP = HT = 100;
+		HP = HT = 200;
 		EXP = 10;
 		defenseSkill = 5;
 
@@ -45,7 +47,7 @@ public class TestBoss extends Mob {
 	}
 
 	private int time_to_summon = 0;
-	private int MAX_COOLDOWN = 10;
+	private int MAX_COOLDOWN = 20;
 
 	private boolean hint = true;
 
@@ -64,6 +66,15 @@ public class TestBoss extends Mob {
 		return (int) (Random.NormalIntRange( 3, 12 ));
 	}
 
+	public boolean checkTowers() {
+		for (Mob mob : Dungeon.level.mobs) {
+			if (mob instanceof Tower) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 16;
@@ -78,8 +89,12 @@ public class TestBoss extends Mob {
 				GLog.p("The boss takes heavy damage from the disintegration rays!");
 			}
 		} else {
-			super.damage(Random.Int(dmg/2), src);
-			if (Random.Int(5) == 0 || HP == HT) {
+			if (HP > HT/2 || checkTowers()) {
+				super.damage(Random.Int(dmg / 2), src);
+			} else {
+				super.damage(0, src);//Display that no damage is being done any more
+			}
+			if (Random.Int(10) == 0 || HP == HT) {
 				GLog.n("The boss is too strong to be damaged significantly by your weapons...");
 			}
 		}
@@ -91,7 +106,21 @@ public class TestBoss extends Mob {
 		if (canSummon()) {
 			zap();
 		}
+		if (!checkTowers()) {
+			sprite.add(CharSprite.State.BERSERK);
+		} else {
+			sprite.remove(CharSprite.State.BERSERK);
+		}
 		return super.act();
+	}
+
+	@Override
+	public float speed() {
+		float speed = super.speed();
+		if (!checkTowers()) {
+			speed *= 1.5f;
+		}
+		return speed;
 	}
 
 	@Override
@@ -179,6 +208,20 @@ public class TestBoss extends Mob {
 		yell( Messages.get(this, "defeated") );
 	}
 
+	@Override
+	public int attackProc(Char enemy, int damage) {
+		if (!checkTowers()) {
+			//trace a ballistica to our target (which will also extend past them
+			Ballistica trajectory = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
+			//trim it to just be the part that goes past them
+			trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
+			//knock them back along that ballistica
+			WandOfBlastWave.throwChar(enemy, trajectory, 2);
+			damage *= 2;
+		}
+		return super.attackProc(enemy, damage);
+	}
+
 	static public class Tower extends Mob {
 		{
 			name = "lightning tower";
@@ -227,12 +270,12 @@ public class TestBoss extends Mob {
 
 		private void zap(int cell) {
 			sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
-			Ballistica shot = new Ballistica(this.pos, cell, Ballistica.WONT_STOP);
+			Ballistica shot = new Ballistica(this.pos, cell, Ballistica.STOP_TARGET);
 			for (int c : shot.path) {
-				CellEmitter.get(c).burst(SparkParticle.FACTORY, 2);
 				Char ch = Actor.findChar(c);
 				if (ch != null) {
 					ch.damage(magicalDamageRoll(), this);
+					CellEmitter.get(c).burst(SparkParticle.FACTORY, 2);
 				}
 			}
 		}
@@ -295,9 +338,7 @@ public class TestBoss extends Mob {
 
 		static public class LitTowerSprite extends MobSprite {
 
-		private int[] points = new int[2];
-
-		public LitTowerSprite() {
+			public LitTowerSprite() {
 			super();
 
 			texture(Assets.LITTOWER);
@@ -313,16 +354,6 @@ public class TestBoss extends Mob {
 			zap = attack.clone();
 
 			idle();
-		}
-
-		@Override
-		public void zap(int pos) {
-
-			points[0] = ch.pos;
-			points[1] = pos;
-
-			turnTo(ch.pos, pos);
-			play(zap);
 		}
 
 		@Override
