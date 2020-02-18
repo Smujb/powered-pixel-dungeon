@@ -21,8 +21,8 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.ui.Archs;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
@@ -65,9 +65,9 @@ public class AboutScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final float colWidth = Camera.main.width / (YASDSettings.landscape() ? 2 : 1);
-		final float colTop = (Camera.main.height / 2) - (YASDSettings.landscape() ? 30 : 90);
-		final float wataOffset = YASDSettings.landscape() ? colWidth : 0;
+		final float colWidth = Camera.main.width / (MainGameSettings.landscape() ? 2 : 1);
+		final float colTop = (Camera.main.height / 2) - (MainGameSettings.landscape() ? 30 : 90);
+		final float wataOffset = MainGameSettings.landscape() ? colWidth : 0;
 
 		Image shpx = Icons.SHPX.get();
 		shpx.x = (colWidth - shpx.width()) / 2;
@@ -112,7 +112,7 @@ public class AboutScene extends PixelScene {
 
 		Image wata = Icons.WATA.get();
 		wata.x = wataOffset + (colWidth - wata.width()) / 2;
-		wata.y = YASDSettings.landscape() ?
+		wata.y = MainGameSettings.landscape() ?
 						colTop:
 						shpxlink.top() + wata.height + 20;
 		align(wata);
@@ -168,6 +168,6 @@ public class AboutScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		YASD.switchScene(TitleScene.class);
+		MainGame.switchScene(TitleScene.class);
 	}
 }

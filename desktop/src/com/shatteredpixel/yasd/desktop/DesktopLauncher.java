@@ -24,7 +24,6 @@ package com.shatteredpixel.yasd.desktop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.shatteredpixel.yasd.general.YASD;
 import com.watabou.noosa.Game;
 
 import java.io.PrintWriter;
@@ -62,7 +61,7 @@ public class DesktopLauncher {
         // it would be nice to be able to fetch them from gradle in some way
         config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
         if (config.title == null) {
-            config.title = "YASD INDEV";
+            config.title = "Yet Another Shattered Dungeon";
         }
 
         Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
@@ -75,7 +74,7 @@ public class DesktopLauncher {
         } catch (NumberFormatException e) {
             Game.versionCode = 380;
         }
-
-        new LwjglApplication(new YASD(new com.shatteredpixel.yasd.desktop.DesktopPlatformSupport()), config);
+        //TODO: Add support for switching games
+        new LwjglApplication(new MainGame(new com.shatteredpixel.yasd.desktop.DesktopPlatformSupport()), config);
     }
 }

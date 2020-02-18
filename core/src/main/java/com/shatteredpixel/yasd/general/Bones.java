@@ -65,7 +65,7 @@ public class Bones {
 		try {
 			FileUtils.bundleToFile( BONES_FILE, bundle );
 		} catch (IOException e) {
-			YASD.reportException(e);
+			MainGame.reportException(e);
 		}
 	}
 

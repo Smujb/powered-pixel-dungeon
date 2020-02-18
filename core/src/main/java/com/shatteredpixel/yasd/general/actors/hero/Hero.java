@@ -28,8 +28,8 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.YASD;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Alchemy;
@@ -633,7 +633,7 @@ public class Hero extends Char {
 				Alchemy.alchPos = dst;
 				AlchemyScene.setProvider( alch );
 			}
-			YASD.switchScene(AlchemyScene.class);
+			MainGame.switchScene(AlchemyScene.class);
 			return false;
 
 		} else if (getCloser( dst )) {
@@ -946,8 +946,8 @@ public class Hero extends Char {
 
 		if (shake > 0.7f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
-			if (YASDSettings.vibrate()) {
-				YASD.vibrate(Math.min(500,(int) (shake * 50)));
+			if (MainGameSettings.vibrate()) {
+				MainGame.vibrate(Math.min(500,(int) (shake * 50)));
 			}
 			if (shake > 1f) {
 				loseMorale(shake*0.5f);
@@ -1095,7 +1095,7 @@ public class Hero extends Char {
 			
 			float speed = speed();
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & !(Dungeon.level.map[pos] == Terrain.EXIT || Dungeon.level.map[pos] == Terrain.DOOR || Dungeon.level.map[pos] == Terrain.ENTRANCE|| Dungeon.level.map[pos] == Terrain.OPEN_DOOR) & !Dungeon.bossLevel()) {
-				if (YASD.scene() instanceof GameScene) {
+				if (MainGame.scene() instanceof GameScene) {
 					if (!isFlying()) {
 						Level.set(pos, Terrain.CHASM);
 					}
@@ -1251,7 +1251,7 @@ public class Hero extends Char {
 			}
 
 			DistributionPoints += 3;
-			YASD.runOnRenderThread(new Callback() {
+			MainGame.runOnRenderThread(new Callback() {
 				@Override
 				public void call() {
 					WndHero window = new WndHero();

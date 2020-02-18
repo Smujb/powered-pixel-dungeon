@@ -25,7 +25,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.LuckyRandom;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -159,7 +159,7 @@ public class Armor extends KindofMisc {
 		
 		augment = bundle.getEnum(AUGMENT, Augment.class);
 
-		if (Dungeon.version >= YASD.v0_2_0) {//Support older saves
+		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);
 		}
 	}

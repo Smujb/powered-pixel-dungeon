@@ -2,7 +2,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -12,8 +12,6 @@ import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Chilling;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
-import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -72,7 +70,7 @@ public class WandOfFlow extends DamageWand {
                 WandOfBlastWave.throwChar(ch, trajectory, 2);
                 Buff.affect(ch, Wet.class, Wet.DURATION);
             } catch (Exception e) {
-                YASD.reportException(e);
+                MainGame.reportException(e);
             }
         }
     }

@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.general.journal;
 
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 
@@ -69,7 +69,7 @@ public class Journal {
 			FileUtils.bundleToFile( JOURNAL_FILE, bundle );
 			saveNeeded = false;
 		} catch (IOException e) {
-			YASD.reportException(e);
+			MainGame.reportException(e);
 		}
 		
 	}

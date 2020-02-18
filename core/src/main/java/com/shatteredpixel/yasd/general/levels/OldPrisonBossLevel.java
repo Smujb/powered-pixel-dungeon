@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -403,12 +403,12 @@ public class OldPrisonBossLevel extends Level {
 				CustomTilemap vis = new exitVisual();
 				vis.pos(11, 8);
 				customTiles.add(vis);
-				((GameScene) YASD.scene()).addCustomTile(vis);
+				((GameScene) MainGame.scene()).addCustomTile(vis);
 
 				vis = new exitVisualWalls();
 				vis.pos(11, 8);
 				customWalls.add(vis);
-				((GameScene) YASD.scene()).addCustomWall(vis);
+				((GameScene) MainGame.scene()).addCustomWall(vis);
 
 				Dungeon.hero.interrupt();
 				Dungeon.hero.pos = 5+27*32;

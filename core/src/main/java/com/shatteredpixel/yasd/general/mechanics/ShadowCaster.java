@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.general.mechanics;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.utils.BArray;
 
 //based on: http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting
@@ -68,7 +68,7 @@ public final class ShadowCaster {
 			scanOctant(distance, fieldOfView, blocking, 1, x, y, 0.0, 1.0, -1, -1, true);
 			scanOctant(distance, fieldOfView, blocking, 1, x, y, 0.0, 1.0, -1, -1, false);
 		} catch (Exception e){
-			YASD.reportException(e);
+			MainGame.reportException(e);
 			BArray.setFalse(fieldOfView);
 		}
 

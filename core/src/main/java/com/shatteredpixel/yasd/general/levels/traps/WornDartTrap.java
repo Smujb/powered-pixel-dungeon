@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.Dart;
@@ -70,7 +70,7 @@ public class WornDartTrap extends Trap {
 					@Override
 					protected boolean act() {
 						final Actor toRemove = this;
-						((MissileSprite) YASD.scene().recycle(MissileSprite.class)).
+						((MissileSprite) MainGame.scene().recycle(MissileSprite.class)).
 							reset(pos, finalTarget.sprite, new Dart(), new Callback() {
 								@Override
 								public void call() {

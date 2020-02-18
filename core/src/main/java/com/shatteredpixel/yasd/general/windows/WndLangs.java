@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -68,10 +68,10 @@ public class WndLangs extends Window {
 				protected void onClick() {
 					super.onClick();
 					Messages.setup(langs.get(langIndex));
-					YASD.seamlessResetScene(new Game.SceneChangeCallback() {
+					MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
-							YASDSettings.language(langs.get(langIndex));
+							MainGameSettings.language(langs.get(langIndex));
 							Game.platform.resetGenerators();
 						}
 						@Override
@@ -94,18 +94,18 @@ public class WndLangs extends Window {
 				}
 			}
 			btn.setSize(BTN_WIDTH, BTN_HEIGHT);
-			if (YASDSettings.landscape() && i % 2 == 1){
+			if (MainGameSettings.landscape() && i % 2 == 1){
 				btn.setPos(BTN_WIDTH+1, y-(BTN_HEIGHT + 1));
 			} else {
 				btn.setPos(0, y);
 				y += BTN_HEIGHT;
-				if (YASDSettings.landscape()) y++;
+				if (MainGameSettings.landscape()) y++;
 			}
 
 			add(btn);
 		}
 		y = Math.max(MIN_HEIGHT, y);
-		resize(YASDSettings.landscape() ? WIDTH_L : WIDTH_P, y);
+		resize(MainGameSettings.landscape() ? WIDTH_L : WIDTH_P, y);
 
 		int textLeft = width - 65;
 		int textWidth = width - textLeft;
@@ -155,7 +155,7 @@ public class WndLangs extends Window {
 					String[] translators = currLang.translators();
 					
 					boolean wide = false;
-					if (YASDSettings.landscape() && (reviewers.length + translators.length) > 10){
+					if (MainGameSettings.landscape() && (reviewers.length + translators.length) > 10){
 						wide = true;
 					}
 					
@@ -242,7 +242,7 @@ public class WndLangs extends Window {
 	public void hide() {
 		super.hide();
 		//resets generators because there's no need to retain chars for languages not selected
-		YASD.seamlessResetScene(new Game.SceneChangeCallback() {
+		MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
 			@Override
 			public void beforeCreate() {
 				Game.platform.resetGenerators();

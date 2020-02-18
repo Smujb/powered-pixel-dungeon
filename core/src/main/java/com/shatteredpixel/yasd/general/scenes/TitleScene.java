@@ -24,8 +24,8 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -69,7 +69,7 @@ public class TitleScene extends PixelScene {
 		float topRegion = Math.max(title.height, h*0.45f);
 
 		title.x = (w - title.width()) / 2f;
-		if (YASDSettings.landscape()) {
+		if (MainGameSettings.landscape()) {
 			title.y = (topRegion - title.height()) / 2f;
 		} else {
 			title.y = 20 + (topRegion - title.height() - 20) / 2f;
@@ -105,7 +105,7 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					TitleScene.this.add( new WndStartGame(1) );
 				} else {
-					YASD.switchScene( StartScene.class );
+					MainGame.switchScene( StartScene.class );
 				}
 			}
 			
@@ -137,7 +137,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnRankings = new TitleButton(Messages.get(this, "rankings")){
 			@Override
 			protected void onClick() {
-				YASD.switchScene( RankingsScene.class );
+				MainGame.switchScene( RankingsScene.class );
 			}
 		};
 		btnRankings.icon(Icons.get(Icons.RANKINGS));
@@ -146,7 +146,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnBadges = new TitleButton(Messages.get(this, "badges")){
 			@Override
 			protected void onClick() {
-				YASD.switchScene( BadgesScene.class );
+				MainGame.switchScene( BadgesScene.class );
 			}
 		};
 		btnBadges.icon(Icons.get(Icons.BADGES));
@@ -156,7 +156,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				ChangesScene.changesSelected = 0;
-				YASD.switchScene( ChangesScene.class );
+				MainGame.switchScene( ChangesScene.class );
 			}
 		};
 		btnChanges.icon(Icons.get(Icons.CHANGES));
@@ -165,18 +165,18 @@ public class TitleScene extends PixelScene {
 		TitleButton btnAbout = new TitleButton(Messages.get(this, "about")){
 			@Override
 			protected void onClick() {
-				YASD.switchScene( AboutScene.class );
+				MainGame.switchScene( AboutScene.class );
 			}
 		};
 		btnAbout.icon(Icons.get(Icons.SHPX));
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 21;
-		int GAP = (int)(h - topRegion - (YASDSettings.landscape() ? 3 : 4)*BTN_HEIGHT)/3;
-		GAP /= YASDSettings.landscape() ? 3 : 4;
+		int GAP = (int)(h - topRegion - (MainGameSettings.landscape() ? 3 : 4)*BTN_HEIGHT)/3;
+		GAP /= MainGameSettings.landscape() ? 3 : 4;
 		GAP = Math.max(GAP, 2);
 
-		if (YASDSettings.landscape()) {
+		if (MainGameSettings.landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
 			btnSettings.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);

@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.journal.Journal;
@@ -98,9 +98,9 @@ public class WndStartGame extends Window {
 				GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				Dungeon.difficulty = YASDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
-				if (YASDSettings.intro()) {
-					YASDSettings.intro( false );
+				Dungeon.difficulty = MainGameSettings.difficulty();//I could just call MainGameSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				if (MainGameSettings.intro()) {
+					MainGameSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
 					InterlevelScene.descend();
@@ -123,22 +123,22 @@ public class WndStartGame extends Window {
 				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, 3) {
 			@Override
 			protected void onChange() {
-				YASDSettings.difficulty(getSelectedValue());
+				MainGameSettings.difficulty(getSelectedValue());
 			}
 		};
-		difficulty.setSelectedValue(YASDSettings.difficulty());
+		difficulty.setSelectedValue(MainGameSettings.difficulty());
 		difficulty.setRect(0, start.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 		add(difficulty);
 
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
 			IconButton challengeButton = new IconButton(
-					Icons.get( YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+					Icons.get( MainGameSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 				@Override
 				protected void onClick() {
-					YASD.scene().add(new WndChallenges(YASDSettings.challenges(), true) {
+					MainGame.scene().add(new WndChallenges(MainGameSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
-							icon( Icons.get( YASDSettings.challenges() > 0 ?
+							icon( Icons.get( MainGameSettings.challenges() > 0 ?
 									Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF ) );
 						}
 					} );
@@ -158,7 +158,7 @@ public class WndStartGame extends Window {
 			
 		} else {
 			Dungeon.challenges = 0;
-			YASDSettings.challenges(0);
+			MainGameSettings.challenges(0);
 		}
 		
 		resize(WIDTH, (int) difficulty.bottom());
@@ -221,7 +221,7 @@ public class WndStartGame extends Window {
 			super.onClick();
 			
 			if( !cl.isUnlocked() ){
-				YASD.scene().add(
+				MainGame.scene().add(
 						new WndMessage(cl.unlockMsg()));
 			} else {
 				GamesInProgress.selectedClass = cl;
@@ -256,7 +256,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
+					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
 				}
 			};
 			heroItem.setSize(BTN_SIZE, BTN_SIZE);
@@ -266,7 +266,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
+					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
 				}
 			};
 			heroLoadout.setSize(BTN_SIZE, BTN_SIZE);
@@ -276,7 +276,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					YASD.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
+					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
 				}
 			};
 			heroMisc.setSize(BTN_SIZE, BTN_SIZE);
@@ -290,7 +290,7 @@ public class WndStartGame extends Window {
 					for (HeroSubClass sub : cl.subClasses()){
 						msg += "\n\n" + sub.desc();
 					}
-					YASD.scene().add(new WndMessage(msg));
+					MainGame.scene().add(new WndMessage(msg));
 				}
 			};
 			heroSubclass.setSize(BTN_SIZE, BTN_SIZE);

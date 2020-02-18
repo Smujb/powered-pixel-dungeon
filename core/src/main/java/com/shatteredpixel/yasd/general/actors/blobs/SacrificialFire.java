@@ -31,11 +31,12 @@ public class SacrificialFire extends Blob {
     @Override
     public void restoreFromBundle( Bundle bundle ) {
         super.restoreFromBundle( bundle );
-
-        for (int i = 0; i < cur.length; i++) {
-            if (cur[i] > 0) {
-                pos = i;
-                break;
+        if (cur != null && cur.length > 0) {
+            for (int i = 0; i < cur.length; i++) {
+                if (cur[i] > 0) {
+                    pos = i;
+                    break;
+                }
             }
         }
     }

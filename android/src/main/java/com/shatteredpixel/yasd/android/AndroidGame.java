@@ -33,8 +33,9 @@ import android.telephony.TelephonyManager;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.ModHandler;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 
@@ -66,11 +67,11 @@ public class AndroidGame extends AndroidApplication {
 		builder.build();
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
-		YASDSettings.setPrefsFromInstance(instance);
+		MainGameSettings.setPrefsFromInstance(instance);
 		
 		//set desired orientation (if it exists) before initializing the app.
-		if (YASDSettings.landscapeFromSettings() != null) {
-			if (YASDSettings.landscapeFromSettings()){
+		if (MainGameSettings.landscapeFromSettings() != null) {
+			if (MainGameSettings.landscapeFromSettings()){
 				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 			} else {
 				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
@@ -92,8 +93,10 @@ public class AndroidGame extends AndroidApplication {
 		support = new AndroidPlatformSupport();
 		
 		support.updateSystemUI();
-		
-		initialize(new YASD(support), config);
+		//TODO: Add support for switching games
+		//com.shatteredpixel.yasd.general.MainGame mainGame = ModHandler.mod.newObject(com.shatteredpixel.yasd.general.MainGame.class, support);
+		MainGame mainGame = new MainGame(support);
+		initialize(mainGame, config);
 		
 		view = (GLSurfaceView)graphics.getView();
 		

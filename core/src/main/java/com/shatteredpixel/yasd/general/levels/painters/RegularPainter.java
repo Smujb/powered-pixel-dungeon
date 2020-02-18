@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Patch;
 import com.shatteredpixel.yasd.general.levels.Terrain;
@@ -148,7 +148,7 @@ public abstract class RegularPainter extends Painter {
 						doorSpots.add(p);
 				}
 				if (doorSpots.isEmpty()){
-					YASD.reportException(
+					MainGame.reportException(
 							new RuntimeException("Could not place a door! " +
 									"r=" + r.getClass().getSimpleName() +
 									" n=" + n.getClass().getSimpleName()));

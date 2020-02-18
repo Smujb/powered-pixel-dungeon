@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
-import com.shatteredpixel.yasd.general.YASD;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -314,7 +314,7 @@ public class InterlevelScene extends PixelScene {
 					s += "\n";
 					s += t.toString();
 				}
-				YASD.reportException(
+				MainGame.reportException(
 						new RuntimeException("waited more than 10 seconds on levelgen. " +
 								"Seed:" + Dungeon.seed + " depth:" + Dungeon.depth + " trace:" +
 								s)
@@ -356,7 +356,7 @@ public class InterlevelScene extends PixelScene {
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
 		msg = Messages.get(Mode.class, Mode.CONTINUE.name());
-		YASD.switchScene(InterlevelScene.class);
+		MainGame.switchScene(InterlevelScene.class);
 	}
 
 	public static void move(int depthToAccess, int path, String msg, Mode mode) {
@@ -364,7 +364,7 @@ public class InterlevelScene extends PixelScene {
 		InterlevelScene.path = path;
 		InterlevelScene.msg = msg;
 		InterlevelScene.mode = mode;
-		YASD.switchScene(InterlevelScene.class);
+		MainGame.switchScene(InterlevelScene.class);
 	}
 
 	public static void resetMode() {

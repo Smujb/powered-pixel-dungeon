@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
@@ -51,6 +52,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.utils.DungeonSeed;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -156,7 +158,7 @@ public class Dungeon {
 	public static void init() {
 
 		version = Game.versionCode;
-		challenges = YASDSettings.challenges();
+		challenges = MainGameSettings.challenges();
 
 		seed = DungeonSeed.randomSeed();
 
@@ -255,9 +257,9 @@ public class Dungeon {
 			try {
 				level = levelClass.newInstance();
 			} catch (InstantiationException e) {
-				YASD.reportException(e);
+				MainGame.reportException(e);
 			} catch (IllegalAccessException e) {
-				YASD.reportException(e);
+				MainGame.reportException(e);
 			}
 		} while (level == null);
 
@@ -362,7 +364,7 @@ public class Dungeon {
 		try {
 			saveAll();
 		} catch (IOException e) {
-			YASD.reportException(e);
+			MainGame.reportException(e);
 			/*This only catches IO errors. Yes, this means things can go wrong, and they can go wrong catastrophically.
 			But when they do the user will get a nice 'report this issue' dialogue, and I can fix the bug.*/
 		}
@@ -460,6 +462,8 @@ public class Dungeon {
 				bundle.put(Messages.format(PORTED, p), portedItems.get(p));
 			}
 
+			ModHandler.mod.storeInBundle( bundle );
+
 			quickslot.storePlaceholders( bundle );
 
 			Bundle limDrops = new Bundle();
@@ -501,7 +505,7 @@ public class Dungeon {
 			
 		} catch (IOException e) {
 			GamesInProgress.setUnknown( save );
-			YASD.reportException(e);
+			MainGame.reportException(e);
 		}
 	}
 	
@@ -540,7 +544,7 @@ public class Dungeon {
 
 		path = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
 
-		if (version < YASD.v0_2_4) {
+		if (version < MainGame.v0_2_4) {
 			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
 			for (int j = 0; j <= Constants.NUM_PATHS; j++) {
 				for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
@@ -554,6 +558,8 @@ public class Dungeon {
 		}
 
 		Actor.restoreNextID( bundle );
+
+		ModHandler.mod.restoreFromBundle( bundle );
 
 		quickslot.reset();
 		QuickSlotButton.reset();
@@ -674,7 +680,7 @@ public class Dungeon {
 		FileUtils.deleteFile(GamesInProgress.gameFile(save));
 		
 		if (deleteLevels) {
-			FileUtils.deleteDir(GamesInProgress.gameFolder(save));
+			FileUtils.deleteDir(GamesInProgress.slotFolder(save));
 		}
 		
 		GamesInProgress.delete( save );

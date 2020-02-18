@@ -23,8 +23,9 @@ package com.shatteredpixel.yasd.general.messages;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.ModHandler;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -77,7 +78,7 @@ public class Messages {
 	};
 
 	static{
-		setup(YASDSettings.language());
+		setup(MainGameSettings.language());
 	}
 
 	public static void setup( Languages lang ){
@@ -99,7 +100,7 @@ public class Messages {
 					try {
 						value = new String(value.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
 					} catch (Exception e) {
-						YASD.reportException(e);
+						MainGame.reportException(e);
 					}
 				}
 
@@ -127,10 +128,10 @@ public class Messages {
 		String key;
 		if (c != null){
 			key = c.getName();
-			if (key.contains("com.shatteredpixel.yasd.general.")) {
-				key = key.replace("com.shatteredpixel.yasd.general.", "");
-			} else {
-				key = key.replace("com.shatteredpixel.yasd.", "");
+			if (key.contains(ModHandler.mod.getPackage())) {
+				key = key.replace(ModHandler.mod.getPackage(), "");
+			} else if (key.contains(ModHandler.NONE.getPackage())) {
+				key = key.replace(ModHandler.NONE.getPackage(), "");
 			}
 			key += "." + k;
 		} else
@@ -165,7 +166,7 @@ public class Messages {
 		try {
 			return String.format(Locale.ENGLISH, format, args);
 		} catch (IllegalFormatException e) {
-			YASD.reportException( e );
+			MainGame.reportException( e );
 			return format;
 		}
 	}

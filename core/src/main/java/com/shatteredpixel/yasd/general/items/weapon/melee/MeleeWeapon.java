@@ -23,10 +23,9 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
@@ -199,7 +198,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		if (Dungeon.version >= YASD.v0_2_0) {//Support older saves
+		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);
 		}
 	}

@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -76,7 +76,7 @@ public class WndGameInProgress extends Window {
 			protected boolean onLongClick() {
 				try {
 					Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));
-					YASD.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
+					MainGame.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
 							"Version: " + Game.version + " (" + Game.versionCode + ")\n" +
 							"Seed: " + bundle.getLong("seed") + "\n" +
 							"Challenge Mask: " + info.challenges));
@@ -128,7 +128,7 @@ public class WndGameInProgress extends Window {
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
 				//InterlevelScene.mode = InterlevelScene.Mode.CONTINUE;
-				//YASD.switchScene(InterlevelScene.class);
+				//MainGame.switchScene(InterlevelScene.class);
 				InterlevelScene.doRestore();
 			}
 		};
@@ -138,7 +138,7 @@ public class WndGameInProgress extends Window {
 			protected void onClick() {
 				super.onClick();
 				
-				YASD.scene().add(new WndOptions(
+				MainGame.scene().add(new WndOptions(
 						Messages.get(WndGameInProgress.class, "erase_warn_title"),
 						Messages.get(WndGameInProgress.class, "erase_warn_body"),
 						Messages.get(WndGameInProgress.class, "erase_warn_yes"),
@@ -146,9 +146,9 @@ public class WndGameInProgress extends Window {
 					@Override
 					protected void onSelect( int index ) {
 						if (index == 0) {
-							FileUtils.deleteDir(GamesInProgress.gameFolder(slot));
+							FileUtils.deleteDir(GamesInProgress.slotFolder(slot));
 							GamesInProgress.setUnknown(slot);
-							YASD.switchNoFade(StartScene.class);
+							MainGame.switchNoFade(StartScene.class);
 						}
 					}
 				} );

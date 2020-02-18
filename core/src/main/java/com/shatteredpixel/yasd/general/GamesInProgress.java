@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+
 public class GamesInProgress {
 	
 	public static final int MAX_SLOTS = 4;
@@ -43,34 +44,33 @@ public class GamesInProgress {
 	public static int curSlot;
 	
 	public static HeroClass selectedClass;
-	
-	private static final String GAME_FOLDER = "game%d";
+
+	private static String gameFolder() {
+		return "MainGame/";
+	}
+	private static final String SLOT_FOLDER = "slot%d";
 	private static final String PATH_FOLDER = "path%d";
 	private static final String GAME_FILE	= "game.dat";
 	private static final String DEPTH_FILE	= "depth%d.dat";
 	
 	public static boolean gameExists( int slot ){
-		return FileUtils.dirExists(Messages.format(GAME_FOLDER, slot));
+		return FileUtils.dirExists(gameFolder() + Messages.format(SLOT_FOLDER, slot));
 	}
 	
-	public static String gameFolder( int slot ){
-		return Messages.format(GAME_FOLDER, slot);
+	public static String slotFolder(int slot ){
+		return gameFolder() + Messages.format(SLOT_FOLDER, slot);
 	}
 
-	public static String pathFolder(int path ){
+	public static String pathFolder( int path ){
 		return Messages.format(PATH_FOLDER, path);
 	}
 	
 	public static String gameFile( int slot ){
-		return gameFolder(slot) + "/" + GAME_FILE;
+		return slotFolder(slot) + "/" + GAME_FILE;
 	}
-	
-	/*public static String depthFile( int slot, int depth ) {
-		return gameFolder(slot) + "/" + Messages.format(DEPTH_FILE, depth);
-	}*/
 
 	public static String depthFile( int slot, int depth, int path ) {
-		return gameFolder(slot) + "/" + pathFolder(path) + "/" + Messages.format(DEPTH_FILE, depth);
+		return slotFolder(slot) + "/" + pathFolder(path) + "/" + Messages.format(DEPTH_FILE, depth);
 	}
 	
 	public static int firstEmpty(){
@@ -112,14 +112,14 @@ public class GamesInProgress {
 				Dungeon.preview(info, bundle);
 				
 				//saves from before 0.6.5c are not supported
-				if (info.version < YASD.v0_6_5c) {
+				if (info.version < MainGame.v0_6_5c) {
 					info = null;
 				}
 
 			} catch (IOException e) {
 				info = null;
 			} catch (Exception e){
-				YASD.reportException( e );
+				MainGame.reportException( e );
 				info = null;
 			}
 			

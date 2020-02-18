@@ -24,7 +24,7 @@ package com.shatteredpixel.yasd.general.items.artifacts;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
@@ -42,7 +42,6 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
@@ -230,7 +229,7 @@ public class DriedRose extends Artifact {
 					ghostID = 0;
 				}
 			} catch ( ClassCastException e ){
-				YASD.reportException(e);
+				MainGame.reportException(e);
 				ghostID = 0;
 			}
 		}
@@ -627,15 +626,7 @@ public class DriedRose extends Artifact {
 		
 		@Override
 		public void damage(int dmg, Object src) {
-			//TODO improve this when I have proper damage source logic
-			if (rose != null && rose.armor != null && rose.armor.hasGlyph(AntiMagic.class, this)
-					&& AntiMagic.RESISTS.contains(src.getClass())){
-				dmg -= AntiMagic.drRoll(rose.armor.level());
-			}
-			
 			super.damage( dmg, src );
-			
-			//for the rose status indicator
 			Item.updateQuickslot();
 		}
 		
@@ -758,7 +749,7 @@ public class DriedRose extends Artifact {
 					yell( Messages.get( this, "dialogue_halls_" + variant ));
 					break;
 			}
-			if (YASD.scene() instanceof GameScene) {
+			if (MainGame.scene() instanceof GameScene) {
 				Sample.INSTANCE.play( Assets.SND_GHOST );
 			}
 		}

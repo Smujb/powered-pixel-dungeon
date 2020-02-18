@@ -201,7 +201,7 @@ public class Badges {
 					badges.add( Badge.valueOf( names[i] ) );
 				}
 			} catch (Exception e) {
-				YASD.reportException(e);
+				MainGame.reportException(e);
 			}
 		}
 	
@@ -248,7 +248,7 @@ public class Badges {
 				FileUtils.bundleToFile(BADGES_FILE, bundle);
 				saveNeeded = false;
 			} catch (IOException e) {
-				YASD.reportException(e);
+				MainGame.reportException(e);
 			}
 		}
 	}

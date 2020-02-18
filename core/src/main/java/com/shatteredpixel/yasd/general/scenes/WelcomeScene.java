@@ -22,9 +22,9 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Chrome;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.Rankings;
-import com.shatteredpixel.yasd.general.YASD;
-import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -40,16 +40,16 @@ import com.watabou.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static int LATEST_UPDATE = YASD.v0_2_7;
+	private static int LATEST_UPDATE = MainGame.v0_2_8;
 
 	@Override
 	public void create() {
 		super.create();
 
-		final int previousVersion = YASDSettings.version();
+		final int previousVersion = MainGameSettings.version();
 
-		if (YASD.versionCode == previousVersion) {
-			YASD.switchNoFade(TitleScene.class);
+		if (MainGame.versionCode == previousVersion) {
+			MainGame.switchNoFade(TitleScene.class);
 			return;
 		}
 
@@ -65,7 +65,7 @@ public class WelcomeScene extends PixelScene {
 		float topRegion = Math.max(title.height, h*0.45f);
 		
 		title.x = (w - title.width()) / 2f;
-		if (YASDSettings.landscape()) {
+		if (MainGameSettings.landscape()) {
 			title.y = (topRegion - title.height()) / 2f;
 		} else {
 			title.y = 20 + (topRegion - title.height() - 20) / 2f;
@@ -97,11 +97,11 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					YASDSettings.version(YASD.versionCode);
+					MainGameSettings.version(MainGame.versionCode);
 					WelcomeScene.this.add(new WndStartGame(1));
 				} else {
 					updateVersion(previousVersion);
-					YASD.switchScene(TitleScene.class);
+					MainGame.switchScene(TitleScene.class);
 				}
 			}
 		};
@@ -113,7 +113,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					YASD.switchScene(ChangesScene.class);
+					MainGame.switchScene(ChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, h-25, (title.width()/2)-2, 21);
@@ -133,7 +133,7 @@ public class WelcomeScene extends PixelScene {
 		String message;
 		if (previousVersion == 0) {
 			message = Messages.get(this, "welcome_msg");
-		} else if (previousVersion <= YASD.versionCode) {
+		} else if (previousVersion <= MainGame.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
@@ -166,7 +166,7 @@ public class WelcomeScene extends PixelScene {
 			}
 		}
 		
-		YASDSettings.version(YASD.versionCode);
+		MainGameSettings.version(MainGame.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {

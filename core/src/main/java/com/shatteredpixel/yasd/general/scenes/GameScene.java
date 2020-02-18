@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -169,16 +169,16 @@ public class GameScene extends PixelScene {
 	public void create() {
 		
 		if (Dungeon.hero == null){
-			YASD.switchNoFade(TitleScene.class);
+			MainGame.switchNoFade(TitleScene.class);
 			return;
 		}
 
 		Music.INSTANCE.play( Assets.TUNE, true );
 
-		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		MainGameSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + YASDSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + MainGameSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -488,7 +488,7 @@ public class GameScene extends PixelScene {
 				try {
 					GameScene.class.wait(5000);
 				} catch (InterruptedException e) {
-					YASD.reportException(e);
+					MainGame.reportException(e);
 				}
 				synchronized (actorThread) {
 					if (Actor.processing()) {
@@ -516,7 +516,7 @@ public class GameScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			YASD.reportException(e);
+			MainGame.reportException(e);
 		}
 	}
 
@@ -599,9 +599,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = YASDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = MainGameSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (YASDSettings.flipTags()) {
+		if (MainGameSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

@@ -113,5 +113,4 @@ public class GameSettings {
 		get().putString(key, value);
 		get().flush();
 	}
-	
 }

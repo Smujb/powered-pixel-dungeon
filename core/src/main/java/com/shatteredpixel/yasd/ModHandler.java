@@ -1,16 +1,16 @@
 package com.shatteredpixel.yasd;
 
-import com.shatteredpixel.yasd.yasd.MainGame;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 import java.lang.reflect.InvocationTargetException;
 
-public enum  ModHandler implements Bundlable {
+public enum ModHandler implements Bundlable {
 	NONE,
 	YASD,
-	TEST;
+	TEST,
+	CURSED;
 
 	public static ModHandler mod = YASD;
 
@@ -33,8 +33,13 @@ public enum  ModHandler implements Bundlable {
 				return base + "general.";
 			case YASD:
 				return base + "yasd.";
+			case TEST:
+				return base + "test.";
+			case CURSED:
+				return base + "cursed.";
 		}
 	}
+
 	//Note that it can only replace the class in ...yasd.general. not anywhere else. It's only possible to do this also if the replacement extends the original.
 	public static  <T> Class<T> replaceType(Class<T> cl) {
 		return ModHandler.mod.replaceClass(cl);
@@ -42,7 +47,7 @@ public enum  ModHandler implements Bundlable {
 
 	public <T> Class<T> replaceClass(Class<T> cl) {
 		String className = cl.getName();
-		className = className.replace(NONE.getPackage(), mod.getPackage());
+		className = className.replace(NONE.getPackage(), mod.getPackage() + "_");
 		try {
 			return (Class<T>) Class.forName(className);
 		} catch (Exception e) {

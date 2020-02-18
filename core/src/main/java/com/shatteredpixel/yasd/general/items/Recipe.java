@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items;
 
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.food.Blandfruit;
@@ -154,7 +154,7 @@ public abstract class Recipe {
 				result.quantity(outQuantity);
 				return result;
 			} catch (Exception e) {
-				YASD.reportException( e );
+				MainGame.reportException( e );
 				return null;
 			}
 		}

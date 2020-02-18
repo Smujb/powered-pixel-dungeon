@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASD;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -176,7 +176,7 @@ public abstract class SpecialRoom extends Room {
 			}
 		} else {
 			initForRun();
-			YASD.reportException(new Exception("specials array didn't exist!"));
+			MainGame.reportException(new Exception("specials array didn't exist!"));
 		}
 		pitNeededDepth = bundle.getInt(PIT);
 	}

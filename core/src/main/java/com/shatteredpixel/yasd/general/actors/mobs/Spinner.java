@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -46,7 +47,7 @@ public class Spinner extends Mob {
 		EXP = 9;
 		maxLvl = 17;
 
-		loot = new MysteryMeat();
+		loot = ModHandler.createObject(MysteryMeat.class);
 		lootChance = 0.125f;
 
 		FLEEING = new Fleeing();

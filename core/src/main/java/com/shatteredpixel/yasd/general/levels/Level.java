@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
-import com.shatteredpixel.yasd.general.YASD;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -330,13 +330,13 @@ public abstract class Level implements Bundlable {
 		version = bundle.getInt( VERSION );
 		
 		//saves from before 0.6.5c are not supported
-		if (version < YASD.v0_6_5c){
+		if (version < MainGame.v0_6_5c){
 			throw new RuntimeException("old save");
 		}
 
 		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
 
-		if (version < YASD.v0_2_3) {
+		if (version < MainGame.v0_2_3) {
 			state = State.REGULAR;
 		} else {
 			state = bundle.getEnum(STATE, State.class);
