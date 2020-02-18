@@ -1,1 +1,1 @@
-include ':core', ':SPD-classes', ':android', ':desktop'
+include ':core', ':SPD-classes', ':android', ':desktop', ':YASD'
