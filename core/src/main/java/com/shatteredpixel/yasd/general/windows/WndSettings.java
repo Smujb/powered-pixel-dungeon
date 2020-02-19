@@ -23,8 +23,8 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -113,8 +113,8 @@ public class WndSettings extends WndTabbed {
 					PixelScene.maxDefaultZoom ) {
 				@Override
 				protected void onChange() {
-					if (getSelectedValue() != MainGameSettings.scale()) {
-						MainGameSettings.scale(getSelectedValue());
+					if (getSelectedValue() != GameSettings.scale()) {
+						GameSettings.scale(getSelectedValue());
 						MainGame.seamlessResetScene();
 					}
 				}
@@ -140,27 +140,27 @@ public class WndSettings extends WndTabbed {
 							protected void onSelect(int index) {
 								if (index == 0) {
 									checked(!checked());
-									MainGameSettings.powerSaver(checked());
+									GameSettings.powerSaver(checked());
 								}
 							}
 						});
 					} else {
-						MainGameSettings.powerSaver(checked());
+						GameSettings.powerSaver(checked());
 					}
 				}
 			};
 			if (PixelScene.maxScreenZoom >= 2) {
 				chkSaver.setRect(0, scale.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-				chkSaver.checked(MainGameSettings.powerSaver());
+				chkSaver.checked(GameSettings.powerSaver());
 				add(chkSaver);
 			}
 
-			RedButton btnOrientation = new RedButton( MainGameSettings.landscape() ?
+			RedButton btnOrientation = new RedButton( GameSettings.landscape() ?
 					Messages.get(this, "portrait")
 					: Messages.get(this, "landscape") ) {
 				@Override
 				protected void onClick() {
-					MainGameSettings.landscape(!MainGameSettings.landscape());
+					GameSettings.landscape(!GameSettings.landscape());
 				}
 			};
 			btnOrientation.setRect(0, chkSaver.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
@@ -171,10 +171,10 @@ public class WndSettings extends WndTabbed {
 					Messages.get(this, "dark"), Messages.get(this, "bright"), -2, 2) {
 				@Override
 				protected void onChange() {
-					MainGameSettings.brightness(getSelectedValue());
+					GameSettings.brightness(getSelectedValue());
 				}
 			};
-			brightness.setSelectedValue(MainGameSettings.brightness());
+			brightness.setSelectedValue(GameSettings.brightness());
 			brightness.setRect(0, btnOrientation.bottom() + GAP_LRG, WIDTH, SLIDER_HEIGHT);
 			add(brightness);
 
@@ -182,10 +182,10 @@ public class WndSettings extends WndTabbed {
 					Messages.get(this, "off"), Messages.get(this, "high"), -1, 3) {
 				@Override
 				protected void onChange() {
-					MainGameSettings.visualGrid(getSelectedValue());
+					GameSettings.visualGrid(getSelectedValue());
 				}
 			};
-			tileGrid.setSelectedValue(MainGameSettings.visualGrid());
+			tileGrid.setSelectedValue(GameSettings.visualGrid());
 			tileGrid.setRect(0, brightness.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 			add(tileGrid);
 
@@ -193,15 +193,21 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					MainGame.scene().addToFront(new WndOptions(Messages.get(DisplayTab.class, "mods_title"),
-							Messages.get(DisplayTab.class, "mods_text", ModHandler.mod.name()),
-							Messages.titleCase(ModHandler.YASD.name()),
-							Messages.titleCase(ModHandler.TEST.name())) {
+							Messages.get(DisplayTab.class, "mods_text", ModHandler.getName()),
+							Messages.titleCase(ModHandler.NONE.displayName()),
+							Messages.titleCase(ModHandler.YASD.displayName()),
+							Messages.titleCase(ModHandler.CURSED.displayName()),
+							Messages.titleCase(ModHandler.TEST.displayName())) {
 						@Override
 						protected void onSelect(int index) {
-							if (index == 0) {
-								ModHandler.mod = ModHandler.YASD;
-							} else if (index == 1) {
-								ModHandler.mod = ModHandler.TEST;
+							if (index == ModHandler.YASD.getValue()) {
+								GameSettings.mod(ModHandler.YASD.getValue());
+							} else if (index == ModHandler.TEST.getValue()) {
+								GameSettings.mod(ModHandler.TEST.getValue());
+							} else if (index == ModHandler.CURSED.getValue()) {
+								GameSettings.mod(ModHandler.CURSED.getValue());
+							} else if (index == ModHandler.NONE.getValue()) {
+								GameSettings.mod(ModHandler.NONE.getValue());
 							}
 						}
 					});
@@ -226,7 +232,7 @@ public class WndSettings extends WndTabbed {
 			RedButton btnSplit = new RedButton(Messages.get(this, "split")){
 				@Override
 				protected void onClick() {
-					MainGameSettings.toolbarMode(Toolbar.Mode.SPLIT.name());
+					GameSettings.toolbarMode(Toolbar.Mode.SPLIT.name());
 					Toolbar.updateLayout();
 				}
 			};
@@ -236,7 +242,7 @@ public class WndSettings extends WndTabbed {
 			RedButton btnGrouped = new RedButton(Messages.get(this, "group")){
 				@Override
 				protected void onClick() {
-					MainGameSettings.toolbarMode(Toolbar.Mode.GROUP.name());
+					GameSettings.toolbarMode(Toolbar.Mode.GROUP.name());
 					Toolbar.updateLayout();
 				}
 			};
@@ -246,7 +252,7 @@ public class WndSettings extends WndTabbed {
 			RedButton btnCentered = new RedButton(Messages.get(this, "center")){
 				@Override
 				protected void onClick() {
-					MainGameSettings.toolbarMode(Toolbar.Mode.CENTER.name());
+					GameSettings.toolbarMode(Toolbar.Mode.CENTER.name());
 					Toolbar.updateLayout();
 				}
 			};
@@ -257,34 +263,34 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.flipToolbar(checked());
+					GameSettings.flipToolbar(checked());
 					Toolbar.updateLayout();
 				}
 			};
 			chkFlipToolbar.setRect(0, btnGrouped.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			chkFlipToolbar.checked(MainGameSettings.flipToolbar());
+			chkFlipToolbar.checked(GameSettings.flipToolbar());
 			add(chkFlipToolbar);
 
 			final CheckBox chkFlipTags = new CheckBox(Messages.get(this, "flip_indicators")){
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.flipTags(checked());
+					GameSettings.flipTags(checked());
 					GameScene.layoutTags();
 				}
 			};
 			chkFlipTags.setRect(0, chkFlipToolbar.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			chkFlipTags.checked(MainGameSettings.flipTags());
+			chkFlipTags.checked(GameSettings.flipTags());
 			add(chkFlipTags);
 
 			OptionSlider slots = new OptionSlider(Messages.get(this, "quickslots"), "0", "4", 0, 4) {
 				@Override
 				protected void onChange() {
-					MainGameSettings.quickSlots(getSelectedValue());
+					GameSettings.quickSlots(getSelectedValue());
 					Toolbar.updateLayout();
 				}
 			};
-			slots.setSelectedValue(MainGameSettings.quickSlots());
+			slots.setSelectedValue(GameSettings.quickSlots());
 			slots.setRect(0, chkFlipTags.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 			add(slots);
 
@@ -292,11 +298,11 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.fullscreen(checked());
+					GameSettings.fullscreen(checked());
 				}
 			};
 			chkImmersive.setRect( 0, slots.bottom() + GAP_SML, WIDTH, BTN_HEIGHT );
-			chkImmersive.checked(MainGameSettings.fullscreen());
+			chkImmersive.checked(GameSettings.fullscreen());
 			chkImmersive.enable(DeviceCompat.supportsFullScreen());
 			add(chkImmersive);
 
@@ -307,7 +313,7 @@ public class WndSettings extends WndTabbed {
 					MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
-							MainGameSettings.systemFont(checked());
+							GameSettings.systemFont(checked());
 						}
 
 						@Override
@@ -318,7 +324,7 @@ public class WndSettings extends WndTabbed {
 				}
 			};
 			chkFont.setRect(0, chkImmersive.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			chkFont.checked(MainGameSettings.systemFont());
+			chkFont.checked(GameSettings.systemFont());
 			add(chkFont);
 		}
 
@@ -330,10 +336,10 @@ public class WndSettings extends WndTabbed {
 			OptionSlider musicVol = new OptionSlider(Messages.get(this, "music_vol"), "0", "10", 0, 10) {
 				@Override
 				protected void onChange() {
-					MainGameSettings.musicVol(getSelectedValue());
+					GameSettings.musicVol(getSelectedValue());
 				}
 			};
-			musicVol.setSelectedValue(MainGameSettings.musicVol());
+			musicVol.setSelectedValue(GameSettings.musicVol());
 			musicVol.setRect(0, 0, WIDTH, SLIDER_HEIGHT);
 			add(musicVol);
 
@@ -341,21 +347,21 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.music(!checked());
+					GameSettings.music(!checked());
 				}
 			};
 			musicMute.setRect(0, musicVol.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			musicMute.checked(!MainGameSettings.music());
+			musicMute.checked(!GameSettings.music());
 			add(musicMute);
 
 
 			OptionSlider SFXVol = new OptionSlider(Messages.get(this, "sfx_vol"), "0", "10", 0, 10) {
 				@Override
 				protected void onChange() {
-					MainGameSettings.SFXVol(getSelectedValue());
+					GameSettings.SFXVol(getSelectedValue());
 				}
 			};
-			SFXVol.setSelectedValue(MainGameSettings.SFXVol());
+			SFXVol.setSelectedValue(GameSettings.SFXVol());
 			SFXVol.setRect(0, musicMute.bottom() + GAP_LRG, WIDTH, SLIDER_HEIGHT);
 			add(SFXVol);
 
@@ -363,24 +369,24 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.soundFx(!checked());
+					GameSettings.soundFx(!checked());
 					Sample.INSTANCE.play( Assets.SND_CLICK );
 				}
 			};
 			btnSound.setRect(0, SFXVol.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			btnSound.checked(!MainGameSettings.soundFx());
+			btnSound.checked(!GameSettings.soundFx());
 			add( btnSound );
 
 			CheckBox btnVibrate = new CheckBox( Messages.get(this, "vibrate") ) {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGameSettings.vibrate(checked());
+					GameSettings.vibrate(checked());
 					Sample.INSTANCE.play( Assets.SND_CLICK );
 				}
 			};
 			btnVibrate.setRect(0, btnSound.bottom() + GAP_LRG, WIDTH, BTN_HEIGHT);
-			btnVibrate.checked(MainGameSettings.vibrate());
+			btnVibrate.checked(GameSettings.vibrate());
 			add( btnVibrate );
 
 			resize( WIDTH, (int)btnVibrate.bottom());

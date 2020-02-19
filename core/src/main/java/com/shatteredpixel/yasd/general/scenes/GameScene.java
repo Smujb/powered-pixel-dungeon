@@ -26,7 +26,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -175,10 +175,10 @@ public class GameScene extends PixelScene {
 
 		Music.INSTANCE.play( Assets.TUNE, true );
 
-		MainGameSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		GameSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + MainGameSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + GameSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -599,9 +599,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = MainGameSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = GameSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (MainGameSettings.flipTags()) {
+		if (GameSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

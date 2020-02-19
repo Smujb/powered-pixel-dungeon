@@ -25,7 +25,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -78,7 +78,7 @@ public class Messages {
 	};
 
 	static{
-		setup(MainGameSettings.language());
+		setup(GameSettings.language());
 	}
 
 	public static void setup( Languages lang ){
@@ -128,8 +128,8 @@ public class Messages {
 		String key;
 		if (c != null){
 			key = c.getName();
-			if (key.contains(ModHandler.mod.getPackage())) {
-				key = key.replace(ModHandler.mod.getPackage(), "");
+			if (key.contains(ModHandler.modPackage())) {
+				key = key.replace(ModHandler.modPackage(), "");
 			} else if (key.contains(ModHandler.NONE.getPackage())) {
 				key = key.replace(ModHandler.NONE.getPackage(), "");
 			}

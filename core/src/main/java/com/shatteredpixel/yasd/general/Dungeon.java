@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
@@ -52,7 +51,6 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.utils.DungeonSeed;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -158,7 +156,7 @@ public class Dungeon {
 	public static void init() {
 
 		version = Game.versionCode;
-		challenges = MainGameSettings.challenges();
+		challenges = GameSettings.challenges();
 
 		seed = DungeonSeed.randomSeed();
 
@@ -462,7 +460,7 @@ public class Dungeon {
 				bundle.put(Messages.format(PORTED, p), portedItems.get(p));
 			}
 
-			ModHandler.mod.storeInBundle( bundle );
+			//ModHandler.mod.storeInBundle( bundle );
 
 			quickslot.storePlaceholders( bundle );
 
@@ -559,7 +557,7 @@ public class Dungeon {
 
 		Actor.restoreNextID( bundle );
 
-		ModHandler.mod.restoreFromBundle( bundle );
+		//ModHandler.mod.restoreFromBundle( bundle );
 
 		quickslot.reset();
 		QuickSlotButton.reset();

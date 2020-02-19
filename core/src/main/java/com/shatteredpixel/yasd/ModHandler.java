@@ -1,53 +1,77 @@
 package com.shatteredpixel.yasd;
 
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.watabou.utils.Bundlable;
-import com.watabou.utils.Bundle;
+import com.shatteredpixel.yasd.general.messages.Messages;
 
 import java.lang.reflect.InvocationTargetException;
 
-public enum ModHandler implements Bundlable {
-	NONE,
-	YASD,
-	TEST,
-	CURSED;
+public enum ModHandler {
+	NONE(0),
+	YASD(1),
+	TEST(2),
+	CURSED(3);
 
-	public static ModHandler mod = YASD;
+	ModHandler(int value) {
+		this.value = value;
+	}
 
-	private static String MOD = "mod";
+	private int value;
 
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		bundle.put(MOD, (Enum<?>) mod);
+	public int getValue() {
+		return value;
+	}
+
+	public static ModHandler mod() {
+		int mod = GameSettings.mod();
+		switch (mod) {
+			default:
+				return NONE;
+			case 1:
+				return YASD;
+			case 2:
+				return TEST;
+			case 3:
+				return CURSED;
+		}
+	}
+
+	public static String modPackage() {
+		return mod().getPackage();
 	}
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
-		mod = bundle.getEnum(MOD, ModHandler.class);
+	public String toString() {
+		switch (this) {
+			case NONE: default:
+				return "general";
+			case YASD:
+				return "yasd";
+			case TEST:
+				return "test";
+			case CURSED:
+				return "cursed";
+		}
 	}
 
 	public String getPackage() {
 		String base = "com.shatteredpixel.yasd.";
-		switch (this) {
-			case NONE: default:
-				return base + "general.";
-			case YASD:
-				return base + "yasd.";
-			case TEST:
-				return base + "test.";
-			case CURSED:
-				return base + "cursed.";
-		}
+		base += this.toString();
+		return base + ".";
+	}
+	public static String getName() {
+		return mod().displayName();
+	}
+
+	public String displayName() {
+		return Messages.get(ModHandler.replaceClass(MainGame.class), this.toString());
 	}
 
 	//Note that it can only replace the class in ...yasd.general. not anywhere else. It's only possible to do this also if the replacement extends the original.
-	public static  <T> Class<T> replaceType(Class<T> cl) {
-		return ModHandler.mod.replaceClass(cl);
-	}
 
-	public <T> Class<T> replaceClass(Class<T> cl) {
+	public static  <T> Class<T> replaceClass(Class<T> cl) {
 		String className = cl.getName();
-		className = className.replace(NONE.getPackage(), mod.getPackage() + "_");
+		className = className.replace(NONE.getPackage(), modPackage() + "_");
 		try {
 			return (Class<T>) Class.forName(className);
 		} catch (Exception e) {
@@ -55,18 +79,20 @@ public enum ModHandler implements Bundlable {
 		}
 	}
 
-	public static <T> T createObject(Class<T> cl, Object...args) {
-		return ModHandler.mod.newObject(cl, args);
-	}
-
-	public <T> T newObject(Class<T> cl, Object...args) {
+	public static  <T> T newObject(Class<T> cl, Object...args) {
 		cl = replaceClass(cl);
-		Class[] placeholder = new Class[args.length];
+		// build matching class args
+		Class<?>[] classArgs = new Class[args.length];
+		for (int i = 0; i < args.length; i++) {
+			classArgs[i] = args[i].getClass();
+		}
+
+		T result = null;
 		try {
 			if (args.length == 0) {
-				return cl.newInstance();
+				result = cl.newInstance();
 			} else {
-				return cl.getDeclaredConstructor(placeholder).newInstance(args);
+				result = cl.getConstructor(classArgs).newInstance(args);
 			}
 		} catch (InstantiationException e) {
 			MainGame.reportException(e);
@@ -77,6 +103,9 @@ public enum ModHandler implements Bundlable {
 		} catch (InvocationTargetException e) {
 			MainGame.reportException(e);
 		}
-		return null;
+
+		assert result != null;
+
+		return result;
 	}
 }

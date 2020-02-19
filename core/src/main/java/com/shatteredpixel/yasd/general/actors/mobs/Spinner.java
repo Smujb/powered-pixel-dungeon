@@ -47,7 +47,7 @@ public class Spinner extends Mob {
 		EXP = 9;
 		maxLvl = 17;
 
-		loot = ModHandler.createObject(MysteryMeat.class);
+		loot = ModHandler.newObject(MysteryMeat.class);
 		lootChance = 0.125f;
 
 		FLEEING = new Fleeing();

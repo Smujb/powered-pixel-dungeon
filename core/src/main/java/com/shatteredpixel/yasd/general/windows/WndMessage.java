@@ -21,7 +21,7 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
@@ -37,7 +37,7 @@ public class WndMessage extends Window {
 		super();
 		
 		RenderedTextBlock info = PixelScene.renderTextBlock( text, 6 );
-		info.maxWidth((MainGameSettings.landscape() ? WIDTH_L : WIDTH_P) - MARGIN * 2);
+		info.maxWidth((GameSettings.landscape() ? WIDTH_L : WIDTH_P) - MARGIN * 2);
 		info.setPos(MARGIN, MARGIN);
 		add( info );
 

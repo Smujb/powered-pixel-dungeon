@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -67,7 +67,7 @@ public class WndStory extends Window {
 		super( 0, 0, Chrome.get( Chrome.Type.SCROLL ) );
 		
 		tf = PixelScene.renderTextBlock( text, 6 );
-		tf.maxWidth(MainGameSettings.landscape() ?
+		tf.maxWidth(GameSettings.landscape() ?
 					WIDTH_L - MARGIN * 2:
 					WIDTH_P - MARGIN *2);
 		tf.invert();

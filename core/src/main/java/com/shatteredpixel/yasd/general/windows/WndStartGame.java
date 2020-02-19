@@ -24,9 +24,9 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.journal.Journal;
@@ -98,9 +98,9 @@ public class WndStartGame extends Window {
 				GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				Dungeon.difficulty = MainGameSettings.difficulty();//I could just call MainGameSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
-				if (MainGameSettings.intro()) {
-					MainGameSettings.intro( false );
+				Dungeon.difficulty = GameSettings.difficulty();//I could just call GameSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				if (GameSettings.intro()) {
+					GameSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
 					InterlevelScene.descend();
@@ -123,22 +123,22 @@ public class WndStartGame extends Window {
 				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, 3) {
 			@Override
 			protected void onChange() {
-				MainGameSettings.difficulty(getSelectedValue());
+				GameSettings.difficulty(getSelectedValue());
 			}
 		};
-		difficulty.setSelectedValue(MainGameSettings.difficulty());
+		difficulty.setSelectedValue(GameSettings.difficulty());
 		difficulty.setRect(0, start.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 		add(difficulty);
 
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
 			IconButton challengeButton = new IconButton(
-					Icons.get( MainGameSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+					Icons.get( GameSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 				@Override
 				protected void onClick() {
-					MainGame.scene().add(new WndChallenges(MainGameSettings.challenges(), true) {
+					MainGame.scene().add(new WndChallenges(GameSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
-							icon( Icons.get( MainGameSettings.challenges() > 0 ?
+							icon( Icons.get( GameSettings.challenges() > 0 ?
 									Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF ) );
 						}
 					} );
@@ -158,7 +158,7 @@ public class WndStartGame extends Window {
 			
 		} else {
 			Dungeon.challenges = 0;
-			MainGameSettings.challenges(0);
+			GameSettings.challenges(0);
 		}
 		
 		resize(WIDTH, (int) difficulty.bottom());

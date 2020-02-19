@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Chrome;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.Rankings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
@@ -46,7 +46,7 @@ public class WelcomeScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final int previousVersion = MainGameSettings.version();
+		final int previousVersion = GameSettings.version();
 
 		if (MainGame.versionCode == previousVersion) {
 			MainGame.switchNoFade(TitleScene.class);
@@ -65,7 +65,7 @@ public class WelcomeScene extends PixelScene {
 		float topRegion = Math.max(title.height, h*0.45f);
 		
 		title.x = (w - title.width()) / 2f;
-		if (MainGameSettings.landscape()) {
+		if (GameSettings.landscape()) {
 			title.y = (topRegion - title.height()) / 2f;
 		} else {
 			title.y = 20 + (topRegion - title.height() - 20) / 2f;
@@ -97,7 +97,7 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					MainGameSettings.version(MainGame.versionCode);
+					GameSettings.version(MainGame.versionCode);
 					WelcomeScene.this.add(new WndStartGame(1));
 				} else {
 					updateVersion(previousVersion);
@@ -166,7 +166,7 @@ public class WelcomeScene extends PixelScene {
 			}
 		}
 		
-		MainGameSettings.version(MainGame.versionCode);
+		GameSettings.version(MainGame.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {

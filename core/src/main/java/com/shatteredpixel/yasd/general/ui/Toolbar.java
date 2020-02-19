@@ -23,7 +23,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
@@ -151,7 +151,7 @@ public class Toolbar extends Component {
 	protected void layout() {
 
 		int[] visible = new int[4];
-		int slots = MainGameSettings.quickSlots();
+		int slots = GameSettings.quickSlots();
 
 		for(int i = 0; i <= 3; i++)
 			visible[i] = (int)((slots > i) ? y+2 : y+25);
@@ -161,8 +161,8 @@ public class Toolbar extends Component {
 			//decides on quickslot layout, depending on available screen size.
 			if (slots == 4 && width < 152){
 				if (width < 138){
-					if ((MainGameSettings.flipToolbar() && i == 3) ||
-							(!MainGameSettings.flipToolbar() && i == 0)) {
+					if ((GameSettings.flipToolbar() && i == 3) ||
+							(!GameSettings.flipToolbar() && i == 0)) {
 						btnQuick[i].border(0, 0);
 						btnQuick[i].frame(88, 0, 17, 24);
 					} else {
@@ -170,12 +170,12 @@ public class Toolbar extends Component {
 						btnQuick[i].frame(88, 0, 18, 24);
 					}
 				} else {
-					if (i == 0 && !MainGameSettings.flipToolbar() ||
-						i == 3 && MainGameSettings.flipToolbar()){
+					if (i == 0 && !GameSettings.flipToolbar() ||
+						i == 3 && GameSettings.flipToolbar()){
 						btnQuick[i].border(0, 2);
 						btnQuick[i].frame(106, 0, 19, 24);
-					} else if (i == 0 && MainGameSettings.flipToolbar() ||
-							i == 3 && !MainGameSettings.flipToolbar()){
+					} else if (i == 0 && GameSettings.flipToolbar() ||
+							i == 3 && !GameSettings.flipToolbar()){
 						btnQuick[i].border(2, 1);
 						btnQuick[i].frame(86, 0, 20, 24);
 					} else {
@@ -191,7 +191,7 @@ public class Toolbar extends Component {
 		}
 
 		float right = width;
-		switch(Mode.valueOf(MainGameSettings.toolbarMode())){
+		switch(Mode.valueOf(GameSettings.toolbarMode())){
 			case SPLIT:
 				btnWait.setPos(x, y);
 				btnSearch.setPos(btnWait.right(), y);
@@ -225,7 +225,7 @@ public class Toolbar extends Component {
 		}
 		right = width;
 
-		if (MainGameSettings.flipToolbar()) {
+		if (GameSettings.flipToolbar()) {
 
 			btnWait.setPos( (right - btnWait.right()), y);
 			btnSearch.setPos( (right - btnSearch.right()), y);

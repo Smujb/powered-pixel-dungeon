@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -83,8 +84,8 @@ public class Yog extends Mob {
 	}
 	
 	public void spawnFists() {
-		RottingFist fist1 = new RottingFist();
-		BurningFist fist2 = new BurningFist();
+		RottingFist fist1 = ModHandler.newObject(RottingFist.class);
+		BurningFist fist2 = ModHandler.newObject(BurningFist.class);
 		
 		do {
 			fist1.pos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];

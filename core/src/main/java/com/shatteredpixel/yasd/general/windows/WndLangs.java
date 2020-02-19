@@ -22,8 +22,8 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -71,7 +71,7 @@ public class WndLangs extends Window {
 					MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
-							MainGameSettings.language(langs.get(langIndex));
+							GameSettings.language(langs.get(langIndex));
 							Game.platform.resetGenerators();
 						}
 						@Override
@@ -94,18 +94,18 @@ public class WndLangs extends Window {
 				}
 			}
 			btn.setSize(BTN_WIDTH, BTN_HEIGHT);
-			if (MainGameSettings.landscape() && i % 2 == 1){
+			if (GameSettings.landscape() && i % 2 == 1){
 				btn.setPos(BTN_WIDTH+1, y-(BTN_HEIGHT + 1));
 			} else {
 				btn.setPos(0, y);
 				y += BTN_HEIGHT;
-				if (MainGameSettings.landscape()) y++;
+				if (GameSettings.landscape()) y++;
 			}
 
 			add(btn);
 		}
 		y = Math.max(MIN_HEIGHT, y);
-		resize(MainGameSettings.landscape() ? WIDTH_L : WIDTH_P, y);
+		resize(GameSettings.landscape() ? WIDTH_L : WIDTH_P, y);
 
 		int textLeft = width - 65;
 		int textWidth = width - textLeft;
@@ -155,7 +155,7 @@ public class WndLangs extends Window {
 					String[] translators = currLang.translators();
 					
 					boolean wide = false;
-					if (MainGameSettings.landscape() && (reviewers.length + translators.length) > 10){
+					if (GameSettings.landscape() && (reviewers.length + translators.length) > 10){
 						wide = true;
 					}
 					

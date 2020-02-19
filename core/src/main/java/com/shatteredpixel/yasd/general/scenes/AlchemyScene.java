@@ -25,8 +25,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -258,7 +258,7 @@ public class AlchemyScene extends PixelScene {
 					{
 						WndJournal.AlchemyTab t = new WndJournal.AlchemyTab();
 						int w, h;
-						if (MainGameSettings.landscape()) {
+						if (GameSettings.landscape()) {
 							w = WndJournal.WIDTH_L; h = WndJournal.HEIGHT_L;
 						} else {
 							w = WndJournal.WIDTH_P; h = WndJournal.HEIGHT_P;

@@ -42,7 +42,6 @@ task runDebug(type: JavaExec) {
 
 task releaseJAR(type: Jar) {
 
-    sourceCompatibility = targetCompatibility = 1.8
     from sourceSets.main.output
     sourceSets.main.resources.srcDirs = assetsDirs
     from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }

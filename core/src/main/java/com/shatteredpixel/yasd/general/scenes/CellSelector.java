@@ -22,7 +22,7 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGameSettings;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -100,7 +100,7 @@ public class CellSelector extends ScrollArea {
 	private float zoom( float value ) {
 
 		value = GameMath.gate( PixelScene.minZoom, value, PixelScene.maxZoom );
-		MainGameSettings.zoom((int) (value - PixelScene.defaultZoom));
+		GameSettings.zoom((int) (value - PixelScene.defaultZoom));
 		camera.zoom( value );
 
 		//Resets character sprite towerPositions with the new camera zoom

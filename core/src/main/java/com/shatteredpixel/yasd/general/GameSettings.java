@@ -21,17 +21,15 @@
 
 package com.shatteredpixel.yasd.general;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.GameSettings;
 
 import java.util.Locale;
 
-public class MainGameSettings extends GameSettings {
+public class GameSettings extends com.watabou.utils.GameSettings {
 	
 	//Version info
 	
@@ -128,12 +126,12 @@ public class MainGameSettings extends GameSettings {
 		return getInt( KEY_GRID, 0, -1, 3 );
 	}
 
-	public static void mod(ModHandler mod) {
-		put(KEY_MOD, mod.name());
+	public static void mod(int mod) {
+		put(KEY_MOD, mod);
 	}
 
-	public static ModHandler mod() {
-		return Enum.valueOf(ModHandler.class, getString(KEY_MOD, ModHandler.YASD.name()));
+	public static int mod() {
+		return getInt(KEY_MOD, 0);
 	}
 
 	//Interface
@@ -164,7 +162,7 @@ public class MainGameSettings extends GameSettings {
 	}
 	
 	public static String toolbarMode() {
-		return getString(KEY_BARMODE, !MainGameSettings.landscape() ? "SPLIT" : "GROUP");
+		return getString(KEY_BARMODE, !GameSettings.landscape() ? "SPLIT" : "GROUP");
 	}
 	
 	//Game State

@@ -38,8 +38,9 @@ public class Bestiary {
 		Mob mob;
 		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
 		mobClass = swapMobAlt(mobClass);
-
-		mob = ModHandler.createObject(mobClass);
+		do {
+			mob = ModHandler.newObject(mobClass);
+		} while (mob == null);
 		switch (Dungeon.difficulty) {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;

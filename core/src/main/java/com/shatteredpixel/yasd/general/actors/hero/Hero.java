@@ -27,9 +27,9 @@ import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.MainGameSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Alchemy;
@@ -946,7 +946,7 @@ public class Hero extends Char {
 
 		if (shake > 0.7f){
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
-			if (MainGameSettings.vibrate()) {
+			if (GameSettings.vibrate()) {
 				MainGame.vibrate(Math.min(500,(int) (shake * 50)));
 			}
 			if (shake > 1f) {
