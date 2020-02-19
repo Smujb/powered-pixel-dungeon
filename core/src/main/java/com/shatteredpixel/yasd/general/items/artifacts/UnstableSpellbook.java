@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.artifacts;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
@@ -45,7 +46,6 @@ import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -138,7 +138,7 @@ public class UnstableSpellbook extends Artifact {
 						@Override
 						protected void onSelect(int index) {
 							if (index == 1){
-								Scroll scroll = Reflection.newInstance(ExoticScroll.regToExo.get(fScroll.getClass()));
+								Scroll scroll = ModHandler.newObject(ExoticScroll.regToExo.get(fScroll.getClass()));
 								charge--;
 								scroll.doRead();
 							} else {

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.ui;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -28,7 +29,6 @@ import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -134,7 +134,7 @@ public class AttackIndicator extends Tag {
 			sprite = null;
 		}
 		
-		sprite = Reflection.newInstance(lastTarget.spriteClass);
+		sprite = ModHandler.newObject(lastTarget.spriteClass);
 		active = true;
 		sprite.linkVisuals(lastTarget);
 		sprite.idle();

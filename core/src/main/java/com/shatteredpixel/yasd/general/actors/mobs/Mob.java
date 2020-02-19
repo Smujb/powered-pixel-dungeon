@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
@@ -170,7 +171,7 @@ public abstract class Mob extends Char {
 	}
 	
 	public CharSprite sprite() {
-		return Reflection.newInstance(spriteClass);
+		return ModHandler.newObject(spriteClass);
 	}
 	
 	@Override
@@ -371,16 +372,7 @@ public abstract class Mob extends Char {
 	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
 		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
 
-			Mob mob = null;
-			do {
-				try {
-					mob = type.newInstance();
-				} catch (IllegalAccessException e) {
-					MainGame.reportException(e);
-				} catch (InstantiationException e) {
-					MainGame.reportException(e);
-				}
-			} while (mob == null);
+			Mob mob = ModHandler.newObject(type);
 			mob.pos = pos;
 			mob.state = mob.HUNTING;
 			GameScene.add( mob );

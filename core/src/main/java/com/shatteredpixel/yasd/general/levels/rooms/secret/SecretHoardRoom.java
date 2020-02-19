@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -33,7 +34,6 @@ import com.shatteredpixel.yasd.general.levels.traps.RockfallTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class SecretHoardRoom extends SecretRoom {
 	
@@ -68,7 +68,7 @@ public class SecretHoardRoom extends SecretRoom {
 		
 		for (Point p : getPoints()){
 			if (Random.Int(2) == 0 && level.map[level.pointToCell(p)] == Terrain.EMPTY){
-				level.setTrap(Reflection.newInstance(trapClass).reveal(), level.pointToCell(p));
+				level.setTrap(ModHandler.newObject(trapClass).reveal(), level.pointToCell(p));
 				Painter.set(level, p, Terrain.TRAP);
 			}
 		}

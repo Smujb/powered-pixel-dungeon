@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.potions.exotic;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Recipe;
@@ -118,7 +119,7 @@ public class ExoticPotion extends Potion {
 	@Override
 	//20 gold more than its none-exotic equivalent
 	public int price() {
-		return (Reflection.newInstance(exoToReg.get(getClass())).price() + 20) * quantity;
+		return (ModHandler.newObject(exoToReg.get(getClass())).price() + 20) * quantity;
 	}
 	
 	public static class PotionToExotic extends Recipe{
@@ -151,7 +152,7 @@ public class ExoticPotion extends Potion {
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 				if (regToExo.containsKey(i.getClass())) {
-					result = Reflection.newInstance(regToExo.get(i.getClass()));
+					result = ModHandler.newObject(regToExo.get(i.getClass()));
 				}
 			}
 			return result;
@@ -161,7 +162,7 @@ public class ExoticPotion extends Potion {
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
 				if (regToExo.containsKey(i.getClass())) {
-					return Reflection.newInstance(regToExo.get(i.getClass()));
+					return ModHandler.newObject(regToExo.get(i.getClass()));
 				}
 			}
 			return null;

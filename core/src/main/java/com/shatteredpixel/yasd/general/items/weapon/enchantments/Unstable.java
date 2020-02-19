@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.enchantments;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -55,7 +56,7 @@ public class Unstable extends Weapon.Enchantment {
 			attacker.buff(Kinetic.ConservedDamage.class).detach();
 		}
 		
-		damage = Reflection.newInstance(Random.oneOf(randomEnchants)).proc( weapon, attacker, defender, damage );
+		damage = ModHandler.newObject(Random.oneOf(randomEnchants)).proc( weapon, attacker, defender, damage );
 		
 		return damage + conservedDamage;
 	}

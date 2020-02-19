@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.missiles.darts;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -156,7 +157,7 @@ public abstract class TippedDart extends Dart {
 	}
 	
 	public static TippedDart getTipped( Plant.Seed s, int quantity ){
-		return (TippedDart) Reflection.newInstance(types.get(s.getClass())).quantity(quantity);
+		return (TippedDart) ModHandler.newObject(types.get(s.getClass())).quantity(quantity);
 	}
 	
 	public static TippedDart randomTipped( int quantity ){

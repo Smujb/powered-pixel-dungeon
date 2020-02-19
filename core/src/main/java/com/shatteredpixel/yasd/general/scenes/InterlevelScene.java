@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -182,7 +183,7 @@ public class InterlevelScene extends PixelScene {
 
 		Level level = null;
 		try {
-			level = Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth).newInstance();
+			level = ModHandler.newObject(Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth));
 		} catch (Exception ignored) {}
 
 		if (level == null || level.loadImg() == null) {

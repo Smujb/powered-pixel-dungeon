@@ -21,13 +21,13 @@
 
 package com.shatteredpixel.yasd.general.actors.blobs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Rect;
-import com.watabou.utils.Reflection;
 
 public class Blob extends Actor {
 
@@ -233,7 +233,7 @@ public class Blob extends Actor {
 		T gas = (T)level.blobs.get( type );
 		
 		if (gas == null) {
-			gas = Reflection.newInstance(type);
+			gas = ModHandler.newObject(type);
 		}
 		
 		if (gas != null){

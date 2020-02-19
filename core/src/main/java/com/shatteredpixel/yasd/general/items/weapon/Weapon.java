@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -43,10 +44,10 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Chilling;
-import com.shatteredpixel.yasd.general.items.weapon.enchantments.Kinetic;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Corrupting;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
+import com.shatteredpixel.yasd.general.items.weapon.enchantments.Kinetic;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Projecting;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
@@ -58,7 +59,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -378,7 +378,7 @@ abstract public class Weapon extends KindOfWeapon {
 			if (enchants.isEmpty()) {
 				return random();
 			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
+				return (Enchantment) ModHandler.newObject(Random.element(enchants));
 			}
 		}
 		
@@ -389,7 +389,7 @@ abstract public class Weapon extends KindOfWeapon {
 			if (enchants.isEmpty()) {
 				return random();
 			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
+				return (Enchantment) ModHandler.newObject(Random.element(enchants));
 			}
 		}
 		
@@ -400,7 +400,7 @@ abstract public class Weapon extends KindOfWeapon {
 			if (enchants.isEmpty()) {
 				return random();
 			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
+				return (Enchantment) ModHandler.newObject(Random.element(enchants));
 			}
 		}
 
@@ -411,7 +411,7 @@ abstract public class Weapon extends KindOfWeapon {
 			if (enchants.isEmpty()) {
 				return random();
 			} else {
-				return (Enchantment) Reflection.newInstance(Random.element(enchants));
+				return (Enchantment) ModHandler.newObject(Random.element(enchants));
 			}
 		}
 		

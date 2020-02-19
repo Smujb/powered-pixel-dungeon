@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.scrolls;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -48,7 +49,6 @@ import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class ScrollOfTransmutation extends InventoryScroll {
 	
@@ -151,7 +151,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		}
 		
 		do {
-			n = (Weapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+			n = (Weapon) ModHandler.newObject(c.classes[Random.chances(c.probs)]);
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 		
 		int level = w.level();
@@ -254,17 +254,17 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	
 	private Scroll changeScroll( Scroll s ) {
 		if (s instanceof ExoticScroll) {
-			return Reflection.newInstance(ExoticScroll.exoToReg.get(s.getClass()));
+			return ModHandler.newObject(ExoticScroll.exoToReg.get(s.getClass()));
 		} else {
-			return Reflection.newInstance(ExoticScroll.regToExo.get(s.getClass()));
+			return ModHandler.newObject(ExoticScroll.regToExo.get(s.getClass()));
 		}
 	}
 	
 	private Potion changePotion( Potion p ) {
 		if	(p instanceof ExoticPotion) {
-			return Reflection.newInstance(ExoticPotion.exoToReg.get(p.getClass()));
+			return ModHandler.newObject(ExoticPotion.exoToReg.get(p.getClass()));
 		} else {
-			return Reflection.newInstance(ExoticPotion.regToExo.get(p.getClass()));
+			return ModHandler.newObject(ExoticPotion.regToExo.get(p.getClass()));
 		}
 	}
 	

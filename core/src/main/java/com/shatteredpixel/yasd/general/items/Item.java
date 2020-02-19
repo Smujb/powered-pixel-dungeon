@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
@@ -311,7 +312,7 @@ public class Item implements Bundlable {
 			return null;
 		} else {
 			//pssh, who needs copy constructors?
-			Item split = Reflection.newInstance(getClass());
+			Item split = ModHandler.newObject(getClass());
 			
 			if (split == null){
 				return null;
@@ -532,7 +533,7 @@ public class Item implements Bundlable {
 	}
 	
 	public Item virtual(){
-		Item item = Reflection.newInstance(getClass());
+		Item item = ModHandler.newObject(getClass());
 		if (item == null) return null;
 		
 		item.quantity = 0;

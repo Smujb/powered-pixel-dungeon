@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.potions;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
@@ -72,7 +73,6 @@ import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -516,7 +516,7 @@ public class Potion extends Item {
 				result = Generator.random( Generator.Category.POTION );
 				
 			} else {
-				result = Reflection.newInstance(types.get(Random.element(ingredients).getClass()));
+				result = ModHandler.newObject(types.get(Random.element(ingredients).getClass()));
 				
 			}
 			

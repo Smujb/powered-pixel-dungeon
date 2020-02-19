@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.scrolls.exotic;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.effects.Identification;
@@ -88,7 +89,7 @@ public class ScrollOfDivination extends ExoticScroll {
 						continue;
 					}
 					probs[0]--;
-					Potion p = Reflection.newInstance(Random.element(potions));
+					Potion p = ModHandler.newObject(Random.element(potions));
 					p.setKnown();
 					IDed.add(p);
 					potions.remove(p.getClass());
@@ -99,7 +100,7 @@ public class ScrollOfDivination extends ExoticScroll {
 						continue;
 					}
 					probs[1]--;
-					Scroll s = Reflection.newInstance(Random.element(scrolls));
+					Scroll s = ModHandler.newObject(Random.element(scrolls));
 					s.setKnown();
 					IDed.add(s);
 					scrolls.remove(s.getClass());
@@ -110,7 +111,7 @@ public class ScrollOfDivination extends ExoticScroll {
 						continue;
 					}
 					probs[2]--;
-					Ring r = Reflection.newInstance(Random.element(rings));
+					Ring r = ModHandler.newObject(Random.element(rings));
 					r.setKnown();
 					IDed.add(r);
 					rings.remove(r.getClass());

@@ -21,13 +21,13 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.sprites.SlimeSprite;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class Slime extends Mob {
 	
@@ -65,7 +65,7 @@ public class Slime extends Mob {
 	@Override
 	protected Item createLoot() {
 		Generator.Category c = Generator.Category.WEP_T2;
-		MeleeWeapon w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+		MeleeWeapon w = (MeleeWeapon) ModHandler.newObject(c.classes[Random.chances(c.probs)]);
 		w.random();
 		w.level(0);
 		return w;

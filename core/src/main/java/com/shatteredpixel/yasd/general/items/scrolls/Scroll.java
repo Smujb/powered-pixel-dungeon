@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.scrolls;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
@@ -33,7 +34,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfAntiMagic;
 import com.shatteredpixel.yasd.general.items.stones.Runestone;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfAffection;
-import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfBlast;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfBlink;
@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfDisarming;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfFlock;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
+import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfShock;
 import com.shatteredpixel.yasd.general.journal.Catalog;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -50,7 +51,6 @@ import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -353,7 +353,7 @@ public abstract class Scroll extends Item {
 			
 			s.quantity(s.quantity() - 1);
 			
-			return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+			return ModHandler.newObject(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
 		}
 		
 		@Override
@@ -361,7 +361,7 @@ public abstract class Scroll extends Item {
 			if (!testIngredients(ingredients)) return null;
 			
 			Scroll s = (Scroll) ingredients.get(0);
-			return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+			return ModHandler.newObject(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
 		}
 	}
 }

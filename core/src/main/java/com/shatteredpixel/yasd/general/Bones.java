@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
@@ -30,7 +31,6 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -151,7 +151,7 @@ public class Bones {
 					if (Generator.removeArtifact(((Artifact)item).getClass())) {
 						
 						//generates a new artifact of the same type, always +0
-						Artifact artifact = Reflection.newInstance(((Artifact)item).getClass());
+						Artifact artifact = ModHandler.newObject(((Artifact)item).getClass());
 						
 						if (artifact == null){
 							return new Gold(item.price());

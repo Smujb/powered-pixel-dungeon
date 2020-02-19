@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -669,7 +670,7 @@ public class WndJournal extends WndTabbed {
 			
 			float pos = 0;
 			for (Class<? extends Item> itemClass : itemClasses) {
-				CatalogItem item = new CatalogItem(Reflection.newInstance(itemClass), known.get(itemClass), Catalog.isSeen(itemClass));
+				CatalogItem item = new CatalogItem(ModHandler.newObject(itemClass), known.get(itemClass), Catalog.isSeen(itemClass));
 				item.setRect( 0, pos, width, ITEM_HEIGHT );
 				content.add( item );
 				items.add( item );

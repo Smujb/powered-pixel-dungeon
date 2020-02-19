@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.potions;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.exotic.ExoticPotion;
@@ -57,14 +58,14 @@ public class AlchemicalCatalyst extends Potion {
 	
 	@Override
 	public void apply(Hero hero) {
-		Potion p = Reflection.newInstance(Random.chances(potionChances));
+		Potion p = ModHandler.newObject(Random.chances(potionChances));
 		p.anonymize();
 		p.apply(hero);
 	}
 	
 	@Override
 	public void shatter(int cell) {
-		Potion p = Reflection.newInstance(Random.chances(potionChances));
+		Potion p = ModHandler.newObject(Random.chances(potionChances));
 		p.anonymize();
 		curItem = p;
 		p.shatter(cell);

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.bombs;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
@@ -54,7 +55,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -399,7 +399,7 @@ public class Bomb extends Item {
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 				if (validIngredients.containsKey(i.getClass())){
-					result = Reflection.newInstance(validIngredients.get(i.getClass()));
+					result = ModHandler.newObject(validIngredients.get(i.getClass()));
 				}
 			}
 			
@@ -410,7 +410,7 @@ public class Bomb extends Item {
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
 				if (validIngredients.containsKey(i.getClass())){
-					return Reflection.newInstance(validIngredients.get(i.getClass()));
+					return ModHandler.newObject(validIngredients.get(i.getClass()));
 				}
 			}
 			return null;

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
@@ -251,7 +252,7 @@ public class Dungeon {
 		} catch (Exception e) {
 			levelClass = DeadEndLevel.class;
 		}
-		do {
+		/*do {
 			try {
 				level = levelClass.newInstance();
 			} catch (InstantiationException e) {
@@ -259,7 +260,8 @@ public class Dungeon {
 			} catch (IllegalAccessException e) {
 				MainGame.reportException(e);
 			}
-		} while (level == null);
+		} while (level == null);*/
+		level = ModHandler.newObject(levelClass);
 
 		
 		level.create();

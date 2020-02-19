@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.alcohol.Alcohol;
@@ -555,12 +556,12 @@ public class Generator {
 			//if we're out of artifacts, return a ring instead.
 			return item != null ? item : random(Category.RING);
 		default:
-			return ((Item) Reflection.newInstance(cat.classes[Random.chances( cat.probs )])).random();
+			return ((Item) ModHandler.newObject(cat.classes[Random.chances( cat.probs )])).random();
 		}
 	}
 	
 	public static Item random( Class<? extends Item> cl ) {
-		return Reflection.newInstance(cl).random();
+		return ModHandler.newObject(cl).random();
 	}
 
 	public static Armor randomArmor(){
@@ -572,7 +573,7 @@ public class Generator {
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
 
-		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(Category.ARMOR.probs)]);
+		Armor a = (Armor)ModHandler.newObject(Category.ARMOR.classes[Random.chances(Category.ARMOR.probs)]);
 		a.random();
 		a.setTier(tier);
 		if (a.tier == 1) {
@@ -609,7 +610,7 @@ public class Generator {
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
-		w = (MeleeWeapon) Reflection.newInstance(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
+		w = (MeleeWeapon) ModHandler.newObject(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
 		w.random();
 		w.setTier(tier);
 		if (w.tier == 1) {
@@ -645,7 +646,7 @@ public class Generator {
 		floorSet = (int)GameMath.gate(0, floorSet, floorSetTierProbs.length-1);
 		
 		Category c = misTiers[Random.chances(floorSetTierProbs[floorSet])];
-		MissileWeapon w = (MissileWeapon)Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+		MissileWeapon w = (MissileWeapon)ModHandler.newObject(c.classes[Random.chances(c.probs)]);
 		w.random();
 		return w;
 	}
@@ -664,7 +665,7 @@ public class Generator {
 		Class<?extends Artifact> art = (Class<? extends Artifact>) cat.classes[i];
 
 		if (removeArtifact(art)) {
-			Artifact artifact = Reflection.newInstance(art);
+			Artifact artifact = ModHandler.newObject(art);
 			artifact.random();
 			return artifact;
 		} else {

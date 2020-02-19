@@ -209,6 +209,13 @@ public class WndSettings extends WndTabbed {
 							} else if (index == ModHandler.NONE.getValue()) {
 								GameSettings.mod(ModHandler.NONE.getValue());
 							}
+
+							/*try {
+								Dungeon.saveAll();
+							} catch (Exception e) {
+								MainGame.reportException(e);
+							}
+							Game.instance.finish();*/
 						}
 					});
 				}

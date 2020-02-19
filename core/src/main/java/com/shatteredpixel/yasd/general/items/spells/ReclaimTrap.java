@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.items.spells;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -36,7 +37,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Reflection;
 
 public class ReclaimTrap extends TargetedSpell {
 	
@@ -63,7 +63,7 @@ public class ReclaimTrap extends TargetedSpell {
 			}
 		} else {
 			
-			Trap t = Reflection.newInstance(storedTrap);
+			Trap t = ModHandler.newObject(storedTrap);
 			storedTrap = null;
 			
 			t.pos = bolt.collisionPos;
@@ -108,7 +108,7 @@ public class ReclaimTrap extends TargetedSpell {
 	@Override
 	public ItemSprite.Glowing glowing() {
 		if (storedTrap != null){
-			return COLORS[Reflection.newInstance(storedTrap).color];
+			return COLORS[ModHandler.newObject(storedTrap).color];
 		}
 		return null;
 	}

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.plants;
 
+import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -40,7 +41,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -153,7 +153,7 @@ public abstract class Plant implements Bundlable {
 			if (level != null && level.heroFOV != null && level.heroFOV[pos]) {
 				Sample.INSTANCE.play(Assets.SND_PLANT);
 			}
-			Plant plant = Reflection.newInstance(plantClass);
+			Plant plant = ModHandler.newObject(plantClass);
 			plant.pos = pos;
 			return plant;
 		}

@@ -94,11 +94,11 @@ public class GamesInProgress {
 	
 	public static Info check( int slot ) {
 		
-		if (slotStates.containsKey( slot )) {
+		/*if (slotStates.containsKey( slot )) {
 			
 			return slotStates.get( slot );
 			
-		} else if (!gameExists( slot )) {
+		} else*/ if (!gameExists( slot )) {
 			
 			slotStates.put(slot, null);
 			return null;
