@@ -73,7 +73,7 @@ public class Shaman extends RangedMob {
 
 	@Override
 	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -103,6 +103,6 @@ public class Shaman extends RangedMob {
 
 	@Override
 	public MagicalDamage magicalSrc() {
-		return new LightningBolt();
+		return new  LightningBolt();
 	}
 }

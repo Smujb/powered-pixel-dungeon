@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.painters;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.Level;
@@ -35,6 +34,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -357,7 +357,7 @@ public abstract class RegularPainter extends Painter {
 			Integer trapPos = Random.element(validCells);
 			validCells.remove(trapPos); //removes the integer object, not at the index
 			
-			Trap trap = ModHandler.newObject(trapClasses[Random.chances( trapChances )]).hide();
+			Trap trap = Reflection.newInstance(trapClasses[Random.chances( trapChances )]).hide();
 			l.setTrap( trap, trapPos );
 			//some traps will not be hidden
 			l.map[trapPos] = trap.visible ? Terrain.TRAP : Terrain.SECRET_TRAP;

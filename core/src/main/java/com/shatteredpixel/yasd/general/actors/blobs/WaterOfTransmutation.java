@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.actors.blobs;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -45,6 +44,7 @@ import com.shatteredpixel.yasd.general.journal.Notes.Landmark;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class WaterOfTransmutation extends WellWater {
 	
@@ -120,7 +120,7 @@ public class WaterOfTransmutation extends WellWater {
 		Category c = Generator.wepTiers[w.tier-1];
 
 		do {
-			n = (MeleeWeapon) ModHandler.newObject(c.classes[Random.chances(c.probs)]);
+			n = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 
 		int level = w.level();

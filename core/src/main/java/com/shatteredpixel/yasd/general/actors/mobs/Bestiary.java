@@ -21,14 +21,10 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.ModHandler;
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -39,7 +35,7 @@ public class Bestiary {
 		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
 		mobClass = swapMobAlt(mobClass);
 		do {
-			mob = ModHandler.newObject(mobClass);
+			mob = Reflection.newInstance(mobClass);
 		} while (mob == null);
 		switch (Dungeon.difficulty) {
 			case 1://Easy = -25% max HP
@@ -70,14 +66,13 @@ public class Bestiary {
 			} else if (cl == Scorpio.class) {
 				cl = Acidic.class;
 			}
-		} else if (Dungeon.level != null && Random.Int(5) == 0 && Dungeon.level.feeling == Level.Feeling.EVIL) {
-			cl = Wraith.class;
 		}
 		return cl;
 	}
 
 	private static Class<? extends Mob> getMobClass( int depth, int path ) {
-		if (path == 0) {
+		return Eye.class;
+		/*if (path == 0) {
 			if (depth == Constants.CHAPTER_LENGTH) {
 				return CausticSlime.class;
 			}
@@ -93,11 +88,11 @@ public class Bestiary {
 				return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
 			}
 		}
-		return Wraith.class;
+		return Wraith.class;*/
 	}
 
 	private static Class<? extends Mob> getSewerMobClass(int depth) {
-		float [] chances = new float[] {
+		float[] chances = new float[] {
 				4 - depth,
 				1 ,
 				depth <= 4 ? 0 : 2,
@@ -121,13 +116,13 @@ public class Bestiary {
 	}
 
 	private static Class<? extends Mob> getPrisonMobClass(int depth) {
-		float [] chances = new float[] {
+		float[] chances = new float[] {
 				3 - depth,
 				1,
 				depth/2f,
 				depth == 1 ? 0 : 2,
 				depth <= 2 ? 0 : 3};
-		ArrayList<Class<? extends Mob>> mobs = new ArrayList<>(Arrays.asList(
+		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Skeleton.class,
 				Swarm.class,
 				Shaman.class,
@@ -138,13 +133,13 @@ public class Bestiary {
 	}
 
 	private static Class<? extends Mob> getCavesMobClass(int depth) {
-		float [] chances = new float[]{
+		float[] chances = new float[]{
 				4 - depth,
 				depth == 1 ? 1 : 3,
 				depth <= 4 ? 0 : 2,
 				depth == 1 ? 0 : 2
 		};
-		ArrayList<Class<? extends Mob>> mobs = new ArrayList<>(Arrays.asList(
+		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Bat.class,
 				Brute.class,
 				Spinner.class,
@@ -154,13 +149,13 @@ public class Bestiary {
 	}
 
 	private static Class<? extends Mob> getCityMobClass(int depth) {
-		float [] chances = new float[]{
+		float[] chances = new float[]{
 				5 - depth,
 				5 - depth,
 				1 + depth,
 				depth <= 3 ? 0 : 4
 		};
-		ArrayList<Class<? extends Mob>> mobs = new ArrayList<>(Arrays.asList(
+		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Warlock.class,
 				Elemental.class,
 				Monk.class,
@@ -170,7 +165,7 @@ public class Bestiary {
 	}
 
 	private static Class<? extends Mob> getHallsMobClass(int depth) {
-		float [] chances = new float[]{
+		float[] chances = new float[] {
 				3,
 				depth >= 3 ? 0 : 4,
 				3

@@ -125,7 +125,7 @@ public class Wraith extends RangedMob {
 	}
 	
 	private static Wraith spawnNeighbor(int pos) {
-		ArrayList<Integer> locations = new ArrayList<>();
+		ArrayList<Integer> locations = new  ArrayList<>();
 		for (int n : PathFinder.NEIGHBOURS8) {
 			int cell = pos + n;
 			if (Dungeon.level.passable[cell] && Actor.findChar( cell ) == null) {
@@ -146,14 +146,14 @@ public class Wraith extends RangedMob {
 	public static Wraith spawnAt( int pos, boolean useNeighbors ) {
 		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
 			
-			Wraith w = new Wraith();
+			Wraith w = new  Wraith();
 			w.adjustStats( Dungeon.depth );
 			w.pos = pos;
 			w.state = w.HUNTING;
 			GameScene.add( w, SPAWN_DELAY );
 			
 			w.sprite.alpha( 0 );
-			w.sprite.parent.add( new AlphaTweener( w.sprite, 1, 0.5f ) );
+			w.sprite.parent.add( new  AlphaTweener( w.sprite, 1, 0.5f ) );
 			
 			w.sprite.emitter().burst( ShadowParticle.CURSE, 5 );
 			
@@ -174,7 +174,7 @@ public class Wraith extends RangedMob {
 
 	private void blink() {
 
-		ArrayList<Integer> cells = new ArrayList<>();
+		ArrayList<Integer> cells = new  ArrayList<>();
 
 		for( Integer cell : Dungeon.level.getPassableCellsList() ){
 			if( pos != cell && Dungeon.hero.fieldOfView[ cell ] ) {

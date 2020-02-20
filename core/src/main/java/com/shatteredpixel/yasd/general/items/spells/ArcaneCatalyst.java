@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.spells;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
@@ -73,7 +72,7 @@ public class ArcaneCatalyst extends Spell {
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
 		
-		Scroll s = ModHandler.newObject(Random.chances(scrollChances));
+		Scroll s = Reflection.newInstance(Random.chances(scrollChances));
 		s.anonymize();
 		curItem = s;
 		s.doRead();

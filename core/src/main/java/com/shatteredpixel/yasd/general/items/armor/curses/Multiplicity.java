@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.armor.curses;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -39,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -74,7 +74,7 @@ public class Multiplicity extends Armor.Glyph {
 					} else {
 						Actor.fixTime();
 						
-						m = (Mob) ModHandler.newObject(attacker.getClass());
+						m = (Mob) Reflection.newInstance(attacker.getClass());
 						
 						if (m != null) {
 							

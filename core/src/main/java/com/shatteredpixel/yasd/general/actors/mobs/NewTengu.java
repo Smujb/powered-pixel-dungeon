@@ -53,7 +53,6 @@ import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
-import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -83,7 +82,7 @@ public class NewTengu extends Mob {
 		EXP = 20;
 		defenseSkill = 18;
 		
-		HUNTING = new Hunting();
+		HUNTING = new  Hunting();
 		
 		flying = true; //doesn't literally fly, but he is fleet-of-foot enough to avoid hazards
 		

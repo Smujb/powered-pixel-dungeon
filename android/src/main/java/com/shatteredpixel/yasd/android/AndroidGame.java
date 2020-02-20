@@ -33,7 +33,6 @@ import android.telephony.TelephonyManager;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.noosa.Game;
@@ -94,7 +93,7 @@ public class AndroidGame extends AndroidApplication {
 		
 		support.updateSystemUI();
 		//TODO: Add support for switching games
-		MainGame mainGame = new MainGame(support);//ModHandler.newObject(MainGame.class, support);
+		MainGame mainGame = new MainGame(support);//Reflection.newInstance(MainGame.class, support);
 		initialize(mainGame, config);
 		
 		view = (GLSurfaceView)graphics.getView();

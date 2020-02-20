@@ -21,12 +21,10 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -87,11 +85,11 @@ public abstract class Mob extends Char {
 	protected static final String TXT_RAGE		= "#$%^";
 	protected static final String TXT_EXP		= "%+dEXP";
 
-	public AiState SLEEPING     = new Sleeping();
-	public AiState HUNTING		= new Hunting();
-	public AiState WANDERING	= new Wandering();
-	public AiState FLEEING		= new Fleeing();
-	public AiState PASSIVE		= new Passive();
+	public AiState SLEEPING     = new  Sleeping();
+	public AiState HUNTING		= new  Hunting();
+	public AiState WANDERING	= new  Wandering();
+	public AiState FLEEING		= new  Fleeing();
+	public AiState PASSIVE		= new  Passive();
 	public AiState state = SLEEPING;
 	
 	public Class<? extends CharSprite> spriteClass;
@@ -171,7 +169,7 @@ public abstract class Mob extends Char {
 	}
 	
 	public CharSprite sprite() {
-		return ModHandler.newObject(spriteClass);
+		return Reflection.newInstance(spriteClass);
 	}
 	
 	@Override
@@ -233,7 +231,7 @@ public abstract class Mob extends Char {
 			}
 		}
 
-		//find a new enemy if..
+		//find a new  enemy if..
 		boolean newEnemy = false;
 		//we have no enemy, or the current one is dead/missing
 		if ( enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING)
@@ -250,7 +248,7 @@ public abstract class Mob extends Char {
 
 		if ( newEnemy ) {
 
-			HashSet<Char> enemies = new HashSet<>();
+			HashSet<Char> enemies = new  HashSet<>();
 
 			//if the mob is amoked...
 			if ( buff(Amok.class) != null) {
@@ -372,7 +370,7 @@ public abstract class Mob extends Char {
 	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
 		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
 
-			Mob mob = ModHandler.newObject(type);
+			Mob mob = Reflection.newInstance(type);
 			mob.pos = pos;
 			mob.state = mob.HUNTING;
 			GameScene.add( mob );
@@ -414,7 +412,7 @@ public abstract class Mob extends Char {
 					|| path.size() > 2*Dungeon.level.distance(pos, target))
 				newPath = true;
 			else if (path.getLast() != target) {
-				//if the new target is adjacent to the end of the path, adjust for that
+				//if the new  target is adjacent to the end of the path, adjust for that
 				//rather than scrapping the whole path.
 				if (Dungeon.level.adjacent(target, path.getLast())) {
 					int last = path.removeLast();
@@ -431,14 +429,14 @@ public abstract class Mob extends Char {
 						}
 
 					} else if (!path.isEmpty()) {
-						//if the new target is simply 1 earlier in the path shorten the path
+						//if the new  target is simply 1 earlier in the path shorten the path
 						if (path.getLast() == target) {
 
-							//if the new target is closer/same, need to modify end of path
+							//if the new  target is closer/same, need to modify end of path
 						} else if (Dungeon.level.adjacent(target, path.getLast())) {
 							path.add(target);
 
-							//if the new target is further away, need to extend the path
+							//if the new  target is further away, need to extend the path
 						} else {
 							path.add(last);
 							path.add(target);
@@ -720,17 +718,17 @@ public abstract class Mob extends Char {
 			if (bonus != null && !bonus.isEmpty()) {
 				for (Item b : bonus) Dungeon.level.drop(b, pos).sprite.drop();
 				if (RingOfWealth.latestDropWasRare){
-					new Flare(8, 48).color(0xAA00FF, true).show(sprite, 3f);
+					new  Flare(8, 48).color(0xAA00FF, true).show(sprite, 3f);
 					RingOfWealth.latestDropWasRare = false;
 				} else {
-					new Flare(8, 24).color(0xFFFFFF, true).show(sprite, 3f);
+					new  Flare(8, 24).color(0xFFFFFF, true).show(sprite, 3f);
 				}
 			}
 		}
 		
 		//lucky enchant logic
 		if (Dungeon.hero.lvl <= Dungeon.depth + 1 && buff(Lucky.LuckProc.class) != null){
-			new Flare(8, 24).color(0x00FF00, true).show(sprite, 3f);
+			new  Flare(8, 24).color(0x00FF00, true).show(sprite, 3f);
 			Dungeon.level.drop(Lucky.genLoot(), pos).sprite.drop();
 		}
 	}
@@ -807,7 +805,7 @@ public abstract class Mob extends Char {
 				target = enemy.pos;
 
 				if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
-					for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
 						if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
 							mob.beckon( target );
 						}
@@ -843,7 +841,7 @@ public abstract class Mob extends Char {
 				target = enemy.pos;
 
 				if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
-					for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+					for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
 						if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
 							mob.beckon( target );
 						}
@@ -956,11 +954,11 @@ public abstract class Mob extends Char {
 	}
 	
 	
-	private static ArrayList<Mob> heldAllies = new ArrayList<>();
+	private static ArrayList<Mob> heldAllies = new  ArrayList<>();
 	
 	public static void holdAllies( Level level ){
 		heldAllies.clear();
-		for (Mob mob : level.mobs.toArray( new Mob[0] )) {
+		for (Mob mob : level.mobs.toArray( new  Mob[0] )) {
 			//preserve the ghost no matter where they are
 			if (mob instanceof DriedRose.GhostHero) {
 				((DriedRose.GhostHero) mob).clearDefensingPos();
@@ -980,7 +978,7 @@ public abstract class Mob extends Char {
 	public static void restoreAllies( Level level, int pos ){
 		if (!heldAllies.isEmpty()){
 			
-			ArrayList<Integer> candidatePositions = new ArrayList<>();
+			ArrayList<Integer> candidatePositions = new  ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8) {
 				if (!Dungeon.level.solid[i+pos] && level.findMob(i+pos) == null){
 					candidatePositions.add(i+pos);

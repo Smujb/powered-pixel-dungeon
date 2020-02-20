@@ -50,8 +50,8 @@ public class Thief extends RangedMob {
 		loot = Gold.class;
 		lootChance = 0.25f;
 
-		//WANDERING = new Wandering();
-		//FLEEING = new Fleeing();
+		//WANDERING = new  Wandering();
+		//FLEEING = new  Fleeing();
 
 		properties.add(Property.UNDEAD);
 	}
@@ -117,7 +117,7 @@ public class Thief extends RangedMob {
 	/*@Override
 	public int defenseProc(Char enemy, int damage) {
 		if (state == FLEEING) {
-			Dungeon.level.drop( new Gold(), pos ).sprite.drop();
+			Dungeon.level.drop( new  Gold(), pos ).sprite.drop();
 		}
 
 		return super.defenseProc(enemy, damage);

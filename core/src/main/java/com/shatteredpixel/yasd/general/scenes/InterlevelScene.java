@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -50,6 +49,7 @@ import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Reflection;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -183,7 +183,7 @@ public class InterlevelScene extends PixelScene {
 
 		Level level = null;
 		try {
-			level = ModHandler.newObject(Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth));
+			level = Reflection.newInstance(Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth));
 		} catch (Exception ignored) {}
 
 		if (level == null || level.loadImg() == null) {

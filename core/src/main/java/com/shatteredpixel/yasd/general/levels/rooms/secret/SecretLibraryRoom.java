@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
@@ -94,7 +93,7 @@ public class SecretLibraryRoom extends SecretRoom {
 			
 			Class<?extends Scroll> scrollCls = Random.chances(chances);
 			chances.put(scrollCls, 0f);
-			level.drop( ModHandler.newObject(scrollCls), pos );
+			level.drop( Reflection.newInstance(scrollCls), pos );
 		}
 	}
 	

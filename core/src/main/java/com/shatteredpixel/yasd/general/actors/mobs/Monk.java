@@ -49,7 +49,7 @@ public class Monk extends Mob {
 
 		DLY = 0.5f;
 		
-		loot = new Food();
+		loot = new  Food();
 		lootChance = 0.083f;
 
 		properties.add(Property.UNDEAD);

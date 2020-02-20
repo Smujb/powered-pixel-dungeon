@@ -67,7 +67,7 @@ public class Warlock extends RangedMob {
 
 	@Override
 	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class Warlock extends RangedMob {
 
 	@Override
 	public MagicalDamage magicalSrc() {
-		return new DarkBolt();
+		return new  DarkBolt();
 	}
 
 	@Override

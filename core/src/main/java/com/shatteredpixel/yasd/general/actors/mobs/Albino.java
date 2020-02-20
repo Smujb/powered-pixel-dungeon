@@ -21,13 +21,13 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.sprites.AlbinoSprite;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Albino extends Rat {
 
@@ -37,7 +37,7 @@ public class Albino extends Rat {
 		HP = HT = 15;
 		EXP = 2;
 		
-		loot = ModHandler.newObject(MysteryMeat.class);
+		loot = Reflection.newInstance(MysteryMeat.class);
 		lootChance = 1f;
 	}
 	

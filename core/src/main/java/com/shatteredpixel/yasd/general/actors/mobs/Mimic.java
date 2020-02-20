@@ -72,7 +72,7 @@ public class Mimic extends Mob {
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		if (bundle.contains( ITEMS )) {
-			items = new ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
+			items = new  ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
 		}
 		adjustStats( bundle.getInt( LEVEL ) );
 		super.restoreFromBundle(bundle);
@@ -120,7 +120,7 @@ public class Mimic extends Mob {
 		if (Dungeon.level.pit[pos]) return null;
 		Char ch = Actor.findChar( pos );
 		if (ch != null) {
-			ArrayList<Integer> candidates = new ArrayList<>();
+			ArrayList<Integer> candidates = new  ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8) {
 				int cell = pos + n;
 				if ((Dungeon.level.passable[cell] || Dungeon.level.avoid[cell]) && Actor.findChar( cell ) == null) {
@@ -129,7 +129,7 @@ public class Mimic extends Mob {
 			}
 			if (candidates.size() > 0) {
 				int newPos = Random.element( candidates );
-				Actor.addDelayed( new Pushing( ch, ch.pos, newPos ), -1 );
+				Actor.addDelayed( new  Pushing( ch, ch.pos, newPos ), -1 );
 				
 				ch.pos = newPos;
 				Dungeon.level.occupyCell(ch );
@@ -139,8 +139,8 @@ public class Mimic extends Mob {
 			}
 		}
 		
-		Mimic m = new Mimic();
-		m.items = new ArrayList<>( items );
+		Mimic m = new  Mimic();
+		m.items = new  ArrayList<>( items );
 		m.adjustStats( Dungeon.depth );
 		m.pos = pos;
 		m.state = m.HUNTING;
@@ -158,7 +158,7 @@ public class Mimic extends Mob {
 		do {
 			switch (Random.Int(5)) {
 				case 0:
-					reward = new Gold().random();
+					reward = new  Gold().random();
 					break;
 				case 1:
 					reward = Generator.randomMissile();

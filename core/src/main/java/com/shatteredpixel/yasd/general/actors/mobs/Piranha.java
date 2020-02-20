@@ -44,9 +44,9 @@ public class Piranha extends Mob {
 		loot = MysteryMeat.class;
 		lootChance = 1f;
 		
-		SLEEPING = new Sleeping();
-		WANDERING = new Wandering();
-		HUNTING = new Hunting();
+		SLEEPING = new  Sleeping();
+		WANDERING = new  Wandering();
+		HUNTING = new  Hunting();
 		
 		state = SLEEPING;
 		

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -31,10 +30,10 @@ import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SpinnerSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Spinner extends Mob {
 
@@ -47,10 +46,10 @@ public class Spinner extends Mob {
 		EXP = 9;
 		maxLvl = 17;
 
-		loot = ModHandler.newObject(MysteryMeat.class);
+		loot = Reflection.newInstance(MysteryMeat.class);
 		lootChance = 0.125f;
 
-		FLEEING = new Fleeing();
+		FLEEING = new  Fleeing();
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class Spinner extends Mob {
 	public void move(int step) {
 		if (state == FLEEING && Random.Int(3) == 0) {
 			//GameScene.add(Blob.seed(pos, Random.Int(5, 7) - curWeb, Web.class));
-			for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+			for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
 				mob.beckon( enemy.pos );
 				sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.3f, 3 );
 				Sample.INSTANCE.play( Assets.SND_CHALLENGE );

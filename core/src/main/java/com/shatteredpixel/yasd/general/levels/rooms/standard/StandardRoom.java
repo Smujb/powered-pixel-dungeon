@@ -21,11 +21,11 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -177,7 +177,7 @@ public abstract class StandardRoom extends Room {
 	
 	
 	public static StandardRoom createRoom(){
-		return ModHandler.newObject(rooms.get(Random.chances(chances[Dungeon.depth])));
+		return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
 	}
 	
 }

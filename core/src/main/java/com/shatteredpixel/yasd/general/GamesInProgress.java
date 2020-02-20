@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
@@ -47,9 +46,10 @@ public class GamesInProgress {
 	public static HeroClass selectedClass;
 
 	private static String gameFolder() {
-		return ModHandler.mod().toString() + "/";
+		return DATA_FOLDER;
 	}
 
+	private static final String DATA_FOLDER = "data/";
 	private static final String SLOT_FOLDER = "slot%d";
 	private static final String PATH_FOLDER = "path%d";
 	private static final String GAME_FILE	= "game.dat";

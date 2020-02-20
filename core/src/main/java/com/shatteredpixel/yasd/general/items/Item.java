@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
@@ -37,10 +36,8 @@ import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Catalog;
-import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.plants.Sungrass;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
@@ -312,7 +309,7 @@ public class Item implements Bundlable {
 			return null;
 		} else {
 			//pssh, who needs copy constructors?
-			Item split = ModHandler.newObject(getClass());
+			Item split = Reflection.newInstance(getClass());
 			
 			if (split == null){
 				return null;
@@ -533,7 +530,7 @@ public class Item implements Bundlable {
 	}
 	
 	public Item virtual(){
-		Item item = ModHandler.newObject(getClass());
+		Item item = Reflection.newInstance(getClass());
 		if (item == null) return null;
 		
 		item.quantity = 0;

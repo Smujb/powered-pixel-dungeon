@@ -28,7 +28,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.Ankh;
 import com.shatteredpixel.yasd.general.items.Generator;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
@@ -58,7 +57,7 @@ public class Statue extends Mob implements Callback {
 
 		STR = Integer.MAX_VALUE;
 
-		loot = new StoneOfRepair();
+		loot = new  StoneOfRepair();
 
 		lootChance = 1f;//Guaranteed in Animated Statues
 	}
@@ -67,7 +66,7 @@ public class Statue extends Mob implements Callback {
 	
 	public Statue() {
 		super();
-		belongings = new Belongings(this);
+		belongings = new  Belongings(this);
 
 		for (int i = 0; i < belongings.miscs.length; i++) {
 			belongings.miscs[i] = newItem();
@@ -86,7 +85,7 @@ public class Statue extends Mob implements Callback {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.canAttack( enemy );
 		} else if (wandToAttack(enemy) != null) {
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+			return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		} else {
 			return false;
 		}

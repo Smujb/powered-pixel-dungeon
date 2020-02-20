@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.scrolls.exotic;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Recipe;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
@@ -38,6 +37,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.general.items.stones.Runestone;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -118,7 +118,7 @@ public abstract class ExoticScroll extends Scroll {
 	@Override
 	//20 gold more than its none-exotic equivalent
 	public int price() {
-		return (ModHandler.newObject(exoToReg.get(getClass())).price() + 20) * quantity;
+		return (Reflection.newInstance(exoToReg.get(getClass())).price() + 20) * quantity;
 	}
 	
 	public static class ScrollToExotic extends Recipe {
@@ -151,7 +151,7 @@ public abstract class ExoticScroll extends Scroll {
 			for (Item i : ingredients){
 				i.quantity(i.quantity()-1);
 				if (regToExo.containsKey(i.getClass())) {
-					result = ModHandler.newObject(regToExo.get(i.getClass()));
+					result = Reflection.newInstance(regToExo.get(i.getClass()));
 				}
 			}
 			return result;
@@ -161,7 +161,7 @@ public abstract class ExoticScroll extends Scroll {
 		public Item sampleOutput(ArrayList<Item> ingredients) {
 			for (Item i : ingredients){
 				if (regToExo.containsKey(i.getClass())) {
-					return ModHandler.newObject(regToExo.get(i.getClass()));
+					return Reflection.newInstance(regToExo.get(i.getClass()));
 				}
 			}
 			return null;

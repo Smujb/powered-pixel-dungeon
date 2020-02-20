@@ -30,12 +30,12 @@ import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.effects.Pushing;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.SmallRation;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SwarmSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class Swarm extends Mob {
 		
 		flying = true;
 
-		loot = new SmallRation();
+		loot = Reflection.newInstance(  SmallRation.class );
 		lootChance = 0.1667f; //by default, see rollToDropLoot()
 	}
 	
@@ -97,7 +97,7 @@ public class Swarm extends Mob {
 	public int defenseProc( Char enemy, int damage ) {
 
 		if (HP >= damage + 2) {
-			ArrayList<Integer> candidates = new ArrayList<>();
+			ArrayList<Integer> candidates = new  ArrayList<>();
 			boolean[] solid = Dungeon.level.solid;
 			
 			int[] neighbours = {pos + 1, pos - 1, pos + Dungeon.level.width(), pos - Dungeon.level.width()};
@@ -132,7 +132,7 @@ public class Swarm extends Mob {
 	}
 	
 	private Swarm split() {
-		Swarm clone = new Swarm();
+		Swarm clone = Reflection.newInstance( Swarm.class );
 		clone.generation = generation + 1;
 		clone.EXP = 0;
 		if (buff( Burning.class ) != null) {

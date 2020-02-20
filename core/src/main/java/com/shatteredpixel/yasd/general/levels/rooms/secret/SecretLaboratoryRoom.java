@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.blobs.Alchemy;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
@@ -41,6 +40,7 @@ import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.HashMap;
 
@@ -83,7 +83,7 @@ public class SecretLaboratoryRoom extends SecretRoom {
 			
 			Class<?extends Potion> potionCls = Random.chances(chances);
 			chances.put(potionCls, 0f);
-			level.drop( ModHandler.newObject(potionCls), pos );
+			level.drop( Reflection.newInstance(potionCls), pos );
 		}
 		
 	}

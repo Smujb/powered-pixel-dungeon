@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -29,6 +28,7 @@ import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +109,7 @@ public abstract class SecretRoom extends SpecialRoom {
 			if (newidx < index) index = newidx;
 		}
 		
-		r = ModHandler.newObject(runSecrets.get( index ));
+		r = Reflection.newInstance(runSecrets.get( index ));
 		
 		runSecrets.add(runSecrets.remove(index));
 		

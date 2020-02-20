@@ -45,6 +45,7 @@ import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.actors.mobs.Bestiary;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.TestBoss;
+import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.particles.FlowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.WindParticle;
@@ -478,7 +479,7 @@ public abstract class Level implements Bundlable {
 		/*if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
 			mobsToSpawn = Bestiary.getMobRotation(Dungeon.depth);
 		}
-		Mob mob = ModHandler.newObject(mobsToSpawn.remove(0));
+		Mob mob = Reflection.newInstance(mobsToSpawn.remove(0));
 		if (mob == null) {
 			return null;
 		}
@@ -493,7 +494,11 @@ public abstract class Level implements Bundlable {
 				break;
 		}
 		return mob;*/
-		return Bestiary.getMob();
+		Mob mob = Bestiary.getMob();
+		if (Random.Int(5) == 0 && feeling == Feeling.EVIL) {
+			mob = new Wraith();
+		}
+		return mob;
 	}
 
 	public ArrayList<Integer> getPassableCellsList() {

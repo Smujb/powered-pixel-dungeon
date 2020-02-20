@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.armor;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -68,6 +67,7 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -705,7 +705,7 @@ public class Armor extends KindofMisc {
 			if (glyphs.isEmpty()) {
 				return random();
 			} else {
-				return (Glyph) ModHandler.newObject(Random.element(glyphs));
+				return (Glyph) Reflection.newInstance(Random.element(glyphs));
 			}
 		}
 		
@@ -716,7 +716,7 @@ public class Armor extends KindofMisc {
 			if (glyphs.isEmpty()) {
 				return random();
 			} else {
-				return (Glyph) ModHandler.newObject(Random.element(glyphs));
+				return (Glyph) Reflection.newInstance(Random.element(glyphs));
 			}
 		}
 		
@@ -727,7 +727,7 @@ public class Armor extends KindofMisc {
 			if (glyphs.isEmpty()) {
 				return random();
 			} else {
-				return (Glyph) ModHandler.newObject(Random.element(glyphs));
+				return (Glyph) Reflection.newInstance(Random.element(glyphs));
 			}
 		}
 		
@@ -738,7 +738,7 @@ public class Armor extends KindofMisc {
 			if (glyphs.isEmpty()) {
 				return random();
 			} else {
-				return (Glyph) ModHandler.newObject(Random.element(glyphs));
+				return (Glyph) Reflection.newInstance(Random.element(glyphs));
 			}
 		}
 		

@@ -63,7 +63,7 @@ public class GnollTrickster extends RangedMob {
 
 	@Override
 	public int damageRoll() {
-		return new Gnoll().damageRoll();
+		return new  Gnoll().damageRoll();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class GnollTrickster extends RangedMob {
 
 	@Override
 	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+		return new  Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
 	}
 
 	@Override

@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.scrolls;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
@@ -51,6 +50,7 @@ import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -353,7 +353,7 @@ public abstract class Scroll extends Item {
 			
 			s.quantity(s.quantity() - 1);
 			
-			return ModHandler.newObject(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+			return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
 		}
 		
 		@Override
@@ -361,7 +361,7 @@ public abstract class Scroll extends Item {
 			if (!testIngredients(ingredients)) return null;
 			
 			Scroll s = (Scroll) ingredients.get(0);
-			return ModHandler.newObject(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
+			return Reflection.newInstance(stones.get(s.getClass())).quantity(amnts.get(s.getClass()));
 		}
 	}
 }

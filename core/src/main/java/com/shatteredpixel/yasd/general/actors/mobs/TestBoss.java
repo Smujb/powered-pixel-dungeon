@@ -51,7 +51,7 @@ public class TestBoss extends Mob {
 
 	private boolean hint = true;
 
-	public static ArrayList<Integer> towerPositions = new ArrayList<>();
+	public static ArrayList<Integer> towerPositions = new  ArrayList<>();
 
 	private int numBolts() {
 		return (int) (6 + (1 - (HP/(float)HT))*8);
@@ -156,7 +156,7 @@ public class TestBoss extends Mob {
 	public void zap() {
 		time_to_summon = MAX_COOLDOWN;
 		towerPositions.clear();
-		int[] positions = new int[numBolts()];
+		int[] positions = new  int[numBolts()];
 		for (int i = 0; i < positions.length; i++) {
 			positions[i] = Dungeon.level.randomRespawnCell();
 		}
@@ -165,7 +165,7 @@ public class TestBoss extends Mob {
 					MagicMissile.SHADOW,
 					this.sprite,
 					i,
-					new Callback() {
+					new  Callback() {
 						@Override
 						public void call() {
 							Mob tower = Mob.spawnAt(Tower.class, i);
@@ -185,16 +185,16 @@ public class TestBoss extends Mob {
 		super.die( cause );
 
 		GameScene.bossSlain();
-		Dungeon.level.drop( new SkeletonKey( Dungeon.depth  ), pos ).sprite.drop();
+		Dungeon.level.drop( new  SkeletonKey( Dungeon.depth  ), pos ).sprite.drop();
 
 		//60% chance of 2 shards, 30% chance of 3, 10% chance for 4. Average of 2.5
-		int blobs = Random.chances(new float[]{0, 0, 6, 3, 1});
+		int blobs = Random.chances(new  float[]{0, 0, 6, 3, 1});
 		for (int i = 0; i < blobs; i++){
 			int ofs;
 			do {
 				ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
 			} while (!Dungeon.level.passable[pos + ofs]);
-			Dungeon.level.drop( new ScrollOfUpgrade(), pos + ofs ).sprite.drop( pos );
+			Dungeon.level.drop( new  ScrollOfUpgrade(), pos + ofs ).sprite.drop( pos );
 		}
 
 
@@ -212,9 +212,9 @@ public class TestBoss extends Mob {
 	public int attackProc(Char enemy, int damage) {
 		if (!checkTowers()) {
 			//trace a ballistica to our target (which will also extend past them
-			Ballistica trajectory = new Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
+			Ballistica trajectory = new  Ballistica(pos, enemy.pos, Ballistica.STOP_TARGET);
 			//trim it to just be the part that goes past them
-			trajectory = new Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
+			trajectory = new  Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
 			//knock them back along that ballistica
 			WandOfBlastWave.throwChar(enemy, trajectory, 2);
 			damage *= 2;
@@ -269,8 +269,8 @@ public class TestBoss extends Mob {
 		}
 
 		private void zap(int cell) {
-			sprite.parent.add(new Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
-			Ballistica shot = new Ballistica(this.pos, cell, Ballistica.STOP_TARGET);
+			sprite.parent.add(new  Beam.DeathRay(this.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
+			Ballistica shot = new  Ballistica(this.pos, cell, Ballistica.STOP_TARGET);
 			for (int c : shot.path) {
 				Char ch = Actor.findChar(c);
 				if (ch != null) {
@@ -313,18 +313,18 @@ public class TestBoss extends Mob {
 
 			texture(Assets.STATUE);
 
-			TextureFilm frames = new TextureFilm(texture, 12, 15);
+			TextureFilm frames = new  TextureFilm(texture, 12, 15);
 
-			idle = new Animation(2, true);
+			idle = new  Animation(2, true);
 			idle.frames(frames, 0, 0, 0, 0, 0, 1, 1);
 
-			run = new Animation(15, true);
+			run = new  Animation(15, true);
 			run.frames(frames, 2, 3, 4, 5, 6, 7);
 
-			attack = new Animation(12, false);
+			attack = new  Animation(12, false);
 			attack.frames(frames, 8, 9, 10);
 
-			die = new Animation(5, false);
+			die = new  Animation(5, false);
 			die.frames(frames, 11, 12, 13, 14, 15, 15);
 
 			play(idle);
@@ -342,9 +342,9 @@ public class TestBoss extends Mob {
 			super();
 
 			texture(Assets.LITTOWER);
-			TextureFilm frames = new TextureFilm(texture, 16, 16);
+			TextureFilm frames = new  TextureFilm(texture, 16, 16);
 
-			idle = new MovieClip.Animation(10, true);
+			idle = new  MovieClip.Animation(10, true);
 			idle.frames(frames, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 			run = idle.clone();

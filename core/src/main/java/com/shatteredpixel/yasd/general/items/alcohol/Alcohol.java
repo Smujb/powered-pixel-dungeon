@@ -5,15 +5,11 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Drunk;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.windows.WndItem;
-import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
 
-public abstract class Alcohol extends Item {
+public class Alcohol extends Item {
     {
         cursed = false;
         stackable = true;

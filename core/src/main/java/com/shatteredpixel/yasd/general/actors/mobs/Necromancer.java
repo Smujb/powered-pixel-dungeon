@@ -55,11 +55,11 @@ public class Necromancer extends Mob {
 		EXP = 7;
 		maxLvl = 14;
 		
-		loot = new PotionOfHealing();
+		loot = new  PotionOfHealing();
 		lootChance = 0.2f; //see createloot
 
 		
-		HUNTING = new Hunting();
+		HUNTING = new  Hunting();
 	}
 	
 	public boolean summoning = false;
@@ -160,7 +160,7 @@ public class Necromancer extends Mob {
 		//heal skeleton first
 		if (mySkeleton.HP < mySkeleton.HT){
 			
-			sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+			sprite.parent.add(new  Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
 			
 			mySkeleton.HP = Math.min(mySkeleton.HP + 5, mySkeleton.HT);
 			mySkeleton.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
@@ -168,7 +168,7 @@ public class Necromancer extends Mob {
 			//otherwise give it adrenaline
 		} else if (mySkeleton.buff(Adrenaline.class) == null) {
 			
-			sprite.parent.add(new Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
+			sprite.parent.add(new  Beam.HealthRay(sprite.center(), mySkeleton.sprite.center()));
 			
 			Buff.affect(mySkeleton, Adrenaline.class, 3f);
 		}
@@ -206,7 +206,7 @@ public class Necromancer extends Mob {
 					//push enemy, or wait a turn if there is no valid pushing position
 					if (pushPos != pos) {
 						Char ch = Actor.findChar(summoningPos);
-						Actor.addDelayed( new Pushing( ch, ch.pos, pushPos ), -1 );
+						Actor.addDelayed( new  Pushing( ch, ch.pos, pushPos ), -1 );
 						
 						ch.pos = pushPos;
 						Dungeon.level.occupyCell(ch );
@@ -219,7 +219,7 @@ public class Necromancer extends Mob {
 				
 				summoning = firstSummon = false;
 				
-				mySkeleton = new NecroSkeleton();
+				mySkeleton = new  NecroSkeleton();
 				mySkeleton.pos = summoningPos;
 				GameScene.add( mySkeleton );
 				Dungeon.level.occupyCell( mySkeleton );

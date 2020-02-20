@@ -10,7 +10,7 @@ public abstract class RangedMob extends Mob implements Callback {
     public boolean magical = true;
 
     public boolean canHit(Char enemy) {
-        return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+        return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
     }
 
     public abstract boolean fleesAtMelee();
@@ -18,7 +18,7 @@ public abstract class RangedMob extends Mob implements Callback {
     public static class MagicalDamage{}
 
     public MagicalDamage magicalSrc() {
-        return new MagicalDamage();
+        return new  MagicalDamage();
     }
 
     @Override

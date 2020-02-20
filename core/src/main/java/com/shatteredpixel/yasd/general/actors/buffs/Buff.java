@@ -21,11 +21,11 @@
 
 package com.shatteredpixel.yasd.general.actors.buffs;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
+import com.watabou.utils.Reflection;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
@@ -113,8 +113,8 @@ public class Buff extends Actor {
 
 	//creates a fresh instance of the buff and attaches that, this allows duplication.
 	public static<T extends Buff> T append( Char target, Class<T> buffClass ) {
-		//T buff = ModHandler.newObject(buffClass);
-		T buff = ModHandler.newObject(buffClass);
+		//T buff = Reflection.newInstance(buffClass);
+		T buff = Reflection.newInstance(buffClass);
 		if (buff == null) {
 			return null;
 		}

@@ -21,13 +21,13 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -150,7 +150,7 @@ public abstract class SpecialRoom extends Room {
 				if (newidx < index) index = newidx;
 			}
 			
-			r = ModHandler.newObject(floorSpecials.get( index ));
+			r = Reflection.newInstance(floorSpecials.get( index ));
 			
 			if (r instanceof WeakFloorRoom){
 				pitNeededDepth = Dungeon.depth + 1;

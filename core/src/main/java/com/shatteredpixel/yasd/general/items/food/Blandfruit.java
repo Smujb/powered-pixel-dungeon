@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.food;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
@@ -49,6 +48,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -122,7 +122,7 @@ public class Blandfruit extends Food {
 	}
 
 	public Item cook(Seed seed){
-		return imbuePotion(ModHandler.newObject(Potion.SeedToPotion.types.get(seed.getClass())));
+		return imbuePotion(Reflection.newInstance(Potion.SeedToPotion.types.get(seed.getClass())));
 	}
 
 	public Item imbuePotion(Potion potion){

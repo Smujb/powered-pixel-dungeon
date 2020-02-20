@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
@@ -58,6 +57,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import java.io.IOException;
@@ -261,7 +261,7 @@ public class Dungeon {
 				MainGame.reportException(e);
 			}
 		} while (level == null);*/
-		level = ModHandler.newObject(levelClass);
+		level = Reflection.newInstance(levelClass);
 
 		
 		level.create();

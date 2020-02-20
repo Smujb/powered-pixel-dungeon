@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.sprites.BatSprite;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Bat extends Mob {
 
@@ -43,7 +44,7 @@ public class Bat extends Mob {
 		
 		flying = true;
 		
-		loot = new PotionOfHealing();
+		loot = Reflection.newInstance( PotionOfHealing.class );
 		lootChance = 0.1667f; //by default, see rollToDropLoot()
 	}
 	

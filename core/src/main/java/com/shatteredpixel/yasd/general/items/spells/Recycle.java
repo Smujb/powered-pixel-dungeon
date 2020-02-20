@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.spells;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
@@ -55,12 +54,12 @@ public class Recycle extends InventorySpell {
 			if (item instanceof Potion) {
 				result = Generator.random(Generator.Category.POTION);
 				if (item instanceof ExoticPotion){
-					result = ModHandler.newObject(ExoticPotion.regToExo.get(result.getClass()));
+					result = Reflection.newInstance(ExoticPotion.regToExo.get(result.getClass()));
 				}
 			} else if (item instanceof Scroll) {
 				result = Generator.random(Generator.Category.SCROLL);
 				if (item instanceof ExoticScroll){
-					result = ModHandler.newObject(ExoticScroll.regToExo.get(result.getClass()));
+					result = Reflection.newInstance(ExoticScroll.regToExo.get(result.getClass()));
 				}
 			} else if (item instanceof Plant.Seed) {
 				result = Generator.random(Generator.Category.SEED);

@@ -58,7 +58,7 @@ public class OldTengu extends Mob {
 		EXP = 20;
 		defenseSkill = 20;
 
-		HUNTING = new Hunting();
+		HUNTING = new  Hunting();
 
 		flying = true; //doesn't literally fly, but he is fleet-of-foot enough to avoid hazards
 
@@ -112,7 +112,7 @@ public class OldTengu extends Mob {
 		//phase 2 of the fight is over
 		if (HP == 0 && state == OldPrisonBossLevel.State.FIGHT_ARENA) {
 			//let full attack action complete first
-			Actor.add(new Actor() {
+			Actor.add(new  Actor() {
 				
 				{
 					actPriority = VFX_PRIO;
@@ -150,7 +150,7 @@ public class OldTengu extends Mob {
 	public void die( Object cause ) {
 		
 		if (Dungeon.hero.subClass == HeroSubClass.NONE) {
-			Dungeon.level.drop( new TomeOfMastery(), pos ).sprite.drop();
+			Dungeon.level.drop( new  TomeOfMastery(), pos ).sprite.drop();
 		}
 		
 		GameScene.bossSlain();
@@ -168,7 +168,7 @@ public class OldTengu extends Mob {
 
 	@Override
     public boolean canAttack(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+		return new  Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
 	}
 
 	//tengu's attack is always visible
@@ -185,7 +185,7 @@ public class OldTengu extends Mob {
 		
 		//incase tengu hasn't had a chance to act yet
 		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
-			fieldOfView = new boolean[Dungeon.level.length()];
+			fieldOfView = new  boolean[Dungeon.level.length()];
 			Dungeon.level.updateFieldOfView( this, fieldOfView );
 		}
 		
@@ -196,7 +196,7 @@ public class OldTengu extends Mob {
 		//if we're in phase 1, want to warp around within the room
 		if (((OldPrisonBossLevel)Dungeon.level).state() == OldPrisonBossLevel.State.FIGHT_START) {
 			
-			//place new traps
+			//place new  traps
 			int tries;
 			for (int i=0; i < 4; i++) {
 				int trapPos;
@@ -207,7 +207,7 @@ public class OldTengu extends Mob {
 						&& level.map[trapPos] != Terrain.TRAP);
 				
 				if (level.map[trapPos] == Terrain.INACTIVE_TRAP) {
-					level.setTrap( new GrippingTrap().reveal(), trapPos );
+					level.setTrap( new  GrippingTrap().reveal(), trapPos );
 					Level.set( trapPos, Terrain.TRAP );
 					ScrollOfMagicMapping.discover( trapPos );
 				}

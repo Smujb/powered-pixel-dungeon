@@ -57,7 +57,7 @@ public class Succubus extends Mob {
 		EXP = 12;
 		maxLvl = 25;
 		
-		loot = new ScrollOfLullaby();
+		loot = new  ScrollOfLullaby();
 		lootChance = 0.05f;
 
 		properties.add(Property.DEMONIC);
@@ -110,7 +110,7 @@ public class Succubus extends Mob {
 	
 	private void blink( int target ) {
 		
-		Ballistica route = new Ballistica( pos, target, Ballistica.PROJECTILE);
+		Ballistica route = new  Ballistica( pos, target, Ballistica.PROJECTILE);
 		int cell = route.collisionPos;
 
 		//can't occupy the same cell as another char, so move back one.
@@ -118,7 +118,7 @@ public class Succubus extends Mob {
 			cell = route.path.get(route.dist-1);
 
 		if (Dungeon.level.avoid[ cell ]){
-			ArrayList<Integer> candidates = new ArrayList<>();
+			ArrayList<Integer> candidates = new  ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8) {
 				cell = route.collisionPos + n;
 				if (Dungeon.level.passable[cell] && Actor.findChar( cell ) == null) {

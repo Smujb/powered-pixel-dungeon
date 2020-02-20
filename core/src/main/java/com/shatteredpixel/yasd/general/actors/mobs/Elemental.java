@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.sprites.ElementalSprite;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Elemental extends Mob {
 
@@ -45,7 +46,7 @@ public class Elemental extends Mob {
 		
 		flying = true;
 		
-		loot = new PotionOfLiquidFlame();
+		loot = Reflection.newInstance( PotionOfLiquidFlame.class );
 		lootChance = 0.1f;
 		
 		properties.add(Property.FIERY);

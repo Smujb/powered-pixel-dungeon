@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -189,7 +188,7 @@ public class WndSettings extends WndTabbed {
 			tileGrid.setRect(0, brightness.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 			add(tileGrid);
 
-			RedButton btnMod = new RedButton( Messages.get(this, "mods") ) {
+			/*RedButton btnMod = new RedButton( Messages.get(this, "mods") ) {
 				@Override
 				protected void onClick() {
 					MainGame.scene().addToFront(new WndOptions(Messages.get(DisplayTab.class, "mods_title"),
@@ -215,14 +214,14 @@ public class WndSettings extends WndTabbed {
 							} catch (Exception e) {
 								MainGame.reportException(e);
 							}
-							Game.instance.finish();*/
+							Game.instance.finish();
 						}
 					});
 				}
 			};
-			btnMod.setRect(0, tileGrid.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
+			btnMod.setRct(0, tileGrid.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
 			add( btnMod );
-
+			*/
 		}
 	}
 

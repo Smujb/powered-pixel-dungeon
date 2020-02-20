@@ -23,7 +23,6 @@ package com.shatteredpixel.yasd.general.messages;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.GameSettings;
 
@@ -124,15 +123,15 @@ public class Messages {
 		return get(o.getClass(), k, args);
 	}
 
-	public static String get(Class c, String k, Object...args){
+	public static String get(Class c, String k, Object...args) {
+		return get(c, k, null, args);
+	}
+
+	private static String get(Class c, String k, String baseName, Object...args){
 		String key;
 		if (c != null){
 			key = c.getName();
-			if (key.contains(ModHandler.modPackage())) {
-				key = key.replace(ModHandler.modPackage(), "");
-			} else if (key.contains(ModHandler.NONE.getPackage())) {
-				key = key.replace(ModHandler.NONE.getPackage(), "");
-			}
+			key = key.replace("com.shatteredpixel.yasd.general.", "");
 			key += "." + k;
 		} else
 			key = k;
@@ -144,14 +143,13 @@ public class Messages {
 			//this is so child classes can inherit properties from their parents.
 			//in cases where text is commonly grabbed as a utility from classes that aren't mean to be instantiated
 			//(e.g. flavourbuff.dispTurns()) using .class directly is probably smarter to prevent unnecessary recursive calls.
+			if (baseName == null) {
+				baseName = key;
+			}
 			if (c != null && c.getSuperclass() != null){
-				return get(c.getSuperclass(), k, args);
+				return get(c.getSuperclass(), k, baseName, args);
 			} else {
-				if (c != null) {
-					return "missed_string:"+key;
-				} else {
-					return "!!!NTF!!!";
-				}
+				return "missed_string:"+baseName;
 			}
 		}
 	}

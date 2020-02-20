@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
@@ -58,6 +57,7 @@ import com.shatteredpixel.yasd.general.items.spells.Recycle;
 import com.shatteredpixel.yasd.general.items.spells.WildEnergy;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.Dart;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -88,7 +88,7 @@ public abstract class Recipe {
 		public ArrayList<Item> getIngredients() {
 			ArrayList<Item> result = new ArrayList<>();
 			for (int i = 0; i < inputs.length; i++) {
-				Item ingredient = ModHandler.newObject(inputs[i]);
+				Item ingredient = Reflection.newInstance(inputs[i]);
 				ingredient.quantity(inQuantity[i]);
 				result.add(ingredient);
 			}
@@ -150,7 +150,7 @@ public abstract class Recipe {
 		//ingredients are ignored, as output doesn't vary
 		public final Item sampleOutput(ArrayList<Item> ingredients){
 			try {
-				Item result = ModHandler.newObject(output);
+				Item result = Reflection.newInstance(output);
 				result.quantity(outQuantity);
 				return result;
 			} catch (Exception e) {

@@ -28,6 +28,7 @@ import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.sprites.CrabSprite;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Crab extends Mob {
 
@@ -41,7 +42,7 @@ public class Crab extends Mob {
 		EXP = 4;
 		maxLvl = 9;
 		
-		loot = new PotionOfHealing();
+		loot = Reflection.newInstance( PotionOfHealing.class );
 		lootChance = 0.5f;
 	}
 	
@@ -63,11 +64,11 @@ public class Crab extends Mob {
 	@Override
 	protected Item createLoot() {
 		//(5-count) / 5 chance of getting healing, otherwise mystery meat
-		if (Random.Float() < ((5f - Dungeon.LimitedDrops.CRAB_HP.count) / 5f)) {
+		if (Random.Float() < ((5f - Dungeon.LimitedDrops.CRAB_HP.count) / 5f)/2) {
 			Dungeon.LimitedDrops.CRAB_HP.count++;
 			return (Item)loot;
 		} else {
-			return new MysteryMeat();
+			return Reflection.newInstance( MysteryMeat.class );
 		}
 	}
 }

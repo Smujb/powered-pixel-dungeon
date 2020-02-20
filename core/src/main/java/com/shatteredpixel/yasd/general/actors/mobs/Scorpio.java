@@ -49,7 +49,7 @@ public class Scorpio extends RangedMob {
 
 		magical = false;
 
-		loot = new PotionOfHealing();
+		loot = new  PotionOfHealing();
 		lootChance = 0.2f;
 
 		properties.add(Property.DEMONIC);
@@ -72,7 +72,7 @@ public class Scorpio extends RangedMob {
 
 	@Override
 	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
+		return new  Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class Scorpio extends RangedMob {
 			Dungeon.LimitedDrops.SCORPIO_HP.count++;
 			return (Item)loot;
 		} else {
-			return new MysteryMeat();
+			return new  MysteryMeat();
 		}
 	}
 	

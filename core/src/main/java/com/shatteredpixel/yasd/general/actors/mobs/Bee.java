@@ -136,13 +136,13 @@ public class Bee extends Mob {
 		//if the pot is on the ground
 		}else {
 			
-			//try to find a new enemy in these circumstances
+			//try to find a new  enemy in these circumstances
 			if (enemy == null || !enemy.isAlive() || state == WANDERING
 					|| Dungeon.level.distance(enemy.pos, potPos) > 3
 					|| (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY)){
 				
 				//find all mobs near the pot
-				HashSet<Char> enemies = new HashSet<>();
+				HashSet<Char> enemies = new  HashSet<>();
 				for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 					if (!(mob == this)
 							&& Dungeon.level.distance(mob.pos, potPos) <= 3

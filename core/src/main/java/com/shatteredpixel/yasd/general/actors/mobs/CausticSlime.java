@@ -29,6 +29,7 @@ import com.shatteredpixel.yasd.general.items.quest.GooBlob;
 import com.shatteredpixel.yasd.general.sprites.CausticSlimeSprite;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class CausticSlime extends Slime {
 	
@@ -58,6 +59,6 @@ public class CausticSlime extends Slime {
 		do {
 			ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!Dungeon.level.passable[pos + ofs]);
-		Dungeon.level.drop( new GooBlob(), pos + ofs ).sprite.drop( pos );
+		Dungeon.level.drop( Reflection.newInstance(  GooBlob.class ), pos + ofs ).sprite.drop( pos );
 	}
 }

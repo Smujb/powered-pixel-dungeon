@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.ModHandler;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -44,6 +43,7 @@ import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.levels.traps.WarpingTrap;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class TrapsRoom extends SpecialRoom {
 
@@ -95,7 +95,7 @@ public class TrapsRoom extends SpecialRoom {
 		for(Point p : getPoints()) {
 			int cell = level.pointToCell(p);
 			if (level.map[cell] == Terrain.TRAP){
-				level.setTrap(ModHandler.newObject(trapClass).reveal(), cell);
+				level.setTrap(Reflection.newInstance(trapClass).reveal(), cell);
 			}
 		}
 		

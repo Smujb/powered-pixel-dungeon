@@ -57,7 +57,7 @@ public class Guard extends Mob {
 
 		properties.add(Property.UNDEAD);
 		
-		HUNTING = new Hunting();
+		HUNTING = new  Hunting();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Guard extends Mob {
 		if (chainsUsed || enemy.properties().contains(Property.IMMOVABLE))
 			return false;
 
-		Ballistica chain = new Ballistica(pos, target, Ballistica.PROJECTILE);
+		Ballistica chain = new  Ballistica(pos, target, Ballistica.PROJECTILE);
 
 		if (chain.collisionPos != enemy.pos
 				|| chain.path.size() < 2
@@ -90,9 +90,9 @@ public class Guard extends Mob {
 				final int newPosFinal = newPos;
 				this.target = newPos;
 				yell( Messages.get(this, "scorpion") );
-				sprite.parent.add(new Chains(sprite.center(), enemy.sprite.center(), new Callback() {
+				sprite.parent.add(new  Chains(sprite.center(), enemy.sprite.center(), new  Callback() {
 					public void call() {
-						Actor.addDelayed(new Pushing(enemy, enemy.pos, newPosFinal, new Callback(){
+						Actor.addDelayed(new  Pushing(enemy, enemy.pos, newPosFinal, new  Callback(){
 							public void call() {
 								enemy.pos = newPosFinal;
 								Dungeon.level.occupyCell(enemy);

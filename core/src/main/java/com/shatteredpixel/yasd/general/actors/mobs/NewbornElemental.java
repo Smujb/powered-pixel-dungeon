@@ -55,6 +55,6 @@ public class NewbornElemental extends Elemental {
 	@Override
 	public void die(Object cause) {
 		super.die(cause);
-		Dungeon.level.drop( new Embers(), pos ).sprite.drop();
+		Dungeon.level.drop( new  Embers(), pos ).sprite.drop();
 	}
 }
