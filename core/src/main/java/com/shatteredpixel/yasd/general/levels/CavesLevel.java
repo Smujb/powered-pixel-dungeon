@@ -83,7 +83,7 @@ public class CavesLevel extends RegularLevel {
 				.setGrass(feeling == Feeling.GRASS ? 0.65f : 0.15f, 3)
 				.setTraps(nTraps(), trapClasses(), trapChances());
 	}
-	
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_CAVES;

@@ -442,7 +442,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
 		bundle.put( STATE, state );
 	}
-	
+
 	public int tunnelTile() {
 		return feeling == Feeling.CHASM ? Terrain.EMPTY_SP : Terrain.EMPTY;
 	}
@@ -476,24 +476,6 @@ public abstract class Level implements Bundlable {
 	private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
 	
 	public Mob createMob() {
-		/*if (mobsToSpawn == null || mobsToSpawn.isEmpty()) {
-			mobsToSpawn = Bestiary.getMobRotation(Dungeon.depth);
-		}
-		Mob mob = Reflection.newInstance(mobsToSpawn.remove(0));
-		if (mob == null) {
-			return null;
-		}
-		switch (Dungeon.difficulty) {
-			case 1://Easy = -25% max HP
-				mob.HP = mob.HT*=0.75f;
-				break;
-			case 2: default://Medium = normal max HP
-				break;
-			case 3://Hard = +25% max HP
-				mob.HP = mob.HT*=1.25f;
-				break;
-		}
-		return mob;*/
 		Mob mob = Bestiary.getMob();
 		if (Random.Int(5) == 0 && feeling == Feeling.EVIL) {
 			mob = new Wraith();

@@ -67,7 +67,7 @@ public class CityLevel extends RegularLevel {
 		//2 to 3, average 2.33
 		return 2 + Random.chances(new float[]{2, 1});
 	}
-	
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_CITY;

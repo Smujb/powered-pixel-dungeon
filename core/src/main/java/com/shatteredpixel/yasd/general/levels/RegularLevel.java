@@ -61,6 +61,8 @@ import java.util.Iterator;
 public abstract class RegularLevel extends Level {
 	
 	protected ArrayList<Room> rooms;
+
+	protected ArrayList<Room> defaultRooms = new ArrayList<>();
 	
 	protected Builder builder;
 	
@@ -75,6 +77,7 @@ public abstract class RegularLevel extends Level {
 		builder = builder();
 		
 		ArrayList<Room> initRooms = initRooms();
+		initRooms.addAll(defaultRooms);
 		Random.shuffle(initRooms);
 		
 		do {

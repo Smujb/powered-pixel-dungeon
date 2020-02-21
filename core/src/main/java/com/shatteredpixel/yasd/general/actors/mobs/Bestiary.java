@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -71,8 +72,7 @@ public class Bestiary {
 	}
 
 	private static Class<? extends Mob> getMobClass( int depth, int path ) {
-		return Eye.class;
-		/*if (path == 0) {
+		if (path == 0) {
 			if (depth == Constants.CHAPTER_LENGTH) {
 				return CausticSlime.class;
 			}
@@ -88,7 +88,7 @@ public class Bestiary {
 				return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
 			}
 		}
-		return Wraith.class;*/
+		return Wraith.class;
 	}
 
 	private static Class<? extends Mob> getSewerMobClass(int depth) {

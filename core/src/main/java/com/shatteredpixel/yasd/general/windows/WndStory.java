@@ -22,8 +22,13 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.levels.CavesLevel;
+import com.shatteredpixel.yasd.general.levels.CityLevel;
+import com.shatteredpixel.yasd.general.levels.HallsLevel;
+import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.PrisonLevel;
+import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -31,7 +36,8 @@ import com.shatteredpixel.yasd.general.ui.Window;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.PointerArea;
-import com.watabou.utils.SparseArray;
+
+import java.util.HashMap;
 
 public class WndStory extends Window {
 
@@ -48,15 +54,15 @@ public class WndStory extends Window {
 	public static final int ID_CAVES		= 2;
 	public static final int ID_CITY     	= 3;
 	public static final int ID_HALLS		= 4;
-	
-	private static final SparseArray<String> CHAPTERS = new SparseArray<>();
+
+	private static final HashMap<Class<? extends Level>, String> CHAPTERS = new HashMap<>();
 	
 	static {
-		CHAPTERS.put( ID_SEWERS, "sewers" );
-		CHAPTERS.put( ID_PRISON, "prison" );
-		CHAPTERS.put( ID_CAVES, "caves" );
-		CHAPTERS.put( ID_CITY, "city" );
-		CHAPTERS.put( ID_HALLS, "halls" );
+		CHAPTERS.put( SewerLevel.class, "sewers" );
+		CHAPTERS.put( PrisonLevel.class, "prisons" );
+		CHAPTERS.put( CavesLevel.class, "caves" );
+		CHAPTERS.put( CityLevel.class, "city" );
+		CHAPTERS.put( HallsLevel.class, "halls" );
 	}
 	
 	private RenderedTextBlock tf;
@@ -93,13 +99,9 @@ public class WndStory extends Window {
 		}
 	}
 	
-	public static void showChapter( int id ) {
+	public static void showChapter( Class<? extends Level> id ) {
 		
-		if (Dungeon.chapters.contains( id )) {
-			return;
-		}
-		
-		String text = Messages.get(WndStory.class, CHAPTERS.get( id ));
+		String text = Messages.get(WndStory.class, CHAPTERS.get(id));
 		if (text != null) {
 			WndStory wnd = new WndStory( text );
 			if ((wnd.delay = 0.6f) > 0) {
@@ -107,8 +109,6 @@ public class WndStory extends Window {
 			}
 			
 			Game.scene().add( wnd );
-			
-			Dungeon.chapters.add( id );
 		}
 	}
 }

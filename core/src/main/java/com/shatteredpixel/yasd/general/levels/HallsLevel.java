@@ -62,7 +62,7 @@ public class HallsLevel extends RegularLevel {
 		color1 = 0x801500;
 		color2 = 0xa68521;
 	}
-	
+
 	@Override
 	protected int standardRooms() {
 		//8 to 10, average 8.67

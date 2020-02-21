@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.NewTengu;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
@@ -277,8 +278,10 @@ public class NewPrisonBossLevel extends Level {
 	private static int W = Terrain.WALL;
 	private static int D = Terrain.WALL_DECO;
 	private static int e = Terrain.EMPTY;
+	private static int s = Terrain.EMPTY_SP;
 	private static int E = Terrain.EXIT;
 	private static int C = Terrain.CHASM;
+	private static int H = Terrain.SECRET_DOOR;
 	
 	private static final Point endStart = new Point( startHallway.left+2, startHallway.top+2);
 	private static final Point levelExit = new Point( endStart.x+12, endStart.y+6);
@@ -292,18 +295,18 @@ public class NewPrisonBossLevel extends Level {
 			e, W, C, C, C, C, C, C, C, C, C, E, E, W,
 			e, e, e, C, C, C, C, C, C, C, C, E, E, W,
 			e, e, e, e, e, C, C, C, C, C, C, E, E, W,
-			e, e, e, e, e, e, e, W, W, W, C, C, C, W,
-			W, e, e, e, e, e, W, W, W, W, C, C, C, W,
-			W, e, e, e, e, W, W, W, W, W, W, C, C, W,
-			W, W, W, W, W, W, W, W, W, W, W, C, C, W,
-			W, W, W, W, W, W, W, W, W, W, W, C, C, W,
-			W, D, W, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
-			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
+			e, e, e, e, e, e, C, C, W, W, C, C, C, W,
+			W, e, e, e, e, e, W, H, W, W, C, C, C, W,
+			W, e, e, e, e, W, W, e, W, W, W, C, C, W,
+			W, W, W, W, W, W, W, e, W, W, W, C, C, W,
+			W, W, W, W, W, W, W, e, W, W, W, C, C, W,
+			W, D, W, W, W, W, W, e, W, W, W, C, C, W,
+			e, e, e, W, W, W, W, e, W, W, W, C, C, W,
+			e, e, e, W, W, W, W, e, W, W, W, C, C, W,
+			e, e, e, W, W, W, e, e, e, W, W, C, C, W,
+			e, e, e, W, W, D, s, e, s, W, W, C, C, W,
+			e, e, e, W, W, W, e, C, e, W, W, C, C, W,
+			e, e, e, W, W, W, e, e, e, W, W, C, C, W,
 			e, e, e, W, W, W, W, W, W, W, W, C, C, W,
 			W, W, W, W, W, W, W, W, W, W, W, C, C, W
 	};
@@ -331,6 +334,8 @@ public class NewPrisonBossLevel extends Level {
 		GameScene.add(vis, true);
 		
 		Painter.set(this, tenguCell.left+4, tenguCell.top, Terrain.DOOR);
+
+		drop(Generator.random(), 22 + width()*18).type = Heap.Type.CHEST;
 		
 		int cell = pointToCell(endStart);
 		int i = 0;

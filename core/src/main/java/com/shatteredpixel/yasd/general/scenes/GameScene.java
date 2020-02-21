@@ -23,10 +23,9 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -354,7 +353,10 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				switch (Dungeon.depth) {
+				if (Dungeon.bossLevel(Dungeon.depth-1)) {
+					WndStory.showChapter(Dungeon.level.getClass());
+				}
+				/*switch (Dungeon.depth) {
 					case 1:
 						WndStory.showChapter(WndStory.ID_SEWERS);
 						break;
@@ -373,7 +375,7 @@ public class GameScene extends PixelScene {
 				}
 				if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
 					Badges.validateNoKilling();
-				}
+				}*/
 				break;
 			default:
 		}

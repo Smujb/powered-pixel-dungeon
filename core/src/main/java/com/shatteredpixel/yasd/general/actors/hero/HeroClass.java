@@ -27,7 +27,6 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.alcohol.Alcohol;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -118,16 +117,17 @@ public enum HeroClass {
 		new StoneOfRepair().collect();
 		new Beer().collect();
 
-		new Alcohol().collect();
+		//new Alcohol().collect();
 
-		//new WandOfDamnation().identify().collect();
-		//Generator.randomArmor().setTier(2).collect();
-		//Generator.randomWeapon().setTier(2).collect();
+		//Generator.random(Generator.Category.WAND).identify().collect();
+		//Generator.randomArmor().setTier(3).identify().collect();
+		//Generator.randomWeapon().setTier(3).identify().collect();
 		//new MagicalInfusion().quantity(100).collect();
 		//new ScrollOfUpgrade().quantity(5).collect();
-		//new PotionOfExperience().quantity(5).collect();
+		//new PotionOfExperience().quantity(10).collect();
 		//new ChainArmor().upgrade(3).collect();
 		//new RingOfElements().identify().collect();
+		//new PotionOfLevitation().collect();
 		//new Flail().upgrade(3).collect();
 		//new Tomahawk().quantity(5).collect();
 		//new WandOfDarkness().identify().collect();
