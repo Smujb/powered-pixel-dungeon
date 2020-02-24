@@ -68,7 +68,7 @@ public class TestBossLevel extends Level {
 			boss.pos = randomRespawnCell();
 			GameScene.add( boss );
 			bossSpawned = true;
-			Level.set(ENTRANCE_LOCATION, Terrain.WALL);
+			Dungeon.level.set(ENTRANCE_LOCATION, Terrain.WALL);
 			GameScene.updateMap( ENTRANCE_LOCATION );
 			Dungeon.observe();
 		}

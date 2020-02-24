@@ -55,7 +55,7 @@ public class AquaBlast extends TargetedSpell {
 						terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
 						terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS ||
 						terr == Terrain.EMPTY_DECO) {
-					Level.set(cell + i, Terrain.WATER);
+					Dungeon.level.set(cell + i, Terrain.WATER);
 					GameScene.updateMap(cell + i);
 				}
 			}

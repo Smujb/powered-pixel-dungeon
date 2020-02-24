@@ -60,7 +60,7 @@ public class AcidPool extends Blob {
         super.seed(level, cell, amount);
         terrain = level.map[cell];
         if (terrain != Terrain.EXIT & terrain != Terrain.ENTRANCE) {
-            Level.set(cell, Terrain.WATER);
+            Dungeon.level.set(cell, Terrain.WATER);
         }
         GameScene.updateMap(cell);
     }
@@ -68,7 +68,7 @@ public class AcidPool extends Blob {
     @Override
     public void clear(int cell) {
         super.clear(cell);
-        Level.set(cell, terrain);
+        Dungeon.level.set(cell, terrain);
         GameScene.updateMap(cell);
     }
 

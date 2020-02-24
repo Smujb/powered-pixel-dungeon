@@ -55,7 +55,7 @@ public class Regrowth extends Blob {
 						}
 
 						if (c1 != c) {
-							Level.set( cell, c1 );
+							Dungeon.level.set( cell, c1 );
 							GameScene.updateMap( cell );
 						}
 

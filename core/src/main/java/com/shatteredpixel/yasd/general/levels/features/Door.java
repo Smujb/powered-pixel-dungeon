@@ -33,7 +33,7 @@ import com.watabou.noosa.audio.Sample;
 public class Door {
 
 	public static void enter( int pos ) {
-		Level.set( pos, Terrain.OPEN_DOOR );
+		Dungeon.level.set( pos, Terrain.OPEN_DOOR );
 		GameScene.updateMap( pos );
 
 		if (Dungeon.level.heroFOV[pos]) {
@@ -51,7 +51,7 @@ public class Door {
 		
 		//door does not shut if anything else is also on it
 		if (Dungeon.level.heaps.get( pos ) == null && chars <= 1) {
-			Level.set( pos, Terrain.DOOR );
+			Dungeon.level.set( pos, Terrain.DOOR );
 			GameScene.updateMap( pos );
 			if (Dungeon.level.heroFOV[pos])
 				Dungeon.observe();

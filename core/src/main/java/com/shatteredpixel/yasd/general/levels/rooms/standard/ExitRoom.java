@@ -21,8 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
-import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -51,7 +49,7 @@ public class ExitRoom extends StandardRoom {
 		}
 		
 		level.exit = level.pointToCell(random( 2 ));
-		if (!Dungeon.canDescend(Dungeon.path, Dungeon.depth)) {
+		if (!level.hasExit) {
 			Painter.set(level, level.exit, Terrain.EMPTY);
 		} else {
 			Painter.set(level, level.exit, Terrain.EXIT);

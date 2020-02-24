@@ -208,7 +208,7 @@ public class OldTengu extends Mob {
 				
 				if (level.map[trapPos] == Terrain.INACTIVE_TRAP) {
 					level.setTrap( new  GrippingTrap().reveal(), trapPos );
-					Level.set( trapPos, Terrain.TRAP );
+					Dungeon.level.set( trapPos, Terrain.TRAP );
 					ScrollOfMagicMapping.discover( trapPos );
 				}
 			}

@@ -100,7 +100,8 @@ public abstract class Level implements Bundlable {
 		GRASS,
 		DARK,
 		EVIL,
-		OPEN
+		OPEN,
+		DEAD
 	}
 
 	public enum State {
@@ -114,6 +115,9 @@ public abstract class Level implements Bundlable {
 	protected int width;
 	protected int height;
 	protected int length;
+
+	public boolean hasExit = true;
+	public boolean hasEntrance = true;
 	
 	protected static final float TIME_TO_RESPAWN	= 50;
 
@@ -137,7 +141,7 @@ public abstract class Level implements Bundlable {
 	public boolean[] water;
 	public boolean[] pit;
 	
-	public Feeling feeling = Feeling.NONE;
+	public Feeling feeling = Feeling.DEAD;
 	
 	public int entrance;
 	public int exit;
@@ -256,6 +260,12 @@ public abstract class Level implements Bundlable {
 						break;
 					case 4:
 						feeling = Feeling.EVIL;
+						break;
+					case 5:
+						feeling = Feeling.OPEN;
+						break;
+					case 6:
+						feeling = Feeling.DEAD;
 						break;
 				}
 			}
@@ -444,7 +454,23 @@ public abstract class Level implements Bundlable {
 	}
 
 	public int tunnelTile() {
-		return feeling == Feeling.CHASM ? Terrain.EMPTY_SP : Terrain.EMPTY;
+		return (feeling == Feeling.CHASM || feeling == Feeling.OPEN) ? Terrain.EMPTY_SP : Terrain.EMPTY;
+	}
+
+	public int grassTile() {
+		int terrainToPaint = Terrain.GRASS;
+		if (feeling == Level.Feeling.DEAD) {
+			terrainToPaint = Random.Int(5) == 0 ? Terrain.EMBERS : Terrain.FURROWED_GRASS;
+		}
+		return terrainToPaint;
+	}
+
+	public int waterTile() {
+		if (feeling == Feeling.DEAD) {
+			return grassTile();
+		} else {
+			return Terrain.WATER;
+		}
 	}
 
 	public int width() {
@@ -660,14 +686,18 @@ public abstract class Level implements Bundlable {
 		for (int i=0; i < width(); i++) {
 			passable[i] = avoid[i] = false;
 			losBlocking[i] = true;
+			map[i] = Terrain.WALL;
 			passable[lastRow + i] = avoid[lastRow + i] = false;
 			losBlocking[lastRow + i] = true;
+			map[lastRow + i] = Terrain.WALL;
 		}
 		for (int i=width(); i < lastRow; i += width()) {
 			passable[i] = avoid[i] = false;
 			losBlocking[i] = true;
+			map[i] = Terrain.WALL;
 			passable[i + width()-1] = avoid[i + width()-1] = false;
 			losBlocking[i + width()-1] = true;
+			map[i + width()-1] = Terrain.WALL;
 		}
 	}
 
@@ -693,12 +723,9 @@ public abstract class Level implements Bundlable {
 			discoverable[i] = d;
 		}
 	}
-	
-	public static void set( int cell, int terrain ){
-		set( cell, terrain, Dungeon.level );
-	}
-	
-	public static void set( int cell, int terrain, Level level ) {
+
+	public void set( int cell, int terrain ){
+		Level level = this;
 		Painter.set( level, cell, terrain );
 
 		if (terrain != Terrain.TRAP && terrain != Terrain.SECRET_TRAP && terrain != Terrain.INACTIVE_TRAP){
@@ -784,7 +811,7 @@ public abstract class Level implements Bundlable {
 				map[pos] == Terrain.EMPTY ||
 				map[pos] == Terrain.EMBERS ||
 				map[pos] == Terrain.EMPTY_DECO) {
-			set(pos, Terrain.GRASS, this);
+			set(pos, Terrain.GRASS);
 			GameScene.updateMap(pos);
 		}
 		

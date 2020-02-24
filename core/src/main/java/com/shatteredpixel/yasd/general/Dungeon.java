@@ -245,23 +245,17 @@ public class Dungeon {
 			Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
 		}
 		
-		Level level = null;
+		Level level;
 		Class <? extends Level> levelClass;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
 		try {
 			levelClass = Constants.LEVEL_TYPES.get(path).get(depth);
 		} catch (Exception e) {
 			levelClass = DeadEndLevel.class;
 		}
-		/*do {
-			try {
-				level = levelClass.newInstance();
-			} catch (InstantiationException e) {
-				MainGame.reportException(e);
-			} catch (IllegalAccessException e) {
-				MainGame.reportException(e);
-			}
-		} while (level == null);*/
 		level = Reflection.newInstance(levelClass);
+		if (level == null) {
+			level = new DeadEndLevel();
+		}
 
 		
 		level.create();
@@ -281,12 +275,12 @@ public class Dungeon {
 		return loadedDepths[path][depth];
 	}
 
-	public static boolean canDescend(int path, int depth) {
-		return path != 0 || depth != 26;
+	public static boolean canDescend() {
+		return level.hasExit;
 	}
 
-	public static boolean canAscend(int path, int depth) {
-		return true;
+	public static boolean canAscend() {
+		return level.hasEntrance;
 	}
 	
 	public static void resetLevel() {

@@ -107,7 +107,7 @@ public class WandOfRegrowth extends Wand {
 			if (c == Terrain.EMPTY ||
 					c == Terrain.EMBERS ||
 					c == Terrain.EMPTY_DECO) {
-				Level.set( i, Terrain.GRASS );
+				Dungeon.level.set( i, Terrain.GRASS );
 			}
 
 			Char ch = Actor.findChar(i);
@@ -117,7 +117,7 @@ public class WandOfRegrowth extends Wand {
 			
 			if (Random.Int(50) < overLimit) {
 				if (Dungeon.level.map[i] == Terrain.GRASS) {
-					Level.set( i, Terrain.FURROWED_GRASS );
+					Dungeon.level.set( i, Terrain.FURROWED_GRASS );
 					GameScene.updateMap( i );
 				}
 				GameScene.add(Blob.seed(i, 9, Regrowth.class));

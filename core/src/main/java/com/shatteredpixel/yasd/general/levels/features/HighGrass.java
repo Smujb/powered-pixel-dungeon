@@ -59,15 +59,19 @@ public class HighGrass {
 				//Do nothing
 				freezeTrample = true;
 			} else {
-				Level.set(pos, Terrain.GRASS);
+				if (level.feeling == Level.Feeling.DEAD) {
+					Dungeon.level.set(pos, Terrain.EMBERS);
+				} else {
+					Dungeon.level.set(pos, Terrain.GRASS);
+				}
 			}
 			
 		} else {
 			if (ch instanceof Hero && ((Hero) ch).heroClass == HeroClass.HUNTRESS){
-				Level.set(pos, Terrain.FURROWED_GRASS);
+				Dungeon.level.set(pos, Terrain.FURROWED_GRASS);
 				freezeTrample = true;
 			} else {
-				Level.set(pos, Terrain.GRASS);
+				Dungeon.level.set(pos, Terrain.GRASS);
 			}
 			
 			int naturalismLevel = 0;

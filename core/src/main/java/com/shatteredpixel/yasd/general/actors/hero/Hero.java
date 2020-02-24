@@ -85,7 +85,6 @@ import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
@@ -1097,7 +1096,7 @@ public class Hero extends Char {
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & !(Dungeon.level.map[pos] == Terrain.EXIT || Dungeon.level.map[pos] == Terrain.DOOR || Dungeon.level.map[pos] == Terrain.ENTRANCE|| Dungeon.level.map[pos] == Terrain.OPEN_DOOR) & !Dungeon.bossLevel()) {
 				if (MainGame.scene() instanceof GameScene) {
 					if (!isFlying()) {
-						Level.set(pos, Terrain.CHASM);
+						Dungeon.level.set(pos, Terrain.CHASM);
 					}
 					GameScene.updateMap(pos);
 					if (Dungeon.level.heroFOV[pos]) Dungeon.observe();
@@ -1173,11 +1172,11 @@ public class Hero extends Char {
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.depth < Constants.NUM_FLOORS && Dungeon.canDescend(Dungeon.path, Dungeon.depth)) {
+				&& Dungeon.depth < Constants.NUM_FLOORS && Dungeon.canDescend()) {
 			
 			curAction = new HeroAction.Descend( cell );
 			
-		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && Dungeon.canAscend(Dungeon.path, Dungeon.depth)) {
+		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && Dungeon.canAscend()) {
 			
 			curAction = new HeroAction.Ascend( cell );
 			
@@ -1474,15 +1473,15 @@ public class Hero extends Char {
 				boolean hasKey = true;
 				if (door == Terrain.LOCKED_DOOR) {
 					hasKey = Notes.remove(new IronKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.DOOR);
+					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
 				} else {
 					hasKey = Notes.remove(new SkeletonKey(Dungeon.depth));
-					if (hasKey) Level.set(doorCell, Terrain.UNLOCKED_EXIT);
+					if (hasKey) Dungeon.level.set(doorCell, Terrain.UNLOCKED_EXIT);
 				}
 				
 				if (hasKey) {
 					GameScene.updateKeyDisplay();
-					Level.set(doorCell, door == Terrain.LOCKED_DOOR ? Terrain.DOOR : Terrain.UNLOCKED_EXIT);
+					Dungeon.level.set(doorCell, door == Terrain.LOCKED_DOOR ? Terrain.DOOR : Terrain.UNLOCKED_EXIT);
 					GameScene.updateMap(doorCell);
 					spend(Key.TIME_TO_UNLOCK);
 				}

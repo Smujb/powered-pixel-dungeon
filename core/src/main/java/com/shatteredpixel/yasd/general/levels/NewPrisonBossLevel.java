@@ -674,7 +674,7 @@ public class NewPrisonBossLevel extends Level {
 				int x = i % 7;
 				int y = i / 7;
 				int cell = x+tenguCell.left+1 + (y+tenguCell.top+1)*width();
-				Level.set(cell, Terrain.SECRET_TRAP);
+				Dungeon.level.set(cell, Terrain.SECRET_TRAP);
 				setTrap(new TenguDartTrap().hide(), cell);
 				CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
 			} else {

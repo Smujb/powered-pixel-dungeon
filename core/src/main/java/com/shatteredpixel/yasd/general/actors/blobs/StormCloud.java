@@ -50,10 +50,10 @@ public class StormCloud extends Blob {
 							terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
 							terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS
 							|| terr == Terrain.EMPTY_DECO) {
-						Level.set(cell, Terrain.WATER);
+						Dungeon.level.set(cell, Terrain.WATER);
 						GameScene.updateMap(cell);
 					} else if (terr == Terrain.SECRET_TRAP || terr == Terrain.TRAP || terr == Terrain.INACTIVE_TRAP) {
-						Level.set(cell, Terrain.WATER);
+						Dungeon.level.set(cell, Terrain.WATER);
 						Dungeon.level.traps.remove(cell);
 						GameScene.updateMap(cell);
 					}

@@ -47,7 +47,7 @@ public class GrippingTrap extends Trap {
 		}
 		//this trap is not disarmed by being triggered
 		reveal();
-		Level.set(pos, Terrain.TRAP);
+		Dungeon.level.set(pos, Terrain.TRAP);
 		activate();
 	}
 

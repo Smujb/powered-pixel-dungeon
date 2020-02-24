@@ -269,19 +269,19 @@ public abstract class RegularPainter extends Painter {
 	protected void paintWater( Level l, ArrayList<Room> rooms ){
 		boolean[] lake = Patch.generate( l.width(), l.height(), waterFill, waterSmoothness, true );
 		
-		if (!rooms.isEmpty()){
+		if (!rooms.isEmpty() && l.feeling != Level.Feeling.OPEN) {
 			for (Room r : rooms){
 				for (Point p : r.waterPlaceablePoints()){
 					int i = l.pointToCell(p);
 					if (lake[i] && l.map[i] == Terrain.EMPTY){
-						l.map[i] = Terrain.WATER;
+						l.map[i] = l.waterTile();
 					}
 				}
 			}
 		} else {
 			for (int i = 0; i < l.length(); i ++) {
 				if (lake[i] && l.map[i] == Terrain.EMPTY){
-					l.map[i] = Terrain.WATER;
+					l.map[i] = l.waterTile();
 				}
 			}
 		}
@@ -290,10 +290,11 @@ public abstract class RegularPainter extends Painter {
 	
 	protected void paintGrass( Level l, ArrayList<Room> rooms ) {
 		boolean[] grass = Patch.generate( l.width(), l.height(), grassFill, grassSmoothness, true );
-		
+
+
 		ArrayList<Integer> grassCells = new ArrayList<>();
 		
-		if (!rooms.isEmpty()){
+		if (!rooms.isEmpty() && l.feeling != Level.Feeling.OPEN){
 			for (Room r : rooms){
 				for (Point p : r.grassPlaceablePoints()){
 					int i = l.pointToCell(p);
@@ -315,24 +316,24 @@ public abstract class RegularPainter extends Painter {
 		//low smoothing, or very low fill, will begin to push the ratio down, normally to 50-30%
 		for (int i : grassCells) {
 			if (l.heaps.get(i) != null || l.findMob(i) != null) {
-				l.map[i] = Terrain.GRASS;
+				l.map[i] = l.grassTile();
 				continue;
 			}
 			
 			int count = 1;
 			for (int n : PathFinder.NEIGHBOURS8) {
-				if (grass[i + n]) {
+				if ((i > 0 && i < grass.length) && grass[i + n]) {
 					count++;
 				}
 			}
-			l.map[i] = (Random.Float() < count / 12f) ? Terrain.HIGH_GRASS : Terrain.GRASS;
+			l.map[i] = (Random.Float() < count / 12f) ? Terrain.FURROWED_GRASS : l.grassTile();
 		}
 	}
 	
 	protected void paintTraps( Level l, ArrayList<Room> rooms ) {
 		ArrayList<Integer> validCells = new ArrayList<>();
 		
-		if (!rooms.isEmpty()){
+		if (!rooms.isEmpty() && l.feeling != Level.Feeling.OPEN){
 			for (Room r : rooms){
 				for (Point p : r.trapPlaceablePoints()){
 					int i = l.pointToCell(p);

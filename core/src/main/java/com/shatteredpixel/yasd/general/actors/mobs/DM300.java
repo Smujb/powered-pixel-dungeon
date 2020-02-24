@@ -121,7 +121,7 @@ public class DM300 extends Mob {
 			if (Dungeon.level.water[cell]) {
 				GameScene.ripple( cell );
 			} else if (Dungeon.level.map[cell] == Terrain.EMPTY) {
-				Level.set( cell, Terrain.EMPTY_DECO );
+				Dungeon.level.set( cell, Terrain.EMPTY_DECO );
 				GameScene.updateMap( cell );
 			}
 		}

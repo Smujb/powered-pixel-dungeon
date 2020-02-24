@@ -129,7 +129,7 @@ public class Terrain {
 
 	public static void swapLevelState(Level level, Level.State state) {
 		for (int i = 0; i < level.map.length; i++) {
-			Level.set(i, swapTerrainState(level.map[i], state));
+			Dungeon.level.set(i, swapTerrainState(level.map[i], state));
 		}
 		GameScene.updateMap();
 		Dungeon.observe();

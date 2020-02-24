@@ -125,7 +125,7 @@ public abstract class WellWater extends Blob {
 				water.cur[cell] > 0 &&
 				water.affect( cell )) {
 				
-				Level.set( cell, Terrain.EMPTY_WELL );
+				Dungeon.level.set( cell, Terrain.EMPTY_WELL );
 				GameScene.updateMap( cell );
 				
 				return;
