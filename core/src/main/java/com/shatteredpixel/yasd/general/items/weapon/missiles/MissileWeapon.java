@@ -169,7 +169,7 @@ abstract public class MissileWeapon extends Weapon {
 	@Override
 	public int throwPos(Char user, int dst) {
 		if (hasEnchant(Projecting.class, user)
-				&& !Dungeon.level.solid[dst] && Dungeon.level.distance(user.pos, dst) <= 4){
+				&& !Dungeon.level.solid()[dst] && Dungeon.level.distance(user.pos, dst) <= 4){
 			return dst;
 		} else {
 			return super.throwPos(user, dst);

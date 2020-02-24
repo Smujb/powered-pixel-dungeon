@@ -32,7 +32,7 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 	}
 
 	@Override
-	protected int getTileVisual(int pos, int tile, boolean flat){
+	protected int getTileVisual(int pos, Terrain tile, boolean flat){
 
 		if (flat) return -1;
 
@@ -50,11 +50,11 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 			} else {
 				return DungeonTileSheet.stitchInternalWallTile(
 						tile,
-						(pos+1) % mapWidth != 0 ?                           map[pos + 1] : -1,
-						(pos+1) % mapWidth != 0 && pos + mapWidth < size ?  map[pos + 1 + mapWidth] : -1,
-						pos + mapWidth < size ?                             map[pos + mapWidth] : -1,
-						pos % mapWidth != 0 && pos + mapWidth < size ?      map[pos - 1 + mapWidth] : -1,
-						pos % mapWidth != 0 ?                               map[pos - 1] : -1
+						(pos+1) % mapWidth != 0 ?                           map[pos + 1] : Terrain.NONE,
+						(pos+1) % mapWidth != 0 && pos + mapWidth < size ?  map[pos + 1 + mapWidth] : Terrain.NONE,
+						pos + mapWidth < size ?                             map[pos + mapWidth] : Terrain.NONE,
+						pos % mapWidth != 0 && pos + mapWidth < size ?      map[pos - 1 + mapWidth] : Terrain.NONE,
+						pos % mapWidth != 0 ?                               map[pos - 1] : Terrain.NONE
 				);
 			}
 
@@ -64,9 +64,9 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 
 			return DungeonTileSheet.stitchWallOverhangTile(
 					tile,
-					(pos+1) % mapWidth != 0 ?   map[pos + 1 + mapWidth] : -1,
+					(pos+1) % mapWidth != 0 ?   map[pos + 1 + mapWidth] : Terrain.NONE,
 												map[pos + mapWidth],
-					pos % mapWidth != 0 ?       map[pos - 1 + mapWidth] : -1
+					pos % mapWidth != 0 ?       map[pos - 1 + mapWidth] : Terrain.NONE
 			);
 
 		} else if (Dungeon.level.insideMap(pos) && (map[pos+mapWidth] == Terrain.DOOR || map[pos+mapWidth] == Terrain.LOCKED_DOOR) ) {

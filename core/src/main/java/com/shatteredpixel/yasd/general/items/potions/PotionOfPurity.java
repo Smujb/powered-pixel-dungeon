@@ -52,7 +52,7 @@ public class PotionOfPurity extends Potion {
 	@Override
 	public void shatter( int cell ) {
 		
-		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), DISTANCE );
+		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid(), null ), DISTANCE );
 		
 		ArrayList<Blob> blobs = new ArrayList<>();
 		for (Class c : affectedBlobs){

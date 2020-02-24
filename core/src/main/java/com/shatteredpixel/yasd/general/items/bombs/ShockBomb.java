@@ -51,7 +51,7 @@ public class ShockBomb extends Bomb {
 		super.explode(cell);
 
 		ArrayList<Char> affected = new ArrayList<>();
-		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 3 );
+		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid(), null ), 3 );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE
 				&& Actor.findChar(i) != null) {

@@ -225,7 +225,7 @@ public class OldTengu extends Mob {
 			do {
 				newPos = Random.Int(level.length());
 			} while (
-					level.solid[newPos] ||
+					level.solid()[newPos] ||
 					level.distance(newPos, enemy.pos) < 8 ||
 					Actor.findChar(newPos) != null);
 		}

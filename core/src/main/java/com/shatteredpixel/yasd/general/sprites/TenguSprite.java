@@ -70,7 +70,7 @@ public class TenguSprite extends MobSprite {
 
 		isMoving = true;
 
-		if (Dungeon.level.water[to]) {
+		if (Dungeon.level.liquid()[to]) {
 			GameScene.ripple( to );
 		}
 

@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.connection;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
@@ -34,7 +35,7 @@ public class TunnelRoom extends ConnectionRoom {
 
 	public void paint(Level level) {
 
-		int floor = level.tunnelTile();
+		Terrain floor = level.tunnelTile();
 
 		Rect c = getConnectionSpace();
 

@@ -44,12 +44,12 @@ public class WoollyBomb extends Bomb {
 	public void explode(int cell) {
 		super.explode(cell);
 		
-		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid, null ), 2 );
+		PathFinder.buildDistanceMap( cell, BArray.not( Dungeon.level.solid(), null ), 2 );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 				if (Dungeon.level.insideMap(i)
 						&& Actor.findChar(i) == null
-						&& !(Dungeon.level.pit[i])) {
+						&& !(Dungeon.level.pit()[i])) {
 					Sheep sheep = new Sheep();
 					sheep.lifespan = Random.NormalIntRange( 8, 16 );
 					sheep.pos = i;

@@ -43,7 +43,7 @@ public abstract class NPC extends Mob {
 			int n;
 			do {
 				n = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			} while (!Dungeon.level.passable[n] && !Dungeon.level.avoid[n]);
+			} while (!Dungeon.level.passable()[n] && !Dungeon.level.avoid()[n]);
 			Dungeon.level.drop( heap.pickUp(), n ).sprite.drop( pos );
 		}
 	}

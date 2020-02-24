@@ -28,7 +28,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -45,7 +44,7 @@ public class StormCloud extends Blob {
 			for (int j = area.top; j < area.bottom; j++){
 				cell = i + j*Dungeon.level.width();
 				if (off[cell] > 0) {
-					int terr = Dungeon.level.map[cell];
+					Terrain terr = Dungeon.level.map[cell];
 					if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
 							terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
 							terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS

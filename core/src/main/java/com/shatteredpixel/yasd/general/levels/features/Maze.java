@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.levels.features;
 
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
@@ -56,7 +57,7 @@ public class Maze {
 		return generate(r.width()+1, r.height()+1);
 	}
 	
-	public static boolean[][] generate(Rect r, int[] terrain, int width, int filledTerrainType){
+	public static boolean[][] generate(Rect r, Terrain[] terrain, int width, Terrain filledTerrainType){
 		boolean[][] maze = new boolean[r.width()][r.height()];
 		for (int x = 0; x < maze.length; x++) {
 			for (int y = 0; y < maze[0].length; y++) {

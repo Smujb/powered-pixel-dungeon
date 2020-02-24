@@ -156,7 +156,7 @@ public abstract class Mob extends Char {
 
 	public int findClosest( Char attacker, Char enemy, int pos) {
 		int closest = -1;
-		boolean[] passable = Dungeon.level.passable;
+		boolean[] passable = Dungeon.level.passable();
 
 		for (int n : PathFinder.NEIGHBOURS9) {
 			int c = pos + n;
@@ -361,14 +361,14 @@ public abstract class Mob extends Char {
 	public static void spawnAtList(Class<? extends Mob> type, int pos, int[] relativePositions) {
 		for (int n : relativePositions) {
 			int cell = pos + n;
-			if (Dungeon.level.passable[cell] && Actor.findChar(cell) == null) {
+			if (Dungeon.level.passable()[cell] && Actor.findChar(cell) == null) {
 				Mob.spawnAt(type, cell);
 			}
 		}
 	}
 
 	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
-		if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
+		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 
 			Mob mob = Reflection.newInstance(type);
 			mob.pos = pos;
@@ -398,7 +398,7 @@ public abstract class Mob extends Char {
 
 			path = null;
 
-			if (Actor.findChar( target ) == null && Dungeon.level.passable[target]) {
+			if (Actor.findChar( target ) == null && Dungeon.level.passable()[target]) {
 				step = target;
 			}
 
@@ -455,7 +455,7 @@ public abstract class Mob extends Char {
 				int lookAhead = (int)GameMath.gate(1, path.size()-1, 4);
 				for (int i = 0; i < lookAhead; i++) {
 					int cell = path.get(i);
-					if (!Dungeon.level.passable[cell] || ( fieldOfView[cell] && Actor.findChar(cell) != null)) {
+					if (!Dungeon.level.passable()[cell] || ( fieldOfView[cell] && Actor.findChar(cell) != null)) {
 						newPath = true;
 						break;
 					}
@@ -464,7 +464,7 @@ public abstract class Mob extends Char {
 
 			if (newPath) {
 				path = Dungeon.findPath(this, pos, target,
-						Dungeon.level.passable,
+						Dungeon.level.passable(),
 						fieldOfView);
 			}
 
@@ -493,7 +493,7 @@ public abstract class Mob extends Char {
 		}
 		
 		int step = Dungeon.flee( this, pos, target,
-			Dungeon.level.passable,
+			Dungeon.level.passable(),
 			fieldOfView );
 		if (step != -1) {
 			move( step );
@@ -980,7 +980,7 @@ public abstract class Mob extends Char {
 			
 			ArrayList<Integer> candidatePositions = new  ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8) {
-				if (!Dungeon.level.solid[i+pos] && level.findMob(i+pos) == null){
+				if (!Dungeon.level.solid()[i+pos] && level.findMob(i+pos) == null){
 					candidatePositions.add(i+pos);
 				}
 			}

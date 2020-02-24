@@ -34,7 +34,7 @@ public class WandOfDarkness extends Wand {
         float level = actualLevel();
         int pos = bolt.collisionPos;
         for( int i : PathFinder.NEIGHBOURS9) {
-            if (!Dungeon.level.solid[pos + i]) {
+            if (!Dungeon.level.solid()[pos + i]) {
                 DarkGas gas = Blob.seed(pos + i, (int) (30 + 5 * level), DarkGas.class);
                 CellEmitter.center(bolt.collisionPos).burst(SmokeParticle.SPEW, 10 );
                 gas.setStrength(2 + (int)level);

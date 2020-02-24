@@ -215,7 +215,7 @@ public class SewerPipeRoom extends StandardRoom {
 	private Point[] corners;
 	
 	//picks the smallest path to fill between two points
-	private void fillBetweenPoints(Level level, Point from, Point to, int floor){
+	private void fillBetweenPoints(Level level, Point from, Point to, Terrain floor){
 		
 		//doors are along the same side
 		if (from.y == to.y || from.x == to.x){

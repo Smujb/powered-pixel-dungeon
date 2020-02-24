@@ -53,7 +53,7 @@ public class BurnedRoom extends PatchRoom {
 				if (!patch[xyToPatchCoords(j, i)])
 					continue;
 				int cell = i * level.width() + j;
-				int t;
+				Terrain t;
 				switch (Random.Int( 5 )) {
 					case 0: default:
 						t = Terrain.EMPTY;

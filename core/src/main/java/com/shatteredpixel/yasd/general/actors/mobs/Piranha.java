@@ -63,7 +63,7 @@ public class Piranha extends Mob {
 	@Override
 	protected boolean act() {
 		
-		if (!Dungeon.level.water[pos]) {
+		if (!Dungeon.level.liquid()[pos]) {
 			die( null );
 			sprite.killAndErase();
 			return true;
@@ -118,7 +118,7 @@ public class Piranha extends Mob {
 		}
 		
 		int step = Dungeon.findStep( this, pos, target,
-			Dungeon.level.water,
+			Dungeon.level.liquid(),
 			fieldOfView );
 		if (step != -1) {
 			move( step );
@@ -131,7 +131,7 @@ public class Piranha extends Mob {
 	@Override
 	protected boolean getFurther( int target ) {
 		int step = Dungeon.flee( this, pos, target,
-			Dungeon.level.water,
+			Dungeon.level.liquid(),
 			fieldOfView );
 		if (step != -1) {
 			move( step );
@@ -151,7 +151,7 @@ public class Piranha extends Mob {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.water, viewDistance);
+				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
 				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
 			}
 			
@@ -163,7 +163,7 @@ public class Piranha extends Mob {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.water, viewDistance);
+				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
 				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
 			}
 			
@@ -176,7 +176,7 @@ public class Piranha extends Mob {
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {
 			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.water, viewDistance);
+				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
 				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
 			}
 			

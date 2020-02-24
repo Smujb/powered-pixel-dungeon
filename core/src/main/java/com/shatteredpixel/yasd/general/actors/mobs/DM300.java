@@ -118,7 +118,7 @@ public class DM300 extends Mob {
 			Camera.main.shake( 3, 0.7f );
 			Sample.INSTANCE.play( Assets.SND_ROCKS );
 			
-			if (Dungeon.level.water[cell]) {
+			if (Dungeon.level.liquid()[cell]) {
 				GameScene.ripple( cell );
 			} else if (Dungeon.level.map[cell] == Terrain.EMPTY) {
 				Dungeon.level.set( cell, Terrain.EMPTY_DECO );
@@ -154,7 +154,7 @@ public class DM300 extends Mob {
 			int ofs;
 			do {
 				ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
-			} while (!Dungeon.level.passable[pos + ofs]);
+			} while (!Dungeon.level.passable()[pos + ofs]);
 			Dungeon.level.drop( Reflection.newInstance(  MetalShard.class ), pos + ofs ).sprite.drop( pos );
 		}
 		

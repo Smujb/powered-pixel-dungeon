@@ -42,7 +42,7 @@ public class FissureRoom extends StandardRoom {
 			door.set( Door.Type.REGULAR );
 		}
 		Painter.fill( level, this, 1, Terrain.EMPTY );
-		int terrainType = Terrain.CHASM;
+		Terrain terrainType = Terrain.CHASM;
 		if (Random.Int(3) == 0) {
 			terrainType = Terrain.BOOKSHELF;
 		} else if (Random.Int(2) == 0) {

@@ -52,7 +52,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		instance = this;
 	}
 
-	protected int getTileVisual(int pos, int tile, boolean flat){
+	protected int getTileVisual(int pos, Terrain tile, boolean flat){
 		if (traps.get(pos) != null){
 			Trap trap = traps.get(pos);
 			if (!trap.visible)
@@ -79,7 +79,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		return -1;
 	}
 
-	public static Image tile(int pos, int tile ) {
+	public static Image tile(int pos, Terrain tile ) {
 		RectF uv = instance.tileset.get( instance.getTileVisual( pos, tile, true ) );
 		if (uv == null) return null;
 		

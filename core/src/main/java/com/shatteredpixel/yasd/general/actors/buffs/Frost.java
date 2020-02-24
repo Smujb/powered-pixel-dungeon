@@ -110,7 +110,7 @@ public class Frost extends FlavourBuff {
 		super.detach();
 		if (target.paralysed > 0)
 			target.paralysed--;
-		if (Dungeon.level.water[target.pos])
+		if (Dungeon.level.liquid()[target.pos])
 			Buff.prolong(target, Chill.class, 4f);
 	}
 	

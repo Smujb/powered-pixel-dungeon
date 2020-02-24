@@ -49,6 +49,8 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class SewerLevel extends RegularLevel {
 
 	{
@@ -131,16 +133,16 @@ public class SewerLevel extends RegularLevel {
 	
 	public static void addSewerVisuals( Level level, Group group ) {
 		for (int i=0; i < level.length(); i++) {
-			if (level.map[i] == Terrain.WALL_DECO) {
+			if (level.map[i] == WALL_DECO) {
 				group.add( new Sink( i ) );
 			}
 		}
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(SewerLevel.class, "water_name");
 			default:
 				return super.tileName( tile );
@@ -148,11 +150,11 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.EMPTY_DECO:
+			case EMPTY_DECO:
 				return Messages.get(SewerLevel.class, "empty_deco_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(SewerLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );

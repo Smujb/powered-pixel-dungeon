@@ -32,7 +32,7 @@ public class RaisedTerrainTilemap extends DungeonTilemap {
 	}
 	
 	@Override
-	protected int getTileVisual(int pos, int tile, boolean flat) {
+	protected int getTileVisual(int pos, Terrain tile, boolean flat) {
 		
 		if (flat) return -1;
 		

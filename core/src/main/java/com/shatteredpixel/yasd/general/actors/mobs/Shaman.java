@@ -89,7 +89,7 @@ public class Shaman extends RangedMob {
 	@Override
 	public int magicalAttackProc(Char enemy, int damage) {
 		damage = super.magicalAttackProc(enemy, damage);
-		if (Dungeon.level.water[enemy.pos] && !enemy.flying) {
+		if (Dungeon.level.liquid()[enemy.pos] && !enemy.flying) {
 			damage *= 1.5f;
 		}
 		if (Dungeon.depth > 12) {//Use a separate statement so they can stack

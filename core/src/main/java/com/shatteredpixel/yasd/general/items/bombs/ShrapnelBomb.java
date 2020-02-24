@@ -50,13 +50,13 @@ public class ShrapnelBomb extends Bomb {
 		
 		boolean[] FOV = new boolean[Dungeon.level.length()];
 		Point c = Dungeon.level.cellToPoint(cell);
-		ShadowCaster.castShadow(c.x, c.y, FOV, Dungeon.level.losBlocking, 8);
+		ShadowCaster.castShadow(c.x, c.y, FOV, Dungeon.level.losBlocking(), 8);
 		
 		ArrayList<Char> affected = new ArrayList<>();
 		
 		for (int i = 0; i < FOV.length; i++) {
 			if (FOV[i]) {
-				if (Dungeon.level.heroFOV[i] && !Dungeon.level.solid[i]) {
+				if (Dungeon.level.heroFOV[i] && !Dungeon.level.solid()[i]) {
 					//TODO better vfx?
 					CellEmitter.center( i ).burst( BlastParticle.FACTORY, 5 );
 				}

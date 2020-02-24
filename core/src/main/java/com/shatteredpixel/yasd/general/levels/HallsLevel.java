@@ -53,6 +53,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class HallsLevel extends RegularLevel {
 
 	{
@@ -121,16 +123,16 @@ public class HallsLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_name");
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(HallsLevel.class, "grass_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(HallsLevel.class, "high_grass_name");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_name");
 			default:
 				return super.tileName( tile );
@@ -138,14 +140,14 @@ public class HallsLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(HallsLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );
@@ -161,7 +163,7 @@ public class HallsLevel extends RegularLevel {
 	
 	public static void addHallsVisuals( Level level, Group group ) {
 		for (int i=0; i < level.length(); i++) {
-			if (level.map[i] == Terrain.WATER) {
+			if (level.map[i] == WATER) {
 				group.add( new Stream( i ) );
 			}
 		}

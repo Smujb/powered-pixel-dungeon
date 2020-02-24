@@ -34,7 +34,7 @@ public class StorageRoom extends SpecialRoom {
 
 	public void paint( Level level ) {
 		
-		final int floor = Terrain.EMPTY_SP;
+		final Terrain floor = Terrain.EMPTY_SP;
 		
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, floor );

@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PushbackInputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -143,7 +144,23 @@ public class Bundle {
 			return enumClass.getEnumConstants()[0];
 		}
 	}
-	
+
+	public <E extends Enum<E>> E[] getEnumArray( String key, Class<E> enumClass) {
+		try {
+			JSONArray array = data.getJSONArray( key );
+			int length = array.length();
+			E[] result =(E[]) Array.newInstance(enumClass, length);
+			String[] resultNames;
+			resultNames = getStringArray(key);
+			for (int i=0; i < length; i++) {
+				result[i] = Enum.valueOf( enumClass, resultNames[i] );
+			}
+			return result;
+		} catch (JSONException e) {
+			Game.reportException(e);
+			return null;
+		}
+	}
 	public int[] getIntArray( String key ) {
 		try {
 			JSONArray array = data.getJSONArray( key );
@@ -317,6 +334,18 @@ public class Bundle {
 			} catch (JSONException e) {
 				Game.reportException(e);
 			}
+		}
+	}
+
+	public void put( String key, Enum[] array ) {
+		try {
+			JSONArray jsonArray = new JSONArray();
+			for (int i=0; i < array.length; i++) {
+				jsonArray.put( i, array[i] );
+			}
+			data.put( key, jsonArray );
+		} catch (JSONException e) {
+			Game.reportException(e);
 		}
 	}
 	

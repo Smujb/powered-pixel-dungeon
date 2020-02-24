@@ -11,7 +11,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -34,7 +33,7 @@ public class DarkGas extends Blob {
             for (int i = area.left; i < area.right; i++){
                 for (int j = area.top; j < area.bottom; j++){
                     cell = i + j*l.width();
-                    l.losBlocking[cell] = off[cell] > 0 || (Terrain.flags[l.map[cell]] & Terrain.LOS_BLOCKING) != 0;
+                    l.losBlocking()[cell] = off[cell] > 0 || l.map[cell].losBlocking;
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                         if (!ch.isImmune(this.getClass())) {
                             if (ch instanceof Hero) {
@@ -86,6 +85,13 @@ public class DarkGas extends Blob {
     public DarkGas setOwner(Char entity) {
         this.ownerID = entity.id();
         return this;
+    }
+
+    @Override
+    public void clear(int cell) {
+        super.clear(cell);
+        Level l = Dungeon.level;
+        l.losBlocking()[cell] = cur[cell] > 0 || l.map[cell].losBlocking;
     }
 
     private static final String STRENGTH = "strength";

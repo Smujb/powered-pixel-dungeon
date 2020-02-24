@@ -50,7 +50,7 @@ public class Electricity extends Blob {
 	@Override
 	protected void evolve() {
 		
-		water = Dungeon.level.water;
+		water = Dungeon.level.liquid();
 		int cell;
 		
 		//spread first..

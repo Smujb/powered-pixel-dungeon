@@ -73,12 +73,12 @@ public class Guard extends Mob {
 
 		if (chain.collisionPos != enemy.pos
 				|| chain.path.size() < 2
-				|| Dungeon.level.pit[chain.path.get(1)])
+				|| Dungeon.level.pit()[chain.path.get(1)])
 			return false;
 		else {
 			int newPos = -1;
 			for (int i : chain.subPath(1, chain.dist)){
-				if (!Dungeon.level.solid[i] && Actor.findChar(i) == null){
+				if (!Dungeon.level.solid()[i] && Actor.findChar(i) == null){
 					newPos = i;
 					break;
 				}

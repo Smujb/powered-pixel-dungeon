@@ -91,9 +91,9 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 	
 	public static void teleportToLocation(Char hero, int pos){
-		PathFinder.buildDistanceMap(pos, BArray.or(Dungeon.level.passable, Dungeon.level.avoid, null));
+		PathFinder.buildDistanceMap(pos, BArray.or(Dungeon.level.passable(), Dungeon.level.avoid(), null));
 		if (PathFinder.distance[hero.pos] == Integer.MAX_VALUE
-				|| (!Dungeon.level.passable[pos] && !Dungeon.level.avoid[pos])
+				|| (!Dungeon.level.passable()[pos] && !Dungeon.level.avoid()[pos])
 				|| Actor.findChar(pos) != null){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "cant_reach") );
 			return;
@@ -150,7 +150,7 @@ public class ScrollOfTeleportation extends Scroll {
 		
 		for (Room r : level.rooms()){
 			if (r instanceof SpecialRoom){
-				int terr;
+				Terrain terr;
 				boolean locked = false;
 				for (Point p : r.getPoints()){
 					terr = level.map[level.pointToCell(p)];
@@ -167,7 +167,7 @@ public class ScrollOfTeleportation extends Scroll {
 			int cell;
 			for (Point p : r.charPlaceablePoints(level)){
 				cell = level.pointToCell(p);
-				if (level.passable[cell] && !level.visited[cell] && Actor.findChar(cell) == null){
+				if (level.passable()[cell] && !level.visited[cell] && Actor.findChar(cell) == null){
 					candidates.add(cell);
 				}
 			}
@@ -185,7 +185,7 @@ public class ScrollOfTeleportation extends Scroll {
 					doorPos = level.pointToCell(room.entrance());
 					for (int i : PathFinder.NEIGHBOURS8){
 						if (!room.inside(level.cellToPoint(doorPos + i))
-								&& level.passable[doorPos + i]
+								&& level.passable()[doorPos + i]
 								&& Actor.findChar(doorPos + i) == null){
 							secretDoor = room instanceof SecretRoom;
 							pos = doorPos + i;
@@ -199,7 +199,7 @@ public class ScrollOfTeleportation extends Scroll {
 			Dungeon.level.occupyCell(hero );
 			if (secretDoor && level.map[doorPos] == Terrain.SECRET_DOOR){
 				Sample.INSTANCE.play( Assets.SND_SECRET );
-				int oldValue = Dungeon.level.map[doorPos];
+				Terrain oldValue = Dungeon.level.map[doorPos];
 				GameScene.discoverTile( doorPos, oldValue );
 				Dungeon.level.discover( doorPos );
 				ScrollOfMagicMapping.discover( doorPos );

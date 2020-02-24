@@ -316,7 +316,7 @@ public abstract class RegularPainter extends Painter {
 		//low smoothing, or very low fill, will begin to push the ratio down, normally to 50-30%
 		for (int i : grassCells) {
 			if (l.heaps.get(i) != null || l.findMob(i) != null) {
-				l.map[i] = l.grassTile();
+				l.map[i] = l.grassTile(false);
 				continue;
 			}
 			
@@ -326,7 +326,8 @@ public abstract class RegularPainter extends Painter {
 					count++;
 				}
 			}
-			l.map[i] = (Random.Float() < count / 12f) ? Terrain.FURROWED_GRASS : l.grassTile();
+			l.map[i] = l.grassTile(Random.Float() < count / 12f);
+
 		}
 	}
 	

@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Point;
 import com.watabou.utils.Rect;
@@ -39,19 +40,19 @@ public abstract class Painter {
 	
 	// Static methods
 
-	public static void set( Level level, int cell, int value ) {
+	public static void set( Level level, int cell, Terrain value ) {
 		level.map[cell] = value;
 	}
 	
-	public static void set( Level level, int x, int y, int value ) {
+	public static void set( Level level, int x, int y, Terrain value ) {
 		set( level, x + y * level.width(), value );
 	}
 	
-	public static void set( Level level, Point p, int value ) {
+	public static void set( Level level, Point p, Terrain value ) {
 		set( level, p.x, p.y, value );
 	}
 	
-	public static void fill( Level level, int x, int y, int w, int h, int value ) {
+	public static void fill( Level level, int x, int y, int w, int h, Terrain value ) {
 		
 		int width = level.width();
 		
@@ -61,19 +62,19 @@ public abstract class Painter {
 		}
 	}
 	
-	public static void fill( Level level, Rect rect, int value ) {
+	public static void fill( Level level, Rect rect, Terrain value ) {
 		fill( level, rect.left, rect.top, rect.width(), rect.height(), value );
 	}
 	
-	public static void fill( Level level, Rect rect, int m, int value ) {
+	public static void fill( Level level, Rect rect, int m, Terrain value ) {
 		fill( level, rect.left + m, rect.top + m, rect.width() - m*2, rect.height() - m*2, value );
 	}
 	
-	public static void fill( Level level, Rect rect, int l, int t, int r, int b, int value ) {
+	public static void fill( Level level, Rect rect, int l, int t, int r, int b, Terrain value ) {
 		fill( level, rect.left + l, rect.top + t, rect.width() - (l + r), rect.height() - (t + b), value );
 	}
 	
-	public static void drawLine( Level level, Point from, Point to, int value){
+	public static void drawLine( Level level, Point from, Point to, Terrain value){
 		float x = from.x;
 		float y = from.y;
 		float dx = to.x - from.x;
@@ -97,15 +98,15 @@ public abstract class Painter {
 		}
 	}
 
-	public static void fillEllipse(Level level, Rect rect, int value ) {
+	public static void fillEllipse(Level level, Rect rect, Terrain value ) {
 		fillEllipse( level, rect.left, rect.top, rect.width(), rect.height(), value );
 	}
 
-	public static void fillEllipse(Level level, Rect rect, int m, int value ) {
+	public static void fillEllipse(Level level, Rect rect, int m, Terrain value ) {
 		fillEllipse( level, rect.left + m, rect.top + m, rect.width() - m*2, rect.height() - m*2, value );
 	}
 	
-	public static void fillEllipse(Level level, int x, int y, int w, int h, int value){
+	public static void fillEllipse(Level level, int x, int y, int w, int h, Terrain value){
 
 		//radii
 		double radH = h/2f;
@@ -138,7 +139,7 @@ public abstract class Painter {
 
 	}
 	
-	public static Point drawInside( Level level, Room room, Point from, int n, int value ) {
+	public static Point drawInside( Level level, Room room, Point from, int n, Terrain value ) {
 		
 		Point step = new Point();
 		if (from.x == room.left) {
@@ -153,7 +154,7 @@ public abstract class Painter {
 		
 		Point p = new Point( from ).offset( step );
 		for (int i=0; i < n; i++) {
-			if (value != -1) {
+			if (value != Terrain.NONE) {
 				set( level, p, value );
 			}
 			p.offset( step );

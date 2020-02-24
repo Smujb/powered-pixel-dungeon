@@ -40,6 +40,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class HallsBossLevel extends Level {
 	
 	{
@@ -105,7 +107,7 @@ public class HallsBossLevel extends Level {
 			
 			int top = Random.IntRange(2, ROOM_TOP - 1);
 			int bottom = Random.IntRange(ROOM_BOTTOM + 1, 22);
-			Painter.fill(this, 2 + i * 4, top, 4, bottom - top + 1, Terrain.EMPTY);
+			Painter.fill(this, 2 + i * 4, top, 4, bottom - top + 1, EMPTY);
 			
 			if (i == 2) {
 				exit = (i * 4 + 3) + (top - 1) * width();
@@ -114,32 +116,32 @@ public class HallsBossLevel extends Level {
 			for (int j = 0; j < 4; j++) {
 				if (Random.Int(2) == 0) {
 					int y = Random.IntRange(top + 1, bottom - 1);
-					map[i * 4 + j + y * width()] = Terrain.WALL_DECO;
+					map[i * 4 + j + y * width()] = WALL_DECO;
 				}
 			}
 		}
 		
-		map[exit] = Terrain.LOCKED_EXIT;
+		map[exit] = LOCKED_EXIT;
 		
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1,
-				ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.WALL);
+				ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, WALL);
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP,
-				ROOM_RIGHT - ROOM_LEFT + 1, ROOM_BOTTOM - ROOM_TOP + 1, Terrain.EMPTY);
+				ROOM_RIGHT - ROOM_LEFT + 1, ROOM_BOTTOM - ROOM_TOP + 1, EMPTY);
 		
 		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1) +
 				Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * width();
-		map[entrance] = Terrain.ENTRANCE;
+		map[entrance] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate(width, height, 0.30f, 6, true);
 		for (int i = 0; i < length(); i++) {
-			if (map[i] == Terrain.EMPTY && patch[i]) {
-				map[i] = Terrain.WATER;
+			if (map[i] == EMPTY && patch[i]) {
+				map[i] = WATER;
 			}
 		}
 		
 		for (int i = 0; i < length(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int(10) == 0) {
-				map[i] = Terrain.EMPTY_DECO;
+			if (map[i] == EMPTY && Random.Int(10) == 0) {
+				map[i] = EMPTY_DECO;
 			}
 		}
 		
@@ -172,7 +174,7 @@ public class HallsBossLevel extends Level {
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -203,7 +205,7 @@ public class HallsBossLevel extends Level {
 			do {
 				boss.pos = Random.Int( length() );
 			} while (
-				!passable[boss.pos] ||
+				!passable()[boss.pos] ||
 				heroFOV[boss.pos]);
 			GameScene.add( boss );
 			boss.spawnFists();
@@ -214,7 +216,7 @@ public class HallsBossLevel extends Level {
 	}
 	
 	private void doMagic( int cell ) {
-		set( cell, Terrain.EMPTY_SP );
+		set( cell, EMPTY_SP );
 		CellEmitter.get( cell ).start( FlameParticle.FACTORY, 0.1f, 3 );
 	}
 	
@@ -226,7 +228,7 @@ public class HallsBossLevel extends Level {
 			unseal();
 			
 			entrance = stairs;
-			set( entrance, Terrain.ENTRANCE );
+			set( entrance, ENTRANCE );
 			GameScene.updateMap( entrance );
 		}
 		
@@ -234,16 +236,16 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_name");
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(HallsLevel.class, "grass_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(HallsLevel.class, "high_grass_name");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_name");
 			default:
 				return super.tileName( tile );
@@ -251,14 +253,14 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(HallsLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );

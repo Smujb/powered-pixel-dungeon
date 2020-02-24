@@ -318,7 +318,7 @@ public class Armor extends KindofMisc {
 				}
 			}
 			if (!enemyNear) speed *= (1.2f + 0.04f * level());
-		} else if (hasGlyph(Flow.class, owner) && Dungeon.level.water[owner.pos]){
+		} else if (hasGlyph(Flow.class, owner) && Dungeon.level.liquid()[owner.pos]){
 			speed *= 2f;
 		}
 		

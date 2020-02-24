@@ -55,6 +55,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 //Exists to support pre-0.7.5 saves
 public class OldPrisonBossLevel extends Level {
 
@@ -215,14 +217,14 @@ public class OldPrisonBossLevel extends Level {
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(PrisonLevel.class, "water_name");
 			default:
 				return super.tileName( tile );
@@ -230,11 +232,11 @@ public class OldPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.EMPTY_DECO:
+			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(PrisonLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );
@@ -245,25 +247,25 @@ public class OldPrisonBossLevel extends Level {
 		traps.clear();
 
 		for (int i = 0; i < length(); i++){
-			if (map[i] == Terrain.INACTIVE_TRAP) {
+			if (map[i] == INACTIVE_TRAP) {
 				Trap t = new GrippingTrap().reveal();
 				t.active = false;
 				setTrap(t, i);
-				map[i] = Terrain.INACTIVE_TRAP;
+				map[i] = INACTIVE_TRAP;
 			}
 		}
 	}
 
-	private void changeMap(int[] map){
+	private void changeMap(Terrain[] map){
 		this.map = map.clone();
 		buildFlagMaps();
 		cleanWalls();
 
 		exit = entrance = 0;
 		for (int i = 0; i < length(); i ++)
-			if (map[i] == Terrain.ENTRANCE)
+			if (map[i] == ENTRANCE)
 				entrance = i;
-			else if (map[i] == Terrain.EXIT)
+			else if (map[i] == EXIT)
 				exit = i;
 
 		BArray.setFalse(visited);
@@ -319,7 +321,7 @@ public class OldPrisonBossLevel extends Level {
 				}
 				
 				seal();
-				set(ARENA_DOOR, Terrain.LOCKED_DOOR);
+				set(ARENA_DOOR, LOCKED_DOOR);
 				GameScene.updateMap(ARENA_DOOR);
 
 				for (Mob m : mobs){
@@ -386,7 +388,7 @@ public class OldPrisonBossLevel extends Level {
 				tengu.state = tengu.HUNTING;
 				do {
 					tengu.pos = Random.Int(length());
-				} while (solid[tengu.pos] || distance(tengu.pos, Dungeon.hero.pos) < 8);
+				} while (solid()[tengu.pos] || distance(tengu.pos, Dungeon.hero.pos) < 8);
 				GameScene.add(tengu);
 				tengu.notice();
 				
@@ -459,22 +461,22 @@ public class OldPrisonBossLevel extends Level {
 		return visuals;
 	}
 
-	private static final int W = Terrain.WALL;
-	private static final int D = Terrain.DOOR;
-	private static final int L = Terrain.LOCKED_DOOR;
-	private static final int e = Terrain.EMPTY;
+	private static final Terrain W = WALL;
+	private static final Terrain D = DOOR;
+	private static final Terrain L = LOCKED_DOOR;
+	private static final Terrain e = EMPTY;
 
-	private static final int T = Terrain.INACTIVE_TRAP;
+	private static final Terrain T = INACTIVE_TRAP;
 
-	private static final int E = Terrain.ENTRANCE;
-	private static final int X = Terrain.EXIT;
+	private static final Terrain E = ENTRANCE;
+	private static final Terrain X = EXIT;
 
-	private static final int M = Terrain.WALL_DECO;
-	private static final int P = Terrain.PEDESTAL;
+	private static final Terrain M = WALL_DECO;
+	private static final Terrain P = PEDESTAL;
 
 	//TODO if I ever need to store more static maps I should externalize them instead of hard-coding
 	//Especially as I means I won't be limited to legal identifiers
-	private static final int[] MAP_START =
+	private static final Terrain[] MAP_START =
 			{       W, W, W, W, W, M, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, e, e, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, E, e, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
@@ -508,7 +510,7 @@ public class OldPrisonBossLevel extends Level {
 					W, W, W, T, T, T, T, T, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
-	private static final int[] MAP_MAZE =
+	private static final Terrain[] MAP_MAZE =
 			{       W, W, W, W, W, M, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, e, e, W, W, M, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, e, D, e, e, e, D, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, W, W,
@@ -542,7 +544,7 @@ public class OldPrisonBossLevel extends Level {
 					W, W, W, T, T, T, T, T, W, e, e, e, e, e, e, e, e, e, e, e, e, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
-	private static final int[] MAP_ARENA =
+	private static final Terrain[] MAP_ARENA =
 			{       W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, e, W, W, W, W, W, W,
 					W, W, e, e, e, e, e, e, e, e, e, e, e, W, W, W, e, e, e, e, e, e, e, e, e, e, e, W, W, W, W, W,
@@ -576,7 +578,7 @@ public class OldPrisonBossLevel extends Level {
 					W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W};
 
-	private static final int[] MAP_END =
+	private static final Terrain[] MAP_END =
 			{       W, W, W, W, W, M, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, e, e, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, E, e, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,

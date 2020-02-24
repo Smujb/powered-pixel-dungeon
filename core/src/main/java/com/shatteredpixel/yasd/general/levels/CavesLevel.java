@@ -50,6 +50,8 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class CavesLevel extends RegularLevel {
 
 	{
@@ -116,13 +118,13 @@ public class CavesLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(CavesLevel.class, "grass_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CavesLevel.class, "high_grass_name");
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(CavesLevel.class, "water_name");
 			default:
 				return super.tileName( tile );
@@ -130,17 +132,17 @@ public class CavesLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc( int tile ) {
+	public String tileDesc( Terrain tile ) {
 		switch (tile) {
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(CavesLevel.class, "entrance_desc");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(CavesLevel.class, "exit_desc");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CavesLevel.class, "high_grass_desc");
-			case Terrain.WALL_DECO:
+			case WALL_DECO:
 				return Messages.get(CavesLevel.class, "wall_deco_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(CavesLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );
@@ -156,7 +158,7 @@ public class CavesLevel extends RegularLevel {
 	
 	public static void addCavesVisuals( Level level, Group group ) {
 		for (int i=0; i < level.length(); i++) {
-			if (level.map[i] == Terrain.WALL_DECO) {
+			if (level.map[i] == WALL_DECO) {
 				group.add( new Vein( i ) );
 			}
 		}
@@ -186,7 +188,7 @@ public class CavesLevel extends RegularLevel {
 				if ((delay -= Game.elapsed) <= 0) {
 
 					//pickaxe can remove the ore, should remove the sparkling too.
-					if (Dungeon.level.map[pos] != Terrain.WALL_DECO){
+					if (Dungeon.level.map[pos] != WALL_DECO){
 						kill();
 						return;
 					}

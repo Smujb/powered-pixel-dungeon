@@ -41,7 +41,7 @@ public class CavesPainter extends RegularPainter {
 		
 		int w = level.width();
 		int l = level.length();
-		int[] map = level.map;
+		Terrain[] map = level.map;
 		
 		for (Room room : rooms) {
 			if (!(room instanceof EmptyRoom || room instanceof CaveRoom)) {

@@ -34,6 +34,8 @@ import com.watabou.utils.Random;
 
 import java.util.Arrays;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class LastLevel extends Level {
 
 	{
@@ -61,53 +63,53 @@ public class LastLevel extends Level {
 	@Override
 	public void create() {
 		super.create();
-		for (int i=0; i < length(); i++) {
-			int flags = Terrain.flags[map[i]];
-			if ((flags & Terrain.PIT) != 0){
+		/*for (int i=0; i < length(); i++) {
+			//int flags = Terrain.flags[map[i]];
+			if (map[i].pit){
 				passable[i] = avoid[i] = false;
 				solid[i] = true;
 			}
-		}
+		}*/
 	}
 
 	@Override
 	protected boolean build() {
 		
 		setSize(16, 64);
-		Arrays.fill( map, Terrain.CHASM );
+		Arrays.fill( map, CHASM );
 
 		int mid = width/2;
 
-		Painter.fill( this, 0, height-1, width, 1, Terrain.WALL );
-		Painter.fill( this, mid - 1, 10, 3, (height-11), Terrain.EMPTY);
-		Painter.fill( this, mid - 2, height - 3, 5, 1, Terrain.EMPTY);
-		Painter.fill( this, mid - 3, height - 2, 7, 1, Terrain.EMPTY);
+		Painter.fill( this, 0, height-1, width, 1, WALL );
+		Painter.fill( this, mid - 1, 10, 3, (height-11), EMPTY);
+		Painter.fill( this, mid - 2, height - 3, 5, 1, EMPTY);
+		Painter.fill( this, mid - 3, height - 2, 7, 1, EMPTY);
 
-		Painter.fill( this, mid - 2, 9, 5, 7, Terrain.EMPTY);
-		Painter.fill( this, mid - 3, 10, 7, 5, Terrain.EMPTY);
+		Painter.fill( this, mid - 2, 9, 5, 7, EMPTY);
+		Painter.fill( this, mid - 3, 10, 7, 5, EMPTY);
 
 		entrance = (height-2) * width() + mid;
-		map[entrance] = Terrain.ENTRANCE;
+		map[entrance] = ENTRANCE;
 
 		pedestal = 12*(width()) + mid;
-		map[pedestal] = Terrain.PEDESTAL;
-		map[pedestal-1-width()] = map[pedestal+1-width()] = map[pedestal-1+width()] = map[pedestal+1+width()] = Terrain.STATUE_SP;
+		map[pedestal] = PEDESTAL;
+		map[pedestal-1-width()] = map[pedestal+1-width()] = map[pedestal-1+width()] = map[pedestal+1+width()] = STATUE_SP;
 
 		exit = pedestal;
 
 		int pos = pedestal;
 
-		map[pos-width()] = map[pos-1] = map[pos+1] = map[pos-2] = map[pos+2] = Terrain.WATER;
+		map[pos-width()] = map[pos-1] = map[pos+1] = map[pos-2] = map[pos+2] = WATER;
 		pos+=width();
-		map[pos] = map[pos-2] = map[pos+2] = map[pos-3] = map[pos+3] = Terrain.WATER;
+		map[pos] = map[pos-2] = map[pos+2] = map[pos-3] = map[pos+3] = WATER;
 		pos+=width();
-		map[pos-3] = map[pos-2] = map[pos-1] = map[pos] = map[pos+1] = map[pos+2] = map[pos+3] = Terrain.WATER;
+		map[pos-3] = map[pos-2] = map[pos-1] = map[pos] = map[pos+1] = map[pos+2] = map[pos+3] = WATER;
 		pos+=width();
-		map[pos-2] = map[pos+2] = Terrain.WATER;
+		map[pos-2] = map[pos+2] = WATER;
 		
 		for (int i=0; i < length(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int( 10 ) == 0) {
-				map[i] = Terrain.EMPTY_DECO;
+			if (map[i] == EMPTY && Random.Int( 10 ) == 0) {
+				map[i] = EMPTY_DECO;
 			}
 		}
 
@@ -139,21 +141,21 @@ public class LastLevel extends Level {
 		int cell;
 		do {
 			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_name");
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(HallsLevel.class, "grass_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(HallsLevel.class, "high_grass_name");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_name");
 			default:
 				return super.tileName( tile );
@@ -161,14 +163,14 @@ public class LastLevel extends Level {
 	}
 
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(HallsLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(HallsLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );
@@ -185,12 +187,12 @@ public class LastLevel extends Level {
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		for (int i=0; i < length(); i++) {
-			int flags = Terrain.flags[map[i]];
-			if ((flags & Terrain.PIT) != 0){
+		/*for (int i=0; i < length(); i++) {
+			//int flags = Terrain.flags[map[i]];
+			if (map[i].pit){
 				passable[i] = avoid[i] = false;
 				solid[i] = true;
 			}
-		}
+		}*/
 	}
 }

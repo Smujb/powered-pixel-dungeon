@@ -58,7 +58,7 @@ public class CausticSlime extends Slime {
 		int ofs;
 		do {
 			ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!Dungeon.level.passable[pos + ofs]);
+		} while (!Dungeon.level.passable()[pos + ofs]);
 		Dungeon.level.drop( Reflection.newInstance(  GooBlob.class ), pos + ofs ).sprite.drop( pos );
 	}
 }

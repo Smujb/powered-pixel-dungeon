@@ -47,6 +47,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class CavesBossLevel extends Level {
 	
 	{
@@ -117,37 +119,37 @@ public class CavesBossLevel extends Level {
 				Random.IntRange(height-6, height-2)
 		);
 
-		Painter.fillEllipse( this, space, Terrain.EMPTY );
+		Painter.fillEllipse( this, space, EMPTY );
 
 		exit = space.left + space.width()/2 + (space.top - 1) * width();
 		
-		map[exit] = Terrain.LOCKED_EXIT;
+		map[exit] = LOCKED_EXIT;
 		
 		Painter.fill( this, ROOM_LEFT - 1, ROOM_TOP - 1,
-			ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, Terrain.WALL );
+			ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, WALL );
 		Painter.fill( this, ROOM_LEFT, ROOM_TOP + 1,
-			ROOM_RIGHT - ROOM_LEFT + 1, ROOM_BOTTOM - ROOM_TOP, Terrain.EMPTY );
+			ROOM_RIGHT - ROOM_LEFT + 1, ROOM_BOTTOM - ROOM_TOP, EMPTY );
 
 		Painter.fill( this, ROOM_LEFT, ROOM_TOP,
-			ROOM_RIGHT - ROOM_LEFT + 1, 1, Terrain.EMPTY_DECO );
+			ROOM_RIGHT - ROOM_LEFT + 1, 1, EMPTY_DECO );
 		
 		arenaDoor = Random.Int( ROOM_LEFT, ROOM_RIGHT ) + (ROOM_BOTTOM + 1) * width();
 		map[arenaDoor] = Terrain.DOOR;
 		
 		entrance = Random.Int( ROOM_LEFT + 1, ROOM_RIGHT - 1 ) +
 			Random.Int( ROOM_TOP + 1, ROOM_BOTTOM - 1 ) * width();
-		map[entrance] = Terrain.ENTRANCE;
+		map[entrance] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate( width, height, 0.30f, 6, true );
 		for (int i=0; i < length(); i++) {
-			if (map[i] == Terrain.EMPTY && patch[i]) {
-				map[i] = Terrain.WATER;
+			if (map[i] == EMPTY && patch[i]) {
+				map[i] = WATER;
 			}
 		}
 
 		for (int i=0; i < length(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int( 6 ) == 0) {
-				map[i] = Terrain.INACTIVE_TRAP;
+			if (map[i] == EMPTY && Random.Int( 6 ) == 0) {
+				map[i] = INACTIVE_TRAP;
 				Trap t = new ToxicTrap().reveal();
 				t.active = false;
 				setTrap(t, i);
@@ -155,31 +157,31 @@ public class CavesBossLevel extends Level {
 		}
 		
 		for (int i=width() + 1; i < length() - width(); i++) {
-			if (map[i] == Terrain.EMPTY) {
+			if (map[i] == EMPTY) {
 				int n = 0;
-				if (map[i+1] == Terrain.WALL) {
+				if (map[i+1] == WALL) {
 					n++;
 				}
-				if (map[i-1] == Terrain.WALL) {
+				if (map[i-1] == WALL) {
 					n++;
 				}
-				if (map[i+width()] == Terrain.WALL) {
+				if (map[i+width()] == WALL) {
 					n++;
 				}
-				if (map[i-width()] == Terrain.WALL) {
+				if (map[i-width()] == WALL) {
 					n++;
 				}
 				if (Random.Int( 8 ) <= n) {
-					map[i] = Terrain.EMPTY_DECO;
+					map[i] = EMPTY_DECO;
 				}
 			}
 		}
 		
 		for (int i=0; i < length() - width(); i++) {
-			if (map[i] == Terrain.WALL
+			if (map[i] == WALL
 					&& DungeonTileSheet.floorTile(map[i + width()])
 					&& Random.Int( 3 ) == 0) {
-				map[i] = Terrain.WALL_DECO;
+				map[i] = WALL_DECO;
 			}
 		}
 		
@@ -211,7 +213,7 @@ public class CavesBossLevel extends Level {
 		int cell;
 		do {
 			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -239,12 +241,12 @@ public class CavesBossLevel extends Level {
 			do {
 				boss.pos = Random.Int( length() );
 			} while (
-				!passable[boss.pos] ||
+				!passable()[boss.pos] ||
 				!outsideEntraceRoom( boss.pos ) ||
 				heroFOV[boss.pos]);
 			GameScene.add( boss );
 			
-			set( arenaDoor, Terrain.WALL );
+			set( arenaDoor, WALL );
 			GameScene.updateMap( arenaDoor );
 			Dungeon.observe();
 			
@@ -264,7 +266,7 @@ public class CavesBossLevel extends Level {
 			
 			CellEmitter.get( arenaDoor ).start( Speck.factory( Speck.ROCK ), 0.07f, 10 );
 			
-			set( arenaDoor, Terrain.EMPTY_DECO );
+			set( arenaDoor, EMPTY_DECO );
 			GameScene.updateMap( arenaDoor );
 			Dungeon.observe();
 		}
@@ -279,13 +281,13 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(CavesLevel.class, "grass_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CavesLevel.class, "high_grass_name");
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(CavesLevel.class, "water_name");
 			default:
 				return super.tileName( tile );
@@ -293,17 +295,17 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc( int tile ) {
+	public String tileDesc( Terrain tile ) {
 		switch (tile) {
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(CavesLevel.class, "entrance_desc");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(CavesLevel.class, "exit_desc");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CavesLevel.class, "high_grass_desc");
-			case Terrain.WALL_DECO:
+			case WALL_DECO:
 				return Messages.get(CavesLevel.class, "wall_deco_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(CavesLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );

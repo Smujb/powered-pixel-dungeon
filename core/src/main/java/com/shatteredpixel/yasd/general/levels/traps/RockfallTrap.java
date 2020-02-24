@@ -64,14 +64,14 @@ public class RockfallTrap extends Trap {
 			int cell;
 			for (Point p : r.getPoints()){
 				cell = Dungeon.level.pointToCell(p);
-				if (!Dungeon.level.solid[cell]){
+				if (!Dungeon.level.solid()[cell]){
 					rockCells.add(cell);
 				}
 			}
 			
 		//if we don't have rooms, then just do 5x5
 		} else {
-			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
+			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
 			for (int i = 0; i < PathFinder.distance.length; i++) {
 				if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 					rockCells.add(i);

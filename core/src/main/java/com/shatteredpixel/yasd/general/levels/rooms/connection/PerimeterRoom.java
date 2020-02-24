@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.connection;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Point;
@@ -33,7 +34,7 @@ public class PerimeterRoom extends ConnectionRoom {
 
 	public void paint( Level level ) {
 		
-		int floor = level.tunnelTile();
+		Terrain floor = level.tunnelTile();
 		
 		fillPerimiterPaths(level, this, floor);
 		
@@ -42,7 +43,7 @@ public class PerimeterRoom extends ConnectionRoom {
 		}
 	}
 	
-	public static void fillPerimiterPaths( Level l, Room r, int floor ){
+	public static void fillPerimiterPaths( Level l, Room r, Terrain floor ){
 		
 		corners = null;
 		
@@ -112,7 +113,7 @@ public class PerimeterRoom extends ConnectionRoom {
 	private static Point[] corners;
 	
 	//picks the smallest path to fill between two points
-	private static void fillBetweenPoints(Level level, Room r, Point from, Point to, int floor){
+	private static void fillBetweenPoints(Level level, Room r, Point from, Point to, Terrain floor){
 		
 		//doors are along the same side
 		if (((from.x == r.left+1 || from.x == r.right-1) && from.x == to.x)

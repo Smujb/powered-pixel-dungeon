@@ -37,14 +37,13 @@ import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 
 public class Fire extends Blob {
 
 	@Override
 	protected void evolve() {
 
-		boolean[] flamable = Dungeon.level.flamable;
+		boolean[] flamable = Dungeon.level.flammable();
 		int cell;
 		int fire;
 		

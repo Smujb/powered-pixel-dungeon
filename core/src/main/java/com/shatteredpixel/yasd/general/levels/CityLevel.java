@@ -49,6 +49,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+
 public class CityLevel extends RegularLevel {
 
 	{
@@ -115,11 +117,11 @@ public class CityLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(CityLevel.class, "water_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CityLevel.class, "high_grass_name");
 			default:
 				return super.tileName( tile );
@@ -127,21 +129,21 @@ public class CityLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(CityLevel.class, "exit_desc");
-			case Terrain.WALL_DECO:
-			case Terrain.EMPTY_DECO:
+			case WALL_DECO:
+			case EMPTY_DECO:
 				return Messages.get(CityLevel.class, "deco_desc");
-			case Terrain.EMPTY_SP:
+			case EMPTY_SP:
 				return Messages.get(CityLevel.class, "sp_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(CityLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(CityLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );
@@ -157,7 +159,7 @@ public class CityLevel extends RegularLevel {
 
 	public static void addCityVisuals( Level level, Group group ) {
 		for (int i=0; i < level.length(); i++) {
-			if (level.map[i] == Terrain.WALL_DECO) {
+			if (level.map[i] == WALL_DECO) {
 				group.add( new Smoke( i ) );
 			}
 		}

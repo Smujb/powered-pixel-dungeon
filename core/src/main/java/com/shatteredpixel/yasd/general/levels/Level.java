@@ -30,6 +30,7 @@ import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
+import com.shatteredpixel.yasd.general.actors.blobs.DarkGas;
 import com.shatteredpixel.yasd.general.actors.blobs.SmokeScreen;
 import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
@@ -91,6 +92,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public abstract class Level implements Bundlable {
 	
 	public enum Feeling {
@@ -123,7 +126,7 @@ public abstract class Level implements Bundlable {
 
 	public int version;
 	
-	public int[] map;
+	public Terrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
 	public boolean[] discoverable;
@@ -132,16 +135,86 @@ public abstract class Level implements Bundlable {
 	
 	public boolean[] heroFOV;
 	
-	public boolean[] passable;
-	public boolean[] losBlocking;
-	public boolean[] flamable;
-	public boolean[] secret;
-	public boolean[] solid;
-	public boolean[] avoid;
-	public boolean[] water;
-	public boolean[] pit;
+	//public boolean[] passable;
+	//public boolean[] losBlocking;
+	//public boolean[] flammable;
+	//public boolean[] secret;
+	//public boolean[] solid;
+	//public boolean[] avoid;
+	//public boolean[] water;
+	//public boolean[] pit;
+
+	public boolean[] passable() {
+		boolean[] passable = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			passable[i] = map[i].passable;
+		}
+		return passable;
+	}
+
+	public boolean[] losBlocking() {
+		boolean[] losBlocking = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			losBlocking[i] = map[i].losBlocking;
+			if (Blob.volumeAt(i, DarkGas.class) > 0 || Blob.volumeAt(i, SmokeScreen.class) > 0) {
+				losBlocking[i] = true;
+			}
+		}
+		return losBlocking;
+	}
+
+	public boolean[] flammable() {
+		boolean[] flammable = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			flammable[i] = map[i].flamable;
+		}
+		return flammable;
+	}
+
+	public boolean[] secret() {
+		boolean[] secret = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			secret[i] = map[i].secret;
+		}
+		return secret;
+	}
+
+	public boolean[] solid() {
+		boolean[] solid = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			solid[i] = map[i].solid;
+		}
+		return solid;
+	}
+
+	public boolean[] avoid() {
+		boolean[] avoid = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			avoid[i] = map[i].avoid;
+			if (traps.containsKey(i) && (traps.get(i).active && traps.get(i).visible)) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
+				avoid[i] = true;
+			}
+		}
+		return avoid;
+	}
+
+	public boolean[] liquid() {
+		boolean[] liquid = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			liquid[i] = map[i].liquid;
+		}
+		return liquid;
+	}
+
+	public boolean[] pit() {
+		boolean[] pit = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			pit[i] = map[i].pit;
+		}
+		return pit;
+	}
 	
-	public Feeling feeling = Feeling.DEAD;
+	public Feeling feeling = Feeling.NONE;
 	
 	public int entrance;
 	public int exit;
@@ -299,12 +372,12 @@ public abstract class Level implements Bundlable {
 		height = h;
 		length = w * h;
 		
-		map = new int[length];
-		int terrain = Terrain.WALL;
+		map = new Terrain[length];
+		Terrain terrain = WALL;
 		if (feeling == Feeling.CHASM) {
-			terrain = Terrain.CHASM;
+			terrain = CHASM;
 		} else if (feeling == Feeling.OPEN) {
-			terrain = Terrain.EMPTY;
+			terrain = EMPTY;
 		}
 		Arrays.fill( map, terrain );
 		
@@ -313,14 +386,14 @@ public abstract class Level implements Bundlable {
 		
 		heroFOV     = new boolean[length];
 		
-		passable	= new boolean[length];
-		losBlocking	= new boolean[length];
-		flamable	= new boolean[length];
-		secret		= new boolean[length];
-		solid		= new boolean[length];
-		avoid		= new boolean[length];
-		water		= new boolean[length];
-		pit			= new boolean[length];
+		//passable	= new boolean[length];
+		//losBlocking	= new boolean[length];
+		//flammable	= new boolean[length];
+		//secret		= new boolean[length];
+		//solid		= new boolean[length];
+		//avoid		= new boolean[length];
+		//water		= new boolean[length];
+		//pit			= new boolean[length];
 		
 		PathFinder.setMapSize(w, h);
 	}
@@ -361,7 +434,7 @@ public abstract class Level implements Bundlable {
 		customTiles = new HashSet<>();
 		customWalls = new HashSet<>();
 		
-		map		= bundle.getIntArray( MAP );
+		map		= (Terrain[]) bundle.getEnumArray( MAP, Terrain.class );
 
 		visited	= bundle.getBooleanArray( VISITED );
 		mapped	= bundle.getBooleanArray( MAPPED );
@@ -453,23 +526,23 @@ public abstract class Level implements Bundlable {
 		bundle.put( STATE, state );
 	}
 
-	public int tunnelTile() {
-		return (feeling == Feeling.CHASM || feeling == Feeling.OPEN) ? Terrain.EMPTY_SP : Terrain.EMPTY;
+	public Terrain tunnelTile() {
+		return (feeling == Feeling.CHASM || feeling == Feeling.OPEN) ? EMPTY_SP : EMPTY;
 	}
 
-	public int grassTile() {
-		int terrainToPaint = Terrain.GRASS;
+	public Terrain grassTile( boolean tall ) {
 		if (feeling == Level.Feeling.DEAD) {
-			terrainToPaint = Random.Int(5) == 0 ? Terrain.EMBERS : Terrain.FURROWED_GRASS;
+			return tall ? FURROWED_GRASS : EMBERS;
+		} else {
+			return tall ? HIGH_GRASS : GRASS;
 		}
-		return terrainToPaint;
 	}
 
-	public int waterTile() {
+	public Terrain waterTile() {
 		if (feeling == Feeling.DEAD) {
-			return grassTile();
+			return grassTile(false);
 		} else {
-			return Terrain.WATER;
+			return WATER;
 		}
 	}
 
@@ -515,7 +588,7 @@ public abstract class Level implements Bundlable {
 
 		for( int cell = 0 ; cell < length() ; cell++ ){
 
-			if( !solid[cell] && passable[cell] && Actor.findChar(cell) == null ) {
+			if( !solid()[cell] && passable()[cell] && Actor.findChar(cell) == null ) {
 				result.add( cell );
 			}
 		}
@@ -548,12 +621,12 @@ public abstract class Level implements Bundlable {
 			visuals.camera = null;
 		}
 		for (int i=0; i < length(); i++) {
-			if (pit[i]) {
+			if (pit()[i]) {
 				visuals.add( new WindParticle.Wind( i ) );
-				if (i >= width() && water[i-width()]) {
+				if (i >= width() && liquid()[i-width()]) {
 					visuals.add( new FlowParticle.Flow( i - width() ) );
 				}
-			} else if ( map[i] == Terrain.EMBERS ) {
+			} else if ( map[i] == EMBERS ) {
 				visuals.add( new CityLevel.Smoke( i ) );
 			}
 		}
@@ -620,7 +693,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int( length() );
 		} while ((Dungeon.level == this && heroFOV[cell])
-				|| !passable[cell]
+				|| !passable()[cell]
 				|| Actor.findChar( cell ) != null);
 		return cell;
 	}
@@ -629,7 +702,7 @@ public abstract class Level implements Bundlable {
 		int cell;
 		do {
 			cell = Random.Int( length() );
-		} while (!passable[cell]);
+		} while (!passable()[cell]);
 		return cell;
 	}
 	
@@ -663,46 +736,46 @@ public abstract class Level implements Bundlable {
 
 	public void buildFlagMaps() {
 		
-		for (int i=0; i < length(); i++) {
-			int flags = Terrain.flags[map[i]];
-			passable[i]		= (flags & Terrain.PASSABLE) != 0;
-			losBlocking[i]	= (flags & Terrain.LOS_BLOCKING) != 0;
-			flamable[i]		= (flags & Terrain.FLAMABLE) != 0;
-			secret[i]		= (flags & Terrain.SECRET) != 0;
-			solid[i]		= (flags & Terrain.SOLID) != 0;
-			avoid[i]		= (flags & Terrain.AVOID) != 0;
-			water[i]		= (flags & Terrain.LIQUID) != 0;
-			pit[i]			= (flags & Terrain.PIT) != 0;
-		}
+		/*for (int i=0; i < length(); i++) {
+			//int flags = Terrain.flags[map[i]];
+			passable[i]		=  map[i].passable;
+			losBlocking[i]	=  map[i].losBlocking;
+			flammable[i]		=  map[i].flamable;
+			secret[i]		=  map[i].secret;
+			solid[i]		=  map[i].solid;
+			avoid[i]		=  map[i].avoid;
+			water[i]		=  map[i].liquid;
+			pit[i]			=  map[i].pit;
+		}*/
 		
-		SmokeScreen s = (SmokeScreen)blobs.get(SmokeScreen.class);
+		/*SmokeScreen s = (SmokeScreen)blobs.get(SmokeScreen.class);
 		if (s != null && s.volume > 0){
 			for (int i=0; i < length(); i++) {
 				losBlocking[i]	= losBlocking[i] || s.cur[i] > 0;
 			}
-		}
+		}*/
 		
 		int lastRow = length() - width();
 		for (int i=0; i < width(); i++) {
-			passable[i] = avoid[i] = false;
-			losBlocking[i] = true;
-			map[i] = Terrain.WALL;
-			passable[lastRow + i] = avoid[lastRow + i] = false;
-			losBlocking[lastRow + i] = true;
-			map[lastRow + i] = Terrain.WALL;
+			//passable[i] = avoid[i] = false;
+			//losBlocking[i] = true;
+			map[i] = WALL;
+			//passable[lastRow + i] = avoid[lastRow + i] = false;
+			//losBlocking[lastRow + i] = true;
+			map[lastRow + i] = WALL;
 		}
 		for (int i=width(); i < lastRow; i += width()) {
-			passable[i] = avoid[i] = false;
-			losBlocking[i] = true;
-			map[i] = Terrain.WALL;
-			passable[i + width()-1] = avoid[i + width()-1] = false;
-			losBlocking[i + width()-1] = true;
-			map[i + width()-1] = Terrain.WALL;
+			//passable[i] = avoid[i] = false;
+			//losBlocking[i] = true;
+			map[i] = WALL;
+			//passable[i + width()-1] = avoid[i + width()-1] = false;
+			//losBlocking[i + width()-1] = true;
+			map[i + width()-1] = WALL;
 		}
 	}
 
 	public void destroy( int pos ) {
-		set( pos, Terrain.EMBERS );
+		set( pos, EMBERS );
 	}
 
 	protected void cleanWalls() {
@@ -714,7 +787,7 @@ public abstract class Level implements Bundlable {
 			
 			for (int j=0; j < PathFinder.NEIGHBOURS9.length; j++) {
 				int n = i + PathFinder.NEIGHBOURS9[j];
-				if (n >= 0 && n < length() && map[n] != Terrain.WALL && map[n] != Terrain.WALL_DECO) {
+				if (n >= 0 && n < length() && map[n] != WALL && map[n] != WALL_DECO) {
 					d = true;
 					break;
 				}
@@ -728,27 +801,27 @@ public abstract class Level implements Bundlable {
 		return x + y * width();
 	}
 
-	public void set( int cell, int terrain ){
+	public void set( int cell, Terrain terrain ){
 		Level level = this;
 		Painter.set( level, cell, terrain );
 
-		if (terrain != Terrain.TRAP && terrain != Terrain.SECRET_TRAP && terrain != Terrain.INACTIVE_TRAP){
+		if (terrain != TRAP && terrain != SECRET_TRAP && terrain != INACTIVE_TRAP){
 			level.traps.remove( cell );
 		}
 
-		int flags = Terrain.flags[terrain];
-		level.passable[cell]		= (flags & Terrain.PASSABLE) != 0;
-		level.losBlocking[cell]	    = (flags & Terrain.LOS_BLOCKING) != 0;
-		level.flamable[cell]		= (flags & Terrain.FLAMABLE) != 0;
-		level.secret[cell]		    = (flags & Terrain.SECRET) != 0;
-		level.solid[cell]			= (flags & Terrain.SOLID) != 0;
-		level.avoid[cell]			= (flags & Terrain.AVOID) != 0;
-		level.pit[cell]			    = (flags & Terrain.PIT) != 0;
-		level.water[cell]			= terrain == Terrain.WATER;
+		//int flags = Terrain.flags[terrain];
+		//level.passable()[cell]		=  map[cell].passable;
+		//level.losBlocking[cell]	    =  map[cell].losBlocking;
+		//level.flammable()[cell]		=  map[cell].flamable;
+		//level.secret[cell]		    =  map[cell].secret;
+		//level.solid()[cell]			=  map[cell].solid;
+		//level.avoid()[cell]			=  map[cell].avoid;
+		//level.pit()[cell]			    =  map[cell].pit;
+		//level.liquid()[cell]			=  map[cell].liquid;
 		
 		SmokeScreen s = (SmokeScreen)level.blobs.get(SmokeScreen.class);
 		if (s != null && s.volume > 0){
-			level.losBlocking[cell] = level.losBlocking[cell] || s.cur[cell] > 0;
+			level.losBlocking()[cell] = level.losBlocking()[cell] || s.cur[cell] > 0;
 		}
 	}
 	
@@ -772,7 +845,7 @@ public abstract class Level implements Bundlable {
 			heap.seen = Dungeon.level == this && heroFOV[cell];
 			heap.pos = cell;
 			heap.drop(item);
-			if (map[cell] == Terrain.CHASM || (Dungeon.level != null && pit[cell])) {
+			if (map[cell] == CHASM || (Dungeon.level != null && pit()[cell])) {
 				Dungeon.dropToChasm( item );
 				GameScene.discard( heap );
 			} else {
@@ -785,7 +858,7 @@ public abstract class Level implements Bundlable {
 			int n;
 			do {
 				n = cell + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			} while (!passable[n] && !avoid[n]);
+			} while (!passable()[n] && !avoid()[n]);
 			return drop( item, n );
 			
 		} else {
@@ -810,12 +883,12 @@ public abstract class Level implements Bundlable {
 			plant.wither();
 		}
 
-		if (map[pos] == Terrain.HIGH_GRASS ||
-				map[pos] == Terrain.FURROWED_GRASS ||
-				map[pos] == Terrain.EMPTY ||
-				map[pos] == Terrain.EMBERS ||
-				map[pos] == Terrain.EMPTY_DECO) {
-			set(pos, Terrain.GRASS);
+		if (map[pos] == HIGH_GRASS ||
+				map[pos] == FURROWED_GRASS ||
+				map[pos] == EMPTY ||
+				map[pos] == EMBERS ||
+				map[pos] == EMPTY_DECO) {
+			set(pos, GRASS);
 			GameScene.updateMap(pos);
 		}
 		
@@ -844,12 +917,12 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void disarmTrap( int pos ) {
-		set(pos, Terrain.INACTIVE_TRAP);
+		set(pos, INACTIVE_TRAP);
 		GameScene.updateMap(pos);
 	}
 
 	public void discover( int cell ) {
-		set( cell, Terrain.discover( map[cell] ) );
+		set( cell, map[cell].discover() );
 		Trap trap = traps.get( cell );
 		if (trap != null)
 			trap.reveal();
@@ -869,7 +942,7 @@ public abstract class Level implements Bundlable {
 	public void occupyCell( Char ch ){
 		if (!ch.flying){
 			
-			if (pit[ch.pos]){
+			if (pit()[ch.pos]){
 				if (ch == Dungeon.hero) {
 					Chasm.heroFall(ch.pos);
 				} else if (ch instanceof Mob) {
@@ -881,7 +954,7 @@ public abstract class Level implements Bundlable {
 			//characters which are not the hero or a sheep 'soft' press cells
 			pressCell( ch.pos, ch instanceof Hero || ch instanceof Sheep);
 		} else {
-			if (map[ch.pos] == Terrain.DOOR){
+			if (map[ch.pos] == DOOR){
 				Door.enter( ch.pos );
 			}
 		}
@@ -900,27 +973,27 @@ public abstract class Level implements Bundlable {
 		
 		switch (map[cell]) {
 		
-		case Terrain.SECRET_TRAP:
+		case SECRET_TRAP:
 			if (hard) {
 				trap = traps.get( cell );
 				GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
 			}
 			break;
 			
-		case Terrain.TRAP:
+		case TRAP:
 			trap = traps.get( cell );
 			break;
 			
-		case Terrain.HIGH_GRASS:
-		case Terrain.FURROWED_GRASS:
+		case HIGH_GRASS:
+		case FURROWED_GRASS:
 			HighGrass.trample( this, cell);
 			break;
 			
-		case Terrain.WELL:
+		case WELL:
 			WellWater.affectCell( cell );
 			break;
 			
-		case Terrain.DOOR:
+		case DOOR:
 			Door.enter( cell );
 			break;
 		}
@@ -977,14 +1050,14 @@ public abstract class Level implements Bundlable {
 			boolean[] blocking;
 			
 			if (c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN) {
-				blocking = Dungeon.level.losBlocking.clone();
+				blocking = Dungeon.level.losBlocking().clone();
 				for (int i = 0; i < blocking.length; i++){
-					if (blocking[i] && (Dungeon.level.map[i] == Terrain.HIGH_GRASS || Dungeon.level.map[i] == Terrain.FURROWED_GRASS)){
+					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)){
 						blocking[i] = false;
 					}
 				}
 			} else {
-				blocking = Dungeon.level.losBlocking;
+				blocking = Dungeon.level.losBlocking();
 			}
 			
 			int viewDist = c.viewDistance;
@@ -1139,106 +1212,106 @@ public abstract class Level implements Bundlable {
 		return p.x + p.y*width();
 	}
 	
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		
 		switch (tile) {
-			case Terrain.CHASM:
+			case CHASM:
 				return Messages.get(Level.class, "chasm_name");
-			case Terrain.EMPTY:
-			case Terrain.EMPTY_SP:
-			case Terrain.EMPTY_DECO:
-			case Terrain.SECRET_TRAP:
+			case EMPTY:
+			case EMPTY_SP:
+			case EMPTY_DECO:
+			case SECRET_TRAP:
 				return Messages.get(Level.class, "floor_name");
-			case Terrain.GRASS:
+			case GRASS:
 				return Messages.get(Level.class, "grass_name");
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(Level.class, "water_name");
-			case Terrain.WALL:
-			case Terrain.WALL_DECO:
-			case Terrain.SECRET_DOOR:
+			case WALL:
+			case WALL_DECO:
+			case SECRET_DOOR:
 				return Messages.get(Level.class, "wall_name");
-			case Terrain.DOOR:
+			case DOOR:
 				return Messages.get(Level.class, "closed_door_name");
-			case Terrain.OPEN_DOOR:
+			case OPEN_DOOR:
 				return Messages.get(Level.class, "open_door_name");
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(Level.class, "entrace_name");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(Level.class, "exit_name");
-			case Terrain.EMBERS:
+			case EMBERS:
 				return Messages.get(Level.class, "embers_name");
-			case Terrain.FURROWED_GRASS:
+			case FURROWED_GRASS:
 				return Messages.get(Level.class, "furrowed_grass_name");
-			case Terrain.LOCKED_DOOR:
+			case LOCKED_DOOR:
 				return Messages.get(Level.class, "locked_door_name");
-			case Terrain.PEDESTAL:
+			case PEDESTAL:
 				return Messages.get(Level.class, "pedestal_name");
-			case Terrain.BARRICADE:
+			case BARRICADE:
 				return Messages.get(Level.class, "barricade_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(Level.class, "high_grass_name");
-			case Terrain.LOCKED_EXIT:
+			case LOCKED_EXIT:
 				return Messages.get(Level.class, "locked_exit_name");
-			case Terrain.UNLOCKED_EXIT:
+			case UNLOCKED_EXIT:
 				return Messages.get(Level.class, "unlocked_exit_name");
-			case Terrain.SIGN:
+			case SIGN:
 				return Messages.get(Level.class, "sign_name");
-			case Terrain.WELL:
+			case WELL:
 				return Messages.get(Level.class, "well_name");
-			case Terrain.EMPTY_WELL:
+			case EMPTY_WELL:
 				return Messages.get(Level.class, "empty_well_name");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(Level.class, "statue_name");
-			case Terrain.INACTIVE_TRAP:
+			case INACTIVE_TRAP:
 				return Messages.get(Level.class, "inactive_trap_name");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(Level.class, "bookshelf_name");
-			case Terrain.ALCHEMY:
+			case ALCHEMY:
 				return Messages.get(Level.class, "alchemy_name");
 			default:
 				return Messages.get(Level.class, "default_name");
 		}
 	}
 	
-	public String tileDesc( int tile ) {
+	public String tileDesc( Terrain tile ) {
 		
 		switch (tile) {
-			case Terrain.CHASM:
+			case CHASM:
 				return Messages.get(Level.class, "chasm_desc");
-			case Terrain.WATER:
+			case WATER:
 				if (Dungeon.hero.morale > Dungeon.hero.MAX_MORALE/2f) {
 					return Messages.get(Level.class, "water_desc");
 				} else {
 					return Messages.get(Level.class, "water_desc_low_morale");
 				}
 
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(Level.class, "entrance_desc");
-			case Terrain.EXIT:
-			case Terrain.UNLOCKED_EXIT:
+			case EXIT:
+			case UNLOCKED_EXIT:
 				return Messages.get(Level.class, "exit_desc");
-			case Terrain.EMBERS:
+			case EMBERS:
 				return Messages.get(Level.class, "embers_desc");
-			case Terrain.HIGH_GRASS:
-			case Terrain.FURROWED_GRASS:
+			case HIGH_GRASS:
+			case FURROWED_GRASS:
 				return Messages.get(Level.class, "high_grass_desc");
-			case Terrain.LOCKED_DOOR:
+			case LOCKED_DOOR:
 				return Messages.get(Level.class, "locked_door_desc");
-			case Terrain.LOCKED_EXIT:
+			case LOCKED_EXIT:
 				return Messages.get(Level.class, "locked_exit_desc");
-			case Terrain.BARRICADE:
+			case BARRICADE:
 				return Messages.get(Level.class, "barricade_desc");
-			case Terrain.SIGN:
+			case SIGN:
 				return Messages.get(Level.class, "sign_desc");
-			case Terrain.INACTIVE_TRAP:
+			case INACTIVE_TRAP:
 				return Messages.get(Level.class, "inactive_trap_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(Level.class, "statue_desc");
-			case Terrain.ALCHEMY:
+			case ALCHEMY:
 				return Messages.get(Level.class, "alchemy_desc");
-			case Terrain.EMPTY_WELL:
+			case EMPTY_WELL:
 				return Messages.get(Level.class, "empty_well_desc");
 			default:
 				return "";

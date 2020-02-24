@@ -39,14 +39,14 @@ public class ShopGuardian extends Statue {
     public void spawnAround( int pos ) {
         for (int n : PathFinder.NEIGHBOURS4) {
             int cell = pos + n;
-            if (Dungeon.level.passable[cell] && Actor.findChar( cell ) == null) {
+            if (Dungeon.level.passable()[cell] && Actor.findChar( cell ) == null) {
                 spawnAt( cell );
             }
         }
     }
 
     public static ShopGuardian spawnAt( int pos ) {
-        if (Dungeon.level.passable[pos] && Actor.findChar( pos ) == null) {
+        if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 
             ShopGuardian shopGuardian = new  ShopGuardian();
             shopGuardian.pos = pos;

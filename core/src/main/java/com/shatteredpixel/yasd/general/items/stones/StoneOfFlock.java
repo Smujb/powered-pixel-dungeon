@@ -44,8 +44,8 @@ public class StoneOfFlock extends Runestone {
 	
 		for (int i : PathFinder.NEIGHBOURS9){
 			
-			if (!Dungeon.level.solid[cell + i]
-					&& !Dungeon.level.pit[cell + i]
+			if (!Dungeon.level.solid()[cell + i]
+					&& !Dungeon.level.pit()[cell + i]
 					&& Actor.findChar(cell + i) == null) {
 				
 				Sheep sheep = new Sheep();

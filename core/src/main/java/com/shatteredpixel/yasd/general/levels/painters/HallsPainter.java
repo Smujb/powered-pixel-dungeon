@@ -34,7 +34,7 @@ public class HallsPainter extends RegularPainter {
 	@Override
 	protected void decorate(Level level, ArrayList<Room> rooms) {
 		
-		int[] map = level.map;
+		Terrain[] map = level.map;
 		int w = level.width();
 		int l = level.length();
 		
@@ -43,7 +43,7 @@ public class HallsPainter extends RegularPainter {
 				
 				int count = 0;
 				for (int j = 0; j < PathFinder.NEIGHBOURS8.length; j++) {
-					if ((Terrain.flags[map[i + PathFinder.NEIGHBOURS8[j]]] & Terrain.PASSABLE) > 0) {
+					if (map[i + PathFinder.NEIGHBOURS8[j]].passable) {
 						count++;
 					}
 				}

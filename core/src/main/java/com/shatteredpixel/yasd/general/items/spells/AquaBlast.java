@@ -28,7 +28,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.effects.Splash;
 import com.shatteredpixel.yasd.general.items.potions.exotic.PotionOfStormClouds;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -50,7 +49,7 @@ public class AquaBlast extends TargetedSpell {
 		
 		for (int i : PathFinder.NEIGHBOURS9){
 			if (i == 0 || Random.Int(5) != 0){
-				int terr = Dungeon.level.map[cell + i];
+				Terrain terr = Dungeon.level.map[cell + i];
 				if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
 						terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
 						terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS ||

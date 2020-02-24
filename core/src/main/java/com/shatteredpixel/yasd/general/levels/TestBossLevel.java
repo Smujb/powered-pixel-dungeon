@@ -16,6 +16,8 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class TestBossLevel extends Level {
 
 	{
@@ -68,7 +70,7 @@ public class TestBossLevel extends Level {
 			boss.pos = randomRespawnCell();
 			GameScene.add( boss );
 			bossSpawned = true;
-			Dungeon.level.set(ENTRANCE_LOCATION, Terrain.WALL);
+			Dungeon.level.set(ENTRANCE_LOCATION, WALL);
 			GameScene.updateMap( ENTRANCE_LOCATION );
 			Dungeon.observe();
 		}
@@ -103,19 +105,19 @@ public class TestBossLevel extends Level {
 	}
 
 	@Override
-	public String tileName(int tile) {
-		if (tile == Terrain.WATER) {
+	public String tileName(Terrain tile) {
+		if (tile == WATER) {
 			return Messages.get(SewerLevel.class, "water_name");
 		}
 		return super.tileName(tile);
 	}
 
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.EMPTY_DECO:
+			case EMPTY_DECO:
 				return Messages.get(SewerLevel.class, "empty_deco_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(SewerLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc(tile);
@@ -141,7 +143,7 @@ public class TestBossLevel extends Level {
 					cont = false;
 				}
 			}
-		} while (!insideRoom(cell) || solid[cell] || Actor.findChar(cell) != null || !cont);
+		} while (!insideRoom(cell) || solid()[cell] || Actor.findChar(cell) != null || !cont);
 		return cell;
 	}
 	public static final String BOSS = "boss";
@@ -157,13 +159,13 @@ public class TestBossLevel extends Level {
 		bossSpawned = bundle.getBoolean(BOSS);
 	}
 
-	private static final int W = Terrain.WALL;
+	private static final Terrain W = WALL;
 	//private static final int Z = Terrain.HIGH_GRASS;
-	private static final int D = Terrain.DOOR;
-	private static final int E = Terrain.ENTRANCE;
-	private static final int Q = Terrain.EMPTY;//for readability
+	private static final Terrain D = DOOR;
+	private static final Terrain E = ENTRANCE;
+	private static final Terrain Q = EMPTY;//for readability
 
-	private static final int[] LAYOUT =	{
+	private static final Terrain[] LAYOUT =	{
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,
 			W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W, 	W,

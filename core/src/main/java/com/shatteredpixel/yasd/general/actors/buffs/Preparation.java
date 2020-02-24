@@ -248,7 +248,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 				
 				AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
 				
-				boolean[] passable = Dungeon.level.passable.clone();
+				boolean[] passable = Dungeon.level.passable();
 				//need to consider enemy cell as passable in case they are on a trap or chasm
 				passable[cell] = true;
 				PathFinder.buildDistanceMap(Dungeon.hero.pos, passable, lvl.blinkDistance+1);

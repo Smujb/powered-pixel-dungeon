@@ -39,7 +39,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 	}
 
 	@Override
-	protected int getTileVisual(int pos, int tile, boolean flat) {
+	protected int getTileVisual(int pos, Terrain tile, boolean flat) {
 		int visual = DungeonTileSheet.directVisuals.get(tile, -1);
 		if (visual != -1) return DungeonTileSheet.getVisualWithAlts(visual, pos);
 
@@ -52,7 +52,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 			);
 
 		} else if (tile == Terrain.CHASM) {
-			return DungeonTileSheet.stitchChasmTile( pos > mapWidth ? map[pos - mapWidth] : -1);
+			return DungeonTileSheet.stitchChasmTile( pos > mapWidth ? map[pos - mapWidth] : Terrain.NONE);
 		}
 
 		if (!flat) {
@@ -62,9 +62,9 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 				return DungeonTileSheet.getRaisedWallTile(
 						tile,
 						pos,
-						(pos+1) % mapWidth != 0 ?   map[pos + 1] : -1,
-						pos + mapWidth < size ?     map[pos + mapWidth] : -1,
-						pos % mapWidth != 0 ?       map[pos - 1] : -1
+						(pos+1) % mapWidth != 0 ?   map[pos + 1] : Terrain.NONE,
+						pos + mapWidth < size ?     map[pos + mapWidth] : Terrain.NONE,
+						pos % mapWidth != 0 ?       map[pos - 1] : Terrain.NONE
 						);
 			} else if (tile == Terrain.SIGN) {
 				return DungeonTileSheet.RAISED_SIGN;
@@ -95,7 +95,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 
 	}
 
-	public static Image tile(int pos, int tile ) {
+	public static Image tile(int pos, Terrain tile ) {
 		Image img = new Image( instance.texture );
 		img.frame( instance.tileset.get( instance.getTileVisual( pos, tile, true ) ) );
 		return img;

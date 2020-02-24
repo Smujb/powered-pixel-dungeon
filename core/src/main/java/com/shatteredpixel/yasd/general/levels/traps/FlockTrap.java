@@ -49,13 +49,13 @@ public class FlockTrap extends Trap {
 			{ actPriority = BUFF_PRIO; }
 
 			protected boolean act() {
-				PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
+				PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
 				for (int i = 0; i < PathFinder.distance.length; i++) {
 					Trap t;
 					if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 						if (Dungeon.level.insideMap(i)
 								&& Actor.findChar(i) == null
-								&& !(Dungeon.level.pit[i])) {
+								&& !(Dungeon.level.pit()[i])) {
 							Sheep sheep = new Sheep();
 							sheep.lifespan = Random.NormalIntRange( 4, 8 );
 							sheep.pos = i;

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.tiles;
 
+import com.badlogic.gdx.utils.ArrayMap;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
@@ -77,7 +78,7 @@ public class DungeonTileSheet {
 	//next 15 slots are all water stitching with ground.
 
 	//These tiles can stitch with water
-	public static HashSet<Integer> waterStitcheable = new HashSet<>(Arrays.asList(
+	public static HashSet<Terrain> waterStitcheable = new HashSet<>(Arrays.asList(
 			Terrain.EMPTY, Terrain.GRASS, Terrain.EMPTY_WELL,
 			Terrain.ENTRANCE, Terrain.EXIT, Terrain.EMBERS,
 			Terrain.BARRICADE, Terrain.HIGH_GRASS, Terrain.FURROWED_GRASS, Terrain.SECRET_TRAP,
@@ -87,7 +88,7 @@ public class DungeonTileSheet {
 	));
 
 	//+1 for ground above, +2 for ground right, +4 for ground below, +8 for ground left.
-	public static int stitchWaterTile(int top, int right, int bottom, int left){
+	public static int stitchWaterTile(Terrain top, Terrain right, Terrain bottom, Terrain left){
 		int result = WATER;
 		if (waterStitcheable.contains(top))     result += 1;
 		if (waterStitcheable.contains(right))   result += 2;
@@ -97,7 +98,7 @@ public class DungeonTileSheet {
 	}
 
 
-	public static boolean floorTile(int tile){
+	public static boolean floorTile(Terrain tile){
 		return tile == Terrain.WATER || directVisuals.get(tile, CHASM) < CHASM;
 	}
 
@@ -114,7 +115,7 @@ public class DungeonTileSheet {
 	public static final int CHASM_WATER             = CHASM+4;
 
 	//tiles that can stitch with chasms (from above), and which visual represents the stitching
-	public static SparseArray<Integer> chasmStitcheable = new SparseArray<>();
+	public static ArrayMap<Terrain, Integer> chasmStitcheable = new ArrayMap<>();
 	static {
 		//floor
 		chasmStitcheable.put( Terrain.EMPTY,        CHASM_FLOOR );
@@ -151,7 +152,7 @@ public class DungeonTileSheet {
 		chasmStitcheable.put( Terrain.WATER,        CHASM_WATER );
 	}
 
-	public static int stitchChasmTile(int above){
+	public static int stitchChasmTile(Terrain above){
 		return chasmStitcheable.get(above, CHASM);
 	}
 
@@ -208,22 +209,22 @@ public class DungeonTileSheet {
 	// makes array traversal much faster than something like HashSet.contains.
 
 	//These tiles count as wall for the purposes of wall stitching
-	private static int[] wallStitcheable = new int[]{
+	private static Terrain[] wallStitcheable = new Terrain[]{
 			Terrain.WALL, Terrain.WALL_DECO, Terrain.SECRET_DOOR,
-			Terrain.LOCKED_EXIT, Terrain.UNLOCKED_EXIT, Terrain.BOOKSHELF, NULL_TILE
+			Terrain.LOCKED_EXIT, Terrain.UNLOCKED_EXIT, Terrain.BOOKSHELF, Terrain.NONE
 	};
 
-	public static boolean wallStitcheable(int tile){
-		for (int i : wallStitcheable)
+	public static boolean wallStitcheable(Terrain tile){
+		for (Terrain i : wallStitcheable)
 			if (tile == i)
 				return true;
 		return false;
 	}
 
-	public static int getRaisedWallTile(int tile, int pos, int right, int below, int left){
+	public static int getRaisedWallTile(Terrain tile, int pos, Terrain right, Terrain below, Terrain left){
 		int result;
 		
-		if (below == -1 || wallStitcheable(below))                      return -1;
+		if (below == Terrain.NONE || wallStitcheable(below))                      return -1;
 		else if (doorTile(below))                                       result = RAISED_WALL_DOOR;
 		else if (tile == Terrain.WALL || tile == Terrain.SECRET_DOOR)   result = RAISED_WALL;
 		else if (tile == Terrain.WALL_DECO)                             result = RAISED_WALL_DECO;
@@ -245,7 +246,7 @@ public class DungeonTileSheet {
 	public static final int RAISED_DOOR_SIDEWAYS    = RAISED_DOORS+3;
 
 
-	public static int getRaisedDoorTile(int tile, int below){
+	public static int getRaisedDoorTile(Terrain tile, Terrain below){
 		if (wallStitcheable(below))             return RAISED_DOOR_SIDEWAYS;
 		else if (tile == Terrain.DOOR)          return DungeonTileSheet.RAISED_DOOR;
 		else if (tile == Terrain.OPEN_DOOR)     return DungeonTileSheet.RAISED_DOOR_OPEN;
@@ -253,12 +254,12 @@ public class DungeonTileSheet {
 		else return -1;
 	}
 
-	private static int[] doorTiles = new int[]{
+	private static Terrain[] doorTiles = new Terrain[]{
 			Terrain.DOOR, Terrain.LOCKED_DOOR, Terrain.OPEN_DOOR
 	};
 
-	public static boolean doorTile(int tile){
-		for (int i : doorTiles)
+	public static boolean doorTile(Terrain tile){
+		for (Terrain i : doorTiles)
 			if (tile == i)
 				return true;
 		return false;
@@ -287,7 +288,7 @@ public class DungeonTileSheet {
 	private static final int WALL_INTERNAL              = WALLS_INTERNAL+0;
 	private static final int WALL_INTERNAL_WOODEN       = WALLS_INTERNAL+16;
 
-	public static int stitchInternalWallTile(int tile, int right, int rightBelow, int below, int leftBelow, int left){
+	public static int stitchInternalWallTile(Terrain tile, Terrain right, Terrain rightBelow, Terrain below, Terrain leftBelow, Terrain left){
 		int result;
 
 		if (tile == Terrain.BOOKSHELF || below == Terrain.BOOKSHELF)  result = WALL_INTERNAL_WOODEN;
@@ -308,7 +309,7 @@ public class DungeonTileSheet {
 	public static final int DOOR_SIDEWAYS_OVERHANG_LOCKED   = WALLS_OVERHANG+12;
 	public static final int WALL_OVERHANG_WOODEN            = WALLS_OVERHANG+16;
 
-	public static int stitchWallOverhangTile(int tile, int rightBelow, int below, int leftBelow){
+	public static int stitchWallOverhangTile(Terrain tile, Terrain rightBelow, Terrain below, Terrain leftBelow){
 		int visual;
 		if (tile == Terrain.DOOR)                                   visual = DOOR_SIDEWAYS_OVERHANG;
 		else if (tile == Terrain.OPEN_DOOR)                         visual = DOOR_SIDEWAYS_OVERHANG_OPEN;
@@ -342,7 +343,7 @@ public class DungeonTileSheet {
 	 **********************************************************************/
 
 	//These visuals always directly represent a game tile with no stitching required
-	public static SparseArray<Integer> directVisuals = new SparseArray<>();
+	public static ArrayMap<Terrain, Integer> directVisuals = new ArrayMap<>();
 	static {
 		directVisuals.put(Terrain.EMPTY,            FLOOR);
 		directVisuals.put(Terrain.GRASS,            GRASS);
@@ -365,7 +366,7 @@ public class DungeonTileSheet {
 	}
 
 	//These visuals directly represent game tiles (no stitching) when terrain is being shown as flat
-	public static SparseArray<Integer> directFlatVisuals = new SparseArray<>();
+	public static ArrayMap<Terrain, Integer> directFlatVisuals = new ArrayMap<>();
 	static {
 		directFlatVisuals.put(Terrain.WALL,             FLAT_WALL);
 		directFlatVisuals.put(Terrain.DOOR,             FLAT_DOOR);

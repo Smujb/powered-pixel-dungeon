@@ -70,7 +70,7 @@ public class TrapsRoom extends SpecialRoom {
 		Door door = entrance();
 		door.set( Door.Type.REGULAR );
 		
-		int lastRow = level.map[left + 1 + (top + 1) * level.width()] == Terrain.CHASM ? Terrain.CHASM : Terrain.EMPTY;
+		Terrain lastRow = level.map[left + 1 + (top + 1) * level.width()] == Terrain.CHASM ? Terrain.CHASM : Terrain.EMPTY;
 
 		int x = -1;
 		int y = -1;

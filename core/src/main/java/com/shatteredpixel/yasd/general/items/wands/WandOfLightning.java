@@ -70,7 +70,7 @@ public class WandOfLightning extends DamageWand {
 		//lightning deals less damage per-target, the more targets that are hit.
 		float multipler = 0.4f + (0.6f/affected.size());
 		//if the main target is in water, all affected take full damage
-		if (Dungeon.level.water[bolt.collisionPos]) multipler = 1f;
+		if (Dungeon.level.liquid()[bolt.collisionPos]) multipler = 1f;
 
 		for (Char ch : affected){
 			processSoulMark(ch, chargesPerCast());
@@ -95,10 +95,10 @@ public class WandOfLightning extends DamageWand {
 
 	private void arc( Char ch ) {
 
-		int dist = (Dungeon.level.water[ch.pos] && !ch.flying) ? 2 : 1;
+		int dist = (Dungeon.level.liquid()[ch.pos] && !ch.flying) ? 2 : 1;
 
 		ArrayList<Char> hitThisArc = new ArrayList<>();
-		PathFinder.buildDistanceMap( ch.pos, BArray.not( Dungeon.level.solid, null ), dist );
+		PathFinder.buildDistanceMap( ch.pos, BArray.not( Dungeon.level.solid(), null ), dist );
 		for (int i = 0; i < PathFinder.distance.length; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE){
 				Char n = Actor.findChar( i );

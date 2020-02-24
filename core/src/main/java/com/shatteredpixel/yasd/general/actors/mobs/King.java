@@ -185,7 +185,7 @@ public class King extends Mob {
 		sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.4f, 2 );
 		Sample.INSTANCE.play( Assets.SND_CHALLENGE );
 		
-		boolean[] passable = Dungeon.level.passable.clone();
+		boolean[] passable = Dungeon.level.passable();
 		for (Char c : Actor.chars()) {
 			passable[c.pos] = false;
 		}

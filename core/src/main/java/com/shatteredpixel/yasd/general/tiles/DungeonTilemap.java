@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Tilemap;
@@ -34,7 +35,7 @@ public abstract class DungeonTilemap extends Tilemap {
 
 	public static final int SIZE = 16;
 
-	protected int[] map;
+	protected Terrain[] map;
 
 	public DungeonTilemap(String tex) {
 		super(tex, new TextureFilm( tex, SIZE, SIZE ) );
@@ -44,15 +45,20 @@ public abstract class DungeonTilemap extends Tilemap {
 	//we need to retain two arrays, map is the dungeon tilemap which we can reference.
 	// Data is our own internal image representation of the tiles, which may differ.
 	public void map(int[] data, int cols) {
+		super.map(new int[data.length], cols);
+	}
+
+	public void map(Terrain[] data, int cols) {
 		map = data;
 		super.map(new int[data.length], cols);
 	}
+
 
 	@Override
 	public synchronized void updateMap() {
 		super.updateMap();
 		for (int i = 0; i < data.length; i++)
-			data[i] = getTileVisual(i ,map[i], false);
+			data[i] = getTileVisual(i, map[i], false);
 	}
 
 	@Override
@@ -71,7 +77,7 @@ public abstract class DungeonTilemap extends Tilemap {
 		}
 	}
 
-	protected abstract int getTileVisual(int pos, int tile, boolean flat);
+	protected abstract int getTileVisual(int pos, Terrain tile, boolean flat);
 
 	public int screenToTile(int x, int y ){
 		return screenToTile(x, y, false);
@@ -111,7 +117,7 @@ public abstract class DungeonTilemap extends Tilemap {
 		return true;
 	}
 	
-	public void discover( int pos, int oldValue ) {
+	public void discover( int pos, Terrain oldValue ) {
 		
 		int visual = getTileVisual( pos, oldValue, false);
 		if (visual < 0) return;

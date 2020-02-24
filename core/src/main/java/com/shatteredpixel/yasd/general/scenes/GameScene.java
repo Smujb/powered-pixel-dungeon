@@ -52,6 +52,7 @@ import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.journal.Journal;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
@@ -878,7 +879,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	//todo this doesn't account for walls right now
-	public static void discoverTile( int pos, int oldValue ) {
+	public static void discoverTile( int pos, Terrain oldValue ) {
 		if (scene != null) {
 			scene.tiles.discover( pos, oldValue );
 		}

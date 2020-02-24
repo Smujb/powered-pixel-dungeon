@@ -744,7 +744,7 @@ public class Hero extends Char {
 		if (Dungeon.level.adjacent( pos, doorCell )) {
 			
 			boolean hasKey = false;
-			int door = Dungeon.level.map[doorCell];
+			Terrain door = Dungeon.level.map[doorCell];
 			
 			if (door == Terrain.LOCKED_DOOR
 					&& Notes.keyCount(new IronKey(Dungeon.depth)) > 0) {
@@ -1032,7 +1032,7 @@ public class Hero extends Char {
 			path = null;
 
 			if (Actor.findChar( target ) == null) {
-				if (Dungeon.level.pit[target] && !flying && !Dungeon.level.solid[target]) {
+				if (Dungeon.level.pit()[target] && !flying && !Dungeon.level.solid()[target]) {
 					if (!Chasm.jumpConfirmed){
 						Chasm.heroJump(this);
 						interrupt();
@@ -1041,7 +1041,7 @@ public class Hero extends Char {
 					}
 					return false;
 				}
-				if (Dungeon.level.passable[target] || Dungeon.level.avoid[target]) {
+				if (Dungeon.level.passable()[target] || Dungeon.level.avoid()[target]) {
 					step = target;
 				}
 				if (walkingToVisibleTrapInFog
@@ -1064,7 +1064,7 @@ public class Hero extends Char {
 				int lookAhead = (int) GameMath.gate(0, path.size()-1, 2);
 				for (int i = 0; i < lookAhead; i++){
 					int cell = path.get(i);
-					if (!Dungeon.level.passable[cell] || (fieldOfView[cell] && Actor.findChar(cell) != null)) {
+					if (!Dungeon.level.passable()[cell] || (fieldOfView[cell] && Actor.findChar(cell) != null)) {
 						newPath = true;
 						break;
 					}
@@ -1074,7 +1074,7 @@ public class Hero extends Char {
 			if (newPath) {
 
 				int len = Dungeon.level.length();
-				boolean[] p = Dungeon.level.passable;
+				boolean[] p = Dungeon.level.passable();
 				boolean[] v = Dungeon.level.visited;
 				boolean[] m = Dungeon.level.mapped;
 				boolean[] passable = new boolean[len];
@@ -1352,18 +1352,18 @@ public class Hero extends Char {
 	public static void reallyDie( Object cause ) {
 		
 		int length = Dungeon.level.length();
-		int[] map = Dungeon.level.map;
+		Terrain[] map = Dungeon.level.map;
 		boolean[] visited = Dungeon.level.visited;
 		boolean[] discoverable = Dungeon.level.discoverable;
 		
 		for (int i=0; i < length; i++) {
 			
-			int terr = map[i];
+			Terrain terr = map[i];
 			
 			if (discoverable[i]) {
 				
 				visited[i] = true;
-				if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+				if (terr.secret) {
 					Dungeon.level.discover( i );
 				}
 			}
@@ -1381,7 +1381,7 @@ public class Hero extends Char {
 		ArrayList<Integer> passable = new ArrayList<>();
 		for (Integer ofs : PathFinder.NEIGHBOURS8) {
 			int cell = pos + ofs;
-			if ((Dungeon.level.passable[cell] || Dungeon.level.avoid[cell]) && Dungeon.level.heaps.get( cell ) == null) {
+			if ((Dungeon.level.passable()[cell] || Dungeon.level.avoid()[cell]) && Dungeon.level.heaps.get( cell ) == null) {
 				passable.add( cell );
 			}
 		}
@@ -1429,7 +1429,7 @@ public class Hero extends Char {
 		super.move( step );
 		
 		if (!flying) {
-			if (Dungeon.level.water[pos]) {
+			if (Dungeon.level.liquid()[pos]) {
 				Sample.INSTANCE.play( Assets.SND_WATER, 1, 1, Random.Float( 0.8f, 1.25f ) );
 			} else {
 				Sample.INSTANCE.play( Assets.SND_STEP );
@@ -1467,7 +1467,7 @@ public class Hero extends Char {
 		if (curAction instanceof HeroAction.Unlock) {
 
 			int doorCell = ((HeroAction.Unlock)curAction).dst;
-			int door = Dungeon.level.map[doorCell];
+			Terrain door = Dungeon.level.map[doorCell];
 			
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
 				boolean hasKey = true;
@@ -1557,7 +1557,7 @@ public class Hero extends Char {
 						sprite.parent.addToBack( new CheckedCell( p ) );
 					}
 					
-					if (Dungeon.level.secret[p]){
+					if (Dungeon.level.secret()[p]){
 						
 						Trap trap = Dungeon.level.traps.get( p );
 						if (trap != null && !trap.canBeSearched){
@@ -1588,7 +1588,7 @@ public class Hero extends Char {
 						
 						if (Random.Float() < chance) {
 						
-							int oldValue = Dungeon.level.map[p];
+							Terrain oldValue = Dungeon.level.map[p];
 							
 							GameScene.discoverTile( p, oldValue );
 							

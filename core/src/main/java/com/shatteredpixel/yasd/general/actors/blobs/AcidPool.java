@@ -19,7 +19,7 @@ public class AcidPool extends Blob {
     }
 
     private int damageOnStep = 0;
-    private int terrain;
+    private Terrain terrain;
 
     @Override
     public String tileDesc() {
@@ -44,7 +44,7 @@ public class AcidPool extends Blob {
     @Override
     public void restoreFromBundle(Bundle bundle) {
         damageOnStep = bundle.getInt(DAMAGE);
-        terrain = bundle.getInt(TERRAIN);
+        terrain = bundle.getEnum(TERRAIN, Terrain.class);
         super.restoreFromBundle(bundle);
     }
 

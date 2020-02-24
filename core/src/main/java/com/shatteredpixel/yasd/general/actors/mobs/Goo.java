@@ -72,7 +72,7 @@ public class Goo extends Mob {
 		int max = (HP*2 <= HT) ? 12 : 8;
 		if (pumpedUp > 0) {
 			pumpedUp = 0;
-			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
+			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
 			for (int i = 0; i < PathFinder.distance.length; i++) {
 				if (PathFinder.distance[i] < Integer.MAX_VALUE)
 					CellEmitter.get(i).burst(ElmoParticle.FACTORY, 10);
@@ -105,7 +105,7 @@ public class Goo extends Mob {
 	@Override
 	public boolean act() {
 
-		if (Dungeon.level.water[pos] && HP < HT) {
+		if (Dungeon.level.liquid()[pos] && HP < HT) {
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 			if (HP*2 == HT) {
 				BossHealthBar.bleed(false);
@@ -175,7 +175,7 @@ public class Goo extends Mob {
 	protected boolean doAttack( Char enemy ) {
 		if (pumpedUp == 1) {
 			((GooSprite)sprite).pumpUp();
-			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid, null ), 2 );
+			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
 			for (int i = 0; i < PathFinder.distance.length; i++) {
 				if (PathFinder.distance[i] < Integer.MAX_VALUE)
 					GameScene.add(Blob.seed(i, 2, GooWarn.class));
@@ -211,7 +211,7 @@ public class Goo extends Mob {
 
 			for (int i=0; i < PathFinder.NEIGHBOURS9.length; i++) {
 				int j = pos + PathFinder.NEIGHBOURS9[i];
-				if (!Dungeon.level.solid[j]) {
+				if (!Dungeon.level.solid()[j]) {
 					GameScene.add(Blob.seed(j, 2, GooWarn.class));
 				}
 			}
@@ -270,7 +270,7 @@ public class Goo extends Mob {
 			int ofs;
 			do {
 				ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
-			} while (!Dungeon.level.passable[pos + ofs]);
+			} while (!Dungeon.level.passable()[pos + ofs]);
 			Dungeon.level.drop( new  GooBlob(), pos + ofs ).sprite.drop( pos );
 		}
 		

@@ -26,7 +26,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -73,7 +72,7 @@ public class Blooming extends Weapon.Enchantment {
 	}
 	
 	private boolean plantGrass(int cell){
-		int c = Dungeon.level.map[cell];
+		Terrain c = Dungeon.level.map[cell];
 		if ( c == Terrain.EMPTY || c == Terrain.EMPTY_DECO
 				|| c == Terrain.EMBERS || c == Terrain.GRASS){
 			Dungeon.level.set(cell, Terrain.HIGH_GRASS);

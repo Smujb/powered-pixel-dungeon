@@ -46,7 +46,7 @@ public class ScrollOfMagicMapping extends Scroll {
 	public void doRead() {
 		
 		int length = Dungeon.level.length();
-		int[] map = Dungeon.level.map;
+		Terrain[] map = Dungeon.level.map;
 		boolean[] mapped = Dungeon.level.mapped;
 		boolean[] discoverable = Dungeon.level.discoverable;
 		
@@ -54,12 +54,12 @@ public class ScrollOfMagicMapping extends Scroll {
 		
 		for (int i=0; i < length; i++) {
 			
-			int terr = map[i];
+			Terrain terr = map[i];
 			
 			if (discoverable[i]) {
 				
 				mapped[i] = true;
-				if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
+				if (terr.secret) {
 					
 					Dungeon.level.discover( i );
 					

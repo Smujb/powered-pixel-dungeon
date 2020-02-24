@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -145,7 +144,7 @@ public class Burning extends Buff implements Hero.Doom {
 			detach();
 		}
 		
-		if (Dungeon.level.flamable[target.pos] && Blob.volumeAt(target.pos, Fire.class) == 0) {
+		if (Dungeon.level.flammable()[target.pos] && Blob.volumeAt(target.pos, Fire.class) == 0) {
 			GameScene.add( Blob.seed( target.pos, 4, Fire.class ) );
 		}
 		
@@ -153,7 +152,7 @@ public class Burning extends Buff implements Hero.Doom {
 		left -= TICK;
 		
 		if (left <= 0 ||
-			(Dungeon.level.water[target.pos] && !target.flying)) {
+			(Dungeon.level.liquid()[target.pos] && !target.flying)) {
 			
 			detach();
 		}

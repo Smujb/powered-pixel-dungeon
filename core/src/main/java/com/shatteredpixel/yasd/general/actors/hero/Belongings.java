@@ -404,7 +404,7 @@ public class Belongings implements Iterable<Item> {
 					}
 				}
 				if (!enemyNear) speed *= (1.2f + 0.04f * CurArmour.level());
-			} else if (CurArmour.hasGlyph(Flow.class, owner) && Dungeon.level.water[owner.pos]){
+			} else if (CurArmour.hasGlyph(Flow.class, owner) && Dungeon.level.liquid()[owner.pos]){
 				speed *= 2f;
 			}
 

@@ -341,7 +341,7 @@ public class Dungeon {
 			if (m.pos == hero.pos){
 				//displace mob
 				for(int i : PathFinder.NEIGHBOURS8){
-					if (Actor.findChar(m.pos+i) == null && level.passable[m.pos + i]){
+					if (Actor.findChar(m.pos+i) == null && level.passable()[m.pos + i]){
 						m.pos += i;
 						break;
 					}
@@ -780,7 +780,7 @@ public class Dungeon {
 
 		setupPassable();
 		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
-			BArray.or( pass, Dungeon.level.avoid, passable );
+			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
@@ -798,12 +798,12 @@ public class Dungeon {
 	public static int findStep(Char ch, int from, int to, boolean[] pass, boolean[] visible ) {
 
 		if (Dungeon.level.adjacent( from, to )) {
-			return Actor.findChar( to ) == null && (pass[to] || Dungeon.level.avoid[to]) ? to : -1;
+			return Actor.findChar( to ) == null && (pass[to] || Dungeon.level.avoid()[to]) ? to : -1;
 		}
 
 		setupPassable();
 		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
-			BArray.or( pass, Dungeon.level.avoid, passable );
+			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
@@ -822,7 +822,7 @@ public class Dungeon {
 
 		setupPassable();
 		if (ch.isFlying()) {
-			BArray.or( pass, Dungeon.level.avoid, passable );
+			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}

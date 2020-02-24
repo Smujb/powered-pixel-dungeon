@@ -41,6 +41,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class CityBossLevel extends Level {
 	
 	{
@@ -102,45 +104,45 @@ public class CityBossLevel extends Level {
 		
 		setSize(32, 32);
 		
-		Painter.fill( this, LEFT, TOP, HALL_WIDTH, HALL_HEIGHT, Terrain.EMPTY );
-		Painter.fill( this, CENTER, TOP, 1, HALL_HEIGHT, Terrain.EMPTY_SP );
+		Painter.fill( this, LEFT, TOP, HALL_WIDTH, HALL_HEIGHT, EMPTY );
+		Painter.fill( this, CENTER, TOP, 1, HALL_HEIGHT, EMPTY_SP );
 		
 		int y = TOP + 1;
 		while (y < TOP + HALL_HEIGHT) {
-			map[y * width() + CENTER - 2] = Terrain.STATUE_SP;
-			map[y * width() + CENTER + 2] = Terrain.STATUE_SP;
+			map[y * width() + CENTER - 2] = STATUE_SP;
+			map[y * width() + CENTER + 2] = STATUE_SP;
 			y += 2;
 		}
 		
 		int left = pedestal( true );
 		int right = pedestal( false );
-		map[left] = map[right] = Terrain.PEDESTAL;
+		map[left] = map[right] = PEDESTAL;
 		for (int i=left+1; i < right; i++) {
-			map[i] = Terrain.EMPTY_SP;
+			map[i] = EMPTY_SP;
 		}
 		
 		exit = (TOP - 1) * width() + CENTER;
-		map[exit] = Terrain.LOCKED_EXIT;
+		map[exit] = LOCKED_EXIT;
 		
 		arenaDoor = (TOP + HALL_HEIGHT) * width() + CENTER;
 		map[arenaDoor] = Terrain.DOOR;
 		
-		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, CHAMBER_HEIGHT, Terrain.EMPTY );
-		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, 1, Terrain.BOOKSHELF);
-		map[arenaDoor + width()] = Terrain.EMPTY;
-		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, Terrain.BOOKSHELF );
-		Painter.fill( this, LEFT + HALL_WIDTH - 1, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, Terrain.BOOKSHELF );
+		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, CHAMBER_HEIGHT, EMPTY );
+		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, 1, BOOKSHELF);
+		map[arenaDoor + width()] = EMPTY;
+		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
+		Painter.fill( this, LEFT + HALL_WIDTH - 1, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
 		
 		entrance = (TOP + HALL_HEIGHT + 3 + Random.Int( CHAMBER_HEIGHT - 2 )) * width() + LEFT + (/*1 +*/ Random.Int( HALL_WIDTH-2 ));
-		map[entrance] = Terrain.ENTRANCE;
+		map[entrance] = ENTRANCE;
 		
 		for (int i=0; i < length() - width(); i++) {
-			if (map[i] == Terrain.EMPTY && Random.Int( 10 ) == 0) {
-				map[i] = Terrain.EMPTY_DECO;
-			} else if (map[i] == Terrain.WALL
+			if (map[i] == EMPTY && Random.Int( 10 ) == 0) {
+				map[i] = EMPTY_DECO;
+			} else if (map[i] == WALL
 					&& DungeonTileSheet.floorTile(map[i + width()])
 					&& Random.Int( 21 - Dungeon.depth ) == 0) {
-				map[i] = Terrain.WALL_DECO;
+				map[i] = WALL_DECO;
 			}
 		}
 		
@@ -182,7 +184,7 @@ public class CityBossLevel extends Level {
 		int cell;
 		do {
 			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -211,7 +213,7 @@ public class CityBossLevel extends Level {
 			do {
 				boss.pos = Random.Int( length() );
 			} while (
-				!passable[boss.pos] ||
+				!passable()[boss.pos] ||
 				!outsideEntraceRoom( boss.pos ) ||
 				(heroFOV[boss.pos] && count++ < 20));
 			GameScene.add( boss );
@@ -222,7 +224,7 @@ public class CityBossLevel extends Level {
 				boss.sprite.parent.add( new AlphaTweener( boss.sprite, 1, 0.1f ) );
 			}
 
-			set( arenaDoor, Terrain.LOCKED_DOOR );
+			set( arenaDoor, LOCKED_DOOR );
 			GameScene.updateMap( arenaDoor );
 			Dungeon.observe();
 		}
@@ -249,11 +251,11 @@ public class CityBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(CityLevel.class, "water_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CityLevel.class, "high_grass_name");
 			default:
 				return super.tileName( tile );
@@ -261,21 +263,21 @@ public class CityBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(CityLevel.class, "exit_desc");
-			case Terrain.WALL_DECO:
-			case Terrain.EMPTY_DECO:
+			case WALL_DECO:
+			case EMPTY_DECO:
 				return Messages.get(CityLevel.class, "deco_desc");
-			case Terrain.EMPTY_SP:
+			case EMPTY_SP:
 				return Messages.get(CityLevel.class, "sp_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(CityLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(CityLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );

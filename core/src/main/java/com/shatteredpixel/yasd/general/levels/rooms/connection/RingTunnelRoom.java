@@ -44,7 +44,7 @@ public class RingTunnelRoom extends TunnelRoom {
 	public void paint(Level level) {
 		super.paint(level);
 
-		int floor = level.tunnelTile();
+		Terrain floor = level.tunnelTile();
 
 		Rect ring = getConnectionSpace();
 

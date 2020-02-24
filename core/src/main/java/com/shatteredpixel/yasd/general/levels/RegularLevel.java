@@ -194,7 +194,7 @@ public abstract class RegularLevel extends Level {
 			
 			do {
 				mob.pos = pointToCell(roomToSpawn.random());
-			} while (findMob(mob.pos) != null || !passable[mob.pos] || mob.pos == exit);
+			} while (findMob(mob.pos) != null || !passable()[mob.pos] || mob.pos == exit);
 
 			mobsToSpawn--;
 			mobs.add(mob);
@@ -204,7 +204,7 @@ public abstract class RegularLevel extends Level {
 				
 				do {
 					mob.pos = pointToCell(roomToSpawn.random());
-				} while (findMob(mob.pos) != null || !passable[mob.pos] || mob.pos == exit);
+				} while (findMob(mob.pos) != null || !passable()[mob.pos] || mob.pos == exit);
 
 				mobsToSpawn--;
 				mobs.add(mob);
@@ -214,7 +214,7 @@ public abstract class RegularLevel extends Level {
 		for (Mob m : mobs){
 			if (map[m.pos] == Terrain.HIGH_GRASS || map[m.pos] == Terrain.FURROWED_GRASS) {
 				map[m.pos] = Terrain.GRASS;
-				losBlocking[m.pos] = false;
+				losBlocking()[m.pos] = false;
 			}
 
 		}
@@ -240,7 +240,7 @@ public abstract class RegularLevel extends Level {
 			cell = pointToCell(room.random(1));
 			if (!heroFOV[cell]
 					&& Actor.findChar( cell ) == null
-					&& passable[cell]
+					&& passable()[cell]
 					&& room.canPlaceCharacter(cellToPoint(cell), this)
 					&& cell != exit) {
 				return cell;
@@ -267,7 +267,7 @@ public abstract class RegularLevel extends Level {
 			}
 			
 			cell = pointToCell(room.random());
-			if (passable[cell]) {
+			if (passable()[cell]) {
 				return cell;
 			}
 			
@@ -301,7 +301,6 @@ public abstract class RegularLevel extends Level {
 			int cell = randomDropCell();
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
 				map[cell] = Terrain.GRASS;
-				losBlocking[cell] = false;
 			}
 			
 			Item toDrop = Generator.random();
@@ -330,7 +329,6 @@ public abstract class RegularLevel extends Level {
 			drop( item, cell ).type = Heap.Type.HEAP;
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
 				map[cell] = Terrain.GRASS;
-				losBlocking[cell] = false;
 			}
 		}
 		
@@ -339,7 +337,6 @@ public abstract class RegularLevel extends Level {
 			int cell = randomDropCell();
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
 				map[cell] = Terrain.GRASS;
-				losBlocking[cell] = false;
 			}
 			drop( item, cell ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
 		}
@@ -366,7 +363,6 @@ public abstract class RegularLevel extends Level {
 			int cell = randomDropCell();
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
 				map[cell] = Terrain.GRASS;
-				losBlocking[cell] = false;
 			}
 			drop( p, cell );
 		}
@@ -412,7 +408,7 @@ public abstract class RegularLevel extends Level {
 			Room room = randomRoom( StandardRoom.class );
 			if (room != null && room != roomEntrance) {
 				int pos = pointToCell(room.random());
-				if (passable[pos]
+				if (passable()[pos]
 						&& pos != exit
 						&& heaps.get(pos) == null) {
 					

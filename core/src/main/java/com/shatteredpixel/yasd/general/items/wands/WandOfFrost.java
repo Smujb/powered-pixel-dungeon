@@ -82,7 +82,7 @@ public class WandOfFrost extends DamageWand {
 			hit(ch);
 
 			if (ch.isAlive()){
-				if (Dungeon.level.water[ch.pos])
+				if (Dungeon.level.liquid()[ch.pos])
 					Buff.prolong(ch, Chill.class, 4+level());
 				else
 					Buff.prolong(ch, Chill.class, 2+level());

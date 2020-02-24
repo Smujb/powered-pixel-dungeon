@@ -103,7 +103,7 @@ public class CeremonialCandle extends Item {
 					ArrayList<Integer> candidates = new ArrayList<>();
 					for (int n : PathFinder.NEIGHBOURS8) {
 						int cell = ritualPos + n;
-						if ((Dungeon.level.passable[cell] || Dungeon.level.avoid[cell]) && Actor.findChar( cell ) == null) {
+						if ((Dungeon.level.passable()[cell] || Dungeon.level.avoid()[cell]) && Actor.findChar( cell ) == null) {
 							candidates.add( cell );
 						}
 					}

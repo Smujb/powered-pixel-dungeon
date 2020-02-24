@@ -40,6 +40,8 @@ import com.watabou.noosa.Group;
 
 import java.util.ArrayList;
 
+import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+
 public class LastShopLevel extends RegularLevel {
 	
 	{
@@ -68,8 +70,8 @@ public class LastShopLevel extends RegularLevel {
 		if (super.build()){
 			
 			for (int i=0; i < length(); i++) {
-				if (map[i] == Terrain.SECRET_DOOR) {
-					map[i] = Terrain.DOOR;
+				if (map[i] == SECRET_DOOR) {
+					map[i] = DOOR;
 				}
 			}
 			
@@ -135,16 +137,16 @@ public class LastShopLevel extends RegularLevel {
 		int cell;
 		do {
 			cell = pointToCell( roomEntrance.random() );
-		} while (!passable[cell] || Actor.findChar(cell) != null);
+		} while (!passable()[cell] || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
 	@Override
-	public String tileName( int tile ) {
+	public String tileName( Terrain tile ) {
 		switch (tile) {
-			case Terrain.WATER:
+			case WATER:
 				return Messages.get(CityLevel.class, "water_name");
-			case Terrain.HIGH_GRASS:
+			case HIGH_GRASS:
 				return Messages.get(CityLevel.class, "high_grass_name");
 			default:
 				return super.tileName( tile );
@@ -152,21 +154,21 @@ public class LastShopLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(int tile) {
+	public String tileDesc(Terrain tile) {
 		switch (tile) {
-			case Terrain.ENTRANCE:
+			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");
-			case Terrain.EXIT:
+			case EXIT:
 				return Messages.get(CityLevel.class, "exit_desc");
-			case Terrain.WALL_DECO:
-			case Terrain.EMPTY_DECO:
+			case WALL_DECO:
+			case EMPTY_DECO:
 				return Messages.get(CityLevel.class, "deco_desc");
-			case Terrain.EMPTY_SP:
+			case EMPTY_SP:
 				return Messages.get(CityLevel.class, "sp_desc");
-			case Terrain.STATUE:
-			case Terrain.STATUE_SP:
+			case STATUE:
+			case STATUE_SP:
 				return Messages.get(CityLevel.class, "statue_desc");
-			case Terrain.BOOKSHELF:
+			case BOOKSHELF:
 				return Messages.get(CityLevel.class, "bookshelf_desc");
 			default:
 				return super.tileDesc( tile );

@@ -245,7 +245,7 @@ public class NewTengu extends Mob {
 				do {
 					newPos = Random.Int(level.length());
 				} while (
-						level.solid[newPos] ||
+						level.solid()[newPos] ||
 								level.distance(newPos, enemy.pos) < 5 ||
 								level.distance(newPos, enemy.pos) > 7 ||
 								level.distance(newPos, pos) < 6 ||
@@ -535,7 +535,7 @@ public class NewTengu extends Mob {
 			PointF p = DungeonTilemap.raisedTileCenterToWorld(bombPos);
 			if (timer == 3) {
 				FloatingText.show(p.x, p.y, bombPos, "3...", CharSprite.NEUTRAL);
-				PathFinder.buildDistanceMap( bombPos, BArray.not( Dungeon.level.solid, null ), 2 );
+				PathFinder.buildDistanceMap( bombPos, BArray.not( Dungeon.level.solid(), null ), 2 );
 				for (int i = 0; i < PathFinder.distance.length; i++) {
 					if (PathFinder.distance[i] < Integer.MAX_VALUE) {
 						GameScene.add(Blob.seed(i, 4, BombBlob.class));
@@ -742,13 +742,13 @@ public class NewTengu extends Mob {
 		}
 		
 		private void spreadFromCell( int cell ){
-			if (!Dungeon.level.solid[cell + PathFinder.CIRCLE8[left(direction)]]){
+			if (!Dungeon.level.solid()[cell + PathFinder.CIRCLE8[left(direction)]]){
 				toCells.add(cell + PathFinder.CIRCLE8[left(direction)]);
 			}
-			if (!Dungeon.level.solid[cell + PathFinder.CIRCLE8[direction]]){
+			if (!Dungeon.level.solid()[cell + PathFinder.CIRCLE8[direction]]){
 				toCells.add(cell + PathFinder.CIRCLE8[direction]);
 			}
-			if (!Dungeon.level.solid[cell + PathFinder.CIRCLE8[right(direction)]]){
+			if (!Dungeon.level.solid()[cell + PathFinder.CIRCLE8[right(direction)]]){
 				toCells.add(cell + PathFinder.CIRCLE8[right(direction)]);
 			}
 		}
@@ -809,7 +809,7 @@ public class NewTengu extends Mob {
 								Buff.affect( ch, Burning.class ).reignite( ch );
 							}
 							
-							if (Dungeon.level.flamable[cell]){
+							if (Dungeon.level.flammable()[cell]){
 								Dungeon.level.destroy( cell );
 								
 								observe = true;
@@ -936,7 +936,7 @@ public class NewTengu extends Mob {
 		private void spreadblob(){
 			GameScene.add(Blob.seed(shockerPos, 1, ShockerBlob.class));
 			for (int i = shockingOrdinals ? 0 : 1; i < PathFinder.CIRCLE8.length; i += 2){
-				if (!Dungeon.level.solid[shockerPos+PathFinder.CIRCLE8[i]]) {
+				if (!Dungeon.level.solid()[shockerPos+PathFinder.CIRCLE8[i]]) {
 					GameScene.add(Blob.seed(shockerPos + PathFinder.CIRCLE8[i], 2, ShockerBlob.class));
 				}
 			}

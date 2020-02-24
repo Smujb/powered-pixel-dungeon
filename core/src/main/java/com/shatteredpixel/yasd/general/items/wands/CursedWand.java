@@ -208,13 +208,14 @@ public class CursedWand {
 						if (Actor.findChar(pos) != null && bolt.dist > 1) {
 							pos = bolt.path.get(bolt.dist - 1);
 						}
+						Terrain terrain = Dungeon.level.map[pos];
 
-						if (pos == Terrain.EMPTY ||
-								pos == Terrain.EMBERS ||
-								pos == Terrain.EMPTY_DECO ||
-								pos == Terrain.GRASS ||
-								pos == Terrain.HIGH_GRASS ||
-								pos == Terrain.FURROWED_GRASS) {
+						if (terrain == Terrain.EMPTY ||
+								terrain == Terrain.EMBERS ||
+								terrain == Terrain.EMPTY_DECO ||
+								terrain == Terrain.GRASS ||
+								terrain == Terrain.HIGH_GRASS ||
+								terrain == Terrain.FURROWED_GRASS) {
 							Dungeon.level.plant((Plant.Seed) Generator.random(Generator.Category.SEED), pos);
 						}
 						afterZap.call();

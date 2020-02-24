@@ -170,13 +170,13 @@ public class WandOfThornvines extends Wand {
         }
 
         public ThornVine spawnAt(int pos, float level, int charges, Char owner ) {
-            if (Dungeon.level.passable[pos]) {
+            if (Dungeon.level.passable()[pos]) {
                 ThornVine TV = new ThornVine(level, charges, owner);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
                 } else {
                     int closest = -1;
-                    boolean[] passable = Dungeon.level.passable;
+                    boolean[] passable = Dungeon.level.passable();
                     for (int n : PathFinder.NEIGHBOURS9) {
                         int c = pos + n;
                         if (passable[c] && Actor.findChar( c ) == null

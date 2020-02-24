@@ -43,10 +43,10 @@ public class WndInfoCell extends Window {
 		
 		super();
 		
-		int tile = Dungeon.level.map[cell];
-		if (Dungeon.level.water[cell]) {
+		Terrain tile = Dungeon.level.map[cell];
+		if (Dungeon.level.liquid()[cell]) {
 			tile = Terrain.WATER;
-		} else if (Dungeon.level.pit[cell]) {
+		} else if (Dungeon.level.pit()[cell]) {
 			tile = Terrain.CHASM;
 		}
 
