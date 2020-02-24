@@ -434,7 +434,7 @@ public class GameScene extends PixelScene {
 		if (InterlevelScene.mode() != InterlevelScene.Mode.NONE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (InterlevelScene.mode() == InterlevelScene.Mode.DESCEND || InterlevelScene.mode() == InterlevelScene.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.path+1, Dungeon.depth);
+				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -446,7 +446,7 @@ public class GameScene extends PixelScene {
 			} else if (InterlevelScene.mode() == InterlevelScene.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.path+1, Dungeon.depth);
+				GLog.h(Messages.get(this, "return"), Dungeon.depth);
 			}
 
 			switch (Dungeon.level.feeling) {
@@ -464,6 +464,16 @@ public class GameScene extends PixelScene {
 					break;
 				case EVIL:
 					GLog.w(Messages.get(this, "evil"));
+					break;
+				case DANGER:
+					GLog.w(Messages.get(this, "danger"));
+					break;
+				case EMBER:
+					GLog.w(Messages.get(this, "ember"));
+					break;
+				case OPEN:
+					GLog.w(Messages.get(this, "open"));
+					break;
 				default:
 			}
 			if (Dungeon.level instanceof RegularLevel &&

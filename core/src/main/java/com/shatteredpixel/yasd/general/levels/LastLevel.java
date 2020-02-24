@@ -28,13 +28,19 @@ import com.shatteredpixel.yasd.general.items.Amulet;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.Arrays;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.Terrain.PEDESTAL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.STATUE_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
 
 public class LastLevel extends Level {
 
@@ -44,6 +50,17 @@ public class LastLevel extends Level {
 	}
 
 	private int pedestal;
+
+	@Override
+	public boolean[] passable() {
+		boolean[] passable = super.passable();
+		for (int i = 0; i < length(); i++) {
+			if (map[i].pit) {//Pits can't be jumped into on this level.
+				passable[i] = false;
+			}
+		}
+		return passable;
+	}
 
 	@Override
 	public String tilesTex() {
@@ -58,18 +75,6 @@ public class LastLevel extends Level {
 	@Override
 	public String loadImg() {
 		return Assets.LOADING_HALLS;
-	}
-
-	@Override
-	public void create() {
-		super.create();
-		/*for (int i=0; i < length(); i++) {
-			//int flags = Terrain.flags[map[i]];
-			if (map[i].pit){
-				passable[i] = avoid[i] = false;
-				solid[i] = true;
-			}
-		}*/
 	}
 
 	@Override
@@ -182,17 +187,5 @@ public class LastLevel extends Level {
 		super.addVisuals();
 		HallsLevel.addHallsVisuals(this, visuals);
 		return visuals;
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		/*for (int i=0; i < length(); i++) {
-			//int flags = Terrain.flags[map[i]];
-			if (map[i].pit){
-				passable[i] = avoid[i] = false;
-				solid[i] = true;
-			}
-		}*/
 	}
 }

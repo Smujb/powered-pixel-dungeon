@@ -59,7 +59,7 @@ public class HighGrass {
 				//Do nothing
 				freezeTrample = true;
 			} else {
-				if (level.feeling == Level.Feeling.DEAD) {
+				if (level.feeling == Level.Feeling.EMBER) {
 					Dungeon.level.set(pos, Terrain.EMBERS);
 				} else {
 					Dungeon.level.set(pos, Terrain.GRASS);

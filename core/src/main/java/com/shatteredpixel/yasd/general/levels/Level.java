@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
-import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -32,7 +31,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.DarkGas;
 import com.shatteredpixel.yasd.general.actors.blobs.SmokeScreen;
-import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -64,21 +62,17 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
-import com.shatteredpixel.yasd.general.levels.features.HighGrass;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
-import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
 import com.shatteredpixel.yasd.general.utils.BArray;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -92,7 +86,21 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMBERS;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.FURROWED_GRASS;
+import static com.shatteredpixel.yasd.general.levels.Terrain.GRASS;
+import static com.shatteredpixel.yasd.general.levels.Terrain.HIGH_GRASS;
+import static com.shatteredpixel.yasd.general.levels.Terrain.INACTIVE_TRAP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.SECRET_TRAP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.TRAP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
 
 public abstract class Level implements Bundlable {
 	
@@ -104,16 +112,9 @@ public abstract class Level implements Bundlable {
 		DARK,
 		EVIL,
 		OPEN,
-		DEAD
+		EMBER,
+		DANGER
 	}
-
-	public enum State {
-		REGULAR,
-		PAST,
-		FUTURE
-	}
-
-	private State state;
 
 	protected int width;
 	protected int height;
@@ -122,7 +123,7 @@ public abstract class Level implements Bundlable {
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
 	
-	protected static final float TIME_TO_RESPAWN	= 50;
+	private static final float TIME_TO_RESPAWN = 50;
 
 	public int version;
 	
@@ -134,15 +135,6 @@ public abstract class Level implements Bundlable {
 	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 6;
 	
 	public boolean[] heroFOV;
-	
-	//public boolean[] passable;
-	//public boolean[] losBlocking;
-	//public boolean[] flammable;
-	//public boolean[] secret;
-	//public boolean[] solid;
-	//public boolean[] avoid;
-	//public boolean[] water;
-	//public boolean[] pit;
 
 	public boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
@@ -156,7 +148,7 @@ public abstract class Level implements Bundlable {
 		boolean[] losBlocking = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
 			losBlocking[i] = map[i].losBlocking;
-			if (Blob.volumeAt(i, DarkGas.class) > 0 || Blob.volumeAt(i, SmokeScreen.class) > 0) {
+			if (Blob.volumeAt(this, i, DarkGas.class) > 0 || Blob.volumeAt(this, i, SmokeScreen.class) > 0) {
 				losBlocking[i] = true;
 			}
 		}
@@ -338,7 +330,10 @@ public abstract class Level implements Bundlable {
 						feeling = Feeling.OPEN;
 						break;
 					case 6:
-						feeling = Feeling.DEAD;
+						feeling = Feeling.EMBER;
+						break;
+					case 7:
+						feeling = Feeling.DANGER;
 						break;
 				}
 			}
@@ -419,12 +414,6 @@ public abstract class Level implements Bundlable {
 		}
 
 		setSize( bundle.getInt(WIDTH), bundle.getInt(HEIGHT));
-
-		if (version < MainGame.v0_2_3) {
-			state = State.REGULAR;
-		} else {
-			state = bundle.getEnum(STATE, State.class);
-		}
 		
 		mobs = new HashSet<>();
 		heaps = new SparseArray<>();
@@ -523,7 +512,6 @@ public abstract class Level implements Bundlable {
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
 		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
-		bundle.put( STATE, state );
 	}
 
 	public Terrain tunnelTile() {
@@ -531,7 +519,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public Terrain grassTile( boolean tall ) {
-		if (feeling == Level.Feeling.DEAD) {
+		if (feeling == Level.Feeling.EMBER) {
 			return tall ? FURROWED_GRASS : EMBERS;
 		} else {
 			return tall ? HIGH_GRASS : GRASS;
@@ -539,7 +527,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public Terrain waterTile() {
-		if (feeling == Feeling.DEAD) {
+		if (feeling == Feeling.EMBER) {
 			return grassTile(false);
 		} else {
 			return WATER;
@@ -940,7 +928,7 @@ public abstract class Level implements Bundlable {
 	}
 	
 	public void occupyCell( Char ch ){
-		if (!ch.flying){
+		if (!ch.isFlying()){
 			
 			if (pit()[ch.pos]){
 				if (ch == Dungeon.hero) {
@@ -969,33 +957,34 @@ public abstract class Level implements Bundlable {
 	//a 'hard' press triggers all things
 	private void pressCell( int cell, boolean hard ) {
 
-		Trap trap = null;
+		map[cell].press(cell, hard);//See Terrain.press()
+		/*Trap trap = null;
 		
 		switch (map[cell]) {
-		
-		case SECRET_TRAP:
-			if (hard) {
-				trap = traps.get( cell );
-				GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
-			}
-			break;
-			
-		case TRAP:
-			trap = traps.get( cell );
-			break;
-			
-		case HIGH_GRASS:
-		case FURROWED_GRASS:
-			HighGrass.trample( this, cell);
-			break;
-			
-		case WELL:
-			WellWater.affectCell( cell );
-			break;
-			
-		case DOOR:
-			Door.enter( cell );
-			break;
+
+			case SECRET_TRAP:
+				if (hard) {
+					trap = traps.get(cell);
+					GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
+				}
+				break;
+
+			case TRAP:
+				trap = traps.get(cell);
+				break;
+
+			case HIGH_GRASS:
+			case FURROWED_GRASS:
+				HighGrass.trample(this, cell);
+				break;
+
+			case WELL:
+				WellWater.affectCell(cell);
+				break;
+
+			case DOOR:
+				Door.enter(cell);
+				break;
 		}
 
 		if (trap != null) {
@@ -1031,7 +1020,7 @@ public abstract class Level implements Bundlable {
 				trap.trigger();
 
 			}
-		}
+		}*/
 		
 		Plant plant = plants.get( cell );
 		if (plant != null) {

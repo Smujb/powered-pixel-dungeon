@@ -350,9 +350,15 @@ public abstract class RegularPainter extends Painter {
 				}
 			}
 		}
+
+		if (l.feeling == Level.Feeling.DANGER) {//4x traps up to 1 every 2 valid tiles on dangerous floors.
+			nTraps *= Math.min(nTraps*4, validCells.size()/2);
+		} else {//no more than one trap every 5 valid tiles normally.
+			nTraps = Math.min(nTraps, validCells.size()/5);
+		}
 		
-		//no more than one trap every 5 valid tiles.
-		nTraps = Math.min(nTraps, validCells.size()/5);
+
+
 		
 		for (int i = 0; i < nTraps; i++) {
 			

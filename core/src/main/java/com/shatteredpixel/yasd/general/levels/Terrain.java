@@ -21,13 +21,23 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
+import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
+import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.features.HighGrass;
+import com.shatteredpixel.yasd.general.levels.traps.Trap;
+import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.plants.Swiftthistle;
+import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.noosa.audio.Sample;
+
 public enum Terrain {
 
 	NONE {
 		@Override
-		public void setup() {
-
-		}
+		public void setup() {}
 	},
 	CHASM {
 		@Override
@@ -76,6 +86,11 @@ public enum Terrain {
 			losBlocking = true;
 			flamable = true;
 			solid = true;
+		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			Door.enter(cell);
 		}
 	},
 	OPEN_DOOR {
@@ -150,6 +165,11 @@ public enum Terrain {
 			losBlocking = true;
 			flamable = true;
 		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			HighGrass.trample(Dungeon.level, cell);
+		}
 	},
 	FURROWED_GRASS {
 		@Override
@@ -157,6 +177,11 @@ public enum Terrain {
 			passable = true;
 			losBlocking = true;
 			flamable = true;
+		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			HIGH_GRASS.press(cell, hard);
 		}
 	},
 	SECRET_DOOR {
@@ -177,6 +202,12 @@ public enum Terrain {
 		public void setup() {
 			avoid = true;
 		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			Trap trap = Dungeon.level.traps.get(cell);
+			triggerTrap(cell, trap);
+		}
 	},
 	SECRET_TRAP {
 		@Override
@@ -188,6 +219,15 @@ public enum Terrain {
 		@Override
 		public Terrain discover() {
 			return TRAP;
+		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			if (hard) {
+				Trap trap = Dungeon.level.traps.get(cell);
+				GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
+				triggerTrap(cell, trap);
+			}
 		}
 	},
 	INACTIVE_TRAP {
@@ -226,6 +266,11 @@ public enum Terrain {
 		public void setup() {
 			avoid = true;
 		}
+
+		@Override
+		public void press(int cell, boolean hard) {
+			WellWater.affectCell(cell);
+		}
 	},
 	STATUE {
 		@Override
@@ -254,14 +299,14 @@ public enum Terrain {
 		}
 	};
 
-	public boolean passable = false;
-	public boolean losBlocking = false;
-	public boolean flamable = false;
-	public boolean secret = false;
-	public boolean solid = false;
-	public boolean avoid = false;
-	public boolean liquid = false;
-	public boolean pit = false;
+	public boolean passable 	= false;
+	public boolean losBlocking  = false;
+	public boolean flamable 	= false;
+	public boolean secret 		= false;
+	public boolean solid 		= false;
+	public boolean avoid 		= false;
+	public boolean liquid 		= false;
+	public boolean pit 			= false;
 
 	Terrain() {
 		setup();
@@ -269,172 +314,52 @@ public enum Terrain {
 
 	public abstract void setup();
 
-
-
 	public Terrain discover() {
 		return this;
 	}
+
+	protected void triggerTrap(int cell, Trap trap) {
+		if (trap != null) {
+
+			TimekeepersHourglass.timeFreeze timeFreeze =
+					Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
+
+			Swiftthistle.TimeBubble bubble =
+					Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+
+			if (bubble != null){
+
+				Sample.INSTANCE.play(Assets.SND_TRAP);
+
+				Dungeon.level.discover(cell);
+
+				bubble.setDelayedPress(cell);
+
+			} else if (timeFreeze != null){
+
+				Sample.INSTANCE.play(Assets.SND_TRAP);
+
+				Dungeon.level.discover(cell);
+
+				timeFreeze.setDelayedPress(cell);
+
+			} else {
+
+				if (Dungeon.hero.pos == cell) {
+					Dungeon.hero.interrupt();
+				}
+
+				trap.trigger();
+
+			}
+		}
+	}
+
+	public void press(int cell) {
+		press(cell, false);
+	}
+
+	public void press(int cell, boolean hard) {
+
+	}
 }
-
-
-	/*public static final int CHASM			= 0;
-	public static final int EMPTY			= 1;
-	public static final int GRASS			= 2;
-	public static final int EMPTY_WELL		= 3;
-	public static final int WALL			= 4;
-	public static final int DOOR			= 5;
-	public static final int OPEN_DOOR		= 6;
-	public static final int ENTRANCE		= 7;
-	public static final int EXIT			= 8;
-	public static final int EMBERS			= 9;
-	public static final int LOCKED_DOOR		= 10;
-	public static final int PEDESTAL		= 11;
-	public static final int WALL_DECO		= 12;
-	public static final int BARRICADE		= 13;
-	public static final int EMPTY_SP		= 14;
-	public static final int HIGH_GRASS		= 15;
-	public static final int FURROWED_GRASS	= 30;
-	public static final int DRY 			= 31;
-	public static final int WALL_ANCIENT	= 32;
-	public static final int WALL_MODERN	    = 33;
-
-	public static final int WALL_ANCIENT_PLACEHOLDER= 34;//Placeholders if they aren't visible
-	public static final int WALL_MODERN_PLACEHOLDER = 35;
-
-	public static final int SECRET_DOOR	    = 16;
-	public static final int SECRET_TRAP     = 17;
-	public static final int TRAP            = 18;
-	public static final int INACTIVE_TRAP   = 19;
-
-	public static final int EMPTY_DECO		= 20;
-	public static final int LOCKED_EXIT		= 21;
-	public static final int UNLOCKED_EXIT	= 22;
-	public static final int SIGN			= 23;
-	public static final int WELL			= 24;
-	public static final int STATUE			= 25;
-	public static final int STATUE_SP		= 26;
-	public static final int BOOKSHELF		= 27;
-	public static final int ALCHEMY			= 28;
-
-	public static final int WATER		    = 29;
-	
-	public static final int passable		= 0x01;
-	public static final int losBlocking	= 0x02;
-	public static final int flamable		= 0x04;
-	public static final int secret			= 0x08;
-	public static final int solid			= 0x10;
-	public static final int avoid			= 0x20;
-	public static final int liquid			= 0x40;
-	public static final int pit				= 0x80;
-	
-	public static final int[] flags = new int[256];
-	static {
-		flags[CHASM]		= avoid	| pit;
-		flags[EMPTY]		= passable;
-		flags[GRASS]		= passable | flamable;
-		flags[EMPTY_WELL]	= passable;
-		flags[WATER]		= passable | liquid;
-		flags[WALL]			= losBlocking | solid;
-		flags[DOOR]			= passable | losBlocking | flamable | solid;
-		flags[OPEN_DOOR]	= passable | flamable;
-		flags[ENTRANCE]		= passable | solid;
-		flags[EXIT]			= passable;
-		flags[EMBERS]		= passable;
-		flags[DRY]          = passable;
-		flags[LOCKED_DOOR]	= losBlocking | solid;
-		flags[PEDESTAL]		= passable;
-		flags[WALL_DECO]	= flags[WALL];
-		flags[BARRICADE]	= flamable | solid | losBlocking;
-		flags[EMPTY_SP]		= flags[EMPTY];
-		flags[HIGH_GRASS]	= passable | losBlocking | flamable;
-		flags[FURROWED_GRASS]= flags[HIGH_GRASS];
-
-		flags[SECRET_DOOR]  = flags[WALL]  | secret;
-		flags[SECRET_TRAP]  = flags[EMPTY] | secret;
-		flags[TRAP]         = avoid;
-		flags[INACTIVE_TRAP]= flags[EMPTY];
-
-		flags[EMPTY_DECO]	= flags[EMPTY];
-		flags[LOCKED_EXIT]	= solid;
-		flags[UNLOCKED_EXIT]= passable;
-		flags[SIGN]			= passable | flamable;
-		flags[WELL]			= avoid;
-		flags[STATUE]		= solid;
-		flags[STATUE_SP]	= flags[STATUE];
-		flags[BOOKSHELF]	= flags[BARRICADE];
-		flags[ALCHEMY]		= solid;
-		flags[WALL_ANCIENT] = flags[WALL_MODERN] = flags[WALL];
-		flags[WALL_ANCIENT_PLACEHOLDER] = flags[WALL_MODERN_PLACEHOLDER] = flags[EMPTY];
-	}
-
-	public static int discover( int terr ) {
-		switch (terr) {
-		case SECRET_DOOR:
-			return DOOR;
-		case SECRET_TRAP:
-			return TRAP;
-		default:
-			return terr;
-		}
-	}
-
-	public static void swapLevelState(Level level, Level.State state) {
-		for (int i = 0; i < level.map.length; i++) {
-			Dungeon.level.set(i, swapTerrainState(level.map[i], state));
-		}
-		GameScene.updateMap();
-		Dungeon.observe();
-	}
-
-	public static int swapTerrainState(int terr, Level.State state) {
-		if (state == Level.State.FUTURE) {
-			switch (terr) {
-				case WATER:
-					terr = DRY;
-					break;
-				case WALL_ANCIENT:
-					terr = WALL_ANCIENT_PLACEHOLDER;
-					break;
-				case WALL_MODERN_PLACEHOLDER:
-					terr = WALL_MODERN;
-					break;
-			}
-		} else if (state == Level.State.REGULAR) {
-			switch (terr) {
-				case DRY:
-					terr = WATER;
-					break;
-				case WALL_ANCIENT:
-					terr = WALL_ANCIENT_PLACEHOLDER;
-					break;
-				case WALL_MODERN:
-					terr = WALL_MODERN_PLACEHOLDER;
-					break;
-			}
-		} else if (state == Level.State.PAST) {
-			switch (terr) {
-				case DRY:
-					terr = WATER;
-					break;
-				case WALL_ANCIENT_PLACEHOLDER:
-					terr = WALL_ANCIENT;
-					break;
-				case WALL_MODERN:
-					terr = WALL_MODERN_PLACEHOLDER;
-					break;
-			}
-		}
-		return terr;
-	}
-
-	//removes signs, places floors instead
-	public static int[] convertTilesFrom0_6_0b(int[] map){
-		for (int i = 0; i < map.length; i++){
-			if (map[i] == 23){
-				map[i] = 1;
-			}
-		}
-		return map;
-	}
-
-}*/

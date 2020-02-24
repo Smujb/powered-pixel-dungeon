@@ -21,7 +21,6 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Axe extends MeleeWeapon {
@@ -46,18 +45,18 @@ public class Axe extends MeleeWeapon {
 	@Override
 	public String desc() {
 		if (tier < 4) {
-			return Messages.get(HandAxe.class, "desc");
+			return new HandAxe().desc();
 		} else {
-			return Messages.get(BattleAxe.class, "desc");
+			return new BattleAxe().desc();
 		}
 	}
 
 	@Override
 	public String name() {
 		if (tier < 4) {
-			return Messages.get(HandAxe.class, "name");
+			return new HandAxe().name();
 		} else  {
-			return Messages.get(BattleAxe.class, "name");
+			return new BattleAxe().name();
 		}
 	}
 
