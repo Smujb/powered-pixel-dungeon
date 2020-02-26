@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
@@ -63,13 +64,12 @@ public class Elemental extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
-		return Random.NormalIntRange(0, 5);
-	}
-
-	@Override
-	public int magicalDRRoll() {
-		return Random.NormalIntRange(3, 12);
+	public int drRoll(Element element) {
+		if (element.isMagical() && element != Element.WATER) {
+			return Random.NormalIntRange(2, 8);
+		} else {
+			return Random.NormalIntRange(0, 5);
+		}
 	}
 
 	@Override
@@ -86,9 +86,9 @@ public class Elemental extends Mob {
 	public void add( Buff buff ) {
 		if (buff instanceof Frost || buff instanceof Chill || buff instanceof Wet) {
 				if (Dungeon.level.liquid()[this.pos])
-					damage( Random.NormalIntRange( HT / 2, HT ), buff );
+					damage( Random.NormalIntRange( HT / 2, HT ), buff, Element.WATER);
 				else
-					damage( Random.NormalIntRange( 1, HT * 2 / 3 ), buff );
+					damage( Random.NormalIntRange( 1, HT * 2 / 3 ), buff, Element.WATER);
 		} else {
 			super.add( buff );
 		}

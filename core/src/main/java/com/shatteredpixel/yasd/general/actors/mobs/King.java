@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
@@ -99,7 +100,7 @@ public class King extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 14);
 	}
 	
@@ -140,8 +141,8 @@ public class King extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
-		super.damage(dmg, src);
+	public void damage(int dmg, Object src, Element element) {
+		super.damage(dmg, src, element);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg);
 	}
@@ -302,8 +303,8 @@ public class King extends Mob {
 		}
 		
 		@Override
-		public void damage( int dmg, Object src ) {
-			super.damage( dmg, src );
+		public void damage(int dmg, Object src, Element element) {
+			super.damage( dmg, src, element);
 			if (src instanceof ToxicGas) {
 				((ToxicGas)src).clear( pos );
 			}
@@ -319,7 +320,7 @@ public class King extends Mob {
 		}
 		
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 5);
 		}
 

@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -94,7 +95,7 @@ public class Swarm extends Mob {
 
 
 	@Override
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
 
 		if (HP >= damage + 2) {
 			ArrayList<Integer> candidates = new  ArrayList<>();
@@ -123,7 +124,7 @@ public class Swarm extends Mob {
 			}
 		}
 		
-		return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage, element);
 	}
 	
 	@Override

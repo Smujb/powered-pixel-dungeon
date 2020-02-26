@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
@@ -142,7 +143,7 @@ public class MirrorImage extends NPC {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		if (user != null && user.belongings.getWeapons() != null){
 			return Random.NormalIntRange(0, user.belongings.getWeapons().get(0).defenseFactor(this)/2);
 		} else {

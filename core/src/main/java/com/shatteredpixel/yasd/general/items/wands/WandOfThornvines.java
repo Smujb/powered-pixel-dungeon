@@ -1,6 +1,7 @@
 package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
@@ -132,7 +133,7 @@ public class WandOfThornvines extends Wand {
         }
 
         @Override
-        public int defenseProc(Char enemy, int damage) {
+        public int defenseProc(Char enemy, int damage, Element element) {
             if (Random.Int(  3 ) >= 2) {
 
                 Buff.affect(enemy, Bleeding.class).set(damage/3f);
@@ -141,7 +142,7 @@ public class WandOfThornvines extends Wand {
 
             }
             Buff.prolong( enemy, Cripple.class, 3f );
-            return super.defenseProc(enemy, damage);
+            return super.defenseProc(enemy, damage, element);
         }
 
         @Override
@@ -158,7 +159,7 @@ public class WandOfThornvines extends Wand {
         }
 
         @Override
-        public int drRoll() {
+        public int drRoll(Element element) {
             return (int) (1 + level*2);
         }
 

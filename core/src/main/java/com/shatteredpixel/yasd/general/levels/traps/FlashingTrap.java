@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
@@ -30,7 +31,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
@@ -59,7 +59,7 @@ public class FlashingTrap extends Trap {
 		Char c = Actor.findChar( pos );
 		
 		if (c != null) {
-			int damage = Math.max( 0,  (4 + Dungeon.depth) - c.drRoll() );
+			int damage = Math.max( 0,  (4 + Dungeon.depth) - c.drRoll(Element.PHYSICAL) );
 			Buff.affect( c, Bleeding.class ).set( damage );
 			Buff.prolong( c, Blindness.class, 10f );
 			Buff.prolong( c, Cripple.class, 20f );

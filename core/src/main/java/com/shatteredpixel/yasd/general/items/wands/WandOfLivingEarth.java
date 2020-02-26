@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
@@ -151,7 +152,7 @@ public class WandOfLivingEarth extends DamageWand {
 				ch.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level() / 2);
 
 				processSoulMark(ch, chargesPerCast());
-				ch.damage(damage, this);
+				hit(ch);
 				
 				if (guardian == null) {
 					curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level() / 2);
@@ -293,6 +294,11 @@ public class WandOfLivingEarth extends DamageWand {
 			HP = HT = 0;
 		}
 
+		@Override
+		public Element elementalType() {
+			return Element.EARTH;
+		}
+
 		private int wandLevel = -1;
 
 		private void setInfo(Char owner, int wandLevel, int healthToAdd){
@@ -329,7 +335,7 @@ public class WandOfLivingEarth extends DamageWand {
 		}
 
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
 				return Random.NormalIntRange(wandLevel, 2 + wandLevel);
 			} else {

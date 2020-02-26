@@ -22,12 +22,9 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.effects.Lightning;
-import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
-public class ShamanSprite extends MagicalMobSprite {
+public class ShamanSprite extends MobSprite {
 	
 	public ShamanSprite() {
 		super();
@@ -51,12 +48,6 @@ public class ShamanSprite extends MagicalMobSprite {
 		die.frames( frames, 8, 9, 10 );
 		
 		play( idle );
-	}
-
-	@Override
-	public void FX(Group group, int cell, Callback c) {
-		c.call();//Callback is called immediately. Waiting for end of effect looks bad.
-		group.add(new Lightning(center(), cell, null));
 	}
 	/*@Override
 	public void zap( int pos ) {

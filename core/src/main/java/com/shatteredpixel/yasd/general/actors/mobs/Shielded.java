@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
 import com.watabou.utils.Random;
 
@@ -32,7 +33,7 @@ public class Shielded extends Brute {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 10);
 	}
 	

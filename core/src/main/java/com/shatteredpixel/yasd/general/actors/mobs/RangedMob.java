@@ -7,13 +7,13 @@ import com.watabou.utils.Callback;
 
 public abstract class RangedMob extends Mob implements Callback {
 
-    public boolean magical = true;
-
     public boolean canHit(Char enemy) {
-        return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+        return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
     }
 
-    public abstract boolean fleesAtMelee();
+    public boolean fleesAtMelee() {
+        return false;
+    }
 
     public static class MagicalDamage{}
 
@@ -30,18 +30,6 @@ public abstract class RangedMob extends Mob implements Callback {
         }
     }
 
-    protected boolean doAttack(Char enemy ) {
-
-        if (Dungeon.level.adjacent( pos, enemy.pos ) || !magical) {
-
-            return super.doAttack( enemy );
-
-        } else {
-
-            return doMagicAttack( enemy );
-        }
-    }
-
     @Override
     protected boolean getCloser( int target ) {
         if (state == HUNTING && fleesAtMelee()) {
@@ -53,10 +41,6 @@ public abstract class RangedMob extends Mob implements Callback {
 
     @Override
     public void call() {
-        if (magical) {
-            onZapComplete();
-        } else {
-            onAttackComplete();
-        }
+        onAttackComplete();
     }
 }

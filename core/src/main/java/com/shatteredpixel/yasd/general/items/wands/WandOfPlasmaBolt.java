@@ -2,6 +2,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -42,10 +43,9 @@ public class WandOfPlasmaBolt extends DamageWand {
             curUser = Dungeon.hero;
         }
         int damage = damageRoll(lvl);
-        damage = enemy.defenseProc(curUser, damage);
-        damage -= enemy.drRoll();
+        damage = enemy.defenseProc(curUser, damage, Element.PHYSICAL);
         if (damage > 0) {
-            enemy.damage(damage, this);
+            enemy.damage(damage, this, Element.PHYSICAL);
         }
         return damage;
     }
@@ -54,7 +54,7 @@ public class WandOfPlasmaBolt extends DamageWand {
     public void onZap(Ballistica bolt) {
         Char ch = Actor.findChar( bolt.collisionPos );
         if (ch != null) {
-            if (Char.hit(curUser,ch,true)) {
+            if (Char.hit(curUser,ch)) {
 
                 processSoulMark(ch, chargesPerCast());
                 hit(ch);

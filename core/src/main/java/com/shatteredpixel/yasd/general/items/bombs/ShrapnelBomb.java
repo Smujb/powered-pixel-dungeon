@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.items.bombs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -71,8 +72,7 @@ public class ShrapnelBomb extends Bomb {
 			//regular bomb damage, which falls off at a rate of 5% per tile of distance
 			int damage = Math.round(Random.NormalIntRange( Dungeon.depth+5, 10 + Dungeon.depth * 2 ));
 			damage = Math.round(damage * (1f - .05f*Dungeon.level.distance(cell, ch.pos)));
-			damage -= ch.drRoll();
-			ch.damage(damage, this);
+			ch.damage(damage, this, Element.PHYSICAL );
 			if (ch == Dungeon.hero && !ch.isAlive()) {
 				Dungeon.fail(Bomb.class);
 			}

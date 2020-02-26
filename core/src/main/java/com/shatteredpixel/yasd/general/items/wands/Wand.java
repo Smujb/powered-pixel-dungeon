@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -59,6 +60,8 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 
 public abstract class Wand extends KindofMisc {
+
+	public Element element = Element.MAGICAL;
 
 	public static final String AC_ZAP = "ZAP";
 	public static final String AC_ZAP_OVERRIDE = "ZAP_OVERRIDE";

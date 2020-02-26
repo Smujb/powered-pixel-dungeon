@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -203,11 +204,11 @@ public abstract class Mob extends Char {
 	//FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
 	protected boolean intelligentAlly = false;
 
-	@Override
+	/*@Override
 	public void onZapComplete() {
 		super.onZapComplete();
 		magicalAttack(enemy);
-	}
+	}*/
 	
 	protected Char chooseEnemy() {
 
@@ -532,7 +533,7 @@ public abstract class Mob extends Char {
 		return !visible;
 	}
 
-	protected boolean doMagicAttack(Char enemy) {
+	/*protected boolean doMagicAttack(Char enemy) {
 
 		boolean visible = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 		if (visible) {
@@ -545,7 +546,7 @@ public abstract class Mob extends Char {
 		spend( magicalAttackDelay() );
 
 		return !visible;
-	}
+	}*/
 	
 	@Override
 	public void onAttackComplete() {
@@ -578,7 +579,7 @@ public abstract class Mob extends Char {
 	protected boolean hitWithRanged = false;
 	
 	@Override
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
 		
 		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
@@ -634,7 +635,7 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Object src, Element element) {
 
 		if (state == SLEEPING) {
 			state = WANDERING;
@@ -644,7 +645,7 @@ public abstract class Mob extends Char {
 		}
 
 		
-		super.damage( dmg, src );
+		super.damage( dmg, src, element);
 	}
 	
 	
@@ -770,7 +771,7 @@ public abstract class Mob extends Char {
 	}
 	
 	public String description() {
-		return Messages.get(this, "desc");
+		return Messages.get(this, "desc") + Messages.get(Mob.class, "info", elementalType().label());
 	}
 	
 	public void notice() {

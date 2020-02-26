@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
@@ -169,17 +170,17 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		if (hero != null){
-			return hero.drRoll();
+			return hero.drRoll(Element.PHYSICAL);
 		} else {
 			return 0;
 		}
 	}
 	
 	@Override
-	public int defenseProc(Char enemy, int damage) {
-		damage = super.defenseProc(enemy, damage);
+	public int defenseProc(Char enemy, int damage, Element element) {
+		damage = super.defenseProc(enemy, damage, element);
 		ArrayList<Armor> Armors = hero.belongings.getArmors();//Proc all armours 1 by 1
 		for (int i=0; i < Armors.size(); i++) {
 			damage = Armors.get(i).proc(enemy,this, damage);
@@ -188,7 +189,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, Object src) {
+	public void damage(int dmg, Object src, Element element) {
 
 		//TODO improve this when I have proper damage source logic
 		//checks if *any* equipped armour has Anti Magic
@@ -200,7 +201,7 @@ public class PrismaticImage extends NPC {
 			}
 		}
 		
-		super.damage(dmg, src);
+		super.damage(dmg, src, element);
 	}
 	
 	@Override

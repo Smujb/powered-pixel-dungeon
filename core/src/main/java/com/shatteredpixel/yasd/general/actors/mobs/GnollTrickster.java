@@ -50,8 +50,6 @@ public class GnollTrickster extends RangedMob {
 
 		state = WANDERING;
 
-		magical = false;
-
 		//at half quantity, see createLoot()
 		loot = Generator.Category.MISSILE;
 		lootChance = 1f;

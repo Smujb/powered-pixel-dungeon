@@ -49,7 +49,7 @@ public class WardSprite extends MobSprite {
 		} else {
 			parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(pos)));
 		}
-		ch.onZapComplete();
+		ch.onAttackComplete();
 	}
 	
 	@Override

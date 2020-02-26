@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Rat;
@@ -124,7 +125,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
 		if (lvl.canInstakill(defender)){
 			int dmg = lvl.damageRoll(attacker, defender);
-			defender.damage( Math.max(defender.HT, dmg), attacker );
+			defender.damage( Math.max(defender.HT, dmg), attacker, Element.IGNORE);
 			//even though the defender is dead, other effects should still proc (enchants, etc.)
 			return Math.max( defender.HT, dmg);
 		} else {

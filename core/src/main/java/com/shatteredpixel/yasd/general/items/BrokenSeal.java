@@ -57,7 +57,7 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
-		//actions.add(AC_DEBUG);
+		actions.add(AC_DEBUG);
 		return actions;
 	}
 
@@ -78,6 +78,7 @@ public class BrokenSeal extends Item {
 				@Override
 				protected void onSelect(int index) {
 					InterlevelScene.move(Dungeon.depth, index, "TEST", InterlevelScene.Mode.DESCEND);
+					hero.HT = hero.HP = 100000;
 				}
 			});
 		}

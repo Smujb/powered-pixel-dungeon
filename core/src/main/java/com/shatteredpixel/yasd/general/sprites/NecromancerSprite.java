@@ -67,7 +67,7 @@ public class NecromancerSprite extends MobSprite {
 				if (((Necromancer) ch).summoning){
 					charge();
 				} else {
-					ch.onZapComplete();
+					ch.onAttackComplete();
 					idle();
 				}
 			} else {

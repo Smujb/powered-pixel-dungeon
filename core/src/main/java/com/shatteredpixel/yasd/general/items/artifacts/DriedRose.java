@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.items.artifacts;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -535,7 +536,7 @@ public class DriedRose extends Artifact {
 		protected boolean act() {
 			updateRose();
 			if (rose == null || !rose.isEquipped(Dungeon.hero)){
-				damage(1, this);
+				damage(1);
 			}
 			
 			if (!isAlive())
@@ -615,18 +616,18 @@ public class DriedRose extends Artifact {
 		}
 		
 		@Override
-		public int defenseProc(Char enemy, int damage) {
+		public int defenseProc(Char enemy, int damage, Element element) {
 			if (rose != null && rose.armor != null) {
 				rose.armor.use();
 				return rose.armor.proc( enemy, this, damage );
 			} else {
-				return super.defenseProc(enemy, damage);
+				return super.defenseProc(enemy, damage, element);
 			}
 		}
 		
 		@Override
-		public void damage(int dmg, Object src) {
-			super.damage( dmg, src );
+		public void damage(int dmg, Object src, Element element) {
+			super.damage( dmg, src, element);
 			Item.updateQuickslot();
 		}
 		
@@ -664,7 +665,7 @@ public class DriedRose extends Artifact {
 		}
 		
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			int block = 0;
 			if (rose != null && rose.armor != null){
 				block += Random.NormalIntRange( rose.armor.DRMin(), rose.armor.DRMax());

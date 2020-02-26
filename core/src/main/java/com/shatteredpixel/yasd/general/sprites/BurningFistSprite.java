@@ -22,12 +22,9 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
-import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
-public class BurningFistSprite extends MagicalMobSprite {
+public class BurningFistSprite extends MobSprite {
 	
 	public BurningFistSprite() {
 		super();
@@ -51,14 +48,5 @@ public class BurningFistSprite extends MagicalMobSprite {
 		zap = attack.clone();
 		
 		play( idle );
-	}
-
-	@Override
-	public void FX(Group group, int cell, Callback c) {
-		MagicMissile.boltFromChar( group,
-				MagicMissile.FIRE_CONE,
-				this,
-				cell,
-				c);
 	}
 }

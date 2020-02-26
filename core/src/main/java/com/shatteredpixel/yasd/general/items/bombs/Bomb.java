@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.bombs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -179,10 +180,8 @@ public class Bomb extends Item {
 					dmg = Math.round(dmg*0.67f);
 				}
 
-				dmg -= ch.drRoll();
-
 				if (dmg > 0) {
-					ch.damage(dmg, this);
+					ch.damage(dmg, this, Element.PHYSICAL);
 				}
 				
 				if (ch == Dungeon.hero && !ch.isAlive()) {

@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
@@ -83,12 +84,12 @@ public class OldTengu extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 5);
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void damage(int dmg, Object src, Element element) {
 		
 		OldPrisonBossLevel.State state = ((OldPrisonBossLevel)Dungeon.level).state();
 		
@@ -100,7 +101,7 @@ public class OldTengu extends Mob {
 		}
 
 		int beforeHitHP = HP;
-		super.damage(dmg, src);
+		super.damage(dmg, src, element);
 		dmg = beforeHitHP - HP;
 
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);

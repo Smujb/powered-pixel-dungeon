@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
@@ -54,8 +55,13 @@ public class Eye extends Mob {
 	}
 
 	@Override
+	public Element elementalType() {
+		return Element.DESTRUCTION;
+	}
+
+	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange(20, 33);
+		return beamCharged ? Random.NormalIntRange(30, 60) : Random.NormalIntRange(15, 30);
 	}
 
 	@Override
@@ -64,7 +70,7 @@ public class Eye extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 10);
 	}
 	
@@ -116,27 +122,15 @@ public class Eye extends Mob {
 			return true;
 		} else {
 
-			return doMagicAttack(enemy);
+			return super.doAttack(enemy);
 		}
 
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void damage(int dmg, Object src, Element element) {
 		if (beamCharged) dmg /= 4;
-		super.damage(dmg, src);
-	}
-
-	@Override
-	public int magicalAttackProc(Char enemy, int damage) {
-		beamCharged = false;
-		beamCooldown = Random.IntRange(3, 6);
-		return super.magicalAttackProc(enemy, damage);
-	}
-
-	@Override
-	public int magicalDamageRoll() {
-		return Random.NormalIntRange( 30, 60 );
+		super.damage(dmg, src, element);
 	}
 
 	//used so resistances can differentiate between melee and magical attacks

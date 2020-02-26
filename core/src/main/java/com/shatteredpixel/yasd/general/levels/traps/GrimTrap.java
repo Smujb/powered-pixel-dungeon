@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -91,7 +92,7 @@ public class GrimTrap extends Trap {
 							new Callback() {
 								@Override
 								public void call() {
-									finalTarget.damage(finalDmg, trap);
+									finalTarget.damage(finalDmg, trap, Element.IGNORE);
 									if (finalTarget == Dungeon.hero) {
 										Sample.INSTANCE.play(Assets.SND_CURSED);
 										if (!finalTarget.isAlive()) {

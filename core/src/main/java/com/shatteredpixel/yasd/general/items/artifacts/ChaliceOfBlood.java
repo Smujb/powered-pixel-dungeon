@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.items.artifacts;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -99,7 +100,7 @@ public class ChaliceOfBlood extends Artifact {
 			damage = rockArmor.absorb(damage);
 		}
 
-		damage -= hero.drRoll();
+		damage -= hero.drRoll(Element.PHYSICAL);
 
 		hero.sprite.operate( hero.pos );
 		hero.busy();
@@ -112,7 +113,7 @@ public class ChaliceOfBlood extends Artifact {
 			hero.sprite.emitter().burst( ShadowParticle.CURSE, 4+(damage/10) );
 		}
 
-		hero.damage(damage, this);
+		hero.damage(damage);
 
 		if (!hero.isAlive()) {
 			Dungeon.fail( getClass() );

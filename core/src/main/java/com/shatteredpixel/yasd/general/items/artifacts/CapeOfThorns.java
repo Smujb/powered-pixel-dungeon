@@ -41,7 +41,7 @@ public class CapeOfThorns extends Artifact {
 		chargeCap = 100;
 		cooldown = 0;
 
-		defaultAction = "NONE"; //so it can be quickslotted
+		defaultAction = "PHYSICAL"; //so it can be quickslotted
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class CapeOfThorns extends Artifact {
 				damage -= deflected;
 
 				if (attacker != null && Dungeon.level.adjacent(attacker.pos, defender.pos)) {
-					attacker.damage(deflected, this);
+					attacker.damage(deflected);
 				}
 
 				exp+= deflected;

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -91,8 +92,7 @@ public class RockfallTrap extends Trap {
 
 			if (ch != null && ch.isAlive()){
 				int damage = Random.NormalIntRange(5+Dungeon.depth, 10+Dungeon.depth*2);
-				damage -= ch.drRoll();
-				ch.damage( Math.max(damage, 0) , this);
+				ch.damage( Math.max(damage, 0) , this, Element.PHYSICAL);
 
 				Buff.prolong( ch, Paralysis.class, Paralysis.DURATION );
 

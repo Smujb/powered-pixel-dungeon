@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
@@ -88,7 +89,7 @@ public class Burning extends Buff implements Hero.Doom {
 				
 				Hero hero = (Hero)target;
 
-				hero.damage( damage, this );
+				hero.damage( damage, this, Element.IGNORE);
 				burnIncrement++;
 
 				//at 4+ turns, there is a (turns-3)/3 chance an item burns
@@ -122,7 +123,7 @@ public class Burning extends Buff implements Hero.Doom {
 				}
 				
 			} else {
-				target.damage( damage, this );
+				target.damage( damage, this, Element.IGNORE);
 			}
 
 			if (target instanceof Thief) {

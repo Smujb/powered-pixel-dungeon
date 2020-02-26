@@ -78,7 +78,7 @@ public class WandOfBlastWave extends DamageWand {
 
 			if (ch != null){
 				processSoulMark(ch, chargesPerCast());
-				if (ch.alignment != Char.Alignment.ALLY) ch.damage(damageRoll(), this);
+				if (ch.alignment != Char.Alignment.ALLY) hit(ch);
 
 				if (ch.isAlive()) {
 					Ballistica trajectory = new Ballistica(ch.pos, ch.pos + i, Ballistica.MAGIC_BOLT);
@@ -134,7 +134,7 @@ public class WandOfBlastWave extends DamageWand {
 				}
 				ch.pos = newPos;
 				if (ch.pos == trajectory.collisionPos && ch.isAlive()) {
-					ch.damage(Random.NormalIntRange((finalDist + 1) / 2, finalDist), this);
+					ch.damage(Random.NormalIntRange((finalDist + 1) / 2, finalDist) );
 					Paralysis.prolong(ch, Paralysis.class, Random.NormalIntRange((finalDist + 1) / 2, finalDist));
 				}
 				Dungeon.level.occupyCell(ch);

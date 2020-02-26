@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -71,13 +72,13 @@ public class Brute extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 8);
 	}
 	
 	@Override
-	public void damage( int dmg, Object src ) {
-		super.damage( dmg, src );
+	public void damage(int dmg, Object src, Element element) {
+		super.damage( dmg, src, element);
 		
 		if (isAlive() && !enraged && HP < HT / 4) {
 			enraged = true;

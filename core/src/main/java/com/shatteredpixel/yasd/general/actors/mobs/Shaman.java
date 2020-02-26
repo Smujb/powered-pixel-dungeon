@@ -22,13 +22,11 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
-import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Random;
 
 public class Shaman extends RangedMob {
@@ -49,6 +47,12 @@ public class Shaman extends RangedMob {
 		
 		properties.add(Property.ELECTRIC);
 	}
+
+	@Override
+	public Element elementalType() {
+		return super.elementalType();
+	}
+
 	public Shaman() {
 		super();
 		if (Dungeon.depth > 12) {
@@ -58,16 +62,29 @@ public class Shaman extends RangedMob {
 	}
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 3 + Dungeon.depth );
+		return Random.NormalIntRange( 4, 18 );
 	}
-	
+
+
+	@Override
+	public int attackProc(Char enemy, int damage) {
+		damage = super.attackProc(enemy, damage);
+		if (Dungeon.level.liquid()[enemy.pos] && !enemy.flying) {
+			damage *= 1.5f;
+		}
+		if (Dungeon.depth > 12) {//Use a separate statement so they can stack
+			damage *= 1.5f;
+		}
+		return damage;
+	}
+
 	@Override
 	public int attackSkill( Char target ) {
 		return Dungeon.depth*2;
 	}//Finding Shaman later are still hard.
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 6);
 	}
 
@@ -79,23 +96,6 @@ public class Shaman extends RangedMob {
 	@Override
 	public boolean fleesAtMelee() {
 		return false;
-	}
-
-	@Override
-	public int magicalDamageRoll() {
-		return Random.IntRange(4,18);
-	}
-
-	@Override
-	public int magicalAttackProc(Char enemy, int damage) {
-		damage = super.magicalAttackProc(enemy, damage);
-		if (Dungeon.level.liquid()[enemy.pos] && !enemy.flying) {
-			damage *= 1.5f;
-		}
-		if (Dungeon.depth > 12) {//Use a separate statement so they can stack
-			damage *= 1.5f;
-		}
-		return damage;
 	}
 
 	//used so resistances can differentiate between melee and magical attacks

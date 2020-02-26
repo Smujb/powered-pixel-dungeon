@@ -3,6 +3,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -81,18 +82,18 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void damage(int dmg, Object src, Element element) {
 		if (src instanceof Tower) {
-			super.damage(dmg, src);
+			super.damage(dmg, src, element);
 			if (hint) {
 				hint = false;
 				GLog.p("The boss takes heavy damage from the disintegration rays!");
 			}
 		} else {
 			if (HP > HT/2 || checkTowers()) {
-				super.damage(Random.Int(dmg / 2), src);
+				super.damage(Random.Int(dmg / 2), src, element);
 			} else {
-				super.damage(0, src);//Display that no damage is being done any more
+				super.damage(0, src, element);//Display that no damage is being done any more
 			}
 			if (Random.Int(10) == 0 || HP == HT) {
 				GLog.n("The boss is too strong to be damaged significantly by your weapons...");
@@ -241,11 +242,6 @@ public class TestBoss extends Mob {
 			// Do nothing
 		}
 
-		@Override
-		public int damageRoll() {
-			return 0;
-		}
-
 
 		@Override
 		public int attackSkill(Char target) {
@@ -254,7 +250,7 @@ public class TestBoss extends Mob {
 
 
 		@Override
-		public void damage(int dmg, Object src) {
+		public void damage(int dmg, Object src, Element element) {
 		}
 
 		@Override
@@ -274,14 +270,14 @@ public class TestBoss extends Mob {
 			for (int c : shot.path) {
 				Char ch = Actor.findChar(c);
 				if (ch != null) {
-					ch.damage(magicalDamageRoll(), this);
+					ch.damage(damageRoll(), this);
 					CellEmitter.get(c).burst(SparkParticle.FACTORY, 2);
 				}
 			}
 		}
 
 		@Override
-		public int magicalDamageRoll() {
+		public int damageRoll() {
 			return Random.Int(10, 25);
 		}
 

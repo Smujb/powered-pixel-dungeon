@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.levels.features;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
@@ -126,7 +127,7 @@ public class Chasm {
 				Dungeon.fail( Chasm.class );
 				GLog.n( Messages.get(Chasm.class, "ondeath") );
 			}
-		} );
+		}, Element.IGNORE);
 	}
 
 	public static void mobFall( Mob mob ) {

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Web;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -63,7 +64,7 @@ public class Spinner extends Mob {
 	}
 
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 6);
 	}
 

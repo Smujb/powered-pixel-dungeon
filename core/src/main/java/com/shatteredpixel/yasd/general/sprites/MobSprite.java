@@ -42,7 +42,7 @@ public class MobSprite extends CharSprite {
 	@Override
 	public void zap(int cell) {
 		super.zap(cell);
-		ch.onZapComplete();
+		ch.onAttackComplete();
 	}
 
 	@Override

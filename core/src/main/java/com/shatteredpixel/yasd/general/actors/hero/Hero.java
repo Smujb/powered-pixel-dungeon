@@ -27,6 +27,7 @@ import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -380,12 +381,12 @@ public class Hero extends Char {
 		return hit;
 	}
 
-	@Override
-	public int magicalDefenseProc(Char enemy, int damage) {
+	/*@Override
+	public int elementalDefenseProc(Char enemy, int damage) {
 		damage *= RingOfElements.resist(this);
-		damageMorale(damage- magicalDRRoll());
-		return super.magicalDefenseProc(enemy, damage);
-	}
+		damageMorale(damage- elementalDRRoll());
+		return super.elementalDefenseProc(enemy, damage);
+	}*/
 
 	@Override
 	public int attackSkill( Char target ) {
@@ -921,16 +922,20 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
+
+		if (enemy.elementalType().isMagical()) {
+			damage *= RingOfElements.resist(enemy);
+		}
 		
 		if (damage > 0 && subClass == HeroSubClass.BERSERKER){
 			Berserk berserk = Buff.affect(this, Berserk.class);
 			berserk.damage(damage);
 		}
 
-		damage = super.defenseProc(enemy,damage);
+		damage = super.defenseProc(enemy,damage, element);
 
-		damageMorale(damage-drRoll());
+		damageMorale(damage-drRoll(element));
 		
 		return damage;
 	}
@@ -957,13 +962,13 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Object src, Element element) {
 		if (!(src instanceof Hunger || src instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
 			resting = false;
 		}
 
-		super.damage( dmg, src );
+		super.damage( dmg, src, element);
 	}
 	
 	public void checkVisibleMobs() {

@@ -23,13 +23,10 @@ package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
-import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
-public class WraithSprite extends MagicalMobSprite {
+public class WraithSprite extends MobSprite {
 	private Animation blink;
 	
 	public WraithSprite() {
@@ -80,14 +77,5 @@ public class WraithSprite extends MagicalMobSprite {
 		isMoving = true;
 
 		ch.onMotionComplete();
-	}
-
-	@Override
-	public void FX(Group group, int cell, Callback c) {
-		MagicMissile.boltFromChar( group,
-				MagicMissile.SHADOW,
-				this,
-				cell,
-				c);
 	}
 }

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -74,8 +75,8 @@ public class WornDartTrap extends Trap {
 							reset(pos, finalTarget.sprite, new Dart(), new Callback() {
 								@Override
 								public void call() {
-								int dmg = Random.NormalIntRange(1, 4) - finalTarget.drRoll();
-								finalTarget.damage(dmg, trap);
+								int dmg = Random.NormalIntRange(1, 4);
+								finalTarget.damage( dmg, trap, Element.PHYSICAL );
 								if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
 									Dungeon.fail( trap.getClass()  );
 								}
@@ -90,7 +91,7 @@ public class WornDartTrap extends Trap {
 					}
 				});
 			} else {
-				finalTarget.damage(Random.NormalIntRange(1, 4) - finalTarget.drRoll(), trap);
+				finalTarget.damage(Random.NormalIntRange(1, 4), trap, Element.PHYSICAL);
 			}
 		}
 	}

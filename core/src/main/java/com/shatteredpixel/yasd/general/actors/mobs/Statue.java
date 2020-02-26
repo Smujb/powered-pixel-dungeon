@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -199,7 +200,7 @@ public class Statue extends Mob implements Callback {
 	}
 	
 	@Override
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Object src, Element element) {
 
 		if (state == PASSIVE) {
 			state = HUNTING;
@@ -209,7 +210,7 @@ public class Statue extends Mob implements Callback {
 			Ankh.revive(this, null);
 			ankhs--;
 		}
-		super.damage( dmg, src );
+		super.damage( dmg, src, element);
 	}
 
 	protected void zap(Char enemy) {
@@ -225,7 +226,8 @@ public class Statue extends Mob implements Callback {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.doAttack( enemy );
 		} else if (belongings.getEquippedItemsOFType(Wand.class).size() > 0) {
-			return doMagicAttack( enemy );
+			zap( enemy );
+			return enemy != null;
 		} else {
 			return false;
 		}

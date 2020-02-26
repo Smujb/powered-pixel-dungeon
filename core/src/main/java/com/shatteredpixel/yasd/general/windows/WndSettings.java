@@ -193,7 +193,7 @@ public class WndSettings extends WndTabbed {
 				protected void onClick() {
 					MainGame.scene().addToFront(new WndOptions(Messages.get(DisplayTab.class, "mods_title"),
 							Messages.get(DisplayTab.class, "mods_text", ModHandler.getName()),
-							Messages.titleCase(ModHandler.NONE.displayName()),
+							Messages.titleCase(ModHandler.PHYSICAL.displayName()),
 							Messages.titleCase(ModHandler.YASD.displayName()),
 							Messages.titleCase(ModHandler.CURSED.displayName()),
 							Messages.titleCase(ModHandler.TEST.displayName())) {
@@ -205,8 +205,8 @@ public class WndSettings extends WndTabbed {
 								GameSettings.mod(ModHandler.TEST.getValue());
 							} else if (index == ModHandler.CURSED.getValue()) {
 								GameSettings.mod(ModHandler.CURSED.getValue());
-							} else if (index == ModHandler.NONE.getValue()) {
-								GameSettings.mod(ModHandler.NONE.getValue());
+							} else if (index == ModHandler.PHYSICAL.getValue()) {
+								GameSettings.mod(ModHandler.PHYSICAL.getValue());
 							}
 
 							/*try {

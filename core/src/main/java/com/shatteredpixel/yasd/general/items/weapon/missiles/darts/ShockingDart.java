@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.items.weapon.missiles.darts;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -41,7 +42,7 @@ public class ShockingDart extends TippedDart {
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 		
-		defender.damage(Random.NormalIntRange(8, 12), this);
+		defender.damage(Random.NormalIntRange(damage/2, damage), this, Element.ELECTRIC);
 		
 		CharSprite s = defender.sprite;
 		if (s != null && s.parent != null) {

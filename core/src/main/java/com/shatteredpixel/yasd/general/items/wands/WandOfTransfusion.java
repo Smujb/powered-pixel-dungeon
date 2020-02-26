@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
@@ -109,7 +110,7 @@ public class WandOfTransfusion extends Wand {
 				
 				//harms the undead
 				} else {
-					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), this);
+					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), this, Element.DARK);
 					ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + intLevel);
 					Sample.INSTANCE.play(Assets.SND_BURNING);
 				}
@@ -126,7 +127,7 @@ public class WandOfTransfusion extends Wand {
 	//this wand costs health too
 	private void damageHero(int damage){
 		
-		curUser.damage(damage, this);
+		curUser.damage(damage);
 
 		if (!curUser.isAlive()){
 			Dungeon.fail( getClass() );

@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
@@ -35,11 +36,11 @@ public class Acidic extends Scorpio {
 	}
 	
 	@Override
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
 
 		Buff.affect(enemy, Ooze.class).set(20f);
 		
-		return super.defenseProc( enemy, damage );
+		return super.defenseProc( enemy, damage, element);
 	}
 	
 }

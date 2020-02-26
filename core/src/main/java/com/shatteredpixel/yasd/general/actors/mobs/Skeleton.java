@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -70,8 +71,8 @@ public class Skeleton extends Mob {
 			Char ch = findChar( pos + PathFinder.NEIGHBOURS8[i] );
 			if (ch != null && ch.isAlive()) {
 				int damage = Random.NormalIntRange(6, 12);
-				damage = Math.max( 0,  damage - (ch.drRoll() + ch.drRoll()) );
-				ch.damage( damage, this );
+				damage = Math.max( 0,  damage - (ch.drRoll(Element.PHYSICAL) + ch.drRoll(Element.PHYSICAL)) );
+				ch.damage( damage, this, Element.EARTH );
 				if (ch == Dungeon.hero && !ch.isAlive()) {
 					heroKilled = true;
 				}
@@ -105,7 +106,7 @@ public class Skeleton extends Mob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 5);
 	}
 

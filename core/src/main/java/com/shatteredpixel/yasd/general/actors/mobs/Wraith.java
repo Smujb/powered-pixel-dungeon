@@ -22,19 +22,18 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.PinCushion;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
-import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
-import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.WraithSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
@@ -69,7 +68,12 @@ public class Wraith extends RangedMob {
 		resistances.add(KindOfWeapon.class);
 		resistances.add(Char.class);
 	}
-	
+
+	@Override
+	public Element elementalType() {
+		return Element.DARK;
+	}
+
 	private static final String LEVEL = "level";
 
 	public Wraith() {
@@ -85,6 +89,9 @@ public class Wraith extends RangedMob {
 	public void add(Buff buff) {
 		if (!(buff.type == Buff.buffType.NEGATIVE)) {
 			super.add( buff );
+		}
+		if (buff instanceof PinCushion) {
+			buff.detach();
 		}
 	}
 
@@ -198,22 +205,9 @@ public class Wraith extends RangedMob {
 	}
 
 	@Override
-	public int magicalDamageRoll() {
-		return damageRoll()/2;
-	}
-
-	@Override
-	public int magicalAttackProc(Char enemy, int damage) {
-		if (Random.Int(3) == 0) {
-			Buff.prolong(enemy, Weakness.class, Weakness.DURATION/4f);
-		}
-		return super.magicalAttackProc(enemy, damage);
-	}
-
-	@Override
 	public int attackProc( Char enemy, int damage ) {
 
-		if ( distance( enemy ) <= 1 && isAlive() ) {
+		if ( isAlive() && Dungeon.level.adjacent(pos, enemy.pos)) {
 
 			int healed = damage/2;
 

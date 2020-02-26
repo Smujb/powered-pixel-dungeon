@@ -87,6 +87,15 @@ public class Bestiary {
 			} else if (depth <= Constants.CHAPTER_LENGTH * 5) {
 				return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
 			}
+		} else if (path == 1) {
+			switch (Random.Int(4)) {
+				case 0:
+					return Warlock.class;
+				case 1:
+					return Eye.class;
+				case 2:
+					return Shaman.class;
+			}
 		}
 		return Wraith.class;
 	}

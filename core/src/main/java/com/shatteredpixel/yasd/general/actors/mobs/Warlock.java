@@ -22,9 +22,8 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
@@ -43,25 +42,32 @@ public class Warlock extends RangedMob {
 		
 		EXP = 11;
 		maxLvl = 21;
+
+		DLY = 2f;
 		
 		loot = Generator.Category.POTION;
 		lootChance = 0.83f;
 
 		properties.add(Property.UNDEAD);
 	}
-	
+
+	@Override
+	public Element elementalType() {
+		return Element.DARK;
+	}
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 16, 24 );
 	}
-	
+
 	@Override
 	public int attackSkill( Char target ) {
 		return 30;
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 8);
 	}
 
@@ -73,24 +79,6 @@ public class Warlock extends RangedMob {
 	@Override
 	public boolean fleesAtMelee() {
 		return false;
-	}
-
-	@Override
-	public int magicalDamageRoll() {
-		return Random.Int(25, 50);
-	}
-
-	@Override
-	public float magicalAttackDelay() {
-		return super.magicalAttackDelay()*2;
-	}
-
-	@Override
-	public int magicalAttackProc(Char enemy, int damage) {
-		if (Random.Int( 2 ) == 0) {
-			Buff.prolong( enemy, Weakness.class, Weakness.DURATION );
-		}
-		return super.magicalAttackProc(enemy, damage);
 	}
 	
 	//used so resistances can differentiate between melee and magical attacks

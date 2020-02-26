@@ -21,6 +21,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.StenchGas;
@@ -53,7 +54,7 @@ public class FetidRat extends Rat {
 	}
 
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 2);
 	}
 
@@ -68,11 +69,11 @@ public class FetidRat extends Rat {
 	}
 
 	@Override
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
 
 		GameScene.add(Blob.seed(pos, 20, StenchGas.class));
 
-		return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage, element);
 	}
 
 	@Override

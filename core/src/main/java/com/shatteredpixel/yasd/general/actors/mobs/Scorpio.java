@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
@@ -47,8 +48,6 @@ public class Scorpio extends RangedMob {
 
 		baseSpeed = 0.8f;
 
-		magical = false;
-
 		loot = new  PotionOfHealing();
 		lootChance = 0.2f;
 
@@ -66,7 +65,7 @@ public class Scorpio extends RangedMob {
 	}
 	
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 20);
 	}
 
@@ -81,8 +80,8 @@ public class Scorpio extends RangedMob {
 	}
 
 	@Override
-	public int defenseProc(Char enemy, int damage) {
-		damage = super.defenseProc(enemy, damage);
+	public int defenseProc(Char enemy, int damage, Element element) {
+		damage = super.defenseProc(enemy, damage, element);
 		if (Random.Int( 2 ) == 0) {
 			Buff.prolong( enemy, Cripple.class, Cripple.DURATION );
 		}

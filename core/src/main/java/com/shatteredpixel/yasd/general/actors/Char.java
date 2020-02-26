@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
@@ -67,8 +68,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
-import com.shatteredpixel.yasd.general.actors.mobs.RangedMob;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Potential;
@@ -84,7 +83,6 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Blunt;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.yasd.general.levels.Terrain;
@@ -188,6 +186,10 @@ public abstract class Char extends Actor {
 		}
 
 		return (buff(Weakness.class) != null) ? STR - 1 : STR;
+	}
+
+	public Element elementalType() {
+		return Element.PHYSICAL;
 	}
 
 	public boolean canAttack(Char enemy) {
@@ -323,22 +325,7 @@ public abstract class Char extends Actor {
 
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
-		if (hit(this, enemy, false)) {
-
-			int dr = enemy.drRoll();
-
-			if (this instanceof Hero) {//Missile Weapons are always equipped in slot 1
-				Hero h = (Hero) this;
-				if (h.belongings.miscs[0] instanceof MissileWeapon
-						&& h.subClass == HeroSubClass.SNIPER
-						&& !Dungeon.level.adjacent(h.pos, enemy.pos)) {
-					dr = 0;
-				}
-			}
-
-			if (hasBelongings() && belongings.getCurrentWeapon() instanceof Blunt) {
-				dr = 0;
-			}
+		if (hit(this, enemy)) {
 
 			int dmg;
 			Preparation prep = buff(Preparation.class);
@@ -348,32 +335,13 @@ public abstract class Char extends Actor {
 				dmg = damageRoll();
 			}
 
-			if (this.alignment == Alignment.ENEMY) {
-				switch (Dungeon.difficulty) {
-					case 1://Easy = -25% damage
-						dmg *= 0.75f;
-						break;
-					case 2:
-					default://Medium = normal damage
-						break;
-					case 3://Hard = +25% damage
-						dmg *= 1.25f;
-						break;
-				}
-			}
-
 			if (hasBelongings()) {
 				if (belongings.miscs[0] instanceof MissileWeapon) {//Missile Weapons are always equipped in slot 1
 					dmg = ((MissileWeapon) belongings.miscs[0]).damageRoll(this);
 				}
 			}
-			int effectiveDamage = enemy.defenseProc(this, dmg);
-			effectiveDamage = Math.max(effectiveDamage - dr, 0);
-			effectiveDamage = attackProc(enemy, effectiveDamage);
 
-			if (visibleFight) {
-				Sample.INSTANCE.play(Assets.SND_HIT, 1, 1, Random.Float(0.8f, 1.25f));
-			}
+			dmg = elementalType().attackProc(dmg, this, enemy);
 
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
@@ -381,7 +349,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage(effectiveDamage, this);
+			enemy.damage(dmg, this, this.elementalType());
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -389,7 +357,7 @@ public abstract class Char extends Actor {
 			if (buff(FrostImbue.class) != null)
 				buff(FrostImbue.class).proc(enemy);
 
-			enemy.sprite.bloodBurstA(sprite.center(), effectiveDamage);
+			enemy.sprite.bloodBurstA(sprite.center(), dmg);
 			enemy.sprite.flash();
 
 			if (!enemy.isAlive() && visibleFight) {
@@ -419,14 +387,19 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public static boolean hit(Char attacker, Char defender, boolean magic) {
+	public static boolean hit(Char attacker, Char defender) {
 		float acuRoll = Random.Float(attacker.attackSkill(defender));
 		float defRoll = Random.Float(defender.defenseSkill(attacker));
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
-		//GLog.i(String.valueOf(defRoll));
-		//GLog.i(String.valueOf(acuRoll));
-		return (magic ? acuRoll * 3 : acuRoll) >= defRoll;
+		if (attacker.elementalType().isMagical()) {
+			if (Dungeon.level.adjacent(attacker.pos, defender.pos)) {//Magical mobs have reduced damage at melee range.
+				acuRoll /= 2;
+			} else {
+				acuRoll *= 2;
+			}
+		}
+		return acuRoll >= defRoll;
 	}
 
 	public void spendAndNext(float time) {
@@ -469,7 +442,7 @@ public abstract class Char extends Actor {
 		return Messages.get(this, "def_verb");
 	}
 
-	public int magicalDRRoll() {
+	/*public int elementalDRRoll() {
 		int dr = 0;
 		if (hasBelongings()) {
 			dr += belongings.magicalDR();
@@ -478,14 +451,14 @@ public abstract class Char extends Actor {
 	}
 
 
-	public int magicalDefenseProc(Char enemy, int damage) {
+	public int elementalDefenseProc(Char enemy, int damage) {
 		if (hasBelongings()) {
 			damage = belongings.magicalDefenseProc(enemy, damage);
 		}
 		return damage;
 	}
 
-	public int magicalAttackProc(Char enemy, int damage) {
+	public int elementalAttackProc(Char enemy, int damage) {
 		if (hasBelongings()) {
 			damage = belongings.magicalAttackProc(enemy, damage);
 		}
@@ -508,11 +481,11 @@ public abstract class Char extends Actor {
 		if (enemy == null) return false;
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 		if (hit( this, enemy, true )) {
-			int dr = enemy.magicalDRRoll();
+			int dr = enemy.elementalDRRoll();
 			int dmg = magicalDamageRoll();
-			int effectiveDamage = enemy.magicalDefenseProc( this, dmg );
+			int effectiveDamage = enemy.elementalDefenseProc( this, dmg );
 			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
-			effectiveDamage = magicalAttackProc( enemy, effectiveDamage );
+			effectiveDamage = elementalAttackProc( enemy, effectiveDamage );
 
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as getArmors glyphs.
@@ -555,20 +528,22 @@ public abstract class Char extends Actor {
 
 			return false;
 		}
+	}*/
 
-	}
-
-	public int drRoll() {
+	public int drRoll(Element element) {
 		int dr = 0;
-		if (hasBelongings()) {
-			dr += belongings.drRoll();
+		if (element.isMagical() && hasBelongings()) {
+			dr += belongings.magicalDR();
+		} else {
+			if (hasBelongings()) {
+				dr += belongings.drRoll();
+			}
+			Barkskin bark = buff(Barkskin.class);
+			if (bark != null) dr += Random.NormalIntRange(0, bark.level());
+
+			Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
+			if (block != null) dr += block.blockingRoll();
 		}
-		Barkskin bark = buff(Barkskin.class);
-		if (bark != null) dr += Random.NormalIntRange(0, bark.level());
-
-		Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
-		if (block != null) dr += block.blockingRoll();
-
 		return dr;
 	}
 
@@ -582,23 +557,33 @@ public abstract class Char extends Actor {
 
 	public int attackProc( Char enemy, int damage ) {
 		if (hasBelongings()) {
-			damage = belongings.attackProc(enemy, damage);
+			if (elementalType().isMagical()) {
+				damage = belongings.magicalAttackProc(enemy, damage);
+			} else {
+				damage = belongings.attackProc(enemy, damage);
+			}
 		}
 		return damage;
 	}
 
-	public int defenseProc( Char enemy, int damage ) {
+	public int defenseProc(Char enemy, int damage, Element element) {
 		if (hasBelongings()) {
-			damage = belongings.defenseProc(enemy, damage);
+			if (enemy.elementalType().isMagical()) {
+				damage = belongings.magicalDefenseProc(enemy, damage);
+			} else {
+				damage = belongings.defenseProc(enemy, damage);
+			}
 		}
-		Earthroot.Armor armor = buff( Earthroot.Armor.class );
-		if (armor != null) {
-			damage = armor.absorb( damage );
-		}
+		if (elementalType().isMagical()) {
+			Earthroot.Armor armor = buff(Earthroot.Armor.class);
+			if (armor != null) {
+				damage = armor.absorb(damage);
+			}
 
-		WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
-		if (rockArmor != null) {
-			damage = rockArmor.absorb(damage);
+			WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
+			if (rockArmor != null) {
+				damage = rockArmor.absorb(damage);
+			}
 		}
 		return damage;
 	}
@@ -652,7 +637,20 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Char ch) {
+		damage(dmg, ch, ch.elementalType());
+	}
+
+	public void damage(int dmg) {
+		damage( dmg, null, Element.IGNORE );
+	}
+
+	public void damage(int dmg, Object src, Element element) {
+
+		dmg = element.affectDamage(this, dmg);
+		if (dmg <= 0) {
+			return;
+		}
 		if (this.buff(Drowsy.class) != null) {
 			Buff.detach(this, Drowsy.class);
 			GLog.w(Messages.get(this, "pain_resist"));

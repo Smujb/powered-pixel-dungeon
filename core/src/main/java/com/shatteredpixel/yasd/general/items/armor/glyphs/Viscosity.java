@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.armor.glyphs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
@@ -44,7 +45,7 @@ public class Viscosity extends Glyph {
 
 		//FIXME this glyph should really just proc after DR is accounted for.
 		//should build in functionality for that, but this works for now
-		int realDamage = damage - defender.drRoll();
+		int realDamage = damage - defender.drRoll(Element.PHYSICAL);
 
 		if (realDamage <= 0) {
 			return 0;
@@ -121,7 +122,7 @@ public class Viscosity extends Glyph {
 			if (target.isAlive()) {
 
 				int damageThisTick = Math.max(1, (int)(damage*0.1f));
-				target.damage( damageThisTick, this );
+				target.damage( damageThisTick );
 				if (target == Dungeon.hero && !target.isAlive()) {
 
 					Dungeon.fail( getClass() );

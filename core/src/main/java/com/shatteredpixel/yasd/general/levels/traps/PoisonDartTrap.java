@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -88,8 +89,8 @@ public class PoisonDartTrap extends Trap {
 							reset(pos, finalTarget.sprite, new PoisonDart(), new Callback() {
 								@Override
 								public void call() {
-									int dmg = Random.NormalIntRange(1, 4) - finalTarget.drRoll();
-									finalTarget.damage(dmg, trap);
+									int dmg = Random.NormalIntRange(1, 4) - finalTarget.drRoll(Element.PHYSICAL);
+									finalTarget.damage( dmg );
 									if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
 										Dungeon.fail( trap.getClass() );
 									}
@@ -105,7 +106,7 @@ public class PoisonDartTrap extends Trap {
 					}
 				});
 			} else {
-				finalTarget.damage(Random.NormalIntRange(1, 4) - finalTarget.drRoll(), trap);
+				finalTarget.damage(Random.NormalIntRange(1, 4) - finalTarget.drRoll(Element.PHYSICAL));
 				Buff.affect( finalTarget, Poison.class ).set( poisonAmount() );
 			}
 		}

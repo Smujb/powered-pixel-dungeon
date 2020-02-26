@@ -24,6 +24,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -218,7 +219,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					dmg = Math.round(dmg*1.5f);
 					break;
 				case SLAM:
-					dmg += target.drRoll();
+					dmg += target.drRoll(Element.PHYSICAL);
 					break;
 				case CRUSH:
 					//rolls 4 times, takes the highest roll
@@ -233,10 +234,10 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					break;
 			}
 			
-			dmg = enemy.defenseProc(target, dmg);
-			dmg -= enemy.drRoll();
+			dmg = enemy.defenseProc(target, dmg, Element.PHYSICAL);
+			//dmg -= enemy.drRoll(Element.PHYSICAL);
 			dmg = target.attackProc(enemy, dmg);
-			enemy.damage( dmg, this );
+			enemy.damage( dmg, this, Element.PHYSICAL );
 
 			//special effects
 			switch (type){

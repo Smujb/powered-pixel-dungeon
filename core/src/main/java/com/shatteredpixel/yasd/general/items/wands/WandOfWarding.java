@@ -2,6 +2,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -185,7 +186,12 @@ public class WandOfWarding extends Wand {
 			name = Messages.get(this, "name_" + tier );
 		}
 
-		public void upgrade( int wandLevel ){
+		@Override
+		public Element elementalType() {
+			return Element.DESTRUCTION;
+		}
+
+		public void upgrade(int wandLevel ){
 			if (this.wandLevel < wandLevel){
 				this.wandLevel = wandLevel;
 			}
@@ -246,7 +252,7 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			if (tier > 3){
 				return Math.round(Random.NormalIntRange(0, 3 + Dungeon.depth/2) / (7f - tier));
 			} else {
@@ -288,7 +294,7 @@ public class WandOfWarding extends Wand {
 
 			//always hits
 			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 8*wandLevel );
-			enemy.damage( dmg, WandOfWarding.class );
+			enemy.damage( dmg, WandOfWarding.class, Element.DESTRUCTION);
 			if (enemy.isAlive()){
 				Wand.processSoulMark(enemy, wandLevel, 1);
 			}
@@ -310,13 +316,13 @@ public class WandOfWarding extends Wand {
 					}
 					break;
 				case 4:
-					damage(5, this);
+					damage(5, this, Element.MAGICAL);
 					break;
 				case 5:
-					damage(6, this);
+					damage(6, this, Element.MAGICAL);
 					break;
 				case 6:
-					damage(7, this);
+					damage(7, this, Element.MAGICAL);
 					break;
 			}
 		}

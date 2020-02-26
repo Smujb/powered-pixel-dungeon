@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.bombs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -72,7 +73,7 @@ public class ShockBomb extends Bomb {
 			if (power > 0){
 				//32% to 8% regular bomb damage
 				int damage = Math.round(Random.NormalIntRange(5 + Dungeon.depth, 10 + 2*Dungeon.depth) * (power/50f));
-				ch.damage(damage, this);
+				ch.damage(damage, this, Element.ELECTRIC);
 				if (ch.isAlive()) Buff.prolong(ch, Paralysis.class, power);
 				arcs.add(new Lightning.Arc(DungeonTilemap.tileCenterToWorld(cell), ch.sprite.center()));
 			}

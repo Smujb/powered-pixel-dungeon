@@ -22,12 +22,9 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
-import com.watabou.noosa.Group;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
-public class WarlockSprite extends MagicalMobSprite {
+public class WarlockSprite extends MobSprite {
 	
 	public WarlockSprite() {
 		super();
@@ -52,16 +49,4 @@ public class WarlockSprite extends MagicalMobSprite {
 		
 		play( idle );
 	}
-
-
-	@Override
-	public void FX(Group group, int cell, Callback c) {
-		MagicMissile.boltFromChar( group,
-				MagicMissile.SHADOW,
-				this,
-				cell,
-				c);
-	}
-
-
 }

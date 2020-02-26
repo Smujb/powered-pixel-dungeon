@@ -285,8 +285,8 @@ public abstract class RegularPainter extends Painter {
 				}
 			}
 		}
-		
 	}
+
 	
 	protected void paintGrass( Level l, ArrayList<Room> rooms ) {
 		boolean[] grass = Patch.generate( l.width(), l.height(), grassFill, grassSmoothness, true );
@@ -322,9 +322,11 @@ public abstract class RegularPainter extends Painter {
 			
 			int count = 1;
 			for (int n : PathFinder.NEIGHBOURS8) {
-				if ((i > 0 && i < grass.length) && grass[i + n]) {
-					count++;
-				}
+				try {
+					if (grass[i + n]) {
+						count++;
+					}
+				} catch (IndexOutOfBoundsException ignored) {}
 			}
 			l.map[i] = l.grassTile(Random.Float() < count / 12f);
 
@@ -366,6 +368,9 @@ public abstract class RegularPainter extends Painter {
 			validCells.remove(trapPos); //removes the integer object, not at the index
 			
 			Trap trap = Reflection.newInstance(trapClasses[Random.chances( trapChances )]).hide();
+			if (Random.Int(2) == 0 && l.feeling == Level.Feeling.DANGER) {
+				trap.reveal();
+			}
 			l.setTrap( trap, trapPos );
 			//some traps will not be hidden
 			l.map[trapPos] = trap.visible ? Terrain.TRAP : Terrain.SECRET_TRAP;

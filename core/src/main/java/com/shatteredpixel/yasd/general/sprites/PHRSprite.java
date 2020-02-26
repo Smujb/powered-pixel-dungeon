@@ -1,10 +1,8 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 
 public class PHRSprite extends MobSprite {
     PHRSprite() {
@@ -34,16 +32,6 @@ public class PHRSprite extends MobSprite {
         turnTo( ch.pos , cell );
         play( zap );
 
-        MagicMissile.boltFromChar( parent,
-                MagicMissile.SHADOW,
-                this,
-                cell,
-                new Callback() {
-                    @Override
-                    public void call() {
-                        ch.onZapComplete();
-                    }
-                } );
         Sample.INSTANCE.play( Assets.SND_ZAP );
     }
 

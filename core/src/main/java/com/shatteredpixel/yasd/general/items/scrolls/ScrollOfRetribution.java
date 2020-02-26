@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.scrolls;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
@@ -52,7 +53,7 @@ public class ScrollOfRetribution extends Scroll {
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Dungeon.level.heroFOV[mob.pos]) {
 				//deals 10%HT, plus 0-90%HP based on scaling
-				mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), this);
+				mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), this,  Element.DARK);
 				if (mob.isAlive()) {
 					Buff.prolong(mob, Blindness.class, Math.round(6 + power));
 				}
@@ -82,7 +83,7 @@ public class ScrollOfRetribution extends Scroll {
 		
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Dungeon.level.heroFOV[mob.pos]) {
-				mob.damage(Math.round(mob.HP * power/5f), this);
+				mob.damage(Math.round(mob.HP * power/5f), this, Element.DARK);
 			}
 		}
 		

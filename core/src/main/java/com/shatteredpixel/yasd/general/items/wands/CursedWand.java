@@ -239,11 +239,11 @@ public class CursedWand {
 								case 0:
 									user.HP = Math.min(user.HT, user.HP + damage);
 									user.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
-									target.damage(damage, origin);
+									target.damage( damage );
 									target.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
 									break;
 								case 1:
-									user.damage( damage, this );
+									user.damage( damage );
 									user.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
 									target.HP = Math.min(target.HT, target.HP + damage);
 									target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);

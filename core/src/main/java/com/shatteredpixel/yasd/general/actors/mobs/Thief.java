@@ -21,15 +21,11 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
-import com.shatteredpixel.yasd.general.items.Honeypot;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ThiefSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Random;
 
 public class Thief extends RangedMob {
@@ -44,8 +40,6 @@ public class Thief extends RangedMob {
 		
 		EXP = 2;
 		maxLvl = 6;
-
-		magical = false;
 
 		loot = Gold.class;
 		lootChance = 0.25f;
@@ -98,7 +92,7 @@ public class Thief extends RangedMob {
 	}
 
 	@Override
-	public int drRoll() {
+	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 2);
 	}
 

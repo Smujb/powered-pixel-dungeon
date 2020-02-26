@@ -24,6 +24,11 @@ public class LootLevel extends SewerLevel {
     }
 
     @Override
+    public float respawnTime() {
+        return super.respawnTime()/5;
+    }
+
+    @Override
     protected int standardRooms() {
         return 20;
     }

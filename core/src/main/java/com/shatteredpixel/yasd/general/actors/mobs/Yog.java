@@ -22,6 +22,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -107,7 +108,7 @@ public class Yog extends Mob {
 	}
 
 	@Override
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Object src, Element element) {
 
 		HashSet<Mob> fists = new HashSet<>();
 
@@ -117,7 +118,7 @@ public class Yog extends Mob {
 
 		dmg >>= fists.size();
 		
-		super.damage( dmg, src );
+		super.damage( dmg, src, element);
 
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg*0.5f);
@@ -241,7 +242,7 @@ public class Yog extends Mob {
 		}
 		
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 15);
 		}
 		
@@ -269,8 +270,8 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, Object src) {
-			super.damage(dmg, src);
+		public void damage(int dmg, Object src, Element element) {
+			super.damage(dmg, src, element);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);
 		}
@@ -301,7 +302,12 @@ public class Yog extends Mob {
 			properties.add(Property.DEMONIC);
 			properties.add(Property.FIERY);
 		}
-		
+
+		@Override
+		public Element elementalType() {
+			return Element.DARK;
+		}
+
 		@Override
 		public int attackSkill( Char target ) {
 			return 36;
@@ -313,19 +319,8 @@ public class Yog extends Mob {
 		}
 		
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 15);
-		}
-
-		@Override
-		public int magicalDamageRoll() {
-			return damageRoll();
-		}
-
-		@Override
-		public int magicalAttackProc(Char enemy, int damage) {
-			Buff.affect(enemy, Burning.class).reignite(enemy);
-			return super.magicalAttackProc(enemy, damage);
 		}
 
 		@Override
@@ -357,8 +352,8 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, Object src) {
-			super.damage(dmg, src);
+		public void damage(int dmg, Object src, Element element) {
+			super.damage(dmg, src, element);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);
 		}
@@ -398,7 +393,7 @@ public class Yog extends Mob {
 		}
 		
 		@Override
-		public int drRoll() {
+		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 8);
 		}
 

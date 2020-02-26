@@ -1,6 +1,7 @@
 package com.shatteredpixel.yasd.general.actors.blobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -85,7 +86,7 @@ public class AcidPool extends Blob {
                 }
                 if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                     if (!ch.isImmune(this.getClass()))
-                        ch.damage(damageOnStep, this);
+                        ch.damage( damageOnStep, this, Element.ACID );
                         Buff.affect(ch, Ooze.class).set( 20f );
                         clear(cell);
                 }
