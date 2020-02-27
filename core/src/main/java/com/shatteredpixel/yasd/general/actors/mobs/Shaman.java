@@ -50,7 +50,7 @@ public class Shaman extends RangedMob {
 
 	@Override
 	public Element elementalType() {
-		return super.elementalType();
+		return Element.ELECTRIC;
 	}
 
 	public Shaman() {

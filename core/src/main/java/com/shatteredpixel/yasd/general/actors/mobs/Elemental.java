@@ -52,7 +52,12 @@ public class Elemental extends Mob {
 		
 		properties.add(Property.FIERY);
 	}
-	
+
+	@Override
+	public Element elementalType() {
+		return Element.FIRE;
+	}
+
 	@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 16, 28 );

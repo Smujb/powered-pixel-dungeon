@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -235,24 +236,21 @@ public class CursedWand {
 							} else {
 								damage = Dungeon.depth * 2;
 							}
-							switch (Random.Int(2)) {
-								case 0:
-									user.HP = Math.min(user.HT, user.HP + damage);
-									user.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
-									target.damage( damage );
-									target.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
-									break;
-								case 1:
-									user.damage( damage );
-									user.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
-									target.HP = Math.min(target.HT, target.HP + damage);
-									target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
-									Sample.INSTANCE.play(Assets.SND_CURSED);
-									if (!user.isAlive() && origin != null) {
-										Dungeon.fail( origin.getClass() );
-										GLog.n(Messages.get(CursedWand.class, "ondeath", origin.name()));
-									}
-									break;
+							if (Random.Int(2) == 0) {
+								user.HP = Math.min(user.HT, user.HP + damage);
+								user.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
+								target.damage(damage, new CursedWand(), Element.CONFUSION, false);
+								target.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
+							} else {
+								user.damage(damage, new CursedWand(), Element.CONFUSION, false);
+								user.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
+								target.HP = Math.min(target.HT, target.HP + damage);
+								target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 3);
+								Sample.INSTANCE.play(Assets.SND_CURSED);
+								if (!user.isAlive() && origin != null) {
+									Dungeon.fail(origin.getClass());
+									GLog.n(Messages.get(CursedWand.class, "ondeath", origin.name()));
+								}
 							}
 							afterZap.call();
 						}

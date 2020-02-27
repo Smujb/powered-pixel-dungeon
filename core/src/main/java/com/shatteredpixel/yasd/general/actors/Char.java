@@ -641,10 +641,6 @@ public abstract class Char extends Actor {
 		damage(dmg, ch, ch.elementalType(), false);
 	}
 
-	public void damage(int dmg, Element element) {
-		damage( dmg, element, element, element.isMagical());
-	}
-
 	public void damage(int dmg, Object src,  Element element) {
 		damage( dmg, src, element, element.isMagical());
 	}

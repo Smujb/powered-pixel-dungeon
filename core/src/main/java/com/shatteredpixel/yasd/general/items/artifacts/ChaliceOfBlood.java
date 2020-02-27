@@ -100,8 +100,6 @@ public class ChaliceOfBlood extends Artifact {
 			damage = rockArmor.absorb(damage);
 		}
 
-		damage -= hero.drRoll(Element.PHYSICAL);
-
 		hero.sprite.operate( hero.pos );
 		hero.busy();
 		hero.spend(3f);
@@ -113,7 +111,7 @@ public class ChaliceOfBlood extends Artifact {
 			hero.sprite.emitter().burst( ShadowParticle.CURSE, 4+(damage/10) );
 		}
 
-		hero.damage(damage);
+		hero.damage(damage, this, Element.PHYSICAL);
 
 		if (!hero.isAlive()) {
 			Dungeon.fail( getClass() );

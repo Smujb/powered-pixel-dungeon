@@ -242,19 +242,22 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 	
 	public void attack( int cell ) {
-		animCallback = new Callback() {
+		attack(cell, new Callback() {
 			@Override
 			public void call() {
-				ch.elementalType().FX(ch, cell);
+				ch.sprite.idle();
+				ch.onAttackComplete();
 			}
-		};
-		turnTo( ch.pos, cell );
-		play( attack );
+		});
 	}
 	
 	public void attack( int cell, Callback callback ) {
-		//animCallback = callback;
-		ch.elementalType().FX(ch, cell, callback);
+		animCallback = new Callback() {
+			@Override
+			public void call() {
+				ch.elementalType().FX(ch, cell, callback);
+			}
+		};
 		turnTo( ch.pos, cell );
 		play( attack );
 	}

@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.actors.blobs;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -73,7 +74,7 @@ public class Electricity extends Blob {
 					if (ch != null && !ch.isImmune(this.getClass())) {
 						Buff.prolong( ch, Paralysis.class, 1f);
 						if (cur[cell] % 2 == 1) {
-							ch.damage(Math.round(Random.Float(2 + Dungeon.depth / Constants.CHAPTER_LENGTH)) );
+							ch.damage(Math.round(Random.Float(2 + Dungeon.depth / Constants.CHAPTER_LENGTH)), this, Element.ELECTRIC );
 							if (!ch.isAlive() && ch == Dungeon.hero){
 								Dungeon.fail( getClass() );
 								GLog.n( Messages.get(this, "ondeath") );

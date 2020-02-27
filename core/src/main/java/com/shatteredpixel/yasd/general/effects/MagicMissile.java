@@ -25,6 +25,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.effects.particles.CorrosionParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
+import com.shatteredpixel.yasd.general.effects.particles.PoisonParticle;
 import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SmokeParticle;
@@ -65,11 +66,16 @@ public class MagicMissile extends Emitter {
 	public static final int EARTH           = 9;
 	public static final int WARD            = 10;
 	public static final int PLASMA_BOLT     = 11;
-	public static final int DARK = 12;
+	public static final int DARK 			= 12;
+	public static final int POISON          = 13;
 
-	public static final int FIRE_CONE       = 100;
+	public static final int SPIRAL          = 100;
 	public static final int FOLIAGE_CONE    = 101;
-	public static final int WATER_CONE      = 102;
+	public static final int COIN            = 102;
+	public static final int FIRE_CONE       = 103;
+	public static final int BONE            = 104;
+	public static final int SLICE 			= 105;
+	public static final int WATER_CONE      = 106;
 	
 	public void reset( int type, int from, int to, Callback callback ) {
 		reset( type,
@@ -119,7 +125,7 @@ public class MagicMissile extends Emitter {
 				pour( MagicParticle.FACTORY, 0.01f );
 				break;
 			case PLASMA_BOLT:
-				pour( PlasmaParticle.FACTORY, 0.01f);
+				pour( PlasmaParticle.PLASMA_FACTORY, 0.01f);
 				break;
 			case FIRE:
 				size( 4 );
@@ -172,6 +178,22 @@ public class MagicMissile extends Emitter {
 				size( 8 );
 				pour(SmokeParticle.FACTORY, 0.01f );
 				break;
+			case POISON:
+				size( 3 );
+				pour( PoisonParticle.MISSILE, 0.01f );
+				break;
+			case SPIRAL:
+				size( 10 );
+				pour( Speck.factory( Speck.TOXIC ), 0.002f );
+				break;
+			case BONE:
+				size( 10 );
+				pour( Speck.factory( Speck.BONE ), 0.01f );
+				break;
+			case SLICE:
+				size( 10 );
+				pour( Speck.factory( Speck.SCREAM ), 0.02f );
+				break;
 		}
 	}
 	
@@ -215,20 +237,28 @@ public class MagicMissile extends Emitter {
 	}
 
 	public static class PlasmaParticle extends MagicParticle {
+
+		public static Emitter.Factory PLASMA_FACTORY = new Factory() {
+				@Override
+				public void emit(Emitter emitter, int index, float x, float y) {
+					((PlasmaParticle)emitter.recycle( MagicParticle.class )).reset( x, y );
+				}
+			};
+
 		public PlasmaParticle() {
 			super();
 
-			color( 0xffffff );
+			color(0xffffff);
 			lifespan = 0.5f;
 
-			speed.set( Random.Float( -10, +10 ), Random.Float( -10, +10 ) );
+			speed.set(Random.Float(-10, +10), Random.Float(-10, +10));
 
 		}
 	}
 	
 	public static class MagicParticle extends PixelParticle {
 		
-		public static final Emitter.Factory FACTORY = new Factory() {
+		public static Emitter.Factory FACTORY = new Factory() {
 			@Override
 			public void emit( Emitter emitter, int index, float x, float y ) {
 				((MagicParticle)emitter.recycle( MagicParticle.class )).reset( x, y );

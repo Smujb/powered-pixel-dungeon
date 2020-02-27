@@ -305,7 +305,7 @@ public class Yog extends Mob {
 
 		@Override
 		public Element elementalType() {
-			return Element.DARK;
+			return Element.FIRE;
 		}
 
 		@Override

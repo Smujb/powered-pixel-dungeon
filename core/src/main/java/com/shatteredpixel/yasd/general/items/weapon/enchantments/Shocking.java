@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.weapon.enchantments;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.Lightning;
@@ -56,7 +57,7 @@ public class Shocking extends Weapon.Enchantment {
 			
 			affected.remove(defender); //defender isn't hurt by lightning
 			for (Char ch : affected) {
-				ch.damage(Math.round(damage*0.4f) );
+				ch.damage(Math.round(damage*0.4f), this, Element.ELECTRIC );
 			}
 
 			attacker.sprite.parent.addToFront( new Lightning( arcs, null ) );

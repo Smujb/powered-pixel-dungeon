@@ -23,6 +23,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
@@ -134,7 +135,7 @@ public class WandOfBlastWave extends DamageWand {
 				}
 				ch.pos = newPos;
 				if (ch.pos == trajectory.collisionPos && ch.isAlive()) {
-					ch.damage(Random.NormalIntRange((finalDist + 1) / 2, finalDist) );
+					ch.damage(Random.NormalIntRange((finalDist + 1) / 2, finalDist), this, Element.PHYSICAL, true );
 					Paralysis.prolong(ch, Paralysis.class, Random.NormalIntRange((finalDist + 1) / 2, finalDist));
 				}
 				Dungeon.level.occupyCell(ch);

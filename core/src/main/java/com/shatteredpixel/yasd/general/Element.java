@@ -37,8 +37,10 @@ public enum Element {
 	AIR( true ),
 	ACID( true ),
 	ELECTRIC( true ),
+	CONFUSION( true ),
 	VENOM( true ),
 	HOLY( true ),
+	DRAIN( true ),
 	DARK( true );
 
 
@@ -52,7 +54,7 @@ public enum Element {
 			case ACID:
 				Buff.affect(defender, Ooze.class).set(20f);
 				break;
-			case DARK:
+			case DARK: case DRAIN:
 				Buff.affect(defender, Weakness.class, Weakness.DURATION);
 				break;
 		}
@@ -100,33 +102,25 @@ public enum Element {
 		damage = Math.max(damage - ch.drRoll(this), 0);
 		return damage;
 	}
-	public void FX(Char ch, int cell) {
-		Callback attack = new Callback() {
-			@Override
-			public void call() {
-				ch.sprite.idle();
-				ch.onAttackComplete();
-			}
-		};
-		FX(ch, cell, attack);
-	}
-
 
 	public void FX(Char ch, int cell, Callback attack) {
 
 		switch (this) {
+			case MAGICAL:
+			case NONE:
 			case PHYSICAL:
 				attack.call();
+				break;
 			case RANGED:
 				((MissileSprite)ch.sprite.parent.recycle( MissileSprite.class )).
 						reset( ch.pos, cell, new ThrowingKnife(), attack );
-				break;
-			case MAGICAL:
 				break;
 			case DESTRUCTION:
 				ch.sprite.parent.add(
 						new Beam.DeathRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 				attack.call();
+				break;
+			case NATURAL:
 				break;
 			case FIRE:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -156,6 +150,20 @@ public enum Element {
 						cell,
 						attack);
 				break;
+			case CONFUSION:
+				MagicMissile.boltFromChar( ch.sprite.parent,
+						MagicMissile.RAINBOW,
+						ch.sprite,
+						cell,
+						attack);
+				break;
+			case VENOM:
+				MagicMissile.boltFromChar( ch.sprite.parent,
+						MagicMissile.POISON,
+						ch.sprite,
+						cell,
+						attack);
+				break;
 			case AIR: case HOLY:
 				ch.sprite.parent.add(
 						new Beam.LightRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
@@ -173,7 +181,7 @@ public enum Element {
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));//No callback as damaging after lightning anim finishes looks messy
 				attack.call();
 				break;
-			case DARK:
+			case DARK: case DRAIN:
 				MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.SHADOW,
 						ch.sprite,

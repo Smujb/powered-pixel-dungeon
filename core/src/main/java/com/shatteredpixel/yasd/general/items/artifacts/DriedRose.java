@@ -536,7 +536,7 @@ public class DriedRose extends Artifact {
 		protected boolean act() {
 			updateRose();
 			if (rose == null || !rose.isEquipped(Dungeon.hero)){
-				damage(1, Element.NONE);
+				damage(1, this, Element.NONE);
 
 			}
 			

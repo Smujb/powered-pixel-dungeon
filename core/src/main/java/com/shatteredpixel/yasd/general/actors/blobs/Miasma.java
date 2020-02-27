@@ -1,6 +1,7 @@
 package com.shatteredpixel.yasd.general.actors.blobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -49,7 +50,7 @@ public class Miasma extends Blob {
                                 Buff.prolong(ch, Weakness.class, Weakness.DURATION / 2f);
                                 break;
                             case 3:
-                                ch.damage((int) (ch.HT / 10f));
+                                ch.damage((int) (ch.HT / 10f),this,  Element.CONFUSION);
                                 break;
                         }
                     }
