@@ -125,7 +125,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
 		if (lvl.canInstakill(defender)){
 			int dmg = lvl.damageRoll(attacker, defender);
-			defender.damage( Math.max(defender.HT, dmg), attacker, Element.IGNORE);
+			defender.damage( Math.max(defender.HT, dmg), attacker, Element.PHYSICAL, true );
 			//even though the defender is dead, other effects should still proc (enchants, etc.)
 			return Math.max( defender.HT, dmg);
 		} else {

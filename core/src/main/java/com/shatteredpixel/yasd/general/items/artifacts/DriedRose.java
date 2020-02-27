@@ -536,7 +536,8 @@ public class DriedRose extends Artifact {
 		protected boolean act() {
 			updateRose();
 			if (rose == null || !rose.isEquipped(Dungeon.hero)){
-				damage(1);
+				damage(1, Element.NONE);
+
 			}
 			
 			if (!isAlive())
@@ -626,8 +627,8 @@ public class DriedRose extends Artifact {
 		}
 		
 		@Override
-		public void damage(int dmg, Object src, Element element) {
-			super.damage( dmg, src, element);
+		public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+			super.damage( dmg, src, element, ignoresDefense);
 			Item.updateQuickslot();
 		}
 		

@@ -242,9 +242,9 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
 		boolean bleeding = (HP*2 <= HT);
-		super.damage(dmg, src, element);
+		super.damage(dmg, src, element, ignoresDefense);
 		if ((HP*2 <= HT) && !bleeding){
 			BossHealthBar.bleed(true);
 			sprite.showStatus(CharSprite.NEGATIVE, Messages.get(this, "enraged"));

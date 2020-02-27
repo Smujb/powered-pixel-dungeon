@@ -28,7 +28,6 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
-import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -115,13 +114,13 @@ public class NewTengu extends Mob {
 	}
 	
 	@Override
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;
 		
 		int beforeHitHP = HP;
-		super.damage(dmg, src, element);
+		super.damage(dmg, src, element, ignoresDefense);
 		dmg = beforeHitHP - HP;
 		
 		//tengu cannot be hit through multiple brackets at a time
@@ -608,7 +607,7 @@ public class NewTengu extends Mob {
 							if (ch != null && !(ch instanceof NewTengu)){
 								int dmg = Random.NormalIntRange(5 + Dungeon.depth, 10 + Dungeon.depth*2);
 
-								ch.damage(dmg, Bomb.class, Element.PHYSICAL);
+								ch.damage(dmg, Bomb.class, Element.PHYSICAL, false);
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);
@@ -980,7 +979,7 @@ public class NewTengu extends Mob {
 							
 							Char ch = Actor.findChar(cell);
 							if (ch != null && !(ch instanceof NewTengu)){
-								ch.damage(2 + Dungeon.depth, Electricity.class, Element.ELECTRIC);
+								ch.damage(2 + Dungeon.depth, Element.ELECTRIC, false );
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);

@@ -26,9 +26,10 @@ public enum Element {
 	 */
 	PHYSICAL( false ),
 	RANGED( false ),
-	IGNORE( true ),
+	NONE( true ),
 	MAGICAL( true ),
 	DESTRUCTION( true ),
+	NATURAL( true ),
 	FIRE( true),
 	WATER( true ),
 	EARTH( false ),
@@ -36,6 +37,7 @@ public enum Element {
 	AIR( true ),
 	ACID( true ),
 	ELECTRIC( true ),
+	VENOM( true ),
 	HOLY( true ),
 	DARK( true );
 
@@ -95,9 +97,7 @@ public enum Element {
 	}
 
 	public int affectDamage(Char ch, int damage) {
-		if (this != IGNORE) {//This is used to ignore DR roll in the case of damage such as from fire or bleeding
-			damage = Math.max(damage - ch.drRoll(this), 0);
-		}
+		damage = Math.max(damage - ch.drRoll(this), 0);
 		return damage;
 	}
 	public void FX(Char ch, int cell) {
@@ -121,7 +121,6 @@ public enum Element {
 				((MissileSprite)ch.sprite.parent.recycle( MissileSprite.class )).
 						reset( ch.pos, cell, new ThrowingKnife(), attack );
 				break;
-			case IGNORE:
 			case MAGICAL:
 				break;
 			case DESTRUCTION:

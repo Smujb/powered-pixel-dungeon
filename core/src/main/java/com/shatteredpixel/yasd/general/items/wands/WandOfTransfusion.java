@@ -110,7 +110,7 @@ public class WandOfTransfusion extends Wand {
 				
 				//harms the undead
 				} else {
-					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), this, Element.DARK);
+					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), this, Element.DARK, false );
 					ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + intLevel);
 					Sample.INSTANCE.play(Assets.SND_BURNING);
 				}
@@ -127,7 +127,7 @@ public class WandOfTransfusion extends Wand {
 	//this wand costs health too
 	private void damageHero(int damage){
 		
-		curUser.damage(damage);
+		curUser.damage(damage, this, Element.DARK);
 
 		if (!curUser.isAlive()){
 			Dungeon.fail( getClass() );

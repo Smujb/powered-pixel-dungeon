@@ -64,7 +64,7 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element){
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense){
 		//crab blocks all attacks originating from its current enemy if it sees them.
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
 		if ((enemySeen && state != SLEEPING && paralysed == 0)
@@ -73,7 +73,7 @@ public class GreatCrab extends Crab {
 			GLog.n( Messages.get(this, "noticed") );
 			sprite.showStatus( CharSprite.NEUTRAL, Messages.get(this, "blocked") );
 		} else {
-			super.damage( dmg, src, element);
+			super.damage( dmg, src, element, ignoresDefense);
 		}
 	}
 

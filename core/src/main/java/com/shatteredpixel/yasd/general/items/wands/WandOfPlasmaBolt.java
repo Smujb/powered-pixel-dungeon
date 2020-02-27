@@ -45,7 +45,7 @@ public class WandOfPlasmaBolt extends DamageWand {
         int damage = damageRoll(lvl);
         damage = enemy.defenseProc(curUser, damage, Element.PHYSICAL);
         if (damage > 0) {
-            enemy.damage(damage, this, Element.PHYSICAL);
+            enemy.damage(damage, this, Element.PHYSICAL, false );
         }
         return damage;
     }

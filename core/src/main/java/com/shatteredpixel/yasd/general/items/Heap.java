@@ -105,7 +105,7 @@ public class Heap implements Bundlable {
 		if (haunted){
 			if (Wraith.spawnAt( pos ) == null) {
 				hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-				hero.damage( hero.HP / 2, this, Element.DARK );
+				hero.damage( hero.HP / 2, this, Element.DARK, );
 			}
 			Sample.INSTANCE.play( Assets.SND_CURSED );
 		}

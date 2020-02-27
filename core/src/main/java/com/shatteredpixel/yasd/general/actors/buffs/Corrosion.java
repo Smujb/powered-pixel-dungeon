@@ -92,7 +92,7 @@ public class Corrosion extends Buff implements Hero.Doom {
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			target.damage((int)damage, this, Element.IGNORE);
+			target.damage((int)damage, this, Element.ACID );
 			if (target.belongings != null) {
 				int index = Random.Int(5);
 				Item item = target.belongings.miscs[index];

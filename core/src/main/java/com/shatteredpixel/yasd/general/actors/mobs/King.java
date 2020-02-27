@@ -141,8 +141,8 @@ public class King extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element) {
-		super.damage(dmg, src, element);
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+		super.damage(dmg, src, element, ignoresDefense);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg);
 	}
@@ -303,8 +303,8 @@ public class King extends Mob {
 		}
 		
 		@Override
-		public void damage(int dmg, Object src, Element element) {
-			super.damage( dmg, src, element);
+		public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+			super.damage( dmg, src, element, ignoresDefense);
 			if (src instanceof ToxicGas) {
 				((ToxicGas)src).clear( pos );
 			}

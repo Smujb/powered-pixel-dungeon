@@ -248,7 +248,7 @@ public class Blacksmith extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
 	}
 	
 	@Override

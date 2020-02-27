@@ -349,7 +349,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage(dmg, this, this.elementalType());
+			enemy.damage( dmg, this );
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -638,16 +638,25 @@ public abstract class Char extends Actor {
 	}
 
 	public void damage(int dmg, Char ch) {
-		damage(dmg, ch, ch.elementalType());
+		damage(dmg, ch, ch.elementalType(), false);
 	}
 
-	public void damage(int dmg) {
-		damage( dmg, null, Element.IGNORE );
+	public void damage(int dmg, Element element) {
+		damage( dmg, element, element, element.isMagical());
 	}
 
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src,  Element element) {
+		damage( dmg, src, element, element.isMagical());
+	}
 
-		dmg = element.affectDamage(this, dmg);
+	public void damage(int dmg, Element element, boolean ignoresDefense) {
+		damage(dmg, element, element, ignoresDefense);
+	}
+
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+		if (!ignoresDefense) {
+			dmg = element.affectDamage(this, dmg);
+		}
 		if (dmg <= 0) {
 			return;
 		}
@@ -698,7 +707,6 @@ public abstract class Char extends Actor {
 		}
 
 		int shielded = dmg;
-		//FIXME: when I add proper damage properties, should add an IGNORES_SHIELDS property to use here.
 		if (!(src instanceof Hunger)){
 			for (ShieldBuff s : buffs(ShieldBuff.class)){
 				dmg = s.absorbDamage(dmg);

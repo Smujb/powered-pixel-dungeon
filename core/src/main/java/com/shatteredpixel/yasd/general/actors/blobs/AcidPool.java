@@ -86,7 +86,7 @@ public class AcidPool extends Blob {
                 }
                 if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                     if (!ch.isImmune(this.getClass()))
-                        ch.damage( damageOnStep, this, Element.ACID );
+                        ch.damage( damageOnStep, this, Element.ACID, false);
                         Buff.affect(ch, Ooze.class).set( 20f );
                         clear(cell);
                 }

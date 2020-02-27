@@ -127,7 +127,7 @@ public class Chasm {
 				Dungeon.fail( Chasm.class );
 				GLog.n( Messages.get(Chasm.class, "ondeath") );
 			}
-		}, Element.IGNORE);
+		}, Element.EARTH, true);
 	}
 
 	public static void mobFall( Mob mob ) {

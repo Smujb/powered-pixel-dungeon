@@ -42,7 +42,7 @@ public class ShockingDart extends TippedDart {
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 		
-		defender.damage(Random.NormalIntRange(damage/2, damage), this, Element.ELECTRIC);
+		defender.damage(Random.NormalIntRange(damage/2, damage), this, Element.ELECTRIC, false);
 		
 		CharSprite s = defender.sprite;
 		if (s != null && s.parent != null) {

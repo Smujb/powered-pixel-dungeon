@@ -200,7 +200,7 @@ public class Statue extends Mob implements Callback {
 	}
 	
 	@Override
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
 
 		if (state == PASSIVE) {
 			state = HUNTING;
@@ -210,7 +210,7 @@ public class Statue extends Mob implements Callback {
 			Ankh.revive(this, null);
 			ankhs--;
 		}
-		super.damage( dmg, src, element);
+		super.damage( dmg, src, element, ignoresDefense);
 	}
 
 	protected void zap(Char enemy) {

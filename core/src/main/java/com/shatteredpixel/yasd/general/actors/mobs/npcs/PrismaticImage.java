@@ -189,7 +189,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, Object src, Element element) {
+	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
 
 		//TODO improve this when I have proper damage source logic
 		//checks if *any* equipped armour has Anti Magic
@@ -201,7 +201,7 @@ public class PrismaticImage extends NPC {
 			}
 		}
 		
-		super.damage(dmg, src, element);
+		super.damage(dmg, src, element, ignoresDefense);
 	}
 	
 	@Override

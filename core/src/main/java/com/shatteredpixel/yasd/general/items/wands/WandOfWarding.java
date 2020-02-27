@@ -294,7 +294,7 @@ public class WandOfWarding extends Wand {
 
 			//always hits
 			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 8*wandLevel );
-			enemy.damage( dmg, WandOfWarding.class, Element.DESTRUCTION);
+			enemy.damage( dmg, WandOfWarding.class, Element.DESTRUCTION, false );
 			if (enemy.isAlive()){
 				Wand.processSoulMark(enemy, wandLevel, 1);
 			}
@@ -316,13 +316,13 @@ public class WandOfWarding extends Wand {
 					}
 					break;
 				case 4:
-					damage(5, this, Element.MAGICAL);
+					damage(5, this, Element.MAGICAL, false );
 					break;
 				case 5:
-					damage(6, this, Element.MAGICAL);
+					damage(6, this, Element.MAGICAL, false );
 					break;
 				case 6:
-					damage(7, this, Element.MAGICAL);
+					damage(7, this, Element.MAGICAL, false );
 					break;
 			}
 		}
