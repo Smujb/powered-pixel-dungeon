@@ -1,22 +1,28 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.levels;
@@ -120,6 +126,8 @@ public abstract class Level implements Bundlable {
 	protected int height;
 	protected int length;
 
+	protected int scaleFactor = 0;
+
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
 	
@@ -135,6 +143,10 @@ public abstract class Level implements Bundlable {
 	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 6;
 	
 	public boolean[] heroFOV;
+
+	public int getScaleFactor() {
+		return scaleFactor;
+	}
 
 	public boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
@@ -482,11 +494,11 @@ public abstract class Level implements Bundlable {
 		if (feeling == Feeling.DARK)
 			viewDistance = Math.round(viewDistance/2f);
 
-		if (bundle.contains( "mobs_to_spawn" )) {
-			for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
-				if (mob != null) mobsToSpawn.add(mob);
-			}
-		}
+		//if (bundle.contains( "mobs_to_spawn" )) {
+		//	for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
+		//		if (mob != null) mobsToSpawn.add(mob);
+		//	}
+		//}
 		
 		buildFlagMaps();
 		cleanWalls();
@@ -511,7 +523,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( MOBS, mobs );
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
-		bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
+		//bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
 	}
 
 	public Terrain tunnelTile() {
@@ -560,14 +572,21 @@ public abstract class Level implements Bundlable {
 	
 	abstract protected boolean build();
 	
-	private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
+	//private ArrayList<Class<?extends Mob>> mobsToSpawn = new ArrayList<>();
+
+	public Class<?>[] mobClasses() {
+		return new Class[]{Wraith.class};
+	}
+
+	public float[] mobChances() {
+		return new float[]{1};
+	}
 	
 	public Mob createMob() {
-		Mob mob = Bestiary.getMob();
-		if (Random.Int(5) == 0 && feeling == Feeling.EVIL) {
-			mob = new Wraith();
-		}
-		return mob;
+		int type = Random.chances(mobChances());
+		Class<? extends Mob> mob = (Class<? extends Mob>) mobClasses()[type];
+		mob = Bestiary.swapMobAlt(mob);
+		return Mob.create(mob, this);
 	}
 
 	public ArrayList<Integer> getPassableCellsList() {

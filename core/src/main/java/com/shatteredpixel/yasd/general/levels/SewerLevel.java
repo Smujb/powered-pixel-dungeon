@@ -1,28 +1,40 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Crab;
+import com.shatteredpixel.yasd.general.actors.mobs.Gnoll;
+import com.shatteredpixel.yasd.general.actors.mobs.Rat;
+import com.shatteredpixel.yasd.general.actors.mobs.Slime;
+import com.shatteredpixel.yasd.general.actors.mobs.Snake;
+import com.shatteredpixel.yasd.general.actors.mobs.Thief;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.general.effects.Ripple;
 import com.shatteredpixel.yasd.general.items.DewVial;
@@ -49,13 +61,15 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
 
 public class SewerLevel extends RegularLevel {
 
 	{
 		color1 = 0x48763c;
 		color2 = 0x59994a;
+
+		scaleFactor = 0;
 	}
 
 
@@ -97,11 +111,37 @@ public class SewerLevel extends RegularLevel {
 	@Override
 	protected Class<?>[] trapClasses() {
 		return Dungeon.depth == 1 ?
-				new Class<?>[]{ WornDartTrap.class } :
-				new Class<?>[]{ ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class,
+				new Class<?>[]{WornDartTrap.class} :
+				new Class<?>[]{ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class,
 						AlarmTrap.class, OozeTrap.class,
-						ConfusionTrap.class, FlockTrap.class, SummoningTrap.class, TeleportationTrap.class };
-}
+						ConfusionTrap.class, FlockTrap.class, SummoningTrap.class, TeleportationTrap.class};
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return Dungeon.depth == 1 ?
+				new Class[]{Rat.class, Snake.class} :
+				new Class[]{
+						Rat.class,
+						Snake.class,
+						Gnoll.class,
+						Thief.class,
+						Crab.class,
+						Slime.class};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return Dungeon.depth == 1 ?
+				new float[]{3, 1} :
+				new float[]{
+						3,
+						1,
+						4,
+						4,
+						2,
+						3};
+	}
 
 	@Override
 	protected float[] trapChances() {

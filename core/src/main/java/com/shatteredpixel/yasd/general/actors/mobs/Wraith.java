@@ -1,22 +1,28 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.actors.mobs;
@@ -29,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.PinCushion;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
@@ -49,13 +54,9 @@ public class Wraith extends RangedMob {
 
 
 	private static final float BLINK_CHANCE	= 0.125f;
-
-	private int level;
 	
 	{
 		spriteClass = WraithSprite.class;
-		
-		HP = HT = 1;
 		EXP = 0;
 
 		maxLvl = -2;
@@ -71,19 +72,10 @@ public class Wraith extends RangedMob {
 
 	@Override
 	public Element elementalType() {
-		return Element.DARK;
+		return Element.DRAIN;
 	}
 
 	private static final String LEVEL = "level";
-
-	public Wraith() {
-		this(Dungeon.depth);
-	}
-
-	public Wraith(int level) {
-		this.level = level;
-		adjustStats(level);
-	}
 
 	@Override
 	public void add(Buff buff) {
@@ -98,17 +90,14 @@ public class Wraith extends RangedMob {
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
-		bundle.put( LEVEL, level );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		level = bundle.getInt( LEVEL );
-		adjustStats( level );
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 2 + (int) (level*0.67), 3 + level );
 	}
@@ -116,12 +105,12 @@ public class Wraith extends RangedMob {
 	@Override
 	public int attackSkill( Char target ) {
 		return 10 + level;
-	}
+	}*/
 	
 	private void adjustStats(int level) {
 		this.level = level;
-		defenseSkill = attackSkill(null) - 3;
-		HP = HT = 5 + Math.round(level * 1.5f);
+		//defenseSkill = attackSkill(null) - 3;
+		//HP = HT = 5 + Math.round(level * 1.5f);
 		enemySeen = true;
 	}
 
@@ -153,7 +142,7 @@ public class Wraith extends RangedMob {
 	public static Wraith spawnAt( int pos, boolean useNeighbors ) {
 		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 			
-			Wraith w = new  Wraith();
+			Wraith w = Mob.create(Wraith.class);
 			w.adjustStats( Dungeon.depth );
 			w.pos = pos;
 			w.state = w.HUNTING;
@@ -202,26 +191,6 @@ public class Wraith extends RangedMob {
 		ScrollOfTeleportation.appear( this, newPos );
 
 		move( newPos );
-	}
-
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-
-		if ( isAlive() && Dungeon.level.adjacent(pos, enemy.pos)) {
-
-			int healed = damage/2;
-
-			if (healed > 0) {
-
-				HP += Math.min(missingHP(), healed);
-
-				if( sprite.visible ) {
-					sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-				}
-			}
-		}
-
-		return damage;
 	}
 
 	@Override

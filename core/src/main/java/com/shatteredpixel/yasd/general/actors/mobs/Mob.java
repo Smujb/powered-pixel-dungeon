@@ -1,22 +1,28 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.actors.mobs;
@@ -26,6 +32,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -36,7 +43,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
-import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
@@ -44,8 +50,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.effects.Surprise;
-import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
@@ -79,12 +83,76 @@ public abstract class Mob extends Char {
 		
 		alignment = Alignment.ENEMY;
 	}
-	
-	private static final String	TXT_DIED	= "You hear something died in the distance";
-	
-	protected static final String TXT_NOTICE1	= "?!";
-	protected static final String TXT_RAGE		= "#$%^";
-	protected static final String TXT_EXP		= "%+dEXP";
+
+	/*public enum Type {
+		NONE,
+		TANK,
+		ASASSIN,
+		SUPPORT,
+		SABOTAGE,
+		MINIBOSS;
+
+		public int normalHP(int chapter) {
+			int amount =  12 + 22 * chapter;//12 in Sewers, 100 in Halls
+			switch (this) {
+				default:
+					break;
+				case TANK:
+					amount *= 1.5f;
+					break;
+				case ASASSIN:
+					amount *= 0.5f;
+					break;
+				case SUPPORT:
+				case SABOTAGE:
+					amount *= 1/3f;
+					break;
+				case MINIBOSS:
+					amount *= 2;
+					break;
+			}
+			return amount;
+		}
+
+		public int attackSkill(int chapter) {
+			return 10 + chapter * Constants.CHAPTER_LENGTH;
+		}
+
+		public int defenseSkill(int chapter) {
+			return 4 + chapter * Constants.CHAPTER_LENGTH;
+		}
+
+		public int damageRoll(int chapter) {
+			int max = 5 + 6 * chapter;//5 in Sewers, 35 in Halls
+			int min = 1 + 2 * chapter;
+			switch (this) {
+				default:
+					break;
+				case TANK:
+					max *= 1/3f;
+					break;
+				case ASASSIN:
+					max *= 2f;
+					break;
+				case SUPPORT:
+				case SABOTAGE:
+					max *= 1/3f;
+					break;
+				case MINIBOSS:
+					max *= 1.5f;
+					break;
+			}
+			return Random.NormalIntRange(min, max);
+		}
+	}
+
+	public Type type = Type.NONE;*/
+
+	protected int level = 0;
+
+	public float damageFactor = 1f;
+	public float healthFactor = 1f;
+	public float drFactor = 1f;
 
 	public AiState SLEEPING     = new  Sleeping();
 	public AiState HUNTING		= new  Hunting();
@@ -97,7 +165,9 @@ public abstract class Mob extends Char {
 	
 	protected int target = -1;
 
-
+	{
+		HP = HT = (int) (normalHP(level) * healthFactor);
+	}
 	
 	public int EXP = 1;
 	public int maxLvl = Constants.HERO_EXP_CAP;
@@ -111,7 +181,8 @@ public abstract class Mob extends Char {
 	private static final String STATE	= "state";
 	private static final String SEEN	= "seen";
 	private static final String TARGET	= "target";
-	
+	private static final String LEVEL	= "level";
+
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		
@@ -130,6 +201,7 @@ public abstract class Mob extends Char {
 		}
 		bundle.put( SEEN, enemySeen );
 		bundle.put( TARGET, target );
+		bundle.put( LEVEL, level );
 	}
 	
 	@Override
@@ -138,24 +210,56 @@ public abstract class Mob extends Char {
 		super.restoreFromBundle( bundle );
 
 		String state = bundle.getString( STATE );
-		if (state.equals( Sleeping.TAG )) {
-			this.state = SLEEPING;
-		} else if (state.equals( Wandering.TAG )) {
-			this.state = WANDERING;
-		} else if (state.equals( Hunting.TAG )) {
-			this.state = HUNTING;
-		} else if (state.equals( Fleeing.TAG )) {
-			this.state = FLEEING;
-		} else if (state.equals( Passive.TAG )) {
-			this.state = PASSIVE;
+		switch (state) {
+			case Sleeping.TAG:
+				this.state = SLEEPING;
+				break;
+			case Wandering.TAG:
+				this.state = WANDERING;
+				break;
+			case Hunting.TAG:
+				this.state = HUNTING;
+				break;
+			case Fleeing.TAG:
+				this.state = FLEEING;
+				break;
+			case Passive.TAG:
+				this.state = PASSIVE;
+				break;
 		}
 
 		enemySeen = bundle.getBoolean( SEEN );
 
 		target = bundle.getInt( TARGET );
+
+		level = bundle.getInt( LEVEL );
 	}
 
-	public int findClosest( Char attacker, Char enemy, int pos) {
+	private int normalHP(int chapter) {
+		return 12 + 22 * chapter;
+	}
+
+	private int normalAttackSkill(int chapter) {
+		return 10 + chapter * Constants.CHAPTER_LENGTH;
+	}
+
+	private int normalDefenseSkill(int chapter) {
+		return 4 + chapter * Constants.CHAPTER_LENGTH;
+	}
+
+	private int normalDamageRoll(int chapter) {
+		int max = 5 + 6 * chapter;//5 in Sewers, 35 in Halls
+		int min = 1 + 2 * chapter;//1 in Sewers, 11 in Halls
+		return Random.NormalIntRange(min, max);
+	}
+
+	private int normalDRRoll(int chapter) {
+		int max = 2 + 2 * chapter;//2 in Sewers, 12 in Halls
+		int min = chapter;//0 in Sewers, 5 in Halls
+		return Random.NormalIntRange(min, max);
+	}
+
+	int findClosest(Char enemy, int pos) {
 		int closest = -1;
 		boolean[] passable = Dungeon.level.passable();
 
@@ -168,7 +272,65 @@ public abstract class Mob extends Char {
 		}
 		return closest;
 	}
-	
+
+	public static <T extends Mob> T create(Class<T> type, int level) {
+		T mob = null;
+		try {
+			mob = type.newInstance();
+		} catch (InstantiationException e) {
+			MainGame.reportException(e);
+		} catch (IllegalAccessException e) {
+			MainGame.reportException(e);
+		}
+		assert mob != null;
+		mob.level = level;
+		return mob;
+	}
+
+	public static <T extends Mob> T create(Class<T> type, Level level) {
+		return create(type, level.getScaleFactor());
+	}
+
+	public static <T extends Mob> T create(Class<T> type) {
+		return create(type, Dungeon.level);
+	}
+
+	@Override
+	public int damageRoll() {
+		if (hasBelongings()) {
+			return super.damageRoll();
+		} else {
+			return (int) (normalDamageRoll(level) * damageFactor);
+		}
+	}
+
+	@Override
+	public int attackSkill(Char target) {
+		if (hasBelongings()) {
+			return super.attackSkill(target);
+		} else {
+			return (int) (normalAttackSkill(level) * ACC);
+		}
+	}
+
+	@Override
+	public int defenseSkill(Char enemy) {
+		if (hasBelongings()) {
+			return super.defenseSkill(enemy);
+		} else {
+			return (int) (normalDefenseSkill(level) * EVA);
+		}
+	}
+
+	@Override
+	public int drRoll(Element element) {
+		if (hasBelongings()) {
+			return super.drRoll(element);
+		} else {
+			return (int) (normalDRRoll(level) * drFactor);
+		}
+	}
+
 	public CharSprite sprite() {
 		return Reflection.newInstance(spriteClass);
 	}
@@ -203,12 +365,6 @@ public abstract class Mob extends Char {
 	
 	//FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
 	protected boolean intelligentAlly = false;
-
-	/*@Override
-	public void onZapComplete() {
-		super.onZapComplete();
-		magicalAttack(enemy);
-	}*/
 	
 	protected Char chooseEnemy() {
 
@@ -371,7 +527,7 @@ public abstract class Mob extends Char {
 	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
 		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 
-			Mob mob = Reflection.newInstance(type);
+			Mob mob = Mob.create(type);
 			mob.pos = pos;
 			mob.state = mob.HUNTING;
 			GameScene.add( mob );
@@ -562,19 +718,24 @@ public abstract class Mob extends Char {
 		}
 		return damage;
 	}
-	
-	@Override
-	public int defenseSkill( Char enemy ) {
+
+	public boolean canBeSurpriseAttacked( Char enemy ) {
 		boolean seen = (enemySeen && enemy.invisible == 0);
 		if (enemy == Dungeon.hero && !Dungeon.hero.canSurpriseAttack()) seen = true;
-		if ( seen
+		return !seen;
+	}
+	
+	/*@Override
+	public int defenseSkill( Char enemy ) {
+
+		if ( !canBeSurpriseAttacked(enemy)
 				&& paralysed == 0
 				&& !(alignment == Alignment.ALLY && enemy == Dungeon.hero)) {
 			return this.defenseSkill;
 		} else {
 			return 0;
 		}
-	}
+	}*/
 	
 	protected boolean hitWithRanged = false;
 	
@@ -584,9 +745,9 @@ public abstract class Mob extends Char {
 		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
 		}
-		
-		if ((!enemySeen || enemy.invisible > 0)
-				&& !element.isMagical() && enemy.canSurpriseAttack()) {
+
+		/*if (canBeSurpriseAttacked(enemy)
+				&& !element.isMagical()) {
 			Statistics.sneakAttacks++;
 			Badges.validateRogueUnlock();
 			if (enemy.buff(Preparation.class) != null) {
@@ -594,7 +755,7 @@ public abstract class Mob extends Char {
 			} else {
 				Surprise.hit(this);
 			}
-		}
+		}*/
 
 		//if attacked by something else than current target, and that thing is closer, switch targets
 		if (this.enemy == null

@@ -1,57 +1,37 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Constants;
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bestiary {
 
-	public static Mob getMob() {
-		Mob mob;
-		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
-		mobClass = swapMobAlt(mobClass);
-		do {
-			mob = Reflection.newInstance(mobClass);
-		} while (mob == null);
-		switch (Dungeon.difficulty) {
-			case 1://Easy = -25% max HP
-				mob.HP = mob.HT*=0.75f;
-				break;
-			case 2: default://Medium = ChainArmor max HP
-				break;
-			case 3://Hard = +25% max HP
-				mob.HP = mob.HT*=1.25f;
-				break;
-		}
-		return mob;
-	}
-
-	private static Class<? extends Mob> swapMobAlt( Class<? extends Mob> mob ) {
+	public static Class<? extends Mob> swapMobAlt( Class<? extends Mob> mob ) {
 		Class<? extends Mob> cl = mob;
 		if (Random.Int( 5 ) == 0) {
 			if (cl == Rat.class) {
@@ -69,6 +49,26 @@ public class Bestiary {
 			}
 		}
 		return cl;
+	}
+
+	/*public static Mob getMob() {
+		Mob mob;
+		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
+		mobClass = swapMobAlt(mobClass);
+		do {
+			mob = Reflection.newInstance(mobClass);
+		} while (mob == null);
+		switch (Dungeon.difficulty) {
+			case 1://Easy = -25% max HP
+				mob.HP = mob.HT*=0.75f;
+				break;
+			case 2: default://Medium = ChainArmor max HP
+				break;
+			case 3://Hard = +25% max HP
+				mob.HP = mob.HT*=1.25f;
+				break;
+		}
+		return mob;
 	}
 
 	private static Class<? extends Mob> getMobClass( int depth, int path ) {
@@ -185,5 +185,5 @@ public class Bestiary {
 				Succubus.class
 		));
 		return mobs.get(Random.chances(chances));
-	}
+	}*/
 }

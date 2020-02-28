@@ -1,29 +1,37 @@
 /*
- * Pixel Dungeon
- * Copyright (C) 2012-2015 Oleg Dolya
  *
- * Shattered Pixel Dungeon
- * Copyright (C) 2014-2019 Evan Debenham
+ *  * Pixel Dungeon
+ *  * Copyright (C) 2012-2015 Oleg Dolya
+ *  *
+ *  * Shattered Pixel Dungeon
+ *  * Copyright (C) 2014-2019 Evan Debenham
+ *  *
+ *  * Yet Another Shattered Dungeon
+ *  * Copyright (C) 2014-2020 Samuel Braithwaite
+ *  *
+ *  * This program is free software: you can redistribute it and/or modify
+ *  * it under the terms of the GNU General Public License as published by
+ *  * the Free Software Foundation, either version 3 of the License, or
+ *  * (at your option) any later version.
+ *  *
+ *  * This program is distributed in the hope that it will be useful,
+ *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  * GNU General Public License for more details.
+ *  *
+ *  * You should have received a copy of the GNU General Public License
+ *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
 package com.shatteredpixel.yasd.general.actors;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
@@ -68,6 +76,9 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.effects.Surprise;
+import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Potential;
@@ -393,11 +404,23 @@ public abstract class Char extends Actor {
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (attacker.elementalType().isMagical()) {
-			if (Dungeon.level.adjacent(attacker.pos, defender.pos)) {//Magical mobs have reduced damage at melee range.
+			if (Dungeon.level.adjacent(attacker.pos, defender.pos)) {//Magical mobs have reduced accuracy at melee range.
 				acuRoll /= 2;
 			} else {
 				acuRoll *= 2;
 			}
+		}
+		if (defender instanceof Mob && ((Mob)defender).canBeSurpriseAttacked(attacker)) {
+			Statistics.sneakAttacks++;
+			Badges.validateRogueUnlock();
+			if (defender.sprite.visible) {
+				if (attacker.buff(Preparation.class) != null) {
+					Wound.hit(defender);
+				} else {
+					Surprise.hit(defender);
+				}
+			}
+			return true;
 		}
 		return acuRoll >= defRoll;
 	}
@@ -437,7 +460,6 @@ public abstract class Char extends Actor {
 		}
 		return Math.round(evasion * EVA);
 	}
-
 	public String defenseVerb() {
 		return Messages.get(this, "def_verb");
 	}
@@ -563,6 +585,7 @@ public abstract class Char extends Actor {
 				damage = belongings.attackProc(enemy, damage);
 			}
 		}
+		elementalType().attackProc(damage, this, enemy);
 		return damage;
 	}
 
@@ -585,6 +608,7 @@ public abstract class Char extends Actor {
 				damage = rockArmor.absorb(damage);
 			}
 		}
+		elementalType().defenseProc(damage, this, enemy);
 		return damage;
 	}
 
