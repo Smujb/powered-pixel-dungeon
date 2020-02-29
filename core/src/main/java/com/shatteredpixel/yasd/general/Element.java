@@ -32,14 +32,10 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Blunt;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
@@ -50,7 +46,7 @@ import com.watabou.utils.Random;
 
 public enum Element {
 	/*
-	The purpose of this file is to make it easier to add more types of ranged attacks for mobs.
+	The purpose of this file is to make it easier to add types of damage to the game. Eventually this will replace the "src" parameter of damage().
 	 */
 	PHYSICAL( false ),
 	RANGED( false ),
@@ -100,20 +96,6 @@ public enum Element {
 					}
 				}
 		}
-		int dr = defender.drRoll(this);
-		if(!magical) {
-			if (attacker instanceof Hero) {//Missile Weapons are always equipped in slot 1
-				Hero h = (Hero) attacker;
-				if (h.belongings.miscs[0] instanceof MissileWeapon
-						&& h.subClass == HeroSubClass.SNIPER) {
-					dr = 0;
-				}
-			}
-
-			if (attacker.hasBelongings() && attacker.belongings.getCurrentWeapon() instanceof Blunt) {
-				dr = 0;
-			}
-		}
 
 		if (attacker.alignment == Char.Alignment.ENEMY) {
 			switch (Dungeon.difficulty) {
@@ -127,7 +109,6 @@ public enum Element {
 					break;
 			}
 		}
-		damage = attacker.attackProc(defender, damage);
 
 		if (Dungeon.hero.fieldOfView[defender.pos] || Dungeon.hero.fieldOfView[attacker.pos]) {
 			Sample.INSTANCE.play(Assets.SND_HIT, 1, 1, Random.Float(0.8f, 1.25f));
@@ -136,7 +117,7 @@ public enum Element {
 	}
 
 	public int defenseProc(int damage, Char attacker, Char defender) {
-		damage = defender.defenseProc(attacker, damage, Element.PHYSICAL);
+		//damage = defender.defenseProc(attacker, damage, Element.PHYSICAL);
 		return damage;
 	}
 

@@ -27,14 +27,10 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.connection;
 
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Point;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
 
 public abstract class ConnectionRoom extends Room {
 	
@@ -57,9 +53,8 @@ public abstract class ConnectionRoom extends Room {
 		//traps cannot appear in connection rooms on floor 1
 		return super.canPlaceTrap(p) && Dungeon.depth > 1;
 	}
-	
-	//FIXME this is a very messy way of handing variable connection rooms
-	private static ArrayList<Class<?extends ConnectionRoom>> rooms = new ArrayList<>();
+
+	/*private static ArrayList<Class<?extends ConnectionRoom>> rooms = new ArrayList<>();
 	static {
 		rooms.add(TunnelRoom.class);
 		rooms.add(BridgeRoom.class);
@@ -115,10 +110,11 @@ public abstract class ConnectionRoom extends Room {
 		chances[21] = chances[5];
 		
 		chances[22] = new float[]{15, 4,    0, 2,       3, 2};
-		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];*/
-	}
+		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];
+	}*/
 	
-	public static ConnectionRoom createRoom(){
-		return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
+	public static ConnectionRoom createRoom(Level level) {
+		//return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
+		return level.randomConnectionRoom();
 	}
 }

@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
@@ -41,8 +40,9 @@ public class Slime extends Mob {
 	{
 		spriteClass = SlimeSprite.class;
 		
-		HP = HT = 30;
-		defenseSkill = 5;
+		//HP = HT = 30;
+		healthFactor = 2f;
+		//defenseSkill = 5;
 		
 		EXP = 4;
 		maxLvl = 9;
@@ -50,7 +50,7 @@ public class Slime extends Mob {
 		lootChance = 0.1f;
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 1, 8 );
 	}
@@ -58,7 +58,7 @@ public class Slime extends Mob {
 	@Override
 	public int attackSkill( Char target ) {
 		return 10;
-	}
+	}*/
 	
 	@Override
 	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {

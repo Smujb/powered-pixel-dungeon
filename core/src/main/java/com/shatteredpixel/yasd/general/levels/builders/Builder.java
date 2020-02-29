@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.builders;
 
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
@@ -44,7 +45,7 @@ public abstract class Builder {
 	
 	//builders take a list of rooms and returns them as a connected map
 	//returns null on failure
-	public abstract ArrayList<Room> build(ArrayList<Room> rooms);
+	public abstract ArrayList<Room> build(ArrayList<Room> rooms, Level level);
 	
 	protected static void findNeighbours(ArrayList<Room> rooms){
 		Room[] ra = rooms.toArray( new Room[0] );

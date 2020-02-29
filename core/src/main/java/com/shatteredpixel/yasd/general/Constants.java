@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.levels.CavesLevel;
 import com.shatteredpixel.yasd.general.levels.CityBossLevel;
 import com.shatteredpixel.yasd.general.levels.CityLevel;
 import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
+import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.LastLevel;
@@ -113,7 +114,7 @@ public class Constants {
     public static final ArrayList<ArrayList<Class <? extends Level>>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
             new ArrayList<>(Arrays.asList(
                     DeadEndLevel.class,//Floor 0, shouldn't ever be here
-                    SewerLevel.class,
+                    FirstLevel.class,
                     SewerLevel.class,
                     SewerLevel.class,
                     SewerLevel.class,

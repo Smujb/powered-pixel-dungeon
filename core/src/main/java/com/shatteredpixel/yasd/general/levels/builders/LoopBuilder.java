@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.builders;
 
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
 import com.watabou.utils.PointF;
@@ -76,7 +77,7 @@ public class LoopBuilder extends RegularBuilder {
 	private PointF loopCenter;
 	
 	@Override
-	public ArrayList<Room> build(ArrayList<Room> rooms) {
+	public ArrayList<Room> build(ArrayList<Room> rooms, Level level) {
 		
 		setupRooms(rooms);
 		
@@ -108,7 +109,7 @@ public class LoopBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				loop.add(ConnectionRoom.createRoom());
+				loop.add(ConnectionRoom.createRoom(level));
 			}
 		}
 		
@@ -133,7 +134,7 @@ public class LoopBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(entrance)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom();
+			ConnectionRoom c = ConnectionRoom.createRoom(level);
 			if (placeRoom(loop, prev, c, angleBetweenRooms(prev, entrance)) == -1){
 				return null;
 			}
@@ -166,7 +167,7 @@ public class LoopBuilder extends RegularBuilder {
 		roomsToBranch.addAll(multiConnections);
 		roomsToBranch.addAll(singleConnections);
 		weightRooms(branchable);
-		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances);
+		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances, level);
 		
 		findNeighbours(rooms);
 		

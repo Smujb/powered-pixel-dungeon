@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.builders;
 
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.MazeConnectionRoom;
@@ -132,7 +133,7 @@ public abstract class RegularBuilder extends Builder {
 	//places the rooms in roomsToBranch into branches from rooms in branchable.
 	//note that the three arrays should be separate, they may contain the same rooms however
 	protected void createBranches(ArrayList<Room> rooms, ArrayList<Room> branchable,
-	                                     ArrayList<Room> roomsToBranch, float[] connChances){
+								  ArrayList<Room> roomsToBranch, float[] connChances, Level level){
 		
 		int i = 0;
 		float angle;
@@ -159,7 +160,7 @@ public abstract class RegularBuilder extends Builder {
 			connectionChances[connectingRooms]--;
 			
 			for (int j = 0; j < connectingRooms; j++){
-				ConnectionRoom t = r instanceof SecretRoom ? new MazeConnectionRoom() : ConnectionRoom.createRoom();
+				ConnectionRoom t = r instanceof SecretRoom ? new MazeConnectionRoom() : ConnectionRoom.createRoom(level);
 				tries = 3;
 				
 				do {

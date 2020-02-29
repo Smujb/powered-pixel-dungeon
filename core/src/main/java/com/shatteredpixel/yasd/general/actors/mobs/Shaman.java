@@ -36,8 +36,6 @@ import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
 import com.watabou.utils.Random;
 
 public class Shaman extends RangedMob {
-
-	private static final float TIME_TO_ZAP	= 1f;
 	
 	{
 		spriteClass = ShamanSprite.class;

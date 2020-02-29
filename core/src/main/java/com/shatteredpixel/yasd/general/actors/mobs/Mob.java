@@ -164,10 +164,6 @@ public abstract class Mob extends Char {
 	public Class<? extends CharSprite> spriteClass;
 	
 	protected int target = -1;
-
-	{
-		HP = HT = (int) (normalHP(level) * healthFactor);
-	}
 	
 	public int EXP = 1;
 	public int maxLvl = Constants.HERO_EXP_CAP;
@@ -235,6 +231,10 @@ public abstract class Mob extends Char {
 		level = bundle.getInt( LEVEL );
 	}
 
+	public void updateHT() {
+		HP = HT = (int) (normalHP(level) * healthFactor);
+	}
+
 	private int normalHP(int chapter) {
 		return 12 + 22 * chapter;
 	}
@@ -284,6 +284,7 @@ public abstract class Mob extends Char {
 		}
 		assert mob != null;
 		mob.level = level;
+		mob.updateHT();
 		return mob;
 	}
 
@@ -741,21 +742,9 @@ public abstract class Mob extends Char {
 	
 	@Override
 	public int defenseProc(Char enemy, int damage, Element element) {
-		
 		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
 		}
-
-		/*if (canBeSurpriseAttacked(enemy)
-				&& !element.isMagical()) {
-			Statistics.sneakAttacks++;
-			Badges.validateRogueUnlock();
-			if (enemy.buff(Preparation.class) != null) {
-				Wound.hit(this);
-			} else {
-				Surprise.hit(this);
-			}
-		}*/
 
 		//if attacked by something else than current target, and that thing is closer, switch targets
 		if (this.enemy == null
@@ -777,7 +766,7 @@ public abstract class Mob extends Char {
 			Dungeon.hero.sprite.emitter().burst( Speck.factory(Speck.HEALING), 1 );
 		}
 
-		return damage;
+		return super.defenseProc(enemy, damage, element);
 	}
 
 	public boolean surprisedBy( Char enemy ){

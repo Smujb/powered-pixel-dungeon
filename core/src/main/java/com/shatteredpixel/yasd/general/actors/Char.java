@@ -352,7 +352,8 @@ public abstract class Char extends Actor {
 				}
 			}
 
-			dmg = elementalType().attackProc(dmg, this, enemy);
+			dmg = attackProc(enemy, dmg);
+			dmg = enemy.defenseProc(this, dmg, this.elementalType());
 
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
@@ -608,7 +609,7 @@ public abstract class Char extends Actor {
 				damage = rockArmor.absorb(damage);
 			}
 		}
-		elementalType().defenseProc(damage, this, enemy);
+		elementalType().defenseProc(damage, enemy, this);
 		return damage;
 	}
 

@@ -25,4 +25,4 @@
  *
  */
 
-include ':core', ':SPD-classes', ':android', ':desktop', ':YASD'
+include ':core', ':SPD-classes', ':android', ':desktop'

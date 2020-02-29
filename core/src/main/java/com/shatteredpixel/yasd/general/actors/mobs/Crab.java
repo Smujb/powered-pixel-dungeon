@@ -28,8 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
@@ -41,31 +39,15 @@ public class Crab extends Mob {
 
 	{
 		spriteClass = CrabSprite.class;
-		
-		HP = HT = 15;
-		defenseSkill = 4;
+
+		healthFactor = 0.7f;
 		baseSpeed = 2f;
-		
+		damageFactor = 2f;
+
 		EXP = 4;
-		maxLvl = 9;
 		
-		loot = Reflection.newInstance( PotionOfHealing.class );
+		loot = new PotionOfHealing();
 		lootChance = 0.5f;
-	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 2, 9 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 14;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 4);
 	}
 
 	@Override

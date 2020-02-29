@@ -129,7 +129,19 @@ public class HallsLevel extends RegularLevel {
 				2, 2, 2, 2,
 				1, 1, 1 };
 	}
-	
+
+	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				15,
+				4,
+				0,
+				2,
+				3,
+				2,
+				1};
+	}
+
 	@Override
 	public String tileName( Terrain tile ) {
 		switch (tile) {

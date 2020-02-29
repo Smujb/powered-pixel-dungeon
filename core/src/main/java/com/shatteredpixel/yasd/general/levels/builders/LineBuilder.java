@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.builders;
 
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
 import com.watabou.utils.Random;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 public class LineBuilder extends RegularBuilder {
 
 	@Override
-	public ArrayList<Room> build(ArrayList<Room> rooms) {
+	public ArrayList<Room> build(ArrayList<Room> rooms, Level level) {
 	
 		setupRooms(rooms);
 		
@@ -74,7 +75,7 @@ public class LineBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				ConnectionRoom t = ConnectionRoom.createRoom();
+				ConnectionRoom t = ConnectionRoom.createRoom(level);
 				placeRoom(rooms, curr, t, direction + Random.Float(-pathVariance, pathVariance));
 				branchable.add(t);
 				rooms.add(t);
@@ -93,7 +94,7 @@ public class LineBuilder extends RegularBuilder {
 		}
 		roomsToBranch.addAll(singleConnections);
 		weightRooms(branchable);
-		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances);
+		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances, level);
 		
 		findNeighbours(rooms);
 		

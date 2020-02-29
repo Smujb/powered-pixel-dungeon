@@ -101,6 +101,13 @@ public class SewerBossLevel extends SewerLevel {
 				.setGrass(0.20f, 4)
 				.setTraps(nTraps(), trapClasses(), trapChances());
 	}
+
+	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				20,
+				0, 0, 0, 0, 0, 0};
+	}
 	
 	protected int nTraps() {
 		return 0;

@@ -116,7 +116,19 @@ public class CityLevel extends RegularLevel {
 				2, 2, 2,
 				1, 1 };
 	}
-	
+
+	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				0,
+				0,
+				18,
+				3,
+				3,
+				1,
+				1};
+	}
+
 	@Override
 	protected void createMobs() {
 		Imp.Quest.spawn( this );

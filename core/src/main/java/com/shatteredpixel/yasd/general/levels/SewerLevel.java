@@ -40,6 +40,13 @@ import com.shatteredpixel.yasd.general.effects.Ripple;
 import com.shatteredpixel.yasd.general.items.DewVial;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.painters.SewerPainter;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.NonHiddenMazeConnectionRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.PerimeterRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.WalkwayRoom;
 import com.shatteredpixel.yasd.general.levels.traps.AlarmTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ChillingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ConfusionTrap;
@@ -110,18 +117,21 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	protected Class<?>[] trapClasses() {
-		return Dungeon.depth == 1 ?
-				new Class<?>[]{WornDartTrap.class} :
-				new Class<?>[]{ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class,
+		return new Class<?>[]{ChillingTrap.class, ShockingTrap.class, ToxicTrap.class, WornDartTrap.class,
 						AlarmTrap.class, OozeTrap.class,
 						ConfusionTrap.class, FlockTrap.class, SummoningTrap.class, TeleportationTrap.class};
 	}
 
 	@Override
+	protected float[] trapChances() {
+		return new float[]{8, 8, 8, 8,
+						4, 4,
+						2, 2, 2, 2};
+	}
+
+	@Override
 	public Class<?>[] mobClasses() {
-		return Dungeon.depth == 1 ?
-				new Class[]{Rat.class, Snake.class} :
-				new Class[]{
+		return new Class[]{
 						Rat.class,
 						Snake.class,
 						Gnoll.class,
@@ -132,9 +142,7 @@ public class SewerLevel extends RegularLevel {
 
 	@Override
 	public float[] mobChances() {
-		return Dungeon.depth == 1 ?
-				new float[]{3, 1} :
-				new float[]{
+		return new float[]{
 						3,
 						1,
 						4,
@@ -143,13 +151,28 @@ public class SewerLevel extends RegularLevel {
 						3};
 	}
 
-	@Override
-	protected float[] trapChances() {
-		return Dungeon.depth == 1 ?
-				new float[]{1} :
-				new float[]{8, 8, 8, 8,
-						4, 4,
-						2, 2, 2, 2};
+	protected Class<?>[] connectionRoomClasses(){
+		return new Class<?>[]{
+				TunnelRoom.class,
+				BridgeRoom.class,
+
+				PerimeterRoom.class,
+				WalkwayRoom.class,
+
+				RingTunnelRoom.class,
+				RingBridgeRoom.class,
+				NonHiddenMazeConnectionRoom.class};
+	}
+
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				20,
+				1,
+				0,
+				2,
+				2,
+				1,
+				1};
 	}
 	
 	@Override
@@ -171,7 +194,7 @@ public class SewerLevel extends RegularLevel {
 		return visuals;
 	}
 	
-	public static void addSewerVisuals( Level level, Group group ) {
+	static void addSewerVisuals(Level level, Group group) {
 		for (int i=0; i < level.length(); i++) {
 			if (level.map[i] == WALL_DECO) {
 				group.add( new Sink( i ) );
@@ -181,12 +204,10 @@ public class SewerLevel extends RegularLevel {
 	
 	@Override
 	public String tileName( Terrain tile ) {
-		switch (tile) {
-			case WATER:
-				return Messages.get(SewerLevel.class, "water_name");
-			default:
-				return super.tileName( tile );
+		if (tile == Terrain.WATER) {
+			return Messages.get(SewerLevel.class, "water_name");
 		}
+		return super.tileName(tile);
 	}
 	
 	@Override
@@ -215,7 +236,7 @@ public class SewerLevel extends RegularLevel {
 			}
 		};
 		
-		public Sink( int pos ) {
+		Sink(int pos) {
 			super();
 			
 			this.pos = pos;

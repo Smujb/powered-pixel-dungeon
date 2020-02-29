@@ -69,6 +69,14 @@ import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.NonHiddenMazeConnectionRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.PerimeterRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.WalkwayRoom;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -84,6 +92,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import java.util.ArrayList;
@@ -587,6 +596,39 @@ public abstract class Level implements Bundlable {
 		Class<? extends Mob> mob = (Class<? extends Mob>) mobClasses()[type];
 		mob = Bestiary.swapMobAlt(mob);
 		return Mob.create(mob, this);
+	}
+
+	protected Class<?>[] connectionRoomClasses(){
+		return new Class<?>[]{
+				TunnelRoom.class,
+				BridgeRoom.class,
+
+				PerimeterRoom.class,
+				WalkwayRoom.class,
+
+				RingTunnelRoom.class,
+				RingBridgeRoom.class,
+				NonHiddenMazeConnectionRoom.class};
+	}
+
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				20,
+				1,
+				0,
+				2,
+				2,
+				1,
+				1};
+	}
+
+	public ConnectionRoom randomConnectionRoom() {
+		if (connectionRoomChances().length != connectionRoomClasses().length) {
+			throw new AssertionError("Room classes must be equal in length to room chances!");
+		}
+		int type = Random.chances(connectionRoomChances());
+		Class<? extends ConnectionRoom> room = (Class<? extends ConnectionRoom>) connectionRoomClasses()[type];
+		return Reflection.newInstance(room);
 	}
 
 	public ArrayList<Integer> getPassableCellsList() {

@@ -32,6 +32,9 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 
 public class LootLevel extends SewerLevel {
+    {
+        scaleFactor = 3;
+    }
 
     @Override
     protected void createItems() {
@@ -58,5 +61,10 @@ public class LootLevel extends SewerLevel {
     @Override
     protected int standardRooms() {
         return 20;
+    }
+
+    @Override
+    protected int specialRooms() {
+        return 9;
     }
 }

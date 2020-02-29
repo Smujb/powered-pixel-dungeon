@@ -124,7 +124,19 @@ public class CavesLevel extends RegularLevel {
 				2, 2, 2,
 				1 };
 	}
-	
+
+	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				12,
+				0,
+				0,
+				5,
+				5,
+				3,
+				1};
+	}
+
 	@Override
 	public String tileName( Terrain tile ) {
 		switch (tile) {

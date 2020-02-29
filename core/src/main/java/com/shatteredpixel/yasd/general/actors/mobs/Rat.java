@@ -34,7 +34,7 @@ public class Rat extends Mob {
 	{
 		spriteClass = RatSprite.class;
 
-		drFactor = 0.5f;
+		drFactor = 0.4f;
 		EVA = 0.5f;
 		ACC = 0.8f;
 		healthFactor = 0.7f;

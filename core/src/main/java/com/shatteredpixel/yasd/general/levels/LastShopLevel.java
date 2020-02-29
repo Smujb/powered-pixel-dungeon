@@ -123,7 +123,14 @@ public class LastShopLevel extends RegularLevel {
 	@Override
 	protected void createMobs() {
 	}
-	
+
+	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				20,
+				0, 0, 0, 0, 0, 0};
+	}
+
 	public Actor respawner() {
 		return null;
 	}

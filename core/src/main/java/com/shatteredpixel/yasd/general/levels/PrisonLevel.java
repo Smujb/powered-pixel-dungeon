@@ -122,6 +122,18 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	@Override
+	protected float[] connectionRoomChances() {
+		return new float[]{
+				0,
+				0,
+				22,
+				3,
+				0,
+				0,
+				1};
+	}
+
+	@Override
 	public String tileName( Terrain tile ) {
 		switch (tile) {
 			case WATER:

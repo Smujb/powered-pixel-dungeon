@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.builders;
 
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
 import com.watabou.utils.PointF;
@@ -83,7 +84,7 @@ public class FigureEightBuilder extends RegularBuilder {
 	PointF firstLoopCenter, secondLoopCenter;
 	
 	@Override
-	public ArrayList<Room> build(ArrayList<Room> rooms) {
+	public ArrayList<Room> build(ArrayList<Room> rooms, Level level) {
 		setupRooms(rooms);
 		
 		//TODO might want to make this able to work without an exit. Probably a random room would be landmark and the landmark room would become exit
@@ -117,7 +118,7 @@ public class FigureEightBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				firstLoop.add(ConnectionRoom.createRoom());
+				firstLoop.add(ConnectionRoom.createRoom(level));
 			}
 		}
 		if (entrance != null) firstLoop.add((firstLoop.size()+1)/2, entrance);
@@ -139,7 +140,7 @@ public class FigureEightBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				secondLoop.add(ConnectionRoom.createRoom());
+				secondLoop.add(ConnectionRoom.createRoom(level));
 			}
 		}
 		if (exit != null) secondLoop.add((secondLoop.size()+1)/2, exit);
@@ -166,7 +167,7 @@ public class FigureEightBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(landmarkRoom)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom();
+			ConnectionRoom c = ConnectionRoom.createRoom(level);
 			if (placeRoom(rooms, prev, c, angleBetweenRooms(prev, landmarkRoom)) == -1){
 				return null;
 			}
@@ -194,7 +195,7 @@ public class FigureEightBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(landmarkRoom)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom();
+			ConnectionRoom c = ConnectionRoom.createRoom(level);
 			if (placeRoom(rooms, prev, c, angleBetweenRooms(prev, landmarkRoom)) == -1){
 				return null;
 			}
@@ -237,7 +238,7 @@ public class FigureEightBuilder extends RegularBuilder {
 		roomsToBranch.addAll(multiConnections);
 		roomsToBranch.addAll(singleConnections);
 		weightRooms(branchable);
-		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances);
+		createBranches(rooms, branchable, roomsToBranch, branchTunnelChances, level);
 		
 		findNeighbours(rooms);
 		
