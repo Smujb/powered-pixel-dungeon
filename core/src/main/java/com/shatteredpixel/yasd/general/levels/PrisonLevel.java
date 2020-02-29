@@ -134,13 +134,36 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	@Override
+	protected float[] standardRoomChances() {
+		return new float[]{20,
+				0,
+				0,
+				15,
+				5,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1};
+	}
+
+	@Override
 	public String tileName( Terrain tile ) {
-		switch (tile) {
-			case WATER:
-				return Messages.get(PrisonLevel.class, "water_name");
-			default:
-				return super.tileName( tile );
+		if (tile == WATER) {
+			return Messages.get(PrisonLevel.class, "water_name");
 		}
+		return super.tileName(tile);
 	}
 
 	@Override

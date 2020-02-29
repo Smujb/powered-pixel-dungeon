@@ -143,6 +143,32 @@ public class HallsLevel extends RegularLevel {
 	}
 
 	@Override
+	protected float[] standardRoomChances() {
+		return new float[]{
+				20,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				0,
+				15,
+				5,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1};
+	}
+
+	@Override
 	public String tileName( Terrain tile ) {
 		switch (tile) {
 			case WATER:

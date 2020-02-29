@@ -60,6 +60,9 @@ public class Wraith extends RangedMob {
 		EXP = 0;
 
 		maxLvl = -2;
+
+		damageFactor = 1/3f;
+		healthFactor = 0.5f;
 		
 		flying = true;
 
@@ -106,13 +109,6 @@ public class Wraith extends RangedMob {
 	public int attackSkill( Char target ) {
 		return 10 + level;
 	}*/
-	
-	private void adjustStats(int level) {
-		this.level = level;
-		//defenseSkill = attackSkill(null) - 3;
-		//HP = HT = 5 + Math.round(level * 1.5f);
-		enemySeen = true;
-	}
 
 	@Override
 	public boolean reset() {
@@ -143,7 +139,7 @@ public class Wraith extends RangedMob {
 		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 			
 			Wraith w = Mob.create(Wraith.class);
-			w.adjustStats( Dungeon.depth );
+			w.enemySeen = true;
 			w.pos = pos;
 			w.state = w.HUNTING;
 			GameScene.add( w, SPAWN_DELAY );

@@ -614,6 +614,9 @@ public abstract class Level implements Bundlable {
 	}
 	
 	public Mob createMob() {
+		if (mobChances().length != mobClasses().length) {
+			throw new AssertionError("Mob classes must be equal in length to mob chances!");
+		}
 		int type = Random.chances(mobChances());
 		Class<? extends Mob> mob = (Class<? extends Mob>) mobClasses()[type];
 		mob = Bestiary.swapMobAlt(mob);
