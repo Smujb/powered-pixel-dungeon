@@ -40,13 +40,6 @@ import com.shatteredpixel.yasd.general.effects.Ripple;
 import com.shatteredpixel.yasd.general.items.DewVial;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.painters.SewerPainter;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.NonHiddenMazeConnectionRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.PerimeterRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.WalkwayRoom;
 import com.shatteredpixel.yasd.general.levels.traps.AlarmTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ChillingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ConfusionTrap;
@@ -151,19 +144,6 @@ public class SewerLevel extends RegularLevel {
 						3};
 	}
 
-	protected Class<?>[] connectionRoomClasses(){
-		return new Class<?>[]{
-				TunnelRoom.class,
-				BridgeRoom.class,
-
-				PerimeterRoom.class,
-				WalkwayRoom.class,
-
-				RingTunnelRoom.class,
-				RingBridgeRoom.class,
-				NonHiddenMazeConnectionRoom.class};
-	}
-
 	protected float[] connectionRoomChances() {
 		return new float[]{
 				20,
@@ -174,7 +154,12 @@ public class SewerLevel extends RegularLevel {
 				1,
 				1};
 	}
-	
+
+	@Override
+	protected float[] standardRoomChances() {
+		return new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
+	}
+
 	@Override
 	protected void createItems() {
 		if (!Dungeon.LimitedDrops.DEW_VIAL.dropped()) {

@@ -77,6 +77,28 @@ import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.WalkwayRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.AquariumRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.BurnedRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.CaveRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.CirclePitRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.EmptyRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.FissureRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.GrassyGraveRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.HallwayRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.MinefieldRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.PillarsRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.PlantsRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.PlatformRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.RingRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.RuinsRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.SegmentedRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.SewerPipeRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.SkullsRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.StandardRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.StatuesRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.StripedRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.StudyRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.SuspiciousChestRoom;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -628,6 +650,52 @@ public abstract class Level implements Bundlable {
 		}
 		int type = Random.chances(connectionRoomChances());
 		Class<? extends ConnectionRoom> room = (Class<? extends ConnectionRoom>) connectionRoomClasses()[type];
+		return Reflection.newInstance(room);
+	}
+
+	protected Class<?>[] standardRoomClasses(){
+		return new Class<?>[]{
+				EmptyRoom.class,
+
+				SewerPipeRoom.class,
+				RingRoom.class,
+
+				SegmentedRoom.class,
+				StatuesRoom.class,
+
+				CaveRoom.class,
+				CirclePitRoom.class,
+
+				HallwayRoom.class,
+				PillarsRoom.class,
+
+				RuinsRoom.class,
+				SkullsRoom.class,
+
+
+				PlantsRoom.class,
+				AquariumRoom.class,
+				PlatformRoom.class,
+				BurnedRoom.class,
+				FissureRoom.class,
+				GrassyGraveRoom.class,
+				StripedRoom.class,
+				StudyRoom.class,
+				SuspiciousChestRoom.class,
+				MinefieldRoom.class};
+	}
+
+	protected float[] standardRoomChances() {
+		return new float[]{20,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	}
+
+	public StandardRoom randomStandardRoom() {
+		if (standardRoomClasses().length != standardRoomChances().length) {
+			throw new AssertionError("Room classes must be equal in length to room chances!");
+		}
+		int type = Random.chances(standardRoomChances());
+		Class<? extends StandardRoom> room = (Class<? extends StandardRoom>) standardRoomClasses()[type];
 		return Reflection.newInstance(room);
 	}
 

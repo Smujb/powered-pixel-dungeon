@@ -29,12 +29,6 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.actors.mobs.Rat;
 import com.shatteredpixel.yasd.general.actors.mobs.Snake;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.PerimeterRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.WalkwayRoom;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
 
 public class FirstLevel extends SewerLevel {//First depth has different mobs
@@ -58,18 +52,6 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 		return new float[]{1};
 	}
 
-	@Override
-	protected Class<?>[] connectionRoomClasses(){
-		return new Class<?>[]{
-				TunnelRoom.class,
-				BridgeRoom.class,
-
-				PerimeterRoom.class,
-				WalkwayRoom.class,
-
-				RingTunnelRoom.class,
-				RingBridgeRoom.class};
-	}
 
 	@Override
 	protected float[] connectionRoomChances() {
@@ -79,6 +61,12 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 				0,
 				2,
 				2,
-				1};
+				1,
+				0};
+	}
+
+	@Override
+	protected float[] standardRoomChances() {
+		return new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    0,0,0,0,0,0,0,0,0,0};
 	}
 }

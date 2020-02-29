@@ -285,6 +285,16 @@ public abstract class Mob extends Char {
 		assert mob != null;
 		mob.level = level;
 		mob.updateHT();
+		switch (Dungeon.difficulty) {
+			case 1://Easy = -25% max HP
+				mob.HP = mob.HT*=0.75f;
+				break;
+			case 2: default://Medium = regular max HP
+				break;
+			case 3://Hard = +25% max HP
+				mob.HP = mob.HT*=1.25f;
+				break;
+		}
 		return mob;
 	}
 

@@ -27,13 +27,9 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
-import com.shatteredpixel.yasd.general.Constants;
-import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
-
-import java.util.ArrayList;
 
 public abstract class StandardRoom extends Room {
 	
@@ -104,9 +100,8 @@ public abstract class StandardRoom extends Room {
 	@Override
 	public int minHeight() { return sizeCat.minDim; }
 	public int maxHeight() { return sizeCat.maxDim; }
-	
-	//FIXME this is a very messy way of handing variable standard rooms
-	private static ArrayList<Class<?extends StandardRoom>> rooms = new ArrayList<>();
+
+	/*private static ArrayList<Class<?extends StandardRoom>> rooms = new ArrayList<>();
 	static {
 		rooms.add(EmptyRoom.class);
 
@@ -178,12 +173,12 @@ public abstract class StandardRoom extends Room {
 		chances[21] = chances[5];
 		
 		chances[22] = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
-		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];*/
-	}
+		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];
+	}*/
 	
-	
-	public static StandardRoom createRoom(){
-		return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
+	public static StandardRoom createRoom(Level level){
+		return level.randomStandardRoom();
+		//return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
 	}
 	
 }
