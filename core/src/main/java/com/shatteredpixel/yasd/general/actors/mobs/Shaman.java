@@ -27,21 +27,20 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
-import com.watabou.utils.Random;
 
 public class Shaman extends RangedMob {
 	
 	{
 		spriteClass = ShamanSprite.class;
-		
-		HP = HT = 20;
-		defenseSkill = 10;
+
+		healthFactor = 0.6f;
+		//HP = HT = 20;
+		//defenseSkill = 10;
 		
 		EXP = 6;
 		maxLvl = 14;
@@ -57,14 +56,7 @@ public class Shaman extends RangedMob {
 		return Element.ELECTRIC;
 	}
 
-	public Shaman() {
-		super();
-		if (Dungeon.depth > 12) {
-			HP = HT *= 2;
-			defenseSkill *= 1.5f;
-		}
-	}
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 4, 18 );
 	}
@@ -90,7 +82,7 @@ public class Shaman extends RangedMob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 6);
-	}
+	}*/
 
 	@Override
 	public boolean canHit(Char enemy) {

@@ -95,6 +95,12 @@ public enum Element {
 						}
 					}
 				}
+				break;
+			case ELECTRIC:
+				if (Dungeon.level.liquid()[defender.pos] && !defender.flying) {
+					damage *= 1.5f;
+				}
+				break;
 		}
 
 		if (attacker.alignment == Char.Alignment.ENEMY) {

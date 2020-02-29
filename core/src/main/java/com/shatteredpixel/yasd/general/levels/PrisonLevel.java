@@ -29,6 +29,11 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Guard;
+import com.shatteredpixel.yasd.general.actors.mobs.Necromancer;
+import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
+import com.shatteredpixel.yasd.general.actors.mobs.Skeleton;
+import com.shatteredpixel.yasd.general.actors.mobs.Swarm;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Wandmaker;
 import com.watabou.noosa.Halo;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
@@ -119,6 +124,28 @@ public class PrisonLevel extends RegularLevel {
 		return new float[]{ 8, 8, 8, 8, 8,
 				4, 4, 4,
 				2, 2, 2, 2 };
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return new Class[] {
+				Skeleton.class,
+				Swarm.class,
+				Shaman.class,
+				Guard.class,
+				Necromancer.class
+		};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return new float[] {
+				5,
+				2,
+				4,
+				2,
+				1
+		};
 	}
 
 	@Override

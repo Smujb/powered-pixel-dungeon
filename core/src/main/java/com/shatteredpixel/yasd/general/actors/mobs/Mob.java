@@ -84,75 +84,12 @@ public abstract class Mob extends Char {
 		alignment = Alignment.ENEMY;
 	}
 
-	/*public enum Type {
-		NONE,
-		TANK,
-		ASASSIN,
-		SUPPORT,
-		SABOTAGE,
-		MINIBOSS;
-
-		public int normalHP(int chapter) {
-			int amount =  12 + 22 * chapter;//12 in Sewers, 100 in Halls
-			switch (this) {
-				default:
-					break;
-				case TANK:
-					amount *= 1.5f;
-					break;
-				case ASASSIN:
-					amount *= 0.5f;
-					break;
-				case SUPPORT:
-				case SABOTAGE:
-					amount *= 1/3f;
-					break;
-				case MINIBOSS:
-					amount *= 2;
-					break;
-			}
-			return amount;
-		}
-
-		public int attackSkill(int chapter) {
-			return 10 + chapter * Constants.CHAPTER_LENGTH;
-		}
-
-		public int defenseSkill(int chapter) {
-			return 4 + chapter * Constants.CHAPTER_LENGTH;
-		}
-
-		public int damageRoll(int chapter) {
-			int max = 5 + 6 * chapter;//5 in Sewers, 35 in Halls
-			int min = 1 + 2 * chapter;
-			switch (this) {
-				default:
-					break;
-				case TANK:
-					max *= 1/3f;
-					break;
-				case ASASSIN:
-					max *= 2f;
-					break;
-				case SUPPORT:
-				case SABOTAGE:
-					max *= 1/3f;
-					break;
-				case MINIBOSS:
-					max *= 1.5f;
-					break;
-			}
-			return Random.NormalIntRange(min, max);
-		}
-	}
-
-	public Type type = Type.NONE;*/
-
 	protected int level = 0;
 
 	public float damageFactor = 1f;
 	public float healthFactor = 1f;
 	public float drFactor = 1f;
+	public float elementaldrFactor = 0f;
 
 	public AiState SLEEPING     = new  Sleeping();
 	public AiState HUNTING		= new  Hunting();
@@ -338,7 +275,11 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.drRoll(element);
 		} else {
-			return (int) (normalDRRoll(level) * drFactor);
+			if (element.isMagical()) {
+				return (int) (normalDRRoll(level) * drFactor);
+			} else {
+				return (int) (normalDRRoll(level) * elementaldrFactor);
+			}
 		}
 	}
 

@@ -55,9 +55,10 @@ public class Necromancer extends Mob {
 	
 	{
 		spriteClass = NecromancerSprite.class;
-		
-		HP = HT = 40;
-		defenseSkill = 13;
+
+		healthFactor = 0.8f;
+		//HP = HT = 40;
+		//defenseSkill = 13;
 		
 		EXP = 7;
 		maxLvl = 14;
@@ -348,7 +349,7 @@ public class Necromancer extends Mob {
 			maxLvl = -5;
 			
 			//Less HP than Shattered, more damage
-			HP = 20;
+			healthFactor = 0.5f;
 		}
 
 		@Override

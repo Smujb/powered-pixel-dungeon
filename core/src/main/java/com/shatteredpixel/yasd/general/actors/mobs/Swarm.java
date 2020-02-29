@@ -50,17 +50,18 @@ public class Swarm extends Mob {
 
 	{
 		spriteClass = SwarmSprite.class;
-		
-		HP = HT = 60;
-		defenseSkill = 9;
+		healthFactor = 3f;
+		//HP = HT = 60;
+		EVA = 1.2f;
+		damageFactor = 0.5f;
+		//defenseSkill = 9;
 
 		EXP = 6;
-		maxLvl = 10;
 		
 		flying = true;
 
-		loot = Reflection.newInstance(  SmallRation.class );
-		lootChance = 0.1667f; //by default, see rollToDropLoot()
+		loot = new SmallRation();
+		lootChance = 0.1f; //by default, see rollToDropLoot()
 	}
 	
 	private static final float SPLIT_DELAY	= 1f;
@@ -82,10 +83,10 @@ public class Swarm extends Mob {
 		if (generation > 0) EXP = 0;
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 1, 9 );
-	}
+	}*/
 
 	@Override
 	public int attackProc(Char enemy, int damage) {
@@ -133,10 +134,10 @@ public class Swarm extends Mob {
 		return super.defenseProc(enemy, damage, element);
 	}
 	
-	@Override
+	/*@Override
 	public int attackSkill( Char target ) {
 		return 12;
-	}
+	}*/
 	
 	private Swarm split() {
 		Swarm clone = Reflection.newInstance( Swarm.class );
