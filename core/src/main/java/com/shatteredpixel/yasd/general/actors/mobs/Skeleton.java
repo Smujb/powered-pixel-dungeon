@@ -48,8 +48,8 @@ public class Skeleton extends Mob {
 		spriteClass = SkeletonSprite.class;
 
 		healthFactor = 0.8f;
-		EVA = 1/3f;
-		ACC = 1.25f;
+		evasionFactor = 1/3f;
+		accuracyFactor = 1.25f;
 		//HP = HT = 25;
 		//defenseSkill = 11;
 		

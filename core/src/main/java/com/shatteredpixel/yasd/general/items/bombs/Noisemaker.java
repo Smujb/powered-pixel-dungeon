@@ -77,7 +77,7 @@ public class Noisemaker extends Bomb {
 		int left;
 		
 		public void set(int cell){
-			floor = Dungeon.depth;
+			floor = Dungeon.yPos;
 			this.cell = cell;
 			left = 6;
 		}
@@ -85,7 +85,7 @@ public class Noisemaker extends Bomb {
 		@Override
 		public boolean act() {
 
-			if (Dungeon.depth != floor){
+			if (Dungeon.yPos != floor){
 				spend(TICK);
 				return true;
 			}

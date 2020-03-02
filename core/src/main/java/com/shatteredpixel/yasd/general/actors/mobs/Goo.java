@@ -44,7 +44,6 @@ import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.quest.GooBlob;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -123,27 +122,6 @@ public class Goo extends Mob {
 		
 		if (state != SLEEPING){
 			Dungeon.level.seal();
-		}
-		boolean flee = false;
-		for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
-			if (mob instanceof CausticSlime) {
-				flee = true;
-			}
-		}
-
-		if (flee && state != FLEEING) {
-			state = FLEEING;
-		} else {
-			if (state != SLEEPING && state != HUNTING && state != WANDERING) {
-				state = HUNTING;
-			}
-			if (HP < HT/2 && Random.Int(10) == 0) {
-				Level l = Dungeon.level;
-				Mob mob = new  CausticSlime();
-				mob.pos = l.randomRespawnCell();
-				GameScene.add( mob );
-				mob.aggro(enemy);
-			}
 		}
 
 		return super.act();
@@ -269,7 +247,7 @@ public class Goo extends Mob {
 		Dungeon.level.unseal();
 		
 		GameScene.bossSlain();
-		Dungeon.level.drop( new  SkeletonKey( Dungeon.depth ), pos ).sprite.drop();
+		Dungeon.level.drop( new  SkeletonKey( Dungeon.yPos), pos ).sprite.drop();
 		
 		//60% chance of 2 blobs, 30% chance of 3, 10% chance for 4. Average of 2.5
 		int blobs = Random.chances(new  float[]{0, 0, 6, 3, 1});

@@ -27,30 +27,32 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.sprites.GolemSprite;
-import com.watabou.utils.Random;
 
 public class Golem extends Mob {
 	
 	{
 		spriteClass = GolemSprite.class;
-		
-		HP = HT = 85;
-		defenseSkill = 22;
+
+
+		healthFactor = 2f;
+		damageFactor = 1.5f;
+		//HP = HT = 85;
+		//defenseSkill = 22;
+
+		baseSpeed = 2/3f;
+		attackDelay = 1.5f;
 		
 		EXP = 12;
-		maxLvl = 22;
 		
 		properties.add(Property.INORGANIC);
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 45 );
 	}
@@ -68,7 +70,7 @@ public class Golem extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 12);
-	}
+	}*/
 	
 	@Override
 	public void rollToDropLoot() {

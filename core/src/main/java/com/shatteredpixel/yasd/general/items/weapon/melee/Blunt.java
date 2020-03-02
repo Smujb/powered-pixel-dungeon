@@ -36,7 +36,7 @@ public class Blunt extends MeleeWeapon {//War Hammer will get reworked.
 		image = ItemSpriteSheet.WAR_HAMMER;
 
 		tier = 1;
-		//ACC = 1.33f; //33% boost to accuracy
+		//accuracyFactor = 1.33f; //33% boost to accuracy
 
 		damageMultiplier = 0.80f;
 	}

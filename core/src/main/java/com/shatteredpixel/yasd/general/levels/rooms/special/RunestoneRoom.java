@@ -66,7 +66,7 @@ public class RunestoneRoom extends SpecialRoom {
 		}
 		
 		entrance().set( Door.Type.LOCKED );
-		level.addItemToSpawn( new IronKey( Dungeon.depth ) );
+		level.addItemToSpawn( new IronKey( Dungeon.yPos) );
 	}
 	
 	private static Item prize( Level level ) {

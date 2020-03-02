@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Web;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -47,7 +46,7 @@ public class Spinner extends Mob {
 	{
 		spriteClass = SpinnerSprite.class;
 
-		HP = HT = 50;
+		//HP = HT = 50;
 		defenseSkill = 14;
 
 		EXP = 9;
@@ -59,7 +58,7 @@ public class Spinner extends Mob {
 		FLEEING = new  Fleeing();
 	}
 
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange(10, 25);
 	}
@@ -72,7 +71,7 @@ public class Spinner extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 6);
-	}
+	}*/
 
 	@Override
 	protected boolean act() {

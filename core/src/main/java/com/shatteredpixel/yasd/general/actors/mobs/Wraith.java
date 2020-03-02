@@ -61,7 +61,7 @@ public class Wraith extends RangedMob {
 
 		maxLvl = -2;
 
-		damageFactor = 1/3f;
+		damageFactor = 2/3f;
 		healthFactor = 0.5f;
 		
 		flying = true;

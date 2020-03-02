@@ -69,8 +69,6 @@ public class OldPrisonBossLevel extends Level {
 	{
 		color1 = 0x6a723d;
 		color2 = 0x88924c;
-
-		scaleFactor = 1;
 	}
 
 	public enum State {
@@ -80,7 +78,12 @@ public class OldPrisonBossLevel extends Level {
 		FIGHT_ARENA,
 		WON
 	}
-	
+
+	@Override
+	public int getScaleFactor() {
+		return new PrisonLevel().getScaleFactor();
+	}
+
 	private static final int ARENA_CENTER = 5+28*32;
 	private static final int ARENA_DOOR = 5+25*32;
 	

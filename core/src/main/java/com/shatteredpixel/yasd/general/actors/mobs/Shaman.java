@@ -38,9 +38,8 @@ public class Shaman extends RangedMob {
 	{
 		spriteClass = ShamanSprite.class;
 
-		healthFactor = 0.6f;
-		//HP = HT = 20;
-		//defenseSkill = 10;
+		healthFactor = 0.7f;
+		damageFactor = 1.3f;
 		
 		EXP = 6;
 		maxLvl = 14;
@@ -56,37 +55,9 @@ public class Shaman extends RangedMob {
 		return Element.ELECTRIC;
 	}
 
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 4, 18 );
-	}
-
-
-	@Override
-	public int attackProc(Char enemy, int damage) {
-		damage = super.attackProc(enemy, damage);
-		if (Dungeon.level.liquid()[enemy.pos] && !enemy.flying) {
-			damage *= 1.5f;
-		}
-		if (Dungeon.depth > 12) {//Use a separate statement so they can stack
-			damage *= 1.5f;
-		}
-		return damage;
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return Dungeon.depth*2;
-	}//Finding Shaman later are still hard.
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 6);
-	}*/
-
 	@Override
 	public boolean canHit(Char enemy) {
-		return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override

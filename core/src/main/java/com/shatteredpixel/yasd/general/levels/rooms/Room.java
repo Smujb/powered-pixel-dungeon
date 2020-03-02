@@ -360,7 +360,7 @@ public abstract class Room extends Rect implements Graph.Node, Bundlable {
 		ArrayList<Room> edges = new ArrayList<>();
 		for( Room r : connected.keySet()){
 			Door d = connected.get(r);
-			//for the purposes of path building, ignore all doors that are locked, blocked, or hidden
+			//for the purposes of xPos building, ignore all doors that are locked, blocked, or hidden
 			if (d.type == Door.Type.EMPTY || d.type == Door.Type.TUNNEL
 					|| d.type == Door.Type.UNLOCKED || d.type == Door.Type.REGULAR){
 				edges.add(r);

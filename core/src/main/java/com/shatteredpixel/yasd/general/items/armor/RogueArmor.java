@@ -27,11 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.armor;
 
-import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.general.sprites.MissileSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
 
 public class RogueArmor extends ClothArmor {
 
@@ -39,8 +35,9 @@ public class RogueArmor extends ClothArmor {
 	{
 		image = ItemSpriteSheet.ARMOR_ROGUE;
 		DRfactor = 0.75f;
-		EVA = 1.25f;
-		STE = 1.25f;
+		magicalDRFactor = 0.5f;
+		EVA = 1.5f;
+		STE = 1.5f;
 	}
 
 	@Override

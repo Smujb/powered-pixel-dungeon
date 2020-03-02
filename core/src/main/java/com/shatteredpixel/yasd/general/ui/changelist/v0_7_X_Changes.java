@@ -497,7 +497,7 @@ public class v0_7_X_Changes {
 		changes.addButton( new ChangeButton( new Image(Assets.TERRAIN_FEATURES, 16, 0, 16, 16), "Trap Adjustments!",
 				"Several traps have been slightly adjusted due to reclaim trap's new functionality:\n\n" +
 				"_-_ Disintegration trap no longer deals damage based on target HP\n" +
-				"_-_ Flock trap duration no longer scales with depth\n" +
+				"_-_ Flock trap duration no longer scales with yPos\n" +
 				"_-_ Bosses now resist grim traps, Yog is immune\n" +
 				"_-_ Pitfall traps do not work on boss floors\n" +
 				"_-_ Reduced poison dart trap damage scaling\n" +
@@ -652,7 +652,7 @@ public class v0_7_X_Changes {
 				"_-_ Stone of aggression now forces enemies to attack a target. Duration is longer if thrown at allies.\n\n" +
 				"_-_ Scroll of teleportation now teleports the player to the entrance of secret/special rooms instead of into them\n\n" +
 				"_-_ Blessed ankhs now cure the same debuffs as a potions of healing\n\n" +
-				"Fire and toxic gas have been adjusted to deal damage based on dungeon depth, and not target max health. " +
+				"Fire and toxic gas have been adjusted to deal damage based on dungeon yPos, and not target max health. " +
 				"This means more damage versus regular enemies, and less versus bosses. " +
 				"Several bosses have lost their resistances to these effects as a result of this change."));
 		

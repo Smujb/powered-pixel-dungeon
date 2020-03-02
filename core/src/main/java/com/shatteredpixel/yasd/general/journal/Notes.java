@@ -56,7 +56,7 @@ public class Notes {
 			return another.depth() - depth();
 		}
 		
-		private static final String DEPTH	= "depth";
+		private static final String DEPTH	= "yPos";
 		
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
@@ -198,9 +198,9 @@ public class Notes {
 	}
 	
 	public static boolean add( Landmark landmark ) {
-		LandmarkRecord l = new LandmarkRecord( landmark, Dungeon.depth );
+		LandmarkRecord l = new LandmarkRecord( landmark, Dungeon.yPos);
 		if (!records.contains(l)) {
-			boolean result = records.add(new LandmarkRecord(landmark, Dungeon.depth));
+			boolean result = records.add(new LandmarkRecord(landmark, Dungeon.yPos));
 			Collections.sort(records);
 			return result;
 		}
@@ -208,7 +208,7 @@ public class Notes {
 	}
 	
 	public static boolean remove( Landmark landmark ) {
-		return records.remove( new LandmarkRecord(landmark, Dungeon.depth) );
+		return records.remove( new LandmarkRecord(landmark, Dungeon.yPos) );
 	}
 	
 	public static boolean add( Key key ){

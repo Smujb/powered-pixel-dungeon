@@ -69,7 +69,8 @@ public class PrisonLevel extends RegularLevel {
 		color1 = 0x6a723d;
 		color2 = 0x88924c;
 
-		scaleFactor = 1;
+		minScaleFactor = 8;
+		maxScaleFactor = 10;
 	}
 	
 	@Override

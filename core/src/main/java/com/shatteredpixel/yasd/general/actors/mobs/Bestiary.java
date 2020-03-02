@@ -35,17 +35,17 @@ public class Bestiary {
 		Class<? extends Mob> cl = mob;
 		if (Random.Int( 5 ) == 0) {
 			if (cl == Rat.class) {
-				cl = Albino.class;
+				cl = Rat.Albino.class;
 			} else if (cl == Slime.class) {
-				cl = CausticSlime.class;
+				cl = Slime.CausticSlime.class;
 			} else if (cl == Thief.class) {
-				cl = Bandit.class;
+				cl = Thief.Bandit.class;
 			} else if (cl == Brute.class) {
-				cl = Shielded.class;
+				cl = Brute.Shielded.class;
 			} else if (cl == Monk.class) {
-				cl = Senior.class;
+				cl = Monk.Senior.class;
 			} else if (cl == Scorpio.class) {
-				cl = Acidic.class;
+				cl = Scorpio.Acidic.class;
 			}
 		}
 		return cl;
@@ -53,7 +53,7 @@ public class Bestiary {
 
 	/*public static Mob getMob() {
 		Mob mob;
-		Class<? extends Mob> mobClass = getMobClass(Dungeon.depth, Dungeon.path);
+		Class<? extends Mob> mobClass = getMobClass(Dungeon.yPos, Dungeon.xPos);
 		mobClass = swapMobAlt(mobClass);
 		do {
 			mob = Reflection.newInstance(mobClass);
@@ -71,23 +71,23 @@ public class Bestiary {
 		return mob;
 	}
 
-	private static Class<? extends Mob> getMobClass( int depth, int path ) {
-		if (path == 0) {
-			if (depth == Constants.CHAPTER_LENGTH) {
+	private static Class<? extends Mob> getMobClass( int yPos, int xPos ) {
+		if (xPos == 0) {
+			if (yPos == Constants.CHAPTER_LENGTH) {
 				return CausticSlime.class;
 			}
-			if (depth < Constants.CHAPTER_LENGTH) {
-				return getSewerMobClass(depth % Constants.CHAPTER_LENGTH);
-			} else if (depth <= Constants.CHAPTER_LENGTH * 2) {
-				return getPrisonMobClass(depth % Constants.CHAPTER_LENGTH);
-			} else if (depth <= Constants.CHAPTER_LENGTH * 3) {
-				return getCavesMobClass(depth % Constants.CHAPTER_LENGTH);
-			} else if (depth <= Constants.CHAPTER_LENGTH * 4) {
-				return getCityMobClass(depth % Constants.CHAPTER_LENGTH);
-			} else if (depth <= Constants.CHAPTER_LENGTH * 5) {
-				return getHallsMobClass(depth % Constants.CHAPTER_LENGTH);
+			if (yPos < Constants.CHAPTER_LENGTH) {
+				return getSewerMobClass(yPos % Constants.CHAPTER_LENGTH);
+			} else if (yPos <= Constants.CHAPTER_LENGTH * 2) {
+				return getPrisonMobClass(yPos % Constants.CHAPTER_LENGTH);
+			} else if (yPos <= Constants.CHAPTER_LENGTH * 3) {
+				return getCavesMobClass(yPos % Constants.CHAPTER_LENGTH);
+			} else if (yPos <= Constants.CHAPTER_LENGTH * 4) {
+				return getCityMobClass(yPos % Constants.CHAPTER_LENGTH);
+			} else if (yPos <= Constants.CHAPTER_LENGTH * 5) {
+				return getHallsMobClass(yPos % Constants.CHAPTER_LENGTH);
 			}
-		} else if (path == 1) {
+		} else if (xPos == 1) {
 			switch (Random.Int(4)) {
 				case 0:
 					return Warlock.class;
@@ -100,17 +100,17 @@ public class Bestiary {
 		return Wraith.class;
 	}
 
-	private static Class<? extends Mob> getSewerMobClass(int depth) {
+	private static Class<? extends Mob> getSewerMobClass(int yPos) {
 		float[] chances = new float[] {
-				4 - depth,
+				4 - yPos,
 				1 ,
-				depth <= 4 ? 0 : 2,
+				yPos <= 4 ? 0 : 2,
 				2,
 				3,
-				depth <= 2 ? 0 : 3};
-		if (depth == 1) {
+				yPos <= 2 ? 0 : 3};
+		if (yPos == 1) {
 			chances = new float[] { 3, 1, 0, 0, 0 };
-		} else if (depth == 6 || depth == 0) {
+		} else if (yPos == 6 || yPos == 0) {
 			return CausticSlime.class;
 		}
 		ArrayList<Class<? extends Mob>> mobs = new ArrayList<>(Arrays.asList(
@@ -124,13 +124,13 @@ public class Bestiary {
 		return mobs.get(Random.chances(chances));
 	}
 
-	private static Class<? extends Mob> getPrisonMobClass(int depth) {
+	private static Class<? extends Mob> getPrisonMobClass(int yPos) {
 		float[] chances = new float[] {
-				3 - depth,
+				3 - yPos,
 				1,
-				depth/2f,
-				depth == 1 ? 0 : 2,
-				depth <= 2 ? 0 : 3};
+				yPos/2f,
+				yPos == 1 ? 0 : 2,
+				yPos <= 2 ? 0 : 3};
 		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Skeleton.class,
 				Swarm.class,
@@ -141,12 +141,12 @@ public class Bestiary {
 		return mobs.get(Random.chances(chances));
 	}
 
-	private static Class<? extends Mob> getCavesMobClass(int depth) {
+	private static Class<? extends Mob> getCavesMobClass(int yPos) {
 		float[] chances = new float[]{
-				4 - depth,
-				depth == 1 ? 1 : 3,
-				depth <= 4 ? 0 : 2,
-				depth == 1 ? 0 : 2
+				4 - yPos,
+				yPos == 1 ? 1 : 3,
+				yPos <= 4 ? 0 : 2,
+				yPos == 1 ? 0 : 2
 		};
 		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Bat.class,
@@ -157,12 +157,12 @@ public class Bestiary {
 		return mobs.get(Random.chances(chances));
 	}
 
-	private static Class<? extends Mob> getCityMobClass(int depth) {
+	private static Class<? extends Mob> getCityMobClass(int yPos) {
 		float[] chances = new float[]{
-				5 - depth,
-				5 - depth,
-				1 + depth,
-				depth <= 3 ? 0 : 4
+				5 - yPos,
+				5 - yPos,
+				1 + yPos,
+				yPos <= 3 ? 0 : 4
 		};
 		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Warlock.class,
@@ -173,10 +173,10 @@ public class Bestiary {
 		return mobs.get(Random.chances(chances));
 	}
 
-	private static Class<? extends Mob> getHallsMobClass(int depth) {
+	private static Class<? extends Mob> getHallsMobClass(int yPos) {
 		float[] chances = new float[] {
 				3,
-				depth >= 3 ? 0 : 4,
+				yPos >= 3 ? 0 : 4,
 				3
 		};
 		ArrayList<Class<? extends Mob>> mobs = new ArrayList<>(Arrays.asList(

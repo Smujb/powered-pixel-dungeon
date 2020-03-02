@@ -121,6 +121,11 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	@Override
+	public int defaultDegradeAmount() {
+		return (int) (super.defaultDegradeAmount()*1.5f);
+	}
+
+	@Override
 	public void execute(Hero hero, String action) {
 
 		super.execute(hero, action);

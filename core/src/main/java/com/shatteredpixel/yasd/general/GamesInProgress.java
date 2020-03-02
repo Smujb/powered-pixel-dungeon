@@ -57,9 +57,9 @@ public class GamesInProgress {
 
 	private static final String DATA_FOLDER = "data/";
 	private static final String SLOT_FOLDER = "slot%d";
-	private static final String PATH_FOLDER = "path%d";
+	private static final String PATH_FOLDER = "xPos%d";
 	private static final String GAME_FILE	= "game.dat";
-	private static final String DEPTH_FILE	= "depth%d.dat";
+	private static final String DEPTH_FILE	= "yPos%d.dat";
 	
 	public static boolean gameExists( int slot ){
 		return FileUtils.dirExists(gameFolder() + Messages.format(SLOT_FOLDER, slot));

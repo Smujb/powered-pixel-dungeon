@@ -36,7 +36,7 @@ import java.util.List;
 
 public class Ballistica {
 
-	//note that the path is the FULL path of the projectile, including tiles after collision.
+	//note that the xPos is the FULL xPos of the projectile, including tiles after collision.
 	//make sure to generate a subPath for the common case of going source to collision.
 	public ArrayList<Integer> path = new ArrayList<>();
 	public Integer sourcePos = null;
@@ -112,7 +112,7 @@ public class Ballistica {
 		int err = dA / 2;
 		while (Dungeon.level.insideMap(cell)) {
 
-			//if we're in a wall, collide with the previous cell along the path.
+			//if we're in a wall, collide with the previous cell along the xPos.
 			//we don't use solid here because we don't want to stop short of closed doors
 			if (stopTerrain && cell != sourcePos && !Dungeon.level.passable()[cell] && !Dungeon.level.avoid()[cell]) {
 				collide(path.get(path.size() - 1));
@@ -142,7 +142,7 @@ public class Ballistica {
 			collisionPos = cell;
 	}
 
-	//returns a segment of the path from start to end, inclusive.
+	//returns a segment of the xPos from start to end, inclusive.
 	//if there is an error, returns an empty arraylist instead.
 	public List<Integer> subPath(int start, int end){
 		try {

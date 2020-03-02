@@ -30,6 +30,10 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
+import com.shatteredpixel.yasd.general.actors.mobs.Eye;
+import com.shatteredpixel.yasd.general.actors.mobs.Scorpio;
+import com.shatteredpixel.yasd.general.actors.mobs.Succubus;
 import com.shatteredpixel.yasd.general.items.Torch;
 import com.shatteredpixel.yasd.general.levels.painters.HallsPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -65,12 +69,13 @@ public class HallsLevel extends RegularLevel {
 
 	{
 		
-		viewDistance = Math.min( Constants.NUM_FLOORS - Dungeon.depth, viewDistance );
+		viewDistance = Math.min( Constants.NUM_FLOORS - Dungeon.yPos, viewDistance );
 		
 		color1 = 0x801500;
 		color2 = 0xa68521;
 
-		scaleFactor = 4;
+		minScaleFactor = 26;
+		maxScaleFactor = 28;
 	}
 
 	@Override
@@ -128,6 +133,26 @@ public class HallsLevel extends RegularLevel {
 				4, 4, 4, 4, 4,
 				2, 2, 2, 2,
 				1, 1, 1 };
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return new Class[] {
+				Eye.class,
+				Succubus.class,
+				Elemental.class,
+				Scorpio.class
+		};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return new float[] {
+				3,
+				5,
+				1,
+				2
+		};
 	}
 
 	@Override

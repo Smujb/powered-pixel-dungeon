@@ -69,7 +69,7 @@ public class Statue extends Mob implements Callback {
 		lootChance = 1f;//Guaranteed in Animated Statues
 	}
 
-	int ankhs = Math.max(1,Dungeon.depth/Constants.CHAPTER_LENGTH);//1 Ankh per chapter
+	int ankhs = Math.max(1,Dungeon.yPos /Constants.CHAPTER_LENGTH);//1 Ankh per chapter
 	
 	public Statue() {
 		super();
@@ -82,9 +82,9 @@ public class Statue extends Mob implements Callback {
 
 		upgradeItems();
 		
-		HP = HT = 15 + Dungeon.depth * 5;
-		defenseSkill = 4 + Dungeon.depth;
-		attackSkill  = 10 + Dungeon.depth;
+		HP = HT = 15 + Dungeon.yPos * 5;
+		defenseSkill = 4 + Dungeon.yPos;
+		attackSkill  = 10 + Dungeon.yPos;
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	public void upgradeItems() {
-		int sous = (Dungeon.depth/Constants.CHAPTER_LENGTH)*Constants.SOU_PER_CHAPTER;//(Dungeon.depth/5 [chapter]) * 3 [3 SoU per chapter]
+		int sous = (Dungeon.yPos /Constants.CHAPTER_LENGTH)*Constants.SOU_PER_CHAPTER;//(Dungeon.yPos/5 [chapter]) * 3 [3 SoU per chapter]
 		KindofMisc Item;
 		if (belongings.miscs.length > 0) {
 			do {

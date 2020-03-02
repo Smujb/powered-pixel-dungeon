@@ -51,7 +51,7 @@ public abstract class ConnectionRoom extends Room {
 	@Override
 	public boolean canPlaceTrap(Point p) {
 		//traps cannot appear in connection rooms on floor 1
-		return super.canPlaceTrap(p) && Dungeon.depth > 1;
+		return super.canPlaceTrap(p) && Dungeon.yPos > 1;
 	}
 
 	/*private static ArrayList<Class<?extends ConnectionRoom>> rooms = new ArrayList<>();
@@ -80,15 +80,15 @@ public abstract class ConnectionRoom extends Room {
 			chances[i] = restrictedChances;
 		}
 		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {
-			if (Dungeon.depth <= Constants.CHAPTER_LENGTH) {
+			if (Dungeon.yPos <= Constants.CHAPTER_LENGTH) {
 				chances[i] = sewerChances;
-			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*2) {
+			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*2) {
 				chances[i] = prisonChances;
-			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*3) {
+			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*3) {
 				chances[i] = cavesChances;
-			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*4) {
+			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*4) {
 				chances[i] = cityChances;
-			} else if (Dungeon.depth <= Constants.CHAPTER_LENGTH*5) {
+			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*5) {
 				chances[i] = hallsChances;
 			}
 		}
@@ -114,7 +114,7 @@ public abstract class ConnectionRoom extends Room {
 	}*/
 	
 	public static ConnectionRoom createRoom(Level level) {
-		//return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.depth])));
+		//return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.yPos])));
 		return level.randomConnectionRoom();
 	}
 }

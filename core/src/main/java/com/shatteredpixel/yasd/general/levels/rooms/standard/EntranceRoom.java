@@ -69,7 +69,7 @@ public class EntranceRoom extends StandardRoom {
 			Painter.set(level, level.entrance, Terrain.ENTRANCE);
 		}
 
-		if (Dungeon.depth == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
+		if (Dungeon.yPos == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
 			int pos;
 			do {
 				//can't be on bottom row of tiles
@@ -81,7 +81,7 @@ public class EntranceRoom extends StandardRoom {
 			level.drop( p, pos );
 		}
 
-		if (Dungeon.depth == 2){
+		if (Dungeon.yPos == 2){
 			if (!Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1)){
 				for (Room.Door door : connected.values()) {
 					door.set( Door.Type.HIDDEN );

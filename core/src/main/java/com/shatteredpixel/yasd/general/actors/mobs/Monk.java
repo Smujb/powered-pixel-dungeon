@@ -28,9 +28,10 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -39,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.food.Food;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MonkSprite;
+import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -47,14 +49,15 @@ public class Monk extends Mob {
 	
 	{
 		spriteClass = MonkSprite.class;
-		
-		HP = HT = 70;
-		defenseSkill = 34;
+
+
+		healthFactor = 0.8f;
+		damageFactor = 0.6f;
 		
 		EXP = 11;
 		maxLvl = 21;
 
-		DLY = 0.5f;
+		attackDelay = 0.5f;
 		
 		loot = new  Food();
 		lootChance = 0.083f;
@@ -62,7 +65,7 @@ public class Monk extends Mob {
 		properties.add(Property.UNDEAD);
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 14, 30 );
 	}
@@ -75,7 +78,7 @@ public class Monk extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 2);
-	}
+	}*/
 	
 	@Override
 	public void rollToDropLoot() {
@@ -131,5 +134,27 @@ public class Monk extends Mob {
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		hitsToDisarm = bundle.getInt(DISARMHITS);
+	}
+
+	public static class Senior extends Monk {
+
+		{
+			spriteClass = SeniorSprite.class;
+		}
+
+		@Override
+		public int damageRoll() {
+			return Random.NormalIntRange( 16, 24 );
+		}
+
+		@Override
+		public int attackProc( Char enemy, int damage ) {
+			damage = super.attackProc( enemy, damage );
+			if (Random.Int( 10 ) == 0) {
+				Buff.prolong( enemy, Paralysis.class, 1.1f );
+			}
+			return super.attackProc( enemy, damage );
+		}
+
 	}
 }

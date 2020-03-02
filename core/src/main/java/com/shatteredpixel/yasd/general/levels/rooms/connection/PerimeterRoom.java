@@ -96,7 +96,7 @@ public class PerimeterRoom extends ConnectionRoom {
 		return Math.abs(a - b)-1;
 	}
 	
-	//gets the path distance between two points
+	//gets the xPos distance between two points
 	private static int distanceBetweenPoints(Room r, Point a, Point b){
 		//on the same side
 		if (((a.x == r.left || a.x == r.right) && a.y == b.y)
@@ -118,7 +118,7 @@ public class PerimeterRoom extends ConnectionRoom {
 	
 	private static Point[] corners;
 	
-	//picks the smallest path to fill between two points
+	//picks the smallest xPos to fill between two points
 	private static void fillBetweenPoints(Level level, Room r, Point from, Point to, Terrain floor){
 		
 		//doors are along the same side

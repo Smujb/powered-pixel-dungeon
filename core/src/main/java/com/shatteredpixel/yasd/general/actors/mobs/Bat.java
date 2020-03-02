@@ -34,28 +34,36 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.sprites.BatSprite;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class Bat extends Mob {
 
 	{
 		spriteClass = BatSprite.class;
-		
-		HP = HT = 35;
-		defenseSkill = 18;
+
+		healthFactor = 0.6f;
+		//HP = HT = 35;
+		evasionFactor = 1.3f;
+		//defenseSkill = 18;
 		baseSpeed = 2f;
+
+		drFactor = 0.5f;
+		accuracyFactor = 0.8f;
+		damageFactor = 0.75f;
 		
 		EXP = 7;
-		maxLvl = 15;
 		
 		flying = true;
 		
-		loot = Reflection.newInstance( PotionOfHealing.class );
+		loot = new PotionOfHealing();
 		lootChance = 0.1667f; //by default, see rollToDropLoot()
 	}
-	
+
 	@Override
+	public Element elementalType() {
+		return Element.DRAIN;
+	}
+
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 5, 18 );
 	}
@@ -68,7 +76,7 @@ public class Bat extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 4);
-	}
+	}*/
 	
 	@Override
 	public int attackProc( Char enemy, int damage ) {

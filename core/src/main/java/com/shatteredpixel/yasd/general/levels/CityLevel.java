@@ -29,6 +29,10 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
+import com.shatteredpixel.yasd.general.actors.mobs.Golem;
+import com.shatteredpixel.yasd.general.actors.mobs.Monk;
+import com.shatteredpixel.yasd.general.actors.mobs.Warlock;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.levels.painters.CityPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -63,7 +67,8 @@ public class CityLevel extends RegularLevel {
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
 
-		scaleFactor = 3;
+		minScaleFactor = 20;
+		maxScaleFactor = 22;
 	}
 	
 	@Override
@@ -115,6 +120,26 @@ public class CityLevel extends RegularLevel {
 				4, 4, 4, 4, 4,
 				2, 2, 2,
 				1, 1 };
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return new Class[] {
+				Warlock.class,
+				Monk.class,
+				Elemental.class,
+				Golem.class
+		};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return new float[] {
+				2,
+				3,
+				4,
+				1
+		};
 	}
 
 	@Override

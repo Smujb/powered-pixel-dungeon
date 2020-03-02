@@ -76,15 +76,15 @@ public class BrokenSeal extends Item {
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
 		} else if (action.equals(AC_DEBUG)) {
-			GameScene.show(new WndOptions("DEBUG: Choose Dungeon path",
+			GameScene.show(new WndOptions("DEBUG: Choose Dungeon xPos",
 					"",
 					Messages.titleCase("PATH 1"),
 					Messages.titleCase("PATH 2"),
 					Messages.titleCase("PATH 3")) {
 				@Override
 				protected void onSelect(int index) {
-					InterlevelScene.move(Dungeon.depth, index, "TEST", InterlevelScene.Mode.DESCEND);
-					hero.HT = hero.HP = 100000;
+					InterlevelScene.move(Dungeon.yPos, index, "TEST", InterlevelScene.Mode.DESCEND);
+					//hero.HT = hero.HP = 100000;
 				}
 			});
 		}
@@ -97,7 +97,7 @@ public class BrokenSeal extends Item {
 	}
 
 
-	protected static WndBag.Listener armorSelector = new WndBag.Listener() {
+	private static WndBag.Listener armorSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect( Item item ) {
 			if (item instanceof Armor) {

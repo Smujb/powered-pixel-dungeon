@@ -63,8 +63,8 @@ public class Piranha extends Mob {
 	public Piranha() {
 		super();
 		
-		HP = HT = 10 + Dungeon.depth * 5;
-		defenseSkill = 10 + Dungeon.depth * 2;
+		HP = HT = 10 + Dungeon.yPos * 5;
+		defenseSkill = 10 + Dungeon.yPos * 2;
 	}
 	
 	@Override
@@ -81,17 +81,17 @@ public class Piranha extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( Dungeon.depth, 4 + Dungeon.depth * 2 );
+		return Random.NormalIntRange( Dungeon.yPos, 4 + Dungeon.yPos * 2 );
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 20 + Dungeon.depth * 2;
+		return 20 + Dungeon.yPos * 2;
 	}
 	
 	@Override
 	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, Dungeon.depth);
+		return Random.NormalIntRange(0, Dungeon.yPos);
 	}
 	
 	@Override
@@ -153,7 +153,7 @@ public class Piranha extends Mob {
 		immunities.add( Vertigo.class );
 	}
 	
-	//if there is not a path to the enemy, piranhas act as if they can't see them
+	//if there is not a xPos to the enemy, piranhas act as if they can't see them
 	private class Sleeping extends Mob.Sleeping{
 		@Override
 		public boolean act(boolean enemyInFOV, boolean justAlerted) {

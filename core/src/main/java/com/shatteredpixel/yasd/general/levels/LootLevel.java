@@ -27,14 +27,12 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
+import com.shatteredpixel.yasd.general.actors.mobs.Eye;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 
 public class LootLevel extends SewerLevel {
-    {
-        scaleFactor = 3;
-    }
 
     @Override
     protected void createItems() {
@@ -51,6 +49,16 @@ public class LootLevel extends SewerLevel {
             addItemToSpawn(Generator.random().identify());
         }
         super.createItems();
+    }
+
+    @Override
+    public Class<?>[] mobClasses() {
+        return new Class[] {Eye.class};
+    }
+
+    @Override
+    public float[] mobChances() {
+        return new float[] {1};
     }
 
     @Override

@@ -181,8 +181,8 @@ public abstract class RegularPainter extends Painter {
 				
 				if (d.type == Room.Door.Type.REGULAR){
 					//chance for a hidden door scales from 3/21 on floor 2 to 3/3 on floor 20
-					if (Dungeon.depth > 1 &&
-							(Dungeon.depth >= 20 || Random.Int(23 - Dungeon.depth) < Dungeon.depth)) {
+					if (Dungeon.yPos > 1 &&
+							(Dungeon.yPos >= 20 || Random.Int(23 - Dungeon.yPos) < Dungeon.yPos)) {
 						d.type = Room.Door.Type.HIDDEN;
 						Graph.buildDistanceMap(rooms, r);
 						//don't hide if it would make this room only accessible by hidden doors

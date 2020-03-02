@@ -317,7 +317,7 @@ public class WandOfLivingEarth extends DamageWand {
 			if (owner instanceof Hero) {
 				defenseSkill = (((Hero)owner).lvl + 4)/2;
 			} else {
-				defenseSkill = (Dungeon.depth + 4)/2;
+				defenseSkill = (Dungeon.yPos + 4)/2;
 			}
 
 			alignment = owner.alignment;
@@ -337,7 +337,7 @@ public class WandOfLivingEarth extends DamageWand {
 
 		@Override
 		public int damageRoll() {
-			return Random.NormalIntRange(2, 4 + Dungeon.depth/2);
+			return Random.NormalIntRange(2, 4 + Dungeon.yPos /2);
 		}
 
 		@Override

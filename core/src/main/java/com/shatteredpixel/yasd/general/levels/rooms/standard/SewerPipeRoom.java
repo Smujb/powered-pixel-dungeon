@@ -199,7 +199,7 @@ public class SewerPipeRoom extends StandardRoom {
 		return Math.abs(a - b)-1;
 	}
 	
-	//gets the path distance between two points
+	//gets the xPos distance between two points
 	private int distanceBetweenPoints(Point a, Point b){
 		//on the same side
 		if (a.y == b.y || a.x == b.x){
@@ -220,7 +220,7 @@ public class SewerPipeRoom extends StandardRoom {
 	
 	private Point[] corners;
 	
-	//picks the smallest path to fill between two points
+	//picks the smallest xPos to fill between two points
 	private void fillBetweenPoints(Level level, Point from, Point to, Terrain floor){
 		
 		//doors are along the same side

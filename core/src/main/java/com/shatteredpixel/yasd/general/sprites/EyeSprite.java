@@ -76,6 +76,12 @@ public class EyeSprite extends MobSprite {
 	}
 
 	@Override
+	public void killAndErase() {
+		super.killAndErase();
+		chargeParticles.killAndErase();
+	}
+
+	@Override
 	public void link(Char ch) {
 		super.link(ch);
 		if (((Eye)ch).beamCharged) play(charging);
@@ -100,16 +106,16 @@ public class EyeSprite extends MobSprite {
 	}
 
 	@Override
-	public void zap( int pos ) {
-		zapPos = pos;
-		super.zap( pos );
+	public void attack(int cell) {
+		zapPos = cell;
+		super.attack(cell);
 	}
-	
+
 	@Override
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
 		
-		if (anim == zap) {
+		if (anim == attack && ((Eye)ch).beamCharged) {
 			idle();
 			if (Actor.findChar(zapPos) != null){
 				parent.add(new Beam.DeathRay(center(), Actor.findChar(zapPos).sprite.center()));

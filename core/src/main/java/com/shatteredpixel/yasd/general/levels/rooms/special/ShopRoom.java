@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Shopkeeper;
-import com.shatteredpixel.yasd.general.items.Ankh;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Honeypot;
@@ -205,7 +204,7 @@ public class ShopRoom extends SpecialRoom {
 
 		ArrayList<Item> itemsToSpawn = new ArrayList<>();
 		
-		switch (Dungeon.depth) {
+		switch (Dungeon.yPos) {
 		case 6:
 			itemsToSpawn.add( Random.Int( 2 ) == 0 ?
 					new FishingSpear().quantity(2) :
@@ -234,12 +233,12 @@ public class ShopRoom extends SpecialRoom {
 			break;
 		}
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
-			Armor armor = generateArmor(Dungeon.depth);
+			Armor armor = generateArmor(Dungeon.yPos);
 			itemsToSpawn.add( armor );
 		}
 
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
-			MeleeWeapon weapon = generateWeapon(Dungeon.depth);
+			MeleeWeapon weapon = generateWeapon(Dungeon.yPos);
 			itemsToSpawn.add( weapon );
 		}
 
@@ -296,7 +295,7 @@ public class ShopRoom extends SpecialRoom {
 			int bags = 0;
 			//creates the given float percent of the remaining bags to be dropped.
 			//this way players who get the hourglass late can still max it, usually.
-			switch (Dungeon.depth) {
+			switch (Dungeon.yPos) {
 				case 6:
 					bags = (int)Math.ceil(( 5-hourglass.sandBags) * 0.20f ); break;
 				case 11:

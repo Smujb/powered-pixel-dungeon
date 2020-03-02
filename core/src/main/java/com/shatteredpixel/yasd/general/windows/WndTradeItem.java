@@ -258,7 +258,7 @@ public class WndTradeItem extends Window {
 	}
 	
 	private int price( Item item ) {
-		int price = item.price() * 3 * (Dungeon.depth / 7 + 1);
+		int price = item.price() * 3 * (Dungeon.yPos / 7 + 1);
 		return price;
 	}
 	

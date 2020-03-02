@@ -79,7 +79,7 @@ public class LloydsBeacon extends Artifact {
 		usesTargeting = true;
 	}
 	
-	private static final String DEPTH	= "depth";
+	private static final String DEPTH	= "yPos";
 	private static final String POS		= "pos";
 	
 	@Override
@@ -134,7 +134,7 @@ public class LloydsBeacon extends Artifact {
 		if (action == AC_ZAP ){
 
 			curUser = hero;
-			int chargesToUse = Dungeon.depth > 20 ? 2 : 1;
+			int chargesToUse = Dungeon.yPos > 20 ? 2 : 1;
 
 			if (!isEquipped( hero )) {
 				GLog.i( Messages.get(Artifact.class, "need_to_equip") );
@@ -150,7 +150,7 @@ public class LloydsBeacon extends Artifact {
 
 		} else if (action == AC_SET) {
 			
-			returnDepth = Dungeon.depth;
+			returnDepth = Dungeon.yPos;
 			returnPos = hero.pos;
 			
 			hero.spend( LloydsBeacon.TIME_TO_USE );
@@ -163,7 +163,7 @@ public class LloydsBeacon extends Artifact {
 			
 		} else if (action == AC_RETURN) {
 			
-			if (returnDepth == Dungeon.depth) {
+			if (returnDepth == Dungeon.yPos) {
 				ScrollOfTeleportation.appear( hero, returnPos );
 				for(Mob m : Dungeon.level.mobs){
 					if (m.pos == hero.pos){
@@ -202,7 +202,7 @@ public class LloydsBeacon extends Artifact {
 			if (target == null) return;
 
 			Invisibility.dispel();
-			charge -= Dungeon.depth > 20 ? 2 : 1;
+			charge -= Dungeon.yPos > 20 ? 2 : 1;
 			updateQuickslot();
 
 			if (Actor.findChar(target) == curUser){

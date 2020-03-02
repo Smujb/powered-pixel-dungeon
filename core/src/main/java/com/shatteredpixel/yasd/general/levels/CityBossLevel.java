@@ -54,10 +54,13 @@ public class CityBossLevel extends Level {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-
-		scaleFactor = 3;
 	}
-	
+
+	@Override
+	public int getScaleFactor() {
+		return new CityLevel().getScaleFactor();
+	}
+
 	private static final int TOP			= 2;
 	private static final int HALL_WIDTH		= 7;
 	private static final int HALL_HEIGHT	= 15;
@@ -149,7 +152,7 @@ public class CityBossLevel extends Level {
 				map[i] = EMPTY_DECO;
 			} else if (map[i] == WALL
 					&& DungeonTileSheet.floorTile(map[i + width()])
-					&& Random.Int( 21 - Dungeon.depth ) == 0) {
+					&& Random.Int( 21 - Dungeon.yPos) == 0) {
 				map[i] = WALL_DECO;
 			}
 		}

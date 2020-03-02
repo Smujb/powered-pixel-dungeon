@@ -35,7 +35,8 @@ public class ChainArmor extends Armor {
 	{
 		image = ItemSpriteSheet.ARMOR_MAIL;
 
-		magicalDRFactor = 0.5f;
+		magicalDRFactor = 2/3f;
+		DRfactor = 1.5f;
 		STE = 0.75f;
 		EVA = 0.75f;
 	}

@@ -31,7 +31,14 @@ import com.shatteredpixel.yasd.general.actors.mobs.Rat;
 import com.shatteredpixel.yasd.general.actors.mobs.Snake;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
 
-public class FirstLevel extends SewerLevel {//First depth has different mobs
+public class FirstLevel extends SewerLevel {//First yPos has different mobs
+
+
+	@Override
+	public int getScaleFactor() {
+		return 0;
+	}
+
 	@Override
 	public Class<?>[] mobClasses() {
 			return new Class[]{Rat.class, Snake.class};

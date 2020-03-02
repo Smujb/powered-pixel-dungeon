@@ -134,7 +134,7 @@ public class EtherealChains extends Artifact {
 		}
 	};
 	
-	//pulls an enemy to a position along the chain's path, as close to the hero as possible
+	//pulls an enemy to a position along the chain's xPos, as close to the hero as possible
 	private void chainEnemy(Ballistica chain, final Char user, final Char enemy ){
 		
 		if (enemy.properties().contains(Char.Property.IMMOVABLE)) {
@@ -144,7 +144,7 @@ public class EtherealChains extends Artifact {
 		
 		int bestPos = -1;
 		for (int i : chain.subPath(1, chain.dist)){
-			//prefer to the earliest point on the path
+			//prefer to the earliest point on the xPos
 			if (!Dungeon.level.solid()[i] && Actor.findChar(i) == null){
 				bestPos = i;
 				break;

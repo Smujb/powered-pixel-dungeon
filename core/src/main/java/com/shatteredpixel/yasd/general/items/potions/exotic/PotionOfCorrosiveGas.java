@@ -51,6 +51,6 @@ public class PotionOfCorrosiveGas extends ExoticPotion {
 			Sample.INSTANCE.play( Assets.SND_SHATTER );
 		}
 		
-		GameScene.add( Blob.seed( cell, 200, CorrosiveGas.class ).setStrength( 1 + Dungeon.depth/Constants.CHAPTER_LENGTH));
+		GameScene.add( Blob.seed( cell, 200, CorrosiveGas.class ).setStrength( 1 + Dungeon.yPos /Constants.CHAPTER_LENGTH));
 	}
 }

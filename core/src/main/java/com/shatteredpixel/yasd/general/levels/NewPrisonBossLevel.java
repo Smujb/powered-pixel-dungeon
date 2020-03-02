@@ -77,8 +77,6 @@ public class NewPrisonBossLevel extends Level {
 		
 		//the player should be able to see all of Tengu's arena
 		viewDistance = 12;
-
-		scaleFactor = 1;
 	}
 	
 	public enum State {
@@ -88,7 +86,12 @@ public class NewPrisonBossLevel extends Level {
 		FIGHT_ARENA,
 		WON
 	}
-	
+
+	@Override
+	public int getScaleFactor() {
+		return new PrisonLevel().getScaleFactor();
+	}
+
 	private State state;
 	private NewTengu tengu;
 	
@@ -215,7 +218,7 @@ public class NewPrisonBossLevel extends Level {
 		
 		Painter.set(this, tenguCell.left+4, tenguCell.top, LOCKED_DOOR);
 		
-		drop(new IronKey(Dungeon.depth), randomPrisonCellPos());
+		drop(new IronKey(Dungeon.yPos), randomPrisonCellPos());
 		
 		for (Point p : startTorches){
 			Painter.set(this, p, WALL_DECO);
@@ -265,7 +268,7 @@ public class NewPrisonBossLevel extends Level {
 		Painter.set(this, mazeHallway.left+1, mazeHallway.top+10, LOCKED_DOOR);
 		
 		for (Point p : mazeKeySpawns){
-			drop(new IronKey(Dungeon.depth), pointToCell(p));
+			drop(new IronKey(Dungeon.yPos), pointToCell(p));
 		}
 		
 		for (Point p : mazeTorches){

@@ -139,9 +139,9 @@ public abstract class Char extends Actor {
 	public boolean flying = false;
 	public int invisible = 0;
 
-	public float DLY = 1f;
-	public float ACC = 1f;
-	public float EVA = 1f;
+	public float attackDelay = 1f;
+	public float accuracyFactor = 1f;
+	public float evasionFactor = 1f;
 	public float STE = 1f;
 
 	//these are relative to the hero
@@ -440,7 +440,7 @@ public abstract class Char extends Actor {
 		if (drunk != null) {
 			accuracy *= drunk.accuracyFactor();
 		}
-		return (int) (accuracy * ACC);
+		return (int) (accuracy * accuracyFactor);
 	}
 
 
@@ -459,7 +459,7 @@ public abstract class Char extends Actor {
 		if (drunk != null) {
 			evasion *= drunk.evasionFactor();
 		}
-		return Math.round(evasion * EVA);
+		return Math.round(evasion * evasionFactor);
 	}
 	public String defenseVerb() {
 		return Messages.get(this, "def_verb");
@@ -634,7 +634,7 @@ public abstract class Char extends Actor {
 		if (hasBelongings()) {
 			return belongings.attackDelay();
 		} else {
-			return DLY;
+			return attackDelay;
 		}
 	}
 
@@ -678,10 +678,7 @@ public abstract class Char extends Actor {
 		if (!ignoresDefense) {
 			dmg = element.affectDamage(this, dmg);
 		}
-		if (dmg <= 0) {
-			return;
-		}
-		if (this.buff(Drowsy.class) != null) {
+		if (this.buff(Drowsy.class) != null && dmg > 0) {
 			Buff.detach(this, Drowsy.class);
 			GLog.w(Messages.get(this, "pain_resist"));
 		}

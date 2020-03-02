@@ -44,12 +44,11 @@ public class Elemental extends Mob {
 
 	{
 		spriteClass = ElementalSprite.class;
-		
-		HP = HT = 65;
-		defenseSkill = 24;
+
+		//HP = HT = 65;
+		//defenseSkill = 24;
 		
 		EXP = 10;
-		maxLvl = 20;
 		
 		flying = true;
 		
@@ -64,7 +63,7 @@ public class Elemental extends Mob {
 		return Element.FIRE;
 	}
 
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 16, 28 );
 	}
@@ -72,14 +71,14 @@ public class Elemental extends Mob {
 	@Override
 	public int attackSkill( Char target ) {
 		return 30;
-	}
+	}*/
 	
 	@Override
 	public int drRoll(Element element) {
-		if (element.isMagical() && element != Element.WATER) {
-			return Random.NormalIntRange(2, 8);
+		if (element == Element.WATER) {
+			return -super.drRoll(element);
 		} else {
-			return Random.NormalIntRange(0, 5);
+			return super.drRoll(element);
 		}
 	}
 

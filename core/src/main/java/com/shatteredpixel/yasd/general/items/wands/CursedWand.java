@@ -240,7 +240,7 @@ public class CursedWand {
 							if (user instanceof Hero) {
 								damage = ((Hero)user).lvl * 2;
 							} else {
-								damage = Dungeon.depth * 2;
+								damage = Dungeon.yPos * 2;
 							}
 							if (Random.Int(2) == 0) {
 								user.HP = Math.min(user.HT, user.HP + damage);
@@ -326,11 +326,11 @@ public class CursedWand {
 
 			//inter-level teleportation
 			case 2:
-				if (Dungeon.depth > 1 && !Dungeon.bossLevel()) {
+				if (Dungeon.yPos > 1 && !Dungeon.bossLevel()) {
 
-					//each depth has 1 more weight than the previous depth.
-					float[] depths = new float[Dungeon.depth-1];
-					for (int i = 1; i < Dungeon.depth; i++) depths[i-1] = i;
+					//each yPos has 1 more weight than the previous yPos.
+					float[] depths = new float[Dungeon.yPos -1];
+					for (int i = 1; i < Dungeon.yPos; i++) depths[i-1] = i;
 					int depth = 1+Random.chances(depths);
 
 					Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
@@ -380,7 +380,7 @@ public class CursedWand {
 					public void call() {
 						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<Item>());
 						if (mimic != null) {
-							mimic.adjustStats(Dungeon.depth + 10);
+							mimic.adjustStats(Dungeon.yPos + 10);
 							mimic.HP = mimic.HT;
 							Item reward;
 							do {

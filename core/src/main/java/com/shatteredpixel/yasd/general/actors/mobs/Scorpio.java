@@ -33,10 +33,12 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
+import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
+import com.shatteredpixel.yasd.general.sprites.AcidicSprite;
 import com.shatteredpixel.yasd.general.sprites.ScorpioSprite;
 import com.watabou.utils.Random;
 
@@ -114,6 +116,24 @@ public class Scorpio extends RangedMob {
 		} else {
 			return new  MysteryMeat();
 		}
+	}
+
+	public static class Acidic extends Scorpio {
+
+		{
+			spriteClass = AcidicSprite.class;
+
+			properties.add(Property.ACIDIC);
+		}
+
+		@Override
+		public int defenseProc(Char enemy, int damage, Element element) {
+
+			Buff.affect(enemy, Ooze.class).set(20f);
+
+			return super.defenseProc( enemy, damage, element);
+		}
+
 	}
 	
 }

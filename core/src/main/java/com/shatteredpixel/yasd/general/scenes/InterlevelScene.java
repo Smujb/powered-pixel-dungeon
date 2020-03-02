@@ -153,7 +153,7 @@ public class InterlevelScene extends PixelScene {
 		if (mode == Mode.CONTINUE) {
 			loadingDepth = GamesInProgress.check(GamesInProgress.curSlot).depth;
 		} else {
-			loadingDepth = Dungeon.depth;
+			loadingDepth = Dungeon.yPos;
 		}
 		switch (mode) {
 			default:
@@ -183,13 +183,13 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = -5;
 				break;
 			case RETURN:
-				scrollSpeed = depth > Dungeon.depth ? 15 : -15;
+				scrollSpeed = depth > Dungeon.yPos ? 15 : -15;
 				break;
 		}
 
 		Level level = null;
 		try {
-			level = Reflection.newInstance(Constants.LEVEL_TYPES.get(Dungeon.path).get(loadingDepth));
+			level = Reflection.newInstance(Constants.LEVEL_TYPES.get(Dungeon.xPos).get(loadingDepth));
 		} catch (Exception ignored) {}
 
 		if (level == null || level.loadImg() == null) {
@@ -304,7 +304,7 @@ public class InterlevelScene extends PixelScene {
 						error.getMessage().equals("old save")) errorMsg = Messages.get(this, "io_error");
 
 				else throw new RuntimeException("fatal error occured while moving between floors. " +
-							"Seed:" + Dungeon.seed + " depth:" + Dungeon.depth, error);
+							"Seed:" + Dungeon.seed + " yPos:" + Dungeon.yPos, error);
 
 				add( new WndError( errorMsg ) {
 					public void onBackPressed() {
@@ -323,7 +323,7 @@ public class InterlevelScene extends PixelScene {
 				}
 				MainGame.reportException(
 						new RuntimeException("waited more than 10 seconds on levelgen. " +
-								"Seed:" + Dungeon.seed + " depth:" + Dungeon.depth + " trace:" +
+								"Seed:" + Dungeon.seed + " yPos:" + Dungeon.yPos + " trace:" +
 								s)
 				);
 			}
@@ -336,27 +336,27 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	public static void descend() {
-		move(Dungeon.depth + 1, Dungeon.path, Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND);
+		move(Dungeon.yPos + 1, Dungeon.xPos, Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND);
 	}
 
 	public static void ascend() {
-		move(Dungeon.depth - 1, Dungeon.path, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
+		move(Dungeon.yPos - 1, Dungeon.xPos, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
 	}
 
 	public static void fall() {
-		move(Dungeon.depth + 1, Dungeon.path, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+		move(Dungeon.yPos + 1, Dungeon.xPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
 	}
 
 	public static void reset() {
-		move(Dungeon.depth, Dungeon.path, Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET);
+		move(Dungeon.yPos, Dungeon.xPos, Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET);
 	}
 
 	public static void resurrect() {
-		move(Dungeon.depth, Dungeon.path, Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT);
+		move(Dungeon.yPos, Dungeon.xPos, Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT);
 	}
 
 	public static void returnTo(int depth, int pos) {
-		move(depth, Dungeon.path, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
+		move(depth, Dungeon.xPos, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
 		returnPos = pos;
 	}
 
@@ -391,11 +391,11 @@ public class InterlevelScene extends PixelScene {
 			Mob.holdAllies( Dungeon.level );
 			Dungeon.saveAll();
 		}
-		Dungeon.depth = depthToAccess;
-		Dungeon.path = path;
+		Dungeon.yPos = depthToAccess;
+		Dungeon.xPos = path;
 		if (mode.equals(Mode.RESURRECT)) {
 			if (Dungeon.level.locked) {
-				Dungeon.hero.resurrect( Dungeon.depth );
+				Dungeon.hero.resurrect( Dungeon.yPos);
 			} else {
 				Dungeon.hero.resurrect( -1 );
 				Dungeon.resetLevel();
@@ -409,7 +409,7 @@ public class InterlevelScene extends PixelScene {
 
 		} else  {
 
-			level = Dungeon.newLevel(Dungeon.depth);
+			level = Dungeon.newLevel(Dungeon.yPos);
 
 		}
 
@@ -438,8 +438,8 @@ public class InterlevelScene extends PixelScene {
 		GameLog.wipe();
 		Level level;
 		Dungeon.loadGame( GamesInProgress.curSlot );
-		if (Dungeon.depth == -1) {
-			Dungeon.depth = Statistics.deepestFloor;
+		if (Dungeon.yPos == -1) {
+			Dungeon.yPos = Statistics.deepestFloor;
 			Dungeon.switchLevel( level = Dungeon.loadLevel( GamesInProgress.curSlot ), -1 );
 		} else {
 			level = Dungeon.loadLevel( GamesInProgress.curSlot );

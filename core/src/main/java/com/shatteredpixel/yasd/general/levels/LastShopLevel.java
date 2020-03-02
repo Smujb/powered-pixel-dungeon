@@ -53,10 +53,13 @@ public class LastShopLevel extends RegularLevel {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-
-		scaleFactor = 3;
 	}
-	
+
+	@Override
+	public int getScaleFactor() {
+		return new CityLevel().getScaleFactor();
+	}
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_CITY;

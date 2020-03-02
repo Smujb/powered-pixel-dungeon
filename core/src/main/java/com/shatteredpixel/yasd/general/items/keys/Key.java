@@ -65,8 +65,8 @@ public abstract class Key extends Item {
 		return true;
 	}
 
-	private static final String DEPTH = "depth";
-	private static final String PATH  = "path";
+	private static final String DEPTH = "yPos";
+	private static final String PATH  = "xPos";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {

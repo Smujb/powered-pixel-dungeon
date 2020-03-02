@@ -60,7 +60,7 @@ public class GuardianTrap extends Trap {
 
 		Sample.INSTANCE.play( Assets.SND_ALERT );
 
-		for (int i = 0; i < (Dungeon.depth - 5)/5; i++){
+		for (int i = 0; i < (Dungeon.yPos - 5)/5; i++){
 			Guardian guardian = new Guardian();
 			guardian.state = guardian.WANDERING;
 			guardian.pos = Dungeon.level.randomRespawnCell();

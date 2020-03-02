@@ -46,8 +46,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.Yog;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
-import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -71,12 +69,12 @@ public class WandOfDamnation extends Wand {
             //base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
             float enemyResist = 1 + enemy.EXP;
             if (ch instanceof Mimic || ch instanceof Statue) {
-                enemyResist = 1 + Dungeon.depth;
+                enemyResist = 1 + Dungeon.yPos;
             } else if (ch instanceof Piranha || ch instanceof Bee) {
-                enemyResist = 1 + Dungeon.depth / 2f;
+                enemyResist = 1 + Dungeon.yPos / 2f;
             } else if (ch instanceof Wraith) {
                 //divide by 3 as wraiths are always at full HP and are therefore ~3x harder to corrupt
-                enemyResist = (1f + Dungeon.depth / 3f) / 3f;
+                enemyResist = (1f + Dungeon.yPos / 3f) / 3f;
             } else if (ch instanceof Yog.BurningFist || ch instanceof Yog.RottingFist) {
                 enemyResist = 1 + 30;
             } else if (ch instanceof Yog.Larva || ch instanceof King.Undead) {

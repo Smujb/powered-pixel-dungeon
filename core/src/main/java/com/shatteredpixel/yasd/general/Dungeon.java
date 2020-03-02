@@ -143,8 +143,9 @@ public class Dungeon {
 
 	public static QuickSlot quickslot = new QuickSlot();
 	
-	public static int depth;
-	public static int path;
+	public static int yPos;
+	public static int xPos;
+	public static int zPos;
 	public static int gold;
 	
 	public static HashSet<Integer> chapters;
@@ -187,8 +188,8 @@ public class Dungeon {
 		quickslot.reset();
 		QuickSlotButton.reset();
 		
-		depth = 1;
-		path = 0;
+		yPos = 1;
+		xPos = 0;
 		gold = 0;
 
 		droppedItems = new SparseArray<>();
@@ -236,7 +237,7 @@ public class Dungeon {
 	}
 
 	public static Level newLevel(int depth) {
-		return newLevel(depth, path);
+		return newLevel(depth, xPos);
 	}
 	
 	public static Level newLevel(int depth, int path) {
@@ -244,7 +245,7 @@ public class Dungeon {
 		Dungeon.level = null;
 		Actor.clear();
 		
-		Dungeon.depth = depth;
+		Dungeon.yPos = depth;
 		if (depth > Statistics.deepestFloor) {
 			Statistics.deepestFloor = depth;
 
@@ -298,7 +299,7 @@ public class Dungeon {
 	}
 
 	public static long seedCurDepth(){
-		return seedForDepth(depth);
+		return seedForDepth(yPos);
 	}
 
 	public static long seedForDepth(int depth){
@@ -311,11 +312,11 @@ public class Dungeon {
 	}
 	
 	public static boolean shopOnLevel() {
-		return bossLevel(depth+1) & depth + 1 != Constants.CHAPTER_LENGTH*4;
+		return bossLevel(yPos +1) & yPos + 1 != Constants.CHAPTER_LENGTH*4;
 	}
 	
 	public static boolean bossLevel() {
-		return bossLevel( depth );
+		return bossLevel(yPos);
 	}
 	
 	public static boolean bossLevel( int depth ) {
@@ -371,7 +372,7 @@ public class Dungeon {
 	}
 
 	public static void dropToChasm( Item item ) {
-		int depth = Dungeon.depth + 1;
+		int depth = Dungeon.yPos + 1;
 		ArrayList<Item> dropped = Dungeon.droppedItems.get( depth );
 		if (dropped == null) {
 			Dungeon.droppedItems.put( depth, dropped = new ArrayList<>() );
@@ -381,10 +382,10 @@ public class Dungeon {
 
 	public static boolean posNeeded() {
 		//2 POS each floor set
-		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (depth / Constants.CHAPTER_LENGTH) * 2);
+		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (yPos / Constants.CHAPTER_LENGTH) * 2);
 		if (posLeftThisSet <= 0) return false;
 
-		int floorThisSet = (depth % 5);
+		int floorThisSet = (yPos % 5);
 
 		//pos drops every two floors, (numbers 1-2, and 3-4) with a 50% chance for the earlier one each time.
 		int targetPOSLeft = 2 - floorThisSet/2;
@@ -400,21 +401,21 @@ public class Dungeon {
 		if (isChallenged(Challenges.NO_SCROLLS)){
 			return false;
 		} else {
-			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / Constants.CHAPTER_LENGTH) * Constants.SOU_PER_CHAPTER);
+			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (yPos / Constants.CHAPTER_LENGTH) * Constants.SOU_PER_CHAPTER);
 		}
 		if (souLeftThisSet <= 0) return false;
 
-		int floorThisSet = (depth % 5);
+		int floorThisSet = (yPos % 5);
 		//chance is floors left / scrolls left
 		return Random.Int(5 - floorThisSet) < souLeftThisSet;
 	}
 	
 	public static boolean esNeeded() {
 		//1 AS each floor set
-		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (depth / Constants.CHAPTER_LENGTH));
+		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (yPos / Constants.CHAPTER_LENGTH));
 		if (asLeftThisSet <= 0) return false;
 
-		int floorThisSet = (depth % 5);
+		int floorThisSet = (yPos % 5);
 		//chance is floors left / scrolls left
 		return Random.Int(5 - floorThisSet) < asLeftThisSet;
 	}
@@ -424,7 +425,7 @@ public class Dungeon {
 	private static final String CHALLENGES	= "challenges";
 	private static final String HERO		= "hero";
 	private static final String GOLD		= "gold";
-	private static final String DEPTH		= "depth";
+	private static final String DEPTH		= "yPos";
 	private static final String DROPPED     = "dropped%d";
 	private static final String PORTED      = "ported%d";
 	private static final String LEVEL		= "level";
@@ -434,7 +435,7 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
 	private static final String LEVELSLOADED= "levels-loaded";
-	private static final String PATH        = "path";
+	private static final String PATH        = "xPos";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -446,9 +447,9 @@ public class Dungeon {
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
-			bundle.put( DEPTH, depth );
+			bundle.put( DEPTH, yPos);
 			bundle.put( DIFFICULTY, difficulty );
-			bundle.put( PATH, path );
+			bundle.put( PATH, xPos);
 
 			for (int i = 0; i < Constants.NUM_PATHS; i++) {
 				bundle.put( LEVELSLOADED+i, loadedDepths[i]);
@@ -513,7 +514,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile(GamesInProgress.depthFile( save, depth, path), bundle);
+		FileUtils.bundleToFile(GamesInProgress.depthFile( save, yPos, xPos), bundle);
 	}
 	
 	public static void saveAll() throws IOException {
@@ -523,7 +524,7 @@ public class Dungeon {
 			saveGame( GamesInProgress.curSlot );
 			saveLevel( GamesInProgress.curSlot );
 
-			GamesInProgress.set( GamesInProgress.curSlot, depth, challenges, hero );
+			GamesInProgress.set( GamesInProgress.curSlot, yPos, challenges, hero );
 
 		}
 	}
@@ -542,7 +543,7 @@ public class Dungeon {
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
 
-		path = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
+		xPos = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
 
 		if (version < MainGame.v0_2_4) {
 			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
@@ -567,7 +568,7 @@ public class Dungeon {
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
 		
 		Dungeon.level = null;
-		Dungeon.depth = -1;
+		Dungeon.yPos = -1;
 		
 		Scroll.restore( bundle );
 		Potion.restore( bundle );
@@ -628,7 +629,7 @@ public class Dungeon {
 		}
 		
 		gold = bundle.getInt( GOLD );
-		depth = bundle.getInt( DEPTH );
+		yPos = bundle.getInt( DEPTH );
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );
@@ -672,7 +673,7 @@ public class Dungeon {
 		Dungeon.level = null;
 		Actor.clear();
 		
-		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, depth, path )) ;
+		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, yPos, xPos)) ;
 		
 		Level level = (Level)bundle.get( LEVEL );
 		

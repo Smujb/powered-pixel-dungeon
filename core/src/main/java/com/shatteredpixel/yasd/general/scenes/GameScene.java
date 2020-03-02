@@ -360,10 +360,10 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				if (Dungeon.bossLevel(Dungeon.depth-1)) {
+				if (Dungeon.bossLevel(Dungeon.yPos -1)) {
 					WndStory.showChapter(Dungeon.level.getClass());
 				}
-				/*switch (Dungeon.depth) {
+				/*switch (Dungeon.yPos) {
 					case 1:
 						WndStory.showChapter(WndStory.ID_SEWERS);
 						break;
@@ -380,14 +380,14 @@ public class GameScene extends PixelScene {
 						WndStory.showChapter(WndStory.ID_HALLS);
 						break;
 				}
-				if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
+				if (Dungeon.hero.isAlive() && Dungeon.yPos != 22) {
 					Badges.validateNoKilling();
 				}*/
 				break;
 			default:
 		}
 
-		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth );
+		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.yPos);
 		if (dropped != null) {
 			for (Item item : dropped) {
 				int pos = Dungeon.level.randomRespawnCell();
@@ -401,10 +401,10 @@ public class GameScene extends PixelScene {
 					Dungeon.level.drop( item, pos );
 				}
 			}
-			Dungeon.droppedItems.remove( Dungeon.depth );
+			Dungeon.droppedItems.remove( Dungeon.yPos);
 		}
 		
-		ArrayList<Item> ported = Dungeon.portedItems.get( Dungeon.depth );
+		ArrayList<Item> ported = Dungeon.portedItems.get( Dungeon.yPos);
 		if (ported != null){
 			//TODO currently items are only ported to boss rooms, so this works well
 			//might want to have a 'near entrance' function if items can be ported elsewhere
@@ -420,7 +420,7 @@ public class GameScene extends PixelScene {
 			}
 			Dungeon.level.heaps.get(pos).type = Heap.Type.CHEST;
 			Dungeon.level.heaps.get(pos).sprite.link(); //sprite reset to show chest
-			Dungeon.portedItems.remove( Dungeon.depth );
+			Dungeon.portedItems.remove( Dungeon.yPos);
 		}
 
 		Dungeon.hero.next();
@@ -438,9 +438,9 @@ public class GameScene extends PixelScene {
 		Camera.main.panTo(hero.center(), 2.5f);
 
 		if (InterlevelScene.mode() != InterlevelScene.Mode.NONE) {
-			if (Dungeon.depth == Statistics.deepestFloor
+			if (Dungeon.yPos == Statistics.deepestFloor
 					&& (InterlevelScene.mode() == InterlevelScene.Mode.DESCEND || InterlevelScene.mode() == InterlevelScene.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
+				GLog.h(Messages.get(this, "descend"), Dungeon.yPos);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -452,7 +452,7 @@ public class GameScene extends PixelScene {
 			} else if (InterlevelScene.mode() == InterlevelScene.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.depth);
+				GLog.h(Messages.get(this, "return"), Dungeon.yPos);
 			}
 
 			switch (Dungeon.level.feeling) {

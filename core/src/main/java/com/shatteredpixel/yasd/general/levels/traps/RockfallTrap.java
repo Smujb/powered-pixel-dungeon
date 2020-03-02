@@ -97,7 +97,7 @@ public class RockfallTrap extends Trap {
 			Char ch = Actor.findChar( cell );
 
 			if (ch != null && ch.isAlive()){
-				int damage = Random.NormalIntRange(5+Dungeon.depth, 10+Dungeon.depth*2);
+				int damage = Random.NormalIntRange(5+Dungeon.yPos, 10+Dungeon.yPos *2);
 				ch.damage( Math.max(damage, 0) , this, Element.PHYSICAL );
 
 				Buff.prolong( ch, Paralysis.class, Paralysis.DURATION );

@@ -37,7 +37,7 @@ public class Snake extends Mob {
 
 		healthFactor = 0.25f;
 		//HP = HT = 4;
-		EVA = 6f;
+		evasionFactor = 6f;
 		//defenseSkill = 30;
 		
 		EXP = 2;

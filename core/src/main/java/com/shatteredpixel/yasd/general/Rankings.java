@@ -74,7 +74,7 @@ public enum Rankings {
 		rec.heroClass	= Dungeon.hero.heroClass;
 		rec.armorTier	= Dungeon.hero.tier();
 		rec.herolevel	= Dungeon.hero.lvl;
-		rec.depth		= Dungeon.depth;
+		rec.depth		= Dungeon.yPos;
 		rec.score	= score( win );
 		
 		INSTANCE.saveGameData(rec);
@@ -111,7 +111,7 @@ public enum Rankings {
 
 	private int score( boolean win ) {
 		int bonus = 0;
-		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.depth ) * 100) * (win ? 2 : 1) * Dungeon.difficulty;
+		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.yPos) * 100) * (win ? 2 : 1) * Dungeon.difficulty;
 	}
 
 	public static final String HERO = "hero";
@@ -260,7 +260,7 @@ public enum Rankings {
 		private static final String SCORE	= "score";
 		private static final String TIER	= "tier";
 		private static final String LEVEL	= "level";
-		private static final String DEPTH	= "depth";
+		private static final String DEPTH	= "yPos";
 		private static final String DATA	= "gameData";
 		private static final String ID      = "gameID";
 

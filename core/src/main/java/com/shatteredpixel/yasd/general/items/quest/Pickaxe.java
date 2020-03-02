@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.Bat;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -98,7 +97,7 @@ public class Pickaxe extends Weapon {
 		
 		if (action.equals(AC_MINE)) {
 			
-			if (Dungeon.depth < 11 || Dungeon.depth > 15) {
+			if (Dungeon.yPos < 11 || Dungeon.yPos > 15) {
 				GLog.w( Messages.get(this, "no_vein") );
 				return;
 			}

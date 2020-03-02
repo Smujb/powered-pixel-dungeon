@@ -29,6 +29,10 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Bat;
+import com.shatteredpixel.yasd.general.actors.mobs.Brute;
+import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
+import com.shatteredpixel.yasd.general.actors.mobs.Spinner;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.yasd.general.levels.painters.CavesPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -56,7 +60,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
 
 public class CavesLevel extends RegularLevel {
 
@@ -66,7 +70,8 @@ public class CavesLevel extends RegularLevel {
 
 		viewDistance = Math.min(6, viewDistance);
 
-		scaleFactor = 2;
+		minScaleFactor = 14;
+		maxScaleFactor = 16;
 	}
 	
 	@Override
@@ -123,6 +128,26 @@ public class CavesLevel extends RegularLevel {
 				4, 4, 4, 4,
 				2, 2, 2,
 				1 };
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return new Class[] {
+				Bat.class,
+				Brute.class,
+				Spinner.class,
+				Shaman.class
+		};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return new float[] {
+				5,
+				3,
+				2,
+				4
+		};
 	}
 
 	@Override

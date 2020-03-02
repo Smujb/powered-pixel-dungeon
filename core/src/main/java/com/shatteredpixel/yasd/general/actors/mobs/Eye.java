@@ -38,17 +38,18 @@ import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.EyeSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-public class Eye extends Mob {
+
+public class Eye extends RangedMob {
 
 	{
 		spriteClass = EyeSprite.class;
 
-		HP = HT = 100;
-		defenseSkill = 25;
+
+		healthFactor = 0.6f;
+		damageFactor = 1.5f;
 		viewDistance = Light.DISTANCE;
 
 		EXP = 13;
-		maxLvl = 25;
 
 		flying = true;
 
@@ -61,16 +62,21 @@ public class Eye extends Mob {
 	}
 
 	@Override
+	public boolean canHit(Char enemy) {
+		return (super.canHit(enemy) && beamCharged);
+	}
+
+	@Override
 	public Element elementalType() {
-		return Element.DESTRUCTION;
+		return beamCharged ? Element.DESTRUCTION : Element.PHYSICAL;
 	}
 
 	@Override
 	public int damageRoll() {
-		return beamCharged ? Random.NormalIntRange(30, 60) : Random.NormalIntRange(15, 30);
+		return beamCharged ? super.damageRoll()*3 : super.damageRoll();
 	}
 
-	@Override
+	/*@Override
 	public int attackSkill( Char target ) {
 		return 35;
 	}
@@ -78,7 +84,7 @@ public class Eye extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 10);
-	}
+	}*/
 	
 	private Ballistica beam;
 	private int beamTarget = -1;
@@ -127,16 +133,24 @@ public class Eye extends Mob {
 			beamCharged = true;
 			return true;
 		} else {
-
 			return super.doAttack(enemy);
 		}
 
 	}
 
 	@Override
+	public boolean attack(Char enemy) {
+		boolean attack = super.attack(enemy);
+		beamCharged = false;
+		beamCooldown = Random.Int(3, 6);
+		return attack;
+	}
+
+	@Override
 	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-		if (beamCharged) dmg /= 4;
-		super.damage(dmg, src, element, ignoresDefense);
+		if (!beamCharged) {//Now immune when beam is charged
+			super.damage(dmg, src, element, ignoresDefense);
+		}
 	}
 
 	//used so resistances can differentiate between melee and magical attacks

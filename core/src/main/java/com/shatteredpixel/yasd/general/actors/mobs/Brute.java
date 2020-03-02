@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.BruteSprite;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
+import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -46,12 +47,13 @@ public class Brute extends Mob {
 	
 	{
 		spriteClass = BruteSprite.class;
-		
-		HP = HT = 50;
-		defenseSkill = 18;
+
+		healthFactor = 1.5f;
+		//HP = HT = 50;
+		evasionFactor = 0.75f;
+		//defenseSkill = 18;
 		
 		EXP = 8;
-		maxLvl = 16;
 		
 		loot = Gold.class;
 		lootChance = 0.5f;
@@ -68,8 +70,8 @@ public class Brute extends Mob {
 	@Override
 	public int damageRoll() {
 		return enraged ?
-			Random.NormalIntRange( 20, 45 ) :
-			Random.NormalIntRange( 10, 26 );
+			super.damageRoll()*3 :
+			super.damageRoll();
 	}
 	
 	@Override
@@ -101,5 +103,14 @@ public class Brute extends Mob {
 		immunities.add( Terror.class );
 		immunities.add( Paralysis.class );
 		immunities.add( Grim.class);
+	}
+
+	public static class Shielded extends Brute {
+
+		{
+			spriteClass = ShieldedSprite.class;
+			drFactor = 2f;
+			//HP = HT = 60;
+		}
 	}
 }

@@ -169,7 +169,7 @@ public class WndDocument extends Window {
 				depth.text(Integer.toString(d));
 				depth.measure();
 				
-				if (d == Dungeon.depth) {
+				if (d == Dungeon.yPos) {
 					label.hardlight(TITLE_COLOR);
 					depth.hardlight(TITLE_COLOR);
 				}

@@ -84,7 +84,7 @@ public class Armor extends KindofMisc {
 	public float STE = 1f;
 	public float speedFactor = 1f;
 	public float DRfactor = 1f;
-	public float magicalDRFactor = 0f;
+	public float magicalDRFactor = 1f;
 
 	protected static final String AC_DETACH       = "DETACH";
 	

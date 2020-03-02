@@ -41,7 +41,7 @@ import com.watabou.utils.Random;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
-//Introduces the concept of a major path, and branches
+//Introduces the concept of a major xPos, and branches
 // with tunnels padding rooms placed in them
 public abstract class RegularBuilder extends Builder {
 	
@@ -55,9 +55,9 @@ public abstract class RegularBuilder extends Builder {
 		return this;
 	}
 	
-	//path length is the percentage of pathable rooms that are on
+	//xPos length is the percentage of pathable rooms that are on
 	protected float pathLength = 0.5f;
-	//The chance weights for extra rooms to be added to the path
+	//The chance weights for extra rooms to be added to the xPos
 	protected float[] pathLenJitterChances = new float[]{0, 1, 0};
 	
 	public RegularBuilder setPathLength( float len, float[] jitter ){

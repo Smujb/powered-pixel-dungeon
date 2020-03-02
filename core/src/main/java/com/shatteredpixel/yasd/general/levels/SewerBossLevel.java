@@ -29,8 +29,8 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.actors.Actor;
-import com.shatteredpixel.yasd.general.actors.mobs.CausticSlime;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.actors.mobs.Slime;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.builders.Builder;
@@ -115,7 +115,7 @@ public class SewerBossLevel extends SewerLevel {
 
 	@Override
 	public Mob createMob() {
-		return Mob.create(CausticSlime.class, this);
+		return Mob.create(Slime.CausticSlime.class, this);
 	}
 
 	@Override

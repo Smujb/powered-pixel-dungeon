@@ -168,31 +168,32 @@ public abstract class Mob extends Char {
 		level = bundle.getInt( LEVEL );
 	}
 
-	public void updateHT() {
+	@Override
+	public void updateHT(boolean boostHP) {
 		HP = HT = (int) (normalHP(level) * healthFactor);
 	}
 
-	private int normalHP(int chapter) {
-		return 12 + 22 * chapter;
+	private int normalHP(int level) {
+		return 8 + 4 * level;
 	}
 
-	private int normalAttackSkill(int chapter) {
-		return 10 + chapter * Constants.CHAPTER_LENGTH;
+	private int normalAttackSkill(int level) {
+		return 9 + level;
 	}
 
-	private int normalDefenseSkill(int chapter) {
-		return 4 + chapter * Constants.CHAPTER_LENGTH;
+	private int normalDefenseSkill(int level) {
+		return 3 + level;
 	}
 
-	private int normalDamageRoll(int chapter) {
-		int max = 5 + 6 * chapter;//5 in Sewers, 35 in Halls
-		int min = 1 + 2 * chapter;//1 in Sewers, 11 in Halls
+	private int normalDamageRoll(int level) {
+		int max = 4 + level;
+		int min = level/3;
 		return Random.NormalIntRange(min, max);
 	}
 
-	private int normalDRRoll(int chapter) {
-		int max = 2 + 2 * chapter;//2 in Sewers, 12 in Halls
-		int min = chapter;//0 in Sewers, 5 in Halls
+	private int normalDRRoll(int level) {
+		int max = 1 + level/3;
+		int min = level/6;
 		return Random.NormalIntRange(min, max);
 	}
 
@@ -221,7 +222,7 @@ public abstract class Mob extends Char {
 		}
 		assert mob != null;
 		mob.level = level;
-		mob.updateHT();
+		mob.updateHT(true);
 		switch (Dungeon.difficulty) {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;
@@ -257,7 +258,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.attackSkill(target);
 		} else {
-			return (int) (normalAttackSkill(level) * ACC);
+			return (int) (normalAttackSkill(level) * accuracyFactor);
 		}
 	}
 
@@ -266,7 +267,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.defenseSkill(enemy);
 		} else {
-			return (int) (normalDefenseSkill(level) * EVA);
+			return (int) (normalDefenseSkill(level) * evasionFactor);
 		}
 	}
 
@@ -514,15 +515,15 @@ public abstract class Mob extends Char {
 		} else {
 
 			boolean newPath = false;
-			//scrap the current path if it's empty, no longer connects to the current location
-			//or if it's extremely inefficient and checking again may result in a much better path
+			//scrap the current xPos if it's empty, no longer connects to the current location
+			//or if it's extremely inefficient and checking again may result in a much better xPos
 			if (path == null || path.isEmpty()
 					|| !Dungeon.level.adjacent(pos, path.getFirst())
 					|| path.size() > 2*Dungeon.level.distance(pos, target))
 				newPath = true;
 			else if (path.getLast() != target) {
-				//if the new  target is adjacent to the end of the path, adjust for that
-				//rather than scrapping the whole path.
+				//if the new  target is adjacent to the end of the xPos, adjust for that
+				//rather than scrapping the whole xPos.
 				if (Dungeon.level.adjacent(target, path.getLast())) {
 					int last = path.removeLast();
 
@@ -531,21 +532,21 @@ public abstract class Mob extends Char {
 						//shorten for a closer one
 						if (Dungeon.level.adjacent(target, pos)) {
 							path.add(target);
-							//extend the path for a further target
+							//extend the xPos for a further target
 						} else {
 							path.add(last);
 							path.add(target);
 						}
 
 					} else if (!path.isEmpty()) {
-						//if the new  target is simply 1 earlier in the path shorten the path
+						//if the new  target is simply 1 earlier in the xPos shorten the xPos
 						if (path.getLast() == target) {
 
-							//if the new  target is closer/same, need to modify end of path
+							//if the new  target is closer/same, need to modify end of xPos
 						} else if (Dungeon.level.adjacent(target, path.getLast())) {
 							path.add(target);
 
-							//if the new  target is further away, need to extend the path
+							//if the new  target is further away, need to extend the xPos
 						} else {
 							path.add(last);
 							path.add(target);
@@ -560,7 +561,7 @@ public abstract class Mob extends Char {
 
 
 			if (!newPath) {
-				//looks ahead for path validity, up to length-1 or 4, but always at least 1.
+				//looks ahead for xPos validity, up to length-1 or 4, but always at least 1.
 				int lookAhead = (int)GameMath.gate(1, path.size()-1, 4);
 				for (int i = 0; i < lookAhead; i++) {
 					int cell = path.get(i);
@@ -577,9 +578,9 @@ public abstract class Mob extends Char {
 						fieldOfView);
 			}
 
-			//if hunting something, don't follow a path that is extremely inefficient
+			//if hunting something, don't follow a xPos that is extremely inefficient
 			//FIXME this is fairly brittle, primarily it assumes that hunting mobs can't see through
-			// permanent terrain, such that if their path is inefficient it's always because
+			// permanent terrain, such that if their xPos is inefficient it's always because
 			// of a temporary blockage, and therefore waiting for it to clear is the best option.
 			if (path == null ||
 					(state == HUNTING && path.size() > Math.max(9, 2*Dungeon.level.distance(pos, target)))) {
@@ -764,7 +765,7 @@ public abstract class Mob extends Char {
 				Badges.validateMonstersSlain();
 				Statistics.qualifiedForNoKilling = false;
 				
-				int exp = Dungeon.hero.lvl <= Dungeon.depth + 1 ? EXP : 0;
+				int exp = Dungeon.hero.lvl <= Dungeon.yPos + 1 ? EXP : 0;
 				if (exp > 0) {
 					Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "exp", exp));
 				}
@@ -799,7 +800,7 @@ public abstract class Mob extends Char {
 	}
 	
 	public void rollToDropLoot(){
-		if (Dungeon.hero.lvl > Dungeon.depth + 3) return;
+		if (Dungeon.hero.lvl > Dungeon.yPos + 3) return;
 		
 		float lootChance = this.lootChance;
 		lootChance *= RingOfWealth.dropChanceMultiplier( Dungeon.hero );
@@ -829,7 +830,7 @@ public abstract class Mob extends Char {
 		}
 		
 		//lucky enchant logic
-		if (Dungeon.hero.lvl <= Dungeon.depth + 1 && buff(Lucky.LuckProc.class) != null){
+		if (Dungeon.hero.lvl <= Dungeon.yPos + 1 && buff(Lucky.LuckProc.class) != null){
 			new  Flare(8, 24).color(0x00FF00, true).show(sprite, 3f);
 			Dungeon.level.drop(Lucky.genLoot(), pos).sprite.drop();
 		}

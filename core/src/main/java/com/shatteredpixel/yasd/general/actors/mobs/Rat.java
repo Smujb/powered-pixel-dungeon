@@ -27,7 +27,13 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
+import com.shatteredpixel.yasd.general.sprites.AlbinoSprite;
 import com.shatteredpixel.yasd.general.sprites.RatSprite;
+import com.watabou.utils.Random;
 
 public class Rat extends Mob {
 
@@ -35,8 +41,31 @@ public class Rat extends Mob {
 		spriteClass = RatSprite.class;
 
 		drFactor = 0.4f;
-		EVA = 0.5f;
-		ACC = 0.8f;
-		healthFactor = 0.7f;
+		evasionFactor = 0.5f;
+		accuracyFactor = 0.8f;
+		damageFactor = 0.8f;
+	}
+
+	public static class Albino extends Rat {
+
+		{
+			spriteClass = AlbinoSprite.class;
+
+			healthFactor = 1.2f;
+			EXP = 2;
+
+			loot = new MysteryMeat();
+			lootChance = 1f;
+		}
+
+		@Override
+		public int attackProc(Char enemy, int damage ) {
+			damage = super.attackProc( enemy, damage );
+			if (Random.Int( 2 ) == 0) {
+				Buff.affect( enemy, Bleeding.class ).set( damage );
+			}
+
+			return damage;
+		}
 	}
 }

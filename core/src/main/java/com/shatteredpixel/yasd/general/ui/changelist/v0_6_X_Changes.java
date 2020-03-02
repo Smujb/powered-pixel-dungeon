@@ -336,7 +336,7 @@ public class v0_6_X_Changes {
 				"\n" +
 				"Earthroot is also problematic, as its 50% damage resist makes it an extremely potent tool against bosses, yet not so useful against regular enemies. My hope is that this change levels its power out over both situations.\n" +
 				"\n" +
-				"_-_ Earthroot now blocks up to a certain amount of damage, based on depth, rather than 50% damage"));
+				"_-_ Earthroot now blocks up to a certain amount of damage, based on yPos, rather than 50% damage"));
 		
 		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.POTION_CRIMSON, null), new PotionOfHealing().trueName(),
 				"Heal potion drops have had their RNG bounded in shattered for a long time, but this bound was always fairly lax. This meant that people who wanted to slowly farm for potions could still amass large numbers of them. I have decided to reign this in more harshly.\n" +
@@ -752,7 +752,7 @@ public class v0_6_X_Changes {
 				"_-_ When drinking from the vial, the hero will now only drink as many drops as they need to reach full HP."));
 		
 		changes.addButton( new ChangeButton( new Image(Assets.STATUE, 0, 0, 12, 15), "AI Changes",
-				"_-_ Improvements to pathfinding. Characters are now more prone to take efficient paths to their targets, and will prefer to wait instead of taking a very inefficient path.\n\n" +
+				"_-_ Improvements to pathfinding. Characters are now more prone to take efficient paths to their targets, and will prefer to wait instead of taking a very inefficient xPos.\n\n" +
 				"_-_ Characters will now more consistently decide who to attack based on distance and who they are being attacked by."));
 		
 		changes.addButton( new ChangeButton(new Image(Assets.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),

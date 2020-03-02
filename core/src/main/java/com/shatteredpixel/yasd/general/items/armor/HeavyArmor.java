@@ -36,7 +36,7 @@ public class HeavyArmor extends Armor {
 		image = ItemSpriteSheet.ARMOR_PLATE;
 
 		EVA = 2/3f;
-		magicalDRFactor = 0.5f;
+		magicalDRFactor = 1.4f;
 		DRfactor = 1.25f;
 		speedFactor = 2/3f;
 	}

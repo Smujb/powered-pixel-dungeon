@@ -27,11 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.armor;
 
-import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.general.sprites.MissileSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
 
 public class MageArmor extends ClothArmor {
 
@@ -39,6 +35,8 @@ public class MageArmor extends ClothArmor {
 	{
 		image = ItemSpriteSheet.ARMOR_MAGE;
 		EVA = 1.25f;
+		magicalDRFactor = 2f;
+		DRfactor = 0f;
 	}
 
 	@Override

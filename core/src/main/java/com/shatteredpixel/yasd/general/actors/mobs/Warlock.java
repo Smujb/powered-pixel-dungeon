@@ -42,14 +42,17 @@ public class Warlock extends RangedMob {
 	
 	{
 		spriteClass = WarlockSprite.class;
-		
-		HP = HT = 80;
+
+
+		healthFactor = 0.8f;
+		evasionFactor = 0.6f;
+		accuracyFactor = 1.2f;
+		damageFactor = 1.2f;
 		defenseSkill = 21;
 		
 		EXP = 11;
-		maxLvl = 21;
 
-		DLY = 2f;
+		attackDelay = 2f;
 		
 		loot = Generator.Category.POTION;
 		lootChance = 0.83f;
@@ -62,7 +65,7 @@ public class Warlock extends RangedMob {
 		return Element.DARK;
 	}
 
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 16, 24 );
 	}
@@ -75,16 +78,16 @@ public class Warlock extends RangedMob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 8);
-	}
+	}*/
 
 	@Override
 	public boolean canHit(Char enemy) {
-		return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 	}
 
 	@Override
 	public boolean fleesAtMelee() {
-		return false;
+		return true;
 	}
 	
 	//used so resistances can differentiate between melee and magical attacks
@@ -92,7 +95,7 @@ public class Warlock extends RangedMob {
 
 	@Override
 	public MagicalDamage magicalSrc() {
-		return new  DarkBolt();
+		return new DarkBolt();
 	}
 
 	@Override

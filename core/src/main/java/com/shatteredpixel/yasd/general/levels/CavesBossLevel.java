@@ -63,7 +63,11 @@ public class CavesBossLevel extends Level {
 
 		viewDistance = Math.min(6, viewDistance);
 
-		scaleFactor = 2;
+	}
+
+	@Override
+	public int getScaleFactor() {
+		return new CavesLevel().getScaleFactor();
 	}
 
 	private static final int WIDTH = 32;

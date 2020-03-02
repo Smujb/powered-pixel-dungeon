@@ -111,6 +111,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
@@ -157,8 +158,6 @@ public abstract class Level implements Bundlable {
 	protected int height;
 	protected int length;
 
-	protected int scaleFactor = 0;
-
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
 	
@@ -175,8 +174,16 @@ public abstract class Level implements Bundlable {
 	
 	public boolean[] heroFOV;
 
+
+	int minScaleFactor = 0;
+	int maxScaleFactor = -1;
+	//By default, scales with hero level and has max and min defined within the individual levels. -1 max gives no limit.
 	public int getScaleFactor() {
-		return scaleFactor;
+		if (maxScaleFactor == -1) {
+			return Math.max(minScaleFactor, Dungeon.hero.levelToScaleFactor());
+		} else {
+			return (int) GameMath.gate(minScaleFactor, Dungeon.hero.levelToScaleFactor(), maxScaleFactor);
+		}
 	}
 
 	public boolean[] passable() {
@@ -295,7 +302,7 @@ public abstract class Level implements Bundlable {
 
 		Random.seed( Dungeon.seedCurDepth() );
 		
-		if (!Dungeon.bossLevel() && Dungeon.path == 0) {
+		if (!Dungeon.bossLevel() && Dungeon.xPos == 0) {
 
 			if (Dungeon.isChallenged(Challenges.NO_FOOD)){
 				addItemToSpawn( new SmallRation() );
@@ -322,12 +329,12 @@ public abstract class Level implements Bundlable {
 			}
 			//one scroll of transmutation is guaranteed to spawn somewhere on chapter 2-4
 			int enchChapter = (int)((Dungeon.seed / 10) % 3) + 1;
-			if ( Dungeon.depth / Constants.CHAPTER_LENGTH == enchChapter &&
-					Dungeon.seed % 4 + 1 == Dungeon.depth % Constants.CHAPTER_LENGTH){
+			if ( Dungeon.yPos / Constants.CHAPTER_LENGTH == enchChapter &&
+					Dungeon.seed % 4 + 1 == Dungeon.yPos % Constants.CHAPTER_LENGTH){
 				addItemToSpawn( new StoneOfEnchantment() );
 			}
 			
-			if ( Dungeon.depth == ((Dungeon.seed % 3) + 1)){
+			if ( Dungeon.yPos == ((Dungeon.seed % 3) + 1)){
 				addItemToSpawn( new StoneOfIntuition() );
 			}
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR)) {
@@ -337,7 +344,7 @@ public abstract class Level implements Bundlable {
 			DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
 			if (rose != null && rose.isIdentified() && !rose.cursed){
 				//aim to drop 1 petal every 2 floors
-				int petalsNeeded = (int) Math.ceil((float)((Dungeon.depth / 2) - rose.droppedPetals) / 3);
+				int petalsNeeded = (int) Math.ceil((float)((Dungeon.yPos / 2) - rose.droppedPetals) / 3);
 
 				for (int i=1; i <= petalsNeeded; i++) {
 					//the player may miss a single petal and still max their rose.
@@ -348,10 +355,10 @@ public abstract class Level implements Bundlable {
 				}
 			}
 			
-			if (Dungeon.depth > 1) {
+			if (Dungeon.yPos > 1) {
 				switch (Random.Int( 10 )) {
 					case 0:
-						if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
+						if (!Dungeon.bossLevel(Dungeon.yPos + 1)) {
 							feeling = Feeling.CHASM;
 						}
 						break;
