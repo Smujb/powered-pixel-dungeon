@@ -47,8 +47,22 @@ import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.journal.Notes;
+import com.shatteredpixel.yasd.general.levels.CavesBossLevel;
+import com.shatteredpixel.yasd.general.levels.CavesLevel;
+import com.shatteredpixel.yasd.general.levels.CityBossLevel;
+import com.shatteredpixel.yasd.general.levels.CityLevel;
 import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
+import com.shatteredpixel.yasd.general.levels.FirstLevel;
+import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
+import com.shatteredpixel.yasd.general.levels.HallsLevel;
+import com.shatteredpixel.yasd.general.levels.LastLevel;
+import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.LootLevel;
+import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.general.levels.PrisonLevel;
+import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
+import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
@@ -68,6 +82,7 @@ import com.watabou.utils.SparseArray;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Dungeon {
@@ -155,11 +170,11 @@ public class Dungeon {
 
 	public static int version;
 
-	public static int difficulty = 2;//1 = easy, 2 = medium, 3 = hard, 4 = endless (when I add). I could use strings, but numbers will probably be better in the long run
+	public static int difficulty = 2;//1 = easy, 2 = medium, 3 = hard. I could use strings, but numbers will probably be better in the long run
 
 	public static long seed;
 
-	private static boolean [][] loadedDepths = new boolean [Constants.NUM_PATHS+1][Constants.NUM_FLOORS+1];
+	private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_Y + 1][Constants.MAX_Z + 1];
 	
 	public static void init() {
 
@@ -213,9 +228,11 @@ public class Dungeon {
 		Badges.reset();
 		
 		GamesInProgress.selectedClass.initHero( hero );
-		for (int j = 0; j <= Constants.NUM_PATHS; j++) {
-			for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
-				loadedDepths[j][i] = false;
+		for (int x = 0; x <= Constants.MAX_X; x++) {
+			for (int y = 0; y <= Constants.MAX_Y; y++) {
+				for (int z = 0; z <= Constants.MAX_Z; z++) {
+					loadedDepths[x][y][z] = false;
+				}
 			}
 		}
 	}
@@ -236,50 +253,71 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
+	private static ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
+			DeadEndLevel.class,//Floor 0, shouldn't ever be here
+			FirstLevel.class,
+			SewerLevel.class,
+			SewerLevel.class,
+			SewerLevel.class,
+			SewerLevel.class,
+			SewerBossLevel.class,//Floor 6, boss
+			PrisonLevel.class,
+			PrisonLevel.class,
+			PrisonLevel.class,
+			PrisonLevel.class,
+			PrisonLevel.class,
+			NewPrisonBossLevel.class,//Floor 12, boss.
+			CavesLevel.class,
+			CavesLevel.class,
+			CavesLevel.class,
+			CavesLevel.class,
+			CavesLevel.class,
+			CavesBossLevel.class,//Floor 18, boss
+			CityLevel.class,
+			CityLevel.class,
+			CityLevel.class,
+			CityLevel.class,
+			CityLevel.class,
+			CityBossLevel.class,//Floor 24, boss
+			LastShopLevel.class,//Floor 25, Imp
+			HallsLevel.class,
+			HallsLevel.class,
+			HallsLevel.class,
+			HallsLevel.class,
+			HallsBossLevel.class,//Floor 30, boss
+			LastLevel.class//Floor 31, last level
+	));
+
 	public static Level newLevel(int depth) {
-		return newLevel(depth, xPos);
+		return newLevel(xPos, depth, yPos, true);
 	}
 	
-	public static Level newLevel(int depth, int path) {
-		
-		Dungeon.level = null;
-		Actor.clear();
-		
-		Dungeon.yPos = depth;
-		if (depth > Statistics.deepestFloor) {
-			Statistics.deepestFloor = depth;
-
-			Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
-		}
+	public static Level newLevel(int x, int y, int z, boolean create /*Allows me to use level.create without switching to that level.*/ ) {
 		
 		Level level;
-		Class <? extends Level> levelClass;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
-		try {
-			levelClass = Constants.LEVEL_TYPES.get(path).get(depth);
-		} catch (Exception e) {
-			levelClass = DeadEndLevel.class;
+		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
+		if (x  == 0 && z == 0 && y < levelClasses.size()) {
+			levelClass = levelClasses.get(y);
+		} else if (x == 1) {
+			levelClass = LootLevel.class;
 		}
+
 		level = Reflection.newInstance(levelClass);
 		if (level == null) {
 			level = new DeadEndLevel();
 		}
-
-		
-		level.create();
-		setLoaded(path, depth);
-		Statistics.qualifiedForNoKilling = !bossLevel();
-		if (level instanceof DeadEndLevel) {
-			Statistics.deepestFloor--;
+		if (create) {
+			level.create();
 		}
 		return level;
 	}
 
-	public static void setLoaded(int path, int depth) {
-		loadedDepths[path][depth] = true;
+	public static void setLoaded(int x, int y, int z) {
+		loadedDepths[x][y][z] = true;
 	}
 
-	public static boolean depthLoaded(int path, int depth) {
-		return loadedDepths[path][depth];
+	public static boolean depthLoaded(int x, int y, int z) {
+		return loadedDepths[x][y][z];
 	}
 
 	public static boolean canDescend() {
@@ -435,6 +473,9 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
 	private static final String LEVELSLOADED= "levels-loaded";
+	private static String levelKey(int x, int y, int z) {
+		return LEVELSLOADED + x + "_" + y + "_" + z;
+	}
 	private static final String PATH        = "xPos";
 	
 	public static void saveGame( int save ) {
@@ -451,8 +492,13 @@ public class Dungeon {
 			bundle.put( DIFFICULTY, difficulty );
 			bundle.put( PATH, xPos);
 
-			for (int i = 0; i < Constants.NUM_PATHS; i++) {
-				bundle.put( LEVELSLOADED+i, loadedDepths[i]);
+			for (int x = 0; x <= Constants.MAX_X; x++) {
+				for (int y = 0; y <= Constants.MAX_Y; y++) {
+					for (int z = 0; z <= Constants.MAX_Z; z++) {
+						bundle.put(levelKey(x, y, z), loadedDepths[x][y][z]);
+						// = bundle.getBoolean(LEVELSLOADED + x + "_" + y + "_" + z);
+					}
+				}
 			}
 
 			for (int d : droppedItems.keyArray()) {
@@ -545,18 +591,26 @@ public class Dungeon {
 
 		xPos = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
 
-		if (version < MainGame.v0_2_4) {
+		for (int x = 0; x <= Constants.MAX_X; x++) {
+			for (int y = 0; y <= Constants.MAX_Y; y++) {
+				for (int z = 0; z <= Constants.MAX_Z; z++) {
+					loadedDepths[x][y][z] = bundle.getBoolean(levelKey(x, y, z));
+				}
+			}
+		}
+
+		/*if (version < MainGame.v0_2_4) {
 			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
-			for (int j = 0; j <= Constants.NUM_PATHS; j++) {
-				for (int i = 0; i <= Constants.NUM_FLOORS; i++) {
+			for (int j = 0; j <= Constants.MAX_Z; j++) {
+				for (int i = 0; i <= Constants.MAX_Y; i++) {
 					loadedDepths[j][i] = false;
 				}
 			}
 		} else {
-			for (int i = 0; i < Constants.NUM_PATHS; i++) {
+			for (int i = 0; i < Constants.MAX_Z; i++) {
 				loadedDepths[i] = bundle.getBooleanArray(LEVELSLOADED + i);
 			}
-		}
+		}*/
 
 		Actor.restoreNextID( bundle );
 

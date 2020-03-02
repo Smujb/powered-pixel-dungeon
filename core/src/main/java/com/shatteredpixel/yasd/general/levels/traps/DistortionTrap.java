@@ -47,7 +47,7 @@ public class DistortionTrap extends Trap{
 		Belongings belongings = Dungeon.hero.belongings;
 		
 		for (Notes.Record rec : Notes.getRecords()){
-			if (rec.depth() == Dungeon.yPos){
+			if (rec.yPos() == Dungeon.yPos){
 				Notes.remove(rec);
 			}
 		}

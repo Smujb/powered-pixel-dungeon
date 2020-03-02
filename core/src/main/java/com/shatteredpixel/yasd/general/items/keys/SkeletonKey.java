@@ -36,12 +36,14 @@ public class SkeletonKey extends Key {
 	}
 	
 	public SkeletonKey() {
-		this( 0 );
+		this( 0, 0, 0 );
 	}
-	
-	public SkeletonKey( int depth ) {
+
+	public SkeletonKey( int x, int y, int z ) {
 		super();
-		this.depth = depth;
+		this.yPos = y;
+		this.xPos = x;
+		this.zPos = z;
 	}
 
 }

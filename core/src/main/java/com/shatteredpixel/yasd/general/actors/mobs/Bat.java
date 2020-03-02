@@ -29,8 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.sprites.BatSprite;
@@ -41,9 +39,7 @@ public class Bat extends Mob {
 		spriteClass = BatSprite.class;
 
 		healthFactor = 0.6f;
-		//HP = HT = 35;
 		evasionFactor = 1.3f;
-		//defenseSkill = 18;
 		baseSpeed = 2f;
 
 		drFactor = 0.5f;
@@ -76,7 +72,7 @@ public class Bat extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 4);
-	}*/
+	}
 	
 	@Override
 	public int attackProc( Char enemy, int damage ) {
@@ -89,7 +85,7 @@ public class Bat extends Mob {
 		}
 		
 		return damage;
-	}
+	}*/
 	
 	@Override
 	public void rollToDropLoot() {

@@ -34,14 +34,16 @@ public class CrystalKey extends Key {
 	{
 		image = ItemSpriteSheet.CRYSTAL_KEY;
 	}
-	
+
 	public CrystalKey() {
-		this( 0 );
+		this( 0, 0, 0);
 	}
 	
-	public CrystalKey( int depth ) {
+	public CrystalKey( int x, int y, int z ) {
 		super();
-		this.depth = depth;
+		this.yPos = y;
+		this.xPos = x;
+		this.zPos = z;
 	}
 	
 }

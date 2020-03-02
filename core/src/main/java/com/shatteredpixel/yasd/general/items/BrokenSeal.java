@@ -83,7 +83,7 @@ public class BrokenSeal extends Item {
 					Messages.titleCase("PATH 3")) {
 				@Override
 				protected void onSelect(int index) {
-					InterlevelScene.move(Dungeon.yPos, index, "TEST", InterlevelScene.Mode.DESCEND);
+					InterlevelScene.move(index, Dungeon.yPos, Dungeon.zPos,  "TEST", InterlevelScene.Mode.DESCEND);
 					//hero.HT = hero.HP = 100000;
 				}
 			});

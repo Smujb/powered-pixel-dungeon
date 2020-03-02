@@ -38,7 +38,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
 
 public class WardSprite extends MobSprite {
-
+	//FIXME update to new zapping system
 	private Animation[] tierIdles = new Animation[7];
 
 	public WardSprite(){

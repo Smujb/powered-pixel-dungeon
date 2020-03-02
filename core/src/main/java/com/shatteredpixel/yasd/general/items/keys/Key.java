@@ -45,13 +45,13 @@ public abstract class Key extends Item {
 		unique = true;
 	}
 	
-	public int depth;
-
-	public int path;
+	public int yPos;
+	public int xPos;
+	public int zPos;
 	
 	@Override
 	public boolean isSimilar( Item item ) {
-		return super.isSimilar(item) && ((Key)item).depth == depth && ((Key) item).path == path;
+		return super.isSimilar(item) && ((Key)item).yPos == yPos && ((Key) item).zPos == zPos && ((Key)item).xPos == xPos;
 	}
 
 	@Override
@@ -65,21 +65,24 @@ public abstract class Key extends Item {
 		return true;
 	}
 
-	private static final String DEPTH = "yPos";
-	private static final String PATH  = "xPos";
+	private static final String YPOS = "yPos";
+	private static final String XPOS = "xPos";
+	private static final String ZPOS = "zPos";
 	
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
-		bundle.put( DEPTH, depth );
-		bundle.put( PATH, path );
+		bundle.put( YPOS, yPos );
+		bundle.put( XPOS, xPos );
+		bundle.put( ZPOS, zPos );
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		depth = bundle.getInt( DEPTH );
-		path = bundle.getInt( PATH );
+		yPos = bundle.getInt( YPOS );
+		xPos = bundle.getInt( XPOS );
+		zPos = bundle.getInt( ZPOS );
 	}
 	
 	@Override

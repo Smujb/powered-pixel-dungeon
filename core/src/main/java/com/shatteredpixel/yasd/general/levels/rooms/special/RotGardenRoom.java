@@ -50,7 +50,7 @@ public class RotGardenRoom extends SpecialRoom {
 
 		Door entrance = entrance();
 		entrance.set(Door.Type.LOCKED);
-		level.addItemToSpawn(new IronKey(Dungeon.yPos));
+		level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 
 		Painter.fill(level, this, Terrain.WALL);
 		Painter.fill(level, this, 1, Terrain.GRASS);

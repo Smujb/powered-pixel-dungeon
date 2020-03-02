@@ -318,7 +318,7 @@ public abstract class RegularLevel extends Level {
 				Heap dropped = drop( toDrop, cell );
 				if (heaps.get(cell) == dropped) {
 					dropped.type = Heap.Type.LOCKED_CHEST;
-					addItemToSpawn(new GoldenKey(Dungeon.yPos));
+					addItemToSpawn(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 				}
 			} else {
 				Heap dropped = drop( toDrop, cell );

@@ -67,7 +67,7 @@ public class LibraryRoom extends SpecialRoom {
 		
 		entrance.set( Door.Type.LOCKED );
 		
-		level.addItemToSpawn( new IronKey( Dungeon.yPos) );
+		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 	}
 	
 	private static Item prize( Level level ) {

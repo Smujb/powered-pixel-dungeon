@@ -68,7 +68,7 @@ public abstract class ConnectionRoom extends Room {
 		rooms.add(NonHiddenMazeConnectionRoom.class);
 	}
 	
-	private static float[][] chances = new float[Constants.NUM_FLOORS + 1][];
+	private static float[][] chances = new float[Constants.MAX_Y + 1][];
 	static {
 		float [] sewerChances      = new float[]{20, 1,    0, 2,       2, 1, 1};
 		float [] prisonChances     = new float[]{0, 0,     22, 3,      0, 0, 1};
@@ -76,7 +76,7 @@ public abstract class ConnectionRoom extends Room {
 		float [] cityChances       = new float[]{0, 0,     18, 3,      3, 1, 1};
 		float [] hallsChances      = new float[]{15, 4,    0, 2,       3, 2, 1};
 		float [] restrictedChances = new float[]{20, 0,    0, 0,       0, 0, 0};
-		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {//Default to Sewer levelgen.
+		for (int i = 0; i <= Constants.MAX_Y; i++) {//Default to Sewer levelgen.
 			chances[i] = restrictedChances;
 		}
 		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {

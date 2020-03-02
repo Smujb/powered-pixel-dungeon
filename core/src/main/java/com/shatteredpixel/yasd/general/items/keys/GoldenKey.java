@@ -36,12 +36,14 @@ public class GoldenKey extends Key {
 	}
 
 	public GoldenKey() {
-		this( 0 );
+		this( 0, 0, 0);
 	}
-	
-	public GoldenKey( int depth ) {
+
+	public GoldenKey( int x, int y, int z ) {
 		super();
-		this.depth = depth;
+		this.yPos = y;
+		this.xPos = x;
+		this.zPos = z;
 	}
 
 }

@@ -560,18 +560,18 @@ public class Badges {
 	public static void validateBossSlain() {
 		Badge badge = null;
 		switch (Dungeon.yPos) {
-		case 5:
-			badge = Badge.BOSS_SLAIN_1;
-			break;
-		case 10:
-			badge = Badge.BOSS_SLAIN_2;
-			break;
-		case 15:
-			badge = Badge.BOSS_SLAIN_3;
-			break;
-		case 20:
-			badge = Badge.BOSS_SLAIN_4;
-			break;
+			case 6:
+				badge = Badge.BOSS_SLAIN_1;
+				break;
+			case 12:
+				badge = Badge.BOSS_SLAIN_2;
+				break;
+			case 18:
+				badge = Badge.BOSS_SLAIN_3;
+				break;
+			case 24:
+				badge = Badge.BOSS_SLAIN_4;
+				break;
 		}
 		
 		if (badge != null) {

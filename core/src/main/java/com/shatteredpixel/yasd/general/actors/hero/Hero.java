@@ -711,8 +711,8 @@ public class Hero extends Char {
 			Heap heap = Dungeon.level.heaps.get( dst );
 			if (heap != null && (heap.type != Type.HEAP && heap.type != Type.FOR_SALE)) {
 				
-				if ((heap.type == Type.LOCKED_CHEST && Notes.keyCount(new GoldenKey(Dungeon.yPos)) < 1)
-					|| (heap.type == Type.CRYSTAL_CHEST && Notes.keyCount(new CrystalKey(Dungeon.yPos)) < 1)){
+				if ((heap.type == Type.LOCKED_CHEST && Notes.keyCount(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos)) < 1)
+					|| (heap.type == Type.CRYSTAL_CHEST && Notes.keyCount(new CrystalKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos)) < 1)){
 
 						GLog.w( Messages.get(this, "locked_chest") );
 						ready();
@@ -758,12 +758,12 @@ public class Hero extends Char {
 			Terrain door = Dungeon.level.map[doorCell];
 			
 			if (door == Terrain.LOCKED_DOOR
-					&& Notes.keyCount(new IronKey(Dungeon.yPos)) > 0) {
+					&& Notes.keyCount(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos)) > 0) {
 				
 				hasKey = true;
 				
 			} else if (door == Terrain.LOCKED_EXIT
-					&& Notes.keyCount(new SkeletonKey(Dungeon.yPos)) > 0) {
+					&& Notes.keyCount(new SkeletonKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos)) > 0) {
 
 				hasKey = true;
 				
@@ -1187,7 +1187,7 @@ public class Hero extends Char {
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.yPos < Constants.NUM_FLOORS && Dungeon.canDescend()) {
+				&& Dungeon.yPos < Constants.MAX_Y && Dungeon.canDescend()) {
 			
 			curAction = new HeroAction.Descend( cell );
 			
@@ -1487,10 +1487,10 @@ public class Hero extends Char {
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
 				boolean hasKey = true;
 				if (door == Terrain.LOCKED_DOOR) {
-					hasKey = Notes.remove(new IronKey(Dungeon.yPos));
+					hasKey = Notes.remove(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
 				} else {
-					hasKey = Notes.remove(new SkeletonKey(Dungeon.yPos));
+					hasKey = Notes.remove(new SkeletonKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.UNLOCKED_EXIT);
 				}
 				
@@ -1511,9 +1511,9 @@ public class Hero extends Char {
 				if (heap.type == Type.SKELETON || heap.type == Type.REMAINS) {
 					Sample.INSTANCE.play( Assets.SND_BONES );
 				} else if (heap.type == Type.LOCKED_CHEST){
-					hasKey = Notes.remove(new GoldenKey(Dungeon.yPos));
+					hasKey = Notes.remove(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 				} else if (heap.type == Type.CRYSTAL_CHEST){
-					hasKey = Notes.remove(new CrystalKey(Dungeon.yPos));
+					hasKey = Notes.remove(new CrystalKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 				}
 				
 				if (hasKey) {

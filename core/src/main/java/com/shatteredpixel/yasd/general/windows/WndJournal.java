@@ -508,7 +508,7 @@ public class WndJournal extends WndTabbed {
 			}
 			for(Notes.Record rec : keys){
 				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
-						Messages.titleCase(rec.desc()), rec.depth() );
+						Messages.titleCase(rec.desc()), rec.yPos() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
 				
@@ -533,7 +533,7 @@ public class WndJournal extends WndTabbed {
 			}
 			for (Notes.Record rec : landmarks) {
 				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
-						Messages.titleCase(rec.desc()), rec.depth() );
+						Messages.titleCase(rec.desc()), rec.yPos() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
 				

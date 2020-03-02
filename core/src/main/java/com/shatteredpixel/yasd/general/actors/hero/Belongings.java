@@ -581,7 +581,7 @@ public class Belongings implements Iterable<Item> {
 
 		for (Item item : backpack.items.toArray( new Item[0])) {
 			if (item instanceof Key) {
-				if (((Key)item).depth == depth) {
+				if (((Key)item).yPos == depth) {
 					item.detachAll( backpack );
 				}
 			} else if (item.unique) {

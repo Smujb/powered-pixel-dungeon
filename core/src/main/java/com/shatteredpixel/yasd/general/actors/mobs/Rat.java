@@ -43,6 +43,7 @@ public class Rat extends Mob {
 		drFactor = 0.4f;
 		evasionFactor = 0.5f;
 		accuracyFactor = 0.8f;
+		healthFactor = 0.7f;
 		damageFactor = 0.8f;
 	}
 

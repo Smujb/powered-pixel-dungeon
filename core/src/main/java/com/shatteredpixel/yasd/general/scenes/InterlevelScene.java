@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -55,7 +54,6 @@ import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Reflection;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,8 +74,9 @@ public class InterlevelScene extends PixelScene {
 	}
 	private static Mode mode;
 
-	private static int depth;
-	private static int path;
+	private static int yPos;
+	private static int xPos;
+	private static int zPos;
 	private static String msg;
 
 	private static int returnPos;
@@ -124,9 +123,9 @@ public class InterlevelScene extends PixelScene {
 							level = restore();
 						} else {
 							if (Dungeon.hero != null) {
-								level = switchDepth(depth, path, mode);
+								level = switchDepth(xPos, yPos, zPos, mode);
 							} else {
-								level = switchDepth(1, 0, Mode.DESCEND);
+								level = switchDepth(0,1, 0, Mode.DESCEND);
 							}
 						}
 
@@ -183,13 +182,13 @@ public class InterlevelScene extends PixelScene {
 				scrollSpeed = -5;
 				break;
 			case RETURN:
-				scrollSpeed = depth > Dungeon.yPos ? 15 : -15;
+				scrollSpeed = yPos > Dungeon.yPos ? 15 : -15;
 				break;
 		}
 
 		Level level = null;
 		try {
-			level = Reflection.newInstance(Constants.LEVEL_TYPES.get(Dungeon.xPos).get(loadingDepth));
+			level = Dungeon.newLevel(xPos, yPos, zPos, false);
 		} catch (Exception ignored) {}
 
 		if (level == null || level.loadImg() == null) {
@@ -336,27 +335,27 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	public static void descend() {
-		move(Dungeon.yPos + 1, Dungeon.xPos, Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND);
+		move(Dungeon.xPos, Dungeon.yPos + 1, Dungeon.zPos, Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND);
 	}
 
 	public static void ascend() {
-		move(Dungeon.yPos - 1, Dungeon.xPos, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
+		move(Dungeon.xPos, Dungeon.yPos - 1, Dungeon.zPos, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
 	}
 
 	public static void fall() {
-		move(Dungeon.yPos + 1, Dungeon.xPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+		move(Dungeon.xPos, Dungeon.yPos + 1, Dungeon.zPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
 	}
 
 	public static void reset() {
-		move(Dungeon.yPos, Dungeon.xPos, Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET);
+		move(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET);
 	}
 
 	public static void resurrect() {
-		move(Dungeon.yPos, Dungeon.xPos, Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT);
+		move(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT);
 	}
 
 	public static void returnTo(int depth, int pos) {
-		move(depth, Dungeon.xPos, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
+		move(Dungeon.xPos, depth, Dungeon.zPos, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
 		returnPos = pos;
 	}
 
@@ -366,9 +365,10 @@ public class InterlevelScene extends PixelScene {
 		MainGame.switchScene(InterlevelScene.class);
 	}
 
-	public static void move(int depthToAccess, int path, String msg, Mode mode) {
-		InterlevelScene.depth = depthToAccess;
-		InterlevelScene.path = path;
+	public static void move(int xPos, int yPos, int zPos, String msg, Mode mode) {
+		InterlevelScene.xPos = xPos;
+		InterlevelScene.yPos = yPos;
+		InterlevelScene.zPos = zPos;
 		InterlevelScene.msg = msg;
 		InterlevelScene.mode = mode;
 		MainGame.switchScene(InterlevelScene.class);
@@ -378,7 +378,8 @@ public class InterlevelScene extends PixelScene {
 		InterlevelScene.mode = Mode.NONE;
 	}
 
-	private static Level switchDepth(int depthToAccess, int path, final Mode mode) throws IOException {
+	private static Level switchDepth(int xPos, int yPos, int zPos, final Mode mode) throws IOException {
+
 		if (Dungeon.hero == null) {
 			Mob.clearHeldAllies();
 			Dungeon.init();
@@ -391,11 +392,12 @@ public class InterlevelScene extends PixelScene {
 			Mob.holdAllies( Dungeon.level );
 			Dungeon.saveAll();
 		}
-		Dungeon.yPos = depthToAccess;
-		Dungeon.xPos = path;
+		Dungeon.yPos = yPos;
+		Dungeon.xPos = xPos;
+		Dungeon.zPos = zPos;
 		if (mode.equals(Mode.RESURRECT)) {
 			if (Dungeon.level.locked) {
-				Dungeon.hero.resurrect( Dungeon.yPos);
+				Dungeon.hero.resurrect( Dungeon.yPos );
 			} else {
 				Dungeon.hero.resurrect( -1 );
 				Dungeon.resetLevel();
@@ -403,13 +405,28 @@ public class InterlevelScene extends PixelScene {
 			}
 		}
 		Level level;
-		if (Dungeon.depthLoaded(path, depthToAccess) & mode != Mode.RESET) {
+		if (Dungeon.depthLoaded(xPos, yPos, zPos) & mode != Mode.RESET) {
 
 			level = Dungeon.loadLevel(GamesInProgress.curSlot);
 
 		} else  {
 
-			level = Dungeon.newLevel(Dungeon.yPos);
+			Dungeon.level = null;
+			Actor.clear();
+
+			if (yPos > Statistics.deepestFloor) {
+				Statistics.deepestFloor = yPos;
+
+				Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
+			}
+
+			level = Dungeon.newLevel(xPos, yPos, zPos, true);
+
+			Dungeon.setLoaded(xPos, yPos, zPos);
+			Statistics.qualifiedForNoKilling = !Dungeon.bossLevel();
+			if (level instanceof DeadEndLevel) {
+				Statistics.deepestFloor--;
+			}
 
 		}
 

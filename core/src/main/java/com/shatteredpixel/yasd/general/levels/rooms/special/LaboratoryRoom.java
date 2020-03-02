@@ -123,7 +123,7 @@ public class LaboratoryRoom extends SpecialRoom {
 			entrance.set( Door.Type.REGULAR );
 		} else {
 			entrance.set( Door.Type.LOCKED );
-			level.addItemToSpawn( new IronKey( Dungeon.yPos) );
+			level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 		}
 		
 	}

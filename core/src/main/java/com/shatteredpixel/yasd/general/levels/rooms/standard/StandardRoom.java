@@ -134,7 +134,7 @@ public abstract class StandardRoom extends Room {
 		rooms.add(MinefieldRoom.class);
 	}
 	
-	private static float[][] chances = new float[Constants.NUM_FLOORS + 1][];
+	private static float[][] chances = new float[Constants.MAX_Y + 1][];
 	static {
 		float [] sewerChances      = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
 		float [] prisonChances     = new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
@@ -142,7 +142,7 @@ public abstract class StandardRoom extends Room {
 		float [] cityChances       = new float[]{20,  0,0, 0,0, 0,0, 15,5, 0,0,    1,1,1,1,1,1,1,1,1,1};
 		float [] hallsChances      = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
 		float [] restrictedChances = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    0,0,0,0,0,0,0,0,0,0};
-		for (int i = 0; i <= Constants.NUM_FLOORS; i++) {//Default to Sewer levelgen.
+		for (int i = 0; i <= Constants.MAX_Y; i++) {//Default to Sewer levelgen.
 			chances[i] = restrictedChances;
 		}
 		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {

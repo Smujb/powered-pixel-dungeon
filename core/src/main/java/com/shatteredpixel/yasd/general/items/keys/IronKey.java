@@ -36,12 +36,14 @@ public class IronKey extends Key {
 	}
 
 	public IronKey() {
-		this( 0 );
+		this( 0, 0, 0);
 	}
-	
-	public IronKey( int depth ) {
+
+	public IronKey( int x, int y, int z ) {
 		super();
-		this.depth = depth;
+		this.yPos = y;
+		this.xPos = x;
+		this.zPos = z;
 	}
 
 }

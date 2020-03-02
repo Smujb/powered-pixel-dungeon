@@ -40,10 +40,20 @@ public class Notes {
 	
 	public static abstract class Record implements Comparable<Record>, Bundlable {
 		
-		protected int depth;
+		protected int yPos;
+		protected int zPos;
+		protected int xPos;
 
-		public int depth(){
-			return depth;
+		public int yPos(){
+			return yPos;
+		}
+
+		public int xPos(){
+			return xPos;
+		}
+
+		public int zPos(){
+			return zPos;
 		}
 		
 		public abstract String desc();
@@ -53,19 +63,19 @@ public class Notes {
 		
 		@Override
 		public int compareTo( Record another ) {
-			return another.depth() - depth();
+			return another.yPos() - yPos();
 		}
 		
 		private static final String DEPTH	= "yPos";
 		
 		@Override
 		public void restoreFromBundle( Bundle bundle ) {
-			depth = bundle.getInt( DEPTH );
+			yPos = bundle.getInt( DEPTH );
 		}
 
 		@Override
 		public void storeInBundle( Bundle bundle ) {
-			bundle.put( DEPTH, depth );
+			bundle.put( DEPTH, yPos);
 		}
 	}
 	
@@ -92,10 +102,16 @@ public class Notes {
 		protected Landmark landmark;
 		
 		public LandmarkRecord() {}
+
+		public LandmarkRecord(Landmark landmark, int depth) {
+			this(landmark, Dungeon.xPos, depth, Dungeon.zPos);
+		}
 		
-		public LandmarkRecord(Landmark landmark, int depth ) {
+		public LandmarkRecord(Landmark landmark, int xPos, int yPos, int zPos ) {
 			this.landmark = landmark;
-			this.depth = depth;
+			this.xPos = xPos;
+			this.zPos = zPos;
+			this.yPos = yPos;
 		}
 		
 		@Override
@@ -107,7 +123,7 @@ public class Notes {
 		public boolean equals(Object obj) {
 			return (obj instanceof LandmarkRecord)
 					&& landmark == ((LandmarkRecord) obj).landmark
-					&& depth() == ((LandmarkRecord) obj).depth();
+					&& yPos() == ((LandmarkRecord) obj).yPos();
 		}
 		
 		private static final String LANDMARK	= "landmark";
@@ -136,10 +152,20 @@ public class Notes {
 		}
 		
 		@Override
-		public int depth() {
-			return key.depth;
+		public int yPos() {
+			return key.yPos;
 		}
-		
+
+		@Override
+		public int xPos() {
+			return key.xPos;
+		}
+
+		@Override
+		public int zPos() {
+			return key.zPos;
+		}
+
 		@Override
 		public String desc() {
 			return key.toString();
