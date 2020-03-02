@@ -63,8 +63,8 @@ public class Piranha extends Mob {
 	public Piranha() {
 		super();
 		
-		HP = HT = 10 + Dungeon.yPos * 5;
-		defenseSkill = 10 + Dungeon.yPos * 2;
+		HP = HT = 10 + Dungeon.getScaleFactor() * 5;
+		defenseSkill = 10 + Dungeon.getScaleFactor() * 2;
 	}
 	
 	@Override
@@ -81,17 +81,17 @@ public class Piranha extends Mob {
 	
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( Dungeon.yPos, 4 + Dungeon.yPos * 2 );
+		return Random.NormalIntRange( Dungeon.getScaleFactor(), 4 + Dungeon.getScaleFactor() * 2 );
 	}
 	
 	@Override
 	public int attackSkill( Char target ) {
-		return 20 + Dungeon.yPos * 2;
+		return 20 + Dungeon.getScaleFactor() * 2;
 	}
 	
 	@Override
 	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, Dungeon.yPos);
+		return Random.NormalIntRange(0, Dungeon.getScaleFactor());
 	}
 	
 	@Override

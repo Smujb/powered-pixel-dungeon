@@ -240,7 +240,7 @@ public class CursedWand {
 							if (user instanceof Hero) {
 								damage = ((Hero)user).lvl * 2;
 							} else {
-								damage = Dungeon.yPos * 2;
+								damage = Dungeon.getScaleFactor() * 2;
 							}
 							if (Random.Int(2) == 0) {
 								user.HP = Math.min(user.HT, user.HP + damage);
@@ -380,7 +380,7 @@ public class CursedWand {
 					public void call() {
 						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<Item>());
 						if (mimic != null) {
-							mimic.adjustStats(Dungeon.yPos + 10);
+							mimic.adjustStats(Dungeon.getScaleFactor() * 2);
 							mimic.HP = mimic.HT;
 							Item reward;
 							do {

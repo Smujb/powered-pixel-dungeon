@@ -611,7 +611,7 @@ public class NewTengu extends Mob {
 							
 							Char ch = Actor.findChar(cell);
 							if (ch != null && !(ch instanceof NewTengu)){
-								int dmg = Random.NormalIntRange(5 + Dungeon.yPos, 10 + Dungeon.yPos *2);
+								int dmg = Random.NormalIntRange(5 + Dungeon.getScaleFactor(), 10 + Dungeon.getScaleFactor() *2);
 
 								ch.damage(dmg, Bomb.class, Element.PHYSICAL, false);
 								
@@ -985,7 +985,7 @@ public class NewTengu extends Mob {
 							
 							Char ch = Actor.findChar(cell);
 							if (ch != null && !(ch instanceof NewTengu)){
-								ch.damage(2 + Dungeon.yPos, Element.ELECTRIC, false );
+								ch.damage(2 + Dungeon.getScaleFactor(), Element.ELECTRIC, false );
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);

@@ -81,7 +81,6 @@ import com.watabou.utils.Random;
 
 import java.util.HashMap;
 
-//TODO need to consider other balance adjustments here. Might want to put more emphasis into debuffs rather than less
 public class WandOfCorruption extends Wand {
 
 	{
@@ -138,13 +137,13 @@ public class WandOfCorruption extends Wand {
 			Mob enemy = (Mob) ch;
 
 			float corruptingPower = 3 + actualLevel();
-			
+			//TODO: Add to mob, so I can merge with WandOfDamnation
 			//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
 			float enemyResist = 1 + enemy.EXP;
 			if (ch instanceof Mimic || ch instanceof Statue || ch instanceof Wraith){
-				enemyResist = 3 + Dungeon.yPos *2;
+				enemyResist = 3 + Dungeon.getScaleFactor() *2;
 			} else if (ch instanceof Piranha || ch instanceof Bee) {
-				enemyResist = 1 + Dungeon.yPos /2f;
+				enemyResist = 1 + Dungeon.getScaleFactor() /2f;
 			} /*else if (ch instanceof Wraith) {
 				//divide by 3 as wraiths are always at full HP and are therefore ~3x harder to corrupt
 				enemyResist = (1f + Dungeon.yPos/3f) / 3f;

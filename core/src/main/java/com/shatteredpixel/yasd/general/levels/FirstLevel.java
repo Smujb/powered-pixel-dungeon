@@ -36,7 +36,7 @@ public class FirstLevel extends SewerLevel {//First yPos has different mobs
 
 	@Override
 	public int getScaleFactor() {
-		return 0;
+		return 1;
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class Statue extends Mob implements Callback {
 		lootChance = 1f;//Guaranteed in Animated Statues
 	}
 
-	int ankhs = Math.max(1,Dungeon.yPos /Constants.CHAPTER_LENGTH);//1 Ankh per chapter
+	int ankhs = Math.max(1, level / Constants.CHAPTER_LENGTH);//1 Ankh per chapter
 	
 	public Statue() {
 		super();

@@ -317,7 +317,7 @@ public class WandOfLivingEarth extends DamageWand {
 			if (owner instanceof Hero) {
 				defenseSkill = (((Hero)owner).lvl + 4)/2;
 			} else {
-				defenseSkill = (Dungeon.yPos + 4)/2;
+				defenseSkill = (Dungeon.getScaleFactor() + 4)/2;
 			}
 
 			alignment = owner.alignment;
@@ -337,12 +337,12 @@ public class WandOfLivingEarth extends DamageWand {
 
 		@Override
 		public int damageRoll() {
-			return Random.NormalIntRange(2, 4 + Dungeon.yPos /2);
+			return Random.NormalIntRange(2, 4 + Dungeon.getScaleFactor() /2);
 		}
 
 		@Override
 		public int drRoll(Element element) {
-			if (Dungeon.isChallenged(Challenges.NO_ARMOR)){
+			if (Dungeon.isChallenged(Challenges.NO_ARMOR) || element.isMagical()) {
 				return Random.NormalIntRange(wandLevel, 2 + wandLevel);
 			} else {
 				return Random.NormalIntRange(wandLevel, 3 + 6 * wandLevel);

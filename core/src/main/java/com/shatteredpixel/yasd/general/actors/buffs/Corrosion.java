@@ -106,7 +106,7 @@ public class Corrosion extends Buff implements Hero.Doom {
 					item.use(damage*10);
 				}
 			}
-			if (damage < (Dungeon.yPos /2f)+2) {
+			if (damage < (Dungeon.getScaleFactor() /2f)+2) {
 				damage++;
 			} else {
 				damage += 0.5f;

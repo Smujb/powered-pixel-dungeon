@@ -96,7 +96,7 @@ public class Gold extends Item {
 	
 	@Override
 	public Item random() {
-		quantity = Random.Int( 30 + Dungeon.yPos * 10, 60 + Dungeon.yPos * 20 );
+		quantity = Random.Int( 30 + Dungeon.getScaleFactor() * 10, 60 + Dungeon.getScaleFactor() * 20 );
 		return this;
 	}
 	

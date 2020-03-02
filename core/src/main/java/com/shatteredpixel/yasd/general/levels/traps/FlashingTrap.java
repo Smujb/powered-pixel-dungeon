@@ -65,7 +65,7 @@ public class FlashingTrap extends Trap {
 		Char c = Actor.findChar( pos );
 		
 		if (c != null) {
-			int damage = Math.max( 0,  (4 + Dungeon.yPos) - c.drRoll(Element.PHYSICAL) );
+			int damage = Math.max( 0,  (4 + Dungeon.getScaleFactor()) - c.drRoll(Element.PHYSICAL) );
 			Buff.affect( c, Bleeding.class ).set( damage );
 			Buff.prolong( c, Blindness.class, 10f );
 			Buff.prolong( c, Cripple.class, 20f );

@@ -70,6 +70,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		if (plants.get(pos) != null){
 			return plants.get(pos).image + 7*16;
 		}
+		//TODO: make grass depend on level not depth
 		int stage = (Dungeon.yPos -1)/Constants.CHAPTER_LENGTH;
 		if (Dungeon.yPos == 21) stage--;
 		if (tile == Terrain.HIGH_GRASS){

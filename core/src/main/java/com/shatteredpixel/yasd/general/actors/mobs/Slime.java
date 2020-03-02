@@ -105,7 +105,7 @@ public class Slime extends Mob {
 
 		@Override
 		public void rollToDropLoot() {
-			if (Dungeon.hero.lvl > Dungeon.yPos + 3) return;
+			if (Dungeon.hero.lvl > Dungeon.getScaleFactor() + 3) return;
 
 			super.rollToDropLoot();
 
