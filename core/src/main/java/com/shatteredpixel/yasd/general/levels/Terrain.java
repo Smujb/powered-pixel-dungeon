@@ -78,6 +78,13 @@ public enum Terrain {
 			liquid = true;
 		}
 	},
+	DEEP_WATER {
+		@Override
+		public void setup() {
+			passable = true;
+			liquid = true;
+		}
+	},
 	WALL {
 		@Override
 		public void setup() {

@@ -79,8 +79,8 @@ public class DungeonTileSheet {
 	/**********************************************************************
 	 * Water Tiles
 	 **********************************************************************/
-
-	public static final int WATER =                                         xy(1, 3);   //16 slots
+	public static final int DEEP_WATER =                                         xy(1, 23);
+	public static final int WATER =                                         xy(1, 24);   //16 slots
 	//next 15 slots are all water stitching with ground.
 
 	//These tiles can stitch with water
@@ -100,6 +100,15 @@ public class DungeonTileSheet {
 		if (waterStitcheable.contains(right))   result += 2;
 		if (waterStitcheable.contains(bottom))  result += 4;
 		if (waterStitcheable.contains(left))    result += 8;
+		return result;
+	}
+
+	public static int stitchDeepWaterTile(Terrain top, Terrain right, Terrain bottom, Terrain left) {
+		int result = DEEP_WATER;//Deep water will ALWAYS be surrounded on all 4 sides by water.
+		if (top != Terrain.DEEP_WATER)     result += 1;
+		if (right != Terrain.DEEP_WATER)   result += 2;
+		if (bottom != Terrain.DEEP_WATER)  result += 4;
+		if (left != Terrain.DEEP_WATER)    result += 8;
 		return result;
 	}
 

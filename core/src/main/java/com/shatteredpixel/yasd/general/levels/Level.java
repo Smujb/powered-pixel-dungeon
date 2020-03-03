@@ -106,6 +106,7 @@ import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
+import com.shatteredpixel.yasd.general.tiles.DungeonTileSheet;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
@@ -125,6 +126,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.Terrain.DEEP_WATER;
 import static com.shatteredpixel.yasd.general.levels.Terrain.DOOR;
 import static com.shatteredpixel.yasd.general.levels.Terrain.EMBERS;
 import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
@@ -582,6 +584,19 @@ public abstract class Level implements Bundlable {
 		} else {
 			return WATER;
 		}
+	}
+
+	public Terrain swapWaterAlts(int pos) {
+		int above = pos + PathFinder.CIRCLE4[0];
+		int right = pos + PathFinder.CIRCLE4[1];
+		int below = pos + PathFinder.CIRCLE4[2];
+		int left = pos + PathFinder.CIRCLE4[3];
+		if (map[pos] == WATER &&
+				!DungeonTileSheet.waterStitcheable.contains(map[above]) & !DungeonTileSheet.waterStitcheable.contains(map[below]) & !DungeonTileSheet.waterStitcheable.contains(map[left]) & !DungeonTileSheet.waterStitcheable.contains(map[right])) {
+			return DEEP_WATER;
+
+		}
+		return map[pos];
 	}
 
 	public int width() {

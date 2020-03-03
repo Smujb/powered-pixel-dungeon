@@ -36,7 +36,7 @@ public class MageArmor extends ClothArmor {
 		image = ItemSpriteSheet.ARMOR_MAGE;
 		EVA = 1.25f;
 		magicalDRFactor = 2f;
-		DRfactor = 0f;
+		DRfactor = 0.5f;
 	}
 
 	@Override

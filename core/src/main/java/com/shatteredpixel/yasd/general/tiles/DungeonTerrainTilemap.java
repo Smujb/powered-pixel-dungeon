@@ -56,7 +56,13 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 					map[pos + PathFinder.CIRCLE4[2]],
 					map[pos + PathFinder.CIRCLE4[3]]
 			);
-
+		} else if (tile == Terrain.DEEP_WATER) {
+			return DungeonTileSheet.stitchDeepWaterTile(
+					map[pos + PathFinder.CIRCLE4[0]],
+					map[pos + PathFinder.CIRCLE4[1]],
+					map[pos + PathFinder.CIRCLE4[2]],
+					map[pos + PathFinder.CIRCLE4[3]]
+			);
 		} else if (tile == Terrain.CHASM) {
 			return DungeonTileSheet.stitchChasmTile( pos > mapWidth ? map[pos - mapWidth] : Terrain.NONE);
 		}
@@ -109,6 +115,6 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 
 	@Override
 	protected boolean needsRender(int pos) {
-		return super.needsRender(pos) && data[pos] != DungeonTileSheet.WATER;
+		return super.needsRender(pos);// && data[pos] != DungeonTileSheet.WATER; (water tiles do need render now)
 	}
 }
