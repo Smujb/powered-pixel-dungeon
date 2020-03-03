@@ -29,20 +29,11 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.DeferredDeath;
-import com.shatteredpixel.yasd.general.actors.mobs.Bee;
-import com.shatteredpixel.yasd.general.actors.mobs.King;
-import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
-import com.shatteredpixel.yasd.general.actors.mobs.Statue;
-import com.shatteredpixel.yasd.general.actors.mobs.Swarm;
-import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
-import com.shatteredpixel.yasd.general.actors.mobs.Yog;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -65,9 +56,8 @@ public class WandOfDamnation extends Wand {
             enemy = ((Mob)ch);
 
             float corruptingPower = 3 + actualLevel();
-            //TODO: Add to mob, so I can merge with WandOfDamnation
             //base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
-            float enemyResist = 1 + enemy.EXP;
+            float enemyResist = enemy.corruptionResistance();/*1 + enemy.EXP;
             if (ch instanceof Mimic || ch instanceof Statue) {
                 enemyResist = 1 + Dungeon.getScaleFactor();
             } else if (ch instanceof Piranha || ch instanceof Bee) {
@@ -85,12 +75,10 @@ public class WandOfDamnation extends Wand {
             }
 
             //100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
-            enemyResist *= 1 + 2 * Math.pow(enemy.HP / (float) enemy.HT, 2);
+            enemyResist *= 1 + 2 * Math.pow(enemy.HP / (float) enemy.HT, 2);*/
 
 
-            if (ch != null) {
-                Buff.affect(ch, DeferredDeath.class, enemyResist/corruptingPower*((float)maxCharges/(float)curCharges));
-            }
+            Buff.affect(ch, DeferredDeath.class, enemyResist/corruptingPower*((float)maxCharges/(float)curCharges));
         }
     }
 

@@ -73,7 +73,10 @@ public enum Element {
 
 	public int attackProc(int damage, Char attacker, Char defender) {
 		switch (this) {
-			case PHYSICAL:
+			case HOLY:
+				if (defender.properties().contains(Char.Property.UNDEAD) || defender.properties().contains(Char.Property.DEMONIC)) {
+					damage *= 1.5;
+				}
 				break;
 			case FIRE:
 				Buff.affect(defender, Burning.class).reignite(defender);

@@ -59,15 +59,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Bee;
-import com.shatteredpixel.yasd.general.actors.mobs.King;
-import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
-import com.shatteredpixel.yasd.general.actors.mobs.Statue;
-import com.shatteredpixel.yasd.general.actors.mobs.Swarm;
-import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
-import com.shatteredpixel.yasd.general.actors.mobs.Yog;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -136,17 +128,13 @@ public class WandOfCorruption extends Wand {
 			Mob enemy = (Mob) ch;
 
 			float corruptingPower = 3 + actualLevel();
-			//TODO: Add to mob, so I can merge with WandOfDamnation
 			//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
-			float enemyResist = 1 + enemy.EXP;
+			float enemyResist = enemy.corruptionResistance();/*1 + enemy.EXP;
 			if (ch instanceof Mimic || ch instanceof Statue || ch instanceof Wraith){
 				enemyResist = 3 + Dungeon.getScaleFactor() *2;
 			} else if (ch instanceof Piranha || ch instanceof Bee) {
 				enemyResist = 1 + Dungeon.getScaleFactor() /2f;
-			} /*else if (ch instanceof Wraith) {
-				//divide by 3 as wraiths are always at full HP and are therefore ~3x harder to corrupt
-				enemyResist = (1f + Dungeon.yPos/3f) / 3f;
-			}*/ else if (ch instanceof Yog.BurningFist || ch instanceof Yog.RottingFist) {
+			}  else if (ch instanceof Yog.BurningFist || ch instanceof Yog.RottingFist) {
 				enemyResist = 1 + 30;
 			} else if (ch instanceof Yog.Larva || ch instanceof King.Undead){
 				enemyResist = 1 + 5;
@@ -156,7 +144,7 @@ public class WandOfCorruption extends Wand {
 			}
 			
 			//100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
-			enemyResist *= 1 + 2*Math.pow(enemy.HP/(float)enemy.HT, 2);
+			enemyResist *= 1 + 2*Math.pow(enemy.HP/(float)enemy.HT, 2);*/
 			
 			//debuffs placed on the enemy reduce their resistance
 			for (Buff buff : enemy.buffs()){
@@ -188,7 +176,7 @@ public class WandOfCorruption extends Wand {
 		}
 	}
 	
-	private void debuffEnemy( Mob enemy, HashMap<Class<? extends Buff>, Float> category ){
+	private void debuffEnemy( Char enemy, HashMap<Class<? extends Buff>, Float> category ){
 		
 		//do not consider buffs which are already assigned, or that the enemy is immune to.
 		HashMap<Class<? extends Buff>, Float> debuffs = new HashMap<>(category);
@@ -215,7 +203,7 @@ public class WandOfCorruption extends Wand {
 		}
 	}
 	
-	private void corruptEnemy( Mob enemy ){
+	private void corruptEnemy( Char enemy ){
 		//cannot re-corrupt or doom an enemy, so give them a major debuff instead
 		if(enemy.buff(Corruption.class) != null || enemy.buff(Doom.class) != null){
 			GLog.w( Messages.get(this, "already_corrupted") );
@@ -228,24 +216,27 @@ public class WandOfCorruption extends Wand {
 				if (buff.type == Buff.buffType.NEGATIVE
 						&& !(buff instanceof SoulMark)) {
 					buff.detach();
-				} else if (buff instanceof PinCushion){
+				} else if (buff instanceof PinCushion) {
 					buff.detach();
 				}
+
 			}
-			if (enemy.alignment == Char.Alignment.ENEMY){
-				enemy.rollToDropLoot();
-			}
+
 			
 			Buff.affect(enemy, Corruption.class);
 			
 			Statistics.enemiesSlain++;
 			Badges.validateMonstersSlain();
 			Statistics.qualifiedForNoKilling = false;
-			if (curUser instanceof Hero) {
+			if (curUser instanceof Hero && enemy instanceof Mob) {
 				Hero hero = ((Hero)curUser);
-				if (enemy.EXP > 0 && hero.lvl <= enemy.maxLvl) {
-					hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(enemy, "exp", enemy.EXP));
-					hero.earnExp(enemy.EXP, enemy.getClass());
+				Mob mob = ((Mob)enemy);
+				if (enemy.alignment == Char.Alignment.ENEMY){
+					mob.rollToDropLoot();
+				}
+				if (mob.EXP > 0 && hero.lvl <= mob.maxLvl) {
+					hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(enemy, "exp", mob.EXP));
+					hero.earnExp(mob.EXP, enemy.getClass());
 				} else {
 					hero.earnExp(0, enemy.getClass());
 				}

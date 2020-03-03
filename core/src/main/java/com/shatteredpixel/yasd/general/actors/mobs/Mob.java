@@ -798,6 +798,25 @@ public abstract class Mob extends Char {
 		
 		super.die( cause );
 	}
+
+	public float corruptionResistance() {
+		float enemyResist = 1 + this.EXP;
+		if (this instanceof Mimic || this instanceof Statue || this instanceof Wraith){
+			enemyResist = 3 + Dungeon.getScaleFactor() *2;
+		} else if (this instanceof Piranha || this instanceof Bee) {
+			enemyResist = 1 + Dungeon.getScaleFactor() /2f;
+		}  else if (this instanceof Yog.BurningFist || this instanceof Yog.RottingFist) {
+			enemyResist = 1 + 30;
+		} else if (this instanceof Yog.Larva || this instanceof King.Undead){
+			enemyResist = 1 + 5;
+		} else if (this instanceof Swarm){
+			//child swarms don't give exp, so we force this here.
+			enemyResist = 1 + 3;
+		}
+		//100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
+		enemyResist *= 1 + 2*Math.pow(enemy.HP/(float)enemy.HT, 2);
+		return enemyResist;
+	}
 	
 	public void rollToDropLoot(){
 		if (Dungeon.hero.lvl > Dungeon.getScaleFactor() + 3) return;
