@@ -44,6 +44,8 @@ import com.watabou.utils.Callback;
 public class WandOfPlasmaBolt extends DamageWand {
     {
         image = ItemSpriteSheet.WAND_PLASMA;
+
+        element = Element.PHYSICAL;
     }
     @Override
     public float min(float lvl) {
@@ -52,7 +54,7 @@ public class WandOfPlasmaBolt extends DamageWand {
 
     @Override
     public float max(float lvl) {
-        return 15 + 8*lvl;
+        return 16 + 8*lvl;
     }
 
     @Override
@@ -65,7 +67,7 @@ public class WandOfPlasmaBolt extends DamageWand {
         Sample.INSTANCE.play(Assets.SND_ZAP);
     }
 
-    public int hit(Char enemy, float lvl) {
+    /*public int hit(Char enemy, float lvl) {
         if (curUser == null) {
             curUser = Dungeon.hero;
         }
@@ -75,7 +77,7 @@ public class WandOfPlasmaBolt extends DamageWand {
             enemy.damage(damage, this, Element.PHYSICAL, false );
         }
         return damage;
-    }
+    }*/
 
     @Override
     public void onZap(Ballistica bolt) {

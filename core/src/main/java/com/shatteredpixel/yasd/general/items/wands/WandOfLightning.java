@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -54,6 +55,8 @@ public class WandOfLightning extends DamageWand {
 
 	{
 		image = ItemSpriteSheet.WAND_LIGHTNING;
+
+		element = Element.ELECTRIC;
 	}
 	
 	private ArrayList<Char> affected = new ArrayList<>();

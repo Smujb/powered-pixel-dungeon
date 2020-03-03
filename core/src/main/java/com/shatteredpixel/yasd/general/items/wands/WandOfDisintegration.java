@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.Beam;
@@ -50,6 +51,8 @@ public class WandOfDisintegration extends DamageWand {
 		image = ItemSpriteSheet.WAND_DISINTEGRATION_YAPD;
 
 		collisionProperties = Ballistica.WONT_STOP;
+
+		element = Element.DESTRUCTION;
 	}
 
 	@Override

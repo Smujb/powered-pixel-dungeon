@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
-import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
@@ -127,12 +126,17 @@ public class Scorpio extends RangedMob {
 		}
 
 		@Override
+		public Element elementalType() {
+			return Element.ACID;
+		}
+
+		/*@Override
 		public int defenseProc(Char enemy, int damage, Element element) {
 
 			Buff.affect(enemy, Ooze.class).set(20f);
 
 			return super.defenseProc( enemy, damage, element);
-		}
+		}*/
 
 	}
 	

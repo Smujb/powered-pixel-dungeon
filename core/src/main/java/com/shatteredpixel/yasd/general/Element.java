@@ -35,7 +35,9 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
+import com.shatteredpixel.yasd.general.effects.RedLightning;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
@@ -56,6 +58,7 @@ public enum Element {
 	NATURAL( true ),
 	FIRE( true),
 	WATER( true ),
+	COLD( true ),
 	EARTH( false ),
 	GRASS( false ),
 	AIR( true ),
@@ -123,12 +126,25 @@ public enum Element {
 	}
 
 	public int defenseProc(int damage, Char attacker, Char defender) {
-		//damage = defender.defenseProc(attacker, damage, Element.PHYSICAL);
+		switch (this) {
+			case ACID:
+				Buff.affect(attacker, Ooze.class).set(20f);
+				break;
+		}
 		return damage;
 	}
 
 	public int affectDamage(Char ch, int damage) {
 		damage = Math.max(damage - ch.drRoll(this), 0);
+		if (this == ACID) {
+			if (ch.hasBelongings()) {
+				int index = Random.Int(5);
+				Item item = ch.belongings.miscs[index];
+				if (item != null && item.canDegrade()) {
+					item.use(damage * 5);
+				}
+			}
+		}
 		return damage;
 	}
 
@@ -136,6 +152,13 @@ public enum Element {
 
 		switch (this) {
 			case MAGICAL:
+				MagicMissile.boltFromChar( ch.sprite.parent,
+						MagicMissile.MAGIC_MISSILE,
+						ch.sprite,
+						cell,
+						attack);
+				Sample.INSTANCE.play( Assets.SND_ZAP );
+				break;
 			case NONE:
 			case PHYSICAL:
 				attack.call();
@@ -164,6 +187,14 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				break;
+			case COLD:
+				MagicMissile.boltFromChar(ch.sprite.parent,
+						MagicMissile.FROST,
+						ch.sprite,
+						cell,
+						attack);
+				Sample.INSTANCE.play(Assets.SND_ZAP);
 				break;
 			case EARTH:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -200,7 +231,7 @@ public enum Element {
 				break;
 			case ACID:
 				MagicMissile.boltFromChar( ch.sprite.parent,
-						MagicMissile.CORROSION,
+						MagicMissile.ACID,
 						ch.sprite,
 						cell,
 						attack);
@@ -210,7 +241,12 @@ public enum Element {
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));//No callback as damaging after lightning anim finishes looks messy
 				attack.call();
 				break;
-			case DARK: case DRAIN:
+			case DRAIN:
+				ch.sprite.parent.add(
+						new RedLightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));
+				attack.call();
+				break;
+			case DARK:
 				MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.SHADOW,
 						ch.sprite,

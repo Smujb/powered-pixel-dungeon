@@ -30,13 +30,13 @@ package com.shatteredpixel.yasd.general.items.wands;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
-import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
@@ -47,9 +47,7 @@ import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
@@ -60,6 +58,8 @@ public class WandOfPrismaticLight extends DamageWand {
 		image = ItemSpriteSheet.WAND_PRISMATIC_LIGHT;
 
 		collisionProperties = Ballistica.MAGIC_BOLT;
+
+		element = Element.HOLY;
 	}
 	@Override
 	public float min(float lvl){
@@ -139,12 +139,12 @@ public class WandOfPrismaticLight extends DamageWand {
 		GameScene.updateFog();
 	}
 
-	@Override
+	/*@Override
 	protected void fx( Ballistica beam, Callback callback ) {
 		curUser.sprite.parent.add(
 				new Beam.LightRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(beam.collisionPos)));
 		callback.call();
-	}
+	}*/
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {

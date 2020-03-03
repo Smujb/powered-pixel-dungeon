@@ -57,16 +57,18 @@ public class WandOfLivingEarth extends DamageWand {
 	
 	{
 		image = ItemSpriteSheet.WAND_LIVING_EARTH;
+
+		element = Element.EARTH;
 	}
 	
 	@Override
 	public float min(float lvl) {
-		return 4;
+		return 4 + lvl;
 	}
 	
 	@Override
 	public float max(float lvl) {
-		return 6 + 2*lvl;
+		return 6 + 4*lvl;
 	}
 	
 	@Override

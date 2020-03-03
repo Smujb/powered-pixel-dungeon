@@ -26,30 +26,25 @@
  */
 package com.shatteredpixel.yasd.general.items.wands;
 
-import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.RedLightning;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
-import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
-import com.shatteredpixel.yasd.general.utils.GLog;
-import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Callback;
 
 public class WandOfLifeDrain extends DamageWand {
 
 	{
         image = ItemSpriteSheet.WAND_LIFE_DRAIN;
+
+        element = Element.DRAIN;
 	}
 
     @Override
@@ -83,7 +78,7 @@ public class WandOfLifeDrain extends DamageWand {
         }
     }
 
-    @Override
+    /*@Override
     protected void fx( Ballistica bolt, Callback callback ) {
 
         int cell = bolt.collisionPos;
@@ -100,7 +95,7 @@ public class WandOfLifeDrain extends DamageWand {
         curUser.sprite.parent.addToFront( lightning  );
         Sample.INSTANCE.play( Assets.SND_LIGHTNING );
         callback.call();
-    }
+    }*/
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {

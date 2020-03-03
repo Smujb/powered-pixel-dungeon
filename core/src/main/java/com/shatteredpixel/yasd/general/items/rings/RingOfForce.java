@@ -62,7 +62,7 @@ public class RingOfForce extends Ring {
 			return Random.NormalIntRange(min(level, tier), max(level, tier));
 		} else {
 			//attack without any ring of force influence
-			return Random.NormalIntRange(1, Math.max(owner.STR()-8, 1));
+			return 1;
 		}
 	}
 

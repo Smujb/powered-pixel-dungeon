@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
-import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.mobs.Rat;
 import com.shatteredpixel.yasd.general.actors.mobs.Snake;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
@@ -38,16 +37,6 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 	@Override
 	public int getScaleFactor() {
 		return 1;
-	}
-
-	@Override
-	public String tilesTex() {
-		return Assets.TILES_HALLS;
-	}
-
-	@Override
-	public String waterTex() {
-		return Assets.WATER_HALLS;
 	}
 
 	@Override

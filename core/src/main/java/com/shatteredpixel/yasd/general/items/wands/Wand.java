@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.items.wands;
 
-import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -44,7 +43,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.armor.MageArmor;
@@ -57,7 +55,6 @@ import com.shatteredpixel.yasd.general.scenes.CellSelector;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
@@ -363,12 +360,7 @@ public abstract class Wand extends KindofMisc {
 	}
 	
 	protected void fx( Ballistica bolt, Callback callback ) {
-		MagicMissile.boltFromChar( curUser.sprite.parent,
-				MagicMissile.MAGIC_MISSILE,
-				curUser.sprite,
-				bolt.collisionPos,
-				callback);
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+		element.FX( curUser, bolt.collisionPos, callback );
 	}
 
 	public void staffFx( MagesStaff.StaffParticle particle ){

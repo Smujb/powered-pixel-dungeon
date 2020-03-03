@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.wands;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.AcidPool;
@@ -45,6 +46,8 @@ public class WandOfAcid extends DamageWand {
     {
         image = ItemSpriteSheet.WAND_ACID;
         collisionProperties = Ballistica.STOP_TARGET | Ballistica.STOP_TERRAIN;
+
+        element = Element.ACID;
     }
     @Override
     public float min(float lvl) {

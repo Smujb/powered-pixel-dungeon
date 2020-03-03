@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -41,6 +42,8 @@ public class WandOfMagicMissile extends DamageWand {
 
 	{
 		image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
+
+		element = Element.MAGICAL;
 	}
 
 	@Override
@@ -50,7 +53,7 @@ public class WandOfMagicMissile extends DamageWand {
 
 	@Override
 	public float max(float lvl){
-		return 6+2*lvl;
+		return 8+2*lvl;
 	}
 
 	@Override

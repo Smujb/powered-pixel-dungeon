@@ -30,13 +30,11 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class Corrosion extends Buff implements Hero.Doom {
 
@@ -99,13 +97,6 @@ public class Corrosion extends Buff implements Hero.Doom {
 	public boolean act() {
 		if (target.isAlive()) {
 			target.damage((int)damage, this, Element.ACID );
-			if (target.belongings != null) {
-				int index = Random.Int(5);
-				Item item = target.belongings.miscs[index];
-				if (item != null && item.canDegrade()) {
-					item.use(damage*10);
-				}
-			}
 			if (damage < (Dungeon.getScaleFactor() /2f)+2) {
 				damage++;
 			} else {
