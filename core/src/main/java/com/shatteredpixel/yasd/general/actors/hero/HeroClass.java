@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.MagicMap;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -124,7 +125,7 @@ public enum HeroClass {
 		new Beer().collect();
 
 		//new Alcohol().collect();
-
+		new MagicMap().collect();
 		//Generator.random(Generator.Category.WAND).identify().collect();
 		//Generator.randomArmor().setTier(3).identify().collect();
 		//Generator.randomWeapon().setTier(3).identify().collect();

@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
@@ -46,7 +45,6 @@ import java.util.ArrayList;
 public class BrokenSeal extends Item {
 
 	private static final String AC_AFFIX = "AFFIX";
-	private static final String AC_DEBUG = "debug";//Used for debugging. Should do nothing in public releases.
 
 	{
 		image = ItemSpriteSheet.SEAL;
@@ -62,7 +60,6 @@ public class BrokenSeal extends Item {
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_AFFIX);
-		actions.add(AC_DEBUG);
 		return actions;
 	}
 
@@ -74,23 +71,6 @@ public class BrokenSeal extends Item {
 		if (action.equals(AC_AFFIX)){
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
-		} else if (action.equals(AC_DEBUG)) {
-			if (Dungeon.zPos < 1) {
-				InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 1, "TEST", InterlevelScene.Mode.DESCEND);
-			} else {
-				InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 0, "TEST", InterlevelScene.Mode.DESCEND);
-			}
-			/*GameScene.show(new WndOptions("DEBUG: Choose Dungeon xPos",
-					"",
-					Messages.titleCase("PATH 1"),
-					Messages.titleCase("PATH 2"),
-					Messages.titleCase("PATH 3")) {
-				@Override
-				protected void onSelect(int index) {
-					InterlevelScene.move(index, Dungeon.yPos, Dungeon.zPos,  "TEST", InterlevelScene.Mode.DESCEND);
-					//hero.HT = hero.HP = 100000;
-				}
-			});*/
 		}
 	}
 

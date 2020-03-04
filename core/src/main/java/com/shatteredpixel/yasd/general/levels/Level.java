@@ -188,6 +188,24 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
+	public ArrayList<Integer> getTileLocations(Terrain terrain) {
+		ArrayList<Integer> locations = new ArrayList<>();
+		for (int i = 0; i < map.length; i++) {
+			if (map[i] == terrain) {
+				locations.add(i);
+			}
+		}
+		return locations;
+	}
+
+	public static Terrain[] basicMap(int size) {
+		Terrain[] map = new Terrain[size];
+		for (int i = 0; i < size; i++) {
+			map[i] = EMPTY;
+		}
+		return map;
+	}
+
 	public boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -943,6 +961,13 @@ public abstract class Level implements Bundlable {
 
 	public int XY(int x, int y) {
 		return x + y * width();
+	}
+
+	public int[] posToXY(int pos) {
+		int[] coords = new int[2];
+		coords[0] = pos/height;
+		coords[1] = pos%height;
+		return coords;
 	}
 
 	public void set( int cell, Terrain terrain ){

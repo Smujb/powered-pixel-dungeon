@@ -28,11 +28,17 @@
 package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.levels.painters.Painter;
-import com.shatteredpixel.yasd.general.levels.painters.UnderwaterPainter;
+import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
+import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
+import com.watabou.noosa.Group;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PointF;
 
-public class UnderwaterLevel extends RegularLevel {
+import java.util.ArrayList;
+
+public class UnderwaterLevel extends Level {
 	{
 		hasEntrance = false;
 
@@ -41,6 +47,11 @@ public class UnderwaterLevel extends RegularLevel {
 
 	public String tilesTex = Assets.TILES_HALLS;
 	public String waterTex = Assets.WATER_HALLS;
+
+	private int _width = -1;
+	private int _height = -1;
+
+	private ArrayList<Integer> lightLocations = new ArrayList<>();
 
 	@Override
 	public boolean[] liquid() {//All passable tiles are considered "liquid" due to being underwater.
@@ -56,12 +67,28 @@ public class UnderwaterLevel extends RegularLevel {
 		tilesTex = level.tilesTex();
 		minScaleFactor = level.minScaleFactor;
 		maxScaleFactor = level.maxScaleFactor;
+		_height = level.height();
+		_width = level.width();
+		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
 		return this;
 	}
 
 	@Override
-	protected Painter painter() {
-		return new UnderwaterPainter();
+	protected boolean build() {
+		setSize(_width, _height);
+		map = Level.basicMap(length());
+		entrance = lightLocations.get(0);
+		return true;
+	}
+
+	@Override
+	protected void createMobs() {
+
+	}
+
+	@Override
+	protected void createItems() {
+
 	}
 
 	@Override
@@ -87,11 +114,23 @@ public class UnderwaterLevel extends RegularLevel {
 		return waterTex();
 	}
 
+	@Override
+	public Group addVisuals() {
+		Group visuals = super.addVisuals();
+		for (int i=0; i < length(); i++) {
+			if (lightLocations.contains(i)) {
+				visuals.add(new Light(i));
+			}
+		}
+		return visuals;
+	}
+
 	private static final String TILE_TEX = "tile_tex";
 	private static final String WATER_TEX = "water_tex";
 	private static final String SCALE_FACTOR_MAX = "scalefactor-max";
 	private static final String SCALE_FACTOR_MIN = "scalefactor-min";
-	private static final String LIGHT_TILES = "light_tiles";
+	private static final String LIGHT_TILE = "light_tile";
+	private static final String LIGHT_TILE_AMT = "light_tiles_num";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -100,6 +139,10 @@ public class UnderwaterLevel extends RegularLevel {
 		bundle.put(WATER_TEX, waterTex);
 		bundle.put(SCALE_FACTOR_MIN, minScaleFactor);
 		bundle.put(SCALE_FACTOR_MAX, maxScaleFactor);
+		bundle.put(LIGHT_TILE_AMT, lightLocations.size());
+		for (int i = 0; i < lightLocations.size(); i++) {
+			bundle.put(LIGHT_TILE+i, lightLocations.get(i));
+		}
 	}
 
 	@Override
@@ -109,6 +152,42 @@ public class UnderwaterLevel extends RegularLevel {
 		waterTex = bundle.getString(WATER_TEX);
 		minScaleFactor = bundle.getInt(SCALE_FACTOR_MIN);
 		maxScaleFactor = bundle.getInt(SCALE_FACTOR_MAX);
+		int num = bundle.getInt(LIGHT_TILE_AMT);
+		for (int i = 0; i < num; i++) {
+			lightLocations.add(bundle.getInt(LIGHT_TILE+i));
+		}
+	}
+
+	static class Light extends Emitter {
+
+		private int pos;
+
+		private static final Emitter.Factory factory = new Factory() {
+
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				ShaftParticle p = (ShaftParticle)emitter.recycle( ShaftParticle.class );
+				p.reset( x, y );
+			}
+		};
+
+		public Light( int pos ) {
+			super();
+
+			this.pos = pos;
+
+			PointF p = DungeonTilemap.tileCenterToWorld( pos );
+			pos( p.x - 6, p.y - 4, 12, 12 );
+
+			pour( factory, 0.05f );
+		}
+
+		@Override
+		public void update() {
+			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+				super.update();
+			}
+		}
 	}
 }
 
