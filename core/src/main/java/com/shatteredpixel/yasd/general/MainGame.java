@@ -56,6 +56,7 @@ public class MainGame extends Game {
 	public static final int v0_2_6  = 406;
 	public static final int v0_2_7  = 407;
 	public static final int v0_2_8  = 409;
+	public static final int v0_2_10  = 411;
 	
 	public MainGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );

@@ -74,7 +74,7 @@ public class DiveIndicator extends Tag {
 
 			icon = new Image(Dungeon.level.waterTex());
 
-			icon.frame((int) this.x + 1, (int) this.y + 1, (int) this.width - 1, (int) this.height - 1);
+			icon.frame((int) this.x + 6, (int) this.y + 6, (int) this.width - 6, (int) this.height - 6);
 
 			add(icon);
 
