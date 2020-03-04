@@ -74,10 +74,15 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
+	public boolean deepWater(int pos) {
+		return lightLocations.contains(pos);
+	}
+
+	@Override
 	protected boolean build() {
 		setSize(_width, _height);
 		map = Level.basicMap(length());
-		entrance = lightLocations.get(0);
+		entrance = exit = lightLocations.get(0);
 		return true;
 	}
 

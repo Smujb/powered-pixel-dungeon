@@ -959,14 +959,18 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
+	public boolean deepWater(int pos) {
+		return map[pos] == DEEP_WATER;
+	}
+
 	public int XY(int x, int y) {
 		return x + y * width();
 	}
 
 	public int[] posToXY(int pos) {
 		int[] coords = new int[2];
-		coords[0] = pos/height;
-		coords[1] = pos%height;
+		coords[0] = pos%height;
+		coords[1] = pos/height;
 		return coords;
 	}
 
