@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 
@@ -44,14 +45,19 @@ public class LevelHandler {
 	}
 
 	public static Level getLevel(int x, int y, int z, int save) {
+
 		Bundle bundle;
+		long start = System.currentTimeMillis();
 		try {
-			bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, x, y, z) );
+			bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, x, y, z));
 		} catch (IOException e) {
 			MainGame.reportException(e);
-			return null;
+			throw new RuntimeException(e.fillInStackTrace());
 		}
+		Level level = (Level) bundle.get(Dungeon.LEVEL);
+		long taken = System.currentTimeMillis() - start;
+		GLog.w("Loaded level in " + taken + "ms\n");
+		return level;
 
-		return (Level) bundle.get( Dungeon.LEVEL );
 	}
 }

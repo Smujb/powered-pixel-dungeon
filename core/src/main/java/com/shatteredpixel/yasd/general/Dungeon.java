@@ -63,6 +63,7 @@ import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
+import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
@@ -292,17 +293,26 @@ public class Dungeon {
 		return newLevel(xPos, depth, yPos, true);
 	}*/
 	
-	public static Level newLevel(int x, int y, int z, boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
+	public static Level newLevel(int x, int y, int z,
+								 boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
 		
 		Level level;
 		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
-		if (x  == 0 && z == 0 && y < levelClasses.size()) {
+		if (x == 0 && z == 0 && y < levelClasses.size()) {
 			levelClass = levelClasses.get(y);
 		} else if (x == 1) {
 			levelClass = LootLevel.class;
 		}
 
 		level = Reflection.newInstance(levelClass);
+
+		if (z == 1) {//Underwater levels.
+			Level surface = LevelHandler.getLevel(x, y, 0, GamesInProgress.curSlot);
+			if (surface != null) {
+				level = new UnderwaterLevel().setParentLevel(surface);
+				//level = new LootLevel();
+			}
+		}
 		if (level == null) {
 			level = new DeadEndLevel();
 		}
@@ -331,7 +341,7 @@ public class Dungeon {
 	public static void resetLevel() {
 		
 		Actor.clear();
-		
+
 		level.reset();
 		switchLevel( level, level.entrance );
 	}
@@ -463,7 +473,6 @@ public class Dungeon {
 	private static final String CHALLENGES	= "challenges";
 	private static final String HERO		= "hero";
 	private static final String GOLD		= "gold";
-	private static final String DEPTH		= "yPos";
 	private static final String DROPPED     = "dropped%d";
 	private static final String PORTED      = "ported%d";
 	public  static final String LEVEL		= "level";
@@ -473,10 +482,12 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
 	private static final String LEVELSLOADED= "levels-loaded";
+	private static final String XPOS = "xPos";
+	private static final String YPOS = "yPos";
+	private static final String ZPOS = "zPos";
 	private static String levelKey(int x, int y, int z) {
 		return LEVELSLOADED + x + "_" + y + "_" + z;
 	}
-	private static final String PATH        = "xPos";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -488,9 +499,10 @@ public class Dungeon {
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
-			bundle.put( DEPTH, yPos);
+			bundle.put(YPOS, yPos);
+			bundle.put(XPOS, xPos);
+			bundle.put(ZPOS, zPos);
 			bundle.put( DIFFICULTY, difficulty );
-			bundle.put( PATH, xPos);
 
 			for (int x = 0; x <= Constants.MAX_X; x++) {
 				for (int y = 0; y <= Constants.MAX_Y; y++) {
@@ -560,7 +572,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile(GamesInProgress.depthFile( save, xPos, yPos, zPos ), bundle);
+		FileUtils.bundleToFile( GamesInProgress.depthFile( save, xPos, yPos, zPos ), bundle );
 	}
 	
 	public static void saveAll() throws IOException {
@@ -589,7 +601,7 @@ public class Dungeon {
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
 
-		xPos = bundle.contains( PATH ) ? bundle.getInt( PATH ) : 0;
+		//xPos = bundle.contains(XPOS) ? bundle.getInt(XPOS) : 0;
 
 		for (int x = 0; x <= Constants.MAX_X; x++) {
 			for (int y = 0; y <= Constants.MAX_Y; y++) {
@@ -599,22 +611,7 @@ public class Dungeon {
 			}
 		}
 
-		/*if (version < MainGame.v0_2_4) {
-			loadedDepths[0] = bundle.getBooleanArray( LEVELSLOADED );
-			for (int j = 0; j <= Constants.MAX_Z; j++) {
-				for (int i = 0; i <= Constants.MAX_Y; i++) {
-					loadedDepths[j][i] = false;
-				}
-			}
-		} else {
-			for (int i = 0; i < Constants.MAX_Z; i++) {
-				loadedDepths[i] = bundle.getBooleanArray(LEVELSLOADED + i);
-			}
-		}*/
-
 		Actor.restoreNextID( bundle );
-
-		//ModHandler.mod.restoreFromBundle( bundle );
 
 		quickslot.reset();
 		QuickSlotButton.reset();
@@ -622,7 +619,9 @@ public class Dungeon {
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
 		
 		Dungeon.level = null;
+		Dungeon.xPos = -1;
 		Dungeon.yPos = -1;
+		Dungeon.zPos = -1;
 		
 		Scroll.restore( bundle );
 		Potion.restore( bundle );
@@ -683,7 +682,10 @@ public class Dungeon {
 		}
 		
 		gold = bundle.getInt( GOLD );
-		yPos = bundle.getInt( DEPTH );
+
+		xPos = bundle.getInt( XPOS );
+		yPos = bundle.getInt( YPOS );
+		zPos = bundle.getInt( ZPOS );
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );
@@ -728,7 +730,8 @@ public class Dungeon {
 		
 		Dungeon.level = null;
 		Actor.clear();
-		
+		//Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, xPos, yPos, zPos));
+		//Level level = (Level) bundle.get(Dungeon.LEVEL);
 		Level level = LevelHandler.getLevel(xPos, yPos, zPos, save);
 		
 		if (level == null){
@@ -750,7 +753,7 @@ public class Dungeon {
 	}
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
-		info.depth = bundle.getInt( DEPTH );
+		info.depth = bundle.getInt(YPOS);
 		info.version = bundle.getInt( VERSION );
 		info.challenges = bundle.getInt( CHALLENGES );
 		Hero.preview( info, bundle.getBundle( HERO ) );

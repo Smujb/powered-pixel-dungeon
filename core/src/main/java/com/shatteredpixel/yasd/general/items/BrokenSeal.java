@@ -39,7 +39,6 @@ import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
-import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 
 import java.util.ArrayList;
@@ -76,7 +75,12 @@ public class BrokenSeal extends Item {
 			curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
 		} else if (action.equals(AC_DEBUG)) {
-			GameScene.show(new WndOptions("DEBUG: Choose Dungeon xPos",
+			if (Dungeon.zPos < 1) {
+				InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 1, "TEST", InterlevelScene.Mode.DESCEND);
+			} else {
+				InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 0, "TEST", InterlevelScene.Mode.DESCEND);
+			}
+			/*GameScene.show(new WndOptions("DEBUG: Choose Dungeon xPos",
 					"",
 					Messages.titleCase("PATH 1"),
 					Messages.titleCase("PATH 2"),
@@ -86,7 +90,7 @@ public class BrokenSeal extends Item {
 					InterlevelScene.move(index, Dungeon.yPos, Dungeon.zPos,  "TEST", InterlevelScene.Mode.DESCEND);
 					//hero.HT = hero.HP = 100000;
 				}
-			});
+			});*/
 		}
 	}
 

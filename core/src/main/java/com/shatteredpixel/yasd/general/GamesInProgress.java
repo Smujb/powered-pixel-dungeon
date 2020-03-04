@@ -75,7 +75,7 @@ public class GamesInProgress {
 	}
 
 	public static String yFolder(int y ){
-		return Messages.format(XPOS, y);
+		return Messages.format(YPOS, y);
 	}
 	
 	public static String gameFile( int slot ){
@@ -83,7 +83,7 @@ public class GamesInProgress {
 	}
 
 	public static String depthFile( int slot, int x, int y, int z ) {
-		return slotFolder(slot) + "/" + xFolder(x) + "/" + yFolder(y) + "/"  + Messages.format(YPOS, z);
+		return slotFolder(slot) + "/" + xFolder(x) + "/" + yFolder(y) + "/"  + Messages.format(ZPOS, z);
 	}
 	
 	public static int firstEmpty(){

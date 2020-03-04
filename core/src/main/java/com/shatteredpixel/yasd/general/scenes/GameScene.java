@@ -59,6 +59,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.journal.Journal;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
@@ -104,13 +105,10 @@ import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.shatteredpixel.yasd.general.windows.WndStory;
 import com.shatteredpixel.yasd.general.windows.WndTradeItem;
-import com.watabou.glwrap.Blending;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
 import com.watabou.noosa.Group;
-import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.NoosaScriptNoLighting;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Music;
@@ -194,9 +192,9 @@ public class GameScene extends PixelScene {
 		water = new SkinnedBlock(
 			Dungeon.level.width() * DungeonTilemap.SIZE,
 			Dungeon.level.height() * DungeonTilemap.SIZE,
-			waterTex ){
+			waterTex ) {
 
-			@Override
+			/*@Override
 			protected NoosaScript script() {
 				return NoosaScriptNoLighting.get();
 			}
@@ -204,12 +202,15 @@ public class GameScene extends PixelScene {
 			@Override
 			public void draw() {
 				//water has no alpha component, this improves performance
-				Blending.disable();
+				//Blending.disable();
 				super.draw();
-				Blending.enable();
-			}
+				//Blending.enable();
+			}*/
 		};
-		terrain.add( water );
+
+		//if (!(Dungeon.level instanceof UnderwaterLevel) ) {
+			terrain.add( water );
+		//}
 
 		ripples = new Group();
 		terrain.add( ripples );
@@ -284,6 +285,10 @@ public class GameScene extends PixelScene {
 			addBlobSprite( blob );
 		}
 
+		if (Dungeon.level instanceof UnderwaterLevel) {
+			water.alpha(0.5f);
+			addToFront(water);
+		}
 
 		fog = new FogOfWar( Dungeon.level.width(), Dungeon.level.height() );
 		add( fog );

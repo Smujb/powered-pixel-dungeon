@@ -103,7 +103,7 @@ public enum Element {
 				}
 				break;
 			case ELECTRIC:
-				if (Dungeon.level.liquid()[defender.pos] && !defender.flying) {
+				if (Dungeon.level.liquid()[defender.pos] && !defender.isFlying()) {
 					damage *= 1.5f;
 				}
 				break;

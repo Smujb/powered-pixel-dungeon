@@ -312,7 +312,8 @@ public class InterlevelScene extends PixelScene {
 					}
 				} );
 				thread = null;
-				error = null;
+				throw new RuntimeException("fatal error occured while moving between floors. " +
+						"Seed:" + Dungeon.seed + " yPos:" + Dungeon.yPos, error);
 			} else if (thread != null && (int)waitingTime == 10){
 				waitingTime = 11f;
 				String s = "";
@@ -389,7 +390,6 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	private static Level switchDepth(int xPos, int yPos, int zPos, final Mode mode) throws IOException {
-
 		if (Dungeon.hero == null) {
 			Mob.clearHeldAllies();
 			Dungeon.init();
