@@ -611,7 +611,10 @@ public abstract class Level implements Bundlable {
 		int left = pos + PathFinder.CIRCLE4[3];
 		try {
 			if (map[pos] == WATER &&
-					!DungeonTileSheet.waterStitcheable.contains(map[above]) & !DungeonTileSheet.waterStitcheable.contains(map[below]) & !DungeonTileSheet.waterStitcheable.contains(map[left]) & !DungeonTileSheet.waterStitcheable.contains(map[right])) {
+					DungeonTileSheet.deepWaterStitchable(map[above]) &
+							DungeonTileSheet.deepWaterStitchable(map[below]) &
+							DungeonTileSheet.deepWaterStitchable(map[left]) &
+							DungeonTileSheet.deepWaterStitchable(map[right])) {
 				return DEEP_WATER;
 
 			}

@@ -29,12 +29,17 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.JellyFish;
+import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
+import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -53,6 +58,18 @@ public class UnderwaterLevel extends Level {
 
 	private ArrayList<Integer> lightLocations = new ArrayList<>();
 
+	public UnderwaterLevel setParent(Level level) {
+		waterTex = level.waterTex();
+		tilesTex = level.tilesTex();
+		minScaleFactor = level.minScaleFactor;
+		maxScaleFactor = level.maxScaleFactor;
+		_width = level.width();
+		_height = level.height();
+		//setSize(level.width(), level.height());
+		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
+		return this;
+	}
+
 	@Override
 	public boolean[] liquid() {//All passable tiles are considered "liquid" due to being underwater.
 		boolean[] liquid = new boolean[length()];
@@ -60,17 +77,6 @@ public class UnderwaterLevel extends Level {
 			liquid[i] = map[i].liquid || map[i].passable;
 		}
 		return liquid;
-	}
-
-	public UnderwaterLevel setParentLevel(Level level) {
-		waterTex = level.waterTex();
-		tilesTex = level.tilesTex();
-		minScaleFactor = level.minScaleFactor;
-		maxScaleFactor = level.maxScaleFactor;
-		_height = level.height();
-		_width = level.width();
-		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
-		return this;
 	}
 
 	@Override
@@ -83,7 +89,28 @@ public class UnderwaterLevel extends Level {
 		setSize(_width, _height);
 		map = Level.basicMap(length());
 		entrance = exit = lightLocations.get(0);
+		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
+		for (int i = 0; i < length(); i ++) {
+			if (setSolid[i] && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
+				map[i] = Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL;
+			}
+		}
 		return true;
+	}
+
+	@Override
+	public Class<?>[] mobClasses() {
+		return new Class[] {Piranha.class, JellyFish.class};
+	}
+
+	@Override
+	public float[] mobChances() {
+		return new float[] {1, 1};
+	}
+
+	@Override
+	public int nMobs() {
+		return 5;
 	}
 
 	@Override
@@ -93,7 +120,9 @@ public class UnderwaterLevel extends Level {
 
 	@Override
 	protected void createItems() {
-
+		for (int i = 0; i < 10; i++) {
+			drop(Generator.random(), randomRespawnCell()).type = Heap.Type.SKELETON;
+		}
 	}
 
 	@Override
@@ -184,7 +213,7 @@ public class UnderwaterLevel extends Level {
 			PointF p = DungeonTilemap.tileCenterToWorld( pos );
 			pos( p.x - 6, p.y - 4, 12, 12 );
 
-			pour( factory, 0.05f );
+			pour( factory, 0.2f );
 		}
 
 		@Override

@@ -323,7 +323,7 @@ public class InterlevelScene extends PixelScene {
 				}
 				MainGame.reportException(
 						new RuntimeException("waited more than 10 seconds on levelgen. " +
-								"Seed:" + Dungeon.seed + " yPos:" + Dungeon.yPos + " trace:" +
+								"Seed:" + Dungeon.seed + "xPos: " + Dungeon.xPos + " yPos:" + Dungeon.yPos + "zPos: " + Dungeon.zPos + " trace:" +
 								s)
 				);
 			}

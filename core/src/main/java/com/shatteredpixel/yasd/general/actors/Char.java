@@ -88,6 +88,7 @@ import com.shatteredpixel.yasd.general.items.rings.RingOfMight;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
+import com.shatteredpixel.yasd.general.items.wands.WandOfFlow;
 import com.shatteredpixel.yasd.general.items.wands.WandOfLightning;
 import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blazing;
@@ -988,6 +989,7 @@ public abstract class Char extends Actor {
 				new HashSet<Class>( Arrays.asList(Ooze.class))),
 		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class)),
 				new HashSet<Class>()),
+		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class))),
 		IMMOVABLE;
 
 		private HashSet<Class> resistances;

@@ -67,13 +67,14 @@ public class Statue extends Mob implements Callback {
 		loot = new  StoneOfRepair();
 
 		lootChance = 1f;//Guaranteed in Animated Statues
+
+		belongings = new Belongings(this);
 	}
 
 	int ankhs = Math.max(1, level / Constants.CHAPTER_LENGTH);//1 Ankh per chapter
 	
 	public Statue() {
 		super();
-		belongings = new  Belongings(this);
 
 		for (int i = 0; i < belongings.miscs.length; i++) {
 			belongings.miscs[i] = newItem();
@@ -82,9 +83,9 @@ public class Statue extends Mob implements Callback {
 
 		upgradeItems();
 		
-		HP = HT = 15 + Dungeon.yPos * 5;
-		defenseSkill = 4 + Dungeon.yPos;
-		attackSkill  = 10 + Dungeon.yPos;
+		HP = HT = 15 + Dungeon.getScaleFactor() * 5;
+		defenseSkill = 4 + Dungeon.getScaleFactor();
+		attackSkill  = 10 + Dungeon.getScaleFactor();
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class Statue extends Mob implements Callback {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.canAttack( enemy );
 		} else if (wandToAttack(enemy) != null) {
-			return new  Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		} else {
 			return false;
 		}
@@ -157,7 +158,7 @@ public class Statue extends Mob implements Callback {
 		}
 	}
 
-	public void wandZap() {
+	public void wandZap(Char enemy) {
 		if (enemy != null) {
 			Wand wand = wandToAttack(enemy);
 			wand.activate(this);
@@ -166,7 +167,7 @@ public class Statue extends Mob implements Callback {
 
 				if (closest == -1){
 					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
-					return; //do not spawn guardian or detach buff
+					return;
 				} else {
 					wand.zap(closest);
 				}
@@ -219,21 +220,21 @@ public class Statue extends Mob implements Callback {
 		super.damage( dmg, src, element, ignoresDefense);
 	}
 
-	protected void zap(Char enemy) {
+	/*protected void zap(Char enemy) {
 		if (enemy != null ) {
 			Wand WandToZap = wandToAttack(enemy);
 			if (WandToZap != null) {
 				WandToZap.zap(enemy.pos);
 			}
 		}
-	}
+	}*/
 
 	protected boolean doAttack( Char enemy ) {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.doAttack( enemy );
 		} else if (belongings.getEquippedItemsOFType(Wand.class).size() > 0) {
-			zap( enemy );
-			return enemy != null;
+			wandZap(enemy);
+			return true;
 		} else {
 			return false;
 		}

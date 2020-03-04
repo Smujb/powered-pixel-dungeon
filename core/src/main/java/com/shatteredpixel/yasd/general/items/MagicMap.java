@@ -28,6 +28,9 @@
 package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
@@ -65,7 +68,7 @@ public class MagicMap extends Item {
 
 	private static final String AC_DEBUG = "debug";
 	private static final String AC_MAP = "map";
-	private static final String AC_TP = "port";
+	private static final String AC_TP = "tp";
 
 	@Override
 	public void execute(Hero hero, String action) {
@@ -78,6 +81,8 @@ public class MagicMap extends Item {
 				break;
 			case AC_MAP:
 				new ScrollOfMagicMapping().doRead();
+				Buff.affect(hero, Awareness.class, Awareness.DURATION*5);
+				Buff.affect(hero, MindVision.class, MindVision.DURATION);
 				break;
 			case AC_TP:
 				if (Dungeon.zPos < 1) {

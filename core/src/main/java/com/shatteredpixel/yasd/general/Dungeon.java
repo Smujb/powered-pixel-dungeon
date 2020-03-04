@@ -309,7 +309,7 @@ public class Dungeon {
 		if (z == 1) {//Underwater levels.
 			Level surface = LevelHandler.getLevel(x, y, 0, GamesInProgress.curSlot);
 			if (surface != null) {
-				level = new UnderwaterLevel().setParentLevel(surface);
+				level = new UnderwaterLevel().setParent(surface);
 				//level = new LootLevel();
 			}
 		}
@@ -730,9 +730,9 @@ public class Dungeon {
 		
 		Dungeon.level = null;
 		Actor.clear();
-		//Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, xPos, yPos, zPos));
-		//Level level = (Level) bundle.get(Dungeon.LEVEL);
-		Level level = LevelHandler.getLevel(xPos, yPos, zPos, save);
+		Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, xPos, yPos, zPos));
+		Level level = (Level) bundle.get(Dungeon.LEVEL);
+		//Level level = LevelHandler.getLevel(xPos, yPos, zPos, save);
 		
 		if (level == null){
 			throw new IOException();

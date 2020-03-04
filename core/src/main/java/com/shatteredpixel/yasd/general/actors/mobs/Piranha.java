@@ -29,43 +29,35 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.Statistics;
-import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Burning;
-import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.sprites.PiranhaSprite;
-import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
-public class Piranha extends Mob {
+public class Piranha extends WaterMob {
 	
 	{
 		spriteClass = PiranhaSprite.class;
 
+		healthFactor = 1.5f;
+		accuracyFactor = 2f;
+		damageFactor = 1.5f;
+
 		baseSpeed = 2f;
 		
 		EXP = 0;
-		
+
 		loot = MysteryMeat.class;
 		lootChance = 1f;
-		
-		SLEEPING = new  Sleeping();
-		WANDERING = new  Wandering();
-		HUNTING = new  Hunting();
-		
+
 		state = SLEEPING;
-		
-		properties.add(Property.BLOB_IMMUNE);
 	}
 	
-	public Piranha() {
+	/*public Piranha() {
 		super();
 		
 		HP = HT = 10 + Dungeon.getScaleFactor() * 5;
 		defenseSkill = 10 + Dungeon.getScaleFactor() * 2;
-	}
+	}*/
 	
 	@Override
 	protected boolean act() {
@@ -79,7 +71,7 @@ public class Piranha extends Mob {
 		}
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( Dungeon.getScaleFactor(), 4 + Dungeon.getScaleFactor() * 2 );
 	}
@@ -92,17 +84,7 @@ public class Piranha extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, Dungeon.getScaleFactor());
-	}
-	
-	@Override
-	public int defenseSkill( Char enemy ) {
-		enemySeen = state != SLEEPING
-				&& this.enemy != null
-				&& fieldOfView != null
-				&& fieldOfView[this.enemy.pos]
-				&& this.enemy.invisible == 0;
-		return super.defenseSkill( enemy );
-	}
+	}*/
 	
 	@Override
 	public void die( Object cause ) {
@@ -117,77 +99,5 @@ public class Piranha extends Mob {
 		return true;
 	}
 	
-	@Override
-	protected boolean getCloser( int target ) {
-		
-		if (rooted) {
-			return false;
-		}
-		
-		int step = Dungeon.findStep( this, pos, target,
-			Dungeon.level.liquid(),
-			fieldOfView );
-		if (step != -1) {
-			move( step );
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	@Override
-	protected boolean getFurther( int target ) {
-		int step = Dungeon.flee( this, pos, target,
-			Dungeon.level.liquid(),
-			fieldOfView );
-		if (step != -1) {
-			move( step );
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	{
-		immunities.add( Burning.class );
-		immunities.add( Vertigo.class );
-	}
-	
-	//if there is not a xPos to the enemy, piranhas act as if they can't see them
-	private class Sleeping extends Mob.Sleeping{
-		@Override
-		public boolean act(boolean enemyInFOV, boolean justAlerted) {
-			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
-				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
-			}
-			
-			return super.act(enemyInFOV, justAlerted);
-		}
-	}
-	
-	private class Wandering extends Mob.Wandering{
-		@Override
-		public boolean act(boolean enemyInFOV, boolean justAlerted) {
-			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
-				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
-			}
-			
-			return super.act(enemyInFOV, justAlerted);
-		}
-	}
-	
-	private class Hunting extends Mob.Hunting{
-		
-		@Override
-		public boolean act(boolean enemyInFOV, boolean justAlerted) {
-			if (enemyInFOV) {
-				PathFinder.buildDistanceMap(enemy.pos, Dungeon.level.liquid(), viewDistance);
-				enemyInFOV = PathFinder.distance[pos] != Integer.MAX_VALUE;
-			}
-			
-			return super.act(enemyInFOV, justAlerted);
-		}
-	}
+
 }

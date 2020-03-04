@@ -28,9 +28,7 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.actors.mobs.Statue;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.noosa.audio.Sample;
 
 public class StatueSprite extends MobSprite {
 	
@@ -61,12 +59,12 @@ public class StatueSprite extends MobSprite {
 		return 0xFFcdcdb7;
 	}
 
-	@Override
+	/*@Override
 	public void zap( int cell ) {
-		((Statue)ch).wandZap();
+		((Statue)ch).wandZap(Actor.findChar(cell));
 		turnTo( ch.pos , cell );
 		Sample.INSTANCE.play( Assets.SND_ZAP );
-	}
+	}*/
 
 	@Override
 	public void onComplete( Animation anim ) {
