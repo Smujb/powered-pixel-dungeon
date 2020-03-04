@@ -32,8 +32,6 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.shatteredpixel.yasd.general.sprites.ItemSprite;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.Image;
 
 public class DiveIndicator extends Tag {
@@ -74,7 +72,9 @@ public class DiveIndicator extends Tag {
 
 		try {
 
-			icon = new ItemSprite(ItemSpriteSheet.CATA_HOLDER);
+			icon = new Image(Dungeon.level.waterTex());
+
+			icon.frame((int) this.x + 1, (int) this.y + 1, (int) this.width - 1, (int) this.height - 1);
 
 			add(icon);
 

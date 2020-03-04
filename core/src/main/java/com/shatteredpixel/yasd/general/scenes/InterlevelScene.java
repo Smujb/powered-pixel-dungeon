@@ -362,7 +362,7 @@ public class InterlevelScene extends PixelScene {
 
 	public static void dive(int pos) {
 		int zpos = 0;
-		if (zPos < 1) {
+		if (Dungeon.zPos < 1) {
 			zpos = 1;
 		}
 		move(Dungeon.xPos, Dungeon.yPos, zpos, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
