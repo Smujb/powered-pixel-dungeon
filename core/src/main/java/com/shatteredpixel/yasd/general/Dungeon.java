@@ -253,7 +253,7 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
-	private static ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
+	private static final ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
 			DeadEndLevel.class,//Floor 0, shouldn't ever be here
 			FirstLevel.class,
 			SewerLevel.class,
@@ -288,11 +288,11 @@ public class Dungeon {
 			LastLevel.class//Floor 31, last level
 	));
 
-	public static Level newLevel(int depth) {
+	/*public static Level newLevel(int depth) {
 		return newLevel(xPos, depth, yPos, true);
-	}
+	}*/
 	
-	public static Level newLevel(int x, int y, int z, boolean create /*Allows me to use level.create without switching to that level.*/ ) {
+	public static Level newLevel(int x, int y, int z, boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
 		
 		Level level;
 		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
@@ -466,7 +466,7 @@ public class Dungeon {
 	private static final String DEPTH		= "yPos";
 	private static final String DROPPED     = "dropped%d";
 	private static final String PORTED      = "ported%d";
-	private static final String LEVEL		= "level";
+	public  static final String LEVEL		= "level";
 	private static final String LIMDROPS    = "limited_drops";
 	private static final String CHAPTERS	= "chapters";
 	private static final String QUESTS		= "quests";
@@ -560,7 +560,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile(GamesInProgress.depthFile( save, yPos, xPos), bundle);
+		FileUtils.bundleToFile(GamesInProgress.depthFile( save, xPos, yPos, zPos ), bundle);
 	}
 	
 	public static void saveAll() throws IOException {
@@ -721,15 +721,15 @@ public class Dungeon {
 			return 0;
 		}
 	}
+
+
 	
 	public static Level loadLevel( int save ) throws IOException {
 		
 		Dungeon.level = null;
 		Actor.clear();
 		
-		Bundle bundle = FileUtils.bundleFromFile( GamesInProgress.depthFile( save, yPos, xPos)) ;
-		
-		Level level = (Level)bundle.get( LEVEL );
+		Level level = LevelHandler.getLevel(xPos, yPos, zPos, save);
 		
 		if (level == null){
 			throw new IOException();

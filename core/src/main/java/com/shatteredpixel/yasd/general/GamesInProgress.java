@@ -57,9 +57,10 @@ public class GamesInProgress {
 
 	private static final String DATA_FOLDER = "data/";
 	private static final String SLOT_FOLDER = "slot%d";
-	private static final String PATH_FOLDER = "xPos%d";
+	private static final String XPOS = "xPos%d";
+	private static final String YPOS = "yPos%d";
+	private static final String ZPOS = "zPos%d.dat";
 	private static final String GAME_FILE	= "game.dat";
-	private static final String DEPTH_FILE	= "yPos%d.dat";
 	
 	public static boolean gameExists( int slot ){
 		return FileUtils.dirExists(gameFolder() + Messages.format(SLOT_FOLDER, slot));
@@ -69,16 +70,20 @@ public class GamesInProgress {
 		return gameFolder() + Messages.format(SLOT_FOLDER, slot);
 	}
 
-	public static String pathFolder( int path ){
-		return Messages.format(PATH_FOLDER, path);
+	public static String xFolder(int x ){
+		return Messages.format(XPOS, x);
+	}
+
+	public static String yFolder(int y ){
+		return Messages.format(XPOS, y);
 	}
 	
 	public static String gameFile( int slot ){
 		return slotFolder(slot) + "/" + GAME_FILE;
 	}
 
-	public static String depthFile( int slot, int depth, int path ) {
-		return slotFolder(slot) + "/" + pathFolder(path) + "/" + Messages.format(DEPTH_FILE, depth);
+	public static String depthFile( int slot, int x, int y, int z ) {
+		return slotFolder(slot) + "/" + xFolder(x) + "/" + yFolder(y) + "/"  + Messages.format(YPOS, z);
 	}
 	
 	public static int firstEmpty(){

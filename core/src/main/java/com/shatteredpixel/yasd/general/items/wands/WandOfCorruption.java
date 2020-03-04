@@ -129,22 +129,7 @@ public class WandOfCorruption extends Wand {
 
 			float corruptingPower = 3 + actualLevel();
 			//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
-			float enemyResist = enemy.corruptionResistance();/*1 + enemy.EXP;
-			if (ch instanceof Mimic || ch instanceof Statue || ch instanceof Wraith){
-				enemyResist = 3 + Dungeon.getScaleFactor() *2;
-			} else if (ch instanceof Piranha || ch instanceof Bee) {
-				enemyResist = 1 + Dungeon.getScaleFactor() /2f;
-			}  else if (ch instanceof Yog.BurningFist || ch instanceof Yog.RottingFist) {
-				enemyResist = 1 + 30;
-			} else if (ch instanceof Yog.Larva || ch instanceof King.Undead){
-				enemyResist = 1 + 5;
-			} else if (ch instanceof Swarm){
-				//child swarms don't give exp, so we force this here.
-				enemyResist = 1 + 3;
-			}
-			
-			//100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
-			enemyResist *= 1 + 2*Math.pow(enemy.HP/(float)enemy.HT, 2);*/
+			float enemyResist = enemy.corruptionResistance();
 			
 			//debuffs placed on the enemy reduce their resistance
 			for (Buff buff : enemy.buffs()){

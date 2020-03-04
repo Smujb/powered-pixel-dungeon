@@ -56,6 +56,8 @@ public class LastLevel extends Level {
 
 		minScaleFactor = 25;
 		maxScaleFactor = -1;
+
+		hasExit = false;
 	}
 
 	private int pedestal;
