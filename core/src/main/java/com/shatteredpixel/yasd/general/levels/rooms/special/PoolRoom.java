@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.special;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
@@ -98,7 +99,7 @@ public class PoolRoom extends SpecialRoom {
 		level.addItemToSpawn( new PotionOfInvisibility() );
 		
 		for (int i=0; i < NPIRANHAS; i++) {
-			Piranha piranha = new Piranha();
+			Piranha piranha = Mob.create(Piranha.class, level);
 			do {
 				piranha.pos = level.pointToCell(random());
 			} while (level.map[piranha.pos] != Terrain.WATER|| level.findMob( piranha.pos ) != null);

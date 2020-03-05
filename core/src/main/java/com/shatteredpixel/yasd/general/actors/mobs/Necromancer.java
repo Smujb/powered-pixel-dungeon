@@ -63,11 +63,11 @@ public class Necromancer extends Mob {
 		EXP = 7;
 		maxLvl = 14;
 		
-		loot = new  PotionOfHealing();
+		loot = new PotionOfHealing();
 		lootChance = 0.2f; //see createloot
 
 		
-		HUNTING = new  Hunting();
+		HUNTING = new Hunting();
 	}
 	
 	public boolean summoning = false;
@@ -227,7 +227,7 @@ public class Necromancer extends Mob {
 				
 				summoning = firstSummon = false;
 				
-				mySkeleton = new  NecroSkeleton();
+				mySkeleton = Mob.create(NecroSkeleton.class);
 				mySkeleton.pos = summoningPos;
 				GameScene.add( mySkeleton );
 				Dungeon.level.occupyCell( mySkeleton );

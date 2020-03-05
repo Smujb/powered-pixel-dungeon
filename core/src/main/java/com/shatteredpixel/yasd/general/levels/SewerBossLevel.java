@@ -114,6 +114,12 @@ public class SewerBossLevel extends SewerLevel {
 	}
 
 	@Override
+	protected float[] standardRoomChances() {
+		return new float[]{20,
+				0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+	}
+
+	@Override
 	public Mob createMob() {
 		return Mob.create(Slime.CausticSlime.class, this);
 	}

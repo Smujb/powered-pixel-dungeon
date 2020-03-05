@@ -364,7 +364,7 @@ public class Generator {
 					Shield.class,
 
 			};
-			WEAPON.probs = new float[]{ 1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 5, 5, 4 };
+			WEAPON.probs = new float[]{ 1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 0, 5, 4 };//TODO: fix dried rose
 			
 			WEP_T1.classes = new Class<?>[]{
 					Fist.class,

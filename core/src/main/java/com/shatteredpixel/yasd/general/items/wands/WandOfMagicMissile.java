@@ -48,7 +48,7 @@ public class WandOfMagicMissile extends DamageWand {
 
 	@Override
 	public float min(float lvl){
-		return max();
+		return max(lvl);
 	}
 
 	@Override
@@ -63,7 +63,6 @@ public class WandOfMagicMissile extends DamageWand {
 
 	@Override
 	public void onZap(Ballistica bolt) {
-				
 		Char ch = Actor.findChar( bolt.collisionPos );
 		if (ch != null) {
 

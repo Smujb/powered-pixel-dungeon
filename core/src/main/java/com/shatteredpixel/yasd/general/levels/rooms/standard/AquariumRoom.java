@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
@@ -60,7 +61,7 @@ public class AquariumRoom extends StandardRoom {
 		int numFish = (minDim - 4)/3; //1-3 fish, depending on room size
 		
 		for (int i=0; i < numFish; i++) {
-			Piranha piranha = new Piranha();
+			Piranha piranha = Mob.create(Piranha.class, level);
 			do {
 				piranha.pos = level.pointToCell(random(3));
 			} while (level.map[piranha.pos] != Terrain.WATER|| level.findMob( piranha.pos ) != null);

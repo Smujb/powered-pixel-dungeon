@@ -39,7 +39,7 @@ public class RingOfLuck extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", getBonus(curUser, LuckBuff.class));
+			return Messages.get(this, "stats", isEquipped(curUser) ? luckFactor(curUser) : soloBonus() * 2);
 		} else {
 			return Messages.get(this, "typical_stats", 2);
 		}

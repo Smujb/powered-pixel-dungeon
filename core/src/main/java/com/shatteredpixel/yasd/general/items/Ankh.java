@@ -156,7 +156,7 @@ public class Ankh extends Item {
 		}
 
 		for (Char ch : Actor.chars()){
-			if (ch instanceof DriedRose.GhostHero){
+			if (ch instanceof DriedRose.GhostHero && toRevive == Dungeon.hero){
 				((DriedRose.GhostHero) ch).sayAnhk();
 				return;
 			}

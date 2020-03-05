@@ -675,7 +675,7 @@ public class DriedRose extends Artifact {
 		public int drRoll(Element element) {
 			int block = 0;
 			if (rose != null && rose.armor != null){
-				block += Random.NormalIntRange( rose.armor.DRMin(), rose.armor.DRMax());
+				block += rose.armor.DRRoll();
 			}
 			if (rose != null && rose.weapon != null){
 				block += Random.NormalIntRange( 0, rose.weapon.defenseFactor( this ));
@@ -763,7 +763,7 @@ public class DriedRose extends Artifact {
 		}
 		
 		public void sayBoss(){
-			int depth = (Dungeon.yPos - 1) / 5;
+			int depth = (Dungeon.yPos - 1) / Constants.CHAPTER_LENGTH;
 			
 			switch(depth){
 				case 0:

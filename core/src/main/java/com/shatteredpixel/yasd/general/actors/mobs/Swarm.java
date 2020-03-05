@@ -42,7 +42,6 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SwarmSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -140,7 +139,7 @@ public class Swarm extends Mob {
 	}*/
 	
 	private Swarm split() {
-		Swarm clone = Reflection.newInstance( Swarm.class );
+		Swarm clone = Mob.create(Swarm.class);
 		clone.generation = generation + 1;
 		clone.EXP = 0;
 		if (buff( Burning.class ) != null) {

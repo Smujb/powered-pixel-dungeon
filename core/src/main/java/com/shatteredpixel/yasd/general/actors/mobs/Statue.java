@@ -47,6 +47,7 @@ import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
@@ -92,14 +93,14 @@ public class Statue extends Mob implements Callback {
 	public boolean canAttack(Char enemy) {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.canAttack( enemy );
-		} else if (wandToAttack(enemy) != null) {
+		} else if ((wand = wandToAttack(enemy)) != null) {
 			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		} else {
 			return false;
 		}
 	}
 
-	public KindofMisc newItem() {
+	private KindofMisc newItem() {
 		boolean con = false;
 		KindofMisc item;
 		do {
@@ -144,7 +145,7 @@ public class Statue extends Mob implements Callback {
 		return item;
 	}
 
-	public void upgradeItems() {
+	private void upgradeItems() {
 		int sous = (Dungeon.yPos /Constants.CHAPTER_LENGTH)*Constants.SOU_PER_CHAPTER;//(Dungeon.yPos/5 [chapter]) * 3 [3 SoU per chapter]
 		KindofMisc Item;
 		if (belongings.miscs.length > 0) {
@@ -158,9 +159,13 @@ public class Statue extends Mob implements Callback {
 		}
 	}
 
-	public void wandZap(Char enemy) {
+	private Wand wand = null;
+
+	private void wandZap(Char enemy) {
 		if (enemy != null) {
-			Wand wand = wandToAttack(enemy);
+			if (wand == null) {
+				wand = wandToAttack(enemy);
+			}
 			wand.activate(this);
 			if (wand instanceof WandOfWarding) {//Wand of Warding cannot zap directly
 				int closest = findClosest(enemy, this.pos);
@@ -180,7 +185,7 @@ public class Statue extends Mob implements Callback {
 		next();
 	}
 
-	protected Wand wandToAttack(Char enemy ) {
+	private Wand wandToAttack(Char enemy) {
 		if (enemy != null ) {
 			ArrayList<KindofMisc> Wands = belongings.getEquippedItemsOFType(Wand.class);
 			ArrayList<Wand> UsableWands = new ArrayList<>();
@@ -273,15 +278,27 @@ public class Statue extends Mob implements Callback {
 
 	@Override
 	public String description() {
-		String description = super.description() + "_";
+		StringBuilder description = new StringBuilder(super.description() + "_");
 		for (int i=0; i < belongings.miscs.length; i++) {
 			if (belongings.miscs[i] != null) {
-				description += (belongings.miscs[i].name()) + "_ \n\n_";
+				description.append(belongings.miscs[i].name()).append("_ \n\n_");
 			}
 		}
 		return description + "_";
 	}
-	
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		belongings.storeInBundle(bundle);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		belongings.restoreFromBundle(bundle);
+	}
+
 	{
 		resistances.add(Grim.class);
 	}

@@ -893,7 +893,7 @@ public abstract class Mob extends Char {
 	}
 	
 	public String description() {
-		return Messages.get(this, "desc") + Messages.get(Mob.class, "info", elementalType().label());
+		return Messages.get(this, "desc");// + Messages.get(Mob.class, "info", elementalType().label());
 	}
 
 	public boolean following(Char follow) {

@@ -88,6 +88,9 @@ public class MainGame extends Game {
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.general.items.stones.StoneOfDisarming.class,
 				"com.shatteredpixel.yasd.general.items.stones.StoneOfDetectCurse" );
+
+		com.watabou.utils.Bundle.addAlias(com.shatteredpixel.yasd.general.items.rings.RingOfLuck.class,
+				"com.shatteredpixel.yasd.general.items.rings.RingOfForce");
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic.class,

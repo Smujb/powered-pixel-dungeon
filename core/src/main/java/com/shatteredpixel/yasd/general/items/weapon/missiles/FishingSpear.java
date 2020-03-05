@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.items.weapon.missiles;
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
+import com.shatteredpixel.yasd.general.actors.mobs.WaterMob;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class FishingSpear extends MissileWeapon {
@@ -41,7 +41,7 @@ public class FishingSpear extends MissileWeapon {
 	
 	@Override
 	public int proc(Char attacker, Char defender, int damage) {
-		if (defender instanceof Piranha){
+		if (defender instanceof WaterMob){
 			damage = Math.max(damage, defender.HP/2);
 		}
 		return super.proc(attacker, defender, damage);
