@@ -92,6 +92,27 @@ public enum Terrain {
 			solid = true;
 		}
 	},
+	//TODO: find a way to make this work
+	/*CRACKED_WALL {
+		@Override
+		public void setup() {
+			losBlocking = true;
+			solid = true;
+		}
+	},
+	HIDDEN_CRACKED_WALL {
+		@Override
+		public void setup() {
+			secret = true;
+			losBlocking = true;
+			solid = true;
+		}
+
+		@Override
+		public Terrain discover() {
+			return CRACKED_WALL;
+		}
+	},*/
 	DOOR {
 		@Override
 		public void setup() {

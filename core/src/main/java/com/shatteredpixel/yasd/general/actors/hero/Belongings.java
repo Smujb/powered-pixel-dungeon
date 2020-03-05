@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Fury;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.EquipableItem;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
@@ -57,7 +58,6 @@ import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.keys.Key;
 import com.shatteredpixel.yasd.general.items.rings.RingOfAccuracy;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
-import com.shatteredpixel.yasd.general.items.rings.RingOfForce;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -279,9 +279,16 @@ public class Belongings implements Iterable<Item> {
 				wep.use();
 			}
 			dmg = wep.damageRoll(owner);
-			if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(owner);
+			//if (!(wep instanceof MissileWeapon)) dmg += RingOfForce.armedDamageBonus(owner);
 		} else {
-			dmg = RingOfForce.damageRoll(owner);
+			int level = 0;
+			if (owner instanceof Mob) {
+				level = ((Mob) owner).EXP;
+			} else if (owner instanceof Hero) {
+				level = ((Hero)owner).lvl/2;
+			}
+			dmg = Random.Int(1, level);
+			//dmg = RingOfForce.damageRoll(owner);
 		}
 		if (dmg < 0) dmg = 0;
 

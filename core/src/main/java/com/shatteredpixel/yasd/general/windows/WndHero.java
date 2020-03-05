@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -166,43 +165,41 @@ public class WndHero extends WndTabbed {
 			pos += GAP;
 
 			//Power
-			statSlot( Messages.get(this, "power"), hero.Power );
+			statSlot( Messages.get(this, "power"), hero.getPower() );
 			statIncreaseButton btnPower = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.Power++;
-					Dungeon.hero.STR();
-					Badges.validateStrengthAttained();
+					Dungeon.hero.increasePower();
 				}
 			};
 			add( btnPower );
 			pos += GAP;
 			//Focus
-			statSlot( Messages.get(this, "focus"), hero.Focus );
+			statSlot( Messages.get(this, "focus"), hero.getFocus() );
 			statIncreaseButton btnFocus = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.Focus++;
+					Dungeon.hero.increaseFocus();
 				}
 			};
 			add( btnFocus );
 			pos += GAP;
 			//Expertise
-			statSlot( Messages.get(this, "expertise"), hero.Expertise );
+			statSlot( Messages.get(this, "expertise"), hero.getExpertise() );
 			statIncreaseButton btnExpertise = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.Expertise++;
+					Dungeon.hero.increaseExpertise();
 				}
 			};
 			add( btnExpertise );
 			pos += GAP;
 			//Resilience
-			statSlot( Messages.get(this, "luck"), hero.Luck);
+			statSlot( Messages.get(this, "luck"), hero.getLuck());
 			statIncreaseButton btnResilience = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.Luck++;
+					Dungeon.hero.increaseExpertise();;
 				}
 			};
 			add( btnResilience );

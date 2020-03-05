@@ -85,6 +85,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
+import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
@@ -138,11 +139,11 @@ public class Hero extends Char {
 
 	public static final int STARTING_STR = 10;
 
-	public int Power = 1;
-	public int Focus = 1;
-	public int Expertise = 1;
-	public int Luck = 1;
-	public int DistributionPoints = 0;
+	private int Power     = 1;
+	private int Focus     = 1;
+	private int Expertise = 1;
+	private int Luck      = 1;
+	public  int DistributionPoints = 0;
 
 	private static final float TIME_TO_REST		    = 1f;
 	private static final float TIME_TO_SEARCH	    = 2f;
@@ -263,6 +264,56 @@ public class Hero extends Char {
 		if (this.sprite != null) {
 			this.sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Morale.class, "gain"));
 		}
+	}
+
+	public int getPower() {
+		return Power;
+	}
+
+	public int getExpertise() {
+		return Expertise;
+	}
+
+	public int getFocus() {
+		return Focus;
+	}
+
+	public int getLuck() {
+		return Luck + RingOfLuck.luckFactor(this);
+	}
+
+	public void setPower(int power) {
+		Power = power;
+		Dungeon.hero.STR();
+		Badges.validateStrengthAttained();
+	}
+
+	public void increasePower() {
+		setPower(Power+1);
+	}
+
+	public void setExpertise(int expertise) {
+		Expertise = expertise;
+	}
+
+	public void increaseExpertise() {
+		setExpertise(Expertise+1);
+	}
+
+	public void setFocus(int focus) {
+		Focus = focus;
+	}
+
+	public void increaseFocus() {
+		setFocus(Focus+1);
+	}
+
+	public void setLuck(int luck) {
+		Luck = luck;
+	}
+
+	public void increaseLuck() {
+		setLuck(Luck+1);
 	}
 
 	@Override

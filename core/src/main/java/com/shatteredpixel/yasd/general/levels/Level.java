@@ -334,19 +334,16 @@ public abstract class Level implements Bundlable {
 				addItemToSpawn( new Torch() );
 			}
 
-			if (Dungeon.posNeeded()) {
-				//TODO: replace Potion of Strength
-				//addItemToSpawn( new PotionOfStrength() );
-				//Dungeon.LimitedDrops.STRENGTH_POTIONS.count++;
-			}
 			if (Dungeon.souNeeded()) {
 				addItemToSpawn( new ScrollOfUpgrade() );
 				Dungeon.LimitedDrops.UPGRADE_SCROLLS.count++;
 			}
+
 			if (Dungeon.esNeeded()) {
 				addItemToSpawn( new StoneOfEnchantment() );
 				Dungeon.LimitedDrops.ENCHANT_STONE.count++;
 			}
+
 			//one scroll of transmutation is guaranteed to spawn somewhere on chapter 2-4
 			int enchChapter = (int)((Dungeon.seed / 10) % 3) + 1;
 			if ( Dungeon.yPos / Constants.CHAPTER_LENGTH == enchChapter &&

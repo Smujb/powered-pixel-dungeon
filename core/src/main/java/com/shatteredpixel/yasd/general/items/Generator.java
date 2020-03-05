@@ -77,9 +77,9 @@ import com.shatteredpixel.yasd.general.items.rings.RingOfAccuracy;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEnergy;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
-import com.shatteredpixel.yasd.general.items.rings.RingOfForce;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
+import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
 import com.shatteredpixel.yasd.general.items.rings.RingOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -493,7 +493,7 @@ public class Generator {
 					RingOfAccuracy.class,
 					RingOfEvasion.class,
 					RingOfElements.class,
-					RingOfForce.class,
+					RingOfLuck.class,
 					RingOfFuror.class,
 					RingOfHaste.class,
 					RingOfEnergy.class,
@@ -501,7 +501,7 @@ public class Generator {
 					RingOfSharpshooting.class,
 					RingOfTenacity.class,
 					RingOfWealth.class};
-			RING.probs = new float[]{ 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1 };
+			RING.probs = new float[]{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 			
 			ARTIFACT.classes = new Class<?>[]{
 					CapeOfThorns.class,

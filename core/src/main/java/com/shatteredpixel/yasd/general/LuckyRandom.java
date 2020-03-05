@@ -35,7 +35,7 @@ import java.util.ArrayList;
 public class LuckyRandom {
 
     public static float luckFactor( Hero target ){
-        return (float) Math.pow(1.05, target.Luck);
+        return (float) Math.pow(1.05, target.getLuck());
     }
 
     public static int rolls() {

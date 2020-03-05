@@ -195,24 +195,9 @@ public class GameScene extends PixelScene {
 			Dungeon.level.width() * DungeonTilemap.SIZE,
 			Dungeon.level.height() * DungeonTilemap.SIZE,
 			waterTex ) {
-
-			/*@Override
-			protected NoosaScript script() {
-				return NoosaScriptNoLighting.get();
-			}
-
-			@Override
-			public void draw() {
-				//water has no alpha component, this improves performance
-				//Blending.disable();
-				super.draw();
-				//Blending.enable();
-			}*/
 		};
+		terrain.add( water );
 
-		//if (!(Dungeon.level instanceof UnderwaterLevel) ) {
-			terrain.add( water );
-		//}
 
 		ripples = new Group();
 		terrain.add( ripples );

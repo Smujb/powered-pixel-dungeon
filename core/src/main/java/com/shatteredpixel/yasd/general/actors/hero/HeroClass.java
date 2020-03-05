@@ -50,6 +50,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfMindVision;
+import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
@@ -126,6 +127,8 @@ public enum HeroClass {
 
 		//new Alcohol().collect();
 		new MagicMap().collect();
+		new RingOfLuck().identify().collect();
+		//new StoneOfBlast().quantity(100).collect();
 		//Generator.random(Generator.Category.WAND).identify().collect();
 		//Generator.randomArmor().setTier(3).identify().collect();
 		//Generator.randomWeapon().setTier(3).identify().collect();
@@ -180,7 +183,7 @@ public enum HeroClass {
 		
 		new PotionOfHealing().identify();
 		new ScrollOfRage().identify();
-		hero.Power+=2;
+		hero.setPower(5);
 		hero.STR();
 	}
 
@@ -200,7 +203,7 @@ public enum HeroClass {
 		
 		new ScrollOfUpgrade().identify();
 		new PotionOfLiquidFlame().identify();
-		hero.Focus += 2;
+		hero.setFocus(5);
 	}
 
 	private static void initRogue( Hero hero ) {
@@ -222,7 +225,7 @@ public enum HeroClass {
 		
 		new ScrollOfMagicMapping().identify();
 		new PotionOfInvisibility().identify();
-		hero.Luck += 2;
+		hero.setLuck(5);
 	}
 
 	private static void initHuntress( Hero hero ) {
@@ -240,7 +243,7 @@ public enum HeroClass {
 		new PotionOfMindVision().identify();
 		new ScrollOfLullaby().identify();
 
-		hero.Expertise += 2;
+		hero.setExpertise(5);
 	}
 	
 	public String title() {

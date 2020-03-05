@@ -40,11 +40,7 @@ import com.watabou.utils.Random;
 
 public class JellyFish extends Mob {
 
-	private static final float TIME_TO_ZAP = 1f;
-	private static final String PRIVATE_DEPTH = "privateDepth";
 	private static final String COLOUR = "colour";
-
-	int privateDepth;
 	int colour;
 
 	public static final int BLUE = 0;
@@ -89,9 +85,8 @@ public class JellyFish extends Mob {
 			//loot = PurpleGel.class;
 		}
 
-		privateDepth = depth;
-		HP = HT = 8 + privateDepth * 4;
-		defenseSkill = 5 + privateDepth * 4;
+		HP = HT = 8 + depth * 4;
+		defenseSkill = 5 + depth * 4;
 	}
 
 	protected boolean act() {
@@ -139,18 +134,16 @@ public class JellyFish extends Mob {
 	@Override
 	public void storeInBundle(Bundle bundle){
 		super.storeInBundle(bundle);
-		bundle.put(PRIVATE_DEPTH, privateDepth);
 		bundle.put(COLOUR, colour);
 	}
 	@Override
 	public void restoreFromBundle(Bundle bundle){
 		super.restoreFromBundle(bundle);
-		privateDepth = bundle.getInt(PRIVATE_DEPTH);
 		colour = bundle.getInt(COLOUR);
 	}
 
 	@Override
 	public boolean canAttack(Char enemy){
-		return Dungeon.level.distance(pos, enemy.pos) <= (Dungeon.level.liquid()[enemy.pos] ? 2 : 1);
+		return Dungeon.level.distance(pos, enemy.pos) <= (Dungeon.level.liquid()[enemy.pos] ? 3 : 2);
 	}
 }
