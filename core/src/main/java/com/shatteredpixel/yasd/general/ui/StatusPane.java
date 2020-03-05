@@ -66,6 +66,7 @@ public class StatusPane extends Component {
 	private Image exp;
 
 	private BossHealthBar bossHP;
+	private AirBar airBar;
 
 	private int lastLvl = -1;
 
@@ -129,6 +130,9 @@ public class StatusPane extends Component {
 		bossHP = new BossHealthBar();
 		add( bossHP );
 
+		airBar = new AirBar();
+		add( airBar );
+
 		level = new BitmapText( PixelScene.pixelFont);
 		level.hardlight( 0xFFEBA4 );
 		add( level );
@@ -172,6 +176,8 @@ public class StatusPane extends Component {
 		morale.y = 11;
 
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
+
+		airBar.setPos( 6 + (width - bossHP.width())/2, 20);
 
 		depth.x = width - 35.5f - depth.width() / 2f;
 		depth.y = 8f - depth.baseLine() / 2f;

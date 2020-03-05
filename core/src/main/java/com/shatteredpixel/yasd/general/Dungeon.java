@@ -337,6 +337,10 @@ public class Dungeon {
 	public static boolean canAscend() {
 		return level.hasEntrance;
 	}
+
+	public static boolean underwater() {
+		return level instanceof UnderwaterLevel;
+	}
 	
 	public static void resetLevel() {
 		

@@ -53,6 +53,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.buffs.Foresight;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
+import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
@@ -493,7 +494,7 @@ public class Hero extends Char {
 
 	@Override
 	public boolean act() {
-		
+		LimitedAir.updateBuff(this);
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;
 		

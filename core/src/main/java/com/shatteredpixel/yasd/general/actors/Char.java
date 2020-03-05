@@ -60,6 +60,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Haste;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
+import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicalSleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
@@ -244,6 +245,7 @@ public abstract class Char extends Actor {
 			fieldOfView = new boolean[Dungeon.level.length()];
 		}
 		Dungeon.level.updateFieldOfView(this, fieldOfView);
+		LimitedAir.updateBuff(this);
 		return false;
 	}
 
@@ -351,7 +353,10 @@ public abstract class Char extends Actor {
 					dmg = ((MissileWeapon) belongings.miscs[0]).damageRoll(this);
 				}
 			}
-
+			dmg -= enemy.drRoll(this.elementalType());
+			if (dmg < 0) {
+				dmg = 0;
+			}
 			dmg = attackProc(enemy, dmg);
 			dmg = enemy.defenseProc(this, dmg, this.elementalType());
 
@@ -361,7 +366,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage( dmg, this );
+			enemy.damage( dmg, this, this.elementalType(), true );
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -464,94 +469,6 @@ public abstract class Char extends Actor {
 	public String defenseVerb() {
 		return Messages.get(this, "def_verb");
 	}
-
-	/*public int elementalDRRoll() {
-		int dr = 0;
-		if (hasBelongings()) {
-			dr += belongings.magicalDR();
-		}
-		return dr;
-	}
-
-
-	public int elementalDefenseProc(Char enemy, int damage) {
-		if (hasBelongings()) {
-			damage = belongings.magicalDefenseProc(enemy, damage);
-		}
-		return damage;
-	}
-
-	public int elementalAttackProc(Char enemy, int damage) {
-		if (hasBelongings()) {
-			damage = belongings.magicalAttackProc(enemy, damage);
-		}
-		return damage;
-	}
-
-	public int magicalDamageRoll() {
-		return 0;
-	}
-
-	public float magicalAttackDelay() {
-		return 1f;
-	}
-
-	public void onZapComplete() {
-		next();
-	}
-
-	public boolean magicalAttack( Char enemy ) {
-		if (enemy == null) return false;
-		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
-		if (hit( this, enemy, true )) {
-			int dr = enemy.elementalDRRoll();
-			int dmg = magicalDamageRoll();
-			int effectiveDamage = enemy.elementalDefenseProc( this, dmg );
-			effectiveDamage = Math.max( effectiveDamage - dr, 0 );
-			effectiveDamage = elementalAttackProc( enemy, effectiveDamage );
-
-			// If the enemy is already dead, interrupt the attack.
-			// This matters as defence procs can sometimes inflict self-damage, such as getArmors glyphs.
-			if (!enemy.isAlive()){
-				return true;
-			}
-			enemy.sprite.bloodBurstA( sprite.center(), effectiveDamage );
-			enemy.sprite.flash();
-
-			if (this instanceof RangedMob) {
-				RangedMob RM = ((RangedMob)this);
-				enemy.damage(effectiveDamage,RM.magicalSrc());
-			} else {
-				enemy.damage(effectiveDamage, this);
-			}
-
-			if (!enemy.isAlive() && visibleFight) {
-				if (enemy == Dungeon.hero) {
-
-					if (this == Dungeon.hero) {
-						return true;
-					}
-
-					Dungeon.fail( getClass() );
-					GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name)) );
-
-				} else if (this == Dungeon.hero) {
-					GLog.i( Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name)) );
-				}
-			}
-
-			return true;
-		} else {
-			if (visibleFight) {
-				String defense = enemy.defenseVerb();
-				enemy.sprite.showStatus( CharSprite.NEUTRAL, defense );
-
-				Sample.INSTANCE.play(Assets.SND_MISS);
-			}
-
-			return false;
-		}
-	}*/
 
 	public int drRoll(Element element) {
 		int dr = 0;
@@ -988,7 +905,7 @@ public abstract class Char extends Actor {
 				new HashSet<Class>( Arrays.asList(Ooze.class))),
 		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class)),
 				new HashSet<Class>()),
-		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class))),
+		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class, LimitedAir.class))),
 		IMMOVABLE;
 
 		private HashSet<Class> resistances;

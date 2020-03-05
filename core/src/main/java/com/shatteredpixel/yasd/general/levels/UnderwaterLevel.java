@@ -29,8 +29,12 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.mobs.JellyFish;
 import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
+import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
@@ -53,10 +57,14 @@ public class UnderwaterLevel extends Level {
 	public String tilesTex = Assets.TILES_HALLS;
 	public String waterTex = Assets.WATER_HALLS;
 
+	private static final int NUM_BUBBLES = 10;
+
 	private int _width = -1;
 	private int _height = -1;
 
 	private ArrayList<Integer> lightLocations = new ArrayList<>();
+
+	private ArrayList<Integer> bubbleLocations = new ArrayList<>();
 
 	public UnderwaterLevel setParent(Level level) {
 		waterTex = level.waterTex();
@@ -94,6 +102,9 @@ public class UnderwaterLevel extends Level {
 			if (setSolid[i] && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
 				map[i] = Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL;
 			}
+		}
+		for (int i = 0; i < NUM_BUBBLES; i++) {
+			bubbleLocations.add(randomRespawnCell());
 		}
 		return true;
 	}
@@ -144,6 +155,18 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
+	public void pressCell(int cell) {
+		super.pressCell(cell);
+		Char ch = Actor.findChar(cell);
+		if (bubbleLocations.contains(cell) && ch != null) {
+			LimitedAir air = ch.buff(LimitedAir.class);
+			if (air != null) {
+				air.reset();
+			}
+		}
+	}
+
+	@Override
 	public String loadImg() {
 		return waterTex();
 	}
@@ -155,6 +178,9 @@ public class UnderwaterLevel extends Level {
 			if (lightLocations.contains(i)) {
 				visuals.add(new Light(i));
 			}
+			if (bubbleLocations.contains(i)) {
+				visuals.add(new Bubble(i));
+			}
 		}
 		return visuals;
 	}
@@ -164,6 +190,8 @@ public class UnderwaterLevel extends Level {
 	private static final String SCALE_FACTOR_MAX = "scalefactor-max";
 	private static final String SCALE_FACTOR_MIN = "scalefactor-min";
 	private static final String LIGHT_TILE = "light_tile";
+	private static final String BUBBLE_TILE_AMT = "bubble_tiles_num";
+	private static final String BUBBLE_TILE = "bubble_tile";
 	private static final String LIGHT_TILE_AMT = "light_tiles_num";
 
 	@Override
@@ -173,9 +201,15 @@ public class UnderwaterLevel extends Level {
 		bundle.put(WATER_TEX, waterTex);
 		bundle.put(SCALE_FACTOR_MIN, minScaleFactor);
 		bundle.put(SCALE_FACTOR_MAX, maxScaleFactor);
-		bundle.put(LIGHT_TILE_AMT, lightLocations.size());
+
+		bundle.put(BUBBLE_TILE_AMT, lightLocations.size());
 		for (int i = 0; i < lightLocations.size(); i++) {
 			bundle.put(LIGHT_TILE+i, lightLocations.get(i));
+		}
+
+		bundle.put(LIGHT_TILE_AMT, bubbleLocations.size());
+		for (int i = 0; i < bubbleLocations.size(); i++) {
+			bundle.put(BUBBLE_TILE+i, bubbleLocations.get(i));
 		}
 	}
 
@@ -186,9 +220,38 @@ public class UnderwaterLevel extends Level {
 		waterTex = bundle.getString(WATER_TEX);
 		minScaleFactor = bundle.getInt(SCALE_FACTOR_MIN);
 		maxScaleFactor = bundle.getInt(SCALE_FACTOR_MAX);
-		int num = bundle.getInt(LIGHT_TILE_AMT);
-		for (int i = 0; i < num; i++) {
+
+		int numLightTiles = bundle.getInt(LIGHT_TILE_AMT);
+		for (int i = 0; i < numLightTiles; i++) {
 			lightLocations.add(bundle.getInt(LIGHT_TILE+i));
+		}
+
+		int numBubbleTiles = bundle.getInt(BUBBLE_TILE_AMT);
+		for (int i = 0; i < numBubbleTiles; i++) {
+			bubbleLocations.add(bundle.getInt(BUBBLE_TILE+i));
+		}
+	}
+
+	static class Bubble extends Emitter {
+
+		private int pos;
+
+		public Bubble( int pos ) {
+			super();
+
+			this.pos = pos;
+
+			PointF p = DungeonTilemap.tileCenterToWorld( pos );
+			pos( p.x - 6, p.y - 4, 12, 12 );
+
+			pour( Speck.factory(Speck.BUBBLE), 0.2f );
+		}
+
+		@Override
+		public void update() {
+			if (visible = (pos < Dungeon.level.heroFOV.length && Dungeon.level.heroFOV[pos])) {
+				super.update();
+			}
 		}
 	}
 

@@ -88,17 +88,14 @@ public enum Element {
 				Buff.affect(defender, Weakness.class, Weakness.DURATION);
 				break;
 			case DRAIN:
-				if ( attacker.isAlive() && Dungeon.level.adjacent(attacker.pos, defender.pos)) {
+				int healed = damage / 2;
 
-					int healed = damage/3;
+				if (healed > 0) {
 
-					if (healed > 0) {
+					attacker.HP += Math.min(attacker.missingHP(), healed);
 
-						attacker.HP += Math.min(attacker.missingHP(), healed);
-
-						if( attacker.sprite.visible ) {
-							attacker.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
-						}
+					if (attacker.sprite.visible) {
+						attacker.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 					}
 				}
 				break;
