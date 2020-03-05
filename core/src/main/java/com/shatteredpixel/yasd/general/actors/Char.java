@@ -84,7 +84,6 @@ import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Potential;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
-import com.shatteredpixel.yasd.general.items.rings.RingOfMight;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
@@ -190,7 +189,7 @@ public abstract class Char extends Actor {
 	public int STR() {
 		int STR = this.STR;
 
-		STR += RingOfMight.strengthBonus(this);
+		//STR += RingOfPower.strengthBonus(this);
 
 		AdrenalineSurge buff = buff(AdrenalineSurge.class);
 		if (buff != null) {
@@ -226,8 +225,8 @@ public abstract class Char extends Actor {
 	public void updateHT(boolean boostHP) {
 		int curHT = HT;
 
-		float multiplier = RingOfMight.HTMultiplier(this);
-		HT = Math.round(multiplier * HT);
+		//float multiplier = RingOfPower.HTMultiplier(this);
+		//HT = Math.round(multiplier * HT);
 
 		if (buff(ElixirOfMight.HTBoost.class) != null) {
 			HT += buff(ElixirOfMight.HTBoost.class).boost();

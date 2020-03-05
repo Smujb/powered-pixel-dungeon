@@ -85,7 +85,10 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
+import com.shatteredpixel.yasd.general.items.rings.RingOfExpertise;
+import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
 import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
@@ -224,21 +227,21 @@ public class Hero extends Char {
 		if (!Constants.MORALE) {
 			return;
 		}
-		float DifficultyMultiplier;
+		float difficultyMultiplier;
 		switch (Dungeon.difficulty) {
 			case 1:// -33% Morale loss in Easy
-				DifficultyMultiplier = 0.67f;
+				difficultyMultiplier = 0.67f;
 				break;
 			case 2:
 			default://Normal Morale loss in Medium
-				DifficultyMultiplier = 1f;
+				difficultyMultiplier = 1f;
 				break;
 			case 3://+50% Morale loss in Hard
-				DifficultyMultiplier = 1.5f;
+				difficultyMultiplier = 1.5f;
 				break;
 
 		}
-		Amount *= DifficultyMultiplier;
+		Amount *= difficultyMultiplier;
 		morale -= Amount;
 		morale = Math.max(morale, 0);
 		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk
@@ -267,19 +270,19 @@ public class Hero extends Char {
 	}
 
 	public int getPower() {
-		return Power;
+		return Power + RingOfPower.powerBonus(this);
 	}
 
 	public int getExpertise() {
-		return Expertise;
+		return Expertise + RingOfExpertise.expertiseBonus(this);
 	}
 
 	public int getFocus() {
-		return Focus;
+		return Focus + RingOfFocus.focusBonus(this);
 	}
 
 	public int getLuck() {
-		return Luck + RingOfLuck.luckFactor(this);
+		return Luck + RingOfLuck.luckBonus(this);
 	}
 
 	public void setPower(int power) {

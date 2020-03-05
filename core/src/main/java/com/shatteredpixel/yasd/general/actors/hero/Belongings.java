@@ -56,8 +56,6 @@ import com.shatteredpixel.yasd.general.items.artifacts.CapeOfThorns;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.keys.Key;
-import com.shatteredpixel.yasd.general.items.rings.RingOfAccuracy;
-import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -211,7 +209,7 @@ public class Belongings implements Iterable<Item> {
 
 	public float accuracyFactor(float accuracy, Char target) {
 		KindOfWeapon wep = getCurrentWeapon();
-		accuracy *= RingOfAccuracy.accuracyMultiplier(owner);
+		//accuracy *= RingOfExpertise.accuracyMultiplier(owner);
 		if (wep instanceof MissileWeapon) {
 			if (Dungeon.level.adjacent(owner.pos, target.pos)) {
 				accuracy *= 0.5f;
@@ -376,7 +374,7 @@ public class Belongings implements Iterable<Item> {
 
 	public float EvasionFactor(float evasion) {
 		ArrayList<Armor> Armors = getArmors();
-		evasion *= RingOfEvasion.evasionMultiplier(owner);
+		//evasion *= RingOfEvasion.evasionMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
 			//evasion *= CurArmour.evasionMultiplier(ownerID);

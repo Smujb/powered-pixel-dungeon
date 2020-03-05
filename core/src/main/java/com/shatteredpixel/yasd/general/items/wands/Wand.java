@@ -47,7 +47,6 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.armor.MageArmor;
 import com.shatteredpixel.yasd.general.items.bags.MagicalHolster;
-import com.shatteredpixel.yasd.general.items.rings.RingOfEnergy;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -599,7 +598,7 @@ public abstract class Wand extends KindofMisc {
 
 			LockedFloor lock = target.buff(LockedFloor.class);
 			if (lock == null || lock.regenOn())
-				partialCharge += (1f/turnsToCharge) * RingOfEnergy.wandChargeMultiplier(target);
+				partialCharge += (1f/turnsToCharge);// * RingOfFocus.wandChargeMultiplier(target);
 
 			for (Recharging bonus : target.buffs(Recharging.class)){
 				if (bonus != null && bonus.remainder() > 0f) {
