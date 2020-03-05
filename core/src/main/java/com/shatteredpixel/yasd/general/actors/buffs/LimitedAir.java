@@ -45,10 +45,14 @@ public class LimitedAir extends Buff {
 
 	@Override
 	public boolean attachTo(Char target) {
+		assignHero();
+		return super.attachTo(target);
+	}
+
+	private void assignHero() {
 		if (target == Dungeon.hero) {
 			AirBar.assignChar(Dungeon.hero);
 		}
-		return super.attachTo(target);
 	}
 
 	public float percentage() {
@@ -107,5 +111,6 @@ public class LimitedAir extends Buff {
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		duration = bundle.getFloat(DURATION_KEY);
+		assignHero();
 	}
 }

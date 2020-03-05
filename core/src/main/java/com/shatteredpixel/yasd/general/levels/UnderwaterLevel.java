@@ -48,9 +48,8 @@ import java.util.ArrayList;
 
 public class UnderwaterLevel extends Level {
 	{
-		hasEntrance = false;
 
-		hasExit = false;
+		hasEntrance = hasExit = false;
 	}
 
 	public String tilesTex = Assets.TILES_HALLS;
@@ -72,7 +71,6 @@ public class UnderwaterLevel extends Level {
 		maxScaleFactor = level.maxScaleFactor;
 		_width = level.width();
 		_height = level.height();
-		//setSize(level.width(), level.height());
 		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
 		return this;
 	}

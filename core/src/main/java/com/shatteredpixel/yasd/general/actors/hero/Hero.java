@@ -1242,11 +1242,12 @@ public class Hero extends Char {
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.yPos < Constants.MAX_Y && Dungeon.canDescend()) {
+				&&  Dungeon.level.hasExit) {
 			
 			curAction = new HeroAction.Descend( cell );
 			
-		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE && Dungeon.canAscend()) {
+		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE
+				&& Dungeon.level.hasEntrance) {
 			
 			curAction = new HeroAction.Ascend( cell );
 			

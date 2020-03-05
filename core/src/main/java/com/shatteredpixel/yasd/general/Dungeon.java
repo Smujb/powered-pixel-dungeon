@@ -330,14 +330,6 @@ public class Dungeon {
 		return loadedDepths[x][y][z];
 	}
 
-	public static boolean canDescend() {
-		return level.hasExit;
-	}
-
-	public static boolean canAscend() {
-		return level.hasEntrance;
-	}
-
 	public static boolean underwater() {
 		return level instanceof UnderwaterLevel;
 	}

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
@@ -36,6 +37,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.utils.PlatformSupport;
 
 import java.util.ArrayList;
 
@@ -90,6 +92,19 @@ public class MagicMap extends Item {
 				} else {
 					InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 0, "TEST", InterlevelScene.Mode.DESCEND);
 				}
+				int i = 0;
+				ArrayList<Integer> postions = new ArrayList<>();
+				postions.add(0);
+				postions.add(0);
+				postions.add(0);
+				MainGame.platform.promptTextInput("Choose depth to visit", "", 2, false, "SET", "NVM", new PlatformSupport.TextCallback() {
+					@Override
+					public void onSelect(boolean positive, String text) {
+						for (char ch : text.toCharArray()) {
+
+						}
+					}
+				});
 				break;
 		}
 	}
