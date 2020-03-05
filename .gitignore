@@ -1,5 +1,5 @@
 # Built application files
-#*.apk
+*.apk
 
 # Files for the Dalvik VM
 *.dex
@@ -10,7 +10,7 @@
 # Gradle build files
 .gradle/
 build/
-#release/
+MainGame/
 
 # Local configuration file (sdk path, etc)
 local.properties

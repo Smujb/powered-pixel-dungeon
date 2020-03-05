@@ -39,14 +39,14 @@ public class RingOfExpertise extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBonus() * 2);
+			return Messages.get(this, "stats", soloBonus() * 3);
 		} else {
-			return Messages.get(this, "typical_stats", 2);
+			return Messages.get(this, "typical_stats", 3);
 		}
 	}
 
 	public static int expertiseBonus(Char target ) {
-		return 2 * getBonus(target, ExpertiseBuff.class);
+		return 3 * getBonus(target, ExpertiseBuff.class);
 	}
 
 	public class ExpertiseBuff extends RingBuff {}

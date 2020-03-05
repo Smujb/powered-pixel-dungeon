@@ -39,14 +39,14 @@ public class RingOfLuck extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBonus() * 2);
+			return Messages.get(this, "stats", soloBonus() * 3);
 		} else {
-			return Messages.get(this, "typical_stats", 2);
+			return Messages.get(this, "typical_stats", 3);
 		}
 	}
 
 	public static int luckBonus(Char target ){
-		return 2 * getBonus(target, LuckBuff.class);
+		return 3 * getBonus(target, LuckBuff.class);
 	}
 
 	public class LuckBuff extends RingBuff {}
