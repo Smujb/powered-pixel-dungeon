@@ -31,10 +31,10 @@ import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.levels.CavesLevel;
 import com.shatteredpixel.yasd.general.levels.CityLevel;
+import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
-import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -64,7 +64,7 @@ public class WndStory extends Window {
 	private static final HashMap<Class<? extends Level>, String> CHAPTERS = new HashMap<>();
 	
 	static {
-		CHAPTERS.put( SewerLevel.class, "sewers" );
+		CHAPTERS.put( FirstLevel.class, "sewers" );
 		CHAPTERS.put( PrisonLevel.class, "prisons" );
 		CHAPTERS.put( CavesLevel.class, "caves" );
 		CHAPTERS.put( CityLevel.class, "city" );
