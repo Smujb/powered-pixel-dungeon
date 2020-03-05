@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.mobs.JellyFish;
@@ -155,10 +154,11 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
-	public void pressCell(int cell) {
-		super.pressCell(cell);
-		Char ch = Actor.findChar(cell);
-		if (bubbleLocations.contains(cell) && ch != null) {
+	public void occupyCell(Char ch) {
+		super.occupyCell(ch);
+		if (bubbleLocations.contains(ch.pos)) {
+			ch.sprite.flash();
+			ch.sprite.emitter().burst(Speck.factory(Speck.BUBBLE), 10);
 			LimitedAir air = ch.buff(LimitedAir.class);
 			if (air != null) {
 				air.reset();

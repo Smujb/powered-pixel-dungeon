@@ -49,18 +49,16 @@ public class Viscosity extends Glyph {
 	@Override
 	public int proc( Armor armor, Char attacker, Char defender, int damage ) {
 
-		//FIXME this glyph should really just proc after DR is accounted for.
-		//should build in functionality for that, but this works for now
-		int realDamage = damage - defender.drRoll(Element.PHYSICAL);
+		//int realDamage = damage - defender.drRoll(Element.PHYSICAL);
 
-		if (realDamage <= 0) {
+		if (damage <= 0) {
 			return 0;
 		}
 
 		int level = Math.max( 0, armor.level() );
 		
 		float percent = (level+1)/(float)(level+6);
-		int amount = (int)Math.ceil(realDamage * percent);
+		int amount = (int)Math.ceil(damage * percent);
 
 		DeferedDamage deferred = Buff.affect( defender, DeferedDamage.class );
 		deferred.prolong( amount );

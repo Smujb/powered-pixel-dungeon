@@ -32,13 +32,14 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.AirBar;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class LimitedAir extends Buff {
 
 	public static final String DURATION_KEY = "duration";
 
-	public static final float DURATION = 25f;
+	public static final float DURATION = 30f;
 
 	public float duration = DURATION;
 
@@ -68,6 +69,10 @@ public class LimitedAir extends Buff {
 			duration--;
 		} else {
 			target.damage(target.HT/5, Element.WATER, true);
+			if (target == Dungeon.hero && !target.isAlive()) {
+				Dungeon.fail( getClass() );
+				GLog.n( Messages.get(this, "ondeath") );
+			}
 		}
 		spend( TICK );
 		return true;

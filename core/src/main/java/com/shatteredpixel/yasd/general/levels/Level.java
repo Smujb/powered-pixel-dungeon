@@ -855,7 +855,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int( length() );
 		} while ((Dungeon.level == this && heroFOV[cell])
-				|| !passable()[cell]
+				|| !map[cell].passable
 				|| Actor.findChar( cell ) != null);
 		return cell;
 	}
@@ -1134,13 +1134,13 @@ public abstract class Level implements Bundlable {
 	}
 	
 	//public method for forcing the hard press of a cell. e.g. when an item lands on it
-	public void pressCell( int cell ){
+	public final void pressCell( int cell ){
 		pressCell( cell, true );
 	}
 	
 	//a 'soft' press ignores hidden traps
 	//a 'hard' press triggers all things
-	private void pressCell( int cell, boolean hard ) {
+	protected final void pressCell(int cell, boolean hard) {
 
 		map[cell].press(cell, hard);//See Terrain.press()
 		/*Trap trap = null;
