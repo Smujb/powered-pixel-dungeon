@@ -96,7 +96,7 @@ public class GnollTrickster extends RangedMob {
 
 			if (effect >=6 && enemy.buff(Burning.class) == null){
 
-				if (Dungeon.level.flammable()[enemy.pos])
+				if (Dungeon.level.map[enemy.pos].flamable)
 					GameScene.add(Blob.seed(enemy.pos, 4, Fire.class));
 				Buff.affect(enemy, Burning.class).reignite( enemy );
 

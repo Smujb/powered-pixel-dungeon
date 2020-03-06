@@ -139,6 +139,8 @@ public class Heap implements Bundlable {
 				haunted = true;
 				item.cursedKnown = true;
 				break;
+			} else if (chance == 1f) {
+				item.cursedKnown = true;
 			}
 		}
 		return this;
@@ -241,12 +243,16 @@ public class Heap implements Bundlable {
 				}
 			}
 
-			if (Fire.canBurn(item)) {
-				items.remove( item );
+			if (Fire.burnItem(item) != item) {
+				//items.remove( item );
 				if (item instanceof Dewdrop) {
 					evaporated = true;
 				} else {
 					burnt = true;
+				}
+				replace(item, Fire.burnItem(item));
+				if (item == null) {
+					remove(item);
 				}
 			}
 		}

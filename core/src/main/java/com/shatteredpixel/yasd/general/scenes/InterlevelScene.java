@@ -398,7 +398,7 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.init();
 			GameLog.wipe();
 		} else {
-			Mob.holdAllies( Dungeon.level );
+			Mob.holdMobs( Dungeon.level );
 			Dungeon.saveAll();
 		}
 		Dungeon.yPos = yPos;

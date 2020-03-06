@@ -38,7 +38,9 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.general.items.armor.LightArmor;
+import com.shatteredpixel.yasd.general.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.general.items.food.Food;
+import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
@@ -124,13 +126,20 @@ public class Fire extends Blob {
 		}
 	}
 
-	public static boolean canBurn(Item i) {
-		if (i instanceof Scroll ||
-				i instanceof Food || //All food can burn
-				(i instanceof ClothArmor || i instanceof LightArmor & i.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
-				i instanceof Plant.Seed){
-			return true;
+	public static Item burnItem(Item item) {
+		if (item instanceof Scroll ||
+				item instanceof Food && !(item instanceof MysteryMeat) || //All food can burn
+				(item instanceof ClothArmor || item instanceof LightArmor & item.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
+				item instanceof Plant.Seed){
+			return null;
+		} else if (item instanceof MysteryMeat) {
+			return new ChargrilledMeat();
 		}
+		return item;
+	}
+
+	public static boolean canBurn(Item i) {
+
 		return false;
 	}
 	

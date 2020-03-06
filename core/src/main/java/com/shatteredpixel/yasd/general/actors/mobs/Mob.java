@@ -1133,39 +1133,44 @@ public abstract class Mob extends Char {
 	}
 	
 	
-	private static ArrayList<Mob> heldAllies = new ArrayList<>();
+	private static ArrayList<Mob> heldMobs = new ArrayList<>();
 	
-	public static void holdAllies( Level level ){
-		heldAllies.clear();
+	public static void holdMobs( Level level ) {
+		heldMobs.clear();
 		for (Mob mob : level.mobs.toArray( new  Mob[0] )) {
 			//preserve the ghost no matter where they are
 			if (mob instanceof DriedRose.GhostHero) {
 				((DriedRose.GhostHero) mob).clearDefensingPos();
 				level.mobs.remove( mob );
-				heldAllies.add(mob);
+				heldMobs.add(mob);
 				
 			//preserve intelligent allies if they are near the hero
 			} else if (mob.alignment == Alignment.ALLY
 					&& mob.intelligentAlly
 					&& Dungeon.level.distance(Dungeon.hero.pos, mob.pos) <= 3){
 				level.mobs.remove( mob );
-				heldAllies.add(mob);
+				heldMobs.add(mob);
+			} else if (mob.properties().contains(Property.BOSS)
+					|| (mob.properties().contains(Property.MINIBOSS)
+					&& level.distance(Dungeon.hero.pos, mob.pos) < 5)) {//Sorry to people who try to cheese, but mobs follow through depths (including going underwater...)
+				level.mobs.remove( mob );
+				heldMobs.add(mob);
 			}
 		}
 	}
 	
-	public static void restoreAllies( Level level, int pos ){
-		if (!heldAllies.isEmpty()){
+	public static void restoreMobs( Level level, int pos ){
+		if (!heldMobs.isEmpty()){
 			
-			ArrayList<Integer> candidatePositions = new  ArrayList<>();
+			ArrayList<Integer> candidatePositions = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8) {
-				if (!Dungeon.level.solid()[i+pos] && level.findMob(i+pos) == null){
+				if (!Dungeon.level.map[i+pos].solid && level.findMob(i+pos) == null){
 					candidatePositions.add(i+pos);
 				}
 			}
 			Collections.shuffle(candidatePositions);
 			
-			for (Mob ally : heldAllies) {
+			for (Mob ally : heldMobs) {
 				level.mobs.add(ally);
 				ally.state = ally.WANDERING;
 				
@@ -1177,11 +1182,11 @@ public abstract class Mob extends Char {
 				
 			}
 		}
-		heldAllies.clear();
+		heldMobs.clear();
 	}
 	
 	public static void clearHeldAllies(){
-		heldAllies.clear();
+		heldMobs.clear();
 	}
 }
 

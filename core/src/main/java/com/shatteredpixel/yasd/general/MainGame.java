@@ -40,13 +40,6 @@ public class MainGame extends Game {
 	//variable constants for specific older versions of shattered, used for data conversion
 	//versions older than v0.6.5c are no longer supported, and data from them is ignored
 	public static final int v0_6_5c = 264;
-	
-	public static final int v0_7_0c = 311;
-	public static final int v0_7_1d = 323;
-	public static final int v0_7_2d = 340;
-	public static final int v0_7_3b = 349;
-	public static final int v0_7_4c = 362;
-	public static final int v0_7_5  = 371;
 	public static final int v0_2_0  = 400;
 	public static final int v0_2_1  = 401;
 	public static final int v0_2_2  = 402;
@@ -58,6 +51,7 @@ public class MainGame extends Game {
 	public static final int v0_2_8  = 409;
 	public static final int v0_2_10  = 411;
 	public static final int v0_2_11  = 412;
+	public static final int v0_2_12  = 413;
 	
 	public MainGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );

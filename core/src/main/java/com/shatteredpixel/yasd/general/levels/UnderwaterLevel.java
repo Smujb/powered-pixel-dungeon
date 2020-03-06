@@ -58,7 +58,7 @@ public class UnderwaterLevel extends Level {
 
 	private static final int NUM_BUBBLES = 10;
 
-	private static final int NUM_ITEMS = 10;
+	private static final int NUM_ITEMS = 16;
 
 	private int _width = -1;
 	private int _height = -1;

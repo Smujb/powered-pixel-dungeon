@@ -111,13 +111,17 @@ public class Goo extends Mob {
 	@Override
 	public boolean act() {
 
-		if (Dungeon.level.liquid()[pos] && HP < HT) {
+		if (Dungeon.level.map[pos].liquid && HP < HT) {
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-			if (HP*2 == HT) {
+			if (HP*2 >= HT) {
 				BossHealthBar.bleed(false);
 				((GooSprite)sprite).spray(false);
 			}
-			HP++;
+			if (Dungeon.underwater()) {
+				HP += 3;
+			} else {
+				HP++;
+			}
 		}
 		
 		if (state != SLEEPING){
@@ -130,8 +134,8 @@ public class Goo extends Mob {
 	@Override
 	public float speed() {
 		float speed = super.speed();
-		if (state == FLEEING) {
-			speed *= 3;
+		if (Dungeon.underwater()) {
+			speed *= 2;
 		}
 		return speed;
 	}

@@ -71,7 +71,7 @@ public class StoneOfClairvoyance extends Runestone {
 				curUser.sprite.parent.addToBack( new CheckedCell( curr ) );
 				Dungeon.level.mapped[curr] = true;
 				
-				if (Dungeon.level.secret()[curr]) {
+				if (Dungeon.level.map[curr].secret) {
 					Dungeon.level.discover(curr);
 					
 					if (Dungeon.level.heroFOV[curr]) {

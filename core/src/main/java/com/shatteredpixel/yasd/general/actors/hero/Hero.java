@@ -1102,7 +1102,7 @@ public class Hero extends Char {
 			path = null;
 
 			if (Actor.findChar( target ) == null) {
-				if (Dungeon.level.pit()[target] && !flying && !Dungeon.level.solid()[target]) {
+				if (Dungeon.level.map[target].pit && !flying && !Dungeon.level.map[target].solid) {
 					if (!Chasm.jumpConfirmed){
 						Chasm.heroJump(this);
 						interrupt();
@@ -1111,7 +1111,7 @@ public class Hero extends Char {
 					}
 					return false;
 				}
-				if (Dungeon.level.passable()[target] || Dungeon.level.avoid()[target]) {
+				if (Dungeon.level.map[target].passable || Dungeon.level.map[target].avoid) {
 					step = target;
 				}
 				if (walkingToVisibleTrapInFog
@@ -1628,7 +1628,7 @@ public class Hero extends Char {
 						sprite.parent.addToBack( new CheckedCell( p ) );
 					}
 					
-					if (Dungeon.level.secret()[p]){
+					if (Dungeon.level.map[p].secret){
 						
 						Trap trap = Dungeon.level.traps.get( p );
 						if (trap != null && !trap.canBeSearched){

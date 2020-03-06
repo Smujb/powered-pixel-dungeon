@@ -28,16 +28,14 @@
 package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
+import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.watabou.utils.PlatformSupport;
 
 import java.util.ArrayList;
 
@@ -87,12 +85,13 @@ public class MagicMap extends Item {
 				Buff.affect(hero, MindVision.class, MindVision.DURATION);
 				break;
 			case AC_TP:
-				if (Dungeon.zPos < 1) {
+				new ScrollOfTeleportation().empoweredRead();
+				/*if (Dungeon.zPos < 1) {
 					InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 1, "TEST", InterlevelScene.Mode.DESCEND);
 				} else {
 					InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 0, "TEST", InterlevelScene.Mode.DESCEND);
 				}
-				int i = 0;
+				/*int i = 0;
 				ArrayList<Integer> postions = new ArrayList<>();
 				postions.add(0);
 				postions.add(0);
@@ -104,7 +103,7 @@ public class MagicMap extends Item {
 
 						}
 					}
-				});
+				});*/
 				break;
 		}
 	}

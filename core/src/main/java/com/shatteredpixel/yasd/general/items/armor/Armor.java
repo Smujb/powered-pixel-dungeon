@@ -490,19 +490,19 @@ public class Armor extends KindofMisc {
 			if (EVA > 1f) {
 				info += "\n" + Messages.get(Armor.class, "eva_increase", Math.round((EVA-1f)*100));
 			} else if (EVA < 1f) {
-				info += "\n" + Messages.get(Armor.class, "eva_decrease", (double) Math.round((1f-EVA)*100));
+				info += "\n" + Messages.get(Armor.class, "eva_decrease", Math.round((1f-EVA)*100));
 			}
 
 			if (STE > 1f) {
-				info += "\n" + Messages.get(Armor.class, "ste_increase", (double) Math.round((STE-1f)*100));
+				info += "\n" + Messages.get(Armor.class, "ste_increase", Math.round((STE-1f)*100));
 			} else if (STE < 1f) {
-				info += "\n" + Messages.get(Armor.class, "ste_decrease", (double) Math.round((1f-STE)*100));
+				info += "\n" + Messages.get(Armor.class, "ste_decrease", Math.round((1f-STE)*100));
 			}
 
 			if (speedFactor > 1f) {
-				info += "\n" + Messages.get(Armor.class, "speed_increase", (double) Math.round((speedFactor-1f)*100));
+				info += "\n" + Messages.get(Armor.class, "speed_increase", Math.round((speedFactor-1f)*100));
 			} else if (speedFactor < 1f) {
-				info += "\n" + Messages.get(Armor.class, "speed_decrease", (double) Math.round((1f-speedFactor)*100));
+				info += "\n" + Messages.get(Armor.class, "speed_decrease", Math.round((1f-speedFactor)*100));
 			}
 		}
 		

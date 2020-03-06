@@ -378,7 +378,7 @@ public class Dungeon {
 		PathFinder.setMapSize(level.width(), level.height());
 		
 		Dungeon.level = level;
-		Mob.restoreAllies( level, pos );
+		Mob.restoreMobs( level, pos );
 		Actor.init();
 		
 		Actor respawner = level.respawner();
