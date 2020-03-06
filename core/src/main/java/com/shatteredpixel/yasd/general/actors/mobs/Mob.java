@@ -1133,7 +1133,7 @@ public abstract class Mob extends Char {
 	}
 	
 	
-	private static ArrayList<Mob> heldAllies = new  ArrayList<>();
+	private static ArrayList<Mob> heldAllies = new ArrayList<>();
 	
 	public static void holdAllies( Level level ){
 		heldAllies.clear();

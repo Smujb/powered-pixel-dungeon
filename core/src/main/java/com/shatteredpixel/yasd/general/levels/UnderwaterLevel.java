@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.mobs.JellyFish;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Piranha;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
@@ -57,6 +58,8 @@ public class UnderwaterLevel extends Level {
 
 	private static final int NUM_BUBBLES = 10;
 
+	private static final int NUM_ITEMS = 10;
+
 	private int _width = -1;
 	private int _height = -1;
 
@@ -64,6 +67,9 @@ public class UnderwaterLevel extends Level {
 
 	private ArrayList<Integer> bubbleLocations = new ArrayList<>();
 
+	private ArrayList<Integer> chasmLocations = new ArrayList<>();//Doesn't need to be stored as it's only used in levelgen.
+
+	//NOTE: setParent() MUST be called before create(). If not, the level size and terrain won't be correct.
 	public UnderwaterLevel setParent(Level level) {
 		waterTex = level.waterTex();
 		tilesTex = level.tilesTex();
@@ -72,6 +78,7 @@ public class UnderwaterLevel extends Level {
 		_width = level.width();
 		_height = level.height();
 		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
+		chasmLocations = level.getTileLocations(Terrain.CHASM);
 		return this;
 	}
 
@@ -96,7 +103,7 @@ public class UnderwaterLevel extends Level {
 		entrance = exit = lightLocations.get(0);
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
-			if (setSolid[i] && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
+			if ((setSolid[i] || chasmLocations.contains(i)) && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
 				map[i] = Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL;
 			}
 		}
@@ -118,17 +125,21 @@ public class UnderwaterLevel extends Level {
 
 	@Override
 	public int nMobs() {
-		return 5;
+		return 3;
 	}
 
 	@Override
 	protected void createMobs() {
-
+		for (int i = 0; i < nMobs(); i++) {
+			Mob mob = createMob();
+			mob.pos = randomRespawnCell();
+			mobs.add(mob);
+		}
 	}
 
 	@Override
 	protected void createItems() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < NUM_ITEMS; i++) {
 			drop(Generator.random(), randomRespawnCell()).type = Heap.Type.SKELETON;
 		}
 	}
@@ -231,7 +242,7 @@ public class UnderwaterLevel extends Level {
 
 		private int pos;
 
-		public Bubble( int pos ) {
+		Bubble(int pos) {
 			super();
 
 			this.pos = pos;
@@ -263,7 +274,7 @@ public class UnderwaterLevel extends Level {
 			}
 		};
 
-		public Light( int pos ) {
+		Light(int pos) {
 			super();
 
 			this.pos = pos;

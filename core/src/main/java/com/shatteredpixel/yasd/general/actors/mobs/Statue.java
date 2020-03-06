@@ -145,7 +145,7 @@ public class Statue extends Mob implements Callback {
 		return item;
 	}
 
-	private void upgradeItems() {
+	protected void upgradeItems() {
 		int sous = (Dungeon.yPos /Constants.CHAPTER_LENGTH)*Constants.SOU_PER_CHAPTER;//(Dungeon.yPos/5 [chapter]) * 3 [3 SoU per chapter]
 		KindofMisc Item;
 		if (belongings.miscs.length > 0) {

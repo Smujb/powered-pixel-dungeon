@@ -66,6 +66,7 @@ public class StatusPane extends Component {
 	private Image air;
 	private Image morale;
 	private Image exp;
+	private Emitter bubbles;
 
 	private BossHealthBar bossHP;
 	//private AirBar airBar;
@@ -126,6 +127,13 @@ public class StatusPane extends Component {
 		air = new Image( Assets.MORALE_BAR, 0, 0, 21, 3 );
 		add( air );
 
+		bubbles = new Emitter();
+		bubbles.pos(air);
+		bubbles.pour(Speck.factory(Speck.BUBBLE), Math.max(0.05f, LimitedAir.percentage(Dungeon.hero)));
+		bubbles.autoKill = false;
+		bubbles.on = false;
+		add( bubbles );
+
 		morale = new Image( Assets.MORALE_BAR );
 		add( morale );
 
@@ -142,7 +150,7 @@ public class StatusPane extends Component {
 		level.hardlight( 0xFFEBA4 );
 		add( level );
 
-		depth = new BitmapText( Integer.toString( Dungeon.yPos), PixelScene.pixelFont);
+		depth = new BitmapText( Integer.toString( Dungeon.yPos), PixelScene.pixelFont );
 		depth.hardlight( 0xCACFC2 );
 		depth.measure();
 		add( depth );

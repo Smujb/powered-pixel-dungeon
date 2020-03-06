@@ -39,20 +39,6 @@ public class LimitedAir extends Buff {
 	public static final float DURATION = 30f;
 
 	private float duration = DURATION;
-	@Override
-	public boolean attachTo(Char target) {
-		//if (target == Dungeon.hero) {
-		//	AirBar.assignChar(Dungeon.hero);
-		//}
-		assignChar(target);
-		return super.attachTo(target);
-	}
-
-	private void assignChar(Char ch) {
-		if (ch == Dungeon.hero) {
-			//AirBar.assignChar(ch);
-		}
-	}
 
 	public static float percentage(Char ch) {
 		LimitedAir air = ch.buff(LimitedAir.class);
@@ -72,7 +58,10 @@ public class LimitedAir extends Buff {
 	}
 
 	private static boolean needed(Char ch) {
-		return Dungeon.underwater() && !ch.properties().contains(Char.Property.WATERY);
+		return Dungeon.underwater() &&
+				!ch.properties().contains(Char.Property.WATERY) && //Piranahs and Jellyfish are immune of course
+				!ch.properties().contains(Char.Property.UNDEAD) && //We don't want Skeletons drowning...
+				!ch.properties().contains(Char.Property.INORGANIC);//Same for Golems
 	}
 
 	@Override
@@ -121,6 +110,5 @@ public class LimitedAir extends Buff {
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		duration = bundle.getFloat(DURATION_KEY);
-		assignChar(target);
 	}
 }

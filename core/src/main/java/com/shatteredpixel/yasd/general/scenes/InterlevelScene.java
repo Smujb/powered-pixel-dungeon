@@ -264,7 +264,7 @@ public class InterlevelScene extends PixelScene {
 
 			message.alpha( 1 - p );
 			if ((timeLeft -= Game.elapsed) <= 0) {
-				if (!thread.isAlive() && error == null) {
+				if (!thread.isAlive() && error == null || waitingTime > 5f) {
 					message.text(Messages.get(this, "tap"));
 					message.setPos((Camera.main.width - message.width()) / 2, (Camera.main.height - message.height()) / 2);
 					PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
@@ -474,7 +474,7 @@ public class InterlevelScene extends PixelScene {
 		return level;
 	}
 
-	public void fadeOut() {
+	private void fadeOut() {
 		phase = Phase.FADE_OUT;
 		timeLeft = fadeTime;
 	}

@@ -199,7 +199,7 @@ public class WndHero extends WndTabbed {
 			statIncreaseButton btnResilience = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.increaseExpertise();;
+					Dungeon.hero.increaseLuck();
 				}
 			};
 			add( btnResilience );

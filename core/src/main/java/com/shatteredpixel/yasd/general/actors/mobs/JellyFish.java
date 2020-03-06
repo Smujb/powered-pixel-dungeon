@@ -41,17 +41,14 @@ import com.watabou.utils.Random;
 public class JellyFish extends Mob {
 
 	private static final String COLOUR = "colour";
-	int colour;
+	private int colour;
 
-	public static final int BLUE = 0;
-	public static final int GREEN = 1;
-	public static final int PURPLE = 2;
+	private static final int BLUE = 0;
+	private static final int GREEN = 1;
+	private static final int PURPLE = 2;
 
 	{
 		EXP = 0;
-
-		//loot = BlueGell.class;
-		//lootChance = 1f;
 
 		immunities.add(Burning.class);
 		immunities.add(Vertigo.class);
@@ -68,7 +65,7 @@ public class JellyFish extends Mob {
 		this(Random.Int(3), Dungeon.getScaleFactor());
 	}
 
-	public JellyFish(int colour, int depth){
+	private JellyFish(int colour, int depth){
 		super();
 
 		this.colour = colour;
@@ -144,6 +141,6 @@ public class JellyFish extends Mob {
 
 	@Override
 	public boolean canAttack(Char enemy){
-		return Dungeon.level.distance(pos, enemy.pos) <= (Dungeon.level.liquid()[enemy.pos] ? 3 : 2);
+		return Dungeon.level.distance(pos, enemy.pos) <= (Dungeon.level.liquid()[enemy.pos] ? 4 : 2);
 	}
 }

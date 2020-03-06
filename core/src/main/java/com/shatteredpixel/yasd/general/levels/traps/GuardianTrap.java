@@ -80,10 +80,11 @@ public class GuardianTrap extends Trap {
 			lootChance = 0.5f;
 		}
 
+		@Override
+		public void dropGear() {}
 
 		@Override
-		public void dropGear() {
-		}
+		protected void upgradeItems() {}
 
 		@Override
 		public void beckon(int cell) {
