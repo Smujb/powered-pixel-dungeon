@@ -31,27 +31,35 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.ui.AirBar;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class LimitedAir extends Buff {
 
-	public static final String DURATION_KEY = "duration";
-
 	public static final float DURATION = 30f;
 
-	public float duration = DURATION;
-
+	private float duration = DURATION;
 	@Override
 	public boolean attachTo(Char target) {
-		assignHero();
+		//if (target == Dungeon.hero) {
+		//	AirBar.assignChar(Dungeon.hero);
+		//}
+		assignChar(target);
 		return super.attachTo(target);
 	}
 
-	private void assignHero() {
-		if (target == Dungeon.hero) {
-			AirBar.assignChar(Dungeon.hero);
+	private void assignChar(Char ch) {
+		if (ch == Dungeon.hero) {
+			//AirBar.assignChar(ch);
+		}
+	}
+
+	public static float percentage(Char ch) {
+		LimitedAir air = ch.buff(LimitedAir.class);
+		if (air == null) {
+			return 1f;
+		} else {
+			return air.percentage();
 		}
 	}
 
@@ -101,6 +109,8 @@ public class LimitedAir extends Buff {
 		return Messages.get(this, "desc");
 	}
 
+	private static final String DURATION_KEY = "duration";
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
@@ -111,6 +121,6 @@ public class LimitedAir extends Buff {
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		duration = bundle.getFloat(DURATION_KEY);
-		assignHero();
+		assignChar(target);
 	}
 }

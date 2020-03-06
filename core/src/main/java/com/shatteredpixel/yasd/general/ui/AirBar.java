@@ -87,14 +87,9 @@ public class AirBar extends Component {
 				ch = null;
 				visible = active = false;
 			} else {
-				LimitedAir limitedAir = ch.buff(LimitedAir.class);
-				if (limitedAir != null) {
-					water.scale.x = limitedAir.percentage();
-					bubbles.on = true;
-				} else {
-					bubbles.on = false;
-				}
-
+				float percentage = LimitedAir.percentage(ch);
+				water.scale.x = percentage;
+				bubbles.on = percentage < 1f;
 			}
 		}
 	}

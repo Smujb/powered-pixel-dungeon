@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.ui;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Statistics;
+import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -62,11 +63,12 @@ public class StatusPane extends Component {
 	private Image rawShielding;
 	private Image shieldedHP;
 	private Image hp;
+	private Image air;
 	private Image morale;
 	private Image exp;
 
 	private BossHealthBar bossHP;
-	private AirBar airBar;
+	//private AirBar airBar;
 
 	private int lastLvl = -1;
 
@@ -121,6 +123,9 @@ public class StatusPane extends Component {
 		hp = new Image( Assets.HP_BAR );
 		add( hp );
 
+		air = new Image( Assets.MORALE_BAR, 0, 0, 21, 3 );
+		add( air );
+
 		morale = new Image( Assets.MORALE_BAR );
 		add( morale );
 
@@ -130,8 +135,8 @@ public class StatusPane extends Component {
 		bossHP = new BossHealthBar();
 		add( bossHP );
 
-		airBar = new AirBar();
-		add( airBar );
+		//airBar = new AirBar();
+		//add( airBar );
 
 		level = new BitmapText( PixelScene.pixelFont);
 		level.hardlight( 0xFFEBA4 );
@@ -175,9 +180,12 @@ public class StatusPane extends Component {
 
 		morale.y = 11;
 
+		air.x = 1;
+		air.y = 30;
+
 		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
 
-		airBar.setPos( 6 + (width - bossHP.width())/2, 20);
+		//airBar.setPos( 6 + (width - bossHP.width())/2, 20);
 
 		depth.x = width - 35.5f - depth.width() / 2f;
 		depth.y = 8f - depth.baseLine() / 2f;
@@ -224,6 +232,8 @@ public class StatusPane extends Component {
 		shieldedHP.scale.x = health/max;
 		rawShielding.scale.x = shield/max;
 		morale.scale.x = moraleAmt/maxMorale;
+
+		air.scale.x = LimitedAir.percentage(Dungeon.hero);
 
 		exp.scale.x = (width / exp.width) * Dungeon.hero.exp / Dungeon.hero.maxExp();
 

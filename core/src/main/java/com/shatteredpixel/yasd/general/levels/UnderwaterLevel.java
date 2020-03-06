@@ -156,7 +156,7 @@ public class UnderwaterLevel extends Level {
 		super.occupyCell(ch);
 		if (bubbleLocations.contains(ch.pos)) {
 			ch.sprite.flash();
-			ch.sprite.emitter().burst(Speck.factory(Speck.BUBBLE), 10);
+			ch.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2);
 			LimitedAir air = ch.buff(LimitedAir.class);
 			if (air != null) {
 				air.reset();
@@ -188,7 +188,6 @@ public class UnderwaterLevel extends Level {
 	private static final String SCALE_FACTOR_MAX = "scalefactor-max";
 	private static final String SCALE_FACTOR_MIN = "scalefactor-min";
 	private static final String LIGHT_TILE = "light_tile";
-	private static final String BUBBLE_TILE_AMT = "bubble_tiles_num";
 	private static final String BUBBLE_TILE = "bubble_tile";
 	private static final String LIGHT_TILE_AMT = "light_tiles_num";
 
@@ -200,12 +199,11 @@ public class UnderwaterLevel extends Level {
 		bundle.put(SCALE_FACTOR_MIN, minScaleFactor);
 		bundle.put(SCALE_FACTOR_MAX, maxScaleFactor);
 
-		bundle.put(BUBBLE_TILE_AMT, lightLocations.size());
 		for (int i = 0; i < lightLocations.size(); i++) {
 			bundle.put(LIGHT_TILE+i, lightLocations.get(i));
 		}
 
-		bundle.put(LIGHT_TILE_AMT, bubbleLocations.size());
+		bundle.put(LIGHT_TILE_AMT, lightLocations.size());
 		for (int i = 0; i < bubbleLocations.size(); i++) {
 			bundle.put(BUBBLE_TILE+i, bubbleLocations.get(i));
 		}
@@ -224,8 +222,7 @@ public class UnderwaterLevel extends Level {
 			lightLocations.add(bundle.getInt(LIGHT_TILE+i));
 		}
 
-		int numBubbleTiles = bundle.getInt(BUBBLE_TILE_AMT);
-		for (int i = 0; i < numBubbleTiles; i++) {
+		for (int i = 0; i < NUM_BUBBLES; i++) {
 			bubbleLocations.add(bundle.getInt(BUBBLE_TILE+i));
 		}
 	}

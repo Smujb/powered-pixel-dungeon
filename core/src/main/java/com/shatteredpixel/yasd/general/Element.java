@@ -85,7 +85,7 @@ public enum Element {
 				Buff.affect(defender, Ooze.class).set(20f);
 				break;
 			case DARK:
-				Buff.affect(defender, Weakness.class, Weakness.DURATION);
+				Buff.affect(defender, Weakness.class, Weakness.DURATION/4f);
 				break;
 			case DRAIN:
 				int healed = damage / 2;
