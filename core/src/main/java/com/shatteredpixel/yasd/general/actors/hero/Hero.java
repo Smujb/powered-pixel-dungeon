@@ -1013,7 +1013,7 @@ public class Hero extends Char {
 		int effectiveHP = Math.max(HT/2, HP);
 		shake = ((float) dmg / (float) effectiveHP) * 4f;
 
-		if (shake > 0.7f){
+		if (shake > 0.5f) {
 			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
 			if (GameSettings.vibrate()) {
 				MainGame.vibrate(Math.min(500,(int) (shake * 50)));

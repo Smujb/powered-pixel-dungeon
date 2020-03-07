@@ -39,7 +39,7 @@ public class Shaman extends RangedMob {
 		spriteClass = ShamanSprite.class;
 
 		healthFactor = 0.7f;
-		damageFactor = 1.3f;
+		damageFactor = 1.5f;
 		
 		EXP = 6;
 		maxLvl = 14;

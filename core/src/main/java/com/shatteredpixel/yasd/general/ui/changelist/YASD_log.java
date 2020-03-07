@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.ui.changelist;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.ChangesScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -37,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.sprites.ShopkeeperSprite;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
+import com.shatteredpixel.yasd.general.sprites.WraithSprite;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.watabou.noosa.Image;
@@ -59,6 +61,17 @@ public class YASD_log {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Chapter length", "Chapters are now 6 depths long"));
+
+		changes.addButton(new ChangeButton(new MagicalInfusion(),
+				"Magical Infusion reworked:\n" +
+						"_-_ Now increases the tier of an item rather than upgrading it\n" +
+						"_-_ Tier 5 is the highest tier"));
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.COMPASS), "Attack/defense system reworked", "_-_ Armours now block magical as well as physical damage\n" +
+				"_-_ Mobs with magic always use it, even at melee\n" +
+				"_-_ Weapons are now divided into classes, meaning you can find them at any tier (and they may change sprites/names depending on tier)"));
+
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_SANDALS, null), "Tall Grass",
 				"Tall grass can now rarely drop Stones."));
 
@@ -79,6 +92,11 @@ public class YASD_log {
 				"_-_ Have a maximum total number of upgrades they can get depending on depth\n" +
 				"_-_ Revive themselves using Blessed Ankhs when on low HP. The number of times this can be done depends on depth."));
 
+		changes.addButton(new ChangeButton(new WraithSprite(), "Wraiths", "Wraiths now have more YAPD style behaviour:\n" +
+				"_-_ Ranged, fire draining bolts\n" +
+				"_-_ Can teleport away with a chance\n" +
+				"_-_ Have more than 0 HP and less evasion."));
+
 		changes.addButton(new ChangeButton(new ShopkeeperSprite(), "shops", "Shops are reworked:\n" +
 				"_-_ Shopkeeper now summons guardians when killed, but leaves stuff behind\n" +
 				"_-_ Guardians are Animated Statues that have 1 ankh always and don't drop gear, but also resist a number of effects.\n" +
@@ -87,6 +105,16 @@ public class YASD_log {
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_AGATE), "New/replaced rings", "New rings have been added along with the stat system:\n" +
+				"Ring of Power increases Power (replaces Might), Ring of Focus increases Focus (replaces Energy), Ring of Expertise increases Expertise (replaces Accuracy and Evasion) and lastly Ring of Luck which replaces nothing."));
+
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "Altar rooms", "Vanilla Altar rooms have returned, but they no longer provide the Scroll of Wipe Out\n\n" +
+				"Instead, they grant an Ankh." +
+				"(For those who have not played Vanilla much or at all, you will find a room with a blue flame, kill mobs on the flame to get the reward)"));
+
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.CHECKED), "Difficulty", "Difficulty settings added - Easy, Normal or Hard."));
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.CHALLENGE_ON), "Challenges", "Some challenges reworked:\n" +
 				"_-_ Forbidden Runes now blocks SoU altogether\n" +
@@ -119,9 +147,14 @@ public class YASD_log {
 		changes.hardlight( CharSprite.POSITIVE );
 		changeInfos.add(changes);
 
+		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "(Blessed) Ankhs", "Ankhs are now always blessed. Additionally, they cleanse equipped items."));
+
+
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
 		changes.hardlight( CharSprite.NEGATIVE );
 		changeInfos.add(changes);
+
+		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Morale System", "Morale system was too unfair and has been reworked to no only be affected by attacks, not bleed/poison."));
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE_YAPD, null), "Wand balance", "Wands have been nerfed, as the stat \"Focus\" affects them:\n" +
 				"Wands on average now do less damage. Wands that do not do direct damage have had other changes."));

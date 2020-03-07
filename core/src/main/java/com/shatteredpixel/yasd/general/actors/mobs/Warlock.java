@@ -47,7 +47,7 @@ public class Warlock extends RangedMob {
 		healthFactor = 0.8f;
 		evasionFactor = 0.6f;
 		accuracyFactor = 1.2f;
-		damageFactor = 1.2f;
+		damageFactor = 1.3f;
 		defenseSkill = 21;
 		
 		EXP = 11;

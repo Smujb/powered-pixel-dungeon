@@ -48,7 +48,7 @@ public class Slime extends Mob {
 		spriteClass = SlimeSprite.class;
 		
 		//HP = HT = 30;
-		healthFactor = 2f;
+		healthFactor = 1 + 2/3f;
 		//defenseSkill = 5;
 		
 		EXP = 4;
@@ -69,9 +69,9 @@ public class Slime extends Mob {
 	
 	@Override
 	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-		if (dmg >= 5){
-			//takes 5/6/7/8/9/10 dmg at 5/7/10/14/19/25 incoming dmg
-			dmg = 4 + (int)(Math.sqrt(8*(dmg - 4) + 1) - 1)/2;
+		float threshold = HT/3f;
+		if (dmg >= threshold){
+			dmg = (int) ((threshold-1) + Math.sqrt((24/threshold)*(dmg - (threshold-1)) + 1) - 1)/2;
 		}
 		super.damage(dmg, src, element, ignoresDefense);
 	}
@@ -79,7 +79,10 @@ public class Slime extends Mob {
 	@Override
 	protected Item createLoot() {
 		Generator.Category c = Generator.Category.WEP_T2;
-		MeleeWeapon w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+		MeleeWeapon w;
+		do {
+			w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+		} while (w == null);
 		w.random();
 		w.level(0);
 		return w;
