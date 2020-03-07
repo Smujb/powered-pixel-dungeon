@@ -27,21 +27,19 @@
 
 package com.shatteredpixel.yasd.general.ui.changelist;
 
-import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.ChangesScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
-import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.general.sprites.PiranhaSprite;
 import com.shatteredpixel.yasd.general.sprites.ShopkeeperSprite;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
 import com.shatteredpixel.yasd.general.sprites.WraithSprite;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.Window;
-import com.watabou.noosa.Image;
 
 import java.util.ArrayList;
 
@@ -56,6 +54,7 @@ public class YASD_log {
 		ChangeInfo changes = new ChangeInfo( "0.2 - release", true, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
+
 
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
@@ -102,6 +101,7 @@ public class YASD_log {
 				"_-_ Guardians are Animated Statues that have 1 ankh always and don't drop gear, but also resist a number of effects.\n" +
 				"_-_ Shops can also provide upgraded gear, and no longer have Ankhs..."));
 
+
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
@@ -125,23 +125,24 @@ public class YASD_log {
 				"_-_ It depends on difficulty level\n" +
 				"_-_ Degraded items lose an upgrade; if they are at +0 they instead become cursed. Cursed items do not degrade.\n" +
 				"_-_ Stones of Repair can be found to repair items fully. Scrolls of Upgrade also do this.\n" +
-				"_-_ There are also some other features to degradation, such as only your  first Armour degrading, and weapons only being degraded when they attack."));
+				"_-_ There are also some other features to degradation, such as only your  first armour degrading, and weapons only being degraded when they attack."));
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.STONE_ENCHANT), "Enchantments", "Stones of enchantment have replaced Arcane Styli as chapter based drops. This gives you a chance to enchant your weapons and armours."));
 
-		changes.addButton(new ChangeButton(new Image(Assets.WATER_SEWERS), "Diving", "Diving mechanic added:\n" +
+
+		changes.addButton(new ChangeButton(new PiranhaSprite(), "Diving", "Diving mechanic added:\n" +
 				"_-_ Hero can dive when over deep water.\n" +
 				"_-_ This will send them to an alternative map, where they have limited air.\n" +
 				"_-_ This area is full of Piranhas, and a new mob stolen from Prismatic PD: Jellyfish"));
 
-		HeroSprite sprite = new HeroSprite();
-		sprite.link(new Hero());
-		changes.addButton(new ChangeButton(sprite, "Stats system", "Added a stat system:\n" +
+
+		changes.addButton(new ChangeButton(Icons.get(HeroClass.WARRIOR), "Stats system", "Added a stat system:\n" +
 				"_-_ When leveling up, hero will get distribution points. These can be used to upgrade skills.\n" +
 				"_-_ Power - increases the hero's strength.\n" +
 				"_-_ Focus - increases the damage of the hero's wands\n" +
 				"_-_ Expertise - increases accuracy and evasion\n" +
 				"_-_ Luck - increases luck in finding good gear, etc"));
+
 
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "buffs"), false, null);
 		changes.hardlight( CharSprite.POSITIVE );
