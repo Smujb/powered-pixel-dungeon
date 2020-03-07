@@ -169,18 +169,18 @@ public class Wraith extends RangedMob {
 		ArrayList<Integer> cells = new  ArrayList<>();
 
 		for( Integer cell : Dungeon.level.getPassableCellsList() ){
-			if( pos != cell && Dungeon.hero.fieldOfView[ cell ] ) {
+			if( pos != cell && enemy.fieldOfView[ cell ] ) {
 				cells.add( cell );
 			}
 		}
 
 		int newPos = !cells.isEmpty() ? Random.element( cells ) : pos ;
 
-		if (Dungeon.hero.fieldOfView[pos]) {
+		if (enemy.fieldOfView[pos]) {
 			CellEmitter.get(pos).start( ShadowParticle.UP, 0.01f, Random.IntRange(5, 10) );
 		}
 
-		if (Dungeon.hero.fieldOfView[newPos]) {
+		if (enemy.fieldOfView[newPos]) {
 			CellEmitter.get(newPos).start(ShadowParticle.MISSILE, 0.01f, Random.IntRange(5, 10));
 		}
 

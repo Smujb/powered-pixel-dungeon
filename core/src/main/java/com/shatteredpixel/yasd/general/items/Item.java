@@ -141,7 +141,7 @@ public class Item implements Bundlable {
 		if (curUser == null) {//curUser may be null if activate() has not yet been called (such as on game start). This prevents the next check from throwing an error.
 			curUser = Dungeon.hero;
 		}
-		if (level() < 0 | !isEquipped(curUser) & !override) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
+		if (level() < 0 | (!isEquipped(curUser) & !override) | cursed) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
 		/*if (curUser instanceof Hero) {

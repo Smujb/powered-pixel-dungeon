@@ -42,7 +42,7 @@ public class ChangeButton extends Component {
 	protected String title;
 	protected String message;
 	
-	public ChangeButton( Image icon, String title, String message){
+	public ChangeButton( Image icon, String title, String message ){
 		super();
 		
 		this.icon = icon;

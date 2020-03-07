@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.PurpleJellyFishSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class JellyFish extends Mob {
+public class JellyFish extends WaterMob {
 
 	private static final String COLOUR = "colour";
 	private int colour;

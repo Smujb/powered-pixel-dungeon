@@ -252,7 +252,7 @@ public class MagicMissile extends Emitter {
 		public static Emitter.Factory PLASMA_FACTORY = new Factory() {
 				@Override
 				public void emit(Emitter emitter, int index, float x, float y) {
-					((PlasmaParticle)emitter.recycle( MagicParticle.class )).reset( x, y );
+					((PlasmaParticle)emitter.recycle( PlasmaParticle.class )).reset( x, y );
 				}
 			};
 

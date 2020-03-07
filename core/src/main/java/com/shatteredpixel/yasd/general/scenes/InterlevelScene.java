@@ -355,7 +355,7 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	public static void returnTo(int depth, int pos) {
-		move(Dungeon.xPos, depth, Dungeon.zPos, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
+		move(Dungeon.xPos, depth, 0, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
 		returnPos = pos;
 	}
 
