@@ -76,14 +76,6 @@ public class Shield extends MeleeWeapon {
 	public int defenseFactor() {
 		return Math.round(tier*2 + (tier/2f)*level());    //2*tier extra defence, plus tier/2 per level;
 	}
-	
-	public String statsInfo(){
-		if (isIdentified()){
-			return Messages.get(this, "stats_desc", defenseFactor());
-		} else {
-			return Messages.get(this, "typical_stats_desc", tier*2);
-		}
-	}
 
 	//Placeholders for tiers.
 	private static class Greatshield extends MeleeWeapon {}

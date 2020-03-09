@@ -56,11 +56,6 @@ public class Fist extends MeleeWeapon {
 	}
 
 	@Override
-	public String statsInfo() {
-		return Messages.get(this, "stats_desc", tier);
-	}
-
-	@Override
 	public String desc() {
 		if (tier < 3) {
 			return Messages.get(Gloves.class, "desc");

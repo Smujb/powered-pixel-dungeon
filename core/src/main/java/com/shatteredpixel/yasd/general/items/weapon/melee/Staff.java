@@ -73,11 +73,6 @@ public class Staff extends MeleeWeapon {
 		return 2*tier;	//2*tier extra defence
 	}
 
-	@Override
-	public String statsInfo() {
-		return Messages.get(this, "stats_desc", 2 * tier);
-	}
-
 	private static class Rod extends MeleeWeapon {}
 	private static class Quarterstaff extends MeleeWeapon {}
 }

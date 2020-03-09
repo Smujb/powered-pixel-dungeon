@@ -34,7 +34,7 @@ public class Polearm extends MeleeWeapon {
 
 	{
 		tier = 1;
-		DLY = 1.5f;   //0.5x speed
+		DLY = 1.5f;   //0.67x speed
 		RCH = 2;    //extra reach
 
 		damageMultiplier = 1.5f;

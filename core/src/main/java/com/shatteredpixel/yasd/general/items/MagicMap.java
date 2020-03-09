@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
@@ -69,6 +70,7 @@ public class MagicMap extends Item {
 	private static final String AC_DEBUG = "debug";
 	private static final String AC_MAP = "map";
 	private static final String AC_TP = "tp";
+	private static final String AC_TEST = "test";
 
 	@Override
 	public void execute(Hero hero, String action) {
@@ -86,6 +88,9 @@ public class MagicMap extends Item {
 				break;
 			case AC_TP:
 				new ScrollOfTeleportation().empoweredRead();
+				break;
+			case AC_TEST:
+				InterlevelScene.move(0, 25, 0, "TESTING", InterlevelScene.Mode.DESCEND);
 				break;
 		}
 	}

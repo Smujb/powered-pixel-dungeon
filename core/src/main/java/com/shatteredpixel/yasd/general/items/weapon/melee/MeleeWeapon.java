@@ -122,7 +122,7 @@ public class MeleeWeapon extends Weapon {
 
 		//String statsInfo = statsInfo();
 		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
-		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack) {
+		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack | defenseFactor(Dungeon.hero) > 0) {
 
 			info += "\n";
 
@@ -154,6 +154,10 @@ public class MeleeWeapon extends Weapon {
 
 			if (!canSurpriseAttack) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "cant_surprise_attk");
+			}
+
+			if (defenseFactor(Dungeon.hero) > 0) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", 0,  defenseFactor(Dungeon.hero));
 			}
 		}
 
