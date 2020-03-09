@@ -195,9 +195,9 @@ public class Armor extends KindofMisc {
 			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
 			if (sealBuff != null) sealBuff.setArmor(null);
 
-			if (seal.level() > 0){
+			/*if (seal.level() > 0){
 				degrade();
-			}
+			}*/
 			GLog.i( Messages.get(Armor.class, "detach_seal") );
 			hero.sprite.operate(hero.pos);
 			if (!seal.collect()){
@@ -215,11 +215,11 @@ public class Armor extends KindofMisc {
 
 	public void affixSeal(BrokenSeal seal){
 		this.seal = seal;
-		if (seal.level() > 0){
+		/*if (seal.level() > 0){
 			//doesn't trigger upgrading logic such as affecting curses/glyphs
 			level(Math.min(level()+1,3));
 			Badges.validateItemLevelAquired(this);
-		}
+		}*/
 		if (isEquipped(Dungeon.hero)){
 			Buff.affect(Dungeon.hero, BrokenSeal.WarriorShield.class).setArmor(this);
 		}
@@ -261,9 +261,6 @@ public class Armor extends KindofMisc {
 	public int DRRoll(int lvl) {
 		return LuckyRandom.NormalIntRange(DRMin(lvl), DRMax(lvl), DRMax(lvl));
 	}
-
-
-
 
 	public final int magicalDRMax(){
 		return magicalDRMax(level());
@@ -372,7 +369,15 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public int level() {
-		return super.level() + (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0);
+		int lvl = super.level();
+		if (curseInfusionBonus) {
+			lvl += Constants.CURSE_INFUSION_BONUS_AMT;
+		}
+		if (seal != null) {
+			lvl += seal.level();
+		}
+		lvl = Math.min(upgradeLimit(), lvl);
+		return lvl;
 	}
 	
 	@Override

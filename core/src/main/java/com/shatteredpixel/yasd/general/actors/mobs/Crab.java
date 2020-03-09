@@ -48,6 +48,8 @@ public class Crab extends Mob {
 		
 		loot = new PotionOfHealing();
 		lootChance = 0.5f;
+
+		properties.add(Property.WATERY);//Can't drown.
 	}
 
 	@Override
