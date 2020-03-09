@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.PinCushion;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
+import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.bags.MagicalHolster;
@@ -76,6 +77,10 @@ abstract public class MissileWeapon extends Weapon {
 	
 	public int tier;
 
+	@Override
+	public boolean breaksArmor(Char owner) {
+		return owner instanceof  Hero && ((Hero)owner).subClass == HeroSubClass.SNIPER;
+	}
 
 	@Override
 	public float degradedPercent() {

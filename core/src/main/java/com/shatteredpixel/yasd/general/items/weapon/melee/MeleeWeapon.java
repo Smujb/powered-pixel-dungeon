@@ -120,8 +120,42 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 
-		String statsInfo = statsInfo();
-		if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
+		//String statsInfo = statsInfo();
+		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
+		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack) {
+
+			info += "\n";
+
+			if (DLY > 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "delay_increase", Math.round((DLY-1f)*100));
+			} else if (DLY < 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "delay_decrease", Math.round((1f-DLY)*100));
+			}
+
+			if (ACC > 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "acc_increase", Math.round((ACC-1f)*100));
+			} else if (ACC < 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "acc_decrease", Math.round((1f-ACC)*100));
+			}
+
+			if (RCH > 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "reach_increase", RCH);
+			} else if (RCH < 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "reach_decrease", RCH);
+			}
+
+			if (dualWieldpenalty) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "dual_wield_penalty");
+			}
+
+			if (breaksArmor(Dungeon.hero)) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "breaks_armour");
+			}
+
+			if (!canSurpriseAttack) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "cant_surprise_attk");
+			}
+		}
 
 		switch (augment) {
 			case SPEED:
@@ -149,9 +183,9 @@ public class MeleeWeapon extends Weapon {
 		return info;
 	}
 	
-	public String statsInfo(){
+	/*public String statsInfo(){
 		return Messages.get(this, "stats_desc");
-	}
+	}*/
 	
 	@Override
 	public int price() {

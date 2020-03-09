@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Flail extends MeleeWeapon {
@@ -35,13 +36,15 @@ public class Flail extends MeleeWeapon {
 		image = ItemSpriteSheet.FLAIL;
 
 		tier = 4;
-		ACC = 0.9f; //0.9x accuracy
+		ACC = 0.8f; //0.8x accuracy
 
 		damageMultiplier = 1.7f;
-
-		dualWieldpenalty = true;
 
 		canSurpriseAttack = false;
 	}
 
+	@Override
+	public boolean breaksArmor(Char owner) {
+		return true;
+	}
 }

@@ -40,6 +40,10 @@ abstract public class KindOfWeapon extends KindofMisc {
 
 	public boolean canSurpriseAttack = true;
 
+	public boolean breaksArmor(Char owner) {
+		return false;
+	}
+
 	public int min(){
 		return min(level());
 	}

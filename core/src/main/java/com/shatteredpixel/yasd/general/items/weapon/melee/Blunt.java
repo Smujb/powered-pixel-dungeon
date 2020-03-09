@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
@@ -39,6 +40,11 @@ public class Blunt extends MeleeWeapon {//War Hammer will get reworked.
 		//accuracyFactor = 1.33f; //33% boost to accuracy
 
 		damageMultiplier = 0.80f;
+	}
+
+	@Override
+	public boolean breaksArmor(Char owner) {
+		return true;
 	}
 
 	@Override

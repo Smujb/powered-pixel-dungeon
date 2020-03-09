@@ -353,7 +353,11 @@ public abstract class Char extends Actor {
 					dmg = ((MissileWeapon) belongings.miscs[0]).damageRoll(this);
 				}
 			}
-			dmg -= enemy.drRoll(this.elementalType());
+			int dr = enemy.drRoll(this.elementalType());
+			if (hasBelongings() && belongings.getCurrentWeapon().breaksArmor(this)) {
+				dr = 0;
+			}
+			dmg -= dr;
 			if (dmg < 0) {
 				dmg = 0;
 			}
