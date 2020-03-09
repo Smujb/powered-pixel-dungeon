@@ -122,38 +122,6 @@ public enum HeroClass {
 		new ScrollOfIdentify().identify().collect();
 		new StoneOfRepair().collect();
 		new Beer().collect();
-
-		//new Alcohol().collect();
-		//new MagicMap().collect();
-		//new RingOfLuck().identify().collect();
-		//new RingOfPower().identify().collect();
-		//new RingOfExpertise().identify().collect();
-		//new RingOfFocus().identify().collect();
-		//new StoneOfBlast().quantity(100).collect();
-		//Generator.random(Generator.Category.WAND).identify().collect();
-		//Generator.randomArmor().setTier(3).identify().collect();
-		//Generator.randomWeapon().setTier(3).identify().collect();
-		//new MagicalInfusion().quantity(100).collect();
-		//new ScrollOfUpgrade().quantity(5).collect();
-		//new PotionOfExperience().quantity(10).collect();
-		//new ChainArmor().upgrade(3).collect();
-		//new RingOfElements().identify().collect();
-		//new PotionOfLevitation().collect();
-		//new Flail().upgrade(3).collect();
-		//new Tomahawk().quantity(5).collect();
-		//new WandOfDarkness().identify().collect();
-		//new WandOfLightning().identify().collect();
-		//new PotionOfHealing().collect();
-		//new WandOfPlasmaBolt().identify().collect();
-		//new WandOfFlow().identify().collect();
-		//new WandOfThornvines().identify().collect();
-		//new TomeOfMastery().collect();
-		/*new WornShortsword().identify().collect();
-		new Spear().identify().collect();
-		new Projectile().identify().collect();
-		new Dart().quantity(5).collect();
-		Generator.random(Generator.Category.ARTIFACT).identify().collect();
-		new PotionOfStrength().quantity(10).identify().collect();*/
 	}
 
 	public Badges.Badge masteryBadge() {
@@ -305,19 +273,19 @@ public enum HeroClass {
 		}
 	}
 	
-	public boolean isUnlocked(){
+	public boolean locked(){
 		//always unlock on debug builds
-		if (DeviceCompat.isDebug()) return true;
+		if (DeviceCompat.isDebug()) return false;
 		
 		switch (this){
 			case WARRIOR: default:
-				return true;
+				return false;
 			case MAGE:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
+				return !Badges.isUnlocked(Badges.Badge.UNLOCK_MAGE);
 			case ROGUE:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
+				return !Badges.isUnlocked(Badges.Badge.UNLOCK_ROGUE);
 			case HUNTRESS:
-				return Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
+				return !Badges.isUnlocked(Badges.Badge.UNLOCK_HUNTRESS);
 		}
 	}
 	

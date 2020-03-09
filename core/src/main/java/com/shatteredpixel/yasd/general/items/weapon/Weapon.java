@@ -132,7 +132,13 @@ abstract public class Weapon extends KindOfWeapon {
 			availableUsesToID = Math.min(USES_TO_ID/2f, availableUsesToID + levelPercent * USES_TO_ID);
 		}
 	}
-	
+
+	@Override
+	public void curse() {
+		super.curse();
+		enchant(Enchantment.randomCurse());
+	}
+
 	private static final String USES_LEFT_TO_ID = "uses_left_to_id";
 	private static final String AVAILABLE_USES  = "available_uses";
 	private static final String ENCHANTMENT	    = "enchantment";

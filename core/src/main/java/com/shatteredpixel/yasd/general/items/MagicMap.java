@@ -86,24 +86,6 @@ public class MagicMap extends Item {
 				break;
 			case AC_TP:
 				new ScrollOfTeleportation().empoweredRead();
-				/*if (Dungeon.zPos < 1) {
-					InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 1, "TEST", InterlevelScene.Mode.DESCEND);
-				} else {
-					InterlevelScene.move(Dungeon.xPos, Dungeon.yPos, 0, "TEST", InterlevelScene.Mode.DESCEND);
-				}
-				/*int i = 0;
-				ArrayList<Integer> postions = new ArrayList<>();
-				postions.add(0);
-				postions.add(0);
-				postions.add(0);
-				MainGame.platform.promptTextInput("Choose depth to visit", "", 2, false, "SET", "NVM", new PlatformSupport.TextCallback() {
-					@Override
-					public void onSelect(boolean positive, String text) {
-						for (char ch : text.toCharArray()) {
-
-						}
-					}
-				});*/
 				break;
 		}
 	}

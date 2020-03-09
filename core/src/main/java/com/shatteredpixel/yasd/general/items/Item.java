@@ -39,7 +39,6 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Catalog;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -82,7 +81,7 @@ public class Item implements Bundlable {
 	protected String name = Messages.get(this, "name");
 	public int image = 0;
 
-	public final float MAXIMUM_DURABILITY = 1000;
+	public static final float MAXIMUM_DURABILITY = 1000;
 	public float curDurability = MAXIMUM_DURABILITY;
 	public boolean saidAlmostBreak = false;
 	
@@ -141,12 +140,9 @@ public class Item implements Bundlable {
 		if (curUser == null) {//curUser may be null if activate() has not yet been called (such as on game start). This prevents the next check from throwing an error.
 			curUser = Dungeon.hero;
 		}
-		if (level() < 0 | (!isEquipped(curUser) & !override) | cursed) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
+		if (level() < 0 | !(isEquipped(curUser) | override) | cursed) {//Unequipped items should never degrade, as they should not be usable. Exception is the Wand imbued in the Mage's staff, this workaround is made for that.
 			return;
 		}
-		/*if (curUser instanceof Hero) {
-			amount *= Math.pow(0.95f, ((Hero)curUser).Luck);
-		}*/
 		curDurability -= amount;
 		if (curDurability <= 0) {
 			GLog.n(Messages.get(this,"broken"),this.name());
@@ -155,12 +151,13 @@ public class Item implements Bundlable {
 			if (level > 0) {
 				degrade();
 			} else {
-				cursed = true;
+				curse();
+				/*cursed = true;
 				if (this instanceof MeleeWeapon) {
 					((MeleeWeapon)this).enchant(Weapon.Enchantment.randomCurse());
 				} else if (this instanceof Armor) {
 					((Armor)this).inscribe(Armor.Glyph.randomCurse());
-				}
+				}*/
 			}
 
 		} else if (curDurability <= MAXIMUM_DURABILITY*0.2f & !saidAlmostBreak) {
@@ -178,6 +175,10 @@ public class Item implements Bundlable {
 			case 3://Hard = 12 drop in durability per hit (about 50 hits until break)
 				return 12;
 		}
+	}
+
+	public void curse() {
+		cursed = true;
 	}
 	
 	public ArrayList<String> actions( Hero hero ) {

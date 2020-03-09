@@ -51,6 +51,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Burning extends Buff implements Hero.Doom {
 	
@@ -104,7 +105,9 @@ public class Burning extends Buff implements Hero.Doom {
 
 					ArrayList<Item> burnable = new ArrayList<>();
 					//does not reach inside of containers
-					for (Item i : hero.belongings.backpack.items){
+					ArrayList<Item> inventory = hero.belongings.backpack.items;
+					inventory.addAll(Arrays.asList(hero.belongings.miscs));
+					for (Item i : inventory){
 						if (Fire.burnItem(i) != i) {
 							burnable.add(i);
 						}

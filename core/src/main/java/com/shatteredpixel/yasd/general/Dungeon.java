@@ -189,12 +189,12 @@ public class Dungeon {
 		
 		Random.seed( seed );
 
-			Scroll.initLabels();
-			Potion.initColors();
-			Ring.initGems();
+		Scroll.initLabels();
+		Potion.initColors();
+		Ring.initGems();
 
-			SpecialRoom.initForRun();
-			SecretRoom.initForRun();
+		SpecialRoom.initForRun();
+		SecretRoom.initForRun();
 
 		Random.seed();
 		
@@ -313,6 +313,7 @@ public class Dungeon {
 				//level = new LootLevel();
 			}
 		}
+		//level = new LastShopLevel();
 		if (level == null) {
 			level = new DeadEndLevel();
 		}

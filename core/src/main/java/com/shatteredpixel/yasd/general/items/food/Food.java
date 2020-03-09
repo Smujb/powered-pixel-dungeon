@@ -39,7 +39,6 @@ import com.shatteredpixel.yasd.general.effects.SpellSprite;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -98,7 +97,7 @@ public class Food extends Item {
 	
 	protected void satisfy( Hero hero ){//Eating food satisfies morale as well as hunger.
 		Buff.affect(hero, Hunger.class).satisfy( energy );
-		hero.gainMorale(0.3f);
+		//hero.gainMorale(0.3f);
 	}
 	
 	public static void foodProc( Hero hero ){

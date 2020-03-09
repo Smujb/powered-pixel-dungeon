@@ -815,7 +815,7 @@ public abstract class Mob extends Char {
 			enemyResist = 1 + new Swarm().EXP;
 		}
 		//100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
-		enemyResist *= 1 + 2*Math.pow(enemy.HP/(float)enemy.HT, 2);
+		enemyResist *= 1 + 2*Math.pow(this.HP/(float)this.HT, 2);
 		return enemyResist;
 	}
 	

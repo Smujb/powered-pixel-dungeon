@@ -627,12 +627,6 @@ public class GameScene extends PixelScene {
 
 		float pos = scene.toolbar.top();
 
-		if (scene.tagDive){
-			scene.dive.setPos( tagLeft, pos - scene.dive.height());
-			scene.dive.flip(tagLeft == 0);
-			pos = scene.dive.top();
-		}
-
 		if (scene.tagAttack){
 			scene.attack.setPos( tagLeft, pos - scene.attack.height());
 			scene.attack.flip(tagLeft == 0);
@@ -654,6 +648,13 @@ public class GameScene extends PixelScene {
 		if (scene.tagResume) {
 			scene.resume.setPos( tagLeft, pos - scene.resume.height() );
 			scene.resume.flip(tagLeft == 0);
+			pos = scene.resume.top();
+		}
+
+		if (scene.tagDive){
+			scene.dive.setPos( tagLeft, pos - scene.dive.height());
+			scene.dive.flip(tagLeft == 0);
+			//pos = scene.dive.top();
 		}
 	}
 	

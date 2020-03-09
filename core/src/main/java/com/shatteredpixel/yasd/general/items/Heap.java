@@ -46,7 +46,6 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
-import com.shatteredpixel.yasd.general.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.general.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.journal.DocumentPage;
@@ -231,8 +230,18 @@ public class Heap implements Bundlable {
 		boolean evaporated = false;
 		
 		for (Item item : items.toArray( new Item[0] )) {
-			if (item instanceof MysteryMeat) {
-				replace( item, ChargrilledMeat.cook( (MysteryMeat)item ) );
+			if (Fire.burnItem(item) != item) {
+				if (item instanceof Dewdrop) {
+					evaporated = true;
+				} else {
+					burnt = true;
+				}
+				Item burnedItem = Fire.burnItem(item);
+				if (burnedItem == null) {
+					remove(item);
+				} else {
+					replace(item, burnedItem);
+				}
 			} else if (item instanceof Bomb) {
 				((Bomb) item).explode( pos );
 				if (((Bomb) item).explodesDestructively()) {
@@ -240,19 +249,6 @@ public class Heap implements Bundlable {
 					return;
 				} else {
 					burnt = true;
-				}
-			}
-
-			if (Fire.burnItem(item) != item) {
-				//items.remove( item );
-				if (item instanceof Dewdrop) {
-					evaporated = true;
-				} else {
-					burnt = true;
-				}
-				replace(item, Fire.burnItem(item));
-				if (item == null) {
-					remove(item);
 				}
 			}
 		}

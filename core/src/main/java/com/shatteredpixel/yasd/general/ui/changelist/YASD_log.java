@@ -52,13 +52,14 @@ public class YASD_log {
 
 	private static void add_v0_2_X_Changes(ArrayList<ChangeInfo> changeInfos) {
 		ChangeInfo changes = new ChangeInfo( "0.2 - release", true, "");
-		changes.hardlight(Window.TITLE_COLOR);
-		changeInfos.add(changes);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
 
 
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
-		changeInfos.add(changes);
+		changeInfos.add( changes );
+
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Chapter length", "Chapters are now 6 depths long"));
 
@@ -106,13 +107,13 @@ public class YASD_log {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 
+
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_AGATE), "New/replaced rings", "New rings have been added along with the stat system:\n" +
 				"Ring of Power increases Power (replaces Might), Ring of Focus increases Focus (replaces Energy), Ring of Expertise increases Expertise (replaces Accuracy and Evasion) and lastly Ring of Luck which replaces nothing."));
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "Altar rooms", "Vanilla Altar rooms have returned, but they no longer provide the Scroll of Wipe Out\n\n" +
 				"Instead, they grant an Ankh." +
 				"(For those who have not played Vanilla much or at all, you will find a room with a blue flame, kill mobs on the flame to get the reward)"));
-
 
 		changes.addButton(new ChangeButton(Icons.get(Icons.CHECKED), "Difficulty", "Difficulty settings added - Easy, Normal or Hard."));
 
@@ -129,12 +130,10 @@ public class YASD_log {
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.STONE_ENCHANT), "Enchantments", "Stones of enchantment have replaced Arcane Styli as chapter based drops. This gives you a chance to enchant your weapons and armours."));
 
-
 		changes.addButton(new ChangeButton(new PiranhaSprite(), "Diving", "Diving mechanic added:\n" +
 				"_-_ Hero can dive when over deep water.\n" +
 				"_-_ This will send them to an alternative map, where they have limited air.\n" +
 				"_-_ This area is full of Piranhas, and a new mob stolen from Prismatic PD: Jellyfish"));
-
 
 		changes.addButton(new ChangeButton(Icons.get(HeroClass.WARRIOR), "Stats system", "Added a stat system:\n" +
 				"_-_ When leveling up, hero will get distribution points. These can be used to upgrade skills.\n" +
@@ -148,6 +147,7 @@ public class YASD_log {
 		changes.hardlight( CharSprite.POSITIVE );
 		changeInfos.add(changes);
 
+
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.ANKH), "(Blessed) Ankhs", "Ankhs are now always blessed. Additionally, they cleanse equipped items."));
 
 
@@ -155,14 +155,15 @@ public class YASD_log {
 		changes.hardlight( CharSprite.NEGATIVE );
 		changeInfos.add(changes);
 
+
 		changes.addButton(new ChangeButton(Icons.get(Icons.DEPTH), "Morale System", "Morale system was too unfair and has been reworked to no only be affected by attacks, not bleed/poison."));
 
 		changes.addButton(new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_MAGIC_MISSILE_YAPD, null), "Wand balance", "Wands have been nerfed, as the stat \"Focus\" affects them:\n" +
 				"Wands on average now do less damage. Wands that do not do direct damage have had other changes."));
 	}
 
-	private static void add_v0_1_X_Changes(ArrayList<ChangeInfo> changeInfos){
-		ChangeInfo changes = new ChangeInfo( "0.1.0 - release", true, "");
+	private static void add_v0_1_X_Changes(ArrayList<ChangeInfo> changeInfos) {
+		ChangeInfo changes = new ChangeInfo( "0.1 - release", true, "");
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 		

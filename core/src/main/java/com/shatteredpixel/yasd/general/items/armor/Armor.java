@@ -446,7 +446,13 @@ public class Armor extends KindofMisc {
 	public String name() {
 		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.name( super.name() ) : super.name();
 	}
-	
+
+	@Override
+	public void curse() {
+		super.curse();
+		inscribe(Glyph.randomCurse());
+	}
+
 	@Override
 	public String info() {
 		String info = desc();

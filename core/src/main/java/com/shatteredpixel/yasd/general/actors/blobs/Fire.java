@@ -129,18 +129,14 @@ public class Fire extends Blob {
 	public static Item burnItem(Item item) {
 		if (item instanceof Scroll ||
 				item instanceof Food && !(item instanceof MysteryMeat) || //All food can burn
-				(item instanceof ClothArmor || item instanceof LightArmor & item.level() < 1) || //Can burn unupgraded cloth or leather armour too ;)
 				item instanceof Plant.Seed){
 			return null;
 		} else if (item instanceof MysteryMeat) {
 			return new ChargrilledMeat();
+		} else if (item instanceof ClothArmor || item instanceof LightArmor) {
+			item.use(item.defaultDegradeAmount()*5, true);//Don't get rid of it, simply degrade it.
 		}
 		return item;
-	}
-
-	public static boolean canBurn(Item i) {
-
-		return false;
 	}
 	
 	@Override

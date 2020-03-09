@@ -167,8 +167,8 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public void use(float amount) {
-		super.use(amount);
+	public void use(float amount, boolean override) {
+		super.use(amount, override);
 		wand.use(amount, true);
 	}
 

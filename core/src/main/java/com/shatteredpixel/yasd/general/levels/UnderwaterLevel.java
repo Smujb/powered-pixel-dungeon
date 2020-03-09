@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
@@ -58,7 +59,7 @@ public class UnderwaterLevel extends Level {
 
 	private static final int NUM_BUBBLES = 10;
 
-	private static final int NUM_ITEMS = 16;
+	private static final int NUM_ITEMS = 10;
 
 	private int _width = -1;
 	private int _height = -1;
@@ -140,7 +141,25 @@ public class UnderwaterLevel extends Level {
 	@Override
 	protected void createItems() {
 		for (int i = 0; i < NUM_ITEMS; i++) {
-			drop(Generator.random(), randomRespawnCell()).type = Heap.Type.SKELETON;
+			Item item;
+			switch (Random.Int(4)) {
+				case 0: default:
+					item = Generator.random(Generator.Category.GOLD);
+					break;
+				case 1:
+					item = Generator.random(Generator.Category.STONE);
+					break;
+				case 2:
+					item = Generator.randomWeapon();
+					item.use(Item.MAXIMUM_DURABILITY*Random.Float(), true);
+					break;
+				case 3:
+					item = Generator.randomArmor();
+					item.use(Item.MAXIMUM_DURABILITY*Random.Float(), true);
+					break;
+
+			}
+			drop(item, randomRespawnCell()).type = Heap.Type.SKELETON;
 		}
 	}
 

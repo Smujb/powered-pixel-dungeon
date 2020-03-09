@@ -53,11 +53,9 @@ public class LastShopLevel extends RegularLevel {
 	{
 		color1 = 0x4b6636;
 		color2 = 0xf2f2f2;
-	}
 
-	@Override
-	public int getScaleFactor() {
-		return new CityLevel().getScaleFactor();
+		minScaleFactor = 20;
+		maxScaleFactor = 22;
 	}
 
 	@Override
