@@ -62,6 +62,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicalSleep;
+import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
@@ -123,6 +124,8 @@ public abstract class Char extends Actor {
 	public String name;
 	public int defenseSkill = 0;
 	public int attackSkill = 0;
+	public int perception = 0;
+	public int stealth = 0;
 
 	public Belongings belongings = null;
 	public int STR;
@@ -774,7 +777,7 @@ public abstract class Char extends Actor {
 
 	@Override
 	protected synchronized void onRemove() {
-		for (Buff buff : buffs.toArray(new Buff[buffs.size()])) {
+		for (Buff buff : buffs.toArray(new Buff[0])) {
 			buff.detach();
 		}
 	}
@@ -785,8 +788,31 @@ public abstract class Char extends Actor {
 		}
 	}
 
+	public boolean notice(Char defender) {
+		if (Dungeon.level.distance(this.pos, defender.pos) < 10) {
+			int perception = Random.Int(Math.round((this.perception() * 8) / Dungeon.level.distance(this.pos, defender.pos)));
+			if (!this.fieldOfView[defender.pos]) {
+				perception /= 2;
+			}
+			int stealth = Random.Int(Math.round(defender.stealth()));
+			//float factor = perception / stealth;
+			return perception > stealth;
+		} else {
+			return false;
+		}
+	}
+
+	public float perception() {
+		float perception = this.perception;
+
+		if (this.buff(MindVision.class) != null) {
+			perception += 5;
+		}
+		return perception;
+	}
+
 	public float stealth() {
-		float stealth = STE;
+		float stealth = this.stealth;
 		if (hasBelongings()) {
 			stealth = belongings.StealthFactor(stealth);
 		}

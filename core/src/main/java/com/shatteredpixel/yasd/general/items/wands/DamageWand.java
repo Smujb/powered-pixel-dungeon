@@ -28,9 +28,9 @@
 package com.shatteredpixel.yasd.general.items.wands;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.watabou.utils.Random;
 
 //for wands that directly damage a target
 //wands with AOE effects count here (e.g. fireblast, blast wave), but wands with indrect damage do not (e.g. corrosion, transfusion)
@@ -83,7 +83,7 @@ public abstract class DamageWand extends Wand{
 	}
 
 	public int damageRoll(float lvl){
-		return LuckyRandom.NormalIntRange((int)min(lvl), (int)max(lvl), (int) max(lvl));
+		return Random.NormalIntRange((int)min(lvl), (int)max(lvl));
 	}
 
 	@Override

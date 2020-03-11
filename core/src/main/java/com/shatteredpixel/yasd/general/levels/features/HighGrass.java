@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.levels.features;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -45,6 +44,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -96,16 +96,16 @@ public class HighGrass {
 			
 			if (naturalismLevel >= 0) {
 				// Seed, scales from 1/20 to 1/4
-				if (LuckyRandom.Int(20 - (naturalismLevel * 4), 0) == 0) {
+				if (Random.Int(20 - (naturalismLevel * 4)) == 0) {
 					level.drop(Generator.random(Generator.Category.SEED), pos).sprite.drop();
 				}
 
-				if (LuckyRandom.Int(30 - (naturalismLevel * 5), 0) == 0) {//Stones more rarely drop
+				if (Random.Int(30 - (naturalismLevel * 5)) == 0) {//Stones more rarely drop
 					level.drop(Generator.random(Generator.Category.STONE), pos).sprite.drop();
 				}
 				
 				// Dew, scales from 1/6 to 1/3
-				if (LuckyRandom.Int(24 - (naturalismLevel * 3), 0) <= 3) {
+				if (Random.Int(24 - (naturalismLevel * 3)) <= 3) {
 					level.drop(new Dewdrop(), pos).sprite.drop();
 				}
 			}

@@ -195,14 +195,14 @@ public class WndHero extends WndTabbed {
 			add( btnExpertise );
 			pos += GAP;
 			//Resilience
-			statSlot( Messages.get(this, "luck"), hero.getLuck());
-			statIncreaseButton btnResilience = new statIncreaseButton() {
+			statSlot( Messages.get(this, "stealth"), hero.getStealth());
+			statIncreaseButton btnStealth = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.increaseLuck();
+					Dungeon.hero.increaseStealth();
 				}
 			};
-			add( btnResilience );
+			add( btnStealth );
 
 		}
 

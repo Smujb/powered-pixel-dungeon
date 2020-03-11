@@ -28,11 +28,11 @@
 package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 abstract public class KindOfWeapon extends KindofMisc {
 	
@@ -56,7 +56,7 @@ abstract public class KindOfWeapon extends KindofMisc {
 	abstract public int max(float lvl);
 
 	public int damageRoll( Char owner ) {
-		return LuckyRandom.Int(min(), max(), max());
+		return Random.NormalIntRange(min(), max());
 	}
 	
 	public float accuracyFactor( Char owner ) {

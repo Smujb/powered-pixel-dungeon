@@ -146,7 +146,7 @@ public class Hero extends Char {
 	private int Power     = 1;
 	private int Focus     = 1;
 	private int Expertise = 1;
-	private int Luck      = 1;
+	private int Stealth = 1;
 	public  int DistributionPoints = 0;
 
 	private static final float TIME_TO_REST		    = 1f;
@@ -282,8 +282,8 @@ public class Hero extends Char {
 		return Focus + RingOfFocus.focusBonus(this);
 	}
 
-	public int getLuck() {
-		return Luck + RingOfLuck.luckBonus(this);
+	public int getStealth() {
+		return Stealth + RingOfLuck.luckBonus(this);
 	}
 
 	public void setPower(int power) {
@@ -312,12 +312,12 @@ public class Hero extends Char {
 		setFocus(Focus+1);
 	}
 
-	public void setLuck(int luck) {
-		Luck = luck;
+	public void setStealth(int stealth) {
+		Stealth = stealth;
 	}
 
-	public void increaseLuck() {
-		setLuck(Luck+1);
+	public void increaseStealth() {
+		setStealth(Stealth +1);
 	}
 
 	@Override
@@ -335,7 +335,7 @@ public class Hero extends Char {
 	private static final String POWER       = "power";
 	private static final String FOCUS       = "focus";
 	private static final String EXPERTISE   = "expertise";
-	private static final String LUCK = "combatskill";
+	private static final String STEALTH     = "combatskill";
 	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
@@ -364,7 +364,7 @@ public class Hero extends Char {
 		bundle.put( POWER, Power );
 		bundle.put( FOCUS, Focus );
 		bundle.put( EXPERTISE, Expertise);
-		bundle.put( LUCK, Luck );
+		bundle.put( STEALTH, Stealth);
 		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
 	}
 	
@@ -392,7 +392,7 @@ public class Hero extends Char {
 		Power = bundle.getInt( POWER );
 		Focus = bundle.getInt( FOCUS );
 		Expertise = bundle.getInt( EXPERTISE );
-		Luck = bundle.getInt( LUCK );
+		Stealth = bundle.getInt( STEALTH );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 	}
 
@@ -401,6 +401,16 @@ public class Hero extends Char {
 	public int STR() {
 		STR = 10 + Power/2;
 		return super.STR();
+	}
+
+	@Override
+	public float stealth() {
+		return 9 + Stealth;
+	}
+
+	@Override
+	public float perception() {
+		return 4 + Stealth;
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle ) {

@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.items.armor;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -259,7 +258,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int DRRoll(int lvl) {
-		return LuckyRandom.NormalIntRange(DRMin(lvl), DRMax(lvl), DRMax(lvl));
+		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
 	}
 
 	public final int magicalDRMax(){
@@ -283,7 +282,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int magicalDRRoll(int lvl) {
-		return LuckyRandom.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl), magicalDRMax(lvl));
+		return Random.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl));
 	}
 	
 	public float evasionFactor( Char owner, float evasion ){
@@ -549,9 +548,9 @@ public class Armor extends KindofMisc {
 		//+1: 20% (4/20)
 		//+2: 5%  (1/20)
 		int n = 0;
-		if (LuckyRandom.Int(4, 0) == 0) {
+		if (Random.Int(4) == 0) {
 			n++;
-			if (LuckyRandom.Int(5, 0) == 0) {
+			if (Random.Int(5) == 0) {
 				n++;
 			}
 		}
@@ -559,7 +558,7 @@ public class Armor extends KindofMisc {
 		
 		//30% chance to be cursed
 		//15% chance to be inscribed
-		float effectRoll = LuckyRandom.Float(1f);
+		float effectRoll = Random.Float();
 		if (effectRoll < 0.3f) {
 			inscribe(Glyph.randomCurse());
 			cursed = true;

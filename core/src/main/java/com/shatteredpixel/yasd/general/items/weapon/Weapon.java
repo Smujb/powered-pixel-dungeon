@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.items.weapon;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -264,9 +263,9 @@ abstract public class Weapon extends KindOfWeapon {
 		//+1: 20% (4/20)
 		//+2: 5%  (1/20)
 		int n = 0;
-		if (LuckyRandom.Int(4, 0) == 0) {
+		if (Random.Int(4) == 0) {
 			n++;
-			if (LuckyRandom.Int(5, 0) == 0) {
+			if (Random.Int(5) == 0) {
 				n++;
 			}
 		}
@@ -274,7 +273,7 @@ abstract public class Weapon extends KindOfWeapon {
 		
 		//30% chance to be cursed
 		//10% chance to be enchanted
-		float effectRoll = LuckyRandom.Float(1f);
+		float effectRoll = Random.Float();
 		if (effectRoll < 0.3f) {
 			enchant(Enchantment.randomCurse());
 			cursed = true;

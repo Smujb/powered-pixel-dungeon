@@ -185,6 +185,14 @@ public abstract class Mob extends Char {
 		return 3 + level;
 	}
 
+	private int normalPerception(int level) {
+		return 9 + level;
+	}
+
+	private int normalStealth(int level) {
+		return 4 + level;
+	}
+
 	private int normalDamageRoll(int level) {
 		int max = 4 + (int) (level*1.2f);
 		int min = level/3;
@@ -259,6 +267,16 @@ public abstract class Mob extends Char {
 			return super.attackSkill(target);
 		} else {
 			return (int) (normalAttackSkill(level) * accuracyFactor);
+		}
+	}
+
+
+	@Override
+	public float perception() {
+		if (hasBelongings()) {
+			return super.perception();
+		} else {
+			return (int) (normalPerception(level) * evasionFactor);
 		}
 	}
 
@@ -928,7 +946,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && Random.Float( distance( enemy ) + enemy.stealth() + (enemy.isFlying() ? 2 : 0) ) < 1) {
+			if (enemyInFOV && notice(enemy)/*Random.Float( distance( enemy ) + enemy.stealth() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
 
 				enemySeen = true;
 
@@ -963,7 +981,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)) {
+			if (enemyInFOV && (justAlerted || notice(enemy)/*Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)*/)) {
 
 				enemySeen = true;
 
@@ -1152,7 +1170,7 @@ public abstract class Mob extends Char {
 				heldMobs.add(mob);
 			} else if (mob.properties().contains(Property.BOSS)
 					|| (mob.properties().contains(Property.MINIBOSS)
-					&& level.distance(Dungeon.hero.pos, mob.pos) < 5)) {//Sorry to people who try to cheese, but mobs follow through depths (including going underwater...)
+					&& level.distance(Dungeon.hero.pos, mob.pos) < 5)) {
 				level.mobs.remove( mob );
 				heldMobs.add(mob);
 			}

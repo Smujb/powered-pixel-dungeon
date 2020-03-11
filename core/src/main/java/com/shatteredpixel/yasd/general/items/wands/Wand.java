@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.LuckyRandom;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -397,16 +396,16 @@ public abstract class Wand extends KindofMisc {
 		//+1: 26.67% (4/15)
 		//+2: 6.67%  (1/15)
 		int n = 0;
-		if (LuckyRandom.Int(3, 0) == 0) {
+		if (Random.Int(3) == 0) {
 			n++;
-			if (LuckyRandom.Int(5, 0) == 0){
+			if (Random.Int(5) == 0){
 				n++;
 			}
 		}
 		level(n);
 		
 		//30% chance to be cursed
-		if (LuckyRandom.Float(1f) < 0.3f) {
+		if (Random.Float() < 0.3f) {
 			cursed = true;
 		}
 
