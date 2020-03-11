@@ -32,14 +32,11 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.items.Gold;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.sprites.BanditSprite;
 import com.shatteredpixel.yasd.general.sprites.ThiefSprite;
 import com.watabou.utils.Random;
 
 public class Thief extends RangedMob {
-	
-	public Item item;
 	
 	{
 		spriteClass = ThiefSprite.class;
@@ -76,24 +73,4 @@ public class Thief extends RangedMob {
 			return super.attackProc(enemy, damage);
 		}
 	}
-
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 2, 5 );
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 10;
-	}
-
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 2);
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return false;
-	}*/
 }

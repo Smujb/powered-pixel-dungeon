@@ -64,6 +64,7 @@ public class MagicMap extends Item {
 		actions.add(AC_DEBUG);
 		actions.add(AC_MAP);
 		actions.add(AC_TP);
+		actions.add(AC_TEST);
 		return actions;
 	}
 

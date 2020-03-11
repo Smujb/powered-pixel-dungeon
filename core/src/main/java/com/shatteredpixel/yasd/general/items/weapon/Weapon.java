@@ -250,6 +250,8 @@ abstract public class Weapon extends KindOfWeapon {
 		
 		return super.upgrade();
 	}
+
+
 	
 	@Override
 	public String name() {

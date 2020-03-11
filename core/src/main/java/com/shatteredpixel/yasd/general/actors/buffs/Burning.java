@@ -34,14 +34,8 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Thief;
-import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.food.ChargrilledMeat;
-import com.shatteredpixel.yasd.general.items.food.FrozenCarpaccio;
-import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
-import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -51,7 +45,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Burning extends Buff implements Hero.Doom {
 	
@@ -92,11 +85,11 @@ public class Burning extends Buff implements Hero.Doom {
 			int damage = Random.NormalIntRange( 1, 3 + Dungeon.getScaleFactor()/2 );
 			Buff.detach( target, Chill.class);
 
-			if (target instanceof Hero) {
+			if (target.hasBelongings()) {
 				
-				Hero hero = (Hero)target;
+				//Hero hero = (Hero)target;
 
-				hero.damage( damage, this, Element.FIRE );
+				target.damage( damage, this, Element.FIRE );
 				burnIncrement++;
 
 				//at 4+ turns, there is a (turns-3)/3 chance an item burns
@@ -105,8 +98,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 					ArrayList<Item> burnable = new ArrayList<>();
 					//does not reach inside of containers
-					ArrayList<Item> inventory = hero.belongings.backpack.items;
-					inventory.addAll(Arrays.asList(hero.belongings.miscs));
+					ArrayList<Item> inventory = target.belongings.backpack.items;
 					for (Item i : inventory){
 						if (Fire.burnItem(i) != i) {
 							burnable.add(i);
@@ -114,20 +106,15 @@ public class Burning extends Buff implements Hero.Doom {
 					}
 
 					if (!burnable.isEmpty()){
-						Item toBurn = Random.element(burnable).detach(hero.belongings.backpack);
+						Item toBurn = Random.element(burnable).detach(target.belongings.backpack);
 						GLog.w( Messages.get(this, "burnsup", Messages.capitalize(toBurn.toString())) );
-						if (toBurn instanceof MysteryMeat){
-							ChargrilledMeat steak = new ChargrilledMeat();
-							if (!steak.collect( hero.belongings.backpack )) {
-								Dungeon.level.drop( steak, hero.pos ).sprite.drop();
-							}
-						} else if (toBurn instanceof FrozenCarpaccio) {//Frozen Carpaccio turns back into mystery meat ;)
-							MysteryMeat meat = new MysteryMeat();
-							if (!meat.collect( hero.belongings.backpack )) {
-								Dungeon.level.drop( meat, hero.pos ).sprite.drop();
+						Item result = Fire.burnItem(toBurn);
+						if (result != null) {
+							if (!result.collect( target.belongings.backpack )) {
+								Dungeon.level.drop( result, target.pos ).sprite.drop();
 							}
 						}
-						Heap.burnFX( hero.pos );
+						Heap.burnFX( target.pos );
 					}
 				}
 				
@@ -135,7 +122,7 @@ public class Burning extends Buff implements Hero.Doom {
 				target.damage( damage, this, Element.FIRE );
 			}
 
-			if (target instanceof Thief) {
+			/*if (target instanceof Thief) {
 
 				Item item = ((Thief) target).item;
 
@@ -147,7 +134,7 @@ public class Burning extends Buff implements Hero.Doom {
 					((Thief)target).item = new ChargrilledMeat();
 				}
 
-			}
+			}*/
 
 		} else {
 

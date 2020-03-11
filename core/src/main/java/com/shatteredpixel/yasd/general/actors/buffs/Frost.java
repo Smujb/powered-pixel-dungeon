@@ -30,13 +30,11 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Thief;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.general.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -92,7 +90,7 @@ public class Frost extends FlavourBuff {
 					}
 				}
 				
-			} else if (target instanceof Thief) {
+			} /*else if (target instanceof Thief) {
 
 				Item item = ((Thief) target).item;
 
@@ -103,7 +101,7 @@ public class Frost extends FlavourBuff {
 					((Thief) target).item = new FrozenCarpaccio();
 				}
 
-			}
+			}*/
 
 			return true;
 		} else {

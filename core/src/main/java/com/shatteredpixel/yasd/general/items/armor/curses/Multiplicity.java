@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Statue;
-import com.shatteredpixel.yasd.general.actors.mobs.Thief;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
@@ -91,11 +90,6 @@ public class Multiplicity extends Armor.Glyph {
 							m.HP = m.HT;
 							if (m.buff(PinCushion.class) != null) {
 								m.remove(m.buff(PinCushion.class));
-							}
-							
-							//If a thief has stolen an item, that item is not duplicated.
-							if (m instanceof Thief) {
-								((Thief) m).item = null;
 							}
 						}
 					}
