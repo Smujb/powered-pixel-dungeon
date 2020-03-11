@@ -504,7 +504,9 @@ public class Hero extends Char {
 
 	@Override
 	public boolean act() {
+		//Manually call this as it's called in Char.act which is overridden.
 		LimitedAir.updateBuff(this);
+
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;
 		
@@ -581,6 +583,12 @@ public class Hero extends Char {
 				
 			} else {
 				actResult = false;
+			}
+		}
+
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+			if (notice(mob) && !fieldOfView[mob.pos]) {
+				GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
 			}
 		}
 		

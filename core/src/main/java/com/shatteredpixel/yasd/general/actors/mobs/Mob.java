@@ -382,18 +382,18 @@ public abstract class Mob extends Char {
 			if ( buff(Amok.class) != null) {
 				//try to find an enemy mob to attack first.
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY && mob != this && fieldOfView[mob.pos])
+					if (mob.alignment == Alignment.ENEMY && mob != this && notice(mob))
 							enemies.add(mob);
 				
 				if (enemies.isEmpty()) {
 					//try to find ally mobs to attack second.
 					for (Mob mob : Dungeon.level.mobs)
-						if (mob.alignment == Alignment.ALLY && mob != this && fieldOfView[mob.pos])
+						if (mob.alignment == Alignment.ALLY && mob != this && notice(mob))
 							enemies.add(mob);
 					
 					if (enemies.isEmpty()) {
 						//try to find the hero third
-						if (fieldOfView[Dungeon.hero.pos]) {
+						if (notice(Dungeon.hero)) {
 							enemies.add(Dungeon.hero);
 						}
 					}
@@ -403,7 +403,7 @@ public abstract class Mob extends Char {
 			} else if ( alignment == Alignment.ALLY ) {
 				//look for hostile mobs to attack
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY && fieldOfView[mob.pos])
+					if (mob.alignment == Alignment.ENEMY && notice(mob))
 						//intelligent allies do not target mobs which are passive, wandering, or asleep
 						if (!intelligentAlly ||
 								(mob.state != mob.SLEEPING && mob.state != mob.PASSIVE && mob.state != mob.WANDERING)) {
@@ -414,11 +414,11 @@ public abstract class Mob extends Char {
 			} else if (alignment == Alignment.ENEMY) {
 				//look for ally mobs to attack
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ALLY && fieldOfView[mob.pos])
+					if (mob.alignment == Alignment.ALLY && notice(mob))
 						enemies.add(mob);
 
 				//and look for the hero
-				if (fieldOfView[Dungeon.hero.pos]) {
+				if (notice(Dungeon.hero)) {
 					enemies.add(Dungeon.hero);
 				}
 				
@@ -922,6 +922,15 @@ public abstract class Mob extends Char {
 		return false;
 
 	}
+
+	private boolean noticeEnemy() {
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+			if (mob.alignment == this.alignment && notice(mob)) {
+				return true;
+			}
+		}
+		return (notice(Dungeon.hero) && alignment == Alignment.ENEMY);
+	}
 	
 	public void notice() {
 		sprite.showAlert();
@@ -946,7 +955,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && notice(enemy)/*Random.Float( distance( enemy ) + enemy.stealth() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
+			if (enemyInFOV && noticeEnemy()/*Random.Float( distance( enemy ) + enemy.stealth() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
 
 				enemySeen = true;
 
@@ -981,7 +990,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || notice(enemy)/*Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)*/)) {
+			if (enemyInFOV && (justAlerted || noticeEnemy()/*Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)*/)) {
 
 				enemySeen = true;
 

@@ -789,10 +789,10 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean notice(Char defender) {
-		if (Dungeon.level.distance(this.pos, defender.pos) < 10) {
-			int perception = Random.Int(Math.round((this.perception() * 8) / Dungeon.level.distance(this.pos, defender.pos)));
+		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
+			int perception = Random.Int(Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos)));
 			if (!this.fieldOfView[defender.pos]) {
-				perception /= 2;
+				perception /= 4;
 			}
 			int stealth = Random.Int(Math.round(defender.stealth()));
 			//float factor = perception / stealth;
@@ -806,7 +806,7 @@ public abstract class Char extends Actor {
 		float perception = this.perception;
 
 		if (this.buff(MindVision.class) != null) {
-			perception += 5;
+			perception *= 2;
 		}
 		return perception;
 	}
