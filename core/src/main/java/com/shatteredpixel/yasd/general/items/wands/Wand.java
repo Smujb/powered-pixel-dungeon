@@ -64,7 +64,7 @@ public abstract class Wand extends KindofMisc {
 
 	public Element element = Element.MAGICAL;
 
-	public static final String AC_ZAP = "ZAP";
+	private static final String AC_ZAP = "ZAP";
 	public static final String AC_ZAP_OVERRIDE = "ZAP_OVERRIDE";
 
 	private static final float TIME_TO_ZAP = 1f;
@@ -73,7 +73,7 @@ public abstract class Wand extends KindofMisc {
 	public int curCharges = maxCharges;
 	public float partialCharge = 0f;
 
-	protected Charger charger;
+	private Charger charger;
 
 	private boolean curChargeKnown = false;
 
@@ -91,7 +91,7 @@ public abstract class Wand extends KindofMisc {
 		bones = true;
 	}
 
-	public float effectiveness (Hero hero) {
+	private float effectiveness(Hero hero) {
 		return level() + hero.getFocus()/6f;
 	}
 

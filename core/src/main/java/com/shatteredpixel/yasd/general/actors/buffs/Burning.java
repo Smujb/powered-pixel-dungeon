@@ -86,8 +86,6 @@ public class Burning extends Buff implements Hero.Doom {
 			Buff.detach( target, Chill.class);
 
 			if (target.hasBelongings()) {
-				
-				//Hero hero = (Hero)target;
 
 				target.damage( damage, this, Element.FIRE );
 				burnIncrement++;
@@ -121,20 +119,6 @@ public class Burning extends Buff implements Hero.Doom {
 			} else {
 				target.damage( damage, this, Element.FIRE );
 			}
-
-			/*if (target instanceof Thief) {
-
-				Item item = ((Thief) target).item;
-
-				if (item instanceof Scroll) {
-					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
-					((Thief)target).item = null;
-				} else if (item instanceof MysteryMeat) {
-					target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
-					((Thief)target).item = new ChargrilledMeat();
-				}
-
-			}*/
 
 		} else {
 

@@ -589,6 +589,7 @@ public class Hero extends Char {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (notice(mob) && !fieldOfView[mob.pos]) {
 				GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
+				mindVisionEnemies.add(mob);
 			}
 		}
 		

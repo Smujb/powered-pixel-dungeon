@@ -54,7 +54,7 @@ public class Shocking extends Weapon.Enchantment {
 		// lvl 2 - 60%
 		int level = Math.max( 0, weapon.level() );
 		
-		if (Random.Int( level + 3 ) >= 2) {
+		if (Random.Int( level + 3 ) != 0) {
 			
 			affected.clear();
 

@@ -49,7 +49,7 @@ public class Lucky extends Weapon.Enchantment {
 		// lvl 1 ~ 12%
 		// lvl 2 ~ 14%
 		if (defender.HP <= damage
-				&& Random.Int( level + 40 ) >= 36){
+				&& Random.Int( level + 20 ) >= 18){
 			Buff.affect(defender, LuckProc.class);
 		}
 		
