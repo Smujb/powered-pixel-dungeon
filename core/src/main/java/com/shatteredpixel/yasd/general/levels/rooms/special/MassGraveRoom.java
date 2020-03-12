@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Skeleton;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
@@ -71,7 +72,7 @@ public class MassGraveRoom extends SpecialRoom {
 
 		//50% 1 skeleton, 50% 2 skeletons
 		for (int i = 0; i <= Random.Int(2); i++){
-			Skeleton skele = new Skeleton();
+			Skeleton skele = Mob.create(Skeleton.class, level);
 
 			int pos;
 			do {
@@ -82,7 +83,7 @@ public class MassGraveRoom extends SpecialRoom {
 		}
 
 		ArrayList<Item> items = new ArrayList<>();
-		//100% corpse dust, 2x100% 1 coin, 2x30% coins, 1x60% random item, 1x30% getArmors
+		//100% corpse dust, 2x100% 1 coin, 2x30% coins, 1x60% random item, 1x30% armour
 		items.add(new CorpseDust());
 		items.add(new Gold(1));
 		items.add(new Gold(1));

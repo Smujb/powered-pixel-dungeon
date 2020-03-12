@@ -159,7 +159,12 @@ public class Necromancer extends Mob {
 			storedSkeletonID = bundle.getInt( MY_SKELETON );
 		}
 	}
-	
+
+	@Override
+	public void onAttackComplete() {
+		onZapComplete();
+	}
+
 	public void onZapComplete(){
 		if (mySkeleton == null || mySkeleton.sprite == null || !mySkeleton.isAlive()){
 			return;

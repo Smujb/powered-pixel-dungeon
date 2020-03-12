@@ -39,14 +39,14 @@ public class RingOfFocus extends Ring {
 
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBonus() * 3);
+			return Messages.get(this, "stats", soloBonus() * 2);
 		} else {
-			return Messages.get(this, "typical_stats", 3);
+			return Messages.get(this, "typical_stats", 2);
 		}
 	}
 
 	public static int focusBonus(Char target ) {
-		return 3 * getBonus(target, FocusBuff.class);
+		return 2 * getBonus(target, FocusBuff.class);
 	}
 
 	public class FocusBuff extends RingBuff {}

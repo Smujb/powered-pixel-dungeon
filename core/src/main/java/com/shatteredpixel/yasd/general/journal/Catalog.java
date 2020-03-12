@@ -62,10 +62,10 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
-import com.shatteredpixel.yasd.general.items.rings.RingOfExpertise;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
-import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
+import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -198,11 +198,11 @@ public enum Catalog {
 		WANDS.seen.put( WandOfCorruption.class,             false);
 		WANDS.seen.put( WandOfRegrowth.class,               false);
 	
-		RINGS.seen.put( RingOfExpertise.class,               false );
+		RINGS.seen.put( RingOfPerception.class,               false );
 		RINGS.seen.put( RingOfFocus.class,                 false );
 		RINGS.seen.put( RingOfElements.class,               false );
-		//RINGS.seen.put( RingOfEvasion.class,                false );
-		RINGS.seen.put( RingOfLuck.class,                   false );
+		//RINGS.seen.put( _Unused.class,                false );
+		RINGS.seen.put( RingOfEvasion.class,                   false );
 		RINGS.seen.put( RingOfFuror.class,                  false );
 		RINGS.seen.put( RingOfHaste.class,                  false );
 		RINGS.seen.put( RingOfPower.class,                  false );

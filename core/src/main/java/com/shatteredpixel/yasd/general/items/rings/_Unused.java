@@ -30,24 +30,27 @@ package com.shatteredpixel.yasd.general.items.rings;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 
-public class RingOfExpertise extends Ring {
+import java.text.DecimalFormat;
 
-	@Override
-	protected RingBuff buff( ) {
-		return new ExpertiseBuff();
-	}
-
+public class _Unused extends Ring {
+	
 	public String statsInfo() {
 		if (isIdentified()){
-			return Messages.get(this, "stats", soloBonus() * 3);
+			return Messages.get(this, "stats", new DecimalFormat("#.##").format(100f * (Math.pow(1.15f, soloBonus()) - 1f)));
 		} else {
-			return Messages.get(this, "typical_stats", 3);
+			return Messages.get(this, "typical_stats", new DecimalFormat("#.##").format(15f));
 		}
 	}
-
-	public static int expertiseBonus(Char target ) {
-		return 3 * getBonus(target, ExpertiseBuff.class);
+	
+	@Override
+	protected RingBuff buff( ) {
+		return new Evasion();
+	}
+	
+	public static float evasionMultiplier( Char target ){
+		return (float) Math.pow( 1.15, getBonus(target, Evasion.class));
 	}
 
-	public class ExpertiseBuff extends RingBuff {}
+	public class Evasion extends RingBuff {
+	}
 }

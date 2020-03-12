@@ -75,10 +75,10 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
-import com.shatteredpixel.yasd.general.items.rings.RingOfExpertise;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
-import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
+import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -489,10 +489,10 @@ public class Generator {
 			FOOD.probs = new float[]{ 4, 1, 0 };
 			
 			RING.classes = new Class<?>[]{
-					RingOfExpertise.class,
-					//RingOfEvasion.class,
+					RingOfPerception.class,
+					//_Unused.class,
 					RingOfElements.class,
-					RingOfLuck.class,
+					RingOfEvasion.class,
 					RingOfFuror.class,
 					RingOfHaste.class,
 					RingOfFocus.class,

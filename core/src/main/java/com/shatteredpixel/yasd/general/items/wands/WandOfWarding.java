@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.actors.mobs.RangedMob;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -53,7 +53,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-public class WandOfWarding extends Wand {
+public class WandOfWarding extends DamageWand {
 
 	{
 		collisionProperties = Ballistica.STOP_TARGET;
@@ -173,7 +173,7 @@ public class WandOfWarding extends Wand {
 		particle.radiateXY(2.5f);
 	}
 
-	public static boolean canPlaceWard(int pos){
+	private static boolean canPlaceWard(int pos){
 
 		for (int i : PathFinder.CIRCLE8){
 			if (Actor.findChar(pos+i) instanceof Ward){
@@ -184,7 +184,25 @@ public class WandOfWarding extends Wand {
 		return true;
 
 	}
-	
+
+	private static float realMin(float lvl) {
+		return 2 + lvl;
+	}
+
+	private static float realMax(float lvl) {
+		return 8 + 4 * lvl;
+	}
+
+	@Override
+	public float min(float lvl) {
+		return realMin(lvl);
+	}
+
+	@Override
+	public float max(float lvl) {
+		return realMax(lvl);
+	}
+
 	@Override
 	public String statsDesc() {
 		if (levelKnown)
@@ -193,7 +211,7 @@ public class WandOfWarding extends Wand {
 			return Messages.get(this, "stats_desc", 3);
 	}
 
-	public static class Ward extends Mob {
+	public static class Ward extends RangedMob {
 
 		public int tier = 1;
 		private int wandLevel = 1;
@@ -305,6 +323,43 @@ public class WandOfWarding extends Wand {
 		}
 
 		@Override
+		public boolean attack(Char enemy, boolean guaranteed) {
+			boolean hit = super.attack(enemy, true);
+			if (hit) {
+				totalZaps++;
+				switch (tier) {
+					case 1:
+					default:
+						if (totalZaps >= tier) {
+							die(this);
+						}
+						break;
+					case 2:
+					case 3:
+						if (totalZaps > tier) {
+							die(this);
+						}
+						break;
+					case 4:
+						damage(5, this, Element.MAGICAL, false);
+						break;
+					case 5:
+						damage(6, this, Element.MAGICAL, false);
+						break;
+					case 6:
+						damage(7, this, Element.MAGICAL, false);
+						break;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public int damageRoll() {
+			return Random.NormalIntRange(Math.round(realMin(wandLevel)), Math.round(realMax(wandLevel)));
+		}
+
+		/*@Override
 		protected boolean doAttack(Char enemy) {
 			boolean visible = fieldOfView[pos] || fieldOfView[enemy.pos];
 			if (visible) {
@@ -352,12 +407,7 @@ public class WandOfWarding extends Wand {
 					damage(7, this, Element.MAGICAL, false );
 					break;
 			}
-		}
-
-		public void onZapComplete() {
-			zap();
-			next();
-		}
+		}*/
 
 		@Override
 		protected boolean getCloser(int target) {

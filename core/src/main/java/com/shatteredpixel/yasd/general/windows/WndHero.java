@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -67,13 +68,29 @@ public class WndHero extends WndTabbed {
 			abilities.visible = abilities.active = selected;
 		}
 	} ;
-	
+
+	private LabeledTab buffsTab = new LabeledTab( Messages.get(this, "buffs") ) {
+		protected void select( boolean value ) {
+			super.select( value );
+			buffs.visible = buffs.active = selected;
+		}
+	};
+
+	private LabeledTab statsTab = new LabeledTab( Messages.get(this, "stats") ) {
+		protected void select( boolean value ) {
+			super.select( value );
+			stats.visible = stats.active = selected;
+		}
+	};
+
 	private SmartTexture icons;
 	private TextureFilm film;
 
 	public void switchToAbilities() {
 		abilities.visible = abilities.active = abilitiesTab.selected = true;
 		abilitiesTab.select(true);
+		buffsTab.select(false);
+		statsTab.select(false);
 		buffs.visible = buffs.active = stats.visible = stats.active = false;
 	}
 	
@@ -97,18 +114,9 @@ public class WndHero extends WndTabbed {
 		abilities = new AbilitiesTab();
 		add( abilities );
 		
-		add( new LabeledTab( Messages.get(this, "stats") ) {
-			protected void select( boolean value ) {
-				super.select( value );
-				stats.visible = stats.active = selected;
-			}
-		} );
-		add( new LabeledTab( Messages.get(this, "buffs") ) {
-			protected void select( boolean value ) {
-				super.select( value );
-				buffs.visible = buffs.active = selected;
-			}
-		} );
+		add( statsTab );
+
+		add( buffsTab );
 
 		add( abilitiesTab );
 		layoutTabs();
@@ -184,25 +192,34 @@ public class WndHero extends WndTabbed {
 			};
 			add( btnFocus );
 			pos += GAP;
-			//Expertise
-			statSlot( Messages.get(this, "expertise"), hero.getExpertise() );
+			//Perception
+			statSlot( Messages.get(this, "perception"), hero.getPerception() );
 			statIncreaseButton btnExpertise = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.increaseExpertise();
+					Dungeon.hero.increasePerception();
 				}
 			};
 			add( btnExpertise );
 			pos += GAP;
-			//Resilience
-			statSlot( Messages.get(this, "stealth"), hero.getStealth());
+			//Evasion
+			statSlot( Messages.get(this, "evasion"), hero.getEvasion());
 			statIncreaseButton btnStealth = new statIncreaseButton() {
 				@Override
 				protected void increaseStat() {
-					Dungeon.hero.increaseStealth();
+					Dungeon.hero.increaseEvasion();
 				}
 			};
 			add( btnStealth );
+			pos += GAP;
+			RedButton btnInfo = new RedButton(Messages.get(this, "info")) {
+				@Override
+				protected void onClick() {
+					MainGame.scene().addToFront(new WndTitledMessage( HeroSprite.avatar(hero.heroClass, 6 ), Messages.get(AbilitiesTab.class, "info_title"), Messages.get(AbilitiesTab.class, "info_desc")));
+				}
+			};
+			add(btnInfo);
+			pos = btnInfo.bottom();
 
 		}
 

@@ -115,7 +115,7 @@ public class ShopRoom extends SpecialRoom {
 
 		int pos = level.pointToCell(center());
 
-		Mob shopkeeper = new Shopkeeper();
+		Mob shopkeeper = Mob.create(Shopkeeper.class, level);
 		shopkeeper.pos = pos;
 		level.mobs.add( shopkeeper );
 
@@ -162,7 +162,7 @@ public class ShopRoom extends SpecialRoom {
 
 	}
 
-	protected static Armor generateArmor(int depth) {
+	private static Armor generateArmor(int depth) {
 		Armor armor;
 		int minTier = depth/5;
 		int maxTier = depth/5 + 2;
@@ -181,7 +181,7 @@ public class ShopRoom extends SpecialRoom {
 		return armor;
 	}
 
-	protected static MeleeWeapon generateWeapon(int depth) {
+	private static MeleeWeapon generateWeapon(int depth) {
 		MeleeWeapon weapon;
 		int minTier = depth/5;
 		int maxTier = depth/5 + 2;
@@ -200,7 +200,7 @@ public class ShopRoom extends SpecialRoom {
 		return weapon;
 	}
 
-	protected static ArrayList<Item> generateItems() {
+	private static ArrayList<Item> generateItems() {
 
 		ArrayList<Item> itemsToSpawn = new ArrayList<>();
 		

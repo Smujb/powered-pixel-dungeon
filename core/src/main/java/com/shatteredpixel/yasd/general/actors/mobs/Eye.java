@@ -139,8 +139,8 @@ public class Eye extends RangedMob {
 	}
 
 	@Override
-	public boolean attack(Char enemy) {
-		boolean attack = super.attack(enemy);
+	public boolean attack(Char enemy, boolean guaranteed) {
+		boolean attack = super.attack(enemy, guaranteed);
 		beamCharged = false;
 		beamCooldown = Random.Int(3, 6);
 		return attack;

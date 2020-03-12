@@ -44,7 +44,7 @@ import com.shatteredpixel.yasd.general.items.food.Food;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
-import com.shatteredpixel.yasd.general.items.rings.RingOfExpertise;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfWealth;
@@ -482,7 +482,7 @@ public class v0_6_X_Changes {
 				"_-_ Decreased lvls to recover rage to 2 from 3\n" +
 				"_-_ Berserking now reduces max health by 20%"));
 		
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_ONYX, null), new RingOfExpertise().trueName(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.RING_ONYX, null), new RingOfPerception().trueName(),
 				"The ring of evasion has always been a very powerful ring, but the recent freerunner rework has increased the power of evasiveness in general, making the ring overbearingly strong.\n\n" +
 				"Evasion synergy has been adjusted:\n" +
 				"_-_ Ring of evasion no longer synergizes as strongly with freerunner or getArmors of swiftness.\n" +

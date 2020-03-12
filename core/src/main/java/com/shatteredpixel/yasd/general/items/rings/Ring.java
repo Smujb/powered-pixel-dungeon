@@ -51,10 +51,10 @@ public class Ring extends KindofMisc {
 	protected Buff buff;
 	
 	private static final Class<?>[] rings = {
-		RingOfExpertise.class,
-		//RingOfEvasion.class,
+		RingOfPerception.class,
+		//_Unused.class,
 		RingOfElements.class,
-		RingOfLuck.class,
+		RingOfEvasion.class,
 		RingOfFuror.class,
 		RingOfHaste.class,
 		RingOfFocus.class,

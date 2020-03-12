@@ -45,11 +45,9 @@ import com.shatteredpixel.yasd.general.actors.buffs.MagicalSight;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.buffs.Shadows;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.actors.mobs.Bestiary;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.actors.mobs.TestBoss;
 import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.particles.FlowParticle;
@@ -108,6 +106,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
 import com.shatteredpixel.yasd.general.tiles.DungeonTileSheet;
 import com.shatteredpixel.yasd.general.utils.BArray;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundlable;
@@ -1292,7 +1291,7 @@ public abstract class Level implements Bundlable {
 					}
 
 				}
-			} else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
+			} /*else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
 				for (Mob mob : mobs) {
 					int p = mob.pos;
 					if (distance( c.pos, p) == 2) {
@@ -1302,9 +1301,11 @@ public abstract class Level implements Bundlable {
 						}
 					}
 				}
-			}
+			}*/
+
 			for (Mob mob : mobs) {
-				if (mob instanceof TestBoss.Tower) {
+				if (Dungeon.hero.notice(mob) && !fieldOfView[mob.pos]) {
+					GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
 					Dungeon.hero.mindVisionEnemies.add(mob);
 				}
 			}

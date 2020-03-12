@@ -332,7 +332,11 @@ public abstract class Char extends Actor {
 		//pre-0.7.0
 	}
 
-	public boolean attack(Char enemy) {
+	public final boolean attack(Char enemy) {
+		return attack(enemy, false);
+	}
+
+	public boolean attack(Char enemy, boolean guaranteed) {
 		if (hasBelongings()) {
 			belongings.nextWeapon();
 		}
@@ -341,7 +345,7 @@ public abstract class Char extends Actor {
 
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
-		if (hit(this, enemy)) {
+		if (hit(this, enemy) | guaranteed) {
 
 			int dmg;
 			Preparation prep = buff(Preparation.class);
@@ -789,16 +793,31 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean notice(Char defender) {
-		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
-			int perception = Random.Int(Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos)));
+		return Random.Float() < this.noticeChance(defender);
+		/*if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
+			int perception = Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos));
 			if (!this.fieldOfView[defender.pos]) {
 				perception /= 4;
 			}
+			perception = Random.Int(perception);
 			int stealth = Random.Int(Math.round(defender.stealth()));
-			//float factor = perception / stealth;
 			return perception > stealth;
 		} else {
 			return false;
+		}*/
+	}
+
+	public float noticeChance(Char defender) {
+		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
+			int perception = Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos));
+			if (!this.fieldOfView[defender.pos]) {
+				perception /= 4;
+			}
+			perception = Random.Int(perception);
+			int stealth = Random.Int(Math.round(defender.stealth()));
+			return (float) (perception/(perception + stealth));
+		} else {
+			return 0f;
 		}
 	}
 

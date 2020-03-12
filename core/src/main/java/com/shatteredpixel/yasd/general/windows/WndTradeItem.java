@@ -42,7 +42,6 @@ import com.shatteredpixel.yasd.general.ui.ItemSlot;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
-import com.watabou.utils.Random;
 
 public class WndTradeItem extends Window {
 	
@@ -142,13 +141,26 @@ public class WndTradeItem extends Window {
 				}
 			};
 
-			//final MasterThievesArmband.Thievery thievery = Dungeon.hero.buff(MasterThievesArmband.Thievery.class);
-			float stealth = Dungeon.hero.stealth();
-			final float chance = Math.max(0f,((1f - (float)Math.pow(0.80, stealth*2))/2) + 0.5f);
+			//Check for shopkeeper
+			Shopkeeper shopkeeper = null;
+			for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+				if (mob instanceof Shopkeeper) {
+					shopkeeper = (Shopkeeper) mob;
+					break;
+				}
+			}
+			//If there's no shopkeeper, stealing has 100% chance of working.
+			boolean steal = true;
+			float chance = 1f;
+			if (shopkeeper != null) {
+				chance = 1f - shopkeeper.noticeChance(Dungeon.hero);
+				steal = shopkeeper.notice(Dungeon.hero);
+			}
+			boolean finalSteal = steal;
 			RedButton btnSteal = new RedButton(Messages.get(this, "steal", Math.min(100, (int) (chance * 100)))) {
 				@Override
 				protected void onClick() {
-					if (Random.Float() < chance) {
+					if (finalSteal) {
 						Hero hero = Dungeon.hero;
 						Item item = heap.pickUp();
 						hide();

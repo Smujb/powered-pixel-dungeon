@@ -217,8 +217,8 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public boolean attack( Char enemy ) {
-		boolean result = super.attack( enemy );
+	public boolean attack( Char enemy, boolean guaranteed ) {
+		boolean result = super.attack( enemy, guaranteed );
 		pumpedUp = 0;
 		return result;
 	}

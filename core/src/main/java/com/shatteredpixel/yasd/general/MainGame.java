@@ -27,6 +27,8 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.scenes.WelcomeScene;
@@ -85,14 +87,14 @@ public class MainGame extends Game {
 				com.shatteredpixel.yasd.general.items.stones.StoneOfDisarming.class,
 				"com.shatteredpixel.yasd.general.items.stones.StoneOfDetectCurse" );
 
-		com.watabou.utils.Bundle.addAlias(com.shatteredpixel.yasd.general.items.rings.RingOfLuck.class,
+		com.watabou.utils.Bundle.addAlias(RingOfEvasion.class,
 				"com.shatteredpixel.yasd.general.items.rings.RingOfForce");
 
-		com.watabou.utils.Bundle.addAlias(com.shatteredpixel.yasd.general.items.rings.RingOfExpertise.class,
+		com.watabou.utils.Bundle.addAlias(RingOfPerception.class,
 				"com.shatteredpixel.yasd.general.items.rings.RingOfAccuracy");
 
-		com.watabou.utils.Bundle.addAlias(com.shatteredpixel.yasd.general.items.rings.RingOfExpertise.class,
-				"com.shatteredpixel.yasd.general.items.rings.RingOfEvasion");
+		com.watabou.utils.Bundle.addAlias(RingOfPerception.class,
+				"com.shatteredpixel.yasd.general.items.rings._Unused");
 		
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic.class,

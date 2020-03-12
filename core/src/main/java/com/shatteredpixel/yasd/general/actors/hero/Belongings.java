@@ -209,7 +209,7 @@ public class Belongings implements Iterable<Item> {
 
 	public float accuracyFactor(float accuracy, Char target) {
 		KindOfWeapon wep = getCurrentWeapon();
-		//accuracy *= RingOfExpertise.accuracyMultiplier(owner);
+		//accuracy *= RingOfPerception.accuracyMultiplier(owner);
 		if (wep instanceof MissileWeapon) {
 			if (Dungeon.level.adjacent(owner.pos, target.pos)) {
 				accuracy *= 0.5f;
@@ -374,7 +374,7 @@ public class Belongings implements Iterable<Item> {
 
 	public float EvasionFactor(float evasion) {
 		ArrayList<Armor> Armors = getArmors();
-		//evasion *= RingOfEvasion.evasionMultiplier(owner);
+		//evasion *= _Unused.evasionMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
 			//evasion *= CurArmour.evasionMultiplier(ownerID);

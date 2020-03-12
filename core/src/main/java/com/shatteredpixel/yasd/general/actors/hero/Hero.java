@@ -86,9 +86,9 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
-import com.shatteredpixel.yasd.general.items.rings.RingOfExpertise;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
-import com.shatteredpixel.yasd.general.items.rings.RingOfLuck;
+import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
@@ -143,10 +143,10 @@ public class Hero extends Char {
 
 	public static final int STARTING_STR = 10;
 
-	private int Power     = 1;
-	private int Focus     = 1;
-	private int Expertise = 1;
-	private int Stealth = 1;
+	private int Power      = 1;
+	private int Focus      = 1;
+	private int Perception = 1;
+	private int Evasion    = 1;
 	public  int DistributionPoints = 0;
 
 	private static final float TIME_TO_REST		    = 1f;
@@ -274,16 +274,16 @@ public class Hero extends Char {
 		return Power + RingOfPower.powerBonus(this);
 	}
 
-	public int getExpertise() {
-		return Expertise + RingOfExpertise.expertiseBonus(this);
+	public int getPerception() {
+		return Perception + RingOfPerception.expertiseBonus(this);
 	}
 
 	public int getFocus() {
 		return Focus + RingOfFocus.focusBonus(this);
 	}
 
-	public int getStealth() {
-		return Stealth + RingOfLuck.luckBonus(this);
+	public int getEvasion() {
+		return Evasion + RingOfEvasion.luckBonus(this);
 	}
 
 	public void setPower(int power) {
@@ -296,12 +296,12 @@ public class Hero extends Char {
 		setPower(Power+1);
 	}
 
-	public void setExpertise(int expertise) {
-		Expertise = expertise;
+	public void setPerception(int perception) {
+		Perception = perception;
 	}
 
-	public void increaseExpertise() {
-		setExpertise(Expertise+1);
+	public void increasePerception() {
+		setPerception(Perception +1);
 	}
 
 	public void setFocus(int focus) {
@@ -312,12 +312,12 @@ public class Hero extends Char {
 		setFocus(Focus+1);
 	}
 
-	public void setStealth(int stealth) {
-		Stealth = stealth;
+	public void setEvasion(int evasion) {
+		Evasion = evasion;
 	}
 
-	public void increaseStealth() {
-		setStealth(Stealth +1);
+	public void increaseEvasion() {
+		setEvasion(Evasion +1);
 	}
 
 	@Override
@@ -334,8 +334,8 @@ public class Hero extends Char {
 	private static final String MORALE      = "morale";
 	private static final String POWER       = "power";
 	private static final String FOCUS       = "focus";
-	private static final String EXPERTISE   = "expertise";
-	private static final String STEALTH     = "combatskill";
+	private static final String PERCEPTION  = "expertise";
+	private static final String EVASION     = "combatskill";
 	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
@@ -363,8 +363,8 @@ public class Hero extends Char {
 		//Hero stats
 		bundle.put( POWER, Power );
 		bundle.put( FOCUS, Focus );
-		bundle.put( EXPERTISE, Expertise);
-		bundle.put( STEALTH, Stealth);
+		bundle.put( PERCEPTION, Perception );
+		bundle.put( EVASION, Evasion );
 		bundle.put( DISTRIBUTIONPOINTS, DistributionPoints );
 	}
 	
@@ -391,8 +391,8 @@ public class Hero extends Char {
 		//Hero stats
 		Power = bundle.getInt( POWER );
 		Focus = bundle.getInt( FOCUS );
-		Expertise = bundle.getInt( EXPERTISE );
-		Stealth = bundle.getInt( STEALTH );
+		Perception = bundle.getInt(PERCEPTION);
+		Evasion = bundle.getInt(EVASION);
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 	}
 
@@ -405,12 +405,16 @@ public class Hero extends Char {
 
 	@Override
 	public float stealth() {
-		return 9 + Stealth;
+		int stealth = 9 + Evasion;
+		if (buff(Drunk.class) != null) {
+			stealth /= 2;
+		}
+		return stealth;
 	}
 
 	@Override
 	public float perception() {
-		return 4 + Stealth;
+		return 4 + Perception;
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle ) {
@@ -465,14 +469,14 @@ public class Hero extends Char {
 
 	@Override
 	public int attackSkill( Char target ) {
-		attackSkill = 9 + Expertise;
+		attackSkill = 9 + Perception;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
 	@Override
 	public int defenseSkill( Char enemy ) {
-		defenseSkill = 3 + Expertise;
+		defenseSkill = 3 + Evasion;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		//GLog.w(String.valueOf(evasion));
 		return (int) (super.defenseSkill(enemy)*(1+moraleMultiplier));
@@ -583,13 +587,6 @@ public class Hero extends Char {
 				
 			} else {
 				actResult = false;
-			}
-		}
-
-		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (notice(mob) && !fieldOfView[mob.pos]) {
-				GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
-				mindVisionEnemies.add(mob);
 			}
 		}
 		
