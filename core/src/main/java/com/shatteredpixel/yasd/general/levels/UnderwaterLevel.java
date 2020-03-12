@@ -101,7 +101,6 @@ public class UnderwaterLevel extends Level {
 	protected boolean build() {
 		setSize(_width, _height);
 		map = Level.basicMap(length());
-		entrance = exit = lightLocations.get(0);
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
 			if ((setSolid[i] || chasmLocations.contains(i)) && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {

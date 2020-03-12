@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
@@ -45,6 +46,7 @@ public class MeleeWeapon extends Weapon {
 	public float defenseFactorMultiplier = 0f;
 
 	public boolean dualWieldpenalty = false;
+	public boolean sneakBenefit = false;
 
 	@Override
 	public boolean canDegrade() {
@@ -71,6 +73,27 @@ public class MeleeWeapon extends Weapon {
 	
 	@Override
 	public int damageRoll(Char owner) {
+		if (sneakBenefit) {
+			Char enemy = null;
+			if (owner instanceof Hero) {
+				enemy = ((Hero) owner).enemy();
+			} else if (owner instanceof Mob){
+				enemy = ((Mob)owner).getEnemy();
+			}
+			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(owner)) {
+				//deals 50% toward max to max on surprise (plus more if the hero's stealth is higher), instead of min to max.
+				float multiplier = 0.5f + (1f - enemy.noticeChance(owner)) * 0.5f;
+				int diff = max() - min();
+				int damage = augment.damageFactor(Random.NormalIntRange(
+						min() + Math.round(diff*multiplier),
+						max()));
+				int exStr = owner.STR() - STRReq();
+				if (exStr > 0) {
+					damage += Random.IntRange(0, exStr);
+				}
+				return damage;
+			}
+		}
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 
 		if (owner instanceof Hero & owner.STR() != Integer.MAX_VALUE) {
@@ -122,7 +145,7 @@ public class MeleeWeapon extends Weapon {
 
 		//String statsInfo = statsInfo();
 		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
-		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack | defenseFactor(Dungeon.hero) > 0) {
+		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack | defenseFactor(Dungeon.hero) > 0 | sneakBenefit) {
 
 			info += "\n";
 
@@ -158,6 +181,10 @@ public class MeleeWeapon extends Weapon {
 
 			if (defenseFactor(Dungeon.hero) > 0) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", 0,  defenseFactor(Dungeon.hero));
+			}
+
+			if (sneakBenefit) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "sneak_benefit");
 			}
 		}
 

@@ -90,6 +90,11 @@ public abstract class Mob extends Char {
 	public float healthFactor = 1f;
 	public float drFactor = 1f;
 	public float elementaldrFactor = 0f;
+	public float attackDelay = 1f;
+	public float accuracyFactor = 1f;
+	public float evasionFactor = 1f;
+	public float perceptionFactor = 1f;
+	public float stealthFactor = 1f;
 
 	public AiState SLEEPING     = new  Sleeping();
 	public AiState HUNTING		= new  Hunting();
@@ -262,21 +267,24 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
+	public int drRoll(Element element) {
+		if (hasBelongings()) {
+			return super.drRoll(element);
+		} else {
+			if (element.isMagical()) {
+				return (int) (normalDRRoll(level) * drFactor);
+			} else {
+				return (int) (normalDRRoll(level) * elementaldrFactor);
+			}
+		}
+	}
+
+	@Override
 	public int attackSkill(Char target) {
 		if (hasBelongings()) {
 			return super.attackSkill(target);
 		} else {
 			return (int) (normalAttackSkill(level) * accuracyFactor);
-		}
-	}
-
-
-	@Override
-	public float perception() {
-		if (hasBelongings()) {
-			return super.perception();
-		} else {
-			return (int) (normalPerception(level) * evasionFactor);
 		}
 	}
 
@@ -290,15 +298,20 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public int drRoll(Element element) {
+	public float stealth() {
 		if (hasBelongings()) {
-			return super.drRoll(element);
+			return super.stealth();
 		} else {
-			if (element.isMagical()) {
-				return (int) (normalDRRoll(level) * drFactor);
-			} else {
-				return (int) (normalDRRoll(level) * elementaldrFactor);
-			}
+			return (int) (normalStealth(level) * stealthFactor);
+		}
+	}
+
+	@Override
+	public float perception() {
+		if (hasBelongings()) {
+			return super.perception();
+		} else {
+			return (int) (normalPerception(level) * perceptionFactor);
 		}
 	}
 
@@ -743,7 +756,11 @@ public abstract class Mob extends Char {
 		return !enemySeen && enemy == Dungeon.hero;
 	}
 
-	public void aggro( Char ch ) {
+	public Char getEnemy() {
+		return enemy;
+	}
+
+	public void aggro(Char ch ) {
 		enemy = ch;
 		if (state != PASSIVE){
 			state = HUNTING;

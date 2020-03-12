@@ -134,7 +134,7 @@ public class WndHero extends WndTabbed {
 
 		private abstract class statIncreaseButton extends RedButton {
 
-			public statIncreaseButton() {
+			statIncreaseButton() {
 				super("+");
 				setRect(WIDTH*0.8f, pos-BTN_HEIGHT, BTN_WIDTH, BTN_HEIGHT);
 			}
@@ -155,7 +155,7 @@ public class WndHero extends WndTabbed {
 			protected abstract void increaseStat();
 		}
 
-		public AbilitiesTab() {
+		AbilitiesTab() {
 
 			Hero hero = Dungeon.hero;
 
@@ -218,6 +218,7 @@ public class WndHero extends WndTabbed {
 					MainGame.scene().addToFront(new WndTitledMessage( HeroSprite.avatar(hero.heroClass, 6 ), Messages.get(AbilitiesTab.class, "info_title"), Messages.get(AbilitiesTab.class, "info_desc")));
 				}
 			};
+			btnInfo.setRect(WIDTH*0.1f, pos, WIDTH*0.8f, BTN_HEIGHT);
 			add(btnInfo);
 			pos = btnInfo.bottom();
 

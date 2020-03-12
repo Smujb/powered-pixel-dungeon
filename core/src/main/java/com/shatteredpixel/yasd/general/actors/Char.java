@@ -143,9 +143,7 @@ public abstract class Char extends Actor {
 	public boolean flying = false;
 	public int invisible = 0;
 
-	public float attackDelay = 1f;
-	public float accuracyFactor = 1f;
-	public float evasionFactor = 1f;
+
 	public float STE = 1f;
 
 	//these are relative to the hero
@@ -456,7 +454,7 @@ public abstract class Char extends Actor {
 		if (drunk != null) {
 			accuracy *= drunk.accuracyFactor();
 		}
-		return (int) (accuracy * accuracyFactor);
+		return (int) (accuracy);
 	}
 
 
@@ -475,7 +473,7 @@ public abstract class Char extends Actor {
 		if (drunk != null) {
 			evasion *= drunk.evasionFactor();
 		}
-		return Math.round(evasion * evasionFactor);
+		return Math.round(evasion);
 	}
 	public String defenseVerb() {
 		return Messages.get(this, "def_verb");
@@ -562,7 +560,7 @@ public abstract class Char extends Actor {
 		if (hasBelongings()) {
 			return belongings.attackDelay();
 		} else {
-			return attackDelay;
+			return 1f;
 		}
 	}
 
@@ -792,30 +790,30 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public boolean notice(Char defender) {
-		return Random.Float() < this.noticeChance(defender);
-		/*if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
-			int perception = Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos));
-			if (!this.fieldOfView[defender.pos]) {
-				perception /= 4;
-			}
-			perception = Random.Int(perception);
-			int stealth = Random.Int(Math.round(defender.stealth()));
-			return perception > stealth;
-		} else {
+	public boolean fieldOfView(int pos) {
+		if (fieldOfView == null) {
 			return false;
-		}*/
+		} else {
+			return fieldOfView[pos];
+		}
+	}
+
+	public boolean notice(Char defender) {
+		return Random.Float() < noticeChance(defender);
 	}
 
 	public float noticeChance(Char defender) {
 		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
-			int perception = Math.round((this.perception() * 2) / Dungeon.level.distance(this.pos, defender.pos));
-			if (!this.fieldOfView[defender.pos]) {
-				perception /= 4;
+			float perception = (this.perception()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)));
+			if (!fieldOfView(defender.pos)) {
+				perception /= 3;
 			}
-			perception = Random.Int(perception);
-			int stealth = Random.Int(Math.round(defender.stealth()));
-			return (float) (perception/(perception + stealth));
+			float stealth = defender.stealth();
+			//Enforced here so we don't get division by zero error
+			if (perception == 0 && stealth == 0) {
+				return 0f;
+			}
+			return perception/(perception + stealth);
 		} else {
 			return 0f;
 		}

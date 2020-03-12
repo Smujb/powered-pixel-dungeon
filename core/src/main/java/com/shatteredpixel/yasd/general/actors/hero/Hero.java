@@ -391,8 +391,8 @@ public class Hero extends Char {
 		//Hero stats
 		Power = bundle.getInt( POWER );
 		Focus = bundle.getInt( FOCUS );
-		Perception = bundle.getInt(PERCEPTION);
-		Evasion = bundle.getInt(EVASION);
+		Perception = bundle.getInt( PERCEPTION );
+		Evasion = bundle.getInt( EVASION );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 	}
 
