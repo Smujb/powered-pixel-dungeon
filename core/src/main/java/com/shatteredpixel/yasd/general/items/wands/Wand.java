@@ -182,6 +182,11 @@ public abstract class Wand extends KindofMisc {
 			return false;
 		}
 
+		if (Dungeon.underwater()) {
+			GLog.w( Messages.get(this, "underwater") );
+			return false;
+		}
+
 		if ( curCharges >= (cursed ? 1 : chargesPerCast())){
 			return true;
 		} else {
@@ -189,21 +194,6 @@ public abstract class Wand extends KindofMisc {
 			return false;
 		}
 	}
-
-	/*@Override
-	public boolean collect( Bag container ) {
-		if (super.collect( container )) {
-			if (container.ownerID != null) {
-				if (container instanceof MagicalHolster)
-					charge( container.ownerID, ((MagicalHolster) container).HOLSTER_SCALE_FACTOR );
-				else
-					charge( container.ownerID );
-			}
-			return true;
-		} else {
-			return false;
-		}
-	}*/
 	
 	public void gainCharge( float amt ){
 		partialCharge += amt;

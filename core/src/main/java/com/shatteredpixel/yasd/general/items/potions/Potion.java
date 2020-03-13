@@ -73,7 +73,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
-import com.shatteredpixel.yasd.general.windows.WndItem;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -88,8 +87,8 @@ public class Potion extends Item {
 
 	public static final String AC_DRINK = "DRINK";
 	
-	//used internally for potions that can be drunk or thrown
-	public static final String AC_CHOOSE = "CHOOSE";
+	//(no longer needed as all items by default have this option)
+	//public static final String AC_CHOOSE = "CHOOSE";
 
 	private static final float TIME_TO_DRINK = 1f;
 
@@ -205,9 +204,10 @@ public class Potion extends Item {
 	//and their sprite is replaced by a placeholder if they are not known,
 	//useful for items that appear in UIs, or which are only spawned for their effects
 	protected boolean anonymous = false;
-	public void anonymize(){
+	public Potion anonymize(){
 		if (!isKnown()) image = ItemSpriteSheet.POTION_HOLDER;
 		anonymous = true;
+		return this;
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class Potion extends Item {
 		if (isKnown() && mustThrowPots.contains(this.getClass())) {
 			defaultAction = AC_THROW;
 		} else if (isKnown() &&canThrowPots.contains(this.getClass())){
-			defaultAction = AC_CHOOSE;
+			defaultAction = AC_INFO;
 		} else {
 			defaultAction = AC_DRINK;
 		}
@@ -252,31 +252,31 @@ public class Potion extends Item {
 
 		super.execute( hero, action );
 		
-		if (action.equals( AC_CHOOSE )){
+		/*if (action.equals( AC_CHOOSE )){
 			
 			GameScene.show(new WndItem(null, this, true) );
 			
-		} else if (action.equals( AC_DRINK )) {
-			
-			if (isKnown() && mustThrowPots.contains(getClass())) {
-				
-					GameScene.show(
-						new WndOptions( Messages.get(Potion.class, "harmful"),
+		} else*/ if (action.equals( AC_DRINK )) {
+			if (Dungeon.underwater()) {
+				GLog.i(Messages.get(this, "underwater"));
+			} else if (isKnown() && mustThrowPots.contains(getClass())) {
+
+				GameScene.show(
+						new WndOptions(Messages.get(Potion.class, "harmful"),
 								Messages.get(Potion.class, "sure_drink"),
-								Messages.get(Potion.class, "yes"), Messages.get(Potion.class, "no") ) {
+								Messages.get(Potion.class, "yes"), Messages.get(Potion.class, "no")) {
 							@Override
 							protected void onSelect(int index) {
 								if (index == 0) {
-									drink( hero );
+									drink(hero);
 								}
 							}
 						}
-					);
-					
-				} else {
-					drink( hero );
-				}
-			
+				);
+
+			} else {
+				drink(hero);
+			}
 		}
 	}
 	

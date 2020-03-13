@@ -64,8 +64,8 @@ public class AlchemicalCatalyst extends Potion {
 	@Override
 	public void apply(Hero hero) {
 		Potion p = Reflection.newInstance(Random.chances(potionChances));
-		p.anonymize();
-		p.apply(hero);
+		p.anonymize().apply(hero);
+		//p.apply(hero);
 	}
 	
 	@Override

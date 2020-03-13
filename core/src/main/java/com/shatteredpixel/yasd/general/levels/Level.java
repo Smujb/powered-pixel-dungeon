@@ -106,7 +106,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
 import com.shatteredpixel.yasd.general.tiles.DungeonTileSheet;
 import com.shatteredpixel.yasd.general.utils.BArray;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundlable;
@@ -1305,7 +1304,7 @@ public abstract class Level implements Bundlable {
 
 			for (Mob mob : mobs) {
 				if (Dungeon.hero.notice(mob) && !fieldOfView[mob.pos]) {
-					GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
+					//GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
 					Dungeon.hero.mindVisionEnemies.add(mob);
 				}
 			}
