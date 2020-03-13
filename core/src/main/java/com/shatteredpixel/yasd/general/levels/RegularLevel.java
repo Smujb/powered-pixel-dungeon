@@ -68,7 +68,7 @@ public abstract class RegularLevel extends Level {
 	
 	protected ArrayList<Room> rooms;
 
-	protected ArrayList<Room> defaultRooms = new ArrayList<>();
+	public ArrayList<Room> defaultRooms = new ArrayList<>();
 	
 	protected Builder builder;
 	

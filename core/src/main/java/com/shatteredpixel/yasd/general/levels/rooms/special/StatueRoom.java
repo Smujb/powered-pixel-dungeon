@@ -27,15 +27,14 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Statue;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.Point;
 
-public class StatueRoom extends SpecialRoom {
+public class StatueRoom extends LockedRoom {
 
 	@Override
 	public int minHeight() {
@@ -57,7 +56,7 @@ public class StatueRoom extends SpecialRoom {
 		return 12;
 	}
 
-	public void paint(Level level ) {
+	public void paintRoom( Level level ) {
 
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY );
@@ -68,8 +67,8 @@ public class StatueRoom extends SpecialRoom {
 		
 		Door door = entrance();
 		
-		door.set( Door.Type.LOCKED );
-		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//door.set( Door.Type.LOCKED );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 		
 		if (door.x == left) {
 			

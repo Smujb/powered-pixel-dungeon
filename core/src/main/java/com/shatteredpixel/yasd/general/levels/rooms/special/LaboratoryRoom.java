@@ -34,11 +34,9 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.journal.AlchemyPage;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.RegularLevel;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Point;
@@ -102,10 +100,10 @@ public class LaboratoryRoom extends SpecialRoom {
 		}
 		
 		if(!missingPages.isEmpty() && chapter >= chapterTarget){
-			
+
 			//for each chapter ahead of the target chapter, drop 1 additional page
 			int pagesToDrop = Math.min(missingPages.size(), (chapter - chapterTarget) + 1);
-			
+
 			for (int i = 0; i < pagesToDrop; i++) {
 				AlchemyPage p = new AlchemyPage();
 				p.page(missingPages.remove(0));
@@ -118,13 +116,13 @@ public class LaboratoryRoom extends SpecialRoom {
 				level.drop(p, pos);
 			}
 		}
-		
-		if (level instanceof RegularLevel && ((RegularLevel)level).hasPitRoom()){
+
+		/*if (level instanceof RegularLevel && ((RegularLevel)level).hasPitRoom()){
 			entrance.set( Door.Type.REGULAR );
 		} else {
 			entrance.set( Door.Type.LOCKED );
 			level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
-		}
+		}*/
 		
 	}
 	

@@ -27,21 +27,21 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.Random;
 
-public class LibraryRoom extends SpecialRoom {
+public class LibraryRoom extends LockedRoom {
 
-	public void paint( Level level ) {
+	@Override
+	public void paintRoom(Level level) {
 		
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY_SP );
@@ -65,9 +65,8 @@ public class LibraryRoom extends SpecialRoom {
 			level.drop( item, pos );
 		}
 		
-		entrance.set( Door.Type.LOCKED );
-		
-		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//entrance.set( Door.Type.LOCKED );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 	}
 	
 	private static Item prize( Level level ) {

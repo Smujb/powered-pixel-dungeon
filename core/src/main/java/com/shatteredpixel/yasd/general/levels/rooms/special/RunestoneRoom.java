@@ -27,17 +27,16 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.stones.Runestone;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.Random;
 
-public class RunestoneRoom extends SpecialRoom {
+public class RunestoneRoom extends LockedRoom {
 	
 	@Override
 	public int minWidth() { return 6; }
@@ -48,7 +47,7 @@ public class RunestoneRoom extends SpecialRoom {
 	}
 	
 	@Override
-	public void paint( Level level) {
+	public void paintRoom( Level level) {
 		
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.CHASM );
@@ -65,8 +64,8 @@ public class RunestoneRoom extends SpecialRoom {
 			level.drop(prize(level), dropPos);
 		}
 		
-		entrance().set( Door.Type.LOCKED );
-		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//entrance().set( Door.Type.LOCKED );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 	}
 	
 	private static Item prize( Level level ) {

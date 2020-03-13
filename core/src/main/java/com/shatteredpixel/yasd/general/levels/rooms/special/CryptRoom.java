@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -54,8 +53,8 @@ public class CryptRoom extends SpecialRoom {
 		
 		Door entrance = entrance();
 		
-		entrance.set( Door.Type.LOCKED );
-		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//entrance.set( Door.Type.LOCKED );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 		
 		if (entrance.x == left) {
 			Painter.set( level, new Point( right-1, top+1 ), Terrain.STATUE );

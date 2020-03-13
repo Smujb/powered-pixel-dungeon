@@ -33,19 +33,19 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.CrystalKey;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class VaultRoom extends SpecialRoom {
+public class VaultRoom extends LockedRoom {
 
-	public void paint( Level level ) {
+	public void paintRoom( Level level ) {
 
 		Painter.fill( level, this, Terrain.WALL );
 		Painter.fill( level, this, 1, Terrain.EMPTY_SP );
@@ -64,13 +64,13 @@ public class VaultRoom extends SpecialRoom {
 		level.drop( i2, c + PathFinder.NEIGHBOURS8[Random.Int( 8 )]).type = Heap.Type.CRYSTAL_CHEST;
 		level.addItemToSpawn( new CrystalKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ) );
 		
-		entrance().set( Door.Type.LOCKED );
-		level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//entrance().set( Door.Type.LOCKED );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 	}
 	
 	private Item prize( Level level ) {
 		Generator.Category cat = prizeClasses.remove(0);
-		Item prize = null;
+		Item prize;
 		do {
 			prize = Generator.random(cat);
 		} while (prize == null || Challenges.isItemBlocked(prize));
