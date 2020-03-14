@@ -91,7 +91,7 @@ public class MagicMap extends Item {
 				new ScrollOfTeleportation().empoweredRead();
 				break;
 			case AC_TEST:
-				InterlevelScene.move(0, 25, 0, "TESTING", InterlevelScene.Mode.DESCEND);
+				InterlevelScene.move(0, 24, 0, "TESTING", InterlevelScene.Mode.DESCEND);
 				break;
 		}
 	}

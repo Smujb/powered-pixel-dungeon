@@ -107,7 +107,11 @@ public class King extends Mob {
 	
 	@Override
 	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 14);
+		if (!element.isMagical()) {
+			return Random.NormalIntRange(0, 14);
+		} else {
+			return 0;
+		}
 	}
 	
 	@Override
