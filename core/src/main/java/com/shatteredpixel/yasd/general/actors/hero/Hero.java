@@ -166,9 +166,6 @@ public class Hero extends Char {
 	
 	public boolean resting = false;
 
-	
-	public float awareness;
-	
 	public int lvl = 1;
 	public int exp = 0;
 	
@@ -275,7 +272,11 @@ public class Hero extends Char {
 	}
 
 	public int getPerception() {
-		return Perception + RingOfPerception.expertiseBonus(this);
+		int perception = Perception + RingOfPerception.perceptionBonus(this);
+		if (buff(Drunk.class) != null) {
+			perception /= 2;
+		}
+		return perception;
 	}
 
 	public int getFocus() {
@@ -283,7 +284,11 @@ public class Hero extends Char {
 	}
 
 	public int getEvasion() {
-		return Evasion + RingOfEvasion.luckBonus(this);
+		int evasion = Evasion + RingOfEvasion.evasionBonus(this);
+		if (buff(Drunk.class) != null) {
+			evasion /= 2;
+		}
+		return evasion;
 	}
 
 	public void setPower(int power) {
@@ -404,16 +409,12 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public float stealth() {
-		int stealth = 9 + getEvasion();
-		if (buff(Drunk.class) != null) {
-			stealth /= 2;
-		}
-		return stealth;
+	public float sneakSkill() {
+		return 9 + getEvasion();
 	}
 
 	@Override
-	public float perception() {
+	public float noticeSkill() {
 		return 4 + getPerception();
 	}
 

@@ -298,18 +298,18 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public float stealth() {
+	public float sneakSkill() {
 		if (hasBelongings()) {
-			return super.stealth();
+			return super.sneakSkill();
 		} else {
 			return (int) (normalStealth(level) * stealthFactor);
 		}
 	}
 
 	@Override
-	public float perception() {
+	public float noticeSkill() {
 		if (hasBelongings()) {
-			return super.perception();
+			return super.noticeSkill();
 		} else {
 			return (int) (normalPerception(level) * perceptionFactor);
 		}
@@ -972,7 +972,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && noticeEnemy()/*Random.Float( distance( enemy ) + enemy.stealth() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
+			if (enemyInFOV && noticeEnemy()/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
 
 				enemySeen = true;
 
@@ -1007,7 +1007,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || noticeEnemy()/*Random.Float( distance( enemy ) / 2f + enemy.stealth() ) < 1)*/)) {
+			if (enemyInFOV && (justAlerted || noticeEnemy()/*Random.Float( distance( enemy ) / 2f + enemy.sneakSkill() ) < 1)*/)) {
 
 				enemySeen = true;
 

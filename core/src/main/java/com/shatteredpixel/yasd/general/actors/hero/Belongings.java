@@ -434,7 +434,7 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
-			//stealth *= CurArmour.stealthMultiplier(ownerID);
+			//sneakSkill *= CurArmour.stealthMultiplier(ownerID);
 
 			if (CurArmour.hasGlyph(Obfuscation.class, owner)){
 				stealth += 1 + CurArmour.level()/3f;

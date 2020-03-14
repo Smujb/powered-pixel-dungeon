@@ -488,7 +488,7 @@ public class v0_6_X_Changes {
 				"_-_ Ring of evasion no longer synergizes as strongly with freerunner or getArmors of swiftness.\n" +
 				"_-_ Previously their affects would multiply together, they now add to eachother instead.\n\n" +
 				"And the ring itself has been nerf/simplified:\n" +
-				"_-_ Ring of evasion no longer grants stealth"));
+				"_-_ Ring of evasion no longer grants sneakSkill"));
 	}
 	
 	public static void add_v0_6_2_Changes( ArrayList<ChangeInfo> changeInfos ){

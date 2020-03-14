@@ -124,8 +124,8 @@ public abstract class Char extends Actor {
 	public String name;
 	public int defenseSkill = 0;
 	public int attackSkill = 0;
-	public int perception = 0;
-	public int stealth = 0;
+	public int noticeSkill = 0;
+	public int sneakSkill = 0;
 
 	public Belongings belongings = null;
 	public int STR;
@@ -807,11 +807,11 @@ public abstract class Char extends Actor {
 
 	public float noticeChance(Char defender) {
 		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance*1.5f) {
-			float perception = (this.perception()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)*2));
+			float perception = (this.noticeSkill()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)*2));
 			if (!fieldOfView(defender.pos)) {
 				perception /= 2;
 			}
-			float stealth = defender.stealth();
+			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error
 			if (perception + stealth == 0) {
 				return 0f;
@@ -822,8 +822,8 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public float perception() {
-		float perception = this.perception;
+	public float noticeSkill() {
+		float perception = this.noticeSkill;
 
 		if (this.buff(MindVision.class) != null) {
 			perception *= 2;
@@ -831,8 +831,8 @@ public abstract class Char extends Actor {
 		return perception;
 	}
 
-	public float stealth() {
-		float stealth = this.stealth;
+	public float sneakSkill() {
+		float stealth = this.sneakSkill;
 		if (hasBelongings()) {
 			stealth = belongings.StealthFactor(stealth);
 		}

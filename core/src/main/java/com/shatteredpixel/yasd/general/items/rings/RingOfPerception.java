@@ -45,7 +45,7 @@ public class RingOfPerception extends Ring {
 		}
 	}
 
-	public static int expertiseBonus(Char target ) {
+	public static int perceptionBonus(Char target ) {
 		return 2 * getBonus(target, ExpertiseBuff.class);
 	}
 

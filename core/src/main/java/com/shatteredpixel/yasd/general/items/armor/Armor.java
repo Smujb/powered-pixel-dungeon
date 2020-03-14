@@ -335,7 +335,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public float stealthMultiplier(Char owner) {
-		float stealth = owner.stealth();
+		float stealth = owner.sneakSkill();
 		return (stealth/stealthFactor(owner,stealth));
 	}
 	

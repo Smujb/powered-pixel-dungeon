@@ -45,7 +45,7 @@ public class RingOfEvasion extends Ring {
 		}
 	}
 
-	public static int luckBonus(Char target ){
+	public static int evasionBonus(Char target ){
 		return 2 * getBonus(target, LuckBuff.class);
 	}
 

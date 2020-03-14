@@ -125,7 +125,7 @@ public class v0_2_X_Changes {
 				"_-_ Ring of Force buffed significantly\n" +
 				"_-_ Ring of Evasion reworked again\n" +
 				"_-_ Improved the effects of some blandfruit types\n" +
-				"_-_ Using throwing weapons now cancels stealth"));
+				"_-_ Using throwing weapons now cancels sneakSkill"));
 		
 		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), Messages.get(ChangesScene.class, "misc"),
 				"_-_ Implemented a donation system in the Google Play version of Shattered\n\n" +

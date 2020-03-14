@@ -81,7 +81,7 @@ public class MeleeWeapon extends Weapon {
 				enemy = ((Mob)owner).getEnemy();
 			}
 			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(owner)) {
-				//deals 50% toward max to max on surprise (plus more if the hero's stealth is higher), instead of min to max.
+				//deals 50% toward max to max on surprise (plus more if the hero's sneakSkill is higher), instead of min to max.
 				float multiplier = 0.5f + (1f - enemy.noticeChance(owner)) * 0.5f;
 				int diff = max() - min();
 				int damage = augment.damageFactor(Random.NormalIntRange(
