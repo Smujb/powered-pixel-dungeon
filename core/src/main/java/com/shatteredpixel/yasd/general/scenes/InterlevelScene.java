@@ -395,14 +395,14 @@ public class InterlevelScene extends PixelScene {
 	}
 
 	private static Level switchDepth(int xPos, int yPos, int zPos, final Mode mode) throws IOException {
-		if (Dungeon.hero != null) {
+		if (Dungeon.hero != null && Dungeon.level != null) {
 			Mob.holdMobs( Dungeon.level );
 			Dungeon.saveAll();
 		}
 		Dungeon.yPos = yPos;
 		Dungeon.xPos = xPos;
 		Dungeon.zPos = zPos;
-		if (mode.equals(Mode.RESURRECT) & Dungeon.hero != null) {
+		if (mode.equals(Mode.RESURRECT) & Dungeon.hero != null & Dungeon.level != null) {
 			if (Dungeon.level.locked) {
 				Dungeon.hero.resurrect( Dungeon.yPos );
 			} else {

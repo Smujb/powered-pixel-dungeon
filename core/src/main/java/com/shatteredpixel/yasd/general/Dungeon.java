@@ -292,10 +292,6 @@ public class Dungeon {
 			HallsBossLevel.class,//Floor 30, boss
 			LastLevel.class//Floor 31, last level
 	));
-
-	/*public static Level newLevel(int depth) {
-		return newLevel(xPos, depth, yPos, true);
-	}*/
 	
 	public static Level newLevel(int x, int y, int z,
 								 boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
@@ -314,14 +310,13 @@ public class Dungeon {
 			Level surface = LevelHandler.getLevel(x, y, 0, GamesInProgress.curSlot);
 			if (surface != null) {
 				level = new UnderwaterLevel().setParent(surface);
-				//level = new LootLevel();
 			}
 		}
-		//level = new LastShopLevel();
-		if (level == null) {
-			level = new DeadEndLevel();
-		}
+		//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
 		if (create) {
+			if (level == null) {
+				level = new DeadEndLevel();
+			}
 			level.create();
 		}
 		return level;
