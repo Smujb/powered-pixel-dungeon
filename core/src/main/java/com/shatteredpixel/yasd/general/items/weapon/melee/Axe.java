@@ -60,9 +60,9 @@ public class Axe extends MeleeWeapon {
 	@Override
 	public String name() {
 		if (tier < 4) {
-			return new HandAxe().name();
+			return Enchantment.getName(HandAxe.class, enchantment);
 		} else  {
-			return new BattleAxe().name();
+			return Enchantment.getName(BattleAxe.class, enchantment);
 		}
 	}
 

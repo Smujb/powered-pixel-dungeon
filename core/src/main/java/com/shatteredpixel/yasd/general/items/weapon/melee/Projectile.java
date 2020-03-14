@@ -48,7 +48,7 @@ public class Projectile extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		return Messages.get(Crossbow.class, "name");
+		return Enchantment.getName(Crossbow.class, enchantment);
 	}
 
 	private static class Crossbow extends MeleeWeapon {}

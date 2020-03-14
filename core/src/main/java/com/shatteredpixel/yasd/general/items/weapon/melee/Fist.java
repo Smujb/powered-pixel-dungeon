@@ -69,11 +69,11 @@ public class Fist extends MeleeWeapon {
 	@Override
 	public String name() {
 		if (tier < 3) {
-			return Messages.get(Gloves.class, "name");
+			return Enchantment.getName(Gloves.class, enchantment);
 		} else if (tier < 5) {
-			return Messages.get(Knuckles.class, "name");
+			return Enchantment.getName(Knuckles.class, enchantment);
 		} else {
-			return Messages.get(Gauntlet.class, "name");
+			return Enchantment.getName(Gauntlet.class, enchantment);
 		}
 	}
 

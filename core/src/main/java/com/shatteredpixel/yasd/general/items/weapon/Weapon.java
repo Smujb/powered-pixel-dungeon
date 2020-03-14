@@ -254,7 +254,8 @@ abstract public class Weapon extends KindOfWeapon {
 	
 	@Override
 	public String name() {
-		return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name( super.name() ) : super.name();
+		//return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name( super.name() ) : super.name();
+		return Enchantment.getName(this.getClass(), enchantment);
 	}
 	
 	@Override
@@ -319,8 +320,8 @@ abstract public class Weapon extends KindOfWeapon {
 
 	public static abstract class Enchantment implements Bundlable {
 
-		public static String getName(Weapon weapon, Enchantment ench) {
-			String name = Messages.get(weapon, "name");
+		public static String getName(Class<? extends Weapon> weaponClass, Enchantment ench) {
+			String name = Messages.get(weaponClass, "name");
 			if (ench != null) {
 				name = ench.name(name);
 			}

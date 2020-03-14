@@ -399,13 +399,13 @@ public class Hero extends Char {
 
 	@Override
 	public int STR() {
-		STR = 10 + Power/2;
+		STR = 10 + getPower()/3;
 		return super.STR();
 	}
 
 	@Override
 	public float stealth() {
-		int stealth = 9 + Evasion;
+		int stealth = 9 + getEvasion();
 		if (buff(Drunk.class) != null) {
 			stealth /= 2;
 		}
@@ -414,7 +414,7 @@ public class Hero extends Char {
 
 	@Override
 	public float perception() {
-		return 4 + Perception;
+		return 4 + getPerception();
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle ) {
@@ -469,14 +469,14 @@ public class Hero extends Char {
 
 	@Override
 	public int attackSkill( Char target ) {
-		attackSkill = 9 + Perception;
+		attackSkill = 9 + getPerception();
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
 	@Override
 	public int defenseSkill( Char enemy ) {
-		defenseSkill = 3 + Evasion;
+		defenseSkill = 3 + getEvasion();
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		//GLog.w(String.valueOf(evasion));
 		return (int) (super.defenseSkill(enemy)*(1+moraleMultiplier));

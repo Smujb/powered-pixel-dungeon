@@ -67,11 +67,11 @@ public class Polearm extends MeleeWeapon {
 	@Override
 	public String name() {
 		if (tier >= 4) {
-			return Enchantment.getName(new Glaive(), enchantment);
+			return Enchantment.getName(Glaive.class, enchantment);
 		} else if (tier > 1) {
-			return Enchantment.getName(new Spear(), enchantment);
+			return Enchantment.getName(Spear.class, enchantment);
 		} else {
-			return Enchantment.getName(new PrimitiveSpear(), enchantment);
+			return Enchantment.getName(PrimitiveSpear.class, enchantment);
 		}
 	}
 

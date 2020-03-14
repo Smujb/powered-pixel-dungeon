@@ -62,9 +62,9 @@ public class Staff extends MeleeWeapon {
 	@Override
 	public String name() {
 		if (tier < 4) {
-		return Messages.get(Quarterstaff.class, "name");
+			return Enchantment.getName(Quarterstaff.class, enchantment);
 		} else  {
-			return Messages.get(Rod.class, "name");
+			return Enchantment.getName(Rod.class, enchantment);
 		}
 	}
 

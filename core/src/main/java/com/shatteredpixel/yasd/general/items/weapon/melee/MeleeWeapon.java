@@ -162,9 +162,7 @@ public class MeleeWeapon extends Weapon {
 			}
 
 			if (RCH > 1f) {
-				info += "\n" + Messages.get(MeleeWeapon.class, "reach_increase", RCH);
-			} else if (RCH < 1f) {
-				info += "\n" + Messages.get(MeleeWeapon.class, "reach_decrease", RCH);
+				info += "\n" + Messages.get(MeleeWeapon.class, "reach_increase", RCH - 1);
 			}
 
 			if (dualWieldpenalty) {

@@ -49,7 +49,7 @@ public class Heavy extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		return Messages.get(Greataxe.class, "name");
+		return Enchantment.getName(Greataxe.class, enchantment);
 	}
 
 	private static class Greataxe extends MeleeWeapon {}
