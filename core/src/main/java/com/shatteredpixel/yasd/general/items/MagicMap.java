@@ -89,7 +89,9 @@ public class MagicMap extends Item {
 
 	public static class WndChooseDepth extends Window {
 
-		//private static final int WIDTH		= MainGame.width;
+		private static int getWidth() {
+			return MainGame.width/2;
+		}
 		private static final int BTN_HEIGHT	= 20;
 		private static final float GAP		= 2;
 
@@ -98,11 +100,11 @@ public class MagicMap extends Item {
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon(new ItemSprite(item.image() , null));
 			titlebar.label(Messages.titleCase(item.name()));
-			titlebar.setRect(0, 0, MainGame.width, 0);
+			titlebar.setRect(0, 0, getWidth(), 0);
 			add( titlebar );
 
 			RenderedTextBlock message = PixelScene.renderTextBlock( "Choose xPos, yPos and zPos:", 6 );
-			message.maxWidth(MainGame.width);
+			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );
 
@@ -116,7 +118,7 @@ public class MagicMap extends Item {
 				}
 			};
 			xPosSlider.setSelectedValue(GameSettings.brightness());
-			xPosSlider.setRect(0, message.bottom() + GAP, MainGame.width, BTN_HEIGHT);
+			xPosSlider.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(xPosSlider);
 
 			OptionSlider yPosSlider = new OptionSlider("Choose yPos",
@@ -127,7 +129,7 @@ public class MagicMap extends Item {
 				}
 			};
 			yPosSlider.setSelectedValue(Dungeon.yPos);
-			yPosSlider.setRect(0, xPosSlider.bottom() + GAP, MainGame.width, BTN_HEIGHT);
+			yPosSlider.setRect(0, xPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(yPosSlider);
 
 			OptionSlider zPosSlider = new OptionSlider("Choose zPos",
@@ -138,7 +140,7 @@ public class MagicMap extends Item {
 				}
 			};
 			zPosSlider.setSelectedValue(Dungeon.yPos);
-			zPosSlider.setRect(0, xPosSlider.bottom() + GAP, MainGame.width, BTN_HEIGHT);
+			zPosSlider.setRect(0, yPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(zPosSlider);
 
 			RedButton btnGo = new RedButton( "GO" ) {
@@ -147,10 +149,19 @@ public class MagicMap extends Item {
 					InterlevelScene.move(position[0], position[1], position[2], "TEST", InterlevelScene.Mode.DESCEND);
 				}
 			};
-			btnGo.setRect(0, zPosSlider.bottom() + GAP, MainGame.width, BTN_HEIGHT);
+			btnGo.setRect(0, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
-			resize(MainGame.width, (int) btnGo.bottom());
+			RedButton btnCancel = new RedButton( "CANCEL" ) {
+				@Override
+				protected void onClick() {
+					hide();
+				}
+			};
+			btnCancel.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			add( btnCancel );
+
+			resize(getWidth(), (int) btnGo.bottom());
 		}
 	}
 
