@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
@@ -65,6 +66,7 @@ public class MagicMap extends Item {
 		actions.add(AC_MAP);
 		actions.add(AC_TP);
 		actions.add(AC_TEST);
+		actions.add(AC_KILL);
 		return actions;
 	}
 
@@ -72,6 +74,7 @@ public class MagicMap extends Item {
 	private static final String AC_MAP = "map";
 	private static final String AC_TP = "tp";
 	private static final String AC_TEST = "test";
+	private static final String AC_KILL = "kill";
 
 	@Override
 	public void execute(Hero hero, String action) {
@@ -92,6 +95,12 @@ public class MagicMap extends Item {
 				break;
 			case AC_TEST:
 				InterlevelScene.move(0, 24, 0, "TESTING", InterlevelScene.Mode.DESCEND);
+				break;
+			case AC_KILL:
+				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+					mob.die(this);
+					GLog.i("All ded");
+				}
 				break;
 		}
 	}

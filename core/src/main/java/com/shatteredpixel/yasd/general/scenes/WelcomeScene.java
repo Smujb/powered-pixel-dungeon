@@ -104,7 +104,7 @@ public class WelcomeScene extends PixelScene {
 				super.onClick();
 				if (previousVersion == 0){
 					GameSettings.version(MainGame.versionCode);
-					WelcomeScene.this.add(new WndStartGame(1));
+					WelcomeScene.this.add(new WndStartGame(1, false));
 				} else {
 					updateVersion(previousVersion);
 					MainGame.switchScene(TitleScene.class);

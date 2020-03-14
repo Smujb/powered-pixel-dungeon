@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.MagicMap;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -118,10 +119,16 @@ public enum HeroClass {
 		if (Dungeon.isChallenged(Challenges.NO_FOOD)){
 			new SmallRation().collect();
 		}
-		//new MagicMap().collect();
 		new ScrollOfIdentify().identify().collect();
 		new StoneOfRepair().collect();
 		new Beer().collect();
+		if (Dungeon.testing) {
+			initTest(hero);
+		}
+	}
+
+	public static void initTest(Hero hero) {
+		new MagicMap().collect(hero.belongings.backpack);
 	}
 
 	public Badges.Badge masteryBadge() {

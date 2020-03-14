@@ -163,6 +163,8 @@ public class Dungeon {
 	public static int xPos;
 	public static int zPos;
 	public static int gold;
+
+	public static boolean testing = false;
 	
 	public static HashSet<Integer> chapters;
 
@@ -183,6 +185,8 @@ public class Dungeon {
 		challenges = GameSettings.challenges();
 
 		seed = DungeonSeed.randomSeed();
+
+		testing = GameSettings.testing();
 
 		Actor.clear();
 		Actor.resetNextID();
@@ -479,9 +483,11 @@ public class Dungeon {
 	private static final String BADGES		= "badges";
 	private static final String DIFFICULTY  = "difficulty";
 	private static final String LEVELSLOADED= "levels-loaded";
-	private static final String XPOS = "xPos";
-	private static final String YPOS = "yPos";
-	private static final String ZPOS = "zPos";
+	private static final String XPOS	    = "xPos";
+	private static final String YPOS 		= "yPos";
+	private static final String ZPOS 		= "zPos";
+	private static final String TESTING 	= "testing";
+
 	private static String levelKey(int x, int y, int z) {
 		return LEVELSLOADED + x + "_" + y + "_" + z;
 	}
@@ -500,6 +506,7 @@ public class Dungeon {
 			bundle.put(XPOS, xPos);
 			bundle.put(ZPOS, zPos);
 			bundle.put( DIFFICULTY, difficulty );
+			bundle.put( TESTING, testing );
 
 			for (int x = 0; x <= Constants.MAX_X; x++) {
 				for (int y = 0; y <= Constants.MAX_Y; y++) {
@@ -597,6 +604,8 @@ public class Dungeon {
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
 		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
+
+		testing = bundle.contains(TESTING) ? GameSettings.testing() : bundle.getBoolean(TESTING);
 
 		//xPos = bundle.contains(XPOS) ? bundle.getInt(XPOS) : 0;
 

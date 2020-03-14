@@ -141,18 +141,18 @@ public class UnderwaterLevel extends Level {
 	protected void createItems() {
 		for (int i = 0; i < NUM_ITEMS; i++) {
 			Item item;
-			switch (Random.Int(4)) {
+			switch (Random.Int(10)) {
 				case 0: default:
 					item = Generator.random(Generator.Category.GOLD);
 					break;
-				case 1:
+				case 1: case 2:
 					item = Generator.random(Generator.Category.STONE);
 					break;
-				case 2:
+				case 3:
 					item = Generator.randomWeapon();
 					item.use(Item.MAXIMUM_DURABILITY*Random.Float(), true);
 					break;
-				case 3:
+				case 4:
 					item = Generator.randomArmor();
 					item.use(Item.MAXIMUM_DURABILITY*Random.Float(), true);
 					break;

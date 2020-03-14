@@ -122,9 +122,9 @@ public class InterlevelScene extends PixelScene {
 							level = restore();
 						} else {
 							if (Dungeon.hero != null) {
-								level = switchDepth(xPos, yPos, zPos, mode);
+								level = switchDepth(xPos,yPos, zPos, mode);
 							} else {
-								level = switchDepth(0,1, 0, Mode.DESCEND);
+								level = initGame();
 							}
 						}
 
@@ -368,11 +368,6 @@ public class InterlevelScene extends PixelScene {
 		returnPos = pos;
 	}
 
-	public static void resurface(int pos) {
-		move(Dungeon.xPos, Dungeon.yPos, 0, Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN);
-		returnPos = pos;
-	}
-
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
 		msg = Messages.get(Mode.class, Mode.CONTINUE.name());
@@ -388,23 +383,26 @@ public class InterlevelScene extends PixelScene {
 		MainGame.switchScene(InterlevelScene.class);
 	}
 
-	public static void resetMode() {
+	static void resetMode() {
 		InterlevelScene.mode = Mode.NONE;
 	}
 
+	private Level initGame() throws IOException {
+		Mob.clearHeldAllies();
+		Dungeon.init();
+		GameLog.wipe();
+		return switchDepth(0, 1, 0, Mode.DESCEND);
+	}
+
 	private static Level switchDepth(int xPos, int yPos, int zPos, final Mode mode) throws IOException {
-		if (Dungeon.hero == null) {
-			Mob.clearHeldAllies();
-			Dungeon.init();
-			GameLog.wipe();
-		} else {
+		if (Dungeon.hero != null) {
 			Mob.holdMobs( Dungeon.level );
 			Dungeon.saveAll();
 		}
 		Dungeon.yPos = yPos;
 		Dungeon.xPos = xPos;
 		Dungeon.zPos = zPos;
-		if (mode.equals(Mode.RESURRECT)) {
+		if (mode.equals(Mode.RESURRECT) & Dungeon.hero != null) {
 			if (Dungeon.level.locked) {
 				Dungeon.hero.resurrect( Dungeon.yPos );
 			} else {

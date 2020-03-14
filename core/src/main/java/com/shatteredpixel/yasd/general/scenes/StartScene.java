@@ -265,7 +265,7 @@ public class StartScene extends PixelScene {
 		@Override
 		protected void onClick() {
 			if (newGame) {
-				MainGame.scene().add( new WndStartGame(slot));
+				MainGame.scene().add( new WndStartGame(slot, false));
 			} else {
 				MainGame.scene().add( new WndGameInProgress(slot));
 			}

@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.ActionIndicator;
+import com.shatteredpixel.yasd.general.ui.CheckBox;
 import com.shatteredpixel.yasd.general.ui.IconButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.OptionSlider;
@@ -63,10 +64,33 @@ public class WndStartGame extends Window {
 	private static final int SLIDER_HEIGHT	= 20;
 	private static final int GAP_TINY 		= 2;
 
-	public WndStartGame(final int slot){
+	public WndStartGame(final int slot, boolean longPress){
 		
 		Badges.loadGlobal();
 		Journal.loadGlobal();
+
+		if (!longPress) {
+			GameSettings.testing(false);
+		}
+
+		if (GamesInProgress.selectedClass == null) {
+			HeroClass cl = null;
+			switch (GameSettings.lastClass()) {
+				case 0:
+					cl = HeroClass.WARRIOR;
+					break;
+				case 1:
+					cl = HeroClass.MAGE;
+					break;
+				case 2:
+					cl = HeroClass.ROGUE;
+					break;
+				case 3:
+					cl = HeroClass.HUNTRESS;
+					break;
+			}
+			GamesInProgress.selectedClass = cl;
+		}
 		
 		RenderedTextBlock title = PixelScene.renderTextBlock(Messages.get(this, "title"), 12 );
 		title.hardlight(Window.TITLE_COLOR);
@@ -166,8 +190,24 @@ public class WndStartGame extends Window {
 			Dungeon.challenges = 0;
 			GameSettings.challenges(0);
 		}
+
+		int bottom = (int) difficulty.bottom();
+
+		if (longPress) {
+			bottom += 20;
+			final CheckBox BoxTesting = new CheckBox("TEST MODE"){
+				@Override
+				protected void onClick() {
+					super.onClick();
+					GameSettings.testing(checked());
+				}
+			};
+			BoxTesting.setRect(0, HEIGHT , WIDTH, 20);
+			BoxTesting.checked(GameSettings.testing());
+			add(BoxTesting);
+		}
 		
-		resize(WIDTH, (int) difficulty.bottom());
+		resize(WIDTH, bottom);
 		
 	}
 	
@@ -184,15 +224,20 @@ public class WndStartGame extends Window {
 			super();
 			
 			this.cl = cl;
-			
-			if (cl == HeroClass.WARRIOR){
-				hero = new Image(Assets.WARRIOR, 0, 90, 12, 15);
-			} else if (cl == HeroClass.MAGE){
-				hero = new Image(Assets.MAGE, 0, 90, 12, 15);
-			} else if (cl == HeroClass.ROGUE){
-				hero = new Image(Assets.ROGUE, 0, 90, 12, 15);
-			} else if (cl == HeroClass.HUNTRESS){
-				hero = new Image(Assets.HUNTRESS, 0, 90, 12, 15);
+
+			switch (cl) {
+				case WARRIOR:
+					hero = new Image(Assets.WARRIOR, 0, 90, 12, 15);
+					break;
+				case MAGE:
+					hero = new Image(Assets.MAGE, 0, 90, 12, 15);
+					break;
+				case ROGUE:
+					hero = new Image(Assets.ROGUE, 0, 90, 12, 15);
+					break;
+				case HUNTRESS:
+					hero = new Image(Assets.HUNTRESS, 0, 90, 12, 15);
+					break;
 			}
 			add(hero);
 			
@@ -225,7 +270,6 @@ public class WndStartGame extends Window {
 		@Override
 		protected void onClick() {
 			super.onClick();
-			
 			if(cl.locked()){
 				MainGame.scene().add(
 						new WndMessage(cl.unlockMsg()));

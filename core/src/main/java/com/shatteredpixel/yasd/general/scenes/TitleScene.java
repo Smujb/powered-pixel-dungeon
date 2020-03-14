@@ -109,7 +109,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				if (GamesInProgress.checkAll().size() == 0){
-					TitleScene.this.add( new WndStartGame(1) );
+					TitleScene.this.add( new WndStartGame(1, false) );
 				} else {
 					MainGame.switchScene( StartScene.class );
 				}
@@ -119,7 +119,7 @@ public class TitleScene extends PixelScene {
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
 				if (DeviceCompat.isDebug()) {
-					TitleScene.this.add( new WndStartGame(1) );
+					TitleScene.this.add( new WndStartGame(1, true) );
 					return true;
 				}
 				return super.onLongClick();
