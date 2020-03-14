@@ -297,7 +297,7 @@ public class Dungeon {
 								 boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
 		
 		Level level;
-		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that you hadn't defined a level class.
+		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that I haven't defined a level class.
 		if (x == 0 && z == 0 && y < levelClasses.size()) {
 			levelClass = levelClasses.get(y);
 		} else if (x == 1) {
@@ -330,6 +330,8 @@ public class Dungeon {
 		return loadedDepths[x][y][z];
 	}
 
+
+	//Probably going to update this later.
 	public static boolean underwater() {
 		return level instanceof UnderwaterLevel;
 	}

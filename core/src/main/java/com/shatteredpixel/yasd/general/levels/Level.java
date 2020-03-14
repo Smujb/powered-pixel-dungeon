@@ -164,7 +164,8 @@ public abstract class Level implements Bundlable {
 	private static final float TIME_TO_RESPAWN = 50;
 
 	public int version;
-	
+
+	//FIXME: make Terrain[][] (2D array). Possibly also 3D if I make 3D levels.
 	public Terrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
