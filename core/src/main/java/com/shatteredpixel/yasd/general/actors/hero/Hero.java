@@ -410,12 +410,14 @@ public class Hero extends Char {
 
 	@Override
 	public float sneakSkill() {
-		return 9 + getEvasion();
+		sneakSkill = 9 + getEvasion();
+		return super.sneakSkill();
 	}
 
 	@Override
 	public float noticeSkill() {
-		return 4 + getPerception();
+		noticeSkill = 4 + getPerception();
+		return super.noticeSkill();
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle ) {

@@ -838,7 +838,7 @@ public abstract class Char extends Actor {
 		}
 
 		if (this.buff(Invisibility.class) != null) {
-			stealth += 5;
+			stealth *= 2;
 		}
 		return stealth;
 	}
