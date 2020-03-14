@@ -320,6 +320,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 	public static abstract class Enchantment implements Bundlable {
 
+		//Why is this static when it takes an enchant as an argument? Well, it prevents me doing a null-check every time I want to use it (as enchantment can be null and often is)
 		public static String getName(Class<? extends Weapon> weaponClass, Enchantment ench) {
 			String name = Messages.get(weaponClass, "name");
 			if (ench != null) {

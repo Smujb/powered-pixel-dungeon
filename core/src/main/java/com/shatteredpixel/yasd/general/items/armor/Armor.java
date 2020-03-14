@@ -446,7 +446,7 @@ public class Armor extends KindofMisc {
 	
 	@Override
 	public String name() {
-		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.name( super.name() ) : super.name();
+		return Glyph.getName(this.getClass(), glyph);
 	}
 
 	@Override
@@ -462,9 +462,8 @@ public class Armor extends KindofMisc {
 		if (levelKnown) {
 			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, DRMin(), DRMax(), STRReq());
 
-			if (magicalDRMax() > 0) {
-				info += " " + Messages.get(Armor.class, "curr_absorb_magic",  magicalDRMin(), magicalDRMax());
-			}
+			info += " " + Messages.get(Armor.class, "curr_absorb_magic",  magicalDRMin(), magicalDRMax());
+
 			
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
@@ -643,6 +642,14 @@ public class Armor extends KindofMisc {
 	}
 	
 	public static abstract class Glyph implements Bundlable {
+
+		public static String getName(Class<? extends Armor> armClass, Glyph gly) {
+			String name = Messages.get(armClass, "name");
+			if (gly != null) {
+				name = gly.name(name);
+			}
+			return name;
+		}
 		
 		private static final Class<?>[] common = new Class<?>[]{
 				Obfuscation.class, Swiftness.class, Viscosity.class, Potential.class };

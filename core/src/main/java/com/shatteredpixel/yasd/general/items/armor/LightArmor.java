@@ -64,11 +64,11 @@ public class LightArmor extends Armor {
 	@Override
 	public String name() {
 		if (tier == 0) {
-			return Messages.get(Cloth.class, "name");
+			return Glyph.getName(Cloth.class, glyph);
 		} else if (tier < 4) {
-			return Messages.get(Hide.class, "name");
+			return Glyph.getName(Hide.class, glyph);
 		} else  {
-			return Messages.get(Leather.class, "name");
+			return Glyph.getName(Leather.class, glyph);
 		}
 	}
 

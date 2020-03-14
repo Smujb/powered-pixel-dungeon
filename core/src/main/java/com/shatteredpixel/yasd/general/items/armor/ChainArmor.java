@@ -66,11 +66,11 @@ public class ChainArmor extends Armor {
 	@Override
 	public String name() {
 		if (tier < 3) {
-			return Messages.get(Studded.class, "name");
+			return Glyph.getName(Studded.class, glyph);
 		} else if (tier < 5) {
-			return Messages.get(RingMail.class, "name");
+			return Glyph.getName(RingMail.class, glyph);
 		} else {
-			return Messages.get(Mail.class, "name");
+			return Glyph.getName(Mail.class, glyph);
 		}
 	}
 

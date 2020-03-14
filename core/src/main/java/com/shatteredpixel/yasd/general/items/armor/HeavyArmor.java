@@ -62,9 +62,9 @@ public class HeavyArmor extends Armor {
 	@Override
 	public String name() {
 		if (tier < 4) {
-			return Messages.get(Plate.class, "name");
+			return Glyph.getName(Plate.class, glyph);
 		} else  {
-			return Messages.get(Lead.class, "name");
+			return Glyph.getName(Lead.class, glyph);
 		}
 	}
 
