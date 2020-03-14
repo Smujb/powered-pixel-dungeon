@@ -29,9 +29,13 @@ package com.shatteredpixel.yasd.general.levels.rooms;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
+import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
+import com.watabou.utils.Random;
 
 public abstract class LockedRoom extends SpecialRoom {
 	@Override
@@ -42,14 +46,38 @@ public abstract class LockedRoom extends SpecialRoom {
 			if (regularLevel.hasPitRoom()) {
 				entrance().set(Door.Type.REGULAR);
 			} else {
-				setKey(level);
+
+				switch (Random.Int(10)) {
+					case 0: default:
+						setKeyDoor(level);
+						break;
+					case 1:
+						setChasmDoor(level);
+						break;
+					case 2:
+						setBarricadeDoor(level);
+						break;
+				}
+
 			}
 		} else {
-			setKey(level);
+			setKeyDoor(level);
 		}
 	}
 
-	public void setKey(Level level) {
+	private void setChasmDoor(Level level) {
+		level.map[level.XY(entrance().x, entrance().y)] = Terrain.CHASM;
+		entrance().type = Door.Type.EMPTY;
+		level.addItemToSpawn(new PotionOfLevitation());
+	}
+
+	private void setBarricadeDoor(Level level) {
+		level.map[level.XY(entrance().x, entrance().y)] = Terrain.BARRICADE;
+		entrance().type = Door.Type.EMPTY;
+		level.addItemToSpawn(new PotionOfLiquidFlame());
+	}
+
+	private void setKeyDoor(Level level) {
 		entrance().set(Door.Type.LOCKED);
 		level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 	}

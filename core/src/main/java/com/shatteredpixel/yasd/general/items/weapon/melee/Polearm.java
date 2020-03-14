@@ -46,8 +46,10 @@ public class Polearm extends MeleeWeapon {
 	public int image() {
 		if (tier >= 4) {
 			return ItemSpriteSheet.GLAIVE;
-		} else {
+		} else if (tier > 1) {
 			return ItemSpriteSheet.SPEAR;
+		} else {
+			return ItemSpriteSheet.PRIMITIVE_SPEAR;
 		}
 	}
 
@@ -55,17 +57,21 @@ public class Polearm extends MeleeWeapon {
 	public String desc() {
 		if (tier >= 4) {
 			return Messages.get(Glaive.class, "desc");
-		} else {
+		} else if (tier > 1) {
 			return Messages.get(Spear.class, "desc");
+		} else {
+			return Messages.get(PrimitiveSpear.class, "desc");
 		}
 	}
 
 	@Override
 	public String name() {
 		if (tier >= 4) {
-			return Messages.get(Glaive.class, "name");
+			return Enchantment.getName(new Glaive(), enchantment);
+		} else if (tier > 1) {
+			return Enchantment.getName(new Spear(), enchantment);
 		} else {
-			return Messages.get(Spear.class, "name");
+			return Enchantment.getName(new PrimitiveSpear(), enchantment);
 		}
 	}
 
@@ -73,4 +79,6 @@ public class Polearm extends MeleeWeapon {
 	private static class Glaive extends MeleeWeapon {}
 
 	private static class Spear extends MeleeWeapon {}
+
+	private static class PrimitiveSpear extends MeleeWeapon {}
 }

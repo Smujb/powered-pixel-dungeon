@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
 
 public class SwitchRoom extends SpecialRoom {
+
 	@Override
 	public void paint(Level level) {
 		Painter.fill( level, this, Terrain.WALL );

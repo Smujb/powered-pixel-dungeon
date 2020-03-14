@@ -803,14 +803,14 @@ public abstract class Char extends Actor {
 	}
 
 	public float noticeChance(Char defender) {
-		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance) {
-			float perception = (this.perception()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)));
+		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance*1.5f) {
+			float perception = (this.perception()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)*2));
 			if (!fieldOfView(defender.pos)) {
-				perception /= 3;
+				perception /= 2;
 			}
 			float stealth = defender.stealth();
 			//Enforced here so we don't get division by zero error
-			if (perception == 0 && stealth == 0) {
+			if (perception + stealth == 0) {
 				return 0f;
 			}
 			return perception/(perception + stealth);

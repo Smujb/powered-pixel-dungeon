@@ -68,7 +68,7 @@ public abstract class RegularLevel extends Level {
 	
 	protected ArrayList<Room> rooms;
 
-	public ArrayList<Room> defaultRooms = new ArrayList<>();
+	private ArrayList<Room> defaultRooms = new ArrayList<>();
 	
 	protected Builder builder;
 	
@@ -94,8 +94,6 @@ public abstract class RegularLevel extends Level {
 			rooms = builder.build((ArrayList<Room>)initRooms.clone(), this);
 		} while (rooms == null);
 
-
-		
 		return painter().paint(this, rooms);
 		
 	}

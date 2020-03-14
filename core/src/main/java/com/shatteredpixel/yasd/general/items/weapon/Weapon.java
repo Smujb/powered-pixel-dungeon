@@ -318,6 +318,14 @@ abstract public class Weapon extends KindOfWeapon {
 	}
 
 	public static abstract class Enchantment implements Bundlable {
+
+		public static String getName(Weapon weapon, Enchantment ench) {
+			String name = Messages.get(weapon, "name");
+			if (ench != null) {
+				name = ench.name(name);
+			}
+			return name;
+		}
 		
 		private static final Class<?>[] common = new Class<?>[]{
 				Blazing.class, Chilling.class, Kinetic.class, Shocking.class};
