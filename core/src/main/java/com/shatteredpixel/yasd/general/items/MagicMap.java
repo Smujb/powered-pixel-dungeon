@@ -50,6 +50,7 @@ import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.watabou.noosa.Camera;
+import com.watabou.utils.PlatformSupport;
 
 import java.util.ArrayList;
 
@@ -79,6 +80,7 @@ public class MagicMap extends Item {
 		actions.add(AC_TP);
 		actions.add(AC_TEST);
 		actions.add(AC_KILL);
+		actions.add(AC_ITEM);
 		return actions;
 	}
 
@@ -86,15 +88,129 @@ public class MagicMap extends Item {
 	private static final String AC_MAP = "map";
 	private static final String AC_TP = "tp";
 	private static final String AC_TEST = "test";
+	private static final String AC_ITEM = "item";
 	private static final String AC_KILL = "kill";
 
-	public static class WndChooseDepth extends Window {
 
-		private static int getWidth() {
-			return (int) (Camera.main.width*0.8f);
+	private static final int BTN_HEIGHT	= 20;
+	private static final float GAP		= 2;
+	private static final String BASE_NAME = "com.shatteredpixel.yasd.general.items.";
+	private static int getWidth() {
+		return (int) (Camera.main.width*0.8f);
+	}
+
+	public static class WndGetItem extends Window {
+
+		private IconTitle titlebar;
+		private final Item[] items = new Item[1];
+		private final int[] amounts = new int[1];
+		private final int[] levels = new int[1];
+		private RenderedTextBlock message;
+
+		private static String name(Item item) {
+			return item.getClass().getName();
 		}
-		private static final int BTN_HEIGHT	= 20;
-		private static final float GAP		= 2;
+
+		public WndGetItem(Item item) {
+			super();
+
+			items[0] = item;
+			amounts[0] = 1;
+			levels[0] = 0;
+
+			titlebar = new IconTitle();
+			titlebar.icon(new ItemSprite(items[0].image(), null));
+			titlebar.label(Messages.titleCase(items[0].name()));
+			titlebar.setRect(0, 0, getWidth(), 0);
+			add(titlebar);
+
+			message = PixelScene.renderTextBlock("Choose an item (currently " + name(items[0]) + ")", 6);
+			message.maxWidth(getWidth());
+			message.setPos(0, titlebar.bottom() + GAP);
+			add(message);
+
+			final WndGetItem window = this;
+
+			RedButton btnChoose = new RedButton( "Input Item" ) {
+				@Override
+				protected void onClick() {
+					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(items[0]).replace(BASE_NAME, ""), Integer.MAX_VALUE, false, "CHOOSE", "CANCEL", new PlatformSupport.TextCallback() {
+
+						@Override
+						public void onSelect(boolean positive, String text) {
+							if (positive) {
+								try {
+									items[0] = (Item) Class.forName(BASE_NAME + text).newInstance();
+									GLog.p("Successfully fetched item.");
+								} catch (ClassNotFoundException e) {
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									e.printStackTrace();
+								} catch (InstantiationException e) {
+									e.printStackTrace();
+								}
+								window.update();
+							}
+						}
+					});
+				}
+			};
+			btnChoose.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
+			add( btnChoose );
+
+			OptionSlider quantitySlider = new OptionSlider("Choose quantity",
+					"0", "25", 0, 25) {
+				@Override
+				protected void onChange() {
+					amounts[0] = getSelectedValue();
+					update();
+				}
+			};
+			quantitySlider.setSelectedValue(Dungeon.yPos);
+			quantitySlider.setRect(0, btnChoose.bottom() + GAP, getWidth(), BTN_HEIGHT);
+			add(quantitySlider);
+
+			OptionSlider levelSlider = new OptionSlider("Choose upgrade level",
+					"0", "" + Constants.UPGRADE_LIMIT, 0, Constants.UPGRADE_LIMIT) {
+				@Override
+				protected void onChange() {
+					levels[0] = getSelectedValue();
+					update();
+				}
+			};
+			levelSlider.setSelectedValue(Dungeon.yPos);
+			levelSlider.setRect(0, quantitySlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
+			add(levelSlider);
+
+			RedButton btnGo = new RedButton( "Collect" ) {
+				@Override
+				protected void onClick() {
+					if (items[0].quantity(amounts[0]).level(levels[0]).collect()) {
+						GLog.p("Successfully added item " + item.name() + " to entity #" + Dungeon.hero.id() + "'s backpack.");
+					}
+				}
+			};
+			btnGo.setRect(getWidth()/2, levelSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			add( btnGo );
+
+			resize(getWidth(), (int) btnGo.bottom());
+
+		}
+
+		@Override
+		public synchronized void update() {
+			super.update();
+			titlebar.icon(new ItemSprite(items[0].image(), null));
+			titlebar.label(Messages.titleCase(items[0].name()));
+			titlebar.setRect(0, 0, getWidth(), 0);
+
+			message = PixelScene.renderTextBlock("Choose an item (currently " + name(items[0]) + ")", 6);
+			message.maxWidth(getWidth());
+			message.setPos(0, titlebar.bottom() + GAP);
+		}
+	}
+
+	public static class WndChooseDepth extends Window {
 
 		public WndChooseDepth(Item item) {
 			super();
@@ -116,6 +232,7 @@ public class MagicMap extends Item {
 				@Override
 				protected void onChange() {
 					position[0] = getSelectedValue();
+					update();
 				}
 			};
 			xPosSlider.setSelectedValue(GameSettings.brightness());
@@ -127,6 +244,7 @@ public class MagicMap extends Item {
 				@Override
 				protected void onChange() {
 					position[1] = getSelectedValue();
+					update();
 				}
 			};
 			yPosSlider.setSelectedValue(Dungeon.yPos);
@@ -138,6 +256,7 @@ public class MagicMap extends Item {
 				@Override
 				protected void onChange() {
 					position[2] = getSelectedValue();
+					update();
 				}
 			};
 			zPosSlider.setSelectedValue(Dungeon.yPos);
@@ -185,6 +304,9 @@ public class MagicMap extends Item {
 				break;
 			case AC_TEST:
 				MainGame.scene().addToFront(new WndChooseDepth(this));
+				break;
+			case AC_ITEM:
+				MainGame.scene().addToFront(new WndGetItem(this));
 				break;
 			case AC_KILL:
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {

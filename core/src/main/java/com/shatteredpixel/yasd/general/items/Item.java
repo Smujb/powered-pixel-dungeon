@@ -388,10 +388,11 @@ public class Item implements Bundlable {
 		return level;
 	}
 
-	public void level( int value ){
+	public Item level( int value ){
 		level = value;
 
 		updateQuickslot();
+		return this;
 	}
 	
 	public Item upgrade() {
