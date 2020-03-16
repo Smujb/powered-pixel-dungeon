@@ -254,7 +254,7 @@ public class MagicMap extends Item {
 
 				}
 			};
-			btnGo.setRect(getWidth()/2, levelSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnGo.setRect(getWidth()/4, checkIdentified.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
 			resize(getWidth(), (int) btnGo.bottom());
