@@ -202,7 +202,7 @@ public class WndStartGame extends Window {
 					GameSettings.testing(checked());
 				}
 			};
-			BoxTesting.setRect(0, HEIGHT , WIDTH, 20);
+			BoxTesting.setRect(0, difficulty.bottom(), WIDTH, 20);
 			BoxTesting.checked(GameSettings.testing());
 			add(BoxTesting);
 		}

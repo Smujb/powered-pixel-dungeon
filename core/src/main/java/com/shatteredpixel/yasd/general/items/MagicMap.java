@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.general.ui.CheckBox;
 import com.shatteredpixel.yasd.general.ui.OptionSlider;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -102,29 +103,57 @@ public class MagicMap extends Item {
 	public static class WndGetItem extends Window {
 
 		private IconTitle titlebar;
-		private final Item[] items = new Item[1];
+		private final Class[] itemClass = new Class[1];
 		private final int[] amounts = new int[1];
 		private final int[] levels = new int[1];
+		private final boolean[] identified = new boolean[1];
+		private final boolean[] cursed = new boolean[1];
 		private RenderedTextBlock message;
 
-		private static String name(Item item) {
-			return item.getClass().getName();
+		private static String name(Class item) {
+			return item.getName().replace(BASE_NAME, "");
+		}
+
+		private static Item getItem(Class itemClass) {
+			Item item;
+			try {
+				item = (Item) itemClass.newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				item = new MagicMap();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				item = new MagicMap();
+			}
+			return item;
 		}
 
 		public WndGetItem(Item item) {
 			super();
 
-			items[0] = item;
+			itemClass[0] = item.getClass();
 			amounts[0] = 1;
 			levels[0] = 0;
+			cursed[0] = false;
+			identified[0] = false;
 
 			titlebar = new IconTitle();
-			titlebar.icon(new ItemSprite(items[0].image(), null));
-			titlebar.label(Messages.titleCase(items[0].name()));
+			/*try {
+				item = (Item) itemClass[0].newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+				item = new MagicMap();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+				item = new MagicMap();
+			}*/
+			item = getItem(itemClass[0]);
+			titlebar.icon(new ItemSprite(item.image(), null));
+			titlebar.label(Messages.titleCase(item.name()));
 			titlebar.setRect(0, 0, getWidth(), 0);
 			add(titlebar);
 
-			message = PixelScene.renderTextBlock("Choose an item (currently " + name(items[0]) + ")", 6);
+			message = PixelScene.renderTextBlock("Choose an item (currently " + name(itemClass[0]) + ")", 6);
 			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 			add(message);
@@ -134,19 +163,15 @@ public class MagicMap extends Item {
 			RedButton btnChoose = new RedButton( "Input Item" ) {
 				@Override
 				protected void onClick() {
-					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(items[0]).replace(BASE_NAME, ""), Integer.MAX_VALUE, false, "CHOOSE", "CANCEL", new PlatformSupport.TextCallback() {
+					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(itemClass[0]), Integer.MAX_VALUE, false, "CHOOSE", "CANCEL", new PlatformSupport.TextCallback() {
 
 						@Override
 						public void onSelect(boolean positive, String text) {
 							if (positive) {
 								try {
-									items[0] = (Item) Class.forName(BASE_NAME + text).newInstance();
+									itemClass[0] = Class.forName(BASE_NAME + text);
 									GLog.p("Successfully fetched item.");
 								} catch (ClassNotFoundException e) {
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									e.printStackTrace();
-								} catch (InstantiationException e) {
 									e.printStackTrace();
 								}
 								window.update();
@@ -159,14 +184,14 @@ public class MagicMap extends Item {
 			add( btnChoose );
 
 			OptionSlider quantitySlider = new OptionSlider("Choose quantity",
-					"0", "25", 0, 25) {
+					"1", "25", 1, 25) {
 				@Override
 				protected void onChange() {
 					amounts[0] = getSelectedValue();
 					update();
 				}
 			};
-			quantitySlider.setSelectedValue(Dungeon.yPos);
+			quantitySlider.setSelectedValue(amounts[0]);
 			quantitySlider.setRect(0, btnChoose.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(quantitySlider);
 
@@ -178,16 +203,55 @@ public class MagicMap extends Item {
 					update();
 				}
 			};
-			levelSlider.setSelectedValue(Dungeon.yPos);
+			levelSlider.setSelectedValue(levels[0]);
 			levelSlider.setRect(0, quantitySlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(levelSlider);
+
+			CheckBox checkIdentified = new CheckBox("Identified") {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					WndGetItem.this.identified[0] = checked();
+				}
+			};
+			checkIdentified.setRect(0, levelSlider.bottom(), getWidth(), BTN_HEIGHT);
+			checkIdentified.checked(identified[0]);
+			add(checkIdentified);
+
+			CheckBox checkCursed = new CheckBox("Cursed") {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					WndGetItem.this.cursed[0] = checked();
+				}
+			};
+			checkCursed.setRect(0, checkIdentified.bottom(), getWidth(), BTN_HEIGHT);
+			checkCursed.checked(cursed[0]);
+			add(checkCursed);
 
 			RedButton btnGo = new RedButton( "Collect" ) {
 				@Override
 				protected void onClick() {
-					if (items[0].quantity(amounts[0]).level(levels[0]).collect()) {
+					Item item = getItem(itemClass[0]);
+					if (cursed[0]) {
+						item.curse();
+					}
+
+					if (identified[0]) {
+						item.identify();
+					}
+
+					if (amounts[0] > 1) {
+						item.quantity(amounts[0]);
+					}
+
+					if (levels[0] > 0) {
+						item.level(levels[0]);
+					}
+					if (item.collect()) {
 						GLog.p("Successfully added item " + item.name() + " to entity #" + Dungeon.hero.id() + "'s backpack.");
 					}
+
 				}
 			};
 			btnGo.setRect(getWidth()/2, levelSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
@@ -200,11 +264,13 @@ public class MagicMap extends Item {
 		@Override
 		public synchronized void update() {
 			super.update();
-			titlebar.icon(new ItemSprite(items[0].image(), null));
-			titlebar.label(Messages.titleCase(items[0].name()));
+
+			Item item = getItem(itemClass[0]);
+			titlebar.icon(new ItemSprite(item.image(), null));
+			titlebar.label(Messages.titleCase(item.name()));
 			titlebar.setRect(0, 0, getWidth(), 0);
 
-			message = PixelScene.renderTextBlock("Choose an item (currently " + name(items[0]) + ")", 6);
+			message.text("Choose an item (currently " + name(itemClass[0]) + ")");
 			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 		}

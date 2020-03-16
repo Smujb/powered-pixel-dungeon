@@ -239,9 +239,10 @@ public abstract class Wand extends KindofMisc {
 		}
 	}
 	
-	public void level( int value) {
+	public Item level( int value) {
 		super.level( value );
 		updateLevel();
+		return this;
 	}
 	
 	@Override

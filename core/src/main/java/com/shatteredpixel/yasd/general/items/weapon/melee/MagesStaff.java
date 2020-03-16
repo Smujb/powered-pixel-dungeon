@@ -109,9 +109,10 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public void level(int value) {
+	public Item level(int value) {
 		updateWand(false);
 		super.level(value);
+		return this;
 	}
 
 	@Override
