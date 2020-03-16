@@ -49,6 +49,7 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
+import com.watabou.noosa.Camera;
 
 import java.util.ArrayList;
 
@@ -90,7 +91,7 @@ public class MagicMap extends Item {
 	public static class WndChooseDepth extends Window {
 
 		private static int getWidth() {
-			return MainGame.width/2;
+			return (int) (Camera.main.width*0.8f);
 		}
 		private static final int BTN_HEIGHT	= 20;
 		private static final float GAP		= 2;
@@ -110,7 +111,7 @@ public class MagicMap extends Item {
 
 			int[] position = new int[] {Dungeon.xPos, Dungeon.yPos, Dungeon.zPos};
 
-			OptionSlider xPosSlider = new OptionSlider("Choose xPos",
+			OptionSlider xPosSlider = new OptionSlider("Choose xPos (Currently: " + Dungeon.xPos + ", target: " + position[0] + ")",
 					"0", "" + Constants.MAX_X, 0, Constants.MAX_X) {
 				@Override
 				protected void onChange() {
@@ -121,7 +122,7 @@ public class MagicMap extends Item {
 			xPosSlider.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(xPosSlider);
 
-			OptionSlider yPosSlider = new OptionSlider("Choose yPos",
+			OptionSlider yPosSlider = new OptionSlider("Choose yPos (Currently: " + Dungeon.yPos + ", target: " + position[1] + ")",
 					"0", "" + Constants.MAX_Y, 0, Constants.MAX_Y) {
 				@Override
 				protected void onChange() {
@@ -132,7 +133,7 @@ public class MagicMap extends Item {
 			yPosSlider.setRect(0, xPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(yPosSlider);
 
-			OptionSlider zPosSlider = new OptionSlider("Choose zPos",
+			OptionSlider zPosSlider = new OptionSlider("Choose zPos (Currently: " + Dungeon.zPos + ", target: " + position[2] + ")",
 					"0", "" + Constants.MAX_Z, 0, Constants.MAX_Z) {
 				@Override
 				protected void onChange() {
@@ -143,23 +144,23 @@ public class MagicMap extends Item {
 			zPosSlider.setRect(0, yPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(zPosSlider);
 
-			RedButton btnGo = new RedButton( "GO" ) {
-				@Override
-				protected void onClick() {
-					InterlevelScene.move(position[0], position[1], position[2], "TEST", InterlevelScene.Mode.DESCEND);
-				}
-			};
-			btnGo.setRect(0, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
-			add( btnGo );
-
 			RedButton btnCancel = new RedButton( "CANCEL" ) {
 				@Override
 				protected void onClick() {
 					hide();
 				}
 			};
-			btnCancel.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnCancel.setRect(0, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnCancel );
+
+			RedButton btnGo = new RedButton( "GO" ) {
+				@Override
+				protected void onClick() {
+					InterlevelScene.move(position[0], position[1], position[2], "TEST", InterlevelScene.Mode.DESCEND);
+				}
+			};
+			btnGo.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			add( btnGo );
 
 			resize(getWidth(), (int) btnGo.bottom());
 		}
