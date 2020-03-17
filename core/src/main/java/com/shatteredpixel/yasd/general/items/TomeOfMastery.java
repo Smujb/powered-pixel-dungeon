@@ -49,10 +49,11 @@ public class TomeOfMastery extends Item {
 	public static final String AC_READ	= "READ";
 	
 	{
-		stackable = false;
 		image = ItemSpriteSheet.MASTERY;
 		
 		unique = true;
+
+		stackable = true;
 	}
 	
 	@Override

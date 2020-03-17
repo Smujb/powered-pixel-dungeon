@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
@@ -225,7 +226,7 @@ public class MagicMap extends Item {
 					WndGetItem.this.cursed[0] = checked();
 				}
 			};
-			checkCursed.setRect(0, checkIdentified.bottom(), getWidth(), BTN_HEIGHT);
+			checkCursed.setRect(0, checkIdentified.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			checkCursed.checked(cursed[0]);
 			add(checkCursed);
 
@@ -233,6 +234,8 @@ public class MagicMap extends Item {
 				@Override
 				protected void onClick() {
 					Item item = getItem(itemClass[0]);
+					Char ch = Dungeon.hero;
+					int num = 1;
 					if (cursed[0]) {
 						item.curse();
 					}
@@ -242,22 +245,31 @@ public class MagicMap extends Item {
 					}
 
 					if (amounts[0] > 1) {
-						item.quantity(amounts[0]);
+						if (item.stackable) {
+							item.quantity(amounts[0]);
+						} else {
+							num = amounts[0];
+						}
 					}
 
 					if (levels[0] > 0) {
 						item.level(levels[0]);
 					}
-					if (item.collect()) {
-						GLog.p("Successfully added item " + item.name() + " to entity #" + Dungeon.hero.id() + "'s backpack.");
+					for (int i = 0; i < num; i++) {
+						if (item.collect(ch.belongings.backpack)) {
+							GLog.p("Successfully added item " + item.name() + " to entity #" + ch.id() + "'s backpack.");
+						} else {
+							GLog.p("Item " + item.name() + " could not be added to entity #" + ch.id() + "'s backpack, so it was dropped below them.");
+							Dungeon.level.drop(item, ch.pos).sprite.drop();
+						}
 					}
 
 				}
 			};
-			btnGo.setRect(getWidth()/4, checkIdentified.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnGo.setRect(getWidth()/4, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
-			resize(getWidth(), (int) btnGo.bottom());
+			resize(getWidth(), (int) (btnGo.bottom() + GAP));
 
 		}
 
