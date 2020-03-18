@@ -96,7 +96,7 @@ public class ReclaimTrap extends TargetedSpell {
 	}
 	
 	@Override
-	public void doDrop(Hero hero) {
+	public void doDrop(@NotNull Hero hero) {
 		storedTrap = null;
 		super.doDrop(hero);
 	}

@@ -42,6 +42,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Skeleton extends Mob {
 	
 	{
@@ -68,7 +70,7 @@ public class Skeleton extends Mob {
 	}*/
 	
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		
 		super.die( cause );
 		

@@ -93,7 +93,7 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	@Override
-	public void doDrop(Hero hero) {
+	public void doDrop(@NotNull Hero hero) {
 		returnDepth = -1;
 		super.doDrop(hero);
 	}

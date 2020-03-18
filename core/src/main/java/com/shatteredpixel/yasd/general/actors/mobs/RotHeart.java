@@ -110,7 +110,7 @@ public class RotHeart extends Mob {
 	}
 
 	@Override
-	public void die(DamageSrc cause) {
+	public void die(@NotNull DamageSrc cause) {
 		super.die(cause);
 		Dungeon.level.drop( new Rotberry.Seed(), pos ).sprite.drop();
 	}

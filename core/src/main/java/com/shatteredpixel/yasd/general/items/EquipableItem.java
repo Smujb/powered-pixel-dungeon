@@ -37,6 +37,8 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public abstract class EquipableItem extends Item {
@@ -80,7 +82,7 @@ public abstract class EquipableItem extends Item {
 	}
 
 	@Override
-	public void doDrop(Hero hero) {
+	public void doDrop(@NotNull Hero hero) {
 		if (!isEquipped(hero) || doUnequip(hero, false, false)) {
 			super.doDrop(hero);
 		}

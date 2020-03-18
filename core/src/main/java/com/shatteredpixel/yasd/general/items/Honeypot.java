@@ -42,6 +42,8 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Honeypot extends Item {
@@ -173,7 +175,7 @@ public class Honeypot extends Item {
 		}
 
 		@Override
-		public void doDrop(Hero hero) {
+		public void doDrop(@NotNull Hero hero) {
 			super.doDrop(hero);
 			dropPot(hero, hero.pos);
 		}

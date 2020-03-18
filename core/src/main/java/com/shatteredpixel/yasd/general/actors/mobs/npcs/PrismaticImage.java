@@ -50,6 +50,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class PrismaticImage extends NPC {
@@ -116,7 +118,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public void die(DamageSrc cause) {
+	public void die(@NotNull DamageSrc cause) {
 		if (deathTimer == -1) {
 			if (cause.getCause() == Chasm.class){
 				super.die( cause );

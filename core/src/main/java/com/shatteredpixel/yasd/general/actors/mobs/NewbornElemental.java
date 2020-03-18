@@ -35,6 +35,8 @@ import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.items.quest.Embers;
 import com.shatteredpixel.yasd.general.sprites.NewbornElementalSprite;
 
+import org.jetbrains.annotations.NotNull;
+
 public class NewbornElemental extends Elemental {
 
 	{
@@ -60,7 +62,7 @@ public class NewbornElemental extends Elemental {
 	}
 
 	@Override
-	public void die(DamageSrc cause) {
+	public void die(@NotNull DamageSrc cause) {
 		super.die(cause);
 		Dungeon.level.drop( new  Embers(), pos ).sprite.drop();
 	}

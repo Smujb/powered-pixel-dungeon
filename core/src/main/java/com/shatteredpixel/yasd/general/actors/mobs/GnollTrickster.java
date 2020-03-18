@@ -43,6 +43,8 @@ import com.shatteredpixel.yasd.general.sprites.GnollTricksterSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class GnollTrickster extends Mob {
 
 	{
@@ -109,7 +111,7 @@ public class GnollTrickster extends Mob {
 	}
 	
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		super.die( cause );
 
 		Ghost.Quest.process();

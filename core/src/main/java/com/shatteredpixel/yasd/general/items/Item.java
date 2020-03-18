@@ -205,7 +205,7 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public void doDrop( Hero hero ) {
+	public void doDrop(@NotNull Hero hero ) {
 		hero.spendAndNext(TIME_TO_DROP);
 		Dungeon.level.drop(detachAll(hero.belongings.backpack), hero.pos).sprite.drop(hero.pos);
 	}

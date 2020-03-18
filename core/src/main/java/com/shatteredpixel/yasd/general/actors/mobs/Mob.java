@@ -833,7 +833,7 @@ public abstract class Mob extends Char {
 	}
 	
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		
 		if (hitWithRanged){
 			Statistics.thrownAssists++;

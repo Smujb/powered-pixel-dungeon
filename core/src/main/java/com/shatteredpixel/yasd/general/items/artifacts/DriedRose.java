@@ -719,7 +719,7 @@ public class DriedRose extends Artifact {
 		}
 
 		@Override
-		public void die(DamageSrc cause) {
+		public void die(@NotNull DamageSrc cause) {
 			sayDefeated();
 			super.die(cause);
 		}

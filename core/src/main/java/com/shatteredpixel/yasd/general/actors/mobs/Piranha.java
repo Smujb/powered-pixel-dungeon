@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.sprites.PiranhaSprite;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Piranha extends WaterMob {
 	
 	{
@@ -88,7 +90,7 @@ public class Piranha extends WaterMob {
 	}*/
 	
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		super.die( cause );
 		
 		Statistics.piranhasKilled++;

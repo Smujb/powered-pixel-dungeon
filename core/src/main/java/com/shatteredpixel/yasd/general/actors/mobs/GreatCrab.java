@@ -85,7 +85,7 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		super.die( cause );
 
 		Ghost.Quest.process();

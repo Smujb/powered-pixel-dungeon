@@ -51,6 +51,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Necromancer extends Mob {
 	
 	{
@@ -108,7 +110,7 @@ public class Necromancer extends Mob {
 	}
 	
 	@Override
-	public void die(DamageSrc cause) {
+	public void die(@NotNull DamageSrc cause) {
 		if (storedSkeletonID != -1){
 			Actor ch = Actor.findById(storedSkeletonID);
 			storedSkeletonID = -1;

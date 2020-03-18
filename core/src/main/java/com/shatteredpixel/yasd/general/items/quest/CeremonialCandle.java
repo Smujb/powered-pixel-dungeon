@@ -43,6 +43,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 
@@ -71,7 +73,7 @@ public class CeremonialCandle extends Item {
 	}
 
 	@Override
-	public void doDrop(Hero hero) {
+	public void doDrop(@NotNull Hero hero) {
 		super.doDrop(hero);
 		checkCandles();
 	}

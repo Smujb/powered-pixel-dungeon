@@ -210,7 +210,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 
 		super.die( cause );
 
@@ -322,7 +322,7 @@ public class TestBoss extends Mob {
 		}
 
 		@Override
-		public void die(DamageSrc cause) {
+		public void die(@NotNull DamageSrc cause) {
 			super.die(cause);
 			sprite.emitter().burst(SparkParticle.FACTORY, 10);
 		}

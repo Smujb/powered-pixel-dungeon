@@ -242,7 +242,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		
 		super.die( cause );
 		

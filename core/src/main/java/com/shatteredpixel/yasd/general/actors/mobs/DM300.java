@@ -151,7 +151,7 @@ public class DM300 extends Mob {
 	}
 
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		
 		super.die( cause );
 		

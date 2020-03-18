@@ -1399,7 +1399,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void die(DamageSrc cause  ) {
+	public void die(@NotNull DamageSrc cause  ) {
 		
 		curAction = null;
 

@@ -605,6 +605,7 @@ public abstract class Char extends Actor {
 	}
 
 
+	@NotNull
 	@Contract(" -> new")
 	private DamageSrc defaultSrc() {
 		return new DamageSrc(this.elementalType(), this);
@@ -696,7 +697,7 @@ public abstract class Char extends Actor {
 		Actor.remove( this );
 	}
 
-	public void die(DamageSrc src ) {
+	public void die(@NotNull DamageSrc src ) {
 		destroy();
 		if (src.getCause() != Chasm.class) sprite.die();
 	}
@@ -751,7 +752,7 @@ public abstract class Char extends Actor {
 		return null;
 	}
 
-	public synchronized boolean isCharmedBy( Char ch ) {
+	public synchronized boolean isCharmedBy(@NotNull Char ch ) {
 		int chID = ch.id();
 		for (Buff b : buffs) {
 			if (b instanceof Charm && ((Charm)b).object == chID) {
@@ -818,11 +819,11 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public boolean notice(Char defender) {
+	public boolean notice(@NotNull Char defender) {
 		return Random.Float() < noticeChance(defender);
 	}
 
-	public float noticeChance(Char defender) {
+	public float noticeChance(@NotNull Char defender) {
 		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance*1.5f) {
 			float perception = (this.noticeSkill()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)*2));
 			if (!fieldOfView(defender.pos)) {

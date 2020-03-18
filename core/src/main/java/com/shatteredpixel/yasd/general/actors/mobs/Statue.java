@@ -260,7 +260,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	@Override
-	public void die(DamageSrc cause ) {
+	public void die(@NotNull DamageSrc cause ) {
 		dropGear();
 		super.die( cause );
 	}
