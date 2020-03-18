@@ -175,7 +175,7 @@ public abstract class Scroll extends Item {
 	}
 	
 	@Override
-	public void execute( Hero hero, String action ) {
+	public void execute( @NotNull Hero hero, String action ) {
 
 		super.execute( hero, action );
 
@@ -193,7 +193,7 @@ public abstract class Scroll extends Item {
 				GLog.n( Messages.get(this, "cursed") );
 			} else {
 				curUser = hero;
-				//curItem = detach( hero.belongings.backpack );
+				detach( hero.belongings.backpack );
 				doRead();
 			}
 			

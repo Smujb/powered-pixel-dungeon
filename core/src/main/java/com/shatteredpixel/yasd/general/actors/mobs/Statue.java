@@ -50,6 +50,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Statue extends Mob implements Callback {
@@ -211,7 +213,7 @@ public class Statue extends Mob implements Callback {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 
 		if (state == PASSIVE) {
 			state = HUNTING;

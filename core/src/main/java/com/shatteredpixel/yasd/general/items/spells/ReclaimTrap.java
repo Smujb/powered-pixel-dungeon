@@ -44,6 +44,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ReclaimTrap extends TargetedSpell {
 	
 	{
@@ -128,13 +130,13 @@ public class ReclaimTrap extends TargetedSpell {
 	private static final String STORED_TRAP = "stored_trap";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(STORED_TRAP, storedTrap);
 	}
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		storedTrap = bundle.getClass(STORED_TRAP);
 	}

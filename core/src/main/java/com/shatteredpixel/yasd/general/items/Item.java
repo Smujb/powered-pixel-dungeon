@@ -58,7 +58,9 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -264,7 +266,7 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	public boolean collect( Bag container, Char ch ) {
+	public boolean collect(@NotNull Bag container, @NotNull Char ch ) {
 		
 		ArrayList<Item> items = container.items;
 
@@ -275,7 +277,7 @@ public class Item implements Bundlable {
 		
 		for (Item item:items) {
 			if (item instanceof Bag && ((Bag)item).grab( this )) {
-				return collect( (Bag)item, Dungeon.hero);
+				return collect( (Bag)item, ch);
 			}
 		}
 		
@@ -334,22 +336,18 @@ public class Item implements Bundlable {
 			return split;
 		}
 	}
-	
-	public final Item detach( Bag container ) {
 
-		curUser = null;
+	@Nullable
+	public final Item detach(Bag container ) {
 		
 		if (quantity <= 0) {
-			
 			return null;
 			
-		} else
-		if (quantity == 1) {
+		} else if (quantity == 1) {
 
 			if (stackable){
 				Dungeon.quickslot.convertToPlaceholder(this);
 			}
-
 			return detachAll( container );
 			
 		} else {
@@ -411,7 +409,8 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	final public Item upgrade( int n ) {
+	@Contract("_ -> this")
+	final public Item upgrade(int n ) {
 		for (int i=0; i < n; i++) {
 			upgrade();
 		}
@@ -426,7 +425,8 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	final public Item degrade( int n ) {
+	@Contract("_ -> this")
+	final public Item degrade(int n ) {
 		for (int i=0; i < n; i++) {
 			degrade();
 		}
@@ -462,7 +462,7 @@ public class Item implements Bundlable {
 	}
 
 
-	public boolean isEquipped(Char owner ) {
+	public boolean isEquipped(@NotNull Char owner ) {
 		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
 	}
 
@@ -484,7 +484,7 @@ public class Item implements Bundlable {
 		//do nothing by default
 	}
 	
-	public static void evoke( Hero hero ) {
+	public static void evoke(@NotNull Hero hero ) {
 		hero.sprite.emitter().burst( Speck.factory( Speck.EVOKE ), 5 );
 	}
 	
@@ -507,6 +507,7 @@ public class Item implements Bundlable {
 		return name;
 	}
 	
+	@Contract(pure = true)
 	public final String trueName() {
 		return name;
 	}
@@ -572,7 +573,7 @@ public class Item implements Bundlable {
 	private static final String DURABILITY      = "durability";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		bundle.put( QUANTITY, quantity );
 		bundle.put( LEVEL, level );
 		bundle.put( LEVEL_KNOWN, levelKnown );
@@ -585,7 +586,7 @@ public class Item implements Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		quantity	= bundle.getInt( QUANTITY );
 		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
 		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
@@ -604,7 +605,7 @@ public class Item implements Bundlable {
 		}
 	}
 
-	public int throwPos( Char user, int dst){
+	public int throwPos(@NotNull Char user, int dst){
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 	

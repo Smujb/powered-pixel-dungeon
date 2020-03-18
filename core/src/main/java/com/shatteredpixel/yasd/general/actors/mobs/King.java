@@ -61,6 +61,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class King extends Mob {
 	
 	private static final int MAX_ARMY_SIZE = 5;
@@ -151,7 +153,7 @@ public class King extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		super.damage(dmg, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg);

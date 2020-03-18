@@ -223,7 +223,7 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public boolean collect(Bag container, Char ch) {
+	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
 		if (super.collect( container, ch)){
 			setAction();
 			return true;

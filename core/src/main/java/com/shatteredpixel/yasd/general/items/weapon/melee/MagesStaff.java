@@ -58,6 +58,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class MagesStaff extends MeleeWeapon {
@@ -185,7 +187,7 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public boolean collect(Bag container, Char ch) {
+	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
 		if (super.collect(container, ch)) {
 			if (container.owner != null && wand != null) {
 				wand.charge(container.owner, STAFF_SCALE_FACTOR);
@@ -313,13 +315,13 @@ public class MagesStaff extends MeleeWeapon {
 	private static final String WAND = "wand";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(WAND, wand);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {

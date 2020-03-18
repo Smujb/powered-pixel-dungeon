@@ -43,6 +43,8 @@ import com.shatteredpixel.yasd.general.windows.WndTradeItem;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Shopkeeper extends NPC {
 
 	{
@@ -62,7 +64,7 @@ public class Shopkeeper extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		flee();
 	}
 	

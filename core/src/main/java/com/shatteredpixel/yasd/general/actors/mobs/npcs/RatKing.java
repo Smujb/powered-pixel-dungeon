@@ -33,6 +33,8 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.RatKingSprite;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RatKing extends NPC {
 
 	{
@@ -57,7 +59,7 @@ public class RatKing extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 	}
 	
 	@Override

@@ -33,6 +33,8 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
+import org.jetbrains.annotations.NotNull;
+
 public class StoneOfBlink extends Runestone {
 	
 	{
@@ -42,7 +44,7 @@ public class StoneOfBlink extends Runestone {
 	private static Ballistica throwPath;
 	
 	@Override
-	public int throwPos(Char user, int dst) {
+	public int throwPos(@NotNull Char user, int dst) {
 		throwPath = new Ballistica( user.pos, dst, Ballistica.PROJECTILE );
 		return throwPath.collisionPos;
 	}

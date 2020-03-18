@@ -59,9 +59,9 @@ public class LimitedAir extends Buff {
 
 	private static boolean needed(Char ch) {
 		return Dungeon.underwater() &&
-				!ch.properties().contains(Char.Property.WATERY) && //Piranahs and Jellyfish are immune of course
-				!ch.properties().contains(Char.Property.UNDEAD) && //We don't want Skeletons drowning...
-				!ch.properties().contains(Char.Property.INORGANIC);//Same for Golems
+				!ch.properties().contains(Char.Property.WATERY) &&  //Piranahs and Jellyfish are immune of course
+				!ch.properties().contains(Char.Property.UNDEAD) &&  //We don't want Skeletons drowning...
+				!ch.properties().contains(Char.Property.INORGANIC); //Same for Golems
 	}
 
 	@Override

@@ -35,6 +35,8 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
 
+import org.jetbrains.annotations.NotNull;
+
 
 public abstract class KindofMisc extends EquipableItem {
 
@@ -127,7 +129,7 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean isEquipped( Char owner ) {
+	public boolean isEquipped(@NotNull Char owner ) {
 		for (int i = 0; i < Constants.MISC_SLOTS; i++) {
 			if (owner.belongings.miscs[i] == this) {
 				return true;

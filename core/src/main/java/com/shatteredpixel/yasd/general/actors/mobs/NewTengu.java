@@ -76,6 +76,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 
 public class NewTengu extends Mob {
@@ -119,7 +121,7 @@ public class NewTengu extends Mob {
 	}*/
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;

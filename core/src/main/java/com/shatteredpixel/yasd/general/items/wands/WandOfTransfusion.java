@@ -54,6 +54,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class WandOfTransfusion extends Wand {
 
 	{
@@ -179,13 +181,13 @@ public class WandOfTransfusion extends Wand {
 	private static final String FREECHARGE = "freecharge";
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		freeCharge = bundle.getBoolean( FREECHARGE );
 	}
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( FREECHARGE, freeCharge );
 	}

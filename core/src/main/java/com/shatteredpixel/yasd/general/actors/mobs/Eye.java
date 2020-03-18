@@ -39,6 +39,8 @@ import com.shatteredpixel.yasd.general.sprites.EyeSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Eye extends Mob {
 
 	{
@@ -135,7 +137,7 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (!beamCharged) {//Now immune when beam is charged
 			super.damage(dmg, src);
 		}

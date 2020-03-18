@@ -46,6 +46,8 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class TimekeepersHourglass extends Artifact {
@@ -187,7 +189,7 @@ public class TimekeepersHourglass extends Artifact {
 	private static final String BUFF =      "buff";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( SANDBAGS, sandBags );
 
@@ -196,7 +198,7 @@ public class TimekeepersHourglass extends Artifact {
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		sandBags = bundle.getInt( SANDBAGS );
 

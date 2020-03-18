@@ -77,6 +77,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class DriedRose extends Artifact {
@@ -304,7 +306,7 @@ public class DriedRose extends Artifact {
 	private static final String ARMOR =         "getArmors";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 
 		bundle.put( TALKEDTO, talkedTo );
@@ -317,7 +319,7 @@ public class DriedRose extends Artifact {
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 
 		talkedTo = bundle.getBoolean( TALKEDTO );
@@ -634,7 +636,7 @@ public class DriedRose extends Artifact {
 		}
 		
 		@Override
-		public void damage(int dmg, DamageSrc src) {
+		public void damage(int dmg, @NotNull DamageSrc src) {
 			super.damage( dmg, src);
 			Item.updateQuickslot();
 		}

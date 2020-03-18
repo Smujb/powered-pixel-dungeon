@@ -43,6 +43,8 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.RotHeartSprite;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RotHeart extends Mob {
 
 	{
@@ -71,7 +73,7 @@ public class RotHeart extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (src.getElement() == Element.FIRE) {
 			destroy();
 			sprite.die();

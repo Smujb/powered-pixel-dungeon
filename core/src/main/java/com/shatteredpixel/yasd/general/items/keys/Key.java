@@ -72,7 +72,7 @@ public abstract class Key extends Item {
 	private static final String ZPOS = "zPos";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( YPOS, yPos );
 		bundle.put( XPOS, xPos );
@@ -80,7 +80,7 @@ public abstract class Key extends Item {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		yPos = bundle.getInt( YPOS );
 		xPos = bundle.getInt( XPOS );

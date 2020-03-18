@@ -48,6 +48,8 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 abstract public class MissileWeapon extends Weapon {
@@ -172,13 +174,13 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	@Override
-	public boolean collect(Bag container, Char ch) {
+	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
 		if (container instanceof MagicalHolster) holster = true;
 		return super.collect(container, ch);
 	}
 	
 	@Override
-	public int throwPos(Char user, int dst) {
+	public int throwPos(@NotNull Char user, int dst) {
 		if (hasEnchant(Projecting.class, user)
 				&& !Dungeon.level.solid()[dst] && Dungeon.level.distance(user.pos, dst) <= 4){
 			return dst;
@@ -407,7 +409,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static final String DURABILITY = "durability";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(DURABILITY, durability);
 	}
@@ -415,7 +417,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static boolean bundleRestoring = false;
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		bundleRestoring = true;
 		super.restoreFromBundle(bundle);
 		bundleRestoring = false;

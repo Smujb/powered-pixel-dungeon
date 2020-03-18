@@ -54,6 +54,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Wandmaker extends NPC {
@@ -76,7 +78,7 @@ public class Wandmaker extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 	}
 	
 	@Override

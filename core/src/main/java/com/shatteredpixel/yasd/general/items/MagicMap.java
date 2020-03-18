@@ -123,11 +123,11 @@ public class MagicMap extends Item {
 				item = (Item) itemClass.newInstance();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
-				item = new MagicMap();
+				item = null;
 				MainGame.scene().addToFront(new WndError(e.getMessage()));
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
-				item = new MagicMap();
+				item = null;
 				MainGame.scene().addToFront(new WndError(e.getMessage()));
 			}
 			return item;
@@ -234,6 +234,7 @@ public class MagicMap extends Item {
 				@Override
 				protected void onClick() {
 					Item item = getItem(itemClass[0]);
+					if (item == null) return;
 					Char ch = Dungeon.hero;
 					int num = 1;
 					if (cursed[0]) {
@@ -266,8 +267,17 @@ public class MagicMap extends Item {
 
 				}
 			};
-			btnGo.setRect(getWidth()/4, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnGo.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
+
+			RedButton btnCancel = new RedButton( "Cancel" ) {
+				@Override
+				protected void onClick() {
+					hide();
+				}
+			};
+			btnCancel.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			add( btnCancel );
 
 			resize(getWidth(), (int) (btnGo.bottom() + GAP));
 

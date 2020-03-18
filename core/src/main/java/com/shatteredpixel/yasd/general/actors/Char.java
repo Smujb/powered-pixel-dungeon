@@ -57,7 +57,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.FireImbue;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.FrostImbue;
 import com.shatteredpixel.yasd.general.actors.buffs.Haste;
-import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
@@ -82,7 +81,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Surprise;
 import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
-import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Potential;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
@@ -369,14 +367,14 @@ public abstract class Char extends Actor {
 			}
 			dmg = attackProc(enemy, dmg);
 			dmg = enemy.defenseProc(this, dmg, this.elementalType());
-
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
 				return true;
 			}
+			//Actually damage them. Ignore defense as DR roll is automatically processed earlier.
+			enemy.damage( dmg, defaultSrc().ignoreDefense() );
 
-			enemy.damage( dmg, defaultSrc() );
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -482,8 +480,13 @@ public abstract class Char extends Actor {
 
 	public int drRoll(Element element) {
 		int dr = 0;
-		if (element.isMagical() && hasBelongings()) {
-			dr += belongings.magicalDR();
+		if (element.isMagical()) {
+			if (hasBelongings()) {
+				dr += belongings.magicalDR();
+			}
+			if (buff(ArcaneArmor.class) != null){
+				dr += Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
+			}
 		} else {
 			if (hasBelongings()) {
 				dr += belongings.drRoll();
@@ -601,11 +604,13 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
+
+	@Contract(" -> new")
 	private DamageSrc defaultSrc() {
 		return new DamageSrc(this.elementalType(), this);
 	}
 
-	public final void damage(int dmg, Char ch) {
+	public final void damage(int dmg, @NotNull Char ch) {
 		damage(dmg, ch.defaultSrc());
 	}
 
@@ -613,7 +618,7 @@ public abstract class Char extends Actor {
 		damage(dmg, new DamageSrc(element, null));
 	}
 
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (!src.ignores()) {
 			dmg = src.getElement().affectDamage(this, dmg);
 		}
@@ -653,18 +658,17 @@ public abstract class Char extends Actor {
 			dmg = Math.round( dmg * resist( srcClass ));
 		}
 
-		//TODO improve this when I have proper damage cause logic
-		if (AntiMagic.RESISTS.contains(src.getClass()) && buff(ArcaneArmor.class) != null){
+		/*if (AntiMagic.RESISTS.contains(src.getClass()) && buff(ArcaneArmor.class) != null){
 			dmg -= Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
 			if (dmg < 0) dmg = 0;
-		}
+		}*/
 
 		if (buff( Paralysis.class ) != null) {
 			buff( Paralysis.class ).processDamage(dmg);
 		}
 
 		int shielded = dmg;
-		if (!(src.getCause() instanceof Hunger)){
+		if (!src.breaksShields()){
 			for (ShieldBuff s : buffs(ShieldBuff.class)){
 				dmg = s.absorbDamage(dmg);
 				if (dmg == 0) break;
@@ -1000,6 +1004,7 @@ public abstract class Char extends Actor {
 		private Object cause;
 		private Element element;
 		private boolean ignores = false;
+		private boolean breakShields = false;
 
 		public DamageSrc(Element element) {
 			this(element, null);
@@ -1018,12 +1023,21 @@ public abstract class Char extends Actor {
 			return cause;
 		}
 
+		public DamageSrc breakShields() {
+			this.breakShields = true;
+			return this;
+		}
+
+		boolean breaksShields() {
+			return breakShields;
+		}
+
 		public DamageSrc ignoreDefense() {
 			this.ignores = true;
 			return this;
 		}
 
-		public boolean ignores() {
+		boolean ignores() {
 			return ignores;
 		}
 	}

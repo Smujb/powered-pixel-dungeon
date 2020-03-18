@@ -46,6 +46,8 @@ import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class HornOfPlenty extends Artifact {
@@ -207,13 +209,13 @@ public class HornOfPlenty extends Artifact {
 	private static final String STORED = "stored";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( STORED, storedFoodEnergy );
 	}
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		storedFoodEnergy = bundle.getInt(STORED);
 		

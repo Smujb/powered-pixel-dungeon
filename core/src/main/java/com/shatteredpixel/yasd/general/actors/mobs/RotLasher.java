@@ -36,6 +36,8 @@ import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.sprites.RotLasherSprite;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RotLasher extends Mob {
 
 	{
@@ -66,7 +68,7 @@ public class RotLasher extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (src.getCause() instanceof Burning) {
 			destroy();
 			sprite.die();

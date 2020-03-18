@@ -43,6 +43,8 @@ import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Brute extends Mob {
 	
 	{
@@ -85,7 +87,7 @@ public class Brute extends Mob {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		super.damage( dmg, src);
 		
 		if (isAlive() && !enraged && HP < HT / 4) {

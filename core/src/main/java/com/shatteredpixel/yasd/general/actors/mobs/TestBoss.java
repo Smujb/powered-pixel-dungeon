@@ -58,6 +58,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class TestBoss extends Mob {
@@ -109,7 +111,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (src.getCause() instanceof Tower) {
 			super.damage(dmg, src);
 			if (hint) {
@@ -277,7 +279,7 @@ public class TestBoss extends Mob {
 
 
 		@Override
-		public void damage(int dmg, DamageSrc src) {
+		public void damage(int dmg, @NotNull DamageSrc src) {
 		}
 
 		@Override

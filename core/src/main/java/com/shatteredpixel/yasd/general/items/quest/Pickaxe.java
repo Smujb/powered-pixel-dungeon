@@ -48,6 +48,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Pickaxe extends Weapon {
@@ -165,14 +167,14 @@ public class Pickaxe extends Weapon {
 	private static final String BLOODSTAINED = "bloodStained";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		
 		bundle.put( BLOODSTAINED, bloodStained );
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		
 		bloodStained = bundle.getBoolean( BLOODSTAINED );

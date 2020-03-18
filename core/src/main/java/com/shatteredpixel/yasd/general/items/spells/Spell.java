@@ -63,7 +63,7 @@ public abstract class Spell extends Item {
 				GLog.w( Messages.get(this, "no_magic") );
 				return;
 			}
-			
+			detach( hero.belongings.backpack );
 			onCast( hero );
 			
 		}

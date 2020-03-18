@@ -38,6 +38,8 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MeleeWeapon extends Weapon {
 	
 	public int tier;
@@ -259,13 +261,13 @@ public class MeleeWeapon extends Weapon {
 	public static String TIER = "tier";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TIER, tier);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);

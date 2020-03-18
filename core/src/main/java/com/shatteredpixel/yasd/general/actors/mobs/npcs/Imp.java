@@ -49,6 +49,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Imp extends NPC {
 
 	{
@@ -82,7 +84,7 @@ public class Imp extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 	}
 	
 	@Override

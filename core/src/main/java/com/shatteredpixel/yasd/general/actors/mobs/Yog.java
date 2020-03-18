@@ -63,6 +63,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -110,7 +112,7 @@ public class Yog extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 
 		HashSet<Mob> fists = new HashSet<>();
 
@@ -271,7 +273,7 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, DamageSrc src) {
+		public void damage(int dmg, @NotNull DamageSrc src) {
 			super.damage(dmg, src);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);
@@ -322,7 +324,7 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, DamageSrc src) {
+		public void damage(int dmg, @NotNull DamageSrc src) {
 			super.damage(dmg, src);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);

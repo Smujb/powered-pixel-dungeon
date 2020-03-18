@@ -37,6 +37,8 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.GreatCrabSprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
+import org.jetbrains.annotations.NotNull;
+
 public class GreatCrab extends Crab {
 
 	{
@@ -69,7 +71,7 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void damage(int dmg, DamageSrc src){
+	public void damage(int dmg, @NotNull DamageSrc src){
 		//crab blocks all attacks originating from its current enemy if it sees them.
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
 		if ((enemySeen && state != SLEEPING && paralysed == 0)
