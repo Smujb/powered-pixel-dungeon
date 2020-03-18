@@ -60,6 +60,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
+import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -95,6 +96,10 @@ public abstract class Mob extends Char {
 	public float evasionFactor = 1f;
 	public float perceptionFactor = 1f;
 	public float stealthFactor = 1f;
+
+	public int range = 1;
+	public boolean hasMeleeAttack = true;
+	public int shotType = Ballistica.PROJECTILE;
 
 	public AiState SLEEPING     = new  Sleeping();
 	public AiState HUNTING		= new  Hunting();
@@ -225,15 +230,16 @@ public abstract class Mob extends Char {
 	}
 
 	public static <T extends Mob> T create(Class<T> type, int level) {
-		T mob = null;
+		T mob;
 		try {
 			mob = type.newInstance();
 		} catch (InstantiationException e) {
 			MainGame.reportException(e);
+			throw new RuntimeException(e.getCause());
 		} catch (IllegalAccessException e) {
 			MainGame.reportException(e);
+			throw new RuntimeException(e.getCause());
 		}
-		assert mob != null;
 		mob.level = level;
 		mob.updateHT(true);
 		switch (Dungeon.difficulty) {
@@ -245,6 +251,12 @@ public abstract class Mob extends Char {
 			case 3://Hard = +25% max HP
 				mob.HP = mob.HT*=1.25f;
 				break;
+		}
+		//Bosses (obviously) have higher HP
+		if (mob.properties().contains(Property.BOSS)) {
+			mob.HP = mob.HT *= 5;
+		} else if (mob.properties().contains(Property.MINIBOSS)) {
+			mob.HP = mob.HT *= 2;
 		}
 		return mob;
 	}
@@ -262,7 +274,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.damageRoll();
 		} else {
-			return (int) (normalDamageRoll(level) * damageFactor);
+			return affectDamageRoll( (int) (normalDamageRoll(level) * damageFactor));
 		}
 	}
 
@@ -508,10 +520,10 @@ public abstract class Mob extends Char {
 		}
 	}
 
-	public static Mob spawnAt(Class<? extends Mob> type, int pos) {
+	public static <T extends Mob> T spawnAt(Class<T> type, int pos) {
 		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
 
-			Mob mob = Mob.create(type);
+			T mob = Mob.create(type);
 			mob.pos = pos;
 			mob.state = mob.HUNTING;
 			GameScene.add( mob );
@@ -524,107 +536,116 @@ public abstract class Mob extends Char {
 
 	@Override
 	public boolean canAttack(Char enemy) {
-		return Dungeon.level.adjacent( pos, enemy.pos );
+		if (Dungeon.level.adjacent(this.pos, enemy.pos) && !hasMeleeAttack) {
+			return false;
+		}
+		return (Dungeon.level.distance( pos, enemy.pos ) <= range | range < 0) & new Ballistica(this.pos, enemy.pos, shotType).collisionPos == enemy.pos;
 	}
 	
 	protected boolean getCloser( int target ) {
-		
-		if (rooted || target == pos) {
-			return false;
-		}
+		if (state == HUNTING && !hasMeleeAttack) {
 
-		int step = -1;
-
-		if (Dungeon.level.adjacent( pos, target )) {
-
-			path = null;
-
-			if (Actor.findChar( target ) == null && Dungeon.level.passable()[target]) {
-				step = target;
-			}
+			return enemySeen && getFurther( target );
 
 		} else {
 
-			boolean newPath = false;
-			//scrap the current xPos if it's empty, no longer connects to the current location
-			//or if it's extremely inefficient and checking again may result in a much better xPos
-			if (path == null || path.isEmpty()
-					|| !Dungeon.level.adjacent(pos, path.getFirst())
-					|| path.size() > 2*Dungeon.level.distance(pos, target))
-				newPath = true;
-			else if (path.getLast() != target) {
-				//if the new  target is adjacent to the end of the xPos, adjust for that
-				//rather than scrapping the whole xPos.
-				if (Dungeon.level.adjacent(target, path.getLast())) {
-					int last = path.removeLast();
-
-					if (path.isEmpty()) {
-
-						//shorten for a closer one
-						if (Dungeon.level.adjacent(target, pos)) {
-							path.add(target);
-							//extend the xPos for a further target
-						} else {
-							path.add(last);
-							path.add(target);
-						}
-
-					} else if (!path.isEmpty()) {
-						//if the new  target is simply 1 earlier in the xPos shorten the xPos
-						if (path.getLast() == target) {
-
-							//if the new  target is closer/same, need to modify end of xPos
-						} else if (Dungeon.level.adjacent(target, path.getLast())) {
-							path.add(target);
-
-							//if the new  target is further away, need to extend the xPos
-						} else {
-							path.add(last);
-							path.add(target);
-						}
-					}
-
-				} else {
-					newPath = true;
-				}
-
-			}
-
-
-			if (!newPath) {
-				//looks ahead for xPos validity, up to length-1 or 4, but always at least 1.
-				int lookAhead = (int)GameMath.gate(1, path.size()-1, 4);
-				for (int i = 0; i < lookAhead; i++) {
-					int cell = path.get(i);
-					if (!Dungeon.level.passable()[cell] || ( fieldOfView[cell] && Actor.findChar(cell) != null)) {
-						newPath = true;
-						break;
-					}
-				}
-			}
-
-			if (newPath) {
-				path = Dungeon.findPath(this, pos, target,
-						Dungeon.level.passable(),
-						fieldOfView);
-			}
-
-			//if hunting something, don't follow a xPos that is extremely inefficient
-			//FIXME this is fairly brittle, primarily it assumes that hunting mobs can't see through
-			// permanent terrain, such that if their xPos is inefficient it's always because
-			// of a temporary blockage, and therefore waiting for it to clear is the best option.
-			if (path == null ||
-					(state == HUNTING && path.size() > Math.max(9, 2*Dungeon.level.distance(pos, target)))) {
+			if (rooted || target == pos) {
 				return false;
 			}
 
-			step = path.removeFirst();
-		}
-		if (step != -1) {
-			move( step );
-			return true;
-		} else {
-			return false;
+			int step = -1;
+
+			if (Dungeon.level.adjacent(pos, target)) {
+
+				path = null;
+
+				if (Actor.findChar(target) == null && Dungeon.level.passable()[target]) {
+					step = target;
+				}
+
+			} else {
+
+				boolean newPath = false;
+				//scrap the current xPos if it's empty, no longer connects to the current location
+				//or if it's extremely inefficient and checking again may result in a much better xPos
+				if (path == null || path.isEmpty()
+						|| !Dungeon.level.adjacent(pos, path.getFirst())
+						|| path.size() > 2 * Dungeon.level.distance(pos, target))
+					newPath = true;
+				else if (path.getLast() != target) {
+					//if the new  target is adjacent to the end of the xPos, adjust for that
+					//rather than scrapping the whole xPos.
+					if (Dungeon.level.adjacent(target, path.getLast())) {
+						int last = path.removeLast();
+
+						if (path.isEmpty()) {
+
+							//shorten for a closer one
+							if (Dungeon.level.adjacent(target, pos)) {
+								path.add(target);
+								//extend the xPos for a further target
+							} else {
+								path.add(last);
+								path.add(target);
+							}
+
+						} else if (!path.isEmpty()) {
+							//if the new  target is simply 1 earlier in the xPos shorten the xPos
+							if (path.getLast() == target) {
+
+								//if the new  target is closer/same, need to modify end of xPos
+							} else if (Dungeon.level.adjacent(target, path.getLast())) {
+								path.add(target);
+
+								//if the new  target is further away, need to extend the xPos
+							} else {
+								path.add(last);
+								path.add(target);
+							}
+						}
+
+					} else {
+						newPath = true;
+					}
+
+				}
+
+
+				if (!newPath) {
+					//looks ahead for xPos validity, up to length-1 or 4, but always at least 1.
+					int lookAhead = (int) GameMath.gate(1, path.size() - 1, 4);
+					for (int i = 0; i < lookAhead; i++) {
+						int cell = path.get(i);
+						if (!Dungeon.level.passable()[cell] || (fieldOfView[cell] && Actor.findChar(cell) != null)) {
+							newPath = true;
+							break;
+						}
+					}
+				}
+
+				if (newPath) {
+					path = Dungeon.findPath(this, pos, target,
+							Dungeon.level.passable(),
+							fieldOfView);
+				}
+
+				//if hunting something, don't follow a xPos that is extremely inefficient
+				//FIXME this is fairly brittle, primarily it assumes that hunting mobs can't see through
+				// permanent terrain, such that if their xPos is inefficient it's always because
+				// of a temporary blockage, and therefore waiting for it to clear is the best option.
+				if (path == null ||
+						(state == HUNTING && path.size() > Math.max(9, 2 * Dungeon.level.distance(pos, target)))) {
+					return false;
+				}
+
+				step = path.removeFirst();
+			}
+			if (step != -1) {
+				move(step);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 	

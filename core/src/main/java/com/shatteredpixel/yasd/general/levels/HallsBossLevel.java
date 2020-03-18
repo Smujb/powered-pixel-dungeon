@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Yog;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
@@ -212,7 +213,7 @@ public class HallsBossLevel extends Level {
 
 			Dungeon.observe();
 			
-			Yog boss = new Yog();
+			Yog boss = Mob.create(Yog.class, this);
 			do {
 				boss.pos = Random.Int( length() );
 			} while (

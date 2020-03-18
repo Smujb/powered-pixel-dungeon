@@ -39,16 +39,16 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
+import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.WraithSprite;
 import com.watabou.noosa.tweeners.AlphaTweener;
-import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public class Wraith extends RangedMob {
+public class Wraith extends Mob {
 
 	private static final float SPAWN_DELAY	= 2f;
 
@@ -60,6 +60,8 @@ public class Wraith extends RangedMob {
 		EXP = 0;
 
 		maxLvl = -2;
+		range = 4;
+		shotType = Ballistica.MAGIC_BOLT;
 
 		damageFactor = 2/3f;
 		healthFactor = 0.5f;
@@ -78,8 +80,6 @@ public class Wraith extends RangedMob {
 		return Element.DRAIN;
 	}
 
-	private static final String LEVEL = "level";
-
 	@Override
 	public void add(Buff buff) {
 		if (!(buff.type == Buff.buffType.NEGATIVE)) {
@@ -89,26 +89,6 @@ public class Wraith extends RangedMob {
 			buff.detach();
 		}
 	}
-
-	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-	}
-	
-	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 2 + (int) (level*0.67), 3 + level );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 10 + level;
-	}*/
 
 	@Override
 	public boolean reset() {
@@ -197,10 +177,5 @@ public class Wraith extends RangedMob {
 		}
 
 		return super.doAttack(enemy);
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return false;
 	}
 }

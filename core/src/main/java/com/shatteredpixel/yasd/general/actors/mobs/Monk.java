@@ -140,11 +140,7 @@ public class Monk extends Mob {
 
 		{
 			spriteClass = SeniorSprite.class;
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange( 16, 24 );
+			damageFactor = 0.7f;
 		}
 
 		@Override

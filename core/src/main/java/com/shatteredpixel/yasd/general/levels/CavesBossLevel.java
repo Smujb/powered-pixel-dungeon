@@ -248,7 +248,7 @@ public class CavesBossLevel extends Level {
 				}
 			}
 			
-			DM300 boss = new DM300();
+			DM300 boss = Mob.create( DM300.class );
 			boss.state = boss.WANDERING;
 			do {
 				boss.pos = Random.Int( length() );

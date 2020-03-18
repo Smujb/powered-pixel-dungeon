@@ -83,12 +83,12 @@ public class NewTengu extends Mob {
 	
 	{
 		spriteClass = TenguSprite.class;
-		
-		HP = HT = 160;
+
+		//HP = HT = 160;
 		EXP = 20;
-		defenseSkill = 18;
+		//defenseSkill = 18;
 		
-		HUNTING = new  Hunting();
+		HUNTING = new Hunting();
 		
 		flying = true; //doesn't literally fly, but he is fleet-of-foot enough to avoid hazards
 		
@@ -104,7 +104,7 @@ public class NewTengu extends Mob {
 		super.onAdd();
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 6, 16 );
 	}
@@ -117,7 +117,7 @@ public class NewTengu extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 5);
-	}
+	}*/
 	
 	@Override
 	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {

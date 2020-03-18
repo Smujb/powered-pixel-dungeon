@@ -191,14 +191,12 @@ public abstract class Char extends Actor {
 	public int STR() {
 		int STR = this.STR;
 
-		//STR += RingOfPower.strengthBonus(this);
-
 		AdrenalineSurge buff = buff(AdrenalineSurge.class);
 		if (buff != null) {
 			STR += buff.boost();
 		}
 
-		return (buff(Weakness.class) != null) ? STR - 1 : STR;
+		return STR;
 	}
 
 	public Element elementalType() {
@@ -497,11 +495,23 @@ public abstract class Char extends Actor {
 	}
 
 	public int damageRoll() {
+		int damage;
 		if (hasBelongings()) {
-			return belongings.damageRoll();
+			damage = belongings.damageRoll();
 		} else {
-			return 1;
+			damage = 1;
 		}
+		damage = affectDamageRoll(damage);
+		return damage;
+	}
+
+
+	//Used for central stuff that affects damage dealt
+	public final int affectDamageRoll(int damage) {
+		if (buff(Weakness.class) != null) {
+			damage *= 2/3f;
+		}
+		return damage;
 	}
 
 	public int attackProc( Char enemy, int damage ) {

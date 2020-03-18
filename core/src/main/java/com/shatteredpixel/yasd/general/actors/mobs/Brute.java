@@ -49,9 +49,9 @@ public class Brute extends Mob {
 		spriteClass = BruteSprite.class;
 
 		healthFactor = 1.5f;
-		//HP = HT = 50;
+		damageFactor = 1.5f;
+		stealthFactor = 2/3f;
 		evasionFactor = 0.75f;
-		//defenseSkill = 18;
 		
 		EXP = 8;
 		

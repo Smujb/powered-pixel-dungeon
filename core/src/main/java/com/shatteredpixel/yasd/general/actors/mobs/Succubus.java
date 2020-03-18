@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
@@ -57,8 +56,11 @@ public class Succubus extends Mob {
 	{
 		spriteClass = SuccubusSprite.class;
 		
-		HP = HT = 80;
-		defenseSkill = 29;
+		//HP = HT = 80;
+		//defenseSkill = 29;
+		healthFactor = 0.8f;
+		damageFactor = 1.2f;
+		perceptionFactor = 1.5f;
 		viewDistance = Light.DISTANCE;
 		
 		EXP = 12;
@@ -69,11 +71,7 @@ public class Succubus extends Mob {
 
 		properties.add(Property.DEMONIC);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 22, 30 );
-	}
+
 	
 	@Override
 	public int attackProc( Char enemy, int damage ) {
@@ -143,16 +141,6 @@ public class Succubus extends Mob {
 		ScrollOfTeleportation.appear( this, cell );
 		
 		delay = BLINK_DELAY;
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 43;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 10);
 	}
 	
 	{

@@ -60,9 +60,9 @@ import com.watabou.utils.Random;
 public class Goo extends Mob {
 
 	{
-		HP = HT = 100;
+		//HP = HT = 100;
 		EXP = 10;
-		defenseSkill = 8;
+		//defenseSkill = 8;
 		spriteClass = GooSprite.class;
 
 		properties.add(Property.BOSS);
@@ -74,8 +74,8 @@ public class Goo extends Mob {
 
 	@Override
 	public int damageRoll() {
-		int min = 1;
-		int max = (HP*2 <= HT) ? 12 : 8;
+		//int min = 1;
+		//int max = (HP*2 <= HT) ? 12 : 8;
 		if (pumpedUp > 0) {
 			pumpedUp = 0;
 			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
@@ -84,15 +84,17 @@ public class Goo extends Mob {
 					CellEmitter.get(i).burst(ElmoParticle.FACTORY, 10);
 			}
 			Sample.INSTANCE.play( Assets.SND_BURNING );
-			return Random.NormalIntRange( min*3, max*3 );
+			//return Random.NormalIntRange( min*3, max*3 );
+			return super.damageRoll() * 3;
 		} else {
-			return Random.NormalIntRange( min, max );
+			return super.damageRoll();
+			//return Random.NormalIntRange( min, max );
 		}
 	}
 
 	@Override
 	public int attackSkill( Char target ) {
-		int attack = 10;
+		int attack = super.attackSkill(target);
 		if (HP*2 <= HT) attack = 15;
 		if (pumpedUp > 0) attack *= 2;
 		return attack;
@@ -101,11 +103,6 @@ public class Goo extends Mob {
 	@Override
 	public int defenseSkill(Char enemy) {
 		return (int)(super.defenseSkill(enemy) * ((HP*2 <= HT)? 1.5 : 1));
-	}
-
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 2);
 	}
 
 	@Override
@@ -300,7 +297,7 @@ public class Goo extends Mob {
 
 		pumpedUp = bundle.getInt( PUMPEDUP );
 		if (state != SLEEPING) BossHealthBar.assignBoss(this);
-		if ((HP*2 <= HT)) BossHealthBar.bleed(true);
+		if (HP*2 <= HT) BossHealthBar.bleed(true);
 
 	}
 	

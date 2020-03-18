@@ -27,23 +27,22 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.sprites.BanditSprite;
 import com.shatteredpixel.yasd.general.sprites.ThiefSprite;
 import com.watabou.utils.Random;
 
-public class Thief extends RangedMob {
+public class Thief extends Mob {
 	
 	{
 		spriteClass = ThiefSprite.class;
-		
-		//HP = HT = 11;
+
 		evasionFactor = 1.2f;
-		//defenseSkill = 6;
+		range = 3;
 		
 		EXP = 2;
 
@@ -58,17 +57,14 @@ public class Thief extends RangedMob {
 		{
 			spriteClass = BanditSprite.class;
 
-			//1 in 50 chance to be a crazy bandit, equates to overall 1/100 chance.
+			loot = Generator.random(Generator.Category.RING);
 			lootChance = 0.5f;
 		}
 
 		@Override
 		public int attackProc(Char enemy, int damage) {
 			if (Random.Int(5) == 0) {
-				//Buff.prolong(enemy, Blindness.class, Random.Int(2, 5));
-				Buff.affect(enemy, Poison.class).set(Random.Int(2, 3));
-				//Buff.prolong(enemy, Cripple.class, Random.Int(3, 8));
-				Dungeon.observe();
+				Buff.affect(enemy, Poison.class).set(Random.Int(3, 4));
 			}
 			return super.attackProc(enemy, damage);
 		}

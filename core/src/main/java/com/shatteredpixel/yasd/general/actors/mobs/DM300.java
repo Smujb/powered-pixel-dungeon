@@ -63,17 +63,21 @@ public class DM300 extends Mob {
 	
 	{
 		spriteClass = DM300Sprite.class;
-		
-		HP = HT = 200;
+
+
+		healthFactor = 2f;
+		damageFactor = 0.7f;
+		perceptionFactor = 2f;
+		///HP = HT = 200;
 		EXP = 30;
-		defenseSkill = 18;
+		//defenseSkill = 18;
 		
 
 		properties.add(Property.BOSS);
 		properties.add(Property.INORGANIC);
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 20, 25 );
 	}
@@ -86,7 +90,7 @@ public class DM300 extends Mob {
 	@Override
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 10);
-	}
+	}*/
 	
 	@Override
 	public boolean act() {

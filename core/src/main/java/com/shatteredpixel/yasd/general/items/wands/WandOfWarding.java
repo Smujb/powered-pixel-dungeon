@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.RangedMob;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -211,7 +211,7 @@ public class WandOfWarding extends DamageWand {
 			return Messages.get(this, "stats_desc", 3);
 	}
 
-	public static class Ward extends RangedMob {
+	public static class Ward extends Mob {
 
 		public int tier = 1;
 		private int wandLevel = 1;
@@ -315,11 +315,6 @@ public class WandOfWarding extends DamageWand {
 				case 5: case 6:
 					return 1f;
 			}
-		}
-
-		@Override
-        public boolean canAttack(Char enemy) {
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 		}
 
 		@Override

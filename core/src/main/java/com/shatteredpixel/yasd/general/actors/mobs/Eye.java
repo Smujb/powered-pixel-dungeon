@@ -39,7 +39,7 @@ import com.shatteredpixel.yasd.general.sprites.EyeSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class Eye extends RangedMob {
+public class Eye extends Mob {
 
 	{
 		spriteClass = EyeSprite.class;
@@ -58,12 +58,10 @@ public class Eye extends RangedMob {
 		loot = new Dewdrop();
 		lootChance = 0.5f;
 
-		properties.add(Property.DEMONIC);
-	}
+		range = -1;
+		shotType = Ballistica.MAGIC_BOLT;
 
-	@Override
-	public boolean canHit(Char enemy) {
-		return (super.canHit(enemy) && beamCharged);
+		properties.add(Property.DEMONIC);
 	}
 
 	@Override
@@ -75,16 +73,6 @@ public class Eye extends RangedMob {
 	public int damageRoll() {
 		return beamCharged ? super.damageRoll()*3 : super.damageRoll();
 	}
-
-	/*@Override
-	public int attackSkill( Char target ) {
-		return 35;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 10);
-	}*/
 	
 	private Ballistica beam;
 	private int beamTarget = -1;
@@ -180,9 +168,6 @@ public class Eye extends RangedMob {
 	{
 		resistances.add( WandOfDisintegration.class );
 		resistances.add( Grim.class );
-	}
-	
-	{
 		immunities.add( Terror.class );
 	}
 

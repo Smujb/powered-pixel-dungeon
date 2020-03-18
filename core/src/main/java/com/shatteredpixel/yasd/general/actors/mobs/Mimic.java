@@ -85,11 +85,6 @@ public class Mimic extends Mob {
 	}
 	
 	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( HT / 10, HT / 4 );
-	}
-	
-	@Override
 	public int attackSkill( Char target ) {
 		return 9 + level;
 	}

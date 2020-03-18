@@ -42,11 +42,6 @@ public abstract class RangedMob extends Mob implements Callback {
         return false;
     }
 
-    public static class MagicalDamage{}
-
-    public MagicalDamage magicalSrc() {
-        return new  MagicalDamage();
-    }
 
     @Override
     public boolean canAttack(Char enemy) {

@@ -218,7 +218,7 @@ public class CityBossLevel extends Level {
 				}
 			}
 			
-			King boss = new King();
+			King boss = Mob.create(King.class, this);
 			boss.state = boss.WANDERING;
 			int count = 0;
 			do {

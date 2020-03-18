@@ -63,14 +63,14 @@ import com.watabou.utils.Random;
 
 public class King extends Mob {
 	
-	private static final int MAX_ARMY_SIZE	= 5;
+	private static final int MAX_ARMY_SIZE = 5;
 	
 	{
 		spriteClass = KingSprite.class;
-		
-		HP = HT = 300;
+
+		damageFactor = 1.3f;
+
 		EXP = 40;
-		defenseSkill = 25;
 		
 		Undead.count = 0;
 
@@ -95,7 +95,7 @@ public class King extends Mob {
 		BossHealthBar.assignBoss(this);
 	}
 	
-	@Override
+	/*@Override
 	public int damageRoll() {
 		return Random.NormalIntRange( 25, 40 );
 	}
@@ -112,7 +112,7 @@ public class King extends Mob {
 		} else {
 			return 0;
 		}
-	}
+	}*/
 	
 	@Override
 	protected boolean getCloser( int target ) {
@@ -213,7 +213,7 @@ public class King extends Mob {
 				for (int j=0; j < Dungeon.level.length(); j++) {
 					if (PathFinder.distance[j] == dist) {
 						
-						Undead undead = new Undead();
+						Undead undead = Mob.create( Undead.class );
 						undead.pos = j;
 						GameScene.add( undead );
 						
@@ -252,9 +252,6 @@ public class King extends Mob {
 		resistances.add( WandOfDisintegration.class );
 		resistances.add( ToxicGas.class );
 		resistances.add( Burning.class );
-	}
-	
-	{
 		immunities.add( Paralysis.class );
 		immunities.add( Vertigo.class );
 		immunities.add( Blindness.class );
@@ -267,9 +264,12 @@ public class King extends Mob {
 		
 		{
 			spriteClass = UndeadSprite.class;
-			
-			HP = HT = 28;
-			defenseSkill = 15;
+
+
+			healthFactor = 0.25f;
+			damageFactor = 0.75f;
+			//HP = HT = 28;
+			//defenseSkill = 15;
 			
 			maxLvl = -2;
 			EXP = 0;
@@ -292,7 +292,7 @@ public class King extends Mob {
 			super.onRemove();
 		}
 		
-		@Override
+		/*@Override
 		public int damageRoll() {
 			return Random.NormalIntRange( 15, 25 );
 		}
@@ -300,7 +300,7 @@ public class King extends Mob {
 		@Override
 		public int attackSkill( Char target ) {
 			return 16;
-		}
+		}*/
 		
 		@Override
 		public int attackProc( Char enemy, int damage ) {
@@ -310,14 +310,6 @@ public class King extends Mob {
 			}
 			
 			return damage;
-		}
-		
-		@Override
-		public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-			super.damage( dmg, src, element, ignoresDefense);
-			if (src instanceof ToxicGas) {
-				((ToxicGas)src).clear( pos );
-			}
 		}
 		
 		@Override

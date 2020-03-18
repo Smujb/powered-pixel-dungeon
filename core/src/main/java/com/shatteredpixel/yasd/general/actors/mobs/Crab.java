@@ -40,9 +40,11 @@ public class Crab extends Mob {
 	{
 		spriteClass = CrabSprite.class;
 
-		healthFactor = 0.7f;
+		healthFactor = 0.5f;
 		baseSpeed = 2f;
 		damageFactor = 2f;
+		perceptionFactor = 2f;
+		stealthFactor = 0.5f;
 
 		EXP = 4;
 		
@@ -57,7 +59,7 @@ public class Crab extends Mob {
 		//(5-count) / 5 chance of getting healing, otherwise mystery meat
 		if (Random.Float() < ((5f - Dungeon.LimitedDrops.CRAB_HP.count) / 5f)/2) {
 			Dungeon.LimitedDrops.CRAB_HP.count++;
-			return (Item)loot;
+			return (Item) loot;
 		} else {
 			return Reflection.newInstance( MysteryMeat.class );
 		}

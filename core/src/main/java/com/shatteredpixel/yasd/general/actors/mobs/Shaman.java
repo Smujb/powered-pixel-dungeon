@@ -28,18 +28,20 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
 
-public class Shaman extends RangedMob {
+public class Shaman extends Mob {
 	
 	{
 		spriteClass = ShamanSprite.class;
 
 		healthFactor = 0.7f;
 		damageFactor = 1.5f;
+
+		range = -1;
+		shotType = Ballistica.MAGIC_BOLT;
 		
 		EXP = 6;
 		maxLvl = 14;
@@ -53,23 +55,5 @@ public class Shaman extends RangedMob {
 	@Override
 	public Element elementalType() {
 		return Element.ELECTRIC;
-	}
-
-	@Override
-	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return false;
-	}
-
-	//used so resistances can differentiate between melee and magical attacks
-	public static class LightningBolt extends MagicalDamage{}
-
-	@Override
-	public MagicalDamage magicalSrc() {
-		return new  LightningBolt();
 	}
 }

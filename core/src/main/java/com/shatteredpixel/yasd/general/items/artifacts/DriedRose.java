@@ -608,6 +608,7 @@ public class DriedRose extends Artifact {
 			} else {
 				dmg += Random.NormalIntRange(0, 5);
 			}
+			dmg = affectDamageRoll(dmg);
 			
 			return dmg;
 		}

@@ -36,15 +36,16 @@ import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.sprites.RotLasherSprite;
-import com.watabou.utils.Random;
 
 public class RotLasher extends Mob {
 
 	{
 		spriteClass = RotLasherSprite.class;
 
-		HP = HT = 40;
-		defenseSkill = 0;
+		healthFactor = 2/3f;
+		damageFactor = 1.5f;
+		//HP = HT = 40;
+		//defenseSkill = 0;
 
 		EXP = 1;
 
@@ -95,21 +96,6 @@ public class RotLasher extends Mob {
 	@Override
 	protected boolean getFurther(int target) {
 		return true;
-	}
-
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(10, 20);
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 25;
-	}
-
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 8);
 	}
 	
 	{

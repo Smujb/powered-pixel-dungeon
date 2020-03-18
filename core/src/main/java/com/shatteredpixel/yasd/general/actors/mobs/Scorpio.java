@@ -36,19 +36,21 @@ import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
-import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.AcidicSprite;
 import com.shatteredpixel.yasd.general.sprites.ScorpioSprite;
 import com.watabou.utils.Random;
 
-public class Scorpio extends RangedMob {
+public class Scorpio extends Mob {
 	
 	{
 		spriteClass = ScorpioSprite.class;
-		
-		HP = HT = 95;
-		defenseSkill = 29;
-		viewDistance = Light.DISTANCE;
+
+		accuracyFactor = 1.2f;
+		healthFactor = 0.8f;
+		damageFactor = 1.3f;
+		//HP = HT = 95;
+		range = viewDistance = Light.DISTANCE;
+		hasMeleeAttack = false;
 		
 		EXP = 14;
 		maxLvl = 25;
@@ -60,30 +62,10 @@ public class Scorpio extends RangedMob {
 
 		properties.add(Property.DEMONIC);
 	}
-	
-	@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 26, 36 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 40;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 20);
-	}
 
 	@Override
-	public boolean canHit(Char enemy) {
-		return new  Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return true;
+	public Element elementalType() {
+		return Element.RANGED;
 	}
 
 	@Override
@@ -129,14 +111,6 @@ public class Scorpio extends RangedMob {
 		public Element elementalType() {
 			return Element.ACID;
 		}
-
-		/*@Override
-		public int defenseProc(Char enemy, int damage, Element element) {
-
-			Buff.affect(enemy, Ooze.class).set(20f);
-
-			return super.defenseProc( enemy, damage, element);
-		}*/
 
 	}
 	

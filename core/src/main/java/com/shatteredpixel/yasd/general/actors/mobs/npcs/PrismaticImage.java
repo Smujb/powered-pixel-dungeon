@@ -42,7 +42,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -192,22 +191,6 @@ public class PrismaticImage extends NPC {
 			damage = Armors.get(i).proc(enemy,this, damage);
 		}
 		return damage;
-	}
-	
-	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-
-		//TODO improve this when I have proper damage source logic
-		//checks if *any* equipped armour has Anti Magic
-		ArrayList<Armor> Armors = hero.belongings.getArmors();
-		for (int i=0; i < Armors.size(); i++) {
-			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, this)
-					&& AntiMagic.RESISTS.contains(src.getClass())) {
-				dmg -= AntiMagic.drRoll(Armors.get(i).level());
-			}
-		}
-		
-		super.damage(dmg, src, element, ignoresDefense);
 	}
 	
 	@Override

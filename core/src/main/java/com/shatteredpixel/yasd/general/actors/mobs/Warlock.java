@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
@@ -38,7 +37,7 @@ import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.WarlockSprite;
 import com.watabou.utils.Random;
 
-public class Warlock extends RangedMob {
+public class Warlock extends Mob {
 	
 	{
 		spriteClass = WarlockSprite.class;
@@ -49,6 +48,8 @@ public class Warlock extends RangedMob {
 		accuracyFactor = 1.2f;
 		damageFactor = 1.3f;
 		defenseSkill = 21;
+		shotType = Ballistica.MAGIC_BOLT;
+		elementaldrFactor = 2f;
 		
 		EXP = 11;
 
@@ -63,39 +64,6 @@ public class Warlock extends RangedMob {
 	@Override
 	public Element elementalType() {
 		return Element.DARK;
-	}
-
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 16, 24 );
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 30;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 8);
-	}*/
-
-	@Override
-	public boolean canHit(Char enemy) {
-		return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return true;
-	}
-	
-	//used so resistances can differentiate between melee and magical attacks
-	public static class DarkBolt extends MagicalDamage{}
-
-	@Override
-	public MagicalDamage magicalSrc() {
-		return new DarkBolt();
 	}
 
 	@Override

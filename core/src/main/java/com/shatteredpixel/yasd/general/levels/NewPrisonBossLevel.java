@@ -627,7 +627,7 @@ public class NewPrisonBossLevel extends Level {
 	
 	@Override
 	protected void createMobs() {
-		tengu = new NewTengu(); //We want to keep track of tengu independently of other mobs, he's not always in the level.
+		tengu = Mob.create(NewTengu.class, this); //We want to keep track of tengu independently of other mobs, he's not always in the level.
 	}
 	
 	public Actor respawner() {

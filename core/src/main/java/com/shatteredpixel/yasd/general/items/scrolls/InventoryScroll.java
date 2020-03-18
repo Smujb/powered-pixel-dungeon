@@ -75,31 +75,27 @@ public abstract class InventoryScroll extends Scroll {
 	
 	protected abstract void onItemSelected( Item item );
 	
-	protected static boolean identifiedByUse = false;
+	private static boolean identifiedByUse = false;
+
 	protected WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect( Item item ) {
-			
-			//FIXME this safety check shouldn't be necessary
-			//it would be better to eliminate the curItem static variable.
-			Item parent = (Item) source;
-			if (!(parent instanceof InventoryScroll)){
-				return;
-			}
+
+			InventoryScroll parent = (InventoryScroll) source;
 			
 			if (item != null) {
 				
-				((InventoryScroll)parent).onItemSelected( item );
-				((InventoryScroll)parent).readAnimation();
+				parent.onItemSelected( item );
+				parent.readAnimation();
 				
 				Sample.INSTANCE.play( Assets.SND_READ );
 				Invisibility.dispel();
 				
-			} else if (identifiedByUse && !((Scroll)parent).anonymous) {
+			} else if (identifiedByUse && !parent.anonymous) {
 				
-				((InventoryScroll)parent).confirmCancelation();
+				parent.confirmCancelation();
 				
-			} else if (!((Scroll)parent).anonymous) {
+			} else if (!parent.anonymous) {
 
 				parent.collect( curUser.belongings.backpack );
 				

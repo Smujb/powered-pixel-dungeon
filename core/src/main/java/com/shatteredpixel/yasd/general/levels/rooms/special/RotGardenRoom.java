@@ -69,7 +69,7 @@ public class RotGardenRoom extends SpecialRoom {
 			heartY = top + 1;
 		}
 
-		placePlant(level, heartX + heartY * level.width(), new RotHeart());
+		placePlant(level, heartX + heartY * level.width(), Mob.create(RotHeart.class) );
 
 		int lashers = ((width()-2)*(height()-2))/8;
 
@@ -78,7 +78,7 @@ public class RotGardenRoom extends SpecialRoom {
 			do {
 				pos = level.pointToCell(random());
 			} while (!validPlantPos(level, pos));
-			placePlant(level, pos, new RotLasher());
+			placePlant(level, pos, Mob.create(RotLasher.class));
 		}
 	}
 

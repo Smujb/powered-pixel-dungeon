@@ -49,8 +49,10 @@ public class RotHeart extends Mob {
 	{
 		spriteClass = RotHeartSprite.class;
 
-		HP = HT = 160;
-		defenseSkill = 0;
+		//HP = HT = 160;
+		//defenseSkill = 0;
+		evasionFactor = 0f;
+		healthFactor = 1.5f;
 
 		EXP = 4;
 
@@ -116,11 +118,6 @@ public class RotHeart extends Mob {
 	@Override
 	public boolean reset() {
 		return true;
-	}
-
-	@Override
-	public int damageRoll() {
-		return 0;
 	}
 
 	@Override

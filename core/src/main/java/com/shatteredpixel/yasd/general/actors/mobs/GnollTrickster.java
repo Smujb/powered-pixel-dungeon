@@ -38,13 +38,12 @@ import com.shatteredpixel.yasd.general.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.GnollTricksterSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-public class GnollTrickster extends RangedMob {
+public class GnollTrickster extends Mob {
 
 	{
 		spriteClass = GnollTricksterSprite.class;
@@ -53,6 +52,9 @@ public class GnollTrickster extends RangedMob {
 		defenseSkill = 5;
 
 		EXP = 5;
+
+		range = 4;
+		hasMeleeAttack = false;
 
 		state = WANDERING;
 
@@ -66,23 +68,8 @@ public class GnollTrickster extends RangedMob {
 	private int combo = 0;
 
 	@Override
-	public int damageRoll() {
-		return new  Gnoll().damageRoll();
-	}
-
-	@Override
 	public int attackSkill( Char target ) {
 		return 16;
-	}
-
-	@Override
-	public boolean canHit(Char enemy) {
-		return new  Ballistica( pos, enemy.pos, Ballistica.PROJECTILE).collisionPos == enemy.pos;
-	}
-
-	@Override
-	public boolean fleesAtMelee() {
-		return true;
 	}
 
 	@Override

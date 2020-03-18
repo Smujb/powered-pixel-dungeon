@@ -35,11 +35,9 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
-import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
@@ -53,7 +51,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
-import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.BurningFistSprite;
@@ -65,7 +62,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -74,8 +70,8 @@ public class Yog extends Mob {
 	
 	{
 		spriteClass = YogSprite.class;
-		
-		HP = HT = 600;
+
+		//HP = HT = 600;
 		
 		EXP = 50;
 		
@@ -91,8 +87,8 @@ public class Yog extends Mob {
 	}
 	
 	public void spawnFists() {
-		RottingFist fist1 = Reflection.newInstance(RottingFist.class);
-		BurningFist fist2 = Reflection.newInstance(BurningFist.class);
+		RottingFist fist1 = Mob.create(RottingFist.class);
+		BurningFist fist2 = Mob.create(BurningFist.class);
 		
 		do {
 			fist1.pos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
@@ -108,7 +104,7 @@ public class Yog extends Mob {
 	@Override
 	protected boolean act() {
 		//heals 10 health per turn
-		HP = Math.min( HT, HP+10 );
+		HP = Math.min( HT, HP + 10 );
 
 		return super.act();
 	}
@@ -139,10 +135,10 @@ public class Yog extends Mob {
 		}
 
 		if (spawnPoints.size() > 0) {
-			Larva larva = new Larva();
-			larva.pos = Random.element( spawnPoints );
-
-			GameScene.add( larva );
+			//Larva larva = Mob.create(Larva.class);
+			//larva.pos = Random.element( spawnPoints );
+			Larva larva = Mob.spawnAt(Larva.class, Random.element(spawnPoints));
+			//GameScene.add( larva );
 			Actor.addDelayed( new Pushing( larva, pos, larva.pos ), -1 );
 		}
 
@@ -153,14 +149,6 @@ public class Yog extends Mob {
 		}
 
 	}
-	
-	/*@Override
-	public int defenseProc( Char enemy, int damage ) {
-
-
-
-		return super.defenseProc(enemy, damage);
-	}*/
 	
 	@Override
 	public void beckon( int cell ) {
@@ -220,13 +208,15 @@ public class Yog extends Mob {
 
 	public static class RottingFist extends Mob {
 	
-		private static final int REGENERATION	= 4;
+		private static final int REGENERATION = 4;
 		
 		{
 			spriteClass = RottingFistSprite.class;
-			
-			HP = HT = 300;
-			defenseSkill = 25;
+
+
+			healthFactor = 0.5f;
+			//HP = HT = 300;
+			//defenseSkill = 25;
 			
 			EXP = 0;
 			
@@ -236,8 +226,13 @@ public class Yog extends Mob {
 			properties.add(Property.DEMONIC);
 			properties.add(Property.ACIDIC);
 		}
-		
+
 		@Override
+		public Element elementalType() {
+			return Element.ACID;
+		}
+
+		/*@Override
 		public int attackSkill( Char target ) {
 			return 36;
 		}
@@ -251,7 +246,7 @@ public class Yog extends Mob {
 		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 15);
 		}
-		
+
 		@Override
 		public int attackProc( Char enemy, int damage ) {
 			damage = super.attackProc( enemy, damage );
@@ -262,7 +257,7 @@ public class Yog extends Mob {
 			}
 			
 			return damage;
-		}
+		}*/
 		
 		@Override
 		public boolean act() {
@@ -292,13 +287,15 @@ public class Yog extends Mob {
 		}
 	}
 	
-	public static class BurningFist extends RangedMob {
+	public static class BurningFist extends Mob {
 		
 		{
 			spriteClass = BurningFistSprite.class;
-			
-			HP = HT = 200;
-			defenseSkill = 25;
+
+			healthFactor = 1/3f;
+			damageFactor = 1.5f;
+			drFactor = 0.75f;
+			elementaldrFactor = 1.5f;
 			
 			EXP = 0;
 			
@@ -312,39 +309,6 @@ public class Yog extends Mob {
 		@Override
 		public Element elementalType() {
 			return Element.FIRE;
-		}
-
-		@Override
-		public int attackSkill( Char target ) {
-			return 36;
-		}
-		
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange( 26, 32 );
-		}
-		
-		@Override
-		public int drRoll(Element element) {
-			return Random.NormalIntRange(0, 15);
-		}
-
-		@Override
-		public boolean canHit(Char enemy) {
-			return new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
-		}
-
-		@Override
-		public boolean fleesAtMelee() {
-			return false;
-		}
-		
-		//used so resistances can differentiate between melee and magical attacks
-		public static class DarkBolt extends MagicalDamage{}
-
-		@Override
-		public MagicalDamage magicalSrc() {
-			return new DarkBolt();
 		}
 
 		@Override
@@ -376,9 +340,10 @@ public class Yog extends Mob {
 		
 		{
 			spriteClass = LarvaSprite.class;
-			
-			HP = HT = 25;
-			defenseSkill = 20;
+
+			healthFactor = 0.25f;
+			baseSpeed = 2f;
+			damageFactor = 2f;
 			
 			EXP = 0;
 			maxLvl = -2;
@@ -388,20 +353,14 @@ public class Yog extends Mob {
 			properties.add(Property.DEMONIC);
 		}
 		
-		@Override
+		/*@Override
 		public int attackSkill( Char target ) {
 			return 30;
 		}
 		
 		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange( 22, 30 );
-		}
-		
-		@Override
 		public int drRoll(Element element) {
 			return Random.NormalIntRange(0, 8);
-		}
-
+		}*/
 	}
 }
