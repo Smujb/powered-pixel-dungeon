@@ -112,6 +112,9 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -373,7 +376,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage( dmg, this, this.elementalType(), true );
+			enemy.damage( dmg, true, defaultSrc() );
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -598,21 +601,21 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
-	public void damage(int dmg, Char ch) {
-		damage(dmg, ch, ch.elementalType(), false);
+	public final DamageSrc defaultSrc() {
+		return new DamageSrc(this.elementalType(), this);
 	}
 
-	public void damage(int dmg, Object src,  Element element) {
-		damage( dmg, src, element, element.isMagical());
+	public final void damage(int dmg, Char ch) {
+		damage(dmg, false, new DamageSrc(ch.elementalType(), ch));
 	}
 
-	public void damage(int dmg, Element element, boolean ignoresDefense) {
-		damage(dmg, element, element, ignoresDefense);
+	public final void damage(int dmg, Element element, boolean ignoresDefense) {
+		damage(dmg, ignoresDefense, new DamageSrc(element, null));
 	}
 
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
 		if (!ignoresDefense) {
-			dmg = element.affectDamage(this, dmg);
+			dmg = src.getElement().affectDamage(this, dmg);
 		}
 		if (this.buff(Drowsy.class) != null && dmg > 0) {
 			Buff.detach(this, Drowsy.class);
@@ -650,7 +653,7 @@ public abstract class Char extends Actor {
 			dmg = Math.round( dmg * resist( srcClass ));
 		}
 
-		//TODO improve this when I have proper damage source logic
+		//TODO improve this when I have proper damage cause logic
 		if (AntiMagic.RESISTS.contains(src.getClass()) && buff(ArcaneArmor.class) != null){
 			dmg -= Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
 			if (dmg < 0) dmg = 0;
@@ -661,7 +664,7 @@ public abstract class Char extends Actor {
 		}
 
 		int shielded = dmg;
-		if (!(src instanceof Hunger)){
+		if (!(src.getCause() instanceof Hunger)){
 			for (ShieldBuff s : buffs(ShieldBuff.class)){
 				dmg = s.absorbDamage(dmg);
 				if (dmg == 0) break;
@@ -975,17 +978,43 @@ public abstract class Char extends Actor {
 			this(new HashSet<Class>(), new HashSet<Class>());
 		}
 
-		Property( HashSet<Class> resistances, HashSet<Class> immunities){
+		Property(HashSet<Class> resistances, HashSet<Class> immunities){
 			this.resistances = resistances;
 			this.immunities = immunities;
 		}
 
+		@NotNull
+		@Contract(" -> new")
 		public HashSet<Class> resistances(){
 			return new HashSet<>(resistances);
 		}
 
+		@NotNull
+		@Contract(" -> new")
 		public HashSet<Class> immunities(){
 			return new HashSet<>(immunities);
+		}
+	}
+
+	public static class DamageSrc {
+		private Object cause;
+		private Element element;
+
+		public DamageSrc(Element element) {
+			this(element, null);
+		}
+
+		public DamageSrc(Element element, Object source) {
+			this.element = element;
+			this.cause = source;
+		}
+
+		public Element getElement() {
+			return element;
+		}
+
+		public Object getCause() {
+			return cause;
 		}
 	}
 }

@@ -60,7 +60,7 @@ public class Corruption extends Buff {
 		buildToDamage -= damage;
 
 		if (damage > 0)
-			target.damage( damage, this, Element.DARK, true );
+			target.damage( damage,true, new Char.DamageSrc(Element.DARK, this));
 
 		spend(TICK);
 

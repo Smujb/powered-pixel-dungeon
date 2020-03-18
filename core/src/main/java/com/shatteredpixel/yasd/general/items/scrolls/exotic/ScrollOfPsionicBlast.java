@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items.scrolls.exotic;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
@@ -58,14 +59,14 @@ public class ScrollOfPsionicBlast extends ExoticScroll {
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Dungeon.level.heroFOV[mob.pos]) {
 				targets ++;
-				mob.damage(Math.round(mob.HT/2f + mob.HP/2f), this, Element.DARK, true);
+				mob.damage(Math.round(mob.HT/2f + mob.HP/2f), true, new Char.DamageSrc(Element.DARK, this));
 				if (mob.isAlive()) {
 					Buff.prolong(mob, Blindness.class, 10);
 				}
 			}
 		}
 		
-		curUser.damage(Math.max(0, Math.round(curUser.HT*(0.5f * (float)Math.pow(0.9, targets)))), this, Element.DARK,true );
+		curUser.damage(Math.max(0, Math.round(curUser.HT*(0.5f * (float)Math.pow(0.9, targets)))), true, new Char.DamageSrc(Element.DARK, this));
 		if (curUser.isAlive()) {
 			Buff.prolong(curUser, Blindness.class, 10);
 			Buff.prolong(curUser, Weakness.class, 100);

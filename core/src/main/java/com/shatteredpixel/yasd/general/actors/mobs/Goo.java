@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -227,9 +226,9 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
 		boolean bleeding = (HP*2 <= HT);
-		super.damage(dmg, src, element, ignoresDefense);
+		super.damage(dmg, ignoresDefense, src);
 		if ((HP*2 <= HT) && !bleeding){
 			BossHealthBar.bleed(true);
 			sprite.showStatus(CharSprite.NEGATIVE, Messages.get(this, "enraged"));

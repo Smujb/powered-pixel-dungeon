@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -143,8 +142,8 @@ public class DM300 extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-		super.damage(dmg, src, element, ignoresDefense);
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+		super.damage(dmg, ignoresDefense, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null && !isImmune(src.getClass())) lock.addTime(dmg*1.5f);
 	}

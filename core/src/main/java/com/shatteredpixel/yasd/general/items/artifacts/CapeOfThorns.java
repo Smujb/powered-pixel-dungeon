@@ -112,7 +112,7 @@ public class CapeOfThorns extends Artifact {
 				damage -= deflected;
 
 				if (attacker != null && Dungeon.level.adjacent(attacker.pos, defender.pos)) {
-					attacker.damage(deflected, this, attacker.elementalType());
+					attacker.damage(deflected, false, new Char.DamageSrc(attacker.elementalType(), this));
 				}
 
 				exp+= deflected;

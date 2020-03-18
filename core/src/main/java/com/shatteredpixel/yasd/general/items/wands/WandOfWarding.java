@@ -336,13 +336,13 @@ public class WandOfWarding extends DamageWand {
 						}
 						break;
 					case 4:
-						damage(5, this, Element.MAGICAL, false);
+						damage(5, this);
 						break;
 					case 5:
-						damage(6, this, Element.MAGICAL, false);
+						damage(6, this);
 						break;
 					case 6:
-						damage(7, this, Element.MAGICAL, false);
+						damage(7, this);
 						break;
 				}
 			}

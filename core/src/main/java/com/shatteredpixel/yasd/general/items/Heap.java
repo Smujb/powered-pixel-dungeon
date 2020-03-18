@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
@@ -110,7 +111,7 @@ public class Heap implements Bundlable {
 		if (haunted){
 			if (Wraith.spawnAt( pos ) == null) {
 				hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-				hero.damage( hero.HP / 2, this, Element.DARK );
+				hero.damage( hero.HP / 2, true, new Char.DamageSrc(Element.DARK, this) );
 			}
 			Sample.INSTANCE.play( Assets.SND_CURSED );
 		}

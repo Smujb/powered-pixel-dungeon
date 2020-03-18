@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -98,9 +99,9 @@ public class Ooze extends Buff {
 	public boolean act() {
 		if (target.isAlive()) {
 			if (Dungeon.getScaleFactor() > 4)
-				target.damage( Dungeon.getScaleFactor() /Constants.CHAPTER_LENGTH, this, Element.ACID );
+				target.damage( Dungeon.getScaleFactor() /Constants.CHAPTER_LENGTH, true, new Char.DamageSrc(Element.ACID, this));
 			else if (Random.Int(2) == 0)
-				target.damage( 1, this, Element.ACID );
+				target.damage( 1, true, new Char.DamageSrc(Element.ACID, this) );
 			if (!target.isAlive() && target == Dungeon.hero) {
 				Dungeon.fail( getClass() );
 				GLog.n( Messages.get(this, "ondeath") );

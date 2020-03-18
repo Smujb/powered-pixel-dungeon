@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
@@ -70,16 +69,16 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense){
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src){
 		//crab blocks all attacks originating from its current enemy if it sees them.
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
 		if ((enemySeen && state != SLEEPING && paralysed == 0)
-				&& ((src instanceof Wand && enemy == Dungeon.hero)
-				|| (src instanceof Char && enemy == src))){
+				&& ((src.getCause() instanceof Wand && enemy == Dungeon.hero)
+				|| (src.getCause() instanceof Char && enemy == src.getCause()))){
 			GLog.n( Messages.get(this, "noticed") );
 			sprite.showStatus( CharSprite.NEUTRAL, Messages.get(this, "blocked") );
 		} else {
-			super.damage( dmg, src, element, ignoresDefense);
+			super.damage( dmg, ignoresDefense, src);
 		}
 	}
 

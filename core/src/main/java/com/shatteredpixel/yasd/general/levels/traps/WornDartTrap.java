@@ -82,7 +82,7 @@ public class WornDartTrap extends Trap {
 								@Override
 								public void call() {
 								int dmg = Random.NormalIntRange(1, 4);
-								finalTarget.damage( dmg, trap, Element.PHYSICAL );
+								finalTarget.damage( dmg, false, new Char.DamageSrc(Element.ACID, this) );
 								if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
 									Dungeon.fail( trap.getClass()  );
 								}
@@ -97,7 +97,7 @@ public class WornDartTrap extends Trap {
 					}
 				});
 			} else {
-				finalTarget.damage(Random.NormalIntRange(1, 4), trap, Element.PHYSICAL );
+				finalTarget.damage(Random.NormalIntRange(1, 4), false, new Char.DamageSrc(Element.ACID, this) );
 			}
 		}
 	}

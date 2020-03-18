@@ -56,7 +56,7 @@ public class Grim extends Weapon.Enchantment {
 		
 		if (Random.Float() < chance) {
 			
-			defender.damage( defender.HP, this, Element.DARK, true );
+			defender.damage( defender.HP, true, new Char.DamageSrc(Element.DARK, this));
 			defender.sprite.emitter().burst( ShadowParticle.UP, 5 );
 			
 			if (!defender.isAlive() && attacker instanceof Hero

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Miasma;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -82,7 +83,7 @@ public class DeferredDeath extends FlavourBuff {
         super.detach();
         GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
         if (target.resist(Grim.class) != 1f) {
-            target.damage(target.HP, new Grim(), Element.DARK, true);
+            target.damage(target.HP, true, new Char.DamageSrc(Element.ACID, this));
         } else {
             target.die(new Grim());
         }

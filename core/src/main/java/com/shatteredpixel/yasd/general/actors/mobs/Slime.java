@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
@@ -68,12 +67,12 @@ public class Slime extends Mob {
 	}*/
 	
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
 		float threshold = HT/3f;
 		if (dmg >= threshold){
 			dmg = (int) ((threshold-1) + Math.sqrt((24/threshold)*(dmg - (threshold-1)) + 1) - 1)/2;
 		}
-		super.damage(dmg, src, element, ignoresDefense);
+		super.damage(dmg, ignoresDefense, src);
 	}
 	
 	@Override

@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -67,12 +66,12 @@ public class RotLasher extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-		if (src instanceof Burning) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+		if (src.getCause() instanceof Burning) {
 			destroy();
 			sprite.die();
 		} else {
-			super.damage(dmg, src, element, ignoresDefense);
+			super.damage(dmg, ignoresDefense, src);
 		}
 	}
 

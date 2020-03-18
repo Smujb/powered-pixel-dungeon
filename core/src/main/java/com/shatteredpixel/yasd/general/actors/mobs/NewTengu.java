@@ -55,7 +55,6 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.TomeOfMastery;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
-import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -120,13 +119,13 @@ public class NewTengu extends Mob {
 	}*/
 	
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;
 		
 		int beforeHitHP = HP;
-		super.damage(dmg, src, element, ignoresDefense);
+		super.damage(dmg, ignoresDefense, src);
 		dmg = beforeHitHP - HP;
 		
 		//tengu cannot be hit through multiple brackets at a time
@@ -613,7 +612,7 @@ public class NewTengu extends Mob {
 							if (ch != null && !(ch instanceof NewTengu)){
 								int dmg = Random.NormalIntRange(5 + Dungeon.getScaleFactor(), 10 + Dungeon.getScaleFactor() *2);
 
-								ch.damage(dmg, Bomb.class, Element.PHYSICAL, false);
+								ch.damage(dmg, false, new DamageSrc(Element.PHYSICAL, this));
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);

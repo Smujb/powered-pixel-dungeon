@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
-import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
@@ -72,13 +71,12 @@ public class RotHeart extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src, Element element, boolean ignoresDefense) {
-		//TODO: when effect properties are done, change this to FIRE
-		if (src instanceof Burning) {
+	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+		if (src.getElement() == Element.FIRE) {
 			destroy();
 			sprite.die();
 		} else {
-			super.damage(dmg, src, element, ignoresDefense);
+			super.damage(dmg, ignoresDefense, src);
 		}
 	}
 
