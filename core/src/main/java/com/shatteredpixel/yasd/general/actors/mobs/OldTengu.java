@@ -95,7 +95,7 @@ public class OldTengu extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 		
 		OldPrisonBossLevel.State state = ((OldPrisonBossLevel)Dungeon.level).state();
 		
@@ -107,7 +107,7 @@ public class OldTengu extends Mob {
 		}
 
 		int beforeHitHP = HP;
-		super.damage(dmg, ignoresDefense, src);
+		super.damage(dmg, src);
 		dmg = beforeHitHP - HP;
 
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);

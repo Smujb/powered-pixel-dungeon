@@ -108,18 +108,18 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 		if (src.getCause() instanceof Tower) {
-			super.damage(dmg, ignoresDefense, src);
+			super.damage(dmg, src);
 			if (hint) {
 				hint = false;
 				GLog.p("The boss takes heavy damage from the disintegration rays!");
 			}
 		} else {
 			if (HP > HT/2 || checkTowers()) {
-				super.damage(Random.Int(dmg / 2), ignoresDefense, src);
+				super.damage(Random.Int(dmg / 2), src);
 			} else {
-				super.damage(0, ignoresDefense, src);//Display that no damage is being done any more
+				super.damage(0, src);//Display that no damage is being done any more
 			}
 			if (Random.Int(10) == 0 || HP == HT) {
 				GLog.n("The boss is too strong to be damaged significantly by your weapons...");
@@ -276,7 +276,7 @@ public class TestBoss extends Mob {
 
 
 		@Override
-		public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+		public void damage(int dmg, DamageSrc src) {
 		}
 
 		@Override

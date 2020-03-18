@@ -57,7 +57,7 @@ public class RatKing extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 	}
 	
 	@Override

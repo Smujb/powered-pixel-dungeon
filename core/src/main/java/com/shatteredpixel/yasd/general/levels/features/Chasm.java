@@ -125,7 +125,7 @@ public class Chasm {
 		//The lower the hero's HP, the more bleed and the less upfront damage.
 		//Hero has a 50% chance to bleed out at 66% HP, and begins to risk instant-death at 25%
 		Buff.affect( hero, FallBleed.class).set( Math.round(hero.HT / (6f + (6f*(hero.HP/(float)hero.HT)))));
-		hero.damage( Math.max( hero.HP / 2, Random.NormalIntRange( hero.HP / 2, hero.HT / 4 )), true, new Char.DamageSrc(Element.PHYSICAL, Chasm.class));
+		hero.damage( Math.max( hero.HP / 2, Random.NormalIntRange( hero.HP / 2, hero.HT / 4 )), new Char.DamageSrc(Element.PHYSICAL, Chasm.class).ignoreDefense());
 	}
 
 	public static void mobFall( Mob mob ) {

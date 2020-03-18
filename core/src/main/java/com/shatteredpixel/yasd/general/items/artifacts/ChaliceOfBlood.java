@@ -118,7 +118,7 @@ public class ChaliceOfBlood extends Artifact {
 			hero.sprite.emitter().burst( ShadowParticle.CURSE, 4+(damage/10) );
 		}
 
-		hero.damage(damage, false, new Char.DamageSrc(Element.PHYSICAL, this));
+		hero.damage(damage, new Char.DamageSrc(Element.PHYSICAL, this));
 
 		if (!hero.isAlive()) {
 			Dungeon.fail( getClass() );

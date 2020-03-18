@@ -126,7 +126,7 @@ public class Viscosity extends Glyph {
 			if (target.isAlive()) {
 
 				int damageThisTick = Math.max(1, (int)(damage*0.1f));
-				target.damage( damageThisTick, true, new Char.DamageSrc(Element.MAGICAL, this));
+				target.damage( damageThisTick, new Char.DamageSrc(Element.MAGICAL, this).ignoreDefense());
 				if (target == Dungeon.hero && !target.isAlive()) {
 
 					Dungeon.fail( getClass() );

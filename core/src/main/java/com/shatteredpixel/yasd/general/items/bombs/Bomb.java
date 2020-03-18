@@ -189,7 +189,7 @@ public class Bomb extends Item {
 				}
 
 				if (dmg > 0) {
-					ch.damage(dmg, false, new Char.DamageSrc(Element.PHYSICAL, this));
+					ch.damage(dmg, new Char.DamageSrc(Element.PHYSICAL, this));
 				}
 				
 				if (ch == Dungeon.hero && !ch.isAlive()) {

@@ -793,7 +793,7 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 
 		if (state == SLEEPING) {
 			state = WANDERING;
@@ -803,7 +803,7 @@ public abstract class Mob extends Char {
 		}
 
 		
-		super.damage( dmg, ignoresDefense, src);
+		super.damage( dmg, src);
 	}
 	
 	

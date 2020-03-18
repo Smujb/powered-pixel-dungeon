@@ -119,13 +119,13 @@ public class NewTengu extends Mob {
 	}*/
 	
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;
 		
 		int beforeHitHP = HP;
-		super.damage(dmg, ignoresDefense, src);
+		super.damage(dmg, src);
 		dmg = beforeHitHP - HP;
 		
 		//tengu cannot be hit through multiple brackets at a time
@@ -612,7 +612,7 @@ public class NewTengu extends Mob {
 							if (ch != null && !(ch instanceof NewTengu)){
 								int dmg = Random.NormalIntRange(5 + Dungeon.getScaleFactor(), 10 + Dungeon.getScaleFactor() *2);
 
-								ch.damage(dmg, false, new DamageSrc(Element.PHYSICAL, this));
+								ch.damage(dmg, new DamageSrc(Element.PHYSICAL, this));
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);
@@ -984,7 +984,7 @@ public class NewTengu extends Mob {
 							
 							Char ch = Actor.findChar(cell);
 							if (ch != null && !(ch instanceof NewTengu)){
-								ch.damage(2 + Dungeon.getScaleFactor(), Element.ELECTRIC, false );
+								ch.damage(2 + Dungeon.getScaleFactor()*2, Element.ELECTRIC);
 								
 								if (ch == Dungeon.hero && !ch.isAlive()) {
 									Dungeon.fail(NewTengu.class);

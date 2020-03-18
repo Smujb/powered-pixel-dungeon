@@ -1046,13 +1046,13 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 		if (!(src.getCause() instanceof Hunger || src.getCause() instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
 			resting = false;
 		}
 
-		super.damage( dmg, ignoresDefense, src);
+		super.damage( dmg, src );
 	}
 	
 	public void checkVisibleMobs() {

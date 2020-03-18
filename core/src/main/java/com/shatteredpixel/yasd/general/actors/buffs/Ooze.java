@@ -99,9 +99,9 @@ public class Ooze extends Buff {
 	public boolean act() {
 		if (target.isAlive()) {
 			if (Dungeon.getScaleFactor() > 4)
-				target.damage( Dungeon.getScaleFactor() /Constants.CHAPTER_LENGTH, true, new Char.DamageSrc(Element.ACID, this));
+				target.damage( Dungeon.getScaleFactor()/Constants.CHAPTER_LENGTH, new Char.DamageSrc(Element.ACID, this).ignoreDefense());
 			else if (Random.Int(2) == 0)
-				target.damage( 1, true, new Char.DamageSrc(Element.ACID, this) );
+				target.damage( 1, new Char.DamageSrc(Element.ACID, this).ignoreDefense() );
 			if (!target.isAlive() && target == Dungeon.hero) {
 				Dungeon.fail( getClass() );
 				GLog.n( Messages.get(this, "ondeath") );

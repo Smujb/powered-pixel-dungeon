@@ -60,7 +60,7 @@ public class ScrollOfRetribution extends Scroll {
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Dungeon.level.heroFOV[mob.pos]) {
 				//deals 10%HT, plus 0-90%HP based on scaling
-				mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), true, new Char.DamageSrc(Element.DARK, this));
+				mob.damage(Math.round(mob.HT/10f + (mob.HP * power * 0.225f)), new Char.DamageSrc(Element.DARK, this).ignoreDefense());
 				if (mob.isAlive()) {
 					Buff.prolong(mob, Blindness.class, Math.round(6 + power));
 				}
@@ -90,7 +90,7 @@ public class ScrollOfRetribution extends Scroll {
 		
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Dungeon.level.heroFOV[mob.pos]) {
-				mob.damage(Math.round(mob.HP * power/5f), true, new Char.DamageSrc(Element.DARK, this));
+				mob.damage(Math.round(mob.HP * power/5f), new Char.DamageSrc(Element.DARK, this).ignoreDefense());
 			}
 		}
 		

@@ -96,9 +96,9 @@ public class Elemental extends Mob {
 	public void add( Buff buff ) {
 		if (buff instanceof Frost || buff instanceof Chill || buff instanceof Wet) {
 				if (Dungeon.level.liquid()[this.pos])
-					damage( Random.NormalIntRange( HT / 2, HT ), true, new DamageSrc(Element.COLD, null));
+					damage( Random.NormalIntRange( HT / 2, HT ), new DamageSrc(Element.COLD, null));
 				else
-					damage( Random.NormalIntRange( 1, HT * 2 / 3 ), true, new DamageSrc(Element.COLD, null));
+					damage( Random.NormalIntRange( 1, HT * 2 / 3 ), new DamageSrc(Element.COLD, null));
 		} else {
 			super.add( buff );
 		}

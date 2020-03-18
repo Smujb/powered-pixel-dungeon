@@ -83,7 +83,7 @@ public class Hunger extends Buff implements Hero.Doom {
 				partialDamage += STEP * target.HT/1000f;
 
 				if (partialDamage > 1){
-					target.damage( (int)partialDamage, true, new Char.DamageSrc(Element.NATURAL, this) );
+					target.damage( (int)partialDamage, new Char.DamageSrc(Element.NATURAL, this).ignoreDefense() );
 					partialDamage -= (int)partialDamage;
 					hero.loseMorale(0.05f, false);
 				}
@@ -97,7 +97,7 @@ public class Hunger extends Buff implements Hero.Doom {
 					GLog.n( Messages.get(this, "onstarving") );
 					hero.loseMorale(0.3f, false);
 					hero.resting = false;
-					hero.damage( 1, true, new Char.DamageSrc(Element.NATURAL, this) );
+					hero.damage( 1, new Char.DamageSrc(Element.NATURAL, this).ignoreDefense() );
 					statusUpdated = true;
 
 					hero.interrupt();

@@ -87,7 +87,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 			if (target.hasBelongings()) {
 
-				target.damage( damage, true, new Char.DamageSrc(Element.FIRE, this) );
+				target.damage( damage, new Char.DamageSrc(Element.FIRE, this).ignoreDefense() );
 				burnIncrement++;
 
 				//at 4+ turns, there is a (turns-3)/3 chance an item burns
@@ -117,7 +117,7 @@ public class Burning extends Buff implements Hero.Doom {
 				}
 				
 			} else {
-				target.damage( damage, true, new Char.DamageSrc(Element.FIRE, this) );
+				target.damage( damage, new Char.DamageSrc(Element.FIRE, this).ignoreDefense() );
 			}
 
 		} else {

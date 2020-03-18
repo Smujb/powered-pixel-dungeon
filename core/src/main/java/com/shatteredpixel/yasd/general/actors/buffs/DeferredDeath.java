@@ -83,7 +83,7 @@ public class DeferredDeath extends FlavourBuff {
         super.detach();
         GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
         if (target.resist(Grim.class) != 1f) {
-            target.damage(target.HP, true, new Char.DamageSrc(Element.ACID, this));
+            target.damage(target.HP, new Char.DamageSrc(Element.DARK, this).ignoreDefense());
         } else {
             target.die(new Grim());
         }

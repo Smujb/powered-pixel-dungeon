@@ -135,9 +135,9 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
+	public void damage(int dmg, DamageSrc src) {
 		if (!beamCharged) {//Now immune when beam is charged
-			super.damage(dmg, ignoresDefense, src);
+			super.damage(dmg, src);
 		}
 	}
 

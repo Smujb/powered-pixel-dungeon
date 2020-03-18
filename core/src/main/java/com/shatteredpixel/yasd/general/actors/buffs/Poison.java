@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.particles.PoisonParticle;
+import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -107,7 +107,7 @@ public class Poison extends Buff implements Hero.Doom {
 	@Override
 	public boolean attachTo(Char target) {
 		if (super.attachTo(target) && target.sprite != null){
-			CellEmitter.center(target.pos).burst( PoisonParticle.SPLASH, 5 );
+			CellEmitter.center(target.pos).burst(Speck.factory(Speck.BUBBLE_PURPLE), 5 );
 			return true;
 		} else
 			return false;
@@ -117,7 +117,7 @@ public class Poison extends Buff implements Hero.Doom {
 	public boolean act() {
 		if (target.isAlive()) {
 			
-			target.damage( (int)(left / 3) + 1, true, new Char.DamageSrc(Element.VENOM, this));
+			target.damage( (int)(left / 3) + 1, new Char.DamageSrc(Element.VENOM, this).ignoreDefense());
 			spend( TICK );
 			
 			if ((left -= TICK) <= 0) {

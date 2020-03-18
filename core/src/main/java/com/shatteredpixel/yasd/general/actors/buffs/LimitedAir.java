@@ -69,7 +69,7 @@ public class LimitedAir extends Buff {
 		if (duration > 0) {
 			duration--;
 		} else {
-			target.damage(target.HT/5, Element.WATER, true);
+			target.damage(target.HT/5, new Char.DamageSrc(Element.WATER, this).ignoreDefense());
 			if (target == Dungeon.hero && !target.isAlive()) {
 				Dungeon.fail( getClass() );
 				GLog.n( Messages.get(this, "ondeath") );

@@ -52,7 +52,7 @@ public abstract class DamageWand extends Wand{
 		damage = enemy.defenseProc(curUser, damage, element);
 		damage -= enemy.drRoll(element);
 		if (damage > 0) {
-			enemy.damage(damage, false, new Char.DamageSrc(element, this));
+			enemy.damage(damage, new Char.DamageSrc(element, this));
 		}
 		return damage;
 	}

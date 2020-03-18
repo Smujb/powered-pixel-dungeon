@@ -376,7 +376,7 @@ public abstract class Char extends Actor {
 				return true;
 			}
 
-			enemy.damage( dmg, true, defaultSrc() );
+			enemy.damage( dmg, defaultSrc() );
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
@@ -601,20 +601,20 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
-	public final DamageSrc defaultSrc() {
+	private DamageSrc defaultSrc() {
 		return new DamageSrc(this.elementalType(), this);
 	}
 
 	public final void damage(int dmg, Char ch) {
-		damage(dmg, false, new DamageSrc(ch.elementalType(), ch));
+		damage(dmg, ch.defaultSrc());
 	}
 
-	public final void damage(int dmg, Element element, boolean ignoresDefense) {
-		damage(dmg, ignoresDefense, new DamageSrc(element, null));
+	public final void damage(int dmg, Element element) {
+		damage(dmg, new DamageSrc(element, null));
 	}
 
-	public void damage(int dmg, boolean ignoresDefense, DamageSrc src) {
-		if (!ignoresDefense) {
+	public void damage(int dmg, DamageSrc src) {
+		if (!src.ignores()) {
 			dmg = src.getElement().affectDamage(this, dmg);
 		}
 		if (this.buff(Drowsy.class) != null && dmg > 0) {
@@ -999,6 +999,7 @@ public abstract class Char extends Actor {
 	public static class DamageSrc {
 		private Object cause;
 		private Element element;
+		private boolean ignores = false;
 
 		public DamageSrc(Element element) {
 			this(element, null);
@@ -1015,6 +1016,15 @@ public abstract class Char extends Actor {
 
 		public Object getCause() {
 			return cause;
+		}
+
+		public DamageSrc ignoreDefense() {
+			this.ignores = true;
+			return this;
+		}
+
+		public boolean ignores() {
+			return ignores;
 		}
 	}
 }
