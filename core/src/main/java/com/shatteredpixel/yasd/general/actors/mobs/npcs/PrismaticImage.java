@@ -116,9 +116,9 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public void die(Object cause) {
+	public void die(DamageSrc cause) {
 		if (deathTimer == -1) {
-			if (cause == Chasm.class){
+			if (cause.getCause() == Chasm.class){
 				super.die( cause );
 			} else {
 				deathTimer = 5;

@@ -158,7 +158,7 @@ public class King extends Mob {
 	}
 	
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 
 		GameScene.bossSlain();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ), pos ).sprite.drop();
@@ -313,7 +313,7 @@ public class King extends Mob {
 		}
 		
 		@Override
-		public void die( Object cause ) {
+		public void die(DamageSrc cause ) {
 			super.die( cause );
 			
 			if (Dungeon.level.heroFOV[pos]) {

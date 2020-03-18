@@ -129,7 +129,7 @@ public class Chasm {
 	}
 
 	public static void mobFall( Mob mob ) {
-		if (mob.isAlive()) mob.die( Chasm.class );
+		if (mob.isAlive()) mob.die( new Char.DamageSrc(Element.NATURAL, Chasm.class));
 		
 		((MobSprite)mob.sprite).fall();
 	}

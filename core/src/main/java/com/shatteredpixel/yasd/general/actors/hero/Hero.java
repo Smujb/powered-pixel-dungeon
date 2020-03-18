@@ -1397,7 +1397,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void die( Object cause  ) {
+	public void die(DamageSrc cause  ) {
 		
 		curAction = null;
 
@@ -1420,26 +1420,9 @@ public class Hero extends Char {
 		Actor.fixTime();
 		super.die( cause );
 		reallyDie( cause );
-		/*
-		if (ankh == null) {
-			
-			reallyDie( cause );
-			
-		} else {
-			
-			Dungeon.deleteGame( GamesInProgress.curSlot, false );
-			final Ankh finalAnkh = ankh;
-			Game.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					GameScene.show( new WndResurrect( finalAnkh, cause ) );
-				}
-			});
-			
-		}*/
 	}
 	
-	public static void reallyDie( Object cause ) {
+	public static void reallyDie( DamageSrc cause ) {
 		
 		int length = Dungeon.level.length();
 		Terrain[] map = Dungeon.level.map;

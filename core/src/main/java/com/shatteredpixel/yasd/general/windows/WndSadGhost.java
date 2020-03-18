@@ -29,6 +29,8 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Ghost;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -118,7 +120,7 @@ public class WndSadGhost extends Window {
 		}
 		
 		ghost.yell( Messages.get(this, "farewell") );
-		ghost.die( null );
+		ghost.die( new Char.DamageSrc(Element.NATURAL, null));
 		
 		Ghost.Quest.complete();
 	}

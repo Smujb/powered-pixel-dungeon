@@ -154,7 +154,7 @@ public class OldTengu extends Mob {
 	}
 
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 		
 		if (Dungeon.hero.subClass == HeroSubClass.NONE) {
 			Dungeon.level.drop( new  TomeOfMastery(), pos ).sprite.drop();

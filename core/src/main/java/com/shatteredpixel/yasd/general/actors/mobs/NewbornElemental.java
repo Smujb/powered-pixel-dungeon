@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
@@ -52,14 +53,14 @@ public class NewbornElemental extends Elemental {
 	@Override
 	public void add(Buff buff) {
 		if (buff instanceof Frost || buff instanceof Chill) {
-			die(buff);
+			die(new DamageSrc(Element.COLD, this));
 		} else {
 			super.add(buff);
 		}
 	}
 
 	@Override
-	public void die(Object cause) {
+	public void die(DamageSrc cause) {
 		super.die(cause);
 		Dungeon.level.drop( new  Embers(), pos ).sprite.drop();
 	}

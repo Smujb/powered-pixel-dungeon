@@ -69,7 +69,7 @@ public class MirrorImage extends NPC {
 		if ( user == null ){
 			user = (Hero)Actor.findById(heroID);
 			if ( user == null ){
-				die(null);
+				die(new DamageSrc(Element.NATURAL, null));
 				sprite.killAndErase();
 				return true;
 			}

@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.sprites.PiranhaSprite;
@@ -63,7 +64,7 @@ public class Piranha extends WaterMob {
 	protected boolean act() {
 		
 		if (!Dungeon.level.liquid()[pos]) {
-			die( null );
+			die( new DamageSrc(Element.EARTH, null) );
 			sprite.killAndErase();
 			return true;
 		} else {
@@ -87,7 +88,7 @@ public class Piranha extends WaterMob {
 	}*/
 	
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 		super.die( cause );
 		
 		Statistics.piranhasKilled++;

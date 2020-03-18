@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -207,7 +208,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 
 		super.die( cause );
 
@@ -286,7 +287,7 @@ public class TestBoss extends Mob {
 					zap(i);
 				}
 			}
-			die(this);
+			die(new DamageSrc(Element.NATURAL, null));
 			return true;
 		}
 
@@ -319,7 +320,7 @@ public class TestBoss extends Mob {
 		}
 
 		@Override
-		public void die(Object cause) {
+		public void die(DamageSrc cause) {
 			super.die(cause);
 			sprite.emitter().burst(SparkParticle.FACTORY, 10);
 		}

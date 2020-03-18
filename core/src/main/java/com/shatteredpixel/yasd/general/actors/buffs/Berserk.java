@@ -29,6 +29,8 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.SpellSprite;
 import com.shatteredpixel.yasd.general.items.BrokenSeal.WarriorShield;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -94,7 +96,7 @@ public class Berserk extends Buff {
 					if (buff != null) buff.absorbDamage(1 + (int)Math.ceil(target.shielding() * 0.1f));
 				}
 				if (target.shielding() <= 0) {
-					target.die(this);
+					target.die(new Char.DamageSrc(Element.CONFUSION, this));
 					if (!target.isAlive()) Dungeon.fail(this.getClass());
 				}
 			} else {

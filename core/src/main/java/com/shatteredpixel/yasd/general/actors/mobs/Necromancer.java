@@ -108,7 +108,7 @@ public class Necromancer extends Mob {
 	}
 	
 	@Override
-	public void die(Object cause) {
+	public void die(DamageSrc cause) {
 		if (storedSkeletonID != -1){
 			Actor ch = Actor.findById(storedSkeletonID);
 			storedSkeletonID = -1;
@@ -118,7 +118,7 @@ public class Necromancer extends Mob {
 		}
 		
 		if (mySkeleton != null && mySkeleton.isAlive()){
-			mySkeleton.die(null);
+			mySkeleton.die(new DamageSrc(Element.NATURAL, null));
 		}
 		
 		if (summoningEmitter != null){

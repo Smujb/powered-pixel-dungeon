@@ -88,7 +88,7 @@ public class JellyFish extends WaterMob {
 
 	protected boolean act() {
 		if(!Dungeon.level.liquid()[pos]){
-			die(null);
+			die(new DamageSrc(Element.EARTH, null));
 			sprite.killAndErase();
 			return true;
 		} else {

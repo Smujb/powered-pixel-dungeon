@@ -156,7 +156,7 @@ public class Yog extends Mob {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist) {

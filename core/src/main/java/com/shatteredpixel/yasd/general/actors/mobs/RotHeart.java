@@ -102,13 +102,13 @@ public class RotHeart extends Mob {
 		super.destroy();
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[Dungeon.level.mobs.size()])){
 			if (mob instanceof RotLasher){
-				mob.die(null);
+				mob.die(new DamageSrc(Element.EARTH, this));
 			}
 		}
 	}
 
 	@Override
-	public void die(Object cause) {
+	public void die(DamageSrc cause) {
 		super.die(cause);
 		Dungeon.level.drop( new Rotberry.Seed(), pos ).sprite.drop();
 	}

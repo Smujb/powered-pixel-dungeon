@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -386,7 +387,7 @@ public class MagicMap extends Item {
 				break;
 			case AC_KILL:
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					mob.die(this);
+					mob.die(new Char.DamageSrc(Element.DARK, this));
 					GLog.i("All ded");
 				}
 				break;

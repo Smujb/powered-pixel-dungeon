@@ -193,7 +193,7 @@ public class WandOfThornvines extends Wand {
         @Override
         public boolean interact() {
             Buff.affect(Dungeon.hero, Recharging.class, (HP/(float)HT)*charges);
-            die(WandOfThornvines.class);
+            die(new DamageSrc(Element.EARTH, null));
             return true;
         }
 

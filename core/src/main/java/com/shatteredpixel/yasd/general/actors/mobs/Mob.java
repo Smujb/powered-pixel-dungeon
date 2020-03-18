@@ -831,14 +831,14 @@ public abstract class Mob extends Char {
 	}
 	
 	@Override
-	public void die( Object cause ) {
+	public void die(DamageSrc cause ) {
 		
 		if (hitWithRanged){
 			Statistics.thrownAssists++;
 			Badges.validateHuntressUnlock();
 		}
 		
-		if (cause == Chasm.class){
+		if (cause.getCause() == Chasm.class){
 			//50% chance to round up, 50% to round down
 			if (EXP % 2 == 1) EXP += Random.Int(2);
 			EXP /= 2;

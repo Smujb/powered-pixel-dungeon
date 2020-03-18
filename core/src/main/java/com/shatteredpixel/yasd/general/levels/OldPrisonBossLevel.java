@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -450,7 +451,7 @@ public class OldPrisonBossLevel extends Level {
 					mobs.add(m);
 				}
 
-				tengu.die(Dungeon.hero);
+				tengu.die(new Char.DamageSrc(Element.NATURAL, Dungeon.hero));
 				
 				clearEntities((Room) new EmptyRoom().set(2, 25, 8, 31)); //arena is safe
 

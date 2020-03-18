@@ -326,13 +326,13 @@ public class WandOfWarding extends DamageWand {
 					case 1:
 					default:
 						if (totalZaps >= tier) {
-							die(this);
+							die(new DamageSrc(Element.NATURAL, this));
 						}
 						break;
 					case 2:
 					case 3:
 						if (totalZaps > tier) {
-							die(this);
+							die(new DamageSrc(Element.NATURAL, this));
 						}
 						break;
 					case 4:
@@ -453,7 +453,7 @@ public class WandOfWarding extends DamageWand {
 							@Override
 							protected void onSelect(int index) {
 								if (index == 0) {
-									die(null);
+									die(new DamageSrc(Element.NATURAL, null));
 								}
 							}
 						});

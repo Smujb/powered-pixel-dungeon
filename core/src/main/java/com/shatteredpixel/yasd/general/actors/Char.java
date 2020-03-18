@@ -692,9 +692,9 @@ public abstract class Char extends Actor {
 		Actor.remove( this );
 	}
 
-	public void die( Object src ) {
+	public void die(DamageSrc src ) {
 		destroy();
-		if (src != Chasm.class) sprite.die();
+		if (src.getCause() != Chasm.class) sprite.die();
 	}
 
 	public boolean isAlive() {

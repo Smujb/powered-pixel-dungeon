@@ -85,7 +85,7 @@ public class DeferredDeath extends FlavourBuff {
         if (target.resist(Grim.class) != 1f) {
             target.damage(target.HP, new Char.DamageSrc(Element.DARK, this).ignoreDefense());
         } else {
-            target.die(new Grim());
+            target.die(new Char.DamageSrc(Element.DARK, null));
         }
         CellEmitter.get(target.pos).burst(ShadowParticle.UP, 20);
     }

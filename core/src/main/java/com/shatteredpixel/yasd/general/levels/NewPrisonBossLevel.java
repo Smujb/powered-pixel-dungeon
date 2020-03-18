@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -530,7 +531,7 @@ public class NewPrisonBossLevel extends Level {
 					mobs.add(m);
 				}
 				
-				tengu.die(Dungeon.hero);
+				tengu.die(new Char.DamageSrc(Element.NATURAL, Dungeon.hero));
 				
 				clearEntities(tenguCell);
 				cleanMapState();
