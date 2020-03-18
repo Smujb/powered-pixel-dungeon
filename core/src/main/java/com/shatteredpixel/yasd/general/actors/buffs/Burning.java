@@ -108,7 +108,7 @@ public class Burning extends Buff implements Hero.Doom {
 						GLog.w( Messages.get(this, "burnsup", Messages.capitalize(toBurn.toString())) );
 						Item result = Fire.burnItem(toBurn);
 						if (result != null) {
-							if (!result.collect( target.belongings.backpack )) {
+							if (!result.collect( target.belongings.backpack, target)) {
 								Dungeon.level.drop( result, target.pos ).sprite.drop();
 							}
 						}

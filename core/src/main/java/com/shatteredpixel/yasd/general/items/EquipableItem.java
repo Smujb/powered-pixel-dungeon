@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -37,7 +36,6 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 
@@ -128,7 +126,7 @@ public abstract class EquipableItem extends Item {
 				hero.spend(time2equip(hero));
 		}
 
-		if (!collect || !collect(hero.belongings.backpack)) {
+		if (!collect || !collect(hero.belongings.backpack, hero)) {
 			onDetach();
 			Dungeon.quickslot.clearItem(this);
 			updateQuickslot();
@@ -143,28 +141,6 @@ public abstract class EquipableItem extends Item {
 	}
 
 	public void activate(Char ch) {
-		userID = ch.id();
 		curUser = ch;
-	}
-
-	@Override
-	public boolean collect() {
-		curUser = (Char) Actor.findById(userID);
-		return super.collect();
-	}
-
-	private int userID = 0;
-	private static final String USERID =       "userID";
-
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put( USERID, userID );
-	}
-
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		userID = bundle.getInt( USERID );
 	}
 }

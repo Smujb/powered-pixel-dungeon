@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.bags;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
@@ -50,8 +51,8 @@ public class MagicalHolster extends Bag {
 	}
 	
 	@Override
-	public boolean collect( Bag container ) {
-		if (super.collect( container )) {
+	public boolean collect(Bag container, Char ch) {
+		if (super.collect( container, ch)) {
 			if (owner != null) {
 				for (Item item : items) {
 					if (item instanceof Wand) {

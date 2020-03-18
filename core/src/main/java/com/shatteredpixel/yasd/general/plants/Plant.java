@@ -48,6 +48,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public abstract class Plant implements Bundlable {
@@ -196,7 +198,7 @@ public abstract class Plant implements Bundlable {
 			}
 			
 			@Override
-			public boolean isSimilar(Item item) {
+			public boolean isSimilar(@NotNull Item item) {
 				return item instanceof Plant.Seed;
 			}
 			

@@ -41,6 +41,8 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MysteryMeat extends Food {
 
 	{
@@ -86,7 +88,7 @@ public class MysteryMeat extends Food {
 		}
 		
 		@Override
-		public boolean isSimilar(Item item) {
+		public boolean isSimilar(@NotNull Item item) {
 			return item instanceof MysteryMeat || item instanceof StewedMeat
 					|| item instanceof ChargrilledMeat || item instanceof FrozenCarpaccio;
 		}

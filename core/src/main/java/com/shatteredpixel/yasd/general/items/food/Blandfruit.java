@@ -56,6 +56,8 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Blandfruit extends Food {
@@ -74,7 +76,7 @@ public class Blandfruit extends Food {
 	}
 
 	@Override
-	public boolean isSimilar( Item item ) {
+	public boolean isSimilar(@NotNull Item item ) {
 		if ( super.isSimilar(item) ){
 			Blandfruit other = (Blandfruit) item;
 			if (potionAttrib == null && other.potionAttrib == null) {

@@ -128,7 +128,7 @@ public enum HeroClass {
 	}
 
 	public static void initTest(Hero hero) {
-		new MagicMap().collect(hero.belongings.backpack);
+		new MagicMap().collect(hero.belongings.backpack, hero);
 	}
 
 	public Badges.Badge masteryBadge() {

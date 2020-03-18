@@ -58,6 +58,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -189,7 +191,7 @@ public class Item implements Bundlable {
 	}
 	
 	public boolean doPickUp( Hero hero ) {
-		if (collect( hero.belongings.backpack )) {
+		if (collect( hero.belongings.backpack, hero)) {
 			
 			GameScene.pickUp( this, hero.pos );
 			Sample.INSTANCE.play( Assets.SND_ITEM );
@@ -262,17 +264,18 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	public boolean collect( Bag container ) {
+	public boolean collect( Bag container, Char ch ) {
 		
 		ArrayList<Item> items = container.items;
-		
+
+		curUser = ch;
 		if (items.contains( this )) {
 			return true;
 		}
 		
 		for (Item item:items) {
 			if (item instanceof Bag && ((Bag)item).grab( this )) {
-				return collect( (Bag)item );
+				return collect( (Bag)item, Dungeon.hero);
 			}
 		}
 		
@@ -306,8 +309,8 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public boolean collect() {
-		return collect( Dungeon.hero.belongings.backpack );
+	public final boolean collect() {
+		return collect( Dungeon.hero.belongings.backpack, Dungeon.hero );
 	}
 	
 	//returns a new item if the split was sucessful and there are now 2 items, otherwise null
@@ -333,6 +336,8 @@ public class Item implements Bundlable {
 	}
 	
 	public final Item detach( Bag container ) {
+
+		curUser = null;
 		
 		if (quantity <= 0) {
 			
@@ -358,7 +363,7 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public final Item detachAll( Bag container ) {
+	public final Item detachAll(@NotNull Bag container ) {
 		Dungeon.quickslot.clearItem( this );
 		updateQuickslot();
 
@@ -378,7 +383,7 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	public boolean isSimilar( Item item ) {
+	public boolean isSimilar(@NotNull Item item ) {
 		return level == item.level && getClass() == item.getClass();
 	}
 

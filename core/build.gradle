@@ -32,4 +32,5 @@ sourceCompatibility = targetCompatibility = 1.8
 
 dependencies {
     api project(':SPD-classes')
+    implementation 'org.jetbrains:annotations:15.0'
 }

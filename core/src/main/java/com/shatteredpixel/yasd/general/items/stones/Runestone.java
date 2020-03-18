@@ -31,6 +31,8 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class Runestone extends Item {
 	
 	{
@@ -76,7 +78,7 @@ public abstract class Runestone extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(Item item) {
+		public boolean isSimilar(@NotNull Item item) {
 			return item instanceof Runestone;
 		}
 		

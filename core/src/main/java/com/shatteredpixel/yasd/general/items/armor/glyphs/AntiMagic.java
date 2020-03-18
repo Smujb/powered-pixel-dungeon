@@ -30,10 +30,6 @@ package com.shatteredpixel.yasd.general.items.armor.glyphs;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
-import com.shatteredpixel.yasd.general.actors.mobs.Eye;
-import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
-import com.shatteredpixel.yasd.general.actors.mobs.Warlock;
-import com.shatteredpixel.yasd.general.actors.mobs.Yog;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
 import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
@@ -74,11 +70,6 @@ public class AntiMagic extends Armor.Glyph {
 		RESISTS.add( WandOfPrismaticLight.class );
 		RESISTS.add( WandOfTransfusion.class );
 		RESISTS.add( WandOfWarding.Ward.class );
-		
-		RESISTS.add( Shaman.LightningBolt.class );
-		RESISTS.add( Warlock.DarkBolt.class );
-		RESISTS.add( Eye.DeathGaze.class );
-		RESISTS.add( Yog.BurningFist.DarkBolt.class );
 	}
 	
 	@Override

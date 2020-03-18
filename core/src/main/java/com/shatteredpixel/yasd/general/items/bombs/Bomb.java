@@ -63,6 +63,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -86,7 +88,7 @@ public class Bomb extends Item {
 	private static final String AC_LIGHTTHROW = "LIGHTTHROW";
 
 	@Override
-	public boolean isSimilar(Item item) {
+	public boolean isSimilar(@NotNull Item item) {
 		return super.isSimilar(item) && this.fuse == ((Bomb) item).fuse;
 	}
 	

@@ -58,6 +58,8 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -284,7 +286,7 @@ public abstract class Scroll extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(Item item) {
+		public boolean isSimilar(@NotNull Item item) {
 			return ExoticScroll.regToExo.containsKey(item.getClass())
 					|| ExoticScroll.regToExo.containsValue(item.getClass());
 		}

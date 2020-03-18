@@ -678,7 +678,7 @@ public class Dungeon {
 			for (Bundlable item : bundle.getCollection("alchemy_inputs")){
 				
 				//try to add normally, force-add otherwise.
-				if (!((Item)item).collect(hero.belongings.backpack)){
+				if (!((Item)item).collect(hero.belongings.backpack, hero)){
 					hero.belongings.backpack.items.add((Item)item);
 				}
 			}

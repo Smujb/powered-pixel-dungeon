@@ -79,6 +79,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -221,8 +223,8 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public boolean collect( Bag container ) {
-		if (super.collect( container )){
+	public boolean collect(Bag container, Char ch) {
+		if (super.collect( container, ch)){
 			setAction();
 			return true;
 		} else {
@@ -449,7 +451,7 @@ public class Potion extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(Item item) {
+		public boolean isSimilar(@NotNull Item item) {
 			return ExoticPotion.regToExo.containsKey(item.getClass())
 					|| ExoticPotion.regToExo.containsValue(item.getClass());
 		}

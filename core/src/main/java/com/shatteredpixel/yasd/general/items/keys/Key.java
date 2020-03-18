@@ -36,6 +36,8 @@ import com.shatteredpixel.yasd.general.windows.WndJournal;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class Key extends Item {
 
 	public static final float TIME_TO_UNLOCK = 1f;
@@ -50,7 +52,7 @@ public abstract class Key extends Item {
 	public int zPos;
 	
 	@Override
-	public boolean isSimilar( Item item ) {
+	public boolean isSimilar(@NotNull Item item ) {
 		return super.isSimilar(item) && ((Key)item).yPos == yPos && ((Key) item).zPos == zPos && ((Key)item).xPos == xPos;
 	}
 

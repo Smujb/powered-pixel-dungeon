@@ -97,7 +97,7 @@ public abstract class InventoryScroll extends Scroll {
 				
 			} else if (!parent.anonymous) {
 
-				parent.collect( curUser.belongings.backpack );
+				parent.collect( curUser.belongings.backpack, curUser);
 				
 			}
 		}

@@ -255,7 +255,7 @@ public class MagicMap extends Item {
 						item.level(level[0]);
 					}
 					for (int i = 0; i < num; i++) {
-						if (item.collect(ch.belongings.backpack)) {
+						if (item.collect(ch.belongings.backpack, ch)) {
 							GLog.p("Successfully added item " + item.name() + " to entity #" + ch.id() + "'s backpack.");
 						} else {
 							GLog.i("Item " + item.name() + " could not be added to entity #" + ch.id() + "'s backpack, so it was dropped below them.");
