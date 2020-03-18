@@ -470,8 +470,23 @@ public class WndBag extends WndTabbed {
 			}
 		}
 	}
-	
-	public interface Listener {
-		void onSelect( Item item );
+
+	public static abstract class Listener {
+
+		protected Object source;
+
+		public Listener() {
+			this(null);
+		}
+
+		public Listener(Object source) {
+			this.source = source;
+		}
+
+		public abstract void onSelect( Item item );
 	}
+
+	/*public interface Listener {
+		void onSelect( Item item );
+	}*/
 }

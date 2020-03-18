@@ -37,11 +37,12 @@ import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.windows.WndBag;
+import com.shatteredpixel.yasd.general.windows.WndBag.Listener;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.PathFinder;
 
-public class QuickSlotButton extends Button implements WndBag.Listener {
+public class QuickSlotButton extends Button {
 	
 	private static QuickSlotButton[] instance = new QuickSlotButton[4];
 	private int slotNum;
@@ -73,6 +74,18 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 		instance = new QuickSlotButton[4];
 
 		lastTarget = null;
+	}
+
+	private WndBag.Listener listener() {
+		return new Listener() {
+			@Override
+			public void onSelect( Item item ) {
+				if (item != null) {
+					Dungeon.quickslot.setSlot( slotNum , item );
+					refresh();
+				}
+			}
+		};
 	}
 	
 	@Override
@@ -135,25 +148,17 @@ public class QuickSlotButton extends Button implements WndBag.Listener {
 	
 	@Override
 	protected void onClick() {
-		GameScene.selectItem( this, WndBag.Mode.QUICKSLOT, Messages.get(this, "select_item") );
+		GameScene.selectItem( listener(), WndBag.Mode.QUICKSLOT, Messages.get(this, "select_item") );
 	}
 	
 	@Override
 	protected boolean onLongClick() {
-		GameScene.selectItem( this, WndBag.Mode.QUICKSLOT, Messages.get(this, "select_item") );
+		GameScene.selectItem( listener(), WndBag.Mode.QUICKSLOT, Messages.get(this, "select_item") );
 		return true;
 	}
 
 	private static Item select(int slotNum){
 		return Dungeon.quickslot.getItem( slotNum );
-	}
-
-	@Override
-	public void onSelect( Item item ) {
-		if (item != null) {
-			Dungeon.quickslot.setSlot( slotNum , item );
-			refresh();
-		}
 	}
 	
 	public void item( Item item ) {

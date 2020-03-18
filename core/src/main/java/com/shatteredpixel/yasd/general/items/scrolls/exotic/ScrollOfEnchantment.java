@@ -54,7 +54,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 		GameScene.selectItem( itemSelector, WndBag.Mode.ENCHANTABLE, Messages.get(this, "inv_title"));
 	}
 	
-	protected WndBag.Listener itemSelector = new WndBag.Listener() {
+	protected WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect(final Item item) {
 			
@@ -81,7 +81,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 						if (index < 3) {
 							((Weapon) item).enchant(enchants[index]);
 							GLog.p(Messages.get(StoneOfEnchantment.class, "getWeapons"));
-							((ScrollOfEnchantment)curItem).readAnimation();
+							((ScrollOfEnchantment)source).readAnimation();
 							
 							Sample.INSTANCE.play( Assets.SND_READ );
 							Invisibility.dispel();
@@ -118,7 +118,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 						if (index < 3) {
 							((Armor) item).inscribe(glyphs[index]);
 							GLog.p(Messages.get(StoneOfEnchantment.class, "getArmors"));
-							((ScrollOfEnchantment)curItem).readAnimation();
+							((ScrollOfEnchantment)source).readAnimation();
 							
 							Sample.INSTANCE.play( Assets.SND_READ );
 							Invisibility.dispel();
@@ -133,7 +133,7 @@ public class ScrollOfEnchantment extends ExoticScroll {
 				});
 			} else {
 				//TODO if this can ever be found un-IDed, need logic for that
-				curItem.collect();
+				((Item)source).collect();
 			}
 		}
 	};

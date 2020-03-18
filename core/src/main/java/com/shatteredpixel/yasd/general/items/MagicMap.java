@@ -51,6 +51,7 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
+import com.shatteredpixel.yasd.general.windows.WndError;
 import com.watabou.noosa.Camera;
 import com.watabou.utils.PlatformSupport;
 
@@ -105,8 +106,8 @@ public class MagicMap extends Item {
 
 		private IconTitle titlebar;
 		private final Class[] itemClass = new Class[1];
-		private final int[] amounts = new int[1];
-		private final int[] levels = new int[1];
+		private final int[] quantity = new int[1];
+		private final int[] level = new int[1];
 		private final boolean[] identified = new boolean[1];
 		private final boolean[] cursed = new boolean[1];
 		private RenderedTextBlock message;
@@ -122,32 +123,29 @@ public class MagicMap extends Item {
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 				item = new MagicMap();
+				MainGame.scene().addToFront(new WndError(e.getMessage()));
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				item = new MagicMap();
+				MainGame.scene().addToFront(new WndError(e.getMessage()));
 			}
 			return item;
 		}
 
-		public WndGetItem(Item item) {
-			super();
+		@Override
+		public void onBackPressed() {}//Do nothing
 
+		WndGetItem(Item item) {
+			super();
+			//Use arrays here so they can be modified by inner classes while still being able to be changed.
 			itemClass[0] = item.getClass();
-			amounts[0] = 1;
-			levels[0] = 0;
+			quantity[0] = 1;
+			level[0] = 0;
 			cursed[0] = false;
 			identified[0] = false;
 
 			titlebar = new IconTitle();
-			/*try {
-				item = (Item) itemClass[0].newInstance();
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-				item = new MagicMap();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-				item = new MagicMap();
-			}*/
+
 			item = getItem(itemClass[0]);
 			titlebar.icon(new ItemSprite(item.image(), null));
 			titlebar.label(Messages.titleCase(item.name()));
@@ -164,7 +162,7 @@ public class MagicMap extends Item {
 			RedButton btnChoose = new RedButton( "Input Item" ) {
 				@Override
 				protected void onClick() {
-					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(itemClass[0]), Integer.MAX_VALUE, false, "CHOOSE", "CANCEL", new PlatformSupport.TextCallback() {
+					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(itemClass[0]), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
 
 						@Override
 						public void onSelect(boolean positive, String text) {
@@ -173,7 +171,8 @@ public class MagicMap extends Item {
 									itemClass[0] = Class.forName(BASE_NAME + text);
 									GLog.p("Successfully fetched item.");
 								} catch (ClassNotFoundException e) {
-									e.printStackTrace();
+									MainGame.reportException(e);
+									MainGame.scene().addToFront(new WndError(e.getMessage()));
 								}
 								window.update();
 							}
@@ -188,11 +187,11 @@ public class MagicMap extends Item {
 					"1", "25", 1, 25) {
 				@Override
 				protected void onChange() {
-					amounts[0] = getSelectedValue();
+					quantity[0] = getSelectedValue();
 					update();
 				}
 			};
-			quantitySlider.setSelectedValue(amounts[0]);
+			quantitySlider.setSelectedValue(quantity[0]);
 			quantitySlider.setRect(0, btnChoose.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(quantitySlider);
 
@@ -200,11 +199,11 @@ public class MagicMap extends Item {
 					"0", "" + Constants.UPGRADE_LIMIT, 0, Constants.UPGRADE_LIMIT) {
 				@Override
 				protected void onChange() {
-					levels[0] = getSelectedValue();
+					level[0] = getSelectedValue();
 					update();
 				}
 			};
-			levelSlider.setSelectedValue(levels[0]);
+			levelSlider.setSelectedValue(level[0]);
 			levelSlider.setRect(0, quantitySlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(levelSlider);
 
@@ -244,22 +243,22 @@ public class MagicMap extends Item {
 						item.identify();
 					}
 
-					if (amounts[0] > 1) {
+					if (quantity[0] > 1) {
 						if (item.stackable) {
-							item.quantity(amounts[0]);
+							item.quantity(quantity[0]);
 						} else {
-							num = amounts[0];
+							num = quantity[0];
 						}
 					}
 
-					if (levels[0] > 0) {
-						item.level(levels[0]);
+					if (level[0] > 0) {
+						item.level(level[0]);
 					}
 					for (int i = 0; i < num; i++) {
 						if (item.collect(ch.belongings.backpack)) {
 							GLog.p("Successfully added item " + item.name() + " to entity #" + ch.id() + "'s backpack.");
 						} else {
-							GLog.p("Item " + item.name() + " could not be added to entity #" + ch.id() + "'s backpack, so it was dropped below them.");
+							GLog.i("Item " + item.name() + " could not be added to entity #" + ch.id() + "'s backpack, so it was dropped below them.");
 							Dungeon.level.drop(item, ch.pos).sprite.drop();
 						}
 					}
@@ -276,7 +275,6 @@ public class MagicMap extends Item {
 		@Override
 		public synchronized void update() {
 			super.update();
-
 			Item item = getItem(itemClass[0]);
 			titlebar.icon(new ItemSprite(item.image(), null));
 			titlebar.label(Messages.titleCase(item.name()));
@@ -290,7 +288,7 @@ public class MagicMap extends Item {
 
 	public static class WndChooseDepth extends Window {
 
-		public WndChooseDepth(Item item) {
+		WndChooseDepth(Item item) {
 			super();
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon(new ItemSprite(item.image() , null));

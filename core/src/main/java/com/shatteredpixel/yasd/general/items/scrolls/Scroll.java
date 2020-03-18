@@ -191,7 +191,7 @@ public abstract class Scroll extends Item {
 				GLog.n( Messages.get(this, "cursed") );
 			} else {
 				curUser = hero;
-				curItem = detach( hero.belongings.backpack );
+				//curItem = detach( hero.belongings.backpack );
 				doRead();
 			}
 			

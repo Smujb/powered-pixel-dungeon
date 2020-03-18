@@ -257,10 +257,10 @@ public class HornOfPlenty extends Artifact {
 
 	}
 
-	protected static WndBag.Listener itemSelector = new WndBag.Listener() {
+	protected WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect( Item item ) {
-			if (item != null && item instanceof Food) {
+			if (item instanceof Food) {
 				if (item instanceof Blandfruit && ((Blandfruit) item).potionAttrib == null){
 					GLog.w( Messages.get(HornOfPlenty.class, "reject") );
 				} else {
@@ -269,7 +269,7 @@ public class HornOfPlenty extends Artifact {
 					hero.busy();
 					hero.spend( Food.TIME_TO_EAT );
 
-					((HornOfPlenty)curItem).gainFoodValue(((Food)item));
+					((HornOfPlenty)source).gainFoodValue(((Food)item));
 					item.detach(hero.belongings.backpack);
 				}
 

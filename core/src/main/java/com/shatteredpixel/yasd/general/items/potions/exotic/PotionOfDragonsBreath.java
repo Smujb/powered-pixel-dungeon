@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
@@ -65,19 +66,19 @@ public class PotionOfDragonsBreath extends ExoticPotion {
 	@Override
 	//need to override drink so that time isn't spent right away
 	protected void drink(final Hero hero) {
-		curItem = detach( hero.belongings.backpack );
+		//curItem = detach( hero.belongings.backpack );
 		setKnown();
 		
 		GameScene.selectCell(targeter);
 	}
 	
-	private CellSelector.Listener targeter = new CellSelector.Listener() {
+	private CellSelector.Listener targeter = new CellSelector.Listener(this) {
 		@Override
 		public void onSelect(final Integer cell) {
 			
 			if (cell == null){
 				//TODO if this can ever be found un-IDed, need logic for that
-				curItem.collect();
+				((Item)source).collect();
 			} else {
 				Sample.INSTANCE.play( Assets.SND_DRINK );
 				curUser.sprite.operate(curUser.pos, new Callback() {

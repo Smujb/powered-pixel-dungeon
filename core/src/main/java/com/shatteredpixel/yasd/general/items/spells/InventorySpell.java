@@ -43,25 +43,20 @@ public abstract class InventorySpell extends Spell {
 	
 	@Override
 	protected void onCast(Hero hero) {
-		curItem = detach( hero.belongings.backpack );
+		//curItem = detach( hero.belongings.backpack );
 		GameScene.selectItem( itemSelector, mode, inventoryTitle );
 	}
 	
 	protected abstract void onItemSelected( Item item );
 	
-	protected static WndBag.Listener itemSelector = new WndBag.Listener() {
+	protected WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect( Item item ) {
-			
-			//FIXME this safety check shouldn't be necessary
-			//it would be better to eliminate the curItem static variable.
-			if (!(curItem instanceof InventorySpell)){
-				return;
-			}
+
 			
 			if (item != null) {
 				
-				((InventorySpell)curItem).onItemSelected( item );
+				((InventorySpell)source).onItemSelected( item );
 				curUser.spend( 1f );
 				curUser.busy();
 				(curUser.sprite).operate( curUser.pos );
@@ -70,7 +65,7 @@ public abstract class InventorySpell extends Spell {
 				Invisibility.dispel();
 				
 			} else {
-				curItem.collect( curUser.belongings.backpack );
+				((Item)source).collect( curUser.belongings.backpack );
 			}
 		}
 	};

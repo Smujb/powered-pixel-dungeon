@@ -81,7 +81,7 @@ public class SpiritBow extends Weapon {
 		if (action.equals(AC_SHOOT)) {
 			
 			curUser = hero;
-			curItem = this;
+			//curItem = this;
 			GameScene.selectCell( shooter );
 			
 		}

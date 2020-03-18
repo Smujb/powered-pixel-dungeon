@@ -169,21 +169,23 @@ public class Dart extends MissileWeapon {
 		return super.price()/2; //half normal value
 	}
 	
-	private final WndBag.Listener itemSelector = new WndBag.Listener() {
+	private final WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		
 		@Override
 		public void onSelect(final Item item) {
 			
 			if (item == null) return;
+
+			final Dart dart = (Dart) source;
 			
-			final int maxToTip = Math.min(curItem.quantity(), item.quantity()*2);
+			final int maxToTip = Math.min(dart.quantity(), item.quantity()*2);
 			final int maxSeedsToUse = (maxToTip+1)/2;
 			
 			final int singleSeedDarts;
 			
 			final String[] options;
 			
-			if (curItem.quantity() == 1){
+			if (dart.quantity() == 1){
 				singleSeedDarts = 1;
 				options = new String[]{
 						Messages.get(Dart.class, "tip_one"),
@@ -219,10 +221,10 @@ public class Dart extends MissileWeapon {
 							item.quantity(item.quantity() - maxSeedsToUse);
 						}
 						
-						if (maxToTip < curItem.quantity()){
-							curItem.quantity(curItem.quantity() - maxToTip);
+						if (maxToTip < dart.quantity()){
+							dart.quantity(dart.quantity() - maxToTip);
 						} else {
-							curItem.detachAll(curUser.belongings.backpack);
+							dart.detachAll(curUser.belongings.backpack);
 						}
 						
 						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, maxToTip);
@@ -235,10 +237,10 @@ public class Dart extends MissileWeapon {
 					} else if ((index == 1 && options.length == 3) || (index == 0 && options.length == 2)){
 						item.detach( curUser.belongings.backpack );
 						
-						if (curItem.quantity() <= singleSeedDarts){
-							curItem.detachAll( curUser.belongings.backpack );
+						if (dart.quantity() <= singleSeedDarts){
+							dart.detachAll( curUser.belongings.backpack );
 						} else {
-							curItem.quantity(curItem.quantity() - singleSeedDarts);
+							dart.quantity(dart.quantity() - singleSeedDarts);
 						}
 						
 						TippedDart newDart = TippedDart.getTipped((Plant.Seed) item, singleSeedDarts);

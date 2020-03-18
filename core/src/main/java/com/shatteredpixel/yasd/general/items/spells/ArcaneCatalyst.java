@@ -80,7 +80,7 @@ public class ArcaneCatalyst extends Spell {
 		
 		Scroll s = Reflection.newInstance(Random.chances(scrollChances));
 		s.anonymize();
-		curItem = s;
+		//curItem = s;
 		s.doRead();
 	}
 	

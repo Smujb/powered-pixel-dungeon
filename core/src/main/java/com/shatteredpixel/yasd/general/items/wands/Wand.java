@@ -135,7 +135,7 @@ public abstract class Wand extends KindofMisc {
 
 		} else if (action.equals(AC_ZAP_OVERRIDE)) {//This is used by Mage's Staff as the Wand in the staff is never equipped.
 			curUser = hero;
-			curItem = this;
+			//curItem = this;
 			GameScene.selectCell(zapper);
 		}
 	}
@@ -464,21 +464,15 @@ public abstract class Wand extends KindofMisc {
 		availableUsesToID = USES_TO_ID/2f;
 	}
 	
-	protected static CellSelector.Listener zapper = new  CellSelector.Listener() {
+	private CellSelector.Listener zapper = new CellSelector.Listener(this) {
 		
 		@Override
 		public void onSelect( Integer target ) {
 			
 			if (target != null) {
-				
-				//FIXME this safety check shouldn't be necessary
-				//it would be better to eliminate the curItem static variable.
-				final Wand curWand;
-				if (curItem instanceof Wand) {
-					curWand = (Wand) Wand.curItem;
-				} else {
-					return;
-				}
+
+				//Source is always Wand in this case.
+				final Wand curWand = (Wand) source;
 
 				final Ballistica shot = new Ballistica( curUser.pos, target, curWand.collisionProperties);
 				int cell = shot.collisionPos;

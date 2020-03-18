@@ -49,7 +49,7 @@ public class CellSelector extends ScrollArea {
 	
 	private float dragThreshold;
 	
-	public CellSelector( DungeonTilemap map ) {
+	public CellSelector(DungeonTilemap map) {
 		super( map );
 		camera = map.camera();
 		
@@ -235,8 +235,19 @@ public class CellSelector extends ScrollArea {
 		}
 	}
 
-	public interface Listener {
-		void onSelect( Integer cell );
-		String prompt();
+	public static abstract class Listener {
+
+		protected Object source;
+
+		public Listener() {
+			this(null);
+		}
+
+		public Listener(Object source) {
+			this.source = source;
+		}
+
+		public abstract void onSelect( Integer cell );
+		public abstract String prompt();
 	}
 }

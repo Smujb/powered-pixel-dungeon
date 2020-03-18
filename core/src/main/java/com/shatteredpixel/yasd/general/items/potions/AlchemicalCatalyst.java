@@ -72,7 +72,7 @@ public class AlchemicalCatalyst extends Potion {
 	public void shatter(int cell) {
 		Potion p = Reflection.newInstance(Random.chances(potionChances));
 		p.anonymize();
-		curItem = p;
+		//curItem = p;
 		p.shatter(cell);
 	}
 	

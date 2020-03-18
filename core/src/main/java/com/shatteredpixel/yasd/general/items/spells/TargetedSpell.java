@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
@@ -62,21 +61,19 @@ public abstract class TargetedSpell extends Spell {
 		Sample.INSTANCE.play( Assets.SND_ZAP );
 	}
 	
-	private  static CellSelector.Listener targeter = new  CellSelector.Listener(){
+	private CellSelector.Listener targeter = new CellSelector.Listener(this){
 		
 		@Override
 		public void onSelect( Integer target ) {
 			
 			if (target != null) {
-				
-				//FIXME this safety check shouldn't be necessary
-				//it would be better to eliminate the curItem static variable.
-				final TargetedSpell curSpell;
-				if (curItem instanceof TargetedSpell) {
-					curSpell = (TargetedSpell)curItem;
+
+				final TargetedSpell curSpell = (TargetedSpell) source;
+				/*(if (source instanceof TargetedSpell) {
+					curSpell = (TargetedSpell)source;
 				} else {
 					return;
-				}
+				}*/
 				
 				final Ballistica shot = new Ballistica( curUser.pos, target, curSpell.collisionProperties);
 				int cell = shot.collisionPos;

@@ -60,7 +60,7 @@ public abstract class InventoryStone extends Runestone {
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 		if (action.equals(AC_USE)){
-			curItem = detach( hero.belongings.backpack );
+			//curItem = detach( hero.belongings.backpack );
 			activate(curUser.pos);
 		}
 	}
@@ -81,22 +81,17 @@ public abstract class InventoryStone extends Runestone {
 	
 	protected abstract void onItemSelected( Item item );
 	
-	protected static WndBag.Listener itemSelector = new WndBag.Listener() {
+	protected WndBag.Listener itemSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect( Item item ) {
-			
-			//FIXME this safety check shouldn't be necessary
-			//it would be better to eliminate the curItem static variable.
-			if (!(curItem instanceof InventoryStone)){
-				return;
-			}
+
 			
 			if (item != null) {
 				
-				((InventoryStone)curItem).onItemSelected( item );
+				((InventoryStone)source).onItemSelected( item );
 				
 			} else{
-				curItem.collect( curUser.belongings.backpack );
+				((Item)source).collect( curUser.belongings.backpack );
 			}
 		}
 	};

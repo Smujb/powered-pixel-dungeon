@@ -130,7 +130,7 @@ public class UnstableSpellbook extends Artifact {
 						|| (scroll instanceof ScrollOfTransmutation));
 				
 				scroll.anonymize();
-				curItem = scroll;
+				//curItem = scroll;
 				curUser = hero;
 				
 				//if there are changes left and the scroll has been given to the book

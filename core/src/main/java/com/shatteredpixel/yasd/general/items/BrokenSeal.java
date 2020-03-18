@@ -69,7 +69,7 @@ public class BrokenSeal extends Item {
 		super.execute(hero, action);
 
 		if (action.equals(AC_AFFIX)){
-			curItem = this;
+			//curItem = this;
 			GameScene.selectItem(armorSelector, WndBag.Mode.ARMOR, Messages.get(this, "prompt"));
 		}
 	}
@@ -81,7 +81,7 @@ public class BrokenSeal extends Item {
 	}
 
 
-	private static WndBag.Listener armorSelector = new WndBag.Listener() {
+	private WndBag.Listener armorSelector = new WndBag.Listener(this) {
 		@Override
 		public void onSelect( Item item ) {
 			if (item instanceof Armor) {
@@ -94,11 +94,12 @@ public class BrokenSeal extends Item {
 					GLog.p(Messages.get(BrokenSeal.class, "affix"));
 					Dungeon.hero.sprite.operate(Dungeon.hero.pos);
 					Sample.INSTANCE.play(Assets.SND_UNLOCK);
-					armor.affixSeal((BrokenSeal)curItem);
+					//armor.affixSeal((BrokenSeal)curItem);
+					armor.affixSeal((BrokenSeal)source);
 					if (armor.level() > 20) {
 						armor.degrade(armor.level() - 20);
 					}
-					curItem.detach(Dungeon.hero.belongings.backpack);
+					((Item)source).detach(Dungeon.hero.belongings.backpack);
 				}
 			}
 		}

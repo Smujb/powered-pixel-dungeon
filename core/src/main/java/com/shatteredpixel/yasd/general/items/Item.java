@@ -219,7 +219,7 @@ public class Item implements Bundlable {
 	public void execute( Hero hero, String action ) {
 		
 		curUser = hero;
-		curItem = this;
+		//curItem = this;
 		
 		if (action.equals( AC_DROP )) {
 			
@@ -653,12 +653,13 @@ public class Item implements Bundlable {
 	}
 	
 	protected static Char curUser = null;
-	protected static Item curItem = null;
-	protected static CellSelector.Listener thrower = new CellSelector.Listener() {
+	//protected static Item curItem = null;
+	protected CellSelector.Listener thrower = new CellSelector.Listener(this) {
 		@Override
 		public void onSelect( Integer target ) {
 			if (target != null) {
-				curItem.cast( curUser, target );
+				Item item = (Item) source;
+				item.cast( curUser, target );
 			}
 		}
 		@Override
