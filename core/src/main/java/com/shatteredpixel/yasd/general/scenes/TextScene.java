@@ -74,7 +74,7 @@ public class TextScene extends PixelScene {
 		super.create();
 
 		if (bgTex == null) {
-			bgTex = Dungeon.level.loadImg();
+			bgTex = Dungeon.newLevel(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, false).loadImg();
 		}
 
 		if (thread != null) {
@@ -128,11 +128,11 @@ public class TextScene extends PixelScene {
 		add(im);
 
 		message = PixelScene.renderTextBlock( text, 9 );
+		message.maxWidth(Camera.main.width);
 		message.setPos(
 				(Camera.main.width - message.width()) / 2,
 				(Camera.main.height - message.height()) / 2
 		);
-		message.maxWidth(Camera.main.width);
 		align( message );
 		add( message );
 
