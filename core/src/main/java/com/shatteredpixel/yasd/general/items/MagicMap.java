@@ -41,8 +41,10 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.shatteredpixel.yasd.general.scenes.TextScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.CheckBox;
@@ -54,6 +56,8 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.shatteredpixel.yasd.general.windows.WndError;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.Game;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PlatformSupport;
 
 import java.util.ArrayList;
@@ -88,6 +92,7 @@ public class MagicMap extends Item {
 		actions.add(AC_TEST);
 		actions.add(AC_KILL);
 		actions.add(AC_ITEM);
+		actions.add(AC_SCENE);
 		return actions;
 	}
 
@@ -97,6 +102,7 @@ public class MagicMap extends Item {
 	private static final String AC_TEST = "test";
 	private static final String AC_ITEM = "item";
 	private static final String AC_KILL = "kill";
+	private static final String AC_SCENE = "scene";
 
 
 	private static final int BTN_HEIGHT	= 20;
@@ -403,6 +409,24 @@ public class MagicMap extends Item {
 					mob.die(new Char.DamageSrc(Element.DARK, this));
 					GLog.i("All ded");
 				}
+				break;
+			case AC_SCENE:
+				TextScene.init("The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system.", null, null, 0, new Callback() {
+					@Override
+					public void call() {
+						TextScene.init("As dark energy has crept up from below the usually harmless sewer creatures have become more and more dangerous. The city sends guard patrols down here to try and maintain safety for those above, but they are slowly failing.", null, null, 0, new Callback() {
+							@Override
+							public void call() {
+								TextScene.init("This place is dangerous, but at least the evil magic at work here is weak.", null, null, 0, new Callback() {
+									@Override
+									public void call() {
+										Game.switchScene(GameScene.class);
+									}
+								});
+							}
+						});
+					}
+				});
 				break;
 		}
 	}

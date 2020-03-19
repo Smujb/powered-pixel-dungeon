@@ -135,7 +135,7 @@ public class CityLevel extends RegularLevel {
 	@Override
 	public float[] mobChances() {
 		return new float[] {
-				2,
+				3,
 				3,
 				4,
 				1
