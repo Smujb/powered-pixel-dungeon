@@ -96,7 +96,7 @@ public class Belongings implements Iterable<Item> {
 	//########################## Stuff for handling chars with belongings ##########################
 	//##############################################################################################
 
-	public ArrayList<Integer> availibleSlots(KindofMisc misc) {
+	private ArrayList<Integer> availibleSlots(KindofMisc misc) {
 		ArrayList<Integer> slots = new ArrayList<>();
 		slots.add(0);
 		slots.add(1);

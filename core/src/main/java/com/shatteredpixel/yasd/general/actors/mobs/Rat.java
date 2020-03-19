@@ -27,13 +27,10 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.sprites.AlbinoSprite;
 import com.shatteredpixel.yasd.general.sprites.RatSprite;
-import com.watabou.utils.Random;
 
 public class Rat extends Mob {
 
@@ -60,6 +57,11 @@ public class Rat extends Mob {
 		}
 
 		@Override
+		public Element elementalType() {
+			return Element.SHARP;
+		}
+
+		/*@Override
 		public int attackProc(Char enemy, int damage ) {
 			damage = super.attackProc( enemy, damage );
 			if (Random.Int( 2 ) == 0) {
@@ -67,6 +69,6 @@ public class Rat extends Mob {
 			}
 
 			return damage;
-		}
+		}*/
 	}
 }

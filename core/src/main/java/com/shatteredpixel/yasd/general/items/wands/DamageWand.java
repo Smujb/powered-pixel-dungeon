@@ -49,10 +49,11 @@ public abstract class DamageWand extends Wand{
 			curUser = Dungeon.hero;
 		}
 		int damage = damageRoll(lvl);
-		damage = enemy.defenseProc(curUser, damage, element);
 		damage -= enemy.drRoll(element);
+		damage = element.attackProc(damage, curUser, enemy);
+		damage = enemy.defenseProc(curUser, damage, element);
 		if (damage > 0) {
-			enemy.damage(damage, new Char.DamageSrc(element, this));
+			enemy.damage(damage, new Char.DamageSrc(element, this).ignoreDefense());
 		}
 		return damage;
 	}

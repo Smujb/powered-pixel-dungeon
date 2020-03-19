@@ -48,9 +48,13 @@ public class Warlock extends Mob {
 		accuracyFactor = 1.2f;
 		damageFactor = 1.3f;
 		defenseSkill = 21;
-		shotType = Ballistica.MAGIC_BOLT;
 		elementaldrFactor = 2f;
-		
+
+		numTypes = 4;
+
+		range = -1;
+		shotType = Ballistica.MAGIC_BOLT;
+
 		EXP = 11;
 
 		attackDelay = 2f;
@@ -63,7 +67,22 @@ public class Warlock extends Mob {
 
 	@Override
 	public Element elementalType() {
-		return Element.DARK;
+		Element element;
+		switch (type) {
+			case 0: default:
+				element = Element.DARK;
+				break;
+			case 1:
+				element = Element.DESTRUCTION;
+				break;
+			case 2:
+				element = Element.EARTH;
+				break;
+			case 3:
+				element = Element.COLD;
+				break;
+		}
+		return element;
 	}
 
 	@Override

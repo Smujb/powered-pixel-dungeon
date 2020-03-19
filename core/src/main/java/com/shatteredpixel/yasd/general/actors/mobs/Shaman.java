@@ -40,6 +40,8 @@ public class Shaman extends Mob {
 		healthFactor = 0.7f;
 		damageFactor = 1.5f;
 
+		numTypes = 4;
+
 		range = -1;
 		shotType = Ballistica.MAGIC_BOLT;
 		
@@ -54,6 +56,21 @@ public class Shaman extends Mob {
 
 	@Override
 	public Element elementalType() {
-		return Element.ELECTRIC;
+		Element element;
+		switch (type) {
+			case 0: default:
+				element = Element.DARK;
+				break;
+			case 1:
+				element = Element.DESTRUCTION;
+				break;
+			case 2:
+				element = Element.EARTH;
+				break;
+			case 3:
+				element = Element.COLD;
+				break;
+		}
+		return element;
 	}
 }

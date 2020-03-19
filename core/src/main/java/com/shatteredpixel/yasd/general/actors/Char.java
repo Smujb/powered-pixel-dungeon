@@ -132,6 +132,9 @@ public abstract class Char extends Actor {
 	public int STR;
 	//public boolean hasBelongings = false;
 
+	protected int numTypes = 1;
+
+	protected int type;
 
 	public int HT;
 	public int HP;
@@ -143,9 +146,6 @@ public abstract class Char extends Actor {
 	public boolean rooted = false;
 	public boolean flying = false;
 	public int invisible = 0;
-
-
-	public float STE = 1f;
 
 	//these are relative to the hero
 	public enum Alignment {
@@ -291,6 +291,7 @@ public abstract class Char extends Actor {
 	protected static final String TAG_HT = "HT";
 	protected static final String TAG_SHLD = "SHLD";
 	protected static final String BUFFS = "buffs";
+	protected static final String TYPE = "type";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -301,6 +302,7 @@ public abstract class Char extends Actor {
 		bundle.put(TAG_HP, HP);
 		bundle.put(TAG_HT, HT);
 		bundle.put(BUFFS, buffs);
+		bundle.put(TYPE, type);
 
 		if (hasBelongings()) {
 			belongings.storeInBundle(bundle);
@@ -315,6 +317,7 @@ public abstract class Char extends Actor {
 		pos = bundle.getInt(POS);
 		HP = bundle.getInt(TAG_HP);
 		HT = bundle.getInt(TAG_HT);
+		type = bundle.getInt(TYPE);
 
 		for (Bundlable b : bundle.getCollection(BUFFS)) {
 			if (b != null) {
@@ -662,11 +665,6 @@ public abstract class Char extends Actor {
 		} else {
 			dmg = Math.round( dmg * resist( srcClass ));
 		}
-
-		/*if (AntiMagic.RESISTS.contains(src.getClass()) && buff(ArcaneArmor.class) != null){
-			dmg -= Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
-			if (dmg < 0) dmg = 0;
-		}*/
 
 		if (buff( Paralysis.class ) != null) {
 			buff( Paralysis.class ).processDamage(dmg);

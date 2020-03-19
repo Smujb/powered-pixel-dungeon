@@ -202,8 +202,8 @@ public class MagicMissile extends Emitter {
 				pour( Speck.factory( Speck.SCREAM ), 0.02f );
 				break;
 			case ACID:
-				size( 4 );
-				pour( Speck.factory( Speck.BUBBLE_GREEN ), 0.01f );
+				size( 10 );
+				pour( Speck.factory( Speck.BUBBLE_GREEN ), 0.05f );
 				break;
 		}
 	}

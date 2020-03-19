@@ -260,6 +260,11 @@ public abstract class Mob extends Char {
 		} else if (mob.properties().contains(Property.MINIBOSS)) {
 			mob.HP = mob.HT *= 2;
 		}
+		if (mob.numTypes > 1) {
+			mob.type = Random.Int(mob.numTypes);
+		} else {
+			mob.type = 0;
+		}
 		return mob;
 	}
 

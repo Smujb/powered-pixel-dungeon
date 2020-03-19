@@ -45,8 +45,8 @@ public class Elemental extends Mob {
 	{
 		spriteClass = ElementalSprite.class;
 
-		//HP = HT = 65;
-		//defenseSkill = 24;
+		healthFactor = 0.7f;
+		damageFactor = 0.8f;
 		
 		EXP = 10;
 		
@@ -85,9 +85,8 @@ public class Elemental extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
-		if (Random.Int( 2 ) == 0) {
-			Buff.affect( enemy, Burning.class ).reignite( enemy );
-		}
+
+		Buff.affect( enemy, Burning.class ).reignite( enemy );
 		
 		return damage;
 	}

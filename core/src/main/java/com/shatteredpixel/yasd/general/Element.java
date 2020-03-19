@@ -28,10 +28,19 @@
 package com.shatteredpixel.yasd.general;
 
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
+import com.shatteredpixel.yasd.general.actors.buffs.Chill;
+import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
+import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.general.actors.buffs.Poison;
+import com.shatteredpixel.yasd.general.actors.buffs.Roots;
+import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -48,10 +57,13 @@ import com.watabou.utils.Random;
 
 public enum Element {
 	/*
-	The purpose of this file is to make it easier to add types of damage to the game. Eventually this will replace the "src" parameter of damage().
+	The purpose of this file is to make it easier to add types of damage to the game. It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing
 	 */
 	PHYSICAL( false ),
 	RANGED( false ),
+	SHARP( false ),
+	EARTH( false ),
+	SABOTAGE( false ),
 	NONE( true ),
 	MAGICAL( true ),
 	DESTRUCTION( true ),
@@ -59,8 +71,7 @@ public enum Element {
 	FIRE( true),
 	WATER( true ),
 	COLD( true ),
-	EARTH( false ),
-	GRASS( false ),
+	GRASS( true ),
 	AIR( true ),
 	ACID( true ),
 	ELECTRIC( true ),
@@ -78,8 +89,47 @@ public enum Element {
 					damage *= 1.5;
 				}
 				break;
+			case PHYSICAL:
+				break;
+			case RANGED:
+				//Buff.affect(attacker, Combo.class).hit(defender);
+				break;
+			case SHARP:
+				if (Random.Int( 2 ) == 0) {
+					Buff.affect( defender, Bleeding.class ).set( Math.max(1, damage/2) );
+				}
+				break;
+			case DESTRUCTION:
+				Buff.affect(defender, Vulnerable.class, Vulnerable.DURATION);
+				break;
 			case FIRE:
 				Buff.affect(defender, Burning.class).reignite(defender);
+				break;
+			case WATER:
+				if (Random.Int( 2 ) == 0) {
+					Buff.affect( defender, Wet.class, 4f );
+				}
+				break;
+			case COLD:
+				if (Random.Int( 2 ) == 0) {
+					Buff.affect( defender, Chill.class, 4f );
+				} else {
+					float duration;
+					Chill chill = defender.buff(Chill.class);
+					if (chill != null) {
+						duration = chill.cooldown();
+						if (duration > 10) {
+							chill.detach();
+							Buff.affect(defender, Frost.class, duration/2f);
+						}
+					}
+				}
+				break;
+			case EARTH:
+			case GRASS:
+				Buff.affect(defender, Roots.class, Paralysis.DURATION);
+				break;
+			case AIR:
 				break;
 			case ACID:
 				Buff.affect(defender, Ooze.class).set(20f);
@@ -100,9 +150,15 @@ public enum Element {
 				}
 				break;
 			case ELECTRIC:
-				if (Dungeon.level.liquid()[defender.pos] && !defender.isFlying()) {
+				if ((Dungeon.level.liquid()[defender.pos] && !defender.isFlying()) || defender.buff(Wet.class) != null) {
 					damage *= 1.5f;
 				}
+				break;
+			case CONFUSION:
+				Buff.affect(defender, Vertigo.class, Vertigo.DURATION);
+				break;
+			case VENOM:
+				Buff.affect(defender, Poison.class).set(2 + Dungeon.getScaleFactor() / 3);
 				break;
 		}
 
@@ -136,14 +192,16 @@ public enum Element {
 
 	public int affectDamage(Char ch, int damage) {
 		damage = Math.max(damage - ch.drRoll(this), 0);
-		if (this == ACID) {
-			if (ch.hasBelongings()) {
-				int index = Random.Int(5);
-				Item item = ch.belongings.miscs[index];
-				if (item != null && item.canDegrade()) {
-					item.use(damage * 5);
+		switch (this) {
+			case ACID:
+				if (ch.hasBelongings()) {
+					int index = Random.Int(5);
+					Item item = ch.belongings.miscs[index];
+					if (item != null && item.canDegrade()) {
+						item.use(damage * 5);
+					}
 				}
-			}
+				break;
 		}
 		return damage;
 	}
@@ -151,6 +209,17 @@ public enum Element {
 	public void FX(Char ch, int cell, Callback attack) {
 
 		switch (this) {
+			default:
+				attack.call();
+				break;
+			case SABOTAGE:
+				MagicMissile.boltFromChar( ch.sprite.parent,
+						MagicMissile.BONE,
+						ch.sprite,
+						cell,
+						attack);
+				Sample.INSTANCE.play( Assets.SND_ZAP );
+				break;
 			case MAGICAL:
 				MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.MAGIC_MISSILE,
@@ -159,10 +228,7 @@ public enum Element {
 						attack);
 				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
-			case NONE:
-			case PHYSICAL:
-				attack.call();
-				break;
+			case SHARP:
 			case RANGED:
 				((MissileSprite)ch.sprite.parent.recycle( MissileSprite.class )).
 						reset( ch.pos, cell, new ThrowingKnife(), attack );
@@ -171,8 +237,6 @@ public enum Element {
 				ch.sprite.parent.add(
 						new Beam.DeathRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 				attack.call();
-				break;
-			case NATURAL:
 				break;
 			case FIRE:
 				MagicMissile.boltFromChar( ch.sprite.parent,
