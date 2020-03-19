@@ -40,6 +40,10 @@ public class Weakness extends FlavourBuff {
 		announced = true;
 	}
 
+	public float damageFactor() {
+		return (float) Math.pow( 0.98, cooldown());
+	}
+
 	@Override
 	public int icon() {
 		return BuffIndicator.WEAKNESS;
@@ -63,6 +67,6 @@ public class Weakness extends FlavourBuff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", dispTurns());
+		return Messages.get(this, "desc", damageFactor(), dispTurns());
 	}
 }

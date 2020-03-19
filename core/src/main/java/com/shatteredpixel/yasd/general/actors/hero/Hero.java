@@ -980,27 +980,24 @@ public class Hero extends Char {
 	public int attackProc( final Char enemy, int damage ) {
 		KindOfWeapon wep = belongings.getCurrentWeapon();
 		damage = super.attackProc(enemy,damage);
-		switch (subClass) {
-		case SNIPER:
+		if (subClass == HeroSubClass.SNIPER) {
 			if (wep instanceof MissileWeapon && !(wep instanceof SpiritBow.SpiritArrow)) {
 				Actor.add(new Actor() {
-					
+
 					{
 						actPriority = VFX_PRIO;
 					}
-					
+
 					@Override
 					protected boolean act() {
 						if (enemy.isAlive()) {
 							Buff.prolong(Hero.this, SnipersMark.class, 2f).object = enemy.id();
 						}
-			 			Actor.remove(this);
+						Actor.remove(this);
 						return true;
 					}
 				});
 			}
-			break;
-		default:
 		}
 
 		
@@ -1021,7 +1018,7 @@ public class Hero extends Char {
 
 		damage = super.defenseProc(enemy,damage, element);
 
-		damageMorale(damage-drRoll(element));
+		damageMorale(damage);
 		
 		return damage;
 	}

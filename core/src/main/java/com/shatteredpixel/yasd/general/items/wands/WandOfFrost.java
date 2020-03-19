@@ -56,7 +56,7 @@ public class WandOfFrost extends DamageWand {
 
 	@Override
 	public float max(float lvl){
-		return 8+5*lvl;
+		return 5+3*lvl;
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class WandOfFrost extends DamageWand {
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null){
 
-			int damage = damageRoll();
+			/*int damage = damageRoll();
 
 			if (ch.buff(Frost.class) != null){
 				return; //do nothing, can't affect a frozen target
@@ -83,29 +83,18 @@ public class WandOfFrost extends DamageWand {
 				ch.sprite.burst( 0xFF99CCFF, level() / 2 + 2 );
 			}
 
-			processSoulMark(ch, chargesPerCast());
-			hit(ch);
-
 			if (ch.isAlive()){
 				if (Dungeon.level.liquid()[ch.pos])
 					Buff.prolong(ch, Chill.class, 4+level());
 				else
 					Buff.prolong(ch, Chill.class, 2+level());
-			}
+			}*/
+			processSoulMark(ch, chargesPerCast());
+			hit(ch);
 		} else {
 			Dungeon.level.pressCell(bolt.collisionPos);
 		}
 	}
-
-	/*@Override
-	protected void fx(Ballistica bolt, Callback callback) {
-		MagicMissile.boltFromChar(curUser.sprite.parent,
-				MagicMissile.FROST,
-				curUser.sprite,
-				bolt.collisionPos,
-				callback);
-		Sample.INSTANCE.play(Assets.SND_ZAP);
-	}*/
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {

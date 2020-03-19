@@ -28,9 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.quest.GooBlob;
@@ -47,26 +45,14 @@ public class Slime extends Mob {
 	
 	{
 		spriteClass = SlimeSprite.class;
-		
-		//HP = HT = 30;
+
 		healthFactor = 1 + 2/3f;
-		//defenseSkill = 5;
 		
 		EXP = 4;
 		maxLvl = 9;
 		
 		lootChance = 0.1f;
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 1, 8 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 10;
-	}*/
 	
 	@Override
 	public void damage(int dmg, @NotNull DamageSrc src) {
@@ -98,6 +84,11 @@ public class Slime extends Mob {
 		}
 
 		@Override
+		public Element elementalType() {
+			return Element.ACID;
+		}
+
+		/*@Override
 		public int attackProc(Char enemy, int damage ) {
 			if (Random.Int( 2 ) == 0) {
 				Buff.affect( enemy, Ooze.class ).set( 20f );
@@ -105,7 +96,7 @@ public class Slime extends Mob {
 			}
 
 			return super.attackProc( enemy, damage );
-		}
+		}*/
 
 		@Override
 		public void rollToDropLoot() {

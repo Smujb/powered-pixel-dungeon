@@ -57,7 +57,8 @@ import com.watabou.utils.Random;
 
 public enum Element {
 	/*
-	The purpose of this file is to make it easier to add types of damage to the game. It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing
+	The purpose of this file is to make it easier to add types of damage to the game.
+	It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing.
 	 */
 	PHYSICAL( false ),
 	RANGED( false ),
@@ -111,18 +112,22 @@ public enum Element {
 				}
 				break;
 			case COLD:
-				if (Random.Int( 2 ) == 0) {
-					Buff.affect( defender, Chill.class, 4f );
+				if (defender.buff(Frost.class) != null){
+					break; //do nothing, can't affect a frozen target
+				}
+				if (defender.buff(Chill.class) != null){
+					//7.5% less damage per turn of chill remaining
+					float chill = defender.buff(Chill.class).cooldown();
+					damage = (int) Math.round(damage * Math.pow(1.2f, chill));
 				} else {
-					float duration;
-					Chill chill = defender.buff(Chill.class);
-					if (chill != null) {
-						duration = chill.cooldown();
-						if (duration > 10) {
-							chill.detach();
-							Buff.affect(defender, Frost.class, duration/2f);
-						}
-					}
+					defender.sprite.burst( 0xFF99CCFF, 1 + damage / 3 );
+				}
+
+				if (defender.isAlive()){
+					if (Dungeon.level.liquid()[defender.pos])
+						Buff.prolong(defender, Chill.class, 4);
+					else
+						Buff.prolong(defender, Chill.class, 2);
 				}
 				break;
 			case EARTH:

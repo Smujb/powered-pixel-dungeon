@@ -73,6 +73,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Speed;
 import com.shatteredpixel.yasd.general.actors.buffs.Stamina;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
@@ -500,6 +501,10 @@ public abstract class Char extends Actor {
 			Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
 			if (block != null) dr += block.blockingRoll();
 		}
+		Vulnerable vulnerable = buff(Vulnerable.class);
+		if (vulnerable != null) {
+			dr *= vulnerable.defenseFactor();
+		}
 		return dr;
 	}
 
@@ -516,9 +521,10 @@ public abstract class Char extends Actor {
 
 
 	//Used for central stuff that affects damage dealt
-	public final int affectDamageRoll(int damage) {
-		if (buff(Weakness.class) != null) {
-			damage *= 2/3f;
+	protected final int affectDamageRoll(int damage) {
+		Weakness weakness = buff(Weakness.class);
+		if (weakness != null) {
+			damage *= weakness.damageFactor();
 		}
 		return damage;
 	}

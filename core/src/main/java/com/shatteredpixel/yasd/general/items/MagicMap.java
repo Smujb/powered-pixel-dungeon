@@ -59,6 +59,9 @@ import com.watabou.utils.PlatformSupport;
 import java.util.ArrayList;
 
 public class MagicMap extends Item {
+	/*
+	This file is mainly not translated as it is for my personal use and the use of testers. Any developer of a mod of this one can feel free to translate it or replace the strings.
+	 */
 
 	{
 		image = ItemSpriteSheet.ARTIFACT_SPELLBOOK;
@@ -270,7 +273,7 @@ public class MagicMap extends Item {
 			btnGo.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
-			RedButton btnCancel = new RedButton( "Cancel" ) {
+			RedButton btnCancel = new RedButton( "Close" ) {
 				@Override
 				protected void onClick() {
 					hide();

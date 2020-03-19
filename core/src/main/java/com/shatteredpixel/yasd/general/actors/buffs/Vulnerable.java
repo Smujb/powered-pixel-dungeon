@@ -39,6 +39,10 @@ public class Vulnerable extends FlavourBuff {
 		announced = true;
 	}
 
+	public float defenseFactor() {
+		return (float) Math.pow( 0.98, cooldown());
+	}
+
 	@Override
 	public int icon() {
 		return BuffIndicator.WEAKNESS;
@@ -56,7 +60,7 @@ public class Vulnerable extends FlavourBuff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", dispTurns());
+		return Messages.get(this, "desc", defenseFactor(), dispTurns());
 	}
 }
 

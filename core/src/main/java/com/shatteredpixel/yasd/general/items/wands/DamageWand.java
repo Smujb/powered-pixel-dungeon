@@ -36,19 +36,14 @@ import com.watabou.utils.Random;
 //wands with AOE effects count here (e.g. fireblast, blast wave), but wands with indrect damage do not (e.g. corrosion, transfusion)
 public abstract class DamageWand extends Wand{
 
-	public int min() {
-		return (int) min(actualLevel());
+	public final int hit(Char enemy) {
+		return hit(enemy, damageRoll());
 	}
 
-	public int hit(Char enemy) {
-		return hit(enemy, actualLevel());
-	}
-
-	public int hit(Char enemy, float lvl) {
+	public int hit(Char enemy, int damage) {
 		if (curUser == null) {
 			curUser = Dungeon.hero;
 		}
-		int damage = damageRoll(lvl);
 		damage -= enemy.drRoll(element);
 		damage = element.attackProc(damage, curUser, enemy);
 		damage = enemy.defenseProc(curUser, damage, element);
@@ -58,19 +53,24 @@ public abstract class DamageWand extends Wand{
 		return damage;
 	}
 
+
+	public final int min() {
+		return (int) min(actualLevel());
+	}
+
 	public abstract float min(float lvl);
 
-	public int defaultMin() {
+	final int defaultMin() {
 		return (int) min(0);
 	}
 
-	public int max(){
+	public final int max(){
 		return (int) max(actualLevel());
 	}
 
 	public abstract float max(float lvl);
 
-	public int defaultMax() {
+	final int defaultMax() {
 		return (int) max(0);
 	}
 
