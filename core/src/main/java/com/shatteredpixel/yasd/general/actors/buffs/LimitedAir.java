@@ -35,6 +35,9 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class LimitedAir extends Buff {
+	{
+		element = Element.WATER;
+	}
 
 	public static final float DURATION = 30f;
 
@@ -69,7 +72,7 @@ public class LimitedAir extends Buff {
 		if (duration > 0) {
 			duration--;
 		} else {
-			target.damage(target.HT/5, new Char.DamageSrc(Element.WATER, this).ignoreDefense());
+			target.damage(target.HT/5, this);
 			if (target == Dungeon.hero && !target.isAlive()) {
 				Dungeon.fail( getClass() );
 				GLog.n( Messages.get(this, "ondeath") );

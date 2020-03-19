@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -38,6 +37,9 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
 public class Corrosion extends Buff implements Hero.Doom {
+	{
+		element = Element.ACID;
+	}
 
 	private float damage = 1;
 	protected float left;
@@ -97,7 +99,7 @@ public class Corrosion extends Buff implements Hero.Doom {
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			target.damage((int)damage, new Char.DamageSrc(Element.ACID, this).ignoreDefense());
+			target.damage((int)damage, this);
 			if (damage < (Dungeon.getScaleFactor() /2f)+2) {
 				damage++;
 			} else {

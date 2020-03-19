@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.buffs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -50,6 +51,12 @@ public class Buff extends Actor {
 	
 	//whether or not the buff announces its name
 	public boolean announced = false;
+
+	public Element element = Element.NONE;
+
+	public Char.DamageSrc defaultSrc() {
+		return new Char.DamageSrc(element, this).ignoreDefense();
+	}
 	
 	protected HashSet<Class> resistances = new HashSet<>();
 	

@@ -615,6 +615,10 @@ public abstract class Char extends Actor {
 		damage(dmg, ch.defaultSrc());
 	}
 
+	public final void damage(int dmg, @NotNull Buff buff) {
+		damage(dmg, buff.defaultSrc());
+	}
+
 	public final void damage(int dmg, Element element) {
 		damage(dmg, new DamageSrc(element, null));
 	}

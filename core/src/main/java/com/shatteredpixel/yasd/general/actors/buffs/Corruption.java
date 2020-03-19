@@ -38,6 +38,8 @@ public class Corruption extends Buff {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
+
+		element = Element.DARK;
 	}
 
 	private float buildToDamage = 0f;
@@ -60,7 +62,7 @@ public class Corruption extends Buff {
 		buildToDamage -= damage;
 
 		if (damage > 0)
-			target.damage( damage, new Char.DamageSrc(Element.DARK, this).ignoreDefense());
+			target.damage( damage, this);
 
 		spend(TICK);
 

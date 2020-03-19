@@ -42,6 +42,9 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
 public class Poison extends Buff implements Hero.Doom {
+	{
+		element = Element.VENOM;
+	}
 	
 	protected float left;
 	
@@ -117,7 +120,7 @@ public class Poison extends Buff implements Hero.Doom {
 	public boolean act() {
 		if (target.isAlive()) {
 			
-			target.damage( (int)(left / 3) + 1, new Char.DamageSrc(Element.VENOM, this).ignoreDefense());
+			target.damage( (int)(left / 3) + 1, this);
 			spend( TICK );
 			
 			if ((left -= TICK) <= 0) {

@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.Splash;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -45,6 +44,8 @@ public class Bleeding extends Buff {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
+
+		element = Element.PHYSICAL;
 	}
 	
 	protected float level;
@@ -93,7 +94,7 @@ public class Bleeding extends Buff {
 			
 			if (dmg > 0) {
 				
-				target.damage( dmg, new Char.DamageSrc(Element.PHYSICAL, this).ignoreDefense());
+				target.damage( dmg, this);
 				if (target.sprite.visible) {
 					Splash.at( target.sprite.center(), -PointF.PI / 2, PointF.PI / 6,
 							target.sprite.blood(), Math.min( 10 * dmg / Math.max(1, target.HT), 10 ) );

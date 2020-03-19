@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.artifacts.HornOfPlenty;
@@ -40,6 +39,9 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 
 public class Hunger extends Buff implements Hero.Doom {
+	{
+		element = Element.NATURAL;
+	}
 
 	private static final float STEP	= 10f;
 
@@ -83,7 +85,7 @@ public class Hunger extends Buff implements Hero.Doom {
 				partialDamage += STEP * target.HT/1000f;
 
 				if (partialDamage > 1){
-					target.damage( (int)partialDamage, new Char.DamageSrc(Element.NATURAL, this).ignoreDefense().breakShields() );
+					target.damage( (int)partialDamage, defaultSrc().breakShields() );
 					partialDamage -= (int)partialDamage;
 					hero.loseMorale(0.05f, false);
 				}
@@ -97,7 +99,7 @@ public class Hunger extends Buff implements Hero.Doom {
 					GLog.n( Messages.get(this, "onstarving") );
 					hero.loseMorale(0.3f, false);
 					hero.resting = false;
-					hero.damage( 1, new Char.DamageSrc(Element.NATURAL, this).ignoreDefense().breakShields() );
+					hero.damage( 1, defaultSrc().breakShields() );
 					statusUpdated = true;
 
 					hero.interrupt();
