@@ -183,12 +183,12 @@ public class LevelHandler {
 		xPos = Dungeon.xPos;
 		yPos = Dungeon.yPos;
 		zPos = Dungeon.zPos;
-		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), getThread(), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(Mode.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
 			@Override
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, 0.67f);
+		}, 0.67f, getThread());
 	}
 
 	public static void move(int xPos, int yPos, int zPos, String msg, Mode mode) {
@@ -196,12 +196,12 @@ public class LevelHandler {
 		LevelHandler.yPos = yPos;
 		LevelHandler.zPos = zPos;
 		LevelHandler.mode = mode;
-		TextScene.init(msg, getThread(), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+		TextScene.init(msg, Messages.get(Mode.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
 			@Override
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, 0.67f);
+		}, 0.67f, getThread());
 	}
 
 	public static void resetMode() {

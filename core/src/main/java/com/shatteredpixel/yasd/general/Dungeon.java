@@ -722,6 +722,8 @@ public class Dungeon {
 	public static int getScaleFactor() {
 		if (level != null) {
 			return level.getScaleFactor();
+		} else if (hero != null) {
+			return hero.levelToScaleFactor();
 		} else {
 			return 0;
 		}

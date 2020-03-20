@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.items.Torch;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
@@ -97,25 +98,6 @@ public class King extends Mob {
 		BossHealthBar.assignBoss(this);
 	}
 	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 25, 40 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 32;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		if (!element.isMagical()) {
-			return Random.NormalIntRange(0, 14);
-		} else {
-			return 0;
-		}
-	}*/
-	
 	@Override
 	protected boolean getCloser( int target ) {
 		return canTryToSummon() ?
@@ -164,6 +146,8 @@ public class King extends Mob {
 
 		GameScene.bossSlain();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ), pos ).sprite.drop();
+
+		Dungeon.level.drop(new Torch(), ((CityBossLevel)Dungeon.level).pedestal( nextPedestal )).sprite.drop(pos);
 		
 		super.die( cause );
 		

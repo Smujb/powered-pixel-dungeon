@@ -52,11 +52,11 @@ public abstract class LockedRoom extends SpecialRoom {
 						setKeyDoor(level);
 						break;
 					case 1:
-						setChasmDoor(level);
-						break;
-					case 2:
 						setBarricadeDoor(level);
 						break;
+					//case 2:
+					//	setChasmDoor(level);
+					//	break;
 				}
 
 			}
@@ -67,13 +67,11 @@ public abstract class LockedRoom extends SpecialRoom {
 
 	private void setChasmDoor(Level level) {
 		level.map[level.XY(entrance().x, entrance().y)] = Terrain.CHASM;
-		entrance().type = Door.Type.EMPTY;
 		level.addItemToSpawn(new PotionOfLevitation());
 	}
 
 	private void setBarricadeDoor(Level level) {
-		level.map[level.XY(entrance().x, entrance().y)] = Terrain.BARRICADE;
-		entrance().type = Door.Type.EMPTY;
+		entrance().set(Door.Type.BARRICADE);
 		level.addItemToSpawn(new PotionOfLiquidFlame());
 	}
 

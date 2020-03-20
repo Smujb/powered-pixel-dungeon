@@ -276,7 +276,7 @@ public class MagicMap extends Item {
 
 				}
 			};
-			btnGo.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnGo.setRect(0, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
 			RedButton btnCancel = new RedButton( "Close" ) {
@@ -285,7 +285,7 @@ public class MagicMap extends Item {
 					hide();
 				}
 			};
-			btnCancel.setRect(0, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnCancel.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnCancel );
 
 			resize(getWidth(), (int) (btnGo.bottom() + GAP));
@@ -422,11 +422,11 @@ public class MagicMap extends Item {
 									public void call() {
 										Game.switchScene(GameScene.class);
 									}
-								}, 0.67f);
+								}, 0.67f, null);
 							}
-						}, 0.67f);
+						}, 0.67f, null);
 					}
-				}, 0.67f);
+				}, 0.67f, null);
 				break;
 		}
 	}

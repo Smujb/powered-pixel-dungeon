@@ -161,7 +161,7 @@ public class Lightning extends Group {
 
 			arc2 = new Image(Effects.get(Effects.Type.LIGHTNING));
 			arc2.origin.set( 0, arc2.height()/2 );
-			arc1.color(gobalColour);
+			arc2.color(gobalColour);
 			add( arc2 );
 		}
 

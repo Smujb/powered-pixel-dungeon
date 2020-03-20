@@ -69,26 +69,6 @@ public class WandOfFrost extends DamageWand {
 
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (ch != null){
-
-			/*int damage = damageRoll();
-
-			if (ch.buff(Frost.class) != null){
-				return; //do nothing, can't affect a frozen target
-			}
-			if (ch.buff(Chill.class) != null){
-				//7.5% less damage per turn of chill remaining
-				float chill = ch.buff(Chill.class).cooldown();
-				damage = (int)Math.round(damage * Math.pow(0.9f, chill));
-			} else {
-				ch.sprite.burst( 0xFF99CCFF, level() / 2 + 2 );
-			}
-
-			if (ch.isAlive()){
-				if (Dungeon.level.liquid()[ch.pos])
-					Buff.prolong(ch, Chill.class, 4+level());
-				else
-					Buff.prolong(ch, Chill.class, 2+level());
-			}*/
 			processSoulMark(ch, chargesPerCast());
 			hit(ch);
 		} else {
@@ -101,7 +81,7 @@ public class WandOfFrost extends DamageWand {
 		Chill chill = defender.buff(Chill.class);
 		if (chill != null && Random.IntRange(2, 10) <= chill.cooldown()){
 			//need to delay this through an actor so that the freezing isn't broken by taking damage from the staff hit.
-			new FlavourBuff(){
+			new FlavourBuff() {
 				{actPriority = VFX_PRIO;}
 				public boolean act() {
 					Buff.affect(target, Frost.class, Frost.duration(target) * Random.Float(1f, 2f));

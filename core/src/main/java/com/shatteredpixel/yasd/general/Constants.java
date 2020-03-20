@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.LastLevel;
-import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.LootLevel;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
@@ -140,7 +139,8 @@ public class Constants {
                     CityLevel.class,
                     CityLevel.class,
                     CityBossLevel.class,//Floor 24, boss
-                    LastShopLevel.class,//Floor 25, Imp
+                    //LastShopLevel.class,//Floor 25, Imp (removed for now)
+                    HallsLevel.class,
                     HallsLevel.class,
                     HallsLevel.class,
                     HallsLevel.class,

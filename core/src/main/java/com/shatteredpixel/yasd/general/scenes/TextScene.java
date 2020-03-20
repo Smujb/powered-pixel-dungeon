@@ -56,6 +56,7 @@ public class TextScene extends PixelScene {
 	private RenderedTextBlock message;
 
 	private static String text = "TEST";
+	private static String continueText = null;
 	private static Thread thread = null;
 	private static String bgTex;
 	private static float scrollSpeed = 0;
@@ -159,6 +160,8 @@ public class TextScene extends PixelScene {
 				message.alpha(1 - p);
 				if ((timeLeft -= Game.elapsed) <= 0) {
 					if ((thread == null || !thread.isAlive())) {
+						if (continueText != null) {
+						}
 						PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 							@Override
 							protected void onClick(PointerEvent event) {
@@ -194,13 +197,14 @@ public class TextScene extends PixelScene {
 	This place is dangerous, but at least the evil magic at work here is weak.
 	 */
 
-	public static void init(String text, Thread thread, String bgTex, float scrollSpeed, Callback onFinish, float fadeTime) {
+	public static void init(String text, String continueText, String bgTex, float scrollSpeed, Callback onFinish, float fadeTime, Thread thread) {
 		TextScene.text = text;
 		TextScene.thread = thread;
 		TextScene.bgTex = bgTex;
 		TextScene.scrollSpeed = scrollSpeed;
 		TextScene.onFinish = onFinish;
 		TextScene.fadeTime = fadeTime;
+		TextScene.continueText = continueText;
 		MainGame.switchScene(TextScene.class);
 	}
 

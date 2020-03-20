@@ -86,13 +86,13 @@ public class ShopRoom extends SpecialRoom {
 	
 	@Override
 	public int minWidth() {
-		if (itemsToSpawn == null) itemsToSpawn = generateItems();
+		if (itemsToSpawn == null) itemsToSpawn = generateItems(Dungeon.getScaleFactor());
 		return Math.max(7, (int)(Math.sqrt(itemsToSpawn.size())+3));
 	}
 	
 	@Override
 	public int minHeight() {
-		if (itemsToSpawn == null) itemsToSpawn = generateItems();
+		if (itemsToSpawn == null) itemsToSpawn = generateItems(Dungeon.getScaleFactor());
 		return Math.max(7, (int)(Math.sqrt(itemsToSpawn.size())+3));
 	}
 	
@@ -124,7 +124,7 @@ public class ShopRoom extends SpecialRoom {
 	protected void placeItems( Level level ){
 
 		if (itemsToSpawn == null)
-			itemsToSpawn = generateItems();
+			itemsToSpawn = generateItems(level.getScaleFactor());
 
 		Point itemPlacement = new Point(entrance());
 		if (itemPlacement.y == top){
@@ -162,17 +162,16 @@ public class ShopRoom extends SpecialRoom {
 
 	}
 
-	private static Armor generateArmor(int depth) {
+	private Armor generateArmor(int level) {
 		Armor armor;
-		int minTier = depth/5;
-		int maxTier = depth/5 + 2;
-		do {
-			armor = (Armor) Generator.randomArmor().identify().upgrade();
-			armor.cursed = false;
-			if (armor.hasCurseGlyph()) {
-				armor.inscribe(Armor.Glyph.random());
-			}
-		} while ((armor.tier > maxTier | armor.tier < minTier));
+		int minTier = level/6;
+		int maxTier = level/6 + 2;
+		armor = (Armor) Generator.randomArmor().identify().upgrade();
+		armor.cursed = false;
+		if (armor.hasCurseGlyph()) {
+			armor.inscribe(Armor.Glyph.random());
+		}
+		armor.setTier(Math.min(5, Random.Int(minTier, maxTier)));
 		if (armor.tier == minTier & armor.isUpgradable()) {//Extra upgrade if possible and Armour is at minimum amount
 			armor.upgrade();
 		} else if (armor.tier == maxTier & armor.level() > 1) {
@@ -181,17 +180,17 @@ public class ShopRoom extends SpecialRoom {
 		return armor;
 	}
 
-	private static MeleeWeapon generateWeapon(int depth) {
+	private MeleeWeapon generateWeapon(int level) {
 		MeleeWeapon weapon;
-		int minTier = depth/5;
-		int maxTier = depth/5 + 2;
-		do {
-			weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON).identify().upgrade();
-			weapon.cursed = false;
-			if (weapon.hasCurseEnchant()) {
-				weapon.enchant(Weapon.Enchantment.random());
-			}
-		} while ((weapon.tier > maxTier | weapon.tier < minTier));
+		int minTier = level/6;
+		int maxTier = level/6 + 2;
+
+		weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON).identify().upgrade();
+		weapon.cursed = false;
+		if (weapon.hasCurseEnchant()) {
+			weapon.enchant(Weapon.Enchantment.random());
+		}
+		weapon.setTier(Math.min(5, Random.Int(minTier, maxTier)));
 		if (weapon.tier == minTier & weapon.isUpgradable()) {//Extra upgrade if possible and Armour is at minimum amount
 			weapon.upgrade();
 		} else if (weapon.tier == maxTier & weapon.level() > 1) {
@@ -200,7 +199,7 @@ public class ShopRoom extends SpecialRoom {
 		return weapon;
 	}
 
-	private static ArrayList<Item> generateItems() {
+	private ArrayList<Item> generateItems(int level) {
 
 		ArrayList<Item> itemsToSpawn = new ArrayList<>();
 		
@@ -233,12 +232,12 @@ public class ShopRoom extends SpecialRoom {
 			break;
 		}
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
-			Armor armor = generateArmor(Dungeon.yPos);
+			Armor armor = generateArmor(level);
 			itemsToSpawn.add( armor );
 		}
 
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
-			MeleeWeapon weapon = generateWeapon(Dungeon.yPos);
+			MeleeWeapon weapon = generateWeapon(level);
 			itemsToSpawn.add( weapon );
 		}
 

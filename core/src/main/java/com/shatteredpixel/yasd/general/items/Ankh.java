@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.items;
 
-//import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Statistics;
@@ -35,10 +34,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
-//import com.shatteredpixel.yasd.general.effects.CellEmitter;
-//import com.shatteredpixel.yasd.general.effects.Speck;
-//import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -47,27 +42,14 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
-//import com.shatteredpixel.yasd.general.utils.GLog;
-//import com.watabou.noosa.audio.Sample;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
-import com.watabou.utils.Bundle;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
 
 public class Ankh extends Item {
 
-	//public static final String AC_BLESS = "BLESS";
-
 	{
 		image = ItemSpriteSheet.ANKH;
-
-		//bones = true;
 	}
-
-	//private Boolean blessed = false;
 	
 	@Override
 	public boolean isUpgradable() {
@@ -78,50 +60,6 @@ public class Ankh extends Item {
 	public boolean isIdentified() {
 		return true;
 	}
-
-	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions(hero);
-		DewVial vial = hero.belongings.getItem(DewVial.class);
-		/*if (vial != null && vial.isFull() && !blessed)
-			actions.add( AC_BLESS );*/
-		return actions;
-	}
-
-	@Override
-	public void execute( final Hero hero, String action ) {
-
-		super.execute( hero, action );
-
-		/*if (action.equals( AC_BLESS )) {
-
-			DewVial vial = hero.belongings.getItem(DewVial.class);
-			if (vial != null){
-				blessed = true;
-				vial.empty();
-				GLog.p( Messages.get(this, "bless") );
-				hero.spend( 1f );
-				hero.busy();
-
-
-				Sample.INSTANCE.play( Assets.SND_DRINK );
-				CellEmitter.get(hero.pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
-				hero.sprite.operate( hero.pos );
-			}
-		}*/
-	}
-
-	/*@Override
-	public String desc() {
-		if (blessed)
-			return Messages.get(this, "desc_blessed");
-		else
-			return super.desc();
-	}*/
-
-	/*public Boolean isBlessed(){
-		return blessed;
-	}*/
 
 	private static final Glowing WHITE = new Glowing( 0xFFFFCC );
 
@@ -137,7 +75,7 @@ public class Ankh extends Item {
 	public static void revive(Char toRevive, Ankh ankh) {
 		toRevive.HP = toRevive.HT;
 
-		//ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dieing again.
+		//ensures that you'll get to act first in almost any case, to prevent reviving and then instantly dying again.
 		PotionOfHealing.cure(toRevive);
 		Buff.detach(toRevive, Paralysis.class);
 		toRevive.spend(-toRevive.cooldown());
@@ -163,20 +101,6 @@ public class Ankh extends Item {
 				return;
 			}
 		}
-	}
-
-	private static final String BLESSED = "blessed";
-
-	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
-		super.storeInBundle( bundle );
-		//bundle.put( BLESSED, blessed );
-	}
-
-	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		//blessed	= bundle.getBoolean( BLESSED );
 	}
 	
 	@Override

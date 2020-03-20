@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -43,11 +44,16 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Beam;
+import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
+import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
+import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
@@ -211,8 +217,10 @@ public enum Element {
 		return damage;
 	}
 
-	public void FX(Char ch, int cell, Callback attack) {
+	private static int AMT = 10;
 
+	public void FX(Char ch, int cell, Callback attack) {
+		Char target;
 		switch (this) {
 			default:
 				attack.call();
@@ -223,6 +231,9 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(Speck.factory(Speck.BONE), 10);
+				}
 				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
 			case MAGICAL:
@@ -235,8 +246,12 @@ public enum Element {
 				break;
 			case SHARP:
 			case RANGED:
-				((MissileSprite)ch.sprite.parent.recycle( MissileSprite.class )).
-						reset( ch.pos, cell, new ThrowingKnife(), attack );
+				if (Dungeon.level.adjacent(ch.pos, cell)) {
+					attack.call();
+				} else {
+					((MissileSprite) ch.sprite.parent.recycle(MissileSprite.class)).
+							reset(ch.pos, cell, new ThrowingKnife(), attack);
+				}
 				break;
 			case DESTRUCTION:
 				ch.sprite.parent.add(
@@ -249,6 +264,9 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(FlameParticle.STORM, AMT);
+				}
 				break;
 			case WATER:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -256,6 +274,9 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(SewerLevel.WaterParticle.FACTORY, AMT);
+				}
 				break;
 			case COLD:
 				MagicMissile.boltFromChar(ch.sprite.parent,
@@ -264,6 +285,9 @@ public enum Element {
 						cell,
 						attack);
 				Sample.INSTANCE.play(Assets.SND_ZAP);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.burst( 0xFF99CCFF, AMT );
+				}
 				break;
 			case EARTH:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -292,10 +316,19 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_PURPLE), AMT);
+				}
 				break;
 			case AIR: case HOLY:
 				ch.sprite.parent.add(
 						new Beam.LightRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					new Flare(8, 16).color(0xFFFF66, true).show(target.sprite, 2f);
+					if (target.properties().contains(Char.Property.UNDEAD) || target.properties().contains(Char.Property.DEMONIC)) {
+						target.sprite.emitter().burst(ShadowParticle.UP, AMT);
+					}
+				}
 				attack.call();
 				break;
 			case ACID:
@@ -304,15 +337,24 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_GREEN), AMT);
+				}
 				break;
 			case ELECTRIC:
 				ch.sprite.parent.add(
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));//No callback as damaging after lightning anim finishes looks messy
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(SparkParticle.FACTORY, AMT);
+				}
 				attack.call();
 				break;
 			case DRAIN:
 				ch.sprite.parent.add(
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null, 0xFF0000));
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					new Flare(8, 16).color(0xFF0000, true).show(target.sprite, 2f);
+				}
 				attack.call();
 				break;
 			case DARK:
@@ -321,6 +363,9 @@ public enum Element {
 						ch.sprite,
 						cell,
 						attack);
+				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+					target.sprite.emitter().burst(ShadowParticle.CURSE, AMT);
+				}
 				break;
 		}
 	}

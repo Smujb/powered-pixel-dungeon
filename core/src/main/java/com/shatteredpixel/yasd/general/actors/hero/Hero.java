@@ -1031,15 +1031,19 @@ public class Hero extends Char {
 		int effectiveHP = Math.max(HT/2, HP);
 		shake = ((float) dmg / (float) effectiveHP) * 4f;
 
-		if (shake > 0.5f) {
-			Camera.main.shake(GameMath.gate(1, shake, 5), Math.min(shake/2f,1f));
-			if (GameSettings.vibrate()) {
-				MainGame.vibrate(Math.min(500,(int) (shake * 50)));
-			}
-			if (shake > 1f) {
-				loseMorale(shake*0.5f);
-			} else {
-				loseMorale(shake*0.5f,false);
+		if (shake > 0) {
+			Camera.main.shake(GameMath.gate(0.5f, shake, 5), Math.max(shake/3f,2.5f));
+
+			if (shake > 0.5f) {
+				if (GameSettings.vibrate()) {
+					MainGame.vibrate(Math.min(250, (int) (shake * 50)));
+				}
+				if (shake > 1f) {
+					loseMorale(shake * 0.5f);
+
+				} else {
+					loseMorale(shake * 0.5f, false);
+				}
 			}
 		}
 	}

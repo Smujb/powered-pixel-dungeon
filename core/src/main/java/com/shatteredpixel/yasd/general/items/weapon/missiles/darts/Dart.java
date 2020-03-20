@@ -75,20 +75,22 @@ public class Dart extends MissileWeapon {
 	
 	@Override
 	public int min(float lvl) {
+		int base = 1 + Dungeon.getScaleFactor()/2;
 		if (bow != null){
 			return  bow.min(lvl);  //+1 per level or bow level
 		} else {
-			return  Math.round(1 +     //1 base, down from 2
+			return  Math.round(base +     //1 base, down from 2
 					lvl);    //scaling unchanged
 		}
 	}
 
 	@Override
 	public int max(float lvl) {
+		int base = 2 + Dungeon.getScaleFactor();
 		if (bow != null){
 			return bow.max(lvl);  //+3 per bow level, +2 per level (default scaling +2)
 		} else {
-			return  Math.round(2 +     //2 base, down from 5
+			return  Math.round(base +     //2 base, down from 5
 					2*lvl);  //scaling unchanged
 		}
 	}
