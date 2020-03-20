@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items.wands;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -69,7 +70,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.ui.TargetHealthIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
@@ -339,7 +339,7 @@ public class CursedWand {
 					buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 					if (buff != null) buff.detach();
 
-					InterlevelScene.returnTo(depth, -1);
+					LevelHandler.returnTo(depth, -1);
 
 				} else {
 					ScrollOfTeleportation.teleportUser(user);

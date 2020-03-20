@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.RankingsScene;
 import com.shatteredpixel.yasd.general.scenes.TitleScene;
 import com.shatteredpixel.yasd.general.ui.RedButton;
@@ -80,7 +79,7 @@ public class WndGame extends Window {
 				@Override
 				protected void onClick() {
 					GamesInProgress.selectedClass = Dungeon.hero.heroClass;
-					InterlevelScene.noStory = true;
+					//InterlevelScene.noStory = true;
 					GameScene.show(new WndStartGame(GamesInProgress.firstEmpty(), false));
 				}
 			} );

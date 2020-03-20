@@ -32,12 +32,12 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.journal.Journal;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.IntroScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -133,7 +133,7 @@ public class WndStartGame extends Window {
 					GameSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
-					InterlevelScene.descend();
+					LevelHandler.descend();
 				}
 			}
 			

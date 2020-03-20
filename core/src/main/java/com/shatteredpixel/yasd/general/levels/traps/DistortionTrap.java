@@ -28,11 +28,11 @@
 package com.shatteredpixel.yasd.general.levels.traps;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 
 public class DistortionTrap extends Trap{
 
@@ -57,7 +57,6 @@ public class DistortionTrap extends Trap{
 					((LloydsBeacon) i).returnDepth = -1;
 		}
 
-		//InterlevelScene.mode = InterlevelScene.Mode.RESET;
-		InterlevelScene.reset();
+		LevelHandler.reset();
 	}
 }

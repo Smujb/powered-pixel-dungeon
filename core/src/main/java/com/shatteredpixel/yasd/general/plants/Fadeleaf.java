@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.plants;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -38,7 +39,6 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
@@ -73,7 +73,7 @@ public class Fadeleaf extends Plant {
 				InterlevelScene.returnPos = -2;
 				Game.switchScene( InterlevelScene.class );/
 				 */
-				InterlevelScene.returnTo(Math.max(1, (Dungeon.yPos - 1)), -2);
+				LevelHandler.returnTo(Math.max(1, (Dungeon.yPos - 1)), -2);
 				
 			} else {
 				ScrollOfTeleportation.teleportUser(ch);

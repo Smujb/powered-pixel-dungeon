@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -346,7 +347,7 @@ public class GameScene extends PixelScene {
 		counter.camera = uiCamera;
 		counter.show(this, busy.center(), 0f);
 		
-		switch (InterlevelScene.mode()) {
+		switch (LevelHandler.mode()) {
 			case RESURRECT:
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.level.entrance);
 				new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
@@ -420,7 +421,7 @@ public class GameScene extends PixelScene {
 
 		Dungeon.hero.next();
 
-		switch (InterlevelScene.mode()){
+		switch (LevelHandler.mode()){
 			case FALL: case DESCEND: case CONTINUE:
 				Camera.main.snapTo(hero.center().x, hero.center().y - DungeonTilemap.SIZE * (defaultZoom/Camera.main.zoom));
 				break;
@@ -432,9 +433,9 @@ public class GameScene extends PixelScene {
 		}
 		Camera.main.panTo(hero.center(), 2.5f);
 
-		if (InterlevelScene.mode() != InterlevelScene.Mode.NONE) {
+		if (LevelHandler.mode() != LevelHandler.Mode.NONE) {
 			if (Dungeon.yPos == Statistics.deepestFloor
-					&& (InterlevelScene.mode() == InterlevelScene.Mode.DESCEND || InterlevelScene.mode() == InterlevelScene.Mode.FALL)) {
+					&& (LevelHandler.mode() == LevelHandler.Mode.DESCEND || LevelHandler.mode() == LevelHandler.Mode.FALL)) {
 				GLog.h(Messages.get(this, "descend"), Dungeon.yPos);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
@@ -444,7 +445,7 @@ public class GameScene extends PixelScene {
 					}
 				}
 				
-			} else if (InterlevelScene.mode() == InterlevelScene.Mode.RESET) {
+			} else if (LevelHandler.mode() == LevelHandler.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
 				GLog.h(Messages.get(this, "return"), Dungeon.yPos);
@@ -482,7 +483,7 @@ public class GameScene extends PixelScene {
 				GLog.w(Messages.get(this, "secrets"));
 			}
 
-			InterlevelScene.resetMode();
+			LevelHandler.resetMode();
 
 			
 		}

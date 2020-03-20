@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -104,7 +105,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.AlchemyScene;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.SurfaceScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.AttackIndicator;
@@ -879,7 +879,7 @@ public class Hero extends Char {
 			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 			if (buff != null) buff.detach();
 			
-			InterlevelScene.descend();
+			LevelHandler.descend();
 
 			return false;
 
@@ -923,7 +923,7 @@ public class Hero extends Char {
 				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 				if (buff != null) buff.detach();
 
-				InterlevelScene.ascend();
+				LevelHandler.ascend();
 			}
 
 			return false;
@@ -1205,7 +1205,7 @@ public class Hero extends Char {
 			//FIXME this is a fairly sloppy fix for a crash involving pitfall traps.
 			//really there should be a way for traps to specify whether action should continue or
 			//not when they are pressed.
-			return InterlevelScene.mode() != InterlevelScene.Mode.FALL;
+			return LevelHandler.mode() != LevelHandler.Mode.FALL;
 
 		} else {
 

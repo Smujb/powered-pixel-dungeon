@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -45,7 +46,6 @@ import com.shatteredpixel.yasd.general.levels.rooms.special.WeakFloorRoom;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.sprites.MobSprite;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.Camera;
@@ -95,11 +95,11 @@ public class Chasm {
 			Dungeon.hero.interrupt();
 			if (Dungeon.level instanceof RegularLevel) {
 				Room room = ((RegularLevel)Dungeon.level).room( pos );
-				InterlevelScene.fallIntoPit = room instanceof WeakFloorRoom;
+				LevelHandler.fallIntoPit = room instanceof WeakFloorRoom;
 			} else {
-				InterlevelScene.fallIntoPit = false;
+				LevelHandler.fallIntoPit = false;
 			}
-			InterlevelScene.fall();
+			LevelHandler.fall();
 		} else {
 			Dungeon.hero.sprite.visible = false;
 		}

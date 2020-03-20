@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Amulet;
@@ -118,7 +119,7 @@ public class AmuletScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		InterlevelScene.doRestore();
+		LevelHandler.doRestore();
 	}
 	
 	private float timer = 0;

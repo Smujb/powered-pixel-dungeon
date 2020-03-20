@@ -27,9 +27,9 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.windows.WndStory;
-import com.watabou.noosa.Game;
 
 public class IntroScene extends PixelScene {
 	
@@ -41,7 +41,8 @@ public class IntroScene extends PixelScene {
 			@Override
 			public void hide() {
 				super.hide();
-				Game.switchScene( InterlevelScene.class );
+				LevelHandler.descend();
+				//Game.switchScene( InterlevelScene.class );
 			}
 		} );
 		

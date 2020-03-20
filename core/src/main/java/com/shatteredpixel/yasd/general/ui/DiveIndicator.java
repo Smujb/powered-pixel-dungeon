@@ -28,9 +28,9 @@
 package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.watabou.noosa.Image;
 
@@ -111,7 +111,7 @@ public class DiveIndicator extends Tag {
 	protected void onClick() {
 		Hero hero = Dungeon.hero;
 		if (Dungeon.level.deepWater(hero.pos)) {
-			InterlevelScene.dive(hero.pos);
+			LevelHandler.dive(hero.pos);
 		}
 	}
 }

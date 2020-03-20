@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -43,8 +44,6 @@ import com.watabou.noosa.SkinnedBlock;
 import com.watabou.utils.Callback;
 
 public class TextScene extends PixelScene {
-
-	//TODO: This copy pastes from Inter Level Scene. Hopefully I can make it use this.
 
 	private enum Phase {
 		FADE_IN, STATIC, FADE_OUT
@@ -74,11 +73,12 @@ public class TextScene extends PixelScene {
 		super.create();
 
 		if (bgTex == null) {
-			bgTex = Dungeon.newLevel(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, false).loadImg();
-		}
-
-		if (thread != null) {
-			thread.run();
+			try {
+				bgTex = Dungeon.newLevel(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, false).loadImg();
+				assert bgTex != null;
+			} catch (Exception e) {
+				bgTex = Assets.SHADOW;
+			}
 		}
 
 		if (onFinish == null) {
@@ -142,6 +142,10 @@ public class TextScene extends PixelScene {
 		timeLeft = fadeTime;
 
 		waitingTime = 0f;
+
+		if (thread != null) {
+			thread.run();
+		}
 	}
 
 	@Override

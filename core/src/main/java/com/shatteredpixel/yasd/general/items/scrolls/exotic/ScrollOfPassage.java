@@ -28,12 +28,12 @@
 package com.shatteredpixel.yasd.general.items.scrolls.exotic;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
 public class ScrollOfPassage extends ExoticScroll {
@@ -59,6 +59,6 @@ public class ScrollOfPassage extends ExoticScroll {
 		buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
 
-		InterlevelScene.returnTo(Math.max(1, (Dungeon.yPos - 1 - (Dungeon.yPos -2)%5)), -1);
+		LevelHandler.returnTo(Math.max(1, (Dungeon.yPos - 1 - (Dungeon.yPos -2)%5)), -1);
 	}
 }

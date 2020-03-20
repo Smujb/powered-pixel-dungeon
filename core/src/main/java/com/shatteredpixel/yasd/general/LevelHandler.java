@@ -201,7 +201,7 @@ public class LevelHandler {
 		});
 	}
 
-	static void resetMode() {
+	public static void resetMode() {
 		mode = Mode.NONE;
 	}
 

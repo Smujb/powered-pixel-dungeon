@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
@@ -42,7 +43,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.scenes.InterlevelScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.scenes.TextScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -371,7 +371,7 @@ public class MagicMap extends Item {
 			RedButton btnGo = new RedButton( "GO" ) {
 				@Override
 				protected void onClick() {
-					InterlevelScene.move(position[0], position[1], position[2], "TEST", InterlevelScene.Mode.DESCEND);
+					LevelHandler.move(position[0], position[1], position[2], "TEST", LevelHandler.Mode.DESCEND);
 				}
 			};
 			btnGo.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
