@@ -285,7 +285,7 @@ public class MagicMap extends Item {
 					hide();
 				}
 			};
-			btnCancel.setRect(getWidth()/2, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnCancel.setRect(0, checkCursed.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnCancel );
 
 			resize(getWidth(), (int) (btnGo.bottom() + GAP));

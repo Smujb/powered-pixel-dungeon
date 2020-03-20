@@ -312,7 +312,7 @@ public enum Element {
 				break;
 			case DRAIN:
 				ch.sprite.parent.add(
-						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null).setColour(0xFF0000));
+						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null, 0xFF0000));
 				attack.call();
 				break;
 			case DARK:

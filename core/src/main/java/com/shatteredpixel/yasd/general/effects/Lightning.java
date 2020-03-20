@@ -41,12 +41,7 @@ import java.util.List;
 
 public class Lightning extends Group {
 
-	private int gobalColour = 0xffffff;
-
-	public Lightning setColour(int Colour) {
-		gobalColour = Colour;
-		return this;
-	}
+	public static final int DEFAULT_COLOUR = 0xffffff;
 
 	private static final float DURATION = 0.3f;
 
@@ -56,22 +51,35 @@ public class Lightning extends Group {
 	
 	private Callback callback;
 
-
+	public Lightning(int from, int to, Callback callback, int colour){
+		this(Arrays.asList(new Arc(from, to, colour)), callback);
+	}
 
 	public Lightning(int from, int to, Callback callback){
-		this(Arrays.asList(new Arc(from, to)), callback);
+		this(from, to, callback, DEFAULT_COLOUR);
+	}
+
+	public Lightning(PointF from, int to, Callback callback, int colour){
+		this(Arrays.asList(new Arc(from, to, colour)), callback);
 	}
 
 	public Lightning(PointF from, int to, Callback callback){
-		this(Arrays.asList(new Arc(from, to)), callback);
+		this(from, to, callback, DEFAULT_COLOUR);
 	}
 
+	public Lightning(int from, PointF to, Callback callback, int colour){
+		this(Arrays.asList(new Arc(from, to, colour)), callback);
+	}
 	public Lightning(int from, PointF to, Callback callback){
-		this(Arrays.asList(new Arc(from, to)), callback);
+		this(from, to, callback, DEFAULT_COLOUR);
+	}
+
+	public Lightning(PointF from, PointF to, Callback callback, int colour){
+		this(Arrays.asList(new Arc(from, to, colour)), callback);
 	}
 
 	public Lightning(PointF from, PointF to, Callback callback){
-		this(Arrays.asList(new Arc(from, to)), callback);
+		this(from, to, callback, DEFAULT_COLOUR);
 	}
 	
 	public Lightning( List<Arc> arcs, Callback callback ) {
@@ -80,8 +88,6 @@ public class Lightning extends Group {
 
 		this.arcs = arcs;
 		for (Arc arc : this.arcs) {
-
-			arc.setColour(gobalColour);
 			add(arc);
 		}
 
@@ -123,31 +129,26 @@ public class Lightning extends Group {
 	//A lightning object is meant to be loaded up with arcs.
 	//these act as a means of easily expressing lighting between two points.
 	public static class Arc extends Group {
-		int gobalColour = 0xffffff;
-
-		void setColour(int Colour) {
-			gobalColour = Colour;
-		}
 
 		private Image arc1, arc2;
 
 		//starting and ending x/y values
 		private PointF start, end;
 
-		public Arc(int from, int to){
+		public Arc(int from, int to, int colour){
 			this( DungeonTilemap.tileCenterToWorld(from),
-					DungeonTilemap.tileCenterToWorld(to));
+					DungeonTilemap.tileCenterToWorld(to), colour);
 		}
 
-		public Arc(PointF from, int to){
-			this( from, DungeonTilemap.tileCenterToWorld(to));
+		public Arc(PointF from, int to, int colour){
+			this( from, DungeonTilemap.tileCenterToWorld(to), colour);
 		}
 
-		public Arc(int from, PointF to){
-			this( DungeonTilemap.tileCenterToWorld(from), to);
+		public Arc(int from, PointF to, int colour){
+			this( DungeonTilemap.tileCenterToWorld(from), to, colour);
 		}
 
-		public Arc(PointF from, PointF to){
+		public Arc(PointF from, PointF to, int gobalColour){
 			start = from;
 			end = to;
 

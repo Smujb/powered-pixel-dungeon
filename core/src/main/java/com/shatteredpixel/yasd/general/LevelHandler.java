@@ -180,6 +180,9 @@ public class LevelHandler {
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
 		Messages.get(Mode.class, Mode.CONTINUE.name());
+		xPos = Dungeon.xPos;
+		yPos = Dungeon.yPos;
+		zPos = Dungeon.zPos;
 		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), getThread(), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
 			@Override
 			public void call() {

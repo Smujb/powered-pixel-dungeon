@@ -81,7 +81,7 @@ public class ShockBomb extends Bomb {
 				int damage = Math.round(Random.NormalIntRange(5 + Dungeon.getScaleFactor(), 10 + 2*Dungeon.getScaleFactor()) * (power/50f));
 				ch.damage(damage, new Char.DamageSrc(Element.ELECTRIC, this));
 				if (ch.isAlive()) Buff.prolong(ch, Paralysis.class, power);
-				arcs.add(new Lightning.Arc(DungeonTilemap.tileCenterToWorld(cell), ch.sprite.center()));
+				arcs.add(new Lightning.Arc(DungeonTilemap.tileCenterToWorld(cell), ch.sprite.center(), Lightning.DEFAULT_COLOUR));
 			}
 		}
 
