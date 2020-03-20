@@ -51,14 +51,14 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	
 	//Graphics
 	
-	public static final String KEY_FULLSCREEN	= "fullscreen";
-	public static final String KEY_LANDSCAPE	= "landscape";
+	private static final String KEY_FULLSCREEN	= "fullscreen";
+	private static final String KEY_LANDSCAPE	= "landscape";
 	public static final String KEY_POWER_SAVER 	= "power_saver";
-	public static final String KEY_SCALE		= "scale";
-	public static final String KEY_ZOOM			= "zoom";
-	public static final String KEY_BRIGHTNESS	= "brightness";
-	public static final String KEY_GRID 	    = "visual_grid";
-	public static final String KEY_MOD 	    	= "mod";
+	private static final String KEY_SCALE		= "scale";
+	private static final String KEY_ZOOM			= "zoom";
+	private static final String KEY_BRIGHTNESS	= "brightness";
+	private static final String KEY_GRID 	    = "visual_grid";
+	private static final String KEY_MOD 	    	= "mod";
 	
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
@@ -130,14 +130,6 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	
 	public static int visualGrid() {
 		return getInt( KEY_GRID, 0, -1, 3 );
-	}
-
-	public static void mod(int mod) {
-		put(KEY_MOD, mod);
-	}
-
-	public static int mod() {
-		return getInt(KEY_MOD, 0);
 	}
 
 	//Interface

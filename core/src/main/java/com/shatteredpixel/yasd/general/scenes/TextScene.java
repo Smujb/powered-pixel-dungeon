@@ -123,7 +123,7 @@ public class TextScene extends PixelScene {
 		add(im);
 
 		message = PixelScene.renderTextBlock( text, 9 );
-		message.maxWidth(Camera.main.width);
+		message.maxWidth((int) (Camera.main.width*0.8f));
 		message.setPos(
 				(Camera.main.width - message.width()) / 2,
 				(Camera.main.height - message.height()) / 2
@@ -161,6 +161,7 @@ public class TextScene extends PixelScene {
 				if ((timeLeft -= Game.elapsed) <= 0) {
 					if ((thread == null || !thread.isAlive())) {
 						if (continueText != null) {
+							message.text(continueText);
 						}
 						PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 							@Override
@@ -191,20 +192,28 @@ public class TextScene extends PixelScene {
 
 		}
 	}
-	/*
-	The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system.
-	As dark energy has crept up from below the usually harmless sewer creatures have become more and more dangerous. The city sends guard patrols down here to try and maintain safety for those above, but they are slowly failing.
-	This place is dangerous, but at least the evil magic at work here is weak.
-	 */
 
 	public static void init(String text, String continueText, String bgTex, float scrollSpeed, Callback onFinish, float fadeTime, Thread thread) {
-		TextScene.text = text;
+		String firstLine = text;
+		Callback callback = onFinish;
+		if (text.contains("\n")) {
+			firstLine = text.split("\n")[0];
+			final String finalText = text.replace(firstLine+"\n", "");
+			callback = new Callback() {
+				@Override
+				public void call() {
+					init(finalText, continueText, bgTex, scrollSpeed, onFinish, fadeTime, thread);
+				}
+			};
+		}
+		TextScene.text = firstLine;
 		TextScene.thread = thread;
 		TextScene.bgTex = bgTex;
 		TextScene.scrollSpeed = scrollSpeed;
-		TextScene.onFinish = onFinish;
+		TextScene.onFinish = callback;
 		TextScene.fadeTime = fadeTime;
 		TextScene.continueText = continueText;
+
 		MainGame.switchScene(TextScene.class);
 	}
 
