@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.watabou.gltextures.TextureCache;
@@ -51,22 +52,15 @@ public class TextScene extends PixelScene {
 
 	private Phase phase;
 	private float timeLeft;
-	private float fadeTime;
 	private float waitingTime;
 	private RenderedTextBlock message;
-
-	//slow fade on entering a new region
-	private static final float SLOW_FADE = 1f; //.33 in, 1.33 steady, .33 out, 2 seconds total
-	//norm fade when loading, falling, returning, or descending to a new floor
-	private static final float NORM_FADE = 0.67f; //.33 in, .67 steady, .33 out, 1.33 seconds total
-	//fast fade when ascending, or descending to a floor you've been on
-	private static final float FAST_FADE = 0.50f; //.33 in, .33 steady, .33 out, 1 second total
 
 	private static String text = "TEST";
 	private static Thread thread = null;
 	private static String bgTex;
 	private static float scrollSpeed = 0;
 	private static Callback onFinish = null;
+	private static float fadeTime;
 
 	@Override
 	public void create() {
@@ -74,8 +68,8 @@ public class TextScene extends PixelScene {
 
 		if (bgTex == null) {
 			try {
-				bgTex = Dungeon.newLevel(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, false).loadImg();
-				assert bgTex != null;
+				bgTex = Dungeon.newLevel(LevelHandler.xPos, LevelHandler.yPos, LevelHandler.zPos, false).loadImg();
+				if (bgTex == null || bgTex.isEmpty()) bgTex = Assets.SHADOW;
 			} catch (Exception e) {
 				bgTex = Assets.SHADOW;
 			}
@@ -138,13 +132,12 @@ public class TextScene extends PixelScene {
 
 		phase = Phase.FADE_IN;
 
-		fadeTime = NORM_FADE;
 		timeLeft = fadeTime;
 
 		waitingTime = 0f;
 
 		if (thread != null) {
-			thread.run();
+			thread.start();
 		}
 	}
 
@@ -155,13 +148,17 @@ public class TextScene extends PixelScene {
 
 		float p = timeLeft / fadeTime;
 
+		if (waitingTime > 10f) {
+			fadeOut();
+		}
+
 		switch (phase) {
 
 			case FADE_IN:
 
 				message.alpha(1 - p);
 				if ((timeLeft -= Game.elapsed) <= 0) {
-					if ((thread == null || !thread.isAlive()) || waitingTime > 5f) {
+					if ((thread == null || !thread.isAlive())) {
 						PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 							@Override
 							protected void onClick(PointerEvent event) {
@@ -197,12 +194,13 @@ public class TextScene extends PixelScene {
 	This place is dangerous, but at least the evil magic at work here is weak.
 	 */
 
-	public static void init(String text, Thread thread, String bgTex, float scrollSpeed, Callback onFinish) {
+	public static void init(String text, Thread thread, String bgTex, float scrollSpeed, Callback onFinish, float fadeTime) {
 		TextScene.text = text;
 		TextScene.thread = thread;
 		TextScene.bgTex = bgTex;
 		TextScene.scrollSpeed = scrollSpeed;
 		TextScene.onFinish = onFinish;
+		TextScene.fadeTime = fadeTime;
 		MainGame.switchScene(TextScene.class);
 	}
 
@@ -213,7 +211,7 @@ public class TextScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		if ((thread == null || !thread.isAlive() || waitingTime > 5f) && phase != Phase.FADE_OUT) {
+		if ((thread == null || !thread.isAlive()) && phase != Phase.FADE_OUT) {
 			fadeOut();
 		}
 	}

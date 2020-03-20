@@ -422,11 +422,11 @@ public class MagicMap extends Item {
 									public void call() {
 										Game.switchScene(GameScene.class);
 									}
-								});
+								}, 0.67f);
 							}
-						});
+						}, 0.67f);
 					}
-				});
+				}, 0.67f);
 				break;
 		}
 	}

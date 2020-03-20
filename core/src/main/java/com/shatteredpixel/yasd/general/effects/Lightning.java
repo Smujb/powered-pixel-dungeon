@@ -41,10 +41,11 @@ import java.util.List;
 
 public class Lightning extends Group {
 
-	int gobalColour = 0xffffff;
+	private int gobalColour = 0xffffff;
 
-	public void setColour(int Colour) {
+	public Lightning setColour(int Colour) {
 		gobalColour = Colour;
+		return this;
 	}
 
 	private static final float DURATION = 0.3f;
@@ -80,8 +81,8 @@ public class Lightning extends Group {
 		this.arcs = arcs;
 		for (Arc arc : this.arcs) {
 
-			add(arc);
 			arc.setColour(gobalColour);
+			add(arc);
 		}
 
 		this.callback = callback;
@@ -124,7 +125,7 @@ public class Lightning extends Group {
 	public static class Arc extends Group {
 		int gobalColour = 0xffffff;
 
-		public void setColour(int Colour) {
+		void setColour(int Colour) {
 			gobalColour = Colour;
 		}
 

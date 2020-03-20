@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Slow;
-import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Chilling;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
@@ -98,7 +97,7 @@ public class WandOfFlow extends DamageWand {
                 }
                 Ballistica trajectory = new Ballistica(ch.pos, bolt.path.get(bolt.dist + 1), Ballistica.MAGIC_BOLT);
                 WandOfBlastWave.throwChar(ch, trajectory, 2);
-                Buff.affect(ch, Wet.class, Wet.DURATION);
+                //Buff.affect(ch, Wet.class, Wet.DURATION);
             } catch (Exception e) {
                 MainGame.reportException(e);
             }

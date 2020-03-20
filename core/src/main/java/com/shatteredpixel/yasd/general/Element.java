@@ -36,19 +36,20 @@ import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
-import com.shatteredpixel.yasd.general.actors.buffs.Roots;
+import com.shatteredpixel.yasd.general.actors.buffs.Slow;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
+import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
-import com.shatteredpixel.yasd.general.effects.RedLightning;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.audio.Sample;
@@ -101,15 +102,13 @@ public enum Element {
 				}
 				break;
 			case DESTRUCTION:
-				Buff.affect(defender, Vulnerable.class, Vulnerable.DURATION);
+				Buff.affect(defender, Vulnerable.class, Vulnerable.DURATION/4f);
 				break;
 			case FIRE:
 				Buff.affect(defender, Burning.class).reignite(defender);
 				break;
 			case WATER:
-				if (Random.Int( 2 ) == 0) {
-					Buff.affect( defender, Wet.class, 4f );
-				}
+				Buff.affect( defender, Wet.class, Wet.DURATION );
 				break;
 			case COLD:
 				if (defender.buff(Frost.class) != null){
@@ -132,7 +131,7 @@ public enum Element {
 				break;
 			case EARTH:
 			case GRASS:
-				Buff.affect(defender, Roots.class, Paralysis.DURATION);
+				Buff.affect(defender, Slow.class, Paralysis.DURATION/2);
 				break;
 			case AIR:
 				break;
@@ -147,11 +146,12 @@ public enum Element {
 
 				if (healed > 0) {
 
-					attacker.HP += Math.min(attacker.missingHP(), healed);
-
-					if (attacker.sprite.visible) {
-						attacker.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+					if (!defender.properties().contains(Char.Property.UNDEAD) & attacker instanceof Hero) {
+						attacker.HP += Math.min(attacker.HT - attacker.HP, healed);//Heal the attacker
+						attacker.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
+						attacker.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healed ) );
 					}
+					defender.sprite.burst(0xFFFFFFFF, 5);
 				}
 				break;
 			case ELECTRIC:
@@ -312,7 +312,7 @@ public enum Element {
 				break;
 			case DRAIN:
 				ch.sprite.parent.add(
-						new RedLightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));
+						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null).setColour(0xFF0000));
 				attack.call();
 				break;
 			case DARK:

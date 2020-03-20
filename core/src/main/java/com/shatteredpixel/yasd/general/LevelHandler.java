@@ -48,9 +48,9 @@ import java.io.IOException;
 public class LevelHandler {
 
 	private static int returnPos;
-	private static int yPos;
-	private static int xPos;
-	private static int zPos;
+	public static int yPos;
+	public static int xPos;
+	public static int zPos;
 	public static boolean fallIntoPit;
 
 	public static Level getLevel() {
@@ -185,7 +185,7 @@ public class LevelHandler {
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		});
+		}, 0.67f);
 	}
 
 	public static void move(int xPos, int yPos, int zPos, String msg, Mode mode) {
@@ -198,7 +198,7 @@ public class LevelHandler {
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		});
+		}, 0.67f);
 	}
 
 	public static void resetMode() {

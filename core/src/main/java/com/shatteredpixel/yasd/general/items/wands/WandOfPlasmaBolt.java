@@ -67,18 +67,6 @@ public class WandOfPlasmaBolt extends DamageWand {
         Sample.INSTANCE.play(Assets.SND_ZAP);
     }
 
-    /*public int hit(Char enemy, float lvl) {
-        if (curUser == null) {
-            curUser = Dungeon.hero;
-        }
-        int damage = damageRoll(lvl);
-        damage = enemy.defenseProc(curUser, damage, Element.PHYSICAL);
-        if (damage > 0) {
-            enemy.damage(damage, this, Element.PHYSICAL, false );
-        }
-        return damage;
-    }*/
-
     @Override
     public void onZap(Ballistica bolt) {
         Char ch = Actor.findChar( bolt.collisionPos );

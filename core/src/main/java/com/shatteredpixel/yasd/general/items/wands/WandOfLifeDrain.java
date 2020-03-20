@@ -30,13 +30,10 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class WandOfLifeDrain extends DamageWand {
@@ -61,41 +58,12 @@ public class WandOfLifeDrain extends DamageWand {
         if (ch != null) {
 
             processSoulMark(ch, chargesPerCast());
-            int HPBeforeHit = ch.HP;
             hit(ch);
-            int HPAfterHit = ch.HP;
-            int damage = HPBeforeHit - HPAfterHit;//This ensures that resistances/immunities also affect the wand's healing.
-            int healAmt = damage/2;
-            if (!ch.properties().contains(Char.Property.UNDEAD) & curUser instanceof Hero) {
-                curUser.HP += Math.min(curUser.HT - curUser.HP, healAmt);//Heal the hero
-                curUser.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
-                curUser.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healAmt ) );
-            }
-            ch.sprite.burst(0xFFFFFFFF, level() / 2 + 2);
 
         } else {
             Dungeon.level.pressCell(bolt.collisionPos);
         }
     }
-
-    /*@Override
-    protected void fx( Ballistica bolt, Callback callback ) {
-
-        int cell = bolt.collisionPos;
-
-        Char ch = Actor.findChar( cell );
-        if (ch != null) {
-        } else {
-            CellEmitter.center( cell ).burst( SparkParticle.FACTORY, 3 );
-        }
-
-        //don't want to wait for the effect before processing damage.
-        RedLightning lightning = new RedLightning(Dungeon.hero.pos, cell, null);
-        //lightning.setColour(0x66002);
-        curUser.sprite.parent.addToFront( lightning  );
-        Sample.INSTANCE.play( Assets.SND_LIGHTNING );
-        callback.call();
-    }*/
 
     @Override
     public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
