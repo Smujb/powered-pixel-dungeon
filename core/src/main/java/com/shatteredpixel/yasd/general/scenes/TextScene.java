@@ -162,6 +162,11 @@ public class TextScene extends PixelScene {
 					if ((thread == null || !thread.isAlive())) {
 						if (continueText != null) {
 							message.text(continueText);
+							message.setPos(
+									(Camera.main.width - message.width()) / 2,
+									(Camera.main.height - message.height()) / 2
+							);
+							align( message );
 						}
 						PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
 							@Override

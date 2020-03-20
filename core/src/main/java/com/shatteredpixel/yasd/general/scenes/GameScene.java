@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.LevelHandler;
+import com.shatteredpixel.yasd.general.Lore;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -104,7 +105,6 @@ import com.shatteredpixel.yasd.general.windows.WndInfoPlant;
 import com.shatteredpixel.yasd.general.windows.WndInfoTrap;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
-import com.shatteredpixel.yasd.general.windows.WndStory;
 import com.shatteredpixel.yasd.general.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -357,25 +357,9 @@ public class GameScene extends PixelScene {
 				break;
 			case DESCEND:
 				if (Dungeon.bossLevel(Dungeon.yPos -1)) {
-					WndStory.showChapter(Dungeon.level.getClass());
+					Lore.showChapter(Dungeon.level);
 				}
-				/*switch (Dungeon.yPos) {
-					case 1:
-						WndStory.showChapter(WndStory.ID_SEWERS);
-						break;
-					case Constants.CHAPTER_LENGTH + 1:
-						WndStory.showChapter(WndStory.ID_PRISON);
-						break;
-					case Constants.CHAPTER_LENGTH * 2 + 1:
-						WndStory.showChapter(WndStory.ID_CAVES);
-						break;
-					case Constants.CHAPTER_LENGTH * 3 + 1:
-						WndStory.showChapter(WndStory.ID_CITY);
-						break;
-					case Constants.CHAPTER_LENGTH * 4 + 1:
-						WndStory.showChapter(WndStory.ID_HALLS);
-						break;
-				}
+				/*
 				if (Dungeon.hero.isAlive() && Dungeon.yPos != 22) {
 					Badges.validateNoKilling();
 				}*/

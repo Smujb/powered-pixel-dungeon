@@ -29,13 +29,6 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GameSettings;
-import com.shatteredpixel.yasd.general.levels.CavesLevel;
-import com.shatteredpixel.yasd.general.levels.CityLevel;
-import com.shatteredpixel.yasd.general.levels.FirstLevel;
-import com.shatteredpixel.yasd.general.levels.HallsLevel;
-import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.PrisonLevel;
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
@@ -43,15 +36,13 @@ import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.PointerArea;
 
-import java.util.HashMap;
-
 public class WndStory extends Window {
 
 	private static final int WIDTH_P = 125;
 	private static final int WIDTH_L = 160;
 	private static final int MARGIN = 2;
 
-	private static final HashMap<Class<? extends Level>, String> CHAPTERS = new HashMap<>();
+	/*private static final HashMap<Class<? extends Level>, String> CHAPTERS = new HashMap<>();
 	
 	static {
 		CHAPTERS.put( FirstLevel.class, "sewers" );
@@ -59,13 +50,13 @@ public class WndStory extends Window {
 		CHAPTERS.put( CavesLevel.class, "caves" );
 		CHAPTERS.put( CityLevel.class, "city" );
 		CHAPTERS.put( HallsLevel.class, "halls" );
-	}
+	}*/
 	
 	private RenderedTextBlock tf;
 	
 	private float delay;
 	
-	public WndStory( String text ) {
+	protected WndStory(String text) {
 		super( 0, 0, Chrome.get( Chrome.Type.SCROLL ) );
 		
 		tf = PixelScene.renderTextBlock( text, 6 );
@@ -92,19 +83,6 @@ public class WndStory extends Window {
 		
 		if (delay > 0 && (delay -= Game.elapsed) <= 0) {
 			shadow.visible = chrome.visible = tf.visible = true;
-		}
-	}
-	
-	public static void showChapter( Class<? extends Level> id ) {
-		
-		String text = Messages.get(WndStory.class, CHAPTERS.get(id));
-		if (text != null) {
-			WndStory wnd = new WndStory( text );
-			if ((wnd.delay = 0.6f) > 0) {
-				wnd.shadow.visible = wnd.chrome.visible = wnd.tf.visible = false;
-			}
-			
-			Game.scene().add( wnd );
 		}
 	}
 }
