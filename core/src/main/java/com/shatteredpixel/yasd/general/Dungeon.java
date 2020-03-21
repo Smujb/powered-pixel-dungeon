@@ -294,7 +294,9 @@ public class Dungeon {
 	));
 	
 	public static Level newLevel(int x, int y, int z,
-								 boolean create /*Allows me to use level.create without switching to that level. Also increases performance when the level isn't actually going to be used.*/ ) {
+								 boolean create
+			/*Allows me to use newLevel without switching to that level.
+			Also increases performance when the level isn't actually going to be used.*/ ) {
 		
 		Level level;
 		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that I haven't defined a level class.
