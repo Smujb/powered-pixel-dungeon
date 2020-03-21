@@ -174,7 +174,7 @@ public class TitleScene extends PixelScene {
 				MainGame.switchScene( AboutScene.class );
 			}
 		};
-		btnAbout.icon(Icons.get(Icons.SHPX));
+		btnAbout.icon(Icons.get(Icons.YENDOR));
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 21;

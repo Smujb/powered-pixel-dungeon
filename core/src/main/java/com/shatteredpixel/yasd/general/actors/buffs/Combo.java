@@ -85,7 +85,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		misses = 0;
 		BuffIndicator.refreshHero();
 		
-		if (count >= 2) {
+		if (count >= 2 && target instanceof Hero) {
 
 			ActionIndicator.setAction( this );
 			Badges.validateMasteryCombo( count );
@@ -114,7 +114,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 	public boolean act() {
 		comboTime-=TICK;
 		spend(TICK);
-		BuffIndicator.refreshHero();
+		if (target instanceof Hero) BuffIndicator.refreshHero();
 		if (comboTime <= 0) {
 			detach();
 		}

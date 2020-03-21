@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
+import com.shatteredpixel.yasd.general.actors.buffs.Combo;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
@@ -99,7 +100,7 @@ public enum Element {
 			case PHYSICAL:
 				break;
 			case RANGED:
-				//Buff.affect(attacker, Combo.class).hit(defender);
+				Buff.affect(attacker, Combo.class).hit(defender);
 				break;
 			case SHARP:
 				if (Random.Int( 2 ) == 0) {
@@ -120,9 +121,9 @@ public enum Element {
 					break; //do nothing, can't affect a frozen target
 				}
 				if (defender.buff(Chill.class) != null){
-					//7.5% less damage per turn of chill remaining
+					//5% more damage per turn of chill
 					float chill = defender.buff(Chill.class).cooldown();
-					damage = (int) Math.round(damage * Math.pow(1.2f, chill));
+					damage = (int) Math.round(damage * Math.pow(1.05f, chill));
 				} else {
 					defender.sprite.burst( 0xFF99CCFF, 1 + damage / 3 );
 				}

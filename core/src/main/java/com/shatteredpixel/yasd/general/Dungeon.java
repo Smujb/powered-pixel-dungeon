@@ -322,11 +322,15 @@ public class Dungeon {
 		return level;
 	}
 
-	public static void setLoaded(int x, int y, int z) {
+	static void setLoaded(int x, int y, int z) {
 		loadedDepths[x][y][z] = true;
 	}
 
-	public static boolean depthLoaded(int x, int y, int z) {
+	static void unLoad(int x, int y, int z) {
+		loadedDepths[x][y][z] = false;
+	}
+
+	static boolean depthLoaded(int x, int y, int z) {
 		return loadedDepths[x][y][z];
 	}
 

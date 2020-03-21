@@ -72,7 +72,7 @@ public enum Icons {
 	RANKINGS,
 	BADGES,
 	CHANGES,
-	SHPX,
+	YENDOR,
 	
 	//misc icons
 	LIBGDX,
@@ -183,7 +183,7 @@ public enum Icons {
 		case CHANGES:
 			icon.frame( icon.texture.uvRect( 51, 64, 68, 79 ) );
 			break;
-		case SHPX:
+		case YENDOR:
 			icon.frame( icon.texture.uvRect( 68, 64, 84, 80 ) );
 			break;
 		case GOLD:

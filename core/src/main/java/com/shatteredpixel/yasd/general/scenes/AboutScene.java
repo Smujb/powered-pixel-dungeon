@@ -75,7 +75,7 @@ public class AboutScene extends PixelScene {
 		final float colTop = (Camera.main.height / 2) - (GameSettings.landscape() ? 30 : 90);
 		final float wataOffset = GameSettings.landscape() ? colWidth : 0;
 
-		Image shpx = Icons.SHPX.get();
+		Image shpx = Icons.YENDOR.get();
 		shpx.x = (colWidth - shpx.width()) / 2;
 		shpx.y = colTop;
 		align(shpx);

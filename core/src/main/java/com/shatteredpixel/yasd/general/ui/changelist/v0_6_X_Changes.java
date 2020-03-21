@@ -88,7 +88,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released May 3rd, 2018\n" +
 				"_-_ 32 days after Shattered v0.6.4\n" +
 				"\n" +
@@ -213,7 +213,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released April 1st, 2018\n" +
 				"_-_ 46 days after Shattered v0.6.3\n" +
 				"\n" +
@@ -355,7 +355,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released February 14th, 2018\n" +
 				"_-_ 113 days after Shattered v0.6.2\n" +
 				"\n" +
@@ -500,7 +500,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released October 24th, 2017\n" +
 				"_-_ 70 days after Shattered v0.6.1\n" +
 				"\n" +
@@ -683,7 +683,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released August 15th, 2017\n" +
 				"_-_ 72 days after Shattered v0.6.0\n" +
 				"\n" +
@@ -850,7 +850,7 @@ public class v0_6_X_Changes {
 		changes.hardlight(Window.TITLE_COLOR);
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Developer Commentary",
+		changes.addButton( new ChangeButton(Icons.get(Icons.YENDOR), "Developer Commentary",
 				"_-_ Released June 4th, 2017\n" +
 				"_-_ 116 days after Shattered v0.5.0\n" +
 				"\n" +

@@ -93,13 +93,16 @@ public class Chasm {
 		
 		if (Dungeon.hero.isAlive()) {
 			Dungeon.hero.interrupt();
+			boolean fallIntoPit;
 			if (Dungeon.level instanceof RegularLevel) {
 				Room room = ((RegularLevel)Dungeon.level).room( pos );
-				LevelHandler.fallIntoPit = room instanceof WeakFloorRoom;
+				fallIntoPit = room instanceof WeakFloorRoom;
 			} else {
-				LevelHandler.fallIntoPit = false;
+				fallIntoPit = false;
 			}
-			LevelHandler.fall();
+
+			LevelHandler.fall(fallIntoPit, Dungeon.bossLevel());
+
 		} else {
 			Dungeon.hero.sprite.visible = false;
 		}

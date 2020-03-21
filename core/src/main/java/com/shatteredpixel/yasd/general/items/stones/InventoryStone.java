@@ -70,7 +70,7 @@ public abstract class InventoryStone extends Runestone {
 		GameScene.selectItem( itemSelector, mode, inventoryTitle );
 	}
 	
-	protected void useAnimation() {
+	void useAnimation() {
 		curUser.spend( 1f );
 		curUser.busy();
 		curUser.sprite.operate(curUser.pos);

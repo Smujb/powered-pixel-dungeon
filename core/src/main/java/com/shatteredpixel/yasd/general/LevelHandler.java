@@ -151,8 +151,15 @@ public class LevelHandler {
 		move(Dungeon.xPos, Dungeon.yPos - 1, Dungeon.zPos, Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND);
 	}
 
-	public static void fall() {
-		move(Dungeon.xPos, Dungeon.yPos + 1, Dungeon.zPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+	public static void fall(boolean fallIntoPit, boolean bossLevel) {
+		LevelHandler.fallIntoPit = fallIntoPit;
+		if (bossLevel) {//If falling from a boss level, the hero will fall back onto the same floor and it will reset.
+			Dungeon.level.reset();
+			Dungeon.unLoad(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+			move(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+		} else {
+			move(Dungeon.xPos, Dungeon.yPos + 1, Dungeon.zPos, Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL);
+		}
 	}
 
 	public static void reset() {
@@ -234,8 +241,13 @@ public class LevelHandler {
 				return;
 			}
 		}
+
+		if (mode == Mode.RESET) {
+			Dungeon.unLoad(xPos, yPos, zPos);
+		}
+
 		Level level;
-		if (Dungeon.depthLoaded(xPos, yPos, zPos) & mode != Mode.RESET) {
+		if (Dungeon.depthLoaded(xPos, yPos, zPos)) {
 
 			level = Dungeon.loadLevel(GamesInProgress.curSlot);
 
