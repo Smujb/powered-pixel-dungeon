@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.sewerboss;
 
 import com.shatteredpixel.yasd.general.actors.mobs.Goo;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -64,8 +65,8 @@ public class WalledGooRoom extends GooBossRoom {
 		Painter.fill( level, left + width()/2 - 2, top + height()/2 - 1, 4 + width()%2, 2 + height()%2, Terrain.WATER);
 		
 		setupGooNest(level);
-		
-		Goo boss = new Goo();
+
+		Goo boss = Mob.create(Goo.class, level);
 		boss.pos = level.pointToCell(center());
 		level.mobs.add( boss );
 	}

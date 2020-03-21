@@ -60,7 +60,7 @@ public abstract class InventoryStone extends Runestone {
 	public void execute(Hero hero, String action) {
 		super.execute(hero, action);
 		if (action.equals(AC_USE)){
-			//curItem = detach( hero.belongings.backpack );
+			detach( hero.belongings.backpack );
 			activate(curUser.pos);
 		}
 	}

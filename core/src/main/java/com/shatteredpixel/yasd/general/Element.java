@@ -37,12 +37,11 @@ import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
-import com.shatteredpixel.yasd.general.actors.buffs.Slow;
+import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Lightning;
@@ -135,14 +134,15 @@ public enum Element {
 						Buff.prolong(defender, Chill.class, 2);
 				}
 				break;
-			case EARTH:
 			case GRASS:
-				Buff.affect(defender, Slow.class, Paralysis.DURATION/2);
+				Buff.affect(defender, Roots.class, Paralysis.DURATION);
 				break;
 			case AIR:
 				break;
 			case ACID:
-				Buff.affect(defender, Ooze.class).set(20f);
+				if (Random.Int(2) == 0) {
+					Buff.affect(defender, Ooze.class).set(20f);
+				}
 				break;
 			case DARK:
 				Buff.affect(defender, Weakness.class, Weakness.DURATION/4f);
@@ -152,8 +152,8 @@ public enum Element {
 
 				if (healed > 0) {
 
-					if (!defender.properties().contains(Char.Property.UNDEAD) & attacker instanceof Hero) {
-						attacker.HP += Math.min(attacker.HT - attacker.HP, healed);//Heal the attacker
+					if (!(defender.properties().contains(Char.Property.UNDEAD) || defender.properties().contains(Char.Property.INORGANIC))) {
+						attacker.HP += Math.min(attacker.missingHP(), healed);//Heal the attacker
 						attacker.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
 						attacker.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healed ) );
 					}
@@ -217,10 +217,9 @@ public enum Element {
 		return damage;
 	}
 
-	private static int AMT = 10;
-
 	public void FX(Char ch, int cell, Callback attack) {
 		Char target;
+		int AMT = 5;
 		switch (this) {
 			default:
 				attack.call();
@@ -232,7 +231,7 @@ public enum Element {
 						cell,
 						attack);
 				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(Speck.factory(Speck.BONE), 10);
+					target.sprite.emitter().burst(Speck.factory(Speck.BONE), AMT);
 				}
 				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
@@ -286,7 +285,7 @@ public enum Element {
 						attack);
 				Sample.INSTANCE.play(Assets.SND_ZAP);
 				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.burst( 0xFF99CCFF, AMT );
+					target.sprite.burst( 0xFF99CCFF, AMT);
 				}
 				break;
 			case EARTH:

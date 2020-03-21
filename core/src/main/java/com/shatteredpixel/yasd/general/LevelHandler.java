@@ -210,6 +210,8 @@ public class LevelHandler {
 
 	private static void initGame() throws IOException {
 		Mob.clearHeldAllies();
+		Dungeon.level = null;
+		Dungeon.hero = null;
 		Dungeon.init();
 		GameLog.wipe();
 		switchDepth(0, 1, 0, Mode.DESCEND);

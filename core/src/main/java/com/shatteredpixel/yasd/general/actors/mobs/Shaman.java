@@ -38,7 +38,7 @@ public class Shaman extends Mob {
 		spriteClass = ShamanSprite.class;
 
 		healthFactor = 0.7f;
-		damageFactor = 1.5f;
+		damageFactor = 1.3f;
 
 		numTypes = 4;
 

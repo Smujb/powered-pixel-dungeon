@@ -374,6 +374,7 @@ public abstract class Char extends Actor {
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
+				enemy.die(new DamageSrc(Element.NATURAL));
 				return true;
 			}
 			//Actually damage them. Ignore defense as DR roll is automatically processed earlier.
@@ -633,6 +634,8 @@ public abstract class Char extends Actor {
 	}
 
 	public void damage(int dmg, @NotNull DamageSrc src) {
+		dmg = Math.max(0, dmg);
+
 		if (!src.ignores()) {
 			dmg = src.getElement().affectDamage(this, dmg);
 		}
@@ -644,7 +647,8 @@ public abstract class Char extends Actor {
 			dmg = belongings.affectDamage(dmg, src);
 		}
 
-		if (!isAlive() || dmg < 0) {
+		if (!isAlive()) {
+			die(src);
 			return;
 		}
 		Terror t = buff(Terror.class);
@@ -711,6 +715,9 @@ public abstract class Char extends Actor {
 	}
 
 	public boolean isAlive() {
+		if (HT <= 0) {
+			HT = 1;
+		}
 		return HP > 0;
 	}
 
