@@ -37,21 +37,22 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.TextScene;
 import com.shatteredpixel.yasd.general.ui.GameLog;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.FileUtils;
+
+import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 
 public class LevelHandler {
 
 	private static int returnPos;
+	private static boolean fallIntoPit;
 	public static int yPos;
 	public static int xPos;
 	public static int zPos;
-	public static boolean fallIntoPit;
 
 	public static Level getLevel() {
 		return getLevel(GamesInProgress.curSlot);
@@ -64,16 +65,13 @@ public class LevelHandler {
 	public static Level getLevel(int x, int y, int z, int save) {
 
 		Bundle bundle;
-		long start = System.currentTimeMillis();
 		try {
 			bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, x, y, z));
 		} catch (IOException e) {
 			MainGame.reportException(e);
-			throw new RuntimeException(e.fillInStackTrace());
+			throw new RuntimeException(e);
 		}
 		Level level = (Level) bundle.get(Dungeon.LEVEL);
-		long taken = System.currentTimeMillis() - start;
-		GLog.w("Loaded level in " + taken + "ms\n");
 		return level;
 
 	}
@@ -116,6 +114,7 @@ public class LevelHandler {
 		};
 	}
 
+	@Contract(pure = true)
 	public static float getSpeed() {
 		float scrollSpeed;
 		switch (mode) {
@@ -139,6 +138,7 @@ public class LevelHandler {
 		return scrollSpeed;
 	}
 
+	@Contract(pure = true)
 	public static Mode mode() {
 		return mode;
 	}
@@ -298,7 +298,7 @@ public class LevelHandler {
 		Dungeon.loadGame( GamesInProgress.curSlot );
 		if (Dungeon.yPos == -1) {
 			Dungeon.yPos = Statistics.deepestFloor;
-			Dungeon.switchLevel( level = Dungeon.loadLevel( GamesInProgress.curSlot ), -1 );
+			Dungeon.switchLevel(Dungeon.loadLevel( GamesInProgress.curSlot ), -1 );
 		} else {
 			level = Dungeon.loadLevel( GamesInProgress.curSlot );
 			Dungeon.switchLevel( level, Dungeon.hero.pos );
