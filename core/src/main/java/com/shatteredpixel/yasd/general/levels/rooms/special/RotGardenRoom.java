@@ -69,7 +69,7 @@ public class RotGardenRoom extends SpecialRoom {
 			heartY = top + 1;
 		}
 
-		placePlant(level, heartX + heartY * level.width(), Mob.create(RotHeart.class) );
+		placePlant(level, heartX + heartY * level.width(), Mob.create(RotHeart.class, level) );
 
 		int lashers = ((width()-2)*(height()-2))/8;
 
