@@ -45,7 +45,6 @@ public class SmokeScreen extends Blob {
 		for (int i = area.left; i < area.right; i++){
 			for (int j = area.top; j < area.bottom; j++){
 				cell = i + j*l.width();
-				l.losBlocking()[cell] = off[cell] > 0 || l.map[cell].losBlocking;
 			}
 		}
 	}
@@ -60,7 +59,6 @@ public class SmokeScreen extends Blob {
 	public void clear(int cell) {
 		super.clear(cell);
 		Level l = Dungeon.level;
-		l.losBlocking()[cell] = cur[cell] > 0 || l.map[cell].losBlocking;
 	}
 	
 	@Override

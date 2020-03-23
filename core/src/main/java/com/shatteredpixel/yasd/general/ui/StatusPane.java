@@ -66,6 +66,7 @@ public class StatusPane extends Component {
 	private Image air;
 	private Image morale;
 	private Image exp;
+	private Image difficulty;
 	private Emitter bubbles;
 
 	private BossHealthBar bossHP;
@@ -87,6 +88,7 @@ public class StatusPane extends Component {
 	
 	private BitmapText version;
 
+
 	@Override
 	protected void createChildren() {
 
@@ -101,6 +103,9 @@ public class StatusPane extends Component {
 				GameScene.show( new WndHero() );
 			}
 		} );
+
+		difficulty = new IconDifficulty();
+		add( difficulty );
 
 		btnJournal = new JournalButton();
 		add( btnJournal );
@@ -212,6 +217,9 @@ public class StatusPane extends Component {
 		version.x = width - version.width();
 		version.y = btnMenu.bottom() + (4 - version.baseLine());
 		PixelScene.align(version);
+
+		difficulty.x = btnMenu.left() + btnMenu.width() / 2 - difficulty.width() / 2;
+		difficulty.y = btnMenu.bottom() + 2;
 	}
 	
 	private static final int[] warningColors = new int[]{0x660000, 0xCC0000, 0x660000};
@@ -267,6 +275,8 @@ public class StatusPane extends Component {
 			lastTier = tier;
 			avatar.copy( HeroSprite.avatar( Dungeon.hero.heroClass, tier ) );
 		}
+
+		difficulty.visible = true;
 	}
 
 	public void pickup( Item item, int cell) {

@@ -71,13 +71,11 @@ public class LevelHandler {
 			MainGame.reportException(e);
 			throw new RuntimeException(e);
 		}
-		Level level = (Level) bundle.get(Dungeon.LEVEL);
-		return level;
-
+		return (Level) bundle.get(Dungeon.LEVEL);
 	}
 
 	public enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT, PATH1, PATH2, PATH3
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT
 	}
 	private static Mode mode;
 	
@@ -96,11 +94,11 @@ public class LevelHandler {
 					if (mode == Mode.CONTINUE) {
 						restore();
 					} else {
-						if (Dungeon.hero != null) {
-							switchDepth(xPos,yPos, zPos, mode);
-						} else {
-							initGame();
-						}
+						//if (Dungeon.hero != null) {
+							switchDepth(xPos, yPos, zPos, mode);
+						//} else {
+						//	initGame();
+						//}
 					}
 
 					if (Dungeon.bossLevel()) {
@@ -186,7 +184,6 @@ public class LevelHandler {
 
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
-		Messages.get(Mode.class, Mode.CONTINUE.name());
 		xPos = Dungeon.xPos;
 		yPos = Dungeon.yPos;
 		zPos = Dungeon.zPos;
@@ -196,6 +193,28 @@ public class LevelHandler {
 				MainGame.switchScene(GameScene.class);
 			}
 		}, 0.67f, getThread());
+	}
+
+	public static void doInit() {
+		mode = Mode.DESCEND;
+		xPos = 0;
+		yPos = 1;
+		zPos = 0;
+		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+			@Override
+			public void call() {
+				MainGame.switchScene(GameScene.class);
+			}
+		}, 0.67f, new Thread() {
+			@Override
+			public void run() {
+				try {
+					initGame();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		});
 	}
 
 	public static void move(int xPos, int yPos, int zPos, String msg, Mode mode) {

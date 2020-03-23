@@ -133,7 +133,7 @@ public class WndStartGame extends Window {
 					GameSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
-					LevelHandler.descend();
+					LevelHandler.doInit();
 				}
 			}
 			

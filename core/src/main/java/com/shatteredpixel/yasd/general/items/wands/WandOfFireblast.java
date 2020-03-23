@@ -81,7 +81,7 @@ public class WandOfFireblast extends DamageWand {
 	public void onZap(Ballistica bolt) {
 		
 		ArrayList<Char> affectedChars = new ArrayList<>();
-		for( int cell : affectedCells){
+		for( int cell : affectedCells.toArray(new Integer[0]) ){
 			
 			//ignore caster cell
 			if (cell == bolt.sourcePos){
@@ -100,7 +100,7 @@ public class WandOfFireblast extends DamageWand {
 			}
 		}
 		
-		for ( Char ch : affectedChars ){
+		for ( Char ch : affectedChars.toArray(new Char[0]) ){
 			processSoulMark(ch, chargesPerCast());
 			hit(ch);
 			Buff.affect( ch, Burning.class ).reignite( ch );
