@@ -29,11 +29,9 @@ package com.shatteredpixel.yasd.general.levels.rooms;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.watabou.utils.Random;
 
@@ -63,11 +61,6 @@ public abstract class LockedRoom extends SpecialRoom {
 		} else {
 			setKeyDoor(level);
 		}
-	}
-
-	private void setChasmDoor(Level level) {
-		level.map[level.XY(entrance().x, entrance().y)] = Terrain.CHASM;
-		level.addItemToSpawn(new PotionOfLevitation());
 	}
 
 	private void setBarricadeDoor(Level level) {

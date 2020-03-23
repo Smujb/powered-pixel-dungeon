@@ -218,8 +218,8 @@ public class StatusPane extends Component {
 		version.y = btnMenu.bottom() + (4 - version.baseLine());
 		PixelScene.align(version);
 
-		difficulty.x = btnMenu.left() + btnMenu.width() / 2 - difficulty.width() / 2;
-		difficulty.y = btnMenu.bottom() + 2;
+		difficulty.x = version.x;
+		difficulty.y = version.y + 10;
 	}
 	
 	private static final int[] warningColors = new int[]{0x660000, 0xCC0000, 0x660000};

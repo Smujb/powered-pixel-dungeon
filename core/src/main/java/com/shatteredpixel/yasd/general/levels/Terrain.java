@@ -165,6 +165,13 @@ public enum Terrain {
 			solid = true;
 		}
 	},
+	BRONZE_LOCKED_DOOR {
+		@Override
+		public void setup() {
+			losBlocking = true;
+			solid = true;
+		}
+	},
 	PEDESTAL {
 		@Override
 		public void setup() {

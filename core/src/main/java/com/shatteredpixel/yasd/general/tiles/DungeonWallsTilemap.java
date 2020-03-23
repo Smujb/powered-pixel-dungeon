@@ -49,6 +49,8 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 					return DungeonTileSheet.DOOR_SIDEWAYS;
 				} else if (map[pos + mapWidth] == Terrain.LOCKED_DOOR){
 					return DungeonTileSheet.DOOR_SIDEWAYS_LOCKED;
+				} else if (map[pos + mapWidth] == Terrain.BRONZE_LOCKED_DOOR){
+					return DungeonTileSheet.BRONZE_DOOR_SIDEWAYS_LOCKED;
 				} else if (map[pos + mapWidth] == Terrain.OPEN_DOOR){
 					return DungeonTileSheet.NULL_TILE;
 				}
@@ -75,7 +77,7 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 					pos % mapWidth != 0 ?       map[pos - 1 + mapWidth] : Terrain.NONE
 			);
 
-		} else if (Dungeon.level.insideMap(pos) && (map[pos+mapWidth] == Terrain.DOOR || map[pos+mapWidth] == Terrain.LOCKED_DOOR) ) {
+		} else if (Dungeon.level.insideMap(pos) && (map[pos+mapWidth] == Terrain.DOOR || map[pos+mapWidth] == Terrain.LOCKED_DOOR || map[pos+mapWidth] == Terrain.BRONZE_LOCKED_DOOR) ) {
 			return DungeonTileSheet.DOOR_OVERHANG;
 		} else if (Dungeon.level.insideMap(pos) && map[pos+mapWidth] == Terrain.OPEN_DOOR ) {
 			return DungeonTileSheet.DOOR_OVERHANG_OPEN;
