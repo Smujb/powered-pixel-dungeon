@@ -81,7 +81,7 @@ public enum Icons {
 	DISCORD,
 	DIFF1,
 	DIFF2,
-	DIFF3,;
+	DIFF3;
 
 	public Image get() {
 		return get( this );
@@ -122,13 +122,13 @@ public enum Icons {
 				break;
 
 			case DIFF1:
-				icon.frame(icon.texture.uvRect(98, 85, 10, 8));
+				icon.frame(icon.texture.uvRect(98, 85, 108, 93));
 				break;
 			case DIFF2:
-				icon.frame(icon.texture.uvRect(108, 85, 10, 8));
+				icon.frame(icon.texture.uvRect(108, 85, 118, 93));
 				break;
 			case DIFF3:
-				icon.frame(icon.texture.uvRect(118, 85, 10, 8));
+				icon.frame(icon.texture.uvRect(118, 85, 128, 93));
 				break;
 
 			case SKULL:
