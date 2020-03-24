@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.CrystalKey;
 import com.shatteredpixel.yasd.general.items.keys.GoldenKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
@@ -66,6 +67,7 @@ public class KeyDisplay extends Visual {
 		keyMap.put(CrystalKey.class, 2);
 		keyMap.put(GoldenKey.class, 3);
 		keyMap.put(IronKey.class, 4);
+		keyMap.put(BronzeKey.class, 5);
 	}
 	
 	private int totalKeys = 0;

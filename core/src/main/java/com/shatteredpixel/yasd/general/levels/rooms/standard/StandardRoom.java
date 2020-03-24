@@ -100,85 +100,9 @@ public abstract class StandardRoom extends Room {
 	@Override
 	public int minHeight() { return sizeCat.minDim; }
 	public int maxHeight() { return sizeCat.maxDim; }
-
-	/*private static ArrayList<Class<?extends StandardRoom>> rooms = new ArrayList<>();
-	static {
-		rooms.add(EmptyRoom.class);
-
-
-		rooms.add(SewerPipeRoom.class);
-		rooms.add(RingRoom.class);
-
-		rooms.add(SegmentedRoom.class);
-		rooms.add(StatuesRoom.class);
-
-		rooms.add(CaveRoom.class);
-		rooms.add(CirclePitRoom.class);
-
-		rooms.add(HallwayRoom.class);
-		rooms.add(PillarsRoom.class);
-
-		rooms.add(RuinsRoom.class);
-		rooms.add(SkullsRoom.class);
-
-
-		rooms.add(PlantsRoom.class);
-		rooms.add(AquariumRoom.class);
-		rooms.add(PlatformRoom.class);
-		rooms.add(BurnedRoom.class);
-		rooms.add(FissureRoom.class);
-		rooms.add(GrassyGraveRoom.class);
-		rooms.add(StripedRoom.class);
-		rooms.add(StudyRoom.class);
-		rooms.add(SuspiciousChestRoom.class);
-		rooms.add(MinefieldRoom.class);
-	}
-	
-	private static float[][] chances = new float[Constants.MAX_Y + 1][];
-	static {
-		float [] sewerChances      = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		float [] prisonChances     = new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		float [] cavesChances      = new float[]{20,  0,0, 0,0, 15,5, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		float [] cityChances       = new float[]{20,  0,0, 0,0, 0,0, 15,5, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		float [] hallsChances      = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
-		float [] restrictedChances = new float[]{20,  15,5, 0,0, 0,0, 0,0, 0,0,    0,0,0,0,0,0,0,0,0,0};
-		for (int i = 0; i <= Constants.MAX_Y; i++) {//Default to Sewer levelgen.
-			chances[i] = restrictedChances;
-		}
-		for (int i = 0; i < Constants.CHAPTER_LENGTH*5; i++) {
-			if (Dungeon.yPos <= Constants.CHAPTER_LENGTH) {
-				chances[i] = sewerChances;
-			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*2) {
-				chances[i] = prisonChances;
-			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*3) {
-				chances[i] = cavesChances;
-			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*4) {
-				chances[i] = cityChances;
-			} else if (Dungeon.yPos <= Constants.CHAPTER_LENGTH*5) {
-				chances[i] = hallsChances;
-			}
-		}
-		chances[Constants.CHAPTER_LENGTH] = restrictedChances;//First boss
-		chances[Constants.CHAPTER_LENGTH*4+1]= restrictedChances;//Floor after 4th boss
-		
-		/*chances[6] =  new float[]{20,  0,0, 15,5, 0,0, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		chances[10] = chances[9] = chances[8] = chances[7] = chances[6];
-		
-		chances[11] = new float[]{20,  0,0, 0,0, 15,5, 0,0, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		chances[15] = chances[14] = chances[13] = chances[12] = chances[11];
-
-		chances[16] = new float[]{20,  0,0, 0,0, 0,0, 15,5, 0,0,    1,1,1,1,1,1,1,1,1,1};
-		chances[20] = chances[19] = chances[18] = chances[17] = chances[16];
-		
-		chances[21] = chances[5];
-		
-		chances[22] = new float[]{20,  0,0, 0,0, 0,0, 0,0, 15,5,    1,1,1,1,1,1,1,1,1,1};
-		chances[26] = chances[25] = chances[24] = chances[23] = chances[22];
-	}*/
 	
 	public static StandardRoom createRoom(Level level){
 		return level.randomStandardRoom();
-		//return Reflection.newInstance(rooms.get(Random.chances(chances[Dungeon.yPos])));
 	}
 	
 }

@@ -1189,7 +1189,7 @@ public class Hero extends Char {
 		if (step != -1) {
 			
 			float speed = speed();
-			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & Dungeon.level.map[pos] == Terrain.EMPTY || Dungeon.level.map[pos] == Terrain.EMPTY_SP || Dungeon.level.map[pos] == Terrain.EMBERS) {
+			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & (Dungeon.level.map[pos] == Terrain.EMPTY || Dungeon.level.map[pos] == Terrain.EMPTY_SP || Dungeon.level.map[pos] == Terrain.EMBERS)) {
 				if (MainGame.scene() instanceof GameScene) {
 					if (!isFlying()) {
 						Dungeon.level.set(pos, Terrain.CHASM);
@@ -1263,8 +1263,8 @@ public class Hero extends Char {
 				curAction = new HeroAction.OpenChest( cell );
 			}
 			
-		} else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR || Dungeon.level.map[cell] == Terrain.LOCKED_EXIT) {
-			
+		} else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR || Dungeon.level.map[cell] == Terrain.LOCKED_EXIT || Dungeon.level.map[cell] == Terrain.BRONZE_LOCKED_DOOR) {
+
 			curAction = new HeroAction.Unlock( cell );
 			
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
@@ -1550,21 +1550,21 @@ public class Hero extends Char {
 			Terrain door = Dungeon.level.map[doorCell];
 			
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
-				boolean hasKey;
+				boolean hasKey = false;
 				if (door == Terrain.LOCKED_DOOR) {
 					hasKey = Notes.remove(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
 				} else if (door == Terrain.BRONZE_LOCKED_DOOR) {
 					hasKey = Notes.remove(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
-				} else {
+				} else if (door == Terrain.LOCKED_EXIT) {
 					hasKey = Notes.remove(new SkeletonKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.UNLOCKED_EXIT);
 				}
 				
 				if (hasKey) {
 					GameScene.updateKeyDisplay();
-					Dungeon.level.set(doorCell, door == Terrain.LOCKED_DOOR ? Terrain.DOOR : Terrain.UNLOCKED_EXIT);
+					//Dungeon.level.set(doorCell, door == Terrain.LOCKED_EXIT ? Terrain.UNLOCKED_EXIT : Terrain.DOOR);
 					GameScene.updateMap(doorCell);
 					spend(Key.TIME_TO_UNLOCK);
 				}
