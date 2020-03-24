@@ -77,6 +77,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.EtherealChains;
 import com.shatteredpixel.yasd.general.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.yasd.general.items.artifacts.TalismanOfForesight;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.CrystalKey;
 import com.shatteredpixel.yasd.general.items.keys.GoldenKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
@@ -843,6 +844,9 @@ public class Hero extends Char {
 
 				hasKey = true;
 				
+			} else if (door == Terrain.BRONZE_LOCKED_DOOR
+					&& Notes.keyCount(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos)) > 0) {
+				hasKey = true;
 			}
 			
 			if (hasKey) {
@@ -1546,9 +1550,12 @@ public class Hero extends Char {
 			Terrain door = Dungeon.level.map[doorCell];
 			
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
-				boolean hasKey = true;
+				boolean hasKey;
 				if (door == Terrain.LOCKED_DOOR) {
 					hasKey = Notes.remove(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
+				} else if (door == Terrain.BRONZE_LOCKED_DOOR) {
+					hasKey = Notes.remove(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 					if (hasKey) Dungeon.level.set(doorCell, Terrain.DOOR);
 				} else {
 					hasKey = Notes.remove(new SkeletonKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));

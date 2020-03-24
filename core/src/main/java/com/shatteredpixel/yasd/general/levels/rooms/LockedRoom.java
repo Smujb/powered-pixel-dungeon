@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.levels.Level;
@@ -36,15 +37,15 @@ import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.watabou.utils.Random;
 
 public abstract class LockedRoom extends SpecialRoom {
+
 	@Override
 	public void paint(Level level) {
 		paintRoom(level);
 		if (level instanceof RegularLevel) {
 			RegularLevel regularLevel = ((RegularLevel)level);
 			if (regularLevel.hasPitRoom()) {
-				entrance().set(Door.Type.REGULAR);
+				entrance().set(Door.Type.BRONZE);
 			} else {
-
 				switch (Random.Int(10)) {
 					case 0: default:
 						setKeyDoor(level);
@@ -52,9 +53,9 @@ public abstract class LockedRoom extends SpecialRoom {
 					case 1:
 						setBarricadeDoor(level);
 						break;
-					//case 2:
-					//	setChasmDoor(level);
-					//	break;
+					case 2: case 3: case 4:
+						setBronzeKeyDoor(level);
+						break;
 				}
 
 			}
@@ -71,6 +72,11 @@ public abstract class LockedRoom extends SpecialRoom {
 	private void setKeyDoor(Level level) {
 		entrance().set(Door.Type.LOCKED);
 		level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+	}
+
+	private void setBronzeKeyDoor(Level level) {
+		entrance().set(Door.Type.BRONZE);
+		level.addItemToSpawn(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
 	}
 
 	public abstract void paintRoom(Level level);

@@ -134,10 +134,6 @@ public class ItemSpriteSheet {
 
 	public static final int HONEYPOT        = SINGLE_USE+7;
 	public static final int SHATTPOT        = SINGLE_USE+8;
-	public static final int IRON_KEY        = SINGLE_USE+9;
-	public static final int GOLDEN_KEY      = SINGLE_USE+10;
-	public static final int CRYSTAL_KEY     = SINGLE_USE+11;
-	public static final int SKELETON_KEY    = SINGLE_USE+12;
 	public static final int MASTERY         = SINGLE_USE+13;
 	public static final int KIT             = SINGLE_USE+14;
 	public static final int AMULET          = SINGLE_USE+15;
@@ -151,10 +147,6 @@ public class ItemSpriteSheet {
 		
 		assignItemRect(HONEYPOT,        14, 12);
 		assignItemRect(SHATTPOT,        14, 12);
-		assignItemRect(IRON_KEY,        8,  14);
-		assignItemRect(GOLDEN_KEY,      8,  14);
-		assignItemRect(CRYSTAL_KEY,     8,  14);
-		assignItemRect(SKELETON_KEY,    8,  14);
 		assignItemRect(MASTERY,         13, 16);
 		assignItemRect(KIT,             16, 15);
 		assignItemRect(AMULET,          16, 16);
@@ -189,8 +181,23 @@ public class ItemSpriteSheet {
 		assignItemRect(SHRAPNEL_BOMB,   10, 13);
 	}
 
-	
-	                                                                                    //16 free slots
+
+	private static final int KEYS          =                               xy(1, 6);   //16 slots
+
+	public static final int IRON_KEY        = KEYS+0;
+	public static final int GOLDEN_KEY      = KEYS+1;
+	public static final int CRYSTAL_KEY     = KEYS+2;
+	public static final int SKELETON_KEY    = KEYS+3;
+	public static final int BRONZE_KEY      = KEYS+4;
+
+	static {
+
+		assignItemRect(IRON_KEY, 8, 14);
+		assignItemRect(GOLDEN_KEY, 8, 14);
+		assignItemRect(CRYSTAL_KEY, 8, 14);
+		assignItemRect(SKELETON_KEY, 8, 14);
+		assignItemRect(BRONZE_KEY, 8, 14);
+	}
 
 	private static final int WEP_TIER1      =                               xy(1, 7);   //8 slots
 	public static final int WORN_SHORTSWORD = WEP_TIER1+0;
