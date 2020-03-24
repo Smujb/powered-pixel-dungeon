@@ -1564,7 +1564,6 @@ public class Hero extends Char {
 				
 				if (hasKey) {
 					GameScene.updateKeyDisplay();
-					//Dungeon.level.set(doorCell, door == Terrain.LOCKED_EXIT ? Terrain.UNLOCKED_EXIT : Terrain.DOOR);
 					GameScene.updateMap(doorCell);
 					spend(Key.TIME_TO_UNLOCK);
 				}

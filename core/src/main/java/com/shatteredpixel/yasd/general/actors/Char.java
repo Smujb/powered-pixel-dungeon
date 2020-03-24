@@ -842,7 +842,7 @@ public abstract class Char extends Actor {
 		if (Dungeon.level.distance(this.pos, defender.pos) < viewDistance*1.5f) {
 			float perception = (this.noticeSkill()) / (Math.max(1, Dungeon.level.distance(this.pos, defender.pos)*2));
 			if (!fieldOfView(defender.pos)) {
-				perception /= 2;
+				perception /= 4;
 			}
 			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error

@@ -31,8 +31,10 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.RotHeart;
 import com.shatteredpixel.yasd.general.actors.mobs.RotLasher;
+import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.RegularLevel;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.PathFinder;
@@ -49,8 +51,13 @@ public class RotGardenRoom extends SpecialRoom {
 	public void paint( Level level ) {
 
 		Door entrance = entrance();
-		entrance.set(Door.Type.LOCKED);
-		level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+		if (level instanceof RegularLevel && ((RegularLevel) level).hasPitRoom()) {
+			entrance.set(Door.Type.BRONZE);
+			level.addItemToSpawn(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+		} else {
+			entrance.set(Door.Type.LOCKED);
+			level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+		}
 
 		Painter.fill(level, this, Terrain.WALL);
 		Painter.fill(level, this, 1, Terrain.GRASS);

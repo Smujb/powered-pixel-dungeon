@@ -55,7 +55,7 @@ public abstract class ConnectionRoom extends Room {
 	}
 
 	//returns a point equidistant from all doors this room has
-	protected final Point getDoorCenter(){
+	final Point getDoorCenter(){
 		PointF doorCenter = new PointF(0, 0);
 
 		for (Door door : connected.values()) {
