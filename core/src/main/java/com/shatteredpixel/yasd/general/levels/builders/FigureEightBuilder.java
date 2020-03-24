@@ -118,7 +118,7 @@ public class FigureEightBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				firstLoop.add(ConnectionRoom.createRoom(level));
+				firstLoop.add(ConnectionRoom.createRoom(level, false));
 			}
 		}
 		if (entrance != null) firstLoop.add((firstLoop.size()+1)/2, entrance);
@@ -140,7 +140,7 @@ public class FigureEightBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				secondLoop.add(ConnectionRoom.createRoom(level));
+				secondLoop.add(ConnectionRoom.createRoom(level, false));
 			}
 		}
 		if (exit != null) secondLoop.add((secondLoop.size()+1)/2, exit);
@@ -167,7 +167,7 @@ public class FigureEightBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(landmarkRoom)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom(level);
+			ConnectionRoom c = ConnectionRoom.createRoom(level, false);
 			if (placeRoom(rooms, prev, c, angleBetweenRooms(prev, landmarkRoom)) == -1){
 				return null;
 			}
@@ -195,7 +195,7 @@ public class FigureEightBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(landmarkRoom)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom(level);
+			ConnectionRoom c = ConnectionRoom.createRoom(level, false);
 			if (placeRoom(rooms, prev, c, angleBetweenRooms(prev, landmarkRoom)) == -1){
 				return null;
 			}

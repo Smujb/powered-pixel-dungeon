@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.levels.builders;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.connection.MazeConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
@@ -160,7 +159,7 @@ public abstract class RegularBuilder extends Builder {
 			connectionChances[connectingRooms]--;
 			
 			for (int j = 0; j < connectingRooms; j++){
-				ConnectionRoom t = r instanceof SecretRoom ? new MazeConnectionRoom() : ConnectionRoom.createRoom(level);
+				ConnectionRoom t = ConnectionRoom.createRoom(level, r instanceof SecretRoom);
 				tries = 3;
 				
 				do {

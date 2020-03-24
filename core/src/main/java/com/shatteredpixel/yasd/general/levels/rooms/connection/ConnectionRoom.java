@@ -30,7 +30,11 @@ package com.shatteredpixel.yasd.general.levels.rooms.connection;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.Point;
+import com.watabou.utils.PointF;
+import com.watabou.utils.Random;
+import com.watabou.utils.Rect;
 
 public abstract class ConnectionRoom extends Room {
 	
@@ -41,6 +45,32 @@ public abstract class ConnectionRoom extends Room {
 	@Override
 	public int minHeight() { return 3; }
 	public int maxHeight() { return 10; }
+
+	//returns the space which all doors must connect to (usually 1 cell, but can be more)
+	//Note that, like rooms, this space is inclusive to its right and bottom sides
+	protected Rect getConnectionSpace(){
+		Point c = getDoorCenter();
+
+		return new Rect(c.x, c.y, c.x, c.y);
+	}
+
+	//returns a point equidistant from all doors this room has
+	protected final Point getDoorCenter(){
+		PointF doorCenter = new PointF(0, 0);
+
+		for (Door door : connected.values()) {
+			doorCenter.x += door.x;
+			doorCenter.y += door.y;
+		}
+
+		Point c = new Point((int)doorCenter.x / connected.size(), (int)doorCenter.y / connected.size());
+		if (Random.Float() < doorCenter.x % 1) c.x++;
+		if (Random.Float() < doorCenter.y % 1) c.y++;
+		c.x = (int) GameMath.gate(left+1, c.x, right-1);
+		c.y = (int)GameMath.gate(top+1, c.y, bottom-1);
+
+		return c;
+	}
 	
 	@Override
 	public int minConnections(int direction) {
@@ -53,8 +83,12 @@ public abstract class ConnectionRoom extends Room {
 		//traps cannot appear in connection rooms on floor 1
 		return super.canPlaceTrap(p) && Dungeon.yPos > 1;
 	}
-	
-	public static ConnectionRoom createRoom(Level level) {
-		return level.randomConnectionRoom();
+
+	public static ConnectionRoom createRoom(Level level, boolean secret) {
+		if (secret) {
+			return Random.Int(2) == 0 ? new MazeConnectionRoom() : new PitConnectionRoom();
+		} else {
+			return level.randomConnectionRoom();
+		}
 	}
 }

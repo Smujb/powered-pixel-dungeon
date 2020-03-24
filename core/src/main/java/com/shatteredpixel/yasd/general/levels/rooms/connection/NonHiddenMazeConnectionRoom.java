@@ -34,7 +34,7 @@ public class NonHiddenMazeConnectionRoom extends MazeConnectionRoom {
     public void paint(Level level) {
         super.paint(level);
         for (Door door : connected.values()) {
-            door.set( Door.Type.REGULAR );
+            door.set( Door.Type.UNLOCKED );
         }
     }
 }

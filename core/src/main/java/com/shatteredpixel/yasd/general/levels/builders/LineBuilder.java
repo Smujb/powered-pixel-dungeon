@@ -75,7 +75,7 @@ public class LineBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				ConnectionRoom t = ConnectionRoom.createRoom(level);
+				ConnectionRoom t = ConnectionRoom.createRoom(level, false);
 				placeRoom(rooms, curr, t, direction + Random.Float(-pathVariance, pathVariance));
 				branchable.add(t);
 				rooms.add(t);

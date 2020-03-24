@@ -109,7 +109,7 @@ public class LoopBuilder extends RegularBuilder {
 			pathTunnels[tunnels]--;
 			
 			for (int j = 0; j < tunnels; j++){
-				loop.add(ConnectionRoom.createRoom(level));
+				loop.add(ConnectionRoom.createRoom(level, false));
 			}
 		}
 		
@@ -134,7 +134,7 @@ public class LoopBuilder extends RegularBuilder {
 		// should just write a general function for stitching two rooms together in builder
 		while (!prev.connect(entrance)){
 			
-			ConnectionRoom c = ConnectionRoom.createRoom(level);
+			ConnectionRoom c = ConnectionRoom.createRoom(level, false);
 			if (placeRoom(loop, prev, c, angleBetweenRooms(prev, entrance)) == -1){
 				return null;
 			}
