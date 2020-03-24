@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.connection;
 
+import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 
@@ -34,5 +35,6 @@ public class PitConnectionRoom extends ConnectionRoom {
 	@Override
 	public void paint(Level level) {
 		TunnelRoom.paint(this, level, Terrain.CHASM);
+		level.addItemToSpawn(new PotionOfLevitation());
 	}
 }
