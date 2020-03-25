@@ -92,15 +92,19 @@ public enum Terrain {
 			solid = true;
 		}
 	},
-	//TODO: find a way to make this work
-	/*CRACKED_WALL {
+	CRACKED_WALL {
 		@Override
 		public void setup() {
 			losBlocking = true;
 			solid = true;
 		}
+
+		@Override
+		public boolean explodable() {
+			return true;
+		}
 	},
-	HIDDEN_CRACKED_WALL {
+	SECRET_CRACKED_WALL {
 		@Override
 		public void setup() {
 			secret = true;
@@ -109,10 +113,15 @@ public enum Terrain {
 		}
 
 		@Override
+		public boolean explodable() {
+			return true;
+		}
+
+		@Override
 		public Terrain discover() {
 			return CRACKED_WALL;
 		}
-	},*/
+	},
 	DOOR {
 		@Override
 		public void setup() {
@@ -357,6 +366,10 @@ public enum Terrain {
 
 	public Terrain discover() {
 		return this;
+	}
+
+	public boolean explodable() {
+		return flamable;
 	}
 
 	protected void triggerTrap(int cell, Trap trap) {

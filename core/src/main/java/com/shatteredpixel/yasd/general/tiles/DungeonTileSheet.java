@@ -161,6 +161,8 @@ public class DungeonTileSheet {
 
 		//wall
 		chasmStitcheable.put( Terrain.WALL,         CHASM_WALL );
+		chasmStitcheable.put( Terrain.CRACKED_WALL, CHASM_WALL );
+		chasmStitcheable.put( Terrain.SECRET_CRACKED_WALL,CHASM_WALL );
 		chasmStitcheable.put( Terrain.DOOR,         CHASM_WALL );
 		chasmStitcheable.put( Terrain.OPEN_DOOR,    CHASM_WALL );
 		chasmStitcheable.put( Terrain.LOCKED_DOOR,  CHASM_WALL );
@@ -183,7 +185,7 @@ public class DungeonTileSheet {
 	public static final int FLAT_WALL           = FLAT_WALLS+0;
 	public static final int FLAT_WALL_DECO      = FLAT_WALLS+1;
 	public static final int FLAT_BOOKSHELF      = FLAT_WALLS+2;
-
+	public static final int FLAT_CRACKED_WALL   = FLAT_WALLS+3;
 	public static final int FLAT_WALL_ALT       = FLAT_WALLS+4;
 	public static final int FLAT_WALL_DECO_ALT  = FLAT_WALLS+5;
 	public static final int FLAT_BOOKSHELF_ALT  = FLAT_WALLS+6;
@@ -217,6 +219,7 @@ public class DungeonTileSheet {
 	//+1 for open to the right, +2 for open to the left
 	public static final int RAISED_WALL                 = RAISED_WALLS+0;
 	public static final int RAISED_WALL_DECO            = RAISED_WALLS+4;
+	public static final int RAISED_WALL_CRACKED            = RAISED_WALL+WIDTH;
 	//wall that appears behind a top/bottom doorway
 	public static final int RAISED_WALL_DOOR            = RAISED_WALLS+8;
 	public static final int RAISED_WALL_BOOKSHELF       = RAISED_WALLS+12;
@@ -230,7 +233,7 @@ public class DungeonTileSheet {
 
 	//These tiles count as wall for the purposes of wall stitching
 	private static Terrain[] wallStitcheable = new Terrain[]{
-			Terrain.WALL, Terrain.WALL_DECO, Terrain.SECRET_DOOR,
+			Terrain.WALL, Terrain.WALL_DECO, Terrain.SECRET_DOOR, Terrain.CRACKED_WALL, Terrain.SECRET_CRACKED_WALL,
 			Terrain.LOCKED_EXIT, Terrain.UNLOCKED_EXIT, Terrain.BOOKSHELF, Terrain.NONE
 	};
 
@@ -246,9 +249,10 @@ public class DungeonTileSheet {
 		
 		if (below == Terrain.NONE || wallStitcheable(below))                      return -1;
 		else if (doorTile(below))                                       result = RAISED_WALL_DOOR;
-		else if (tile == Terrain.WALL || tile == Terrain.SECRET_DOOR)   result = RAISED_WALL;
+		else if (tile == Terrain.WALL || tile == Terrain.SECRET_DOOR || tile == Terrain.SECRET_CRACKED_WALL)   result = RAISED_WALL;
 		else if (tile == Terrain.WALL_DECO)                             result = RAISED_WALL_DECO;
 		else if (tile == Terrain.BOOKSHELF)                             result = RAISED_WALL_BOOKSHELF;
+		else if (tile == Terrain.CRACKED_WALL)                             result = RAISED_WALL_CRACKED;
 		else                                                            return -1;
 
 		result = getVisualWithAlts(result, pos);
@@ -258,7 +262,7 @@ public class DungeonTileSheet {
 		return result;
 	}
 
-	private static final int RAISED_DOORS           =                       xy(1, 10);  //16 slots
+	private static final int RAISED_DOORS           =                       xy(1, 12);  //16 slots
 	public static final int RAISED_DOOR             = RAISED_DOORS+0;
 	public static final int RAISED_DOOR_OPEN        = RAISED_DOORS+1;
 	public static final int RAISED_DOOR_LOCKED      = RAISED_DOORS+2;
@@ -287,7 +291,7 @@ public class DungeonTileSheet {
 		return false;
 	}
 
-	private static final int RAISED_OTHER           =                       xy(1, 11);  //16 slots
+	private static final int RAISED_OTHER           =                       xy(1, 13);  //16 slots
 	public static final int RAISED_SIGN             = RAISED_OTHER+0;
 	public static final int RAISED_STATUE           = RAISED_OTHER+1;
 	public static final int RAISED_STATUE_SP        = RAISED_OTHER+2;
@@ -306,14 +310,16 @@ public class DungeonTileSheet {
 	 **********************************************************************/
 
 	//+1 for open right, +2 for open right-below, +4 for open left-below, +8 for open left.
-	public static final int WALLS_INTERNAL              =                   xy(1, 12);  //32 slots
+	public static final int WALLS_INTERNAL              =                   xy(1, 14);  //32 slots
 	private static final int WALL_INTERNAL              = WALLS_INTERNAL+0;
-	private static final int WALL_INTERNAL_WOODEN       = WALLS_INTERNAL+16;
+	private static final int WALL_INTERNAL_WOODEN       = WALLS_INTERNAL+WIDTH;
+	private static final int WALL_INTERNAL_CRACKED       = WALLS_INTERNAL+WIDTH*2;
 
 	public static int stitchInternalWallTile(Terrain tile, Terrain right, Terrain rightBelow, Terrain below, Terrain leftBelow, Terrain left){
 		int result;
 
 		if (tile == Terrain.BOOKSHELF || below == Terrain.BOOKSHELF)  result = WALL_INTERNAL_WOODEN;
+		else if (tile == Terrain.CRACKED_WALL || below == Terrain.CRACKED_WALL) result = WALL_INTERNAL_CRACKED;
 		else                            result = WALL_INTERNAL;
 
 		if (!wallStitcheable(right))        result += 1;
@@ -324,13 +330,14 @@ public class DungeonTileSheet {
 	}
 
 	//+1 for open to the down-right, +2 for open to the down-left
-	private static final int WALLS_OVERHANG             =                   xy(1, 14);  //32 slots
+	private static final int WALLS_OVERHANG             =                   xy(1, 17);  //32 slots
 	public static final int WALL_OVERHANG                   = WALLS_OVERHANG+0;
 	public static final int DOOR_SIDEWAYS_OVERHANG          = WALLS_OVERHANG+4;
 	public static final int DOOR_SIDEWAYS_OVERHANG_OPEN     = WALLS_OVERHANG+8;
 	public static final int DOOR_SIDEWAYS_OVERHANG_LOCKED   = WALLS_OVERHANG+12;
 	public static final int DOOR_SIDEWAYS_OVERHANG_BRONZE   = WALLS_OVERHANG+WIDTH+12;//+WIDTH as it's on the next line
-	public static final int WALL_OVERHANG_WOODEN            = WALLS_OVERHANG+16;
+	public static final int WALL_OVERHANG_CRACKED           = WALLS_OVERHANG+WIDTH;
+	public static final int WALL_OVERHANG_WOODEN            = WALLS_OVERHANG+WIDTH*2;
 
 	public static int stitchWallOverhangTile(Terrain tile, Terrain rightBelow, Terrain below, Terrain leftBelow){
 		int visual;
@@ -339,6 +346,7 @@ public class DungeonTileSheet {
 		else if (tile == Terrain.LOCKED_DOOR)                       visual = DOOR_SIDEWAYS_OVERHANG_LOCKED;
 		else if (tile == Terrain.BRONZE_LOCKED_DOOR)               	visual = DOOR_SIDEWAYS_OVERHANG_BRONZE;
 		else if (below == Terrain.BOOKSHELF)                        visual = WALL_OVERHANG_WOODEN;
+		else if (below == Terrain.CRACKED_WALL)                     visual = WALL_OVERHANG_CRACKED;
 		else                                                        visual = WALL_OVERHANG;
 
 		if (!wallStitcheable(rightBelow))  visual += 1;
@@ -348,20 +356,20 @@ public class DungeonTileSheet {
 	}
 
 	//no attachment to adjacent walls
-	public static final int DOOR_OVERHANG               = WALL_OVERHANG+21;
-	public static final int DOOR_OVERHANG_OPEN          = WALL_OVERHANG+22;
-	public static final int DOOR_SIDEWAYS               = WALL_OVERHANG+23;
-	public static final int DOOR_SIDEWAYS_LOCKED        = WALL_OVERHANG+24;
-	public static final int BRONZE_DOOR_SIDEWAYS_LOCKED = WALL_OVERHANG+25;
+	public static final int DOOR_OVERHANG               = WALL_OVERHANG+WIDTH+21;
+	public static final int DOOR_OVERHANG_OPEN          = WALL_OVERHANG+WIDTH+22;
+	public static final int DOOR_SIDEWAYS               = WALL_OVERHANG+WIDTH+23;
+	public static final int DOOR_SIDEWAYS_LOCKED        = WALL_OVERHANG+WIDTH+24;
+	public static final int BRONZE_DOOR_SIDEWAYS_LOCKED = WALL_OVERHANG+WIDTH+25;
 
-	public static final int STATUE_OVERHANG             = WALL_OVERHANG+32;
-	public static final int ALCHEMY_POT_OVERHANG        = WALL_OVERHANG+33;
-	public static final int BARRICADE_OVERHANG          = WALL_OVERHANG+34;
-	public static final int HIGH_GRASS_OVERHANG         = WALL_OVERHANG+35;
-	public static final int FURROWED_OVERHANG           = WALL_OVERHANG+36;
+	public static final int STATUE_OVERHANG             = WALL_OVERHANG+WIDTH+32;
+	public static final int ALCHEMY_POT_OVERHANG        = WALL_OVERHANG+WIDTH+33;
+	public static final int BARRICADE_OVERHANG          = WALL_OVERHANG+WIDTH+34;
+	public static final int HIGH_GRASS_OVERHANG         = WALL_OVERHANG+WIDTH+35;
+	public static final int FURROWED_OVERHANG           = WALL_OVERHANG+WIDTH+36;
 
-	public static final int HIGH_GRASS_OVERHANG_ALT     = WALL_OVERHANG+38;
-	public static final int FURROWED_OVERHANG_ALT       = WALL_OVERHANG+39;
+	public static final int HIGH_GRASS_OVERHANG_ALT     = WALL_OVERHANG+WIDTH+38;
+	public static final int FURROWED_OVERHANG_ALT       = WALL_OVERHANG+WIDTH+39;
 
 	/**********************************************************************
 	 * Logic for the selection of tile visuals
@@ -409,6 +417,7 @@ public class DungeonTileSheet {
 		directFlatVisuals.put(Terrain.FURROWED_GRASS,   FLAT_FURROWED_GRASS);
 
 		directFlatVisuals.put(Terrain.SECRET_DOOR,      directFlatVisuals.get(Terrain.WALL));
+		directFlatVisuals.put(Terrain.SECRET_CRACKED_WALL,      directFlatVisuals.get(Terrain.WALL));
 	}
 
 
