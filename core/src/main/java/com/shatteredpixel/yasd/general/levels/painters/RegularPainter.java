@@ -216,6 +216,12 @@ public abstract class RegularPainter extends Painter {
 					case BRONZE:
 						l.map[door] = Terrain.BRONZE_LOCKED_DOOR;
 						break;
+					case CRACKED:
+						l.map[door] = Terrain.CRACKED_WALL;
+						break;
+					case CRACKED_SECRET:
+						l.map[door] = Terrain.SECRET_CRACKED_WALL;
+						break;
 				}
 			}
 		}

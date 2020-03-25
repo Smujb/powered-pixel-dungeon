@@ -123,7 +123,7 @@ public class Bomb extends Item {
 		if (Actor.findChar( cell ) != null && !(Actor.findChar( cell ) instanceof Hero) ){
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8)
-				if (Dungeon.level.passable()[cell + i])
+				if (Dungeon.level.map[cell + i].passable)
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random.element(candidates);
 			Dungeon.level.drop( this, newCell ).sprite.drop( cell );
@@ -162,7 +162,7 @@ public class Bomb extends Item {
 						CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
 					}
 					
-					if (Dungeon.level.flammable()[c]) {
+					if (Dungeon.level.map[c].explodable()) {
 						Dungeon.level.destroy(c);
 						GameScene.updateMap(c);
 						terrainAffected = true;
