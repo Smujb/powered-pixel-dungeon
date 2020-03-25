@@ -204,7 +204,7 @@ public abstract class Level implements Bundlable {
 		}
 		return map;
 	}
-
+	//TODO: fix this for individual locations!
 	public boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
