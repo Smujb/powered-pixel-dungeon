@@ -288,16 +288,20 @@ public class Statue extends Mob implements Callback {
 		return description + "_";
 	}
 
+	private static final String ANKHS = "ankhs";
+
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		belongings.storeInBundle(bundle);
+		bundle.put(ANKHS, ankhs);
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		belongings.restoreFromBundle(bundle);
+		ankhs = bundle.getInt(ANKHS);
 	}
 
 	{
