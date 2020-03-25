@@ -85,7 +85,7 @@ public class RotGardenRoom extends SpecialRoom {
 			do {
 				pos = level.pointToCell(random());
 			} while (!validPlantPos(level, pos));
-			placePlant(level, pos, Mob.create(RotLasher.class));
+			placePlant(level, pos, Mob.create(RotLasher.class, level));
 		}
 	}
 
