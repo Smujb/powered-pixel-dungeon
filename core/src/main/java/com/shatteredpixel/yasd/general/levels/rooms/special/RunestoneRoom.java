@@ -63,9 +63,6 @@ public class RunestoneRoom extends LockedRoom {
 			} while (level.map[dropPos] != Terrain.EMPTY);
 			level.drop(prize(level), dropPos);
 		}
-		
-		//entrance().set( Door.Type.LOCKED );
-		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
 	}
 	
 	private static Item prize( Level level ) {

@@ -86,7 +86,7 @@ public abstract class ConnectionRoom extends Room {
 
 	public static ConnectionRoom createRoom(Level level, boolean secret) {
 		if (secret) {
-			return Random.Int(2) == 0 ? new MazeConnectionRoom() : new PitConnectionRoom();
+			return level.randomSecretConnectionRoom();
 		} else {
 			return level.randomConnectionRoom();
 		}

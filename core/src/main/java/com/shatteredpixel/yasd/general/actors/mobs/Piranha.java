@@ -41,9 +41,9 @@ public class Piranha extends WaterMob {
 	{
 		spriteClass = PiranhaSprite.class;
 
-		healthFactor = 1.5f;
+		healthFactor = 1.2f;
 		accuracyFactor = 2f;
-		damageFactor = 1.5f;
+		damageFactor = 1f;
 
 		baseSpeed = 2f;
 		

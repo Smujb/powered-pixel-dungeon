@@ -50,6 +50,9 @@ public class JellyFish extends WaterMob {
 	{
 		EXP = 0;
 
+		damageFactor = 1.5f;
+		healthFactor = 0.5f;
+
 		immunities.add(Burning.class);
 		immunities.add(Vertigo.class);
 		properties.add(Property.BLOB_IMMUNE);

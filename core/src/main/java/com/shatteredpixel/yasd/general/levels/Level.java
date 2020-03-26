@@ -69,8 +69,11 @@ import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.CrackedWallConnectionRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.MazeConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.NonHiddenMazeConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.PerimeterRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.connection.PitConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.RingBridgeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.RingTunnelRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.TunnelRoom;
@@ -694,6 +697,29 @@ public abstract class Level implements Bundlable {
 		}
 		int type = Random.chances(connectionRoomChances());
 		Class<? extends ConnectionRoom> room = (Class<? extends ConnectionRoom>) connectionRoomClasses()[type];
+		return Reflection.newInstance(room);
+	}
+
+	protected Class<?>[] secretConnectionRoomClasses(){
+		return new Class<?>[]{
+				CrackedWallConnectionRoom.class,
+				MazeConnectionRoom.class,
+				PitConnectionRoom.class};
+	}
+
+	protected float[] secretConnectionRoomChances() {
+		return new float[]{
+				1,
+				3,
+				4};
+	}
+
+	public ConnectionRoom randomSecretConnectionRoom() {
+		if (secretConnectionRoomChances().length != secretConnectionRoomClasses().length) {
+			throw new AssertionError("Room classes must be equal in length to room chances!");
+		}
+		int type = Random.chances(secretConnectionRoomChances());
+		Class<? extends ConnectionRoom> room = (Class<? extends ConnectionRoom>) secretConnectionRoomClasses()[type];
 		return Reflection.newInstance(room);
 	}
 

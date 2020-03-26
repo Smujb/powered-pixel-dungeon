@@ -45,13 +45,13 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-public class GnollTrickster extends Mob {
+public class GnollTrickster extends Gnoll {
 
 	{
 		spriteClass = GnollTricksterSprite.class;
 
-		HP = HT = 20;
-		defenseSkill = 5;
+		//HP = HT = 20;
+		//defenseSkill = 5;
 
 		EXP = 5;
 

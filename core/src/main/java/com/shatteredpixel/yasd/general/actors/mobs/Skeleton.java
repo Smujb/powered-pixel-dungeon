@@ -54,6 +54,8 @@ public class Skeleton extends Mob {
 		accuracyFactor = 1.25f;
 		//HP = HT = 25;
 		//defenseSkill = 11;
+
+		numTypes = 2;
 		
 		EXP = 5;
 
@@ -63,12 +65,21 @@ public class Skeleton extends Mob {
 		properties.add(Property.UNDEAD);
 		properties.add(Property.INORGANIC);
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 4, 15 );
-	}*/
-	
+
+	@Override
+	public Element elementalType() {
+		Element element;
+		switch (type) {
+			case 0: default:
+				element = Element.PHYSICAL;
+				break;
+			case 1:
+				element = Element.EARTH;
+				break;
+		}
+		return element;
+	}
+
 	@Override
 	public void die(@NotNull DamageSrc cause ) {
 		
