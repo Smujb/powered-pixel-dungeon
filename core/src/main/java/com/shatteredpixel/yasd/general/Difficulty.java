@@ -82,4 +82,16 @@ public enum Difficulty {
 				return 12;
 		}
 	}
+
+	@Contract(pure = true)
+	public static Difficulty fromInt(int diff) {
+		switch (diff) {
+			case 1:
+				return EASY;
+			case 2: default:
+				return MEDIUM;
+			case 3:
+				return HARD;
+		}
+	}
 }

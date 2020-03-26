@@ -58,7 +58,7 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	private static final String KEY_ZOOM			= "zoom";
 	private static final String KEY_BRIGHTNESS	= "brightness";
 	private static final String KEY_GRID 	    = "visual_grid";
-	private static final String KEY_MOD 	    	= "mod";
+	private static final String KEY_CUTSCENES 	    	= "cutscenes";
 	
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
@@ -130,6 +130,14 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	
 	public static int visualGrid() {
 		return getInt( KEY_GRID, 0, -1, 3 );
+	}
+
+	public static void cutscenes( boolean value ){
+		put( KEY_CUTSCENES, value );
+	}
+
+	public static boolean cutscenes() {
+		return getBoolean( KEY_CUTSCENES, true );
 	}
 
 	//Interface
