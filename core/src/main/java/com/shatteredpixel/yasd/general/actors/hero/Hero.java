@@ -1043,10 +1043,9 @@ public class Hero extends Char {
 					MainGame.vibrate(Math.min(250, (int) (shake * 50)));
 				}
 				if (shake > 1f) {
-					loseMorale(shake * 0.5f);
-
+					loseMorale(shake * 0.33f);
 				} else {
-					loseMorale(shake * 0.5f, false);
+					loseMorale(shake * 0.33f, false);
 				}
 			}
 		}
