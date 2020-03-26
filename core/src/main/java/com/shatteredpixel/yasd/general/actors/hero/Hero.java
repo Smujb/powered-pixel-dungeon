@@ -228,7 +228,7 @@ public class Hero extends Char {
 		if (!Constants.MORALE) {
 			return;
 		}
-		float difficultyMultiplier;
+		/*float difficultyMultiplier;
 		switch (Dungeon.difficulty) {
 			case 1:// -33% Morale loss in Easy
 				difficultyMultiplier = 0.67f;
@@ -241,8 +241,8 @@ public class Hero extends Char {
 				difficultyMultiplier = 1.5f;
 				break;
 
-		}
-		Amount *= difficultyMultiplier;
+		}*/
+		Amount *= Dungeon.difficulty.moraleFactor();
 		morale -= Amount;
 		morale = Math.max(morale, 0);
 		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk

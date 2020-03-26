@@ -175,16 +175,7 @@ public enum Element {
 		}
 
 		if (attacker.alignment == Char.Alignment.ENEMY) {
-			switch (Dungeon.difficulty) {
-				case 1://Easy = -25% damage
-					damage *= 0.75f;
-					break;
-				case 2: default://Medium = normal damage
-					break;
-				case 3://Hard = +25% damage
-					damage *= 1.25f;
-					break;
-			}
+			damage *= Dungeon.difficulty.mobDamageFactor();
 		}
 
 		if (Dungeon.hero.fieldOfView[defender.pos] || Dungeon.hero.fieldOfView[attacker.pos]) {

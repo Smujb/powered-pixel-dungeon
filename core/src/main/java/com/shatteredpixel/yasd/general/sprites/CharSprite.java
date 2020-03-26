@@ -40,18 +40,14 @@ import com.shatteredpixel.yasd.general.effects.RedShieldHalo;
 import com.shatteredpixel.yasd.general.effects.ShieldHalo;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.Splash;
-import com.shatteredpixel.yasd.general.effects.WepSprite;
 import com.shatteredpixel.yasd.general.effects.TorchHalo;
+import com.shatteredpixel.yasd.general.effects.WepSprite;
 import com.shatteredpixel.yasd.general.effects.YellowBlock;
 import com.shatteredpixel.yasd.general.effects.particles.BloodParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SnowParticle;
-import com.shatteredpixel.yasd.general.items.KindOfWeapon;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Polearm;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -68,7 +64,6 @@ import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.tweeners.AlphaTweener;
-import com.watabou.noosa.tweeners.Delayer;
 import com.watabou.noosa.tweeners.PosTweener;
 import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.utils.Callback;
@@ -274,7 +269,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			@Override
 			public void call() {
 				if (ch.hasBelongings()) {
-					KindOfWeapon weapon = ch.belongings.getCurrentWeapon();
+					/*KindOfWeapon weapon = ch.belongings.getCurrentWeapon();
 					if (weapon != null && !(weapon instanceof MissileWeapon)) {
 						weaponImg = new WepSprite(weapon);
 						//weaponImg.place(ch.pos);
@@ -298,8 +293,9 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 								weaponImg = null;
 							}
 						} );
-						callback.call();
-					}
+
+					}*/
+				callback.call();
 				} else {
 					ch.elementalType().FX(ch, cell, callback);
 				}

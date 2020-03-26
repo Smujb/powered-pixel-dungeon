@@ -356,7 +356,7 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				if (Dungeon.bossLevel(Dungeon.yPos -1)) {
+				if (Dungeon.bossLevel(Dungeon.yPos -1) && GameSettings.cutscenes()) {
 					Lore.showChapter(Dungeon.level);
 				}
 				/*

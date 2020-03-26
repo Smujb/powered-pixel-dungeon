@@ -173,7 +173,7 @@ public class Dungeon {
 
 	public static int version;
 
-	public static int difficulty = 2;//1 = easy, 2 = medium, 3 = hard. I could use strings, but numbers will probably be better in the long run
+	public static Difficulty difficulty = Difficulty.MEDIUM;//1 = easy, 2 = medium, 3 = hard. I could use strings, but numbers will probably be better in the long run
 
 	public static long seed;
 
@@ -243,11 +243,11 @@ public class Dungeon {
 	}
 
 	public static String getDifficultyTitle() {
-		if (difficulty == 1) {
+		if (difficulty == Difficulty.EASY) {
 			return Messages.get(Dungeon.class, "easy");
-		} else if (difficulty == 2) {
+		} else if (difficulty == Difficulty.MEDIUM) {
 			return Messages.get(Dungeon.class, "medium");
-		} else if (difficulty == 3) {
+		} else if (difficulty == Difficulty.HARD) {
 			return Messages.get(Dungeon.class, "hard");
 		} else {
 			return "??";
@@ -484,7 +484,8 @@ public class Dungeon {
 	private static final String CHAPTERS	= "chapters";
 	private static final String QUESTS		= "quests";
 	private static final String BADGES		= "badges";
-	private static final String DIFFICULTY  = "difficulty";
+	static final String _DIFFICULTY = "difficulty";
+	private static final String DIFFICULTY = "difficulty-level";
 	private static final String LEVELSLOADED= "levels-loaded";
 	private static final String XPOS	    = "xPos";
 	private static final String YPOS 		= "yPos";
@@ -606,7 +607,7 @@ public class Dungeon {
 
 		seed = bundle.contains( SEED ) ? bundle.getLong( SEED ) : DungeonSeed.randomSeed();
 
-		difficulty = bundle.contains( DIFFICULTY ) ? bundle.getInt( DIFFICULTY ) : 2;
+		difficulty = bundle.contains(DIFFICULTY) ? bundle.getEnum(DIFFICULTY, Difficulty.class) : Difficulty.fromInt(bundle.getInt(_DIFFICULTY));
 
 		testing = bundle.contains(TESTING) ? GameSettings.testing() : bundle.getBoolean(TESTING);
 

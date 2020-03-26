@@ -244,7 +244,7 @@ public abstract class Mob extends Char {
 		}
 		mob.level = level;
 		mob.updateHT(true);
-		switch (Dungeon.difficulty) {
+		/*switch (Dungeon.difficulty) {
 			case 1://Easy = -25% max HP
 				mob.HP = mob.HT*=0.75f;
 				break;
@@ -253,7 +253,8 @@ public abstract class Mob extends Char {
 			case 3://Hard = +25% max HP
 				mob.HP = mob.HT*=1.25f;
 				break;
-		}
+		}*/
+		mob.HP = mob.HT *= Dungeon.difficulty.mobHealthFactor();
 		//Bosses (obviously) have higher HP
 		if (mob.properties().contains(Property.BOSS)) {
 			mob.HP = mob.HT *= 5;

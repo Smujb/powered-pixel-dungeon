@@ -171,14 +171,7 @@ public class Item implements Bundlable {
 	}
 
 	public int defaultDegradeAmount() {
-		switch (Dungeon.difficulty) {
-			case 1://Easy = 3 drop in durability per hit (200 hits until break)
-				return 3;
-			case 2: default://Medium = 6 drop in durability per hit (100 hits until break)
-				return 6;
-			case 3://Hard = 12 drop in durability per hit (about 50 hits until break)
-				return 12;
-		}
+		return Dungeon.difficulty.degradationAmount();
 	}
 
 	public void curse() {

@@ -202,6 +202,7 @@ public class WndSettings extends WndTabbed {
 			};
 
 			chkCutscenes.setRect(0, tileGrid.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
+			chkCutscenes.checked(GameSettings.cutscenes());
 			add(chkCutscenes);
 		}
 	}

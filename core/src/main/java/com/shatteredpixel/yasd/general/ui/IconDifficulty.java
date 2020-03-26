@@ -36,10 +36,10 @@ public class IconDifficulty extends Image {
 		super();
 
 		switch( Dungeon.difficulty ){
-			case 3:
+			case HARD:
 				copy( Icons.DIFF3.get() );
 				break;
-			case 2:
+			case MEDIUM:
 				copy( Icons.DIFF2.get() );
 				break;
 			default:

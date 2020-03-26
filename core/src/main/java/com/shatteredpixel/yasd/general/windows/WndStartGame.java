@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
+import com.shatteredpixel.yasd.general.Difficulty;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
@@ -128,7 +129,7 @@ public class WndStartGame extends Window {
 				GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				Dungeon.difficulty = GameSettings.difficulty();//I could just call GameSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				Dungeon.difficulty = Difficulty.fromInt(GameSettings.difficulty());//I could just call GameSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
 				if (GameSettings.intro()) {
 					GameSettings.intro( false );
 					Game.switchScene( IntroScene.class );

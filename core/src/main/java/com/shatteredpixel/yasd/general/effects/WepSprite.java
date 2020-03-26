@@ -37,7 +37,7 @@ import com.watabou.utils.PointF;
 
 public class WepSprite extends ItemSprite {
 
-	public static final float TIME		= 0.6f;
+	public static final float TIME = 0.2f;
 
 	private Char source;
 	private Char target;
@@ -62,7 +62,6 @@ public class WepSprite extends ItemSprite {
 	public void update() {
 		super.update();
 
-
 		if ((passed += Game.elapsed) > duration) {
 			kill();
 			passed = 0;
@@ -74,7 +73,9 @@ public class WepSprite extends ItemSprite {
 		PointF dest = DungeonTilemap.tileToWorld(target.pos);
 		PointF d = PointF.diff(dest, src);
 		angle = 135 - (float) (Math.atan2(d.x, d.y) / 3.1415926 * 180);
-		angularSpeed = 400;
+		//angularSpeed = 100;
+		x = source.sprite.x;//.center().x;
+		y = source.sprite.y;//.center().y;
 		if (d.x > 0)
 			x += 2 * SIZE / 3;
 		else if (d.x < 0)
@@ -84,8 +85,6 @@ public class WepSprite extends ItemSprite {
 			y += 2 * SIZE / 3;
 		else if (d.y < 0)
 			y -= 2 * SIZE / 3;
-		x = source.sprite.x;
-		y = source.sprite.y;
 	}
 
 	public void stabEffect() {
@@ -99,18 +98,5 @@ public class WepSprite extends ItemSprite {
 
 		PosTweener tweener = new PosTweener( this, dest, TIME );
 		source.sprite.parent.add( tweener );
-	}
-
-	public static void show(Char ch, Char ch2, Item item ) {
-
-		if (!ch.sprite.visible) {
-			return;
-		}
-
-		WepSprite sprite = new WepSprite( item );
-		sprite.source = ch;
-		sprite.target = ch2;
-		sprite.rotateEffect();
-		ch.sprite.parent.add( sprite );
 	}
 }

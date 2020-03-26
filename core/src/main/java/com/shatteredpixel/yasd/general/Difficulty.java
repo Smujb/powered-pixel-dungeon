@@ -71,7 +71,7 @@ public enum Difficulty {
 	}
 
 	@Contract(pure = true)
-	public float degradationAmount() {
+	public int degradationAmount() {
 		switch (this) {
 			case EASY://Easy = 3 drop in durability per hit (200 hits until break)
 				return 3;

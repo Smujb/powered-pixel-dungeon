@@ -111,7 +111,7 @@ public enum Rankings {
 
 	private int score( boolean win ) {
 		int bonus = 0;
-		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.yPos) * 100) * (win ? 2 : 1) * Dungeon.difficulty;
+		return (Statistics.goldCollected + Dungeon.hero.lvl * (win ? 26 : Dungeon.yPos) * 100) * (win ? 2 : 1);
 	}
 
 	public static final String HERO = "hero";
@@ -194,8 +194,8 @@ public enum Rankings {
 
 		Dungeon.challenges = data.getInt(CHALLENGES);
 
-		Dungeon.difficulty = -1;//This is in case the bundle doesn't contain the difficulty flag, ensuring difficulty displays as "??" rather than the difficulty of most recently accessed run.
-		Dungeon.difficulty = data.getInt(DIFFICULTY);
+		Dungeon.difficulty = null;//This is in case the bundle doesn't contain the difficulty flag, ensuring difficulty displays as "??" rather than the difficulty of most recently accessed run.
+		Dungeon.difficulty = data.contains(DIFFICULTY) ? data.getEnum(DIFFICULTY, Difficulty.class) : Difficulty.fromInt(data.getInt(Dungeon._DIFFICULTY));
 
 	}
 	

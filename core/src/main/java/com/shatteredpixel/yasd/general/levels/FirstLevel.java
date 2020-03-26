@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
 
 public class FirstLevel extends SewerLevel {//First depth has different mobs
 
-
 	@Override
 	public int getScaleFactor() {
 		return 1;
