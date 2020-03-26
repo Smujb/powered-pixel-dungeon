@@ -119,7 +119,7 @@ public enum Rankings {
 	public static final String BADGES = "badges";
 	public static final String HANDLERS = "handlers";
 	public static final String CHALLENGES = "challenges";
-	public static final String DIFFICULTY  = "difficulty";
+	public static final String DIFFICULTY  = "difficulty-level";
 
 	public void saveGameData(Record rec){
 		rec.gameData = new Bundle();

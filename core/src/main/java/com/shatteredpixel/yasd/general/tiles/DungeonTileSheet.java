@@ -90,7 +90,7 @@ public class DungeonTileSheet {
 			Terrain.BARRICADE, Terrain.HIGH_GRASS, Terrain.FURROWED_GRASS, Terrain.SECRET_TRAP,
 			Terrain.TRAP, Terrain.INACTIVE_TRAP, Terrain.EMPTY_DECO,
 			Terrain.SIGN, Terrain.WELL, Terrain.STATUE, Terrain.ALCHEMY,
-			Terrain.DOOR, Terrain.OPEN_DOOR, Terrain.LOCKED_DOOR
+			Terrain.DOOR, Terrain.OPEN_DOOR, Terrain.LOCKED_DOOR, Terrain.BRONZE_LOCKED_DOOR
 	));
 
 	//+1 for ground above, +2 for ground right, +4 for ground below, +8 for ground left.
@@ -166,6 +166,7 @@ public class DungeonTileSheet {
 		chasmStitcheable.put( Terrain.DOOR,         CHASM_WALL );
 		chasmStitcheable.put( Terrain.OPEN_DOOR,    CHASM_WALL );
 		chasmStitcheable.put( Terrain.LOCKED_DOOR,  CHASM_WALL );
+		chasmStitcheable.put( Terrain.BRONZE_LOCKED_DOOR,  CHASM_WALL );
 		chasmStitcheable.put( Terrain.SECRET_DOOR,  CHASM_WALL );
 		chasmStitcheable.put( Terrain.WALL_DECO,    CHASM_WALL );
 
@@ -335,9 +336,9 @@ public class DungeonTileSheet {
 	public static final int DOOR_SIDEWAYS_OVERHANG          = WALLS_OVERHANG+4;
 	public static final int DOOR_SIDEWAYS_OVERHANG_OPEN     = WALLS_OVERHANG+8;
 	public static final int DOOR_SIDEWAYS_OVERHANG_LOCKED   = WALLS_OVERHANG+12;
-	public static final int DOOR_SIDEWAYS_OVERHANG_BRONZE   = WALLS_OVERHANG+WIDTH+12;//+WIDTH as it's on the next line
 	public static final int WALL_OVERHANG_CRACKED           = WALLS_OVERHANG+WIDTH;
 	public static final int WALL_OVERHANG_WOODEN            = WALLS_OVERHANG+WIDTH*2;
+	public static final int DOOR_SIDEWAYS_OVERHANG_BRONZE   = DOOR_SIDEWAYS_OVERHANG_LOCKED+WIDTH;//+WIDTH as it's on the next line
 
 	public static int stitchWallOverhangTile(Terrain tile, Terrain rightBelow, Terrain below, Terrain leftBelow){
 		int visual;

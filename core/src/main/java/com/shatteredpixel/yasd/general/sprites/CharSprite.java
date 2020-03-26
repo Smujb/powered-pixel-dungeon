@@ -295,7 +295,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 						} );
 
 					}*/
-				callback.call();
+					callback.call();
 				} else {
 					ch.elementalType().FX(ch, cell, callback);
 				}
