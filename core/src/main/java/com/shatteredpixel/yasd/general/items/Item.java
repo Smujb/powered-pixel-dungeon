@@ -132,11 +132,11 @@ public class Item implements Bundlable {
 		saidAlmostBreak = false;
 	}
 
-	public void use() {
+	public final void use() {
 		use(defaultDegradeAmount());
 	}
 
-	public void use(float amount) {
+	public final void use(float amount) {
 		use(amount, false);
 	}
 

@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.DarkBlock;
 import com.shatteredpixel.yasd.general.effects.EmoIcon;
@@ -39,6 +40,7 @@ import com.shatteredpixel.yasd.general.effects.RedShieldHalo;
 import com.shatteredpixel.yasd.general.effects.ShieldHalo;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.Splash;
+import com.shatteredpixel.yasd.general.effects.WepSprite;
 import com.shatteredpixel.yasd.general.effects.TorchHalo;
 import com.shatteredpixel.yasd.general.effects.YellowBlock;
 import com.shatteredpixel.yasd.general.effects.particles.BloodParticle;
@@ -47,6 +49,8 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SmokeParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SnowParticle;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
+import com.shatteredpixel.yasd.general.items.weapon.melee.Polearm;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -103,7 +107,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	protected Animation operate;
 	protected Animation zap;
 	protected Animation die;
-	public ItemSprite weaponImg = null;
+	public WepSprite weaponImg = null;
 	
 	protected Callback animCallback;
 	
@@ -262,33 +266,39 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	}
 	
 	public void attack( int cell, Callback callback ) {
+		final Char enemy= Actor.findChar(cell);
+		if (enemy == null) {
+			callback.call();
+		}
 		animCallback = new Callback() {
 			@Override
 			public void call() {
 				if (ch.hasBelongings()) {
-					final float FADE_TIME	= 0.5f;
 					KindOfWeapon weapon = ch.belongings.getCurrentWeapon();
 					if (weapon != null && !(weapon instanceof MissileWeapon)) {
-						weaponImg = new ItemSprite(weapon);
-						weaponImg.place(ch.pos);
-						weaponImg.angularSpeed = 500;
-						if (cell > ch.pos) {
-							weaponImg.angle = 255;
+						weaponImg = new WepSprite(weapon);
+						//weaponImg.place(ch.pos);
+						//weaponImg.center(CharSprite.this);
+						//weaponImg.angularSpeed = 500;
+						//weaponImg.angle = 215;
+						//weaponImg.flipHorizontal = cell <= ch.pos;
+						weaponImg.setChars(ch, enemy);
+						if (weapon instanceof Fist || weapon instanceof Polearm) {
+							weaponImg.stabEffect();
 						} else {
-							weaponImg.angle = 45;
+							weaponImg.rotateEffect();
 						}
-						weaponImg.visible = true;
 						parent.add(weaponImg);
 						parent.update();
-						parent.add( new Delayer( FADE_TIME ) {
+						parent.add( new Delayer( WepSprite.TIME ) {
 							@Override
 							protected void onComplete() {
 								weaponImg.killAndErase();
 								parent.erase( weaponImg );
 								weaponImg = null;
-								callback.call();
 							}
 						} );
+						callback.call();
 					}
 				} else {
 					ch.elementalType().FX(ch, cell, callback);
@@ -840,8 +850,6 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 				idle();
 				ch.onOperateComplete();
 				
-			} else if (anim == attack && ch.hasBelongings()) {
-
 			}
 		}
 	}

@@ -194,40 +194,13 @@ public class WndSettings extends WndTabbed {
 			tileGrid.setRect(0, brightness.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 			add(tileGrid);
 
-			/*RedButton btnMod = new RedButton( Messages.get(this, "mods") ) {
+			CheckBox chkCutscenes = new CheckBox( Messages.get(this, "cutscenes") ) {
 				@Override
 				protected void onClick() {
-					MainGame.scene().addToFront(new WndOptions(Messages.get(DisplayTab.class, "mods_title"),
-							Messages.get(DisplayTab.class, "mods_text", ModHandler.getName()),
-							Messages.titleCase(ModHandler.PHYSICAL.displayName()),
-							Messages.titleCase(ModHandler.YASD.displayName()),
-							Messages.titleCase(ModHandler.CURSED.displayName()),
-							Messages.titleCase(ModHandler.TEST.displayName())) {
-						@Override
-						protected void onSelect(int index) {
-							if (index == ModHandler.YASD.getValue()) {
-								GameSettings.mod(ModHandler.YASD.getValue());
-							} else if (index == ModHandler.TEST.getValue()) {
-								GameSettings.mod(ModHandler.TEST.getValue());
-							} else if (index == ModHandler.CURSED.getValue()) {
-								GameSettings.mod(ModHandler.CURSED.getValue());
-							} else if (index == ModHandler.PHYSICAL.getValue()) {
-								GameSettings.mod(ModHandler.PHYSICAL.getValue());
-							}
 
-							/*try {
-								Dungeon.saveAll();
-							} catch (Exception e) {
-								MainGame.reportException(e);
-							}
-							Game.instance.finish();
-						}
-					});
 				}
 			};
-			btnMod.setRct(0, tileGrid.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			add( btnMod );
-			*/
+
 		}
 	}
 

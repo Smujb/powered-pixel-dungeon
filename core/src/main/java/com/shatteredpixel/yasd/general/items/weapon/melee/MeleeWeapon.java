@@ -122,8 +122,8 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	@Override
-	public void use(float amount) {
-		super.use(amount*DLY);
+	public void use(float amount, boolean override) {
+		super.use(amount*DLY, override);
 	}
 
 	@Override
