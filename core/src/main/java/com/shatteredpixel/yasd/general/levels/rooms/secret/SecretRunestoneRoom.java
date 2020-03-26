@@ -28,12 +28,13 @@
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
 import com.shatteredpixel.yasd.general.items.Generator;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
+import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Point;
+import com.watabou.utils.Random;
 
 public class SecretRunestoneRoom extends SecretRoom {
 	
@@ -49,7 +50,7 @@ public class SecretRunestoneRoom extends SecretRoom {
 			Painter.drawLine(level,
 					new Point(center.x, top+1),
 					new Point(center.x, bottom-1),
-					Terrain.BOOKSHELF);
+					Random.Int(2) == 0 ? Terrain.BOOKSHELF : Terrain.SECRET_CRACKED_WALL);
 			if (entrance.x == left) {
 				Painter.fill(level, center.x+1, top+1, right-center.x-1, height()-2, Terrain.EMPTY_SP);
 			} else {
@@ -67,7 +68,7 @@ public class SecretRunestoneRoom extends SecretRoom {
 			}
 		}
 		
-		level.addItemToSpawn(new PotionOfLiquidFlame());
+		level.addItemToSpawn(new Bomb());
 		
 		int dropPos;
 		

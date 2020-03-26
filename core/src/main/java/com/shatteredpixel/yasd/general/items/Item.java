@@ -81,6 +81,8 @@ public class Item implements Bundlable {
 	
 	public String defaultAction = AC_INFO;
 	public boolean usesTargeting;
+
+	public Class<? extends Bag> necessaryBag = null;
 	
 	protected String name = Messages.get(this, "name");
 	public int image = 0;
@@ -262,6 +264,15 @@ public class Item implements Bundlable {
 	public boolean collect(@NotNull Bag container, @NotNull Char ch ) {
 		
 		ArrayList<Item> items = container.items;
+
+		if (necessaryBag != null && !necessaryBag.isInstance(container)) {
+			for (Item item:items) {
+				if (item instanceof Bag && ((Bag)item).grab( this ) && necessaryBag.isInstance(item)) {
+					return collect( (Bag)item, ch);
+				}
+			}
+			return false;
+		}
 
 		curUser = ch;
 		if (items.contains( this )) {

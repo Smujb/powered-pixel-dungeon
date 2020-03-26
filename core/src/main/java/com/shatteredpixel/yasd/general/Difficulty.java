@@ -75,10 +75,9 @@ public enum Difficulty {
 		switch (this) {
 			case EASY://Easy = 3 drop in durability per hit (200 hits until break)
 				return 3;
-			case MEDIUM:
-			default://Medium = 6 drop in durability per hit (100 hits until break)
+			case MEDIUM: default://Medium = 6 drop in durability per hit (100 hits until break)
 				return 6;
-			case HARD://Hard = 12 drop in durability per hit (about 50 hits until break)
+			case HARD://Hard = 12 drop in durability per hit (50 hits until break)
 				return 12;
 		}
 	}
