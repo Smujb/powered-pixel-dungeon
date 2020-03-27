@@ -416,6 +416,7 @@ public class DungeonTileSheet {
 		directFlatVisuals.put(Terrain.BARRICADE,        FLAT_BARRICADE);
 		directFlatVisuals.put(Terrain.HIGH_GRASS,       FLAT_HIGH_GRASS);
 		directFlatVisuals.put(Terrain.FURROWED_GRASS,   FLAT_FURROWED_GRASS);
+		directFlatVisuals.put(Terrain.CRACKED_WALL,   FLAT_CRACKED_WALL);
 
 		directFlatVisuals.put(Terrain.SECRET_DOOR,      directFlatVisuals.get(Terrain.WALL));
 		directFlatVisuals.put(Terrain.SECRET_CRACKED_WALL,      directFlatVisuals.get(Terrain.WALL));

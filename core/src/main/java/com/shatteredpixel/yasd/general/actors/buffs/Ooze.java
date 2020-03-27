@@ -115,7 +115,7 @@ public class Ooze extends Buff {
 		} else {
 			detach();
 		}
-		if (Dungeon.level.liquid()[target.pos]) {
+		if (Dungeon.level.liquid(target.pos)) {
 			detach();
 		}
 		return true;

@@ -77,7 +77,7 @@ public class Freezing extends Blob {
 			if (ch.buff(Frost.class) != null){
 				Buff.affect(ch, Frost.class, 2f);
 			} else {
-				Buff.affect(ch, Chill.class, Dungeon.level.liquid()[cell] ? 5f : 3f);
+				Buff.affect(ch, Chill.class, Dungeon.level.liquid(cell) ? 5f : 3f);
 				Chill chill = ch.buff(Chill.class);
 				if (chill != null && chill.cooldown() >= 10f){
 					Buff.affect(ch, Frost.class, 5f);
@@ -105,7 +105,7 @@ public class Freezing extends Blob {
 		
 		Char ch = Actor.findChar( cell );
 		if (ch != null) {
-			if (Dungeon.level.liquid()[ch.pos]){
+			if (Dungeon.level.liquid(ch.pos)){
 				Buff.prolong(ch, Frost.class, Frost.duration(ch) * Random.Float(5f, 7.5f));
 			} else {
 				Buff.prolong(ch, Frost.class, Frost.duration(ch) * Random.Float(1.0f, 1.5f));

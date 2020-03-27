@@ -197,6 +197,7 @@ public class WndSettings extends WndTabbed {
 			CheckBox chkCutscenes = new CheckBox( Messages.get(this, "cutscenes") ) {
 				@Override
 				protected void onClick() {
+					super.onClick();
 					GameSettings.cutscenes(checked());
 				}
 			};

@@ -54,9 +54,7 @@ public class Guard extends Mob {
 		spriteClass = GuardSprite.class;
 
 		healthFactor = 2f;
-		damageFactor = 1/3f;
-		//HP = HT = 50;
-		//defenseSkill = 12;
+		damageFactor = 2/3f;
 
 		EXP = 7;
 
@@ -67,11 +65,6 @@ public class Guard extends Mob {
 		
 		HUNTING = new  Hunting();
 	}
-
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange(5, 16);
-	}*/
 
 	private boolean chain(int target){
 		if (chainsUsed || enemy.properties().contains(Property.IMMOVABLE))
