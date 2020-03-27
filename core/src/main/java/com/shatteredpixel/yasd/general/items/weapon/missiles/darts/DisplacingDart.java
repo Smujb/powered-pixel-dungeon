@@ -56,7 +56,7 @@ public class DisplacingDart extends TippedDart {
 			
 			for (int pos = 0; pos < Dungeon.level.length(); pos++){
 				if (Dungeon.level.heroFOV[pos]
-						&& Dungeon.level.passable()[pos]
+						&& Dungeon.level.passable(pos)
 						&& Actor.findChar(pos) == null){
 					
 					int dist = Dungeon.level.distance(attacker.pos, pos);

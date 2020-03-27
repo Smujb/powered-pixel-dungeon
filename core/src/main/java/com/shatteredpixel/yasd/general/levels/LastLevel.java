@@ -151,7 +151,7 @@ public class LastLevel extends Level {
 		int cell;
 		do {
 			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable()[cell] || Actor.findChar(cell) != null);
+		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}
 

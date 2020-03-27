@@ -1159,7 +1159,7 @@ public class Hero extends Char {
 				int lookAhead = (int) GameMath.gate(0, path.size()-1, 2);
 				for (int i = 0; i < lookAhead; i++){
 					int cell = path.get(i);
-					if (!Dungeon.level.passable()[cell] || (fieldOfView[cell] && Actor.findChar(cell) != null)) {
+					if (!Dungeon.level.passable(cell) || (fieldOfView[cell] && Actor.findChar(cell) != null)) {
 						newPath = true;
 						break;
 					}
@@ -1460,7 +1460,7 @@ public class Hero extends Char {
 		ArrayList<Integer> passable = new ArrayList<>();
 		for (Integer ofs : PathFinder.NEIGHBOURS8) {
 			int cell = pos + ofs;
-			if ((Dungeon.level.passable()[cell] || Dungeon.level.avoid()[cell]) && Dungeon.level.heaps.get( cell ) == null) {
+			if ((Dungeon.level.passable(cell) || Dungeon.level.avoid(cell)) && Dungeon.level.heaps.get( cell ) == null) {
 				passable.add( cell );
 			}
 		}

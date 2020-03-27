@@ -100,7 +100,7 @@ public class Wraith extends Mob {
 		ArrayList<Integer> locations = new  ArrayList<>();
 		for (int n : PathFinder.NEIGHBOURS8) {
 			int cell = pos + n;
-			if (Dungeon.level.passable()[cell] && Actor.findChar( cell ) == null) {
+			if (Dungeon.level.passable(cell) && Actor.findChar( cell ) == null) {
 				locations.add(cell);
 			}
 		}
@@ -116,7 +116,7 @@ public class Wraith extends Mob {
 	}
 	
 	public static Wraith spawnAt( int pos, boolean useNeighbors ) {
-		if (Dungeon.level.passable()[pos] && Actor.findChar( pos ) == null) {
+		if (Dungeon.level.passable(pos) && Actor.findChar( pos ) == null) {
 			
 			Wraith w = Mob.create(Wraith.class);
 			w.enemySeen = true;

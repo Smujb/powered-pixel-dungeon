@@ -208,6 +208,7 @@ public abstract class Level implements Bundlable {
 		return map;
 	}
 
+	//NOTE: to avoid lag I recommend using passable(pos), losBlocking(pos), etc instead of passable()[pos], losBlocking()[pos], etc when possible.
 	public boolean passable(int pos) {
 		return map[pos].passable();
 	}
@@ -807,7 +808,7 @@ public abstract class Level implements Bundlable {
 
 		for( int cell = 0 ; cell < length() ; cell++ ){
 
-			if( !solid()[cell] && passable()[cell] && Actor.findChar(cell) == null ) {
+			if( !solid()[cell] && passable(cell) && Actor.findChar(cell) == null ) {
 				result.add( cell );
 			}
 		}
@@ -921,7 +922,7 @@ public abstract class Level implements Bundlable {
 		int cell;
 		do {
 			cell = Random.Int( length() );
-		} while (!passable()[cell]);
+		} while (!passable(cell));
 		return cell;
 	}
 	
@@ -1040,7 +1041,7 @@ public abstract class Level implements Bundlable {
 		}
 
 		//int flags = Terrain.flags[terrain];
-		//level.passable()[cell]		=  map[cell].passable;
+		//level.passable(cell]		=  map[cell].passable;
 		//level.losBlocking[cell]	    =  map[cell].losBlocking;
 		//level.flammable()[cell]		=  map[cell].flammable;
 		//level.secret[cell]		    =  map[cell].secret;
@@ -1088,7 +1089,7 @@ public abstract class Level implements Bundlable {
 			int n;
 			do {
 				n = cell + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			} while (!passable()[n] && !avoid()[n]);
+			} while (!passable(n) && !avoid(n));
 			return drop( item, n );
 			
 		} else {

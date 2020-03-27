@@ -104,7 +104,7 @@ public class WandOfWarding extends DamageWand {
 	public void onZap(Ballistica bolt) {
 		
 		Char ch = Actor.findChar(bolt.collisionPos);
-		if (!curUser.fieldOfView[bolt.collisionPos] || !Dungeon.level.passable()[bolt.collisionPos]){
+		if (!curUser.fieldOfView[bolt.collisionPos] || !Dungeon.level.passable(bolt.collisionPos)){
 			GLog.w( Messages.get(this, "bad_location"));
 			
 		} else if (ch != null){

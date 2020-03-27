@@ -257,7 +257,7 @@ public abstract class Char extends Actor {
 	//swaps places by default
 	public boolean interact() {
 
-		if (!Dungeon.level.passable()[pos] && !Dungeon.hero.flying) {
+		if (!Dungeon.level.passable(pos) && !Dungeon.hero.flying) {
 			return true;
 		}
 

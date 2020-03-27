@@ -254,7 +254,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 								int ofs = PathFinder.NEIGHBOURS8[i];
 								if (enemy.pos - target.pos == ofs) {
 									int newPos = enemy.pos + ofs;
-									if ((Dungeon.level.passable()[newPos] || Dungeon.level.avoid()[newPos])
+									if ((Dungeon.level.passable(newPos) || Dungeon.level.avoid(newPos))
 											&& Actor.findChar( newPos ) == null) {
 
 										Actor.addDelayed( new Pushing( enemy, enemy.pos, newPos ), -1 );

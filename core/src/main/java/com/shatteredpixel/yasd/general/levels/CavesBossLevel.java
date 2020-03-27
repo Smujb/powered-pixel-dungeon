@@ -225,7 +225,7 @@ public class CavesBossLevel extends Level {
 		int cell;
 		do {
 			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable()[cell] || Actor.findChar(cell) != null);
+		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -253,7 +253,7 @@ public class CavesBossLevel extends Level {
 			do {
 				boss.pos = Random.Int( length() );
 			} while (
-				!passable()[boss.pos] ||
+				!passable(boss.pos) ||
 				!outsideEntraceRoom( boss.pos ) ||
 				heroFOV[boss.pos]);
 			GameScene.add( boss );

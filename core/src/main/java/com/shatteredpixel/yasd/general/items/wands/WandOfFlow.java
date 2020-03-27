@@ -113,7 +113,7 @@ public class WandOfFlow extends DamageWand {
     }
 
     private void spreadWater(int cell, float strength){
-        if (strength >= 0 && (Dungeon.level.passable()[cell] || Dungeon.level.flammable()[cell])){
+        if (strength >= 0 && (Dungeon.level.passable(cell) || Dungeon.level.flammable(cell))){
             affectedCells.add(cell);
             if (strength >= 1.5f) {
                 visualCells.remove(cell);
@@ -123,7 +123,7 @@ public class WandOfFlow extends DamageWand {
             } else {
                 visualCells.add(cell);
             }
-        } else if (!Dungeon.level.passable()[cell])
+        } else if (!Dungeon.level.passable(cell))
             visualCells.add(cell);
     }
 

@@ -149,7 +149,7 @@ public class SewerBossLevel extends SewerLevel {
 		int pos;
 		do {
 			pos = pointToCell(roomEntrance.random());
-		} while (pos == entrance || !passable()[pos] || Actor.findChar(pos) != null);
+		} while (pos == entrance || !passable(pos) || Actor.findChar(pos) != null);
 		return pos;
 	}
 

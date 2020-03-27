@@ -212,7 +212,7 @@ public class Necromancer extends Mob {
 					int pushPos = pos;
 					for (int c : PathFinder.NEIGHBOURS8) {
 						if (Actor.findChar(summoningPos + c) == null
-								&& Dungeon.level.passable()[summoningPos + c]
+								&& Dungeon.level.passable(summoningPos + c)
 								&& Dungeon.level.trueDistance(pos, summoningPos + c) > Dungeon.level.trueDistance(pos, pushPos)) {
 							pushPos = summoningPos + c;
 						}
@@ -263,7 +263,7 @@ public class Necromancer extends Mob {
 				summoningPos = -1;
 				for (int c : PathFinder.NEIGHBOURS8){
 					if (Actor.findChar(enemy.pos+c) == null
-							&& Dungeon.level.passable()[enemy.pos+c]
+							&& Dungeon.level.passable(enemy.pos+c)
 							&& fieldOfView[enemy.pos+c]
 							&& Dungeon.level.trueDistance(pos, enemy.pos+c) < Dungeon.level.trueDistance(pos, summoningPos)){
 						summoningPos = enemy.pos+c;
@@ -299,7 +299,7 @@ public class Necromancer extends Mob {
 						int telePos = -1;
 						for (int c : PathFinder.NEIGHBOURS8){
 							if (Actor.findChar(enemy.pos+c) == null
-									&& Dungeon.level.passable()[enemy.pos+c]
+									&& Dungeon.level.passable(enemy.pos+c)
 									&& fieldOfView[enemy.pos+c]
 									&& Dungeon.level.trueDistance(pos, enemy.pos+c) < Dungeon.level.trueDistance(pos, telePos)){
 								telePos = enemy.pos+c;

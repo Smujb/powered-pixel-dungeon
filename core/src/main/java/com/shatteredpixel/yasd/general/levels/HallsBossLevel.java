@@ -186,7 +186,7 @@ public class HallsBossLevel extends Level {
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable()[cell] || Actor.findChar(cell) != null);
+		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -217,7 +217,7 @@ public class HallsBossLevel extends Level {
 			do {
 				boss.pos = Random.Int( length() );
 			} while (
-				!passable()[boss.pos] ||
+				!passable(boss.pos) ||
 				heroFOV[boss.pos]);
 			GameScene.add( boss );
 			boss.spawnFists();

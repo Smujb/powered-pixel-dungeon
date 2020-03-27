@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.PathFinder;
@@ -100,7 +99,7 @@ public abstract class WellWater extends Blob {
 				int newPlace;
 				do {
 					newPlace = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-				} while (!Dungeon.level.passable()[newPlace] && !Dungeon.level.avoid()[newPlace]);
+				} while (!Dungeon.level.passable(newPlace) && !Dungeon.level.avoid(newPlace));
 				Dungeon.level.drop( heap.pickUp(), newPlace ).sprite.drop( pos );
 				
 				return false;

@@ -400,7 +400,7 @@ public class Dungeon {
 			if (m.pos == hero.pos){
 				//displace mob
 				for(int i : PathFinder.NEIGHBOURS8){
-					if (Actor.findChar(m.pos+i) == null && level.passable()[m.pos + i]){
+					if (Actor.findChar(m.pos+i) == null && level.passable(m.pos + i)){
 						m.pos += i;
 						break;
 					}

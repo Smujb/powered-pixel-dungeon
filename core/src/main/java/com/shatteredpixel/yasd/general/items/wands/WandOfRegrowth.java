@@ -149,7 +149,7 @@ public class WandOfRegrowth extends Wand {
 	}
 
 	private void spreadRegrowth(int cell, float strength){
-		if (strength >= 0 && Dungeon.level.passable()[cell]){
+		if (strength >= 0 && Dungeon.level.passable(cell)){
 			affectedCells.add(cell);
 			if (strength >= 1.5f) {
 				spreadRegrowth(cell + PathFinder.CIRCLE8[left(direction)], strength - 1.5f);
@@ -158,7 +158,7 @@ public class WandOfRegrowth extends Wand {
 			} else {
 				visualCells.add(cell);
 			}
-		} else if (!Dungeon.level.passable()[cell])
+		} else if (!Dungeon.level.passable(cell))
 			visualCells.add(cell);
 	}
 
@@ -221,7 +221,7 @@ public class WandOfRegrowth extends Wand {
 		float strength = maxDist;
 		for (int c : bolt.subPath(1, dist)) {
 			strength--; //as we start at dist 1, not 0.
-			if (Dungeon.level.passable()[c]) {
+			if (Dungeon.level.passable(c)) {
 				affectedCells.add(c);
 				spreadRegrowth(c + PathFinder.CIRCLE8[left(direction)], strength - 1);
 				spreadRegrowth(c + PathFinder.CIRCLE8[direction], strength - 1);
@@ -307,7 +307,7 @@ public class WandOfRegrowth extends Wand {
 
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8){
-				if (Dungeon.level.passable()[pos+i]
+				if (Dungeon.level.passable(pos+i)
 						&& pos+i != Dungeon.level.entrance
 						&& pos+i != Dungeon.level.exit){
 					candidates.add(pos+i);
@@ -343,7 +343,7 @@ public class WandOfRegrowth extends Wand {
 
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8){
-				if (Dungeon.level.passable()[pos+i]
+				if (Dungeon.level.passable(pos+i)
 						&& pos+i != Dungeon.level.entrance
 						&& pos+i != Dungeon.level.exit){
 					candidates.add(pos+i);

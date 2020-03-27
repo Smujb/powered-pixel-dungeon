@@ -124,7 +124,7 @@ public class Mimic extends Mob {
 			ArrayList<Integer> candidates = new  ArrayList<>();
 			for (int n : PathFinder.NEIGHBOURS8) {
 				int cell = pos + n;
-				if ((Dungeon.level.passable()[cell] || Dungeon.level.avoid()[cell]) && Actor.findChar( cell ) == null) {
+				if ((Dungeon.level.passable(cell) || Dungeon.level.avoid(cell)) && Actor.findChar( cell ) == null) {
 					candidates.add( cell );
 				}
 			}

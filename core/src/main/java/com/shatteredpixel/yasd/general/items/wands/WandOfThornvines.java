@@ -198,7 +198,7 @@ public class WandOfThornvines extends Wand {
         }
 
         public ThornVine spawnAt(int pos, float level, int charges, Char owner ) {
-            if (Dungeon.level.passable()[pos]) {
+            if (Dungeon.level.passable(pos)) {
                 ThornVine TV = new ThornVine(level, charges, owner);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
