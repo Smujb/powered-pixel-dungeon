@@ -129,7 +129,7 @@ public enum Element {
 				}
 
 				if (defender.isAlive()){
-					if (Dungeon.level.liquid()[defender.pos])
+					if (Dungeon.level.liquid(defender.pos))
 						Buff.prolong(defender, Chill.class, 4);
 					else
 						Buff.prolong(defender, Chill.class, 2);
@@ -162,7 +162,7 @@ public enum Element {
 				}
 				break;
 			case ELECTRIC:
-				if ((Dungeon.level.liquid()[defender.pos] && !defender.isFlying()) || defender.buff(Wet.class) != null) {
+				if ((Dungeon.level.liquid(defender.pos) && !defender.isFlying()) || defender.buff(Wet.class) != null) {
 					damage *= 1.5f;
 				}
 				break;

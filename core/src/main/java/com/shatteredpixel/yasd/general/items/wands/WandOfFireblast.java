@@ -90,7 +90,7 @@ public class WandOfFireblast extends DamageWand {
 			
 			//only ignite cells directly near caster if they are flammable
 			if (!Dungeon.level.adjacent(bolt.sourcePos, cell)
-					|| Dungeon.level.flammable()[cell]){
+					|| Dungeon.level.flammable(cell)){
 				GameScene.add( Blob.seed( cell, 1+chargesPerCast(), Fire.class ) );
 			}
 			

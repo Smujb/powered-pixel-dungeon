@@ -90,7 +90,7 @@ public class WandOfDisintegration extends DamageWand {
 				chars.add( ch );
 			}
 
-			if (Dungeon.level.flammable()[c]) {
+			if (Dungeon.level.flammable(c)) {
 
 				Dungeon.level.destroy( c );
 				GameScene.updateMap( c );
@@ -98,7 +98,7 @@ public class WandOfDisintegration extends DamageWand {
 				
 			}
 
-			if (Dungeon.level.solid()[c])
+			if (Dungeon.level.solid(c))
 				terrainPassed++;
 			
 			CellEmitter.center( c ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
@@ -134,8 +134,8 @@ public class WandOfDisintegration extends DamageWand {
 		// right angles would reflect everything right back at ya so they are ignored
 		if( deltaX != 0 && deltaY != 0 ){
 
-			boolean horizontWall = Dungeon.level.solid()[ targetPos - ( deltaX > 0 ? 1 : -1 ) ];
-			boolean verticalWall = Dungeon.level.solid()[ targetPos - ( deltaY > 0 ? Dungeon.level.width() : -Dungeon.level.width() ) ];
+			boolean horizontWall = Dungeon.level.solid( targetPos - ( deltaX > 0 ? 1 : -1 ) );
+			boolean verticalWall = Dungeon.level.solid( targetPos - ( deltaY > 0 ? Dungeon.level.width() : -Dungeon.level.width() ) );
 
 			if( !horizontWall || !verticalWall ) {
 

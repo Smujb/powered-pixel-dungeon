@@ -808,7 +808,7 @@ public abstract class Level implements Bundlable {
 
 		for( int cell = 0 ; cell < length() ; cell++ ){
 
-			if( !solid()[cell] && passable(cell) && Actor.findChar(cell) == null ) {
+			if( !solid(cell) && passable(cell) && Actor.findChar(cell) == null ) {
 				result.add( cell );
 			}
 		}
@@ -1038,21 +1038,6 @@ public abstract class Level implements Bundlable {
 
 		if (terrain != TRAP && terrain != SECRET_TRAP && terrain != INACTIVE_TRAP){
 			level.traps.remove( cell );
-		}
-
-		//int flags = Terrain.flags[terrain];
-		//level.passable(cell]		=  map[cell].passable;
-		//level.losBlocking[cell]	    =  map[cell].losBlocking;
-		//level.flammable()[cell]		=  map[cell].flammable;
-		//level.secret[cell]		    =  map[cell].secret;
-		//level.solid()[cell]			=  map[cell].solid;
-		//level.avoid()[cell]			=  map[cell].avoid;
-		//level.pit()[cell]			    =  map[cell].pit;
-		//level.liquid()[cell]			=  map[cell].liquid;
-		
-		SmokeScreen s = (SmokeScreen)level.blobs.get(SmokeScreen.class);
-		if (s != null && s.volume > 0){
-			level.losBlocking()[cell] = level.losBlocking()[cell] || s.cur[cell] > 0;
 		}
 	}
 	

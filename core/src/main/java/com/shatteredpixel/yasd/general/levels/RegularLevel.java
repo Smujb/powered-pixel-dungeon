@@ -218,9 +218,7 @@ public abstract class RegularLevel extends Level {
 		for (Mob m : mobs){
 			if (map[m.pos] == Terrain.HIGH_GRASS || map[m.pos] == Terrain.FURROWED_GRASS) {
 				map[m.pos] = Terrain.GRASS;
-				losBlocking()[m.pos] = false;
 			}
-
 		}
 
 	}

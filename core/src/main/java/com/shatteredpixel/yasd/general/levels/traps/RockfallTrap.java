@@ -71,7 +71,7 @@ public class RockfallTrap extends Trap {
 			int cell;
 			for (Point p : r.getPoints()){
 				cell = Dungeon.level.pointToCell(p);
-				if (!Dungeon.level.solid()[cell]){
+				if (!Dungeon.level.solid(cell)){
 					rockCells.add(cell);
 				}
 			}

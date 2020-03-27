@@ -120,7 +120,7 @@ public class Ballistica {
 
 			path.add(cell);
 
-			if ((stopTerrain && cell != sourcePos && Dungeon.level.solid()[cell])
+			if ((stopTerrain && cell != sourcePos && Dungeon.level.solid(cell))
 					|| (cell != sourcePos && stopChars && Actor.findChar( cell ) != null)
 					|| (cell == to && stopTarget)){
 				collide(cell);

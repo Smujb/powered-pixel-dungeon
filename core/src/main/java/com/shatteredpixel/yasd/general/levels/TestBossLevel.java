@@ -170,7 +170,7 @@ public class TestBossLevel extends Level {
 					cont = false;
 				}
 			}
-		} while (!insideRoom(cell) || solid()[cell] || Actor.findChar(cell) != null || !cont);
+		} while (!insideRoom(cell) || solid(cell) || Actor.findChar(cell) != null || !cont);
 		return cell;
 	}
 	public static final String BOSS = "boss";

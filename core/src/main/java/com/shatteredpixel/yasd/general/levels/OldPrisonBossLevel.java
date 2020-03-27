@@ -400,7 +400,7 @@ public class OldPrisonBossLevel extends Level {
 				tengu.state = tengu.HUNTING;
 				do {
 					tengu.pos = Random.Int(length());
-				} while (solid()[tengu.pos] || distance(tengu.pos, Dungeon.hero.pos) < 8);
+				} while (solid(tengu.pos) || distance(tengu.pos, Dungeon.hero.pos) < 8);
 				GameScene.add(tengu);
 				tengu.notice();
 				

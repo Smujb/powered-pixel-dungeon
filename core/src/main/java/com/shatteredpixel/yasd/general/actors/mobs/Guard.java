@@ -86,7 +86,7 @@ public class Guard extends Mob {
 		else {
 			int newPos = -1;
 			for (int i : chain.subPath(1, chain.dist)){
-				if (!Dungeon.level.solid()[i] && Actor.findChar(i) == null){
+				if (!Dungeon.level.solid(i) && Actor.findChar(i) == null){
 					newPos = i;
 					break;
 				}

@@ -145,7 +145,7 @@ public class EtherealChains extends Artifact {
 		int bestPos = -1;
 		for (int i : chain.subPath(1, chain.dist)){
 			//prefer to the earliest point on the xPos
-			if (!Dungeon.level.solid()[i] && Actor.findChar(i) == null){
+			if (!Dungeon.level.solid(i) && Actor.findChar(i) == null){
 				bestPos = i;
 				break;
 			}
@@ -189,7 +189,7 @@ public class EtherealChains extends Artifact {
 	private void chainLocation( Ballistica chain, final Char user ){
 		
 		//don't pull if the collision spot is in a wall
-		if (Dungeon.level.solid()[chain.collisionPos]){
+		if (Dungeon.level.solid(chain.collisionPos)){
 			GLog.i( Messages.get(this, "inside_wall"));
 			return;
 		}
@@ -197,7 +197,7 @@ public class EtherealChains extends Artifact {
 		//don't pull if there are no solid objects next to the pull location
 		boolean solidFound = false;
 		for (int i : PathFinder.NEIGHBOURS8){
-			if (Dungeon.level.solid()[chain.collisionPos + i]){
+			if (Dungeon.level.solid(chain.collisionPos + i)){
 				solidFound = true;
 				break;
 			}

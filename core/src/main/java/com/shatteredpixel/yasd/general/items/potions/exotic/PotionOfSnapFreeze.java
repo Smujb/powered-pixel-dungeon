@@ -57,7 +57,7 @@ public class PotionOfSnapFreeze extends ExoticPotion {
 		Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
 		
 		for (int offset : PathFinder.NEIGHBOURS9){
-			if (!Dungeon.level.solid()[cell+offset]) {
+			if (!Dungeon.level.solid(cell+offset)) {
 				
 				Freezing.affect( cell + offset, fire );
 				
