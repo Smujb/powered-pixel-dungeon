@@ -1223,12 +1223,12 @@ public abstract class Mob extends Char {
 					&& Dungeon.level.distance(Dungeon.hero.pos, mob.pos) <= 3){
 				level.mobs.remove( mob );
 				heldMobs.add(mob);
-			} else if (mob.properties().contains(Property.BOSS)
+			} /*else if (mob.properties().contains(Property.BOSS)
 					|| (mob.properties().contains(Property.MINIBOSS)
 					&& level.distance(Dungeon.hero.pos, mob.pos) < 5)) {
 				level.mobs.remove( mob );
 				heldMobs.add(mob);
-			}
+			}*/
 		}
 	}
 	

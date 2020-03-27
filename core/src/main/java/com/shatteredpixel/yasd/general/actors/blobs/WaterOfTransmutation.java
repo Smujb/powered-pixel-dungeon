@@ -49,8 +49,6 @@ import com.shatteredpixel.yasd.general.journal.Catalog;
 import com.shatteredpixel.yasd.general.journal.Notes.Landmark;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
-import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class WaterOfTransmutation extends WellWater {
 	
@@ -123,10 +121,9 @@ public class WaterOfTransmutation extends WellWater {
 	private Weapon changeWeapon( MeleeWeapon w ) {
 		
 		Weapon n;
-		Category c = Generator.wepTiers[w.tier-1];
 
 		do {
-			n = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+			n = Generator.randomWeapon().setTier(w.tier);
 		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 
 		int level = w.level();

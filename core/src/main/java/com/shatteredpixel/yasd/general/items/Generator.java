@@ -188,11 +188,6 @@ public class Generator {
 
 	public enum Category {
 		WEAPON	( 6,    MeleeWeapon.class),
-		WEP_T1	( 0,    MeleeWeapon.class),
-		WEP_T2	( 0,    MeleeWeapon.class),
-		WEP_T3	( 0,    MeleeWeapon.class),
-		WEP_T4	( 0,    MeleeWeapon.class),
-		WEP_T5	( 0,    MeleeWeapon.class),
 		
 		ARMOR	( 4,    Armor.class ),
 		ARM_T1  (0,     Armor.class ),
@@ -360,46 +355,10 @@ public class Generator {
 					Blunt.class,
 					Polearm.class,
 					Heavy.class,
-					Shield.class,
+					Shield.class
 
 			};
-			WEAPON.probs = new float[]{ 1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 0, 5, 4 };//TODO: fix dried rose
-			
-			WEP_T1.classes = new Class<?>[]{
-					Fist.class,
-					MagesStaff.class
-			};
-			WEP_T1.probs = new float[]{  1, 0 };
-			
-			WEP_T2.classes = new Class<?>[]{
-					Staff.class
-			};
-			WEP_T2.probs = new float[]{  5 };
-			
-			WEP_T3.classes = new Class<?>[]{
-					Sharp.class,
-					Dual.class,
-					Long.class
-			};
-			WEP_T3.probs = new float[]{  5, 5, 4 };
-			
-			WEP_T4.classes = new Class<?>[]{
-					Axe.class,
-					Flail.class,
-					Magical.class,
-					Sneak.class,
-					Projectile.class
-			};
-			WEP_T4.probs = new float[]{  5, 5, 4, 4, 4 };
-			
-			WEP_T5.classes = new Class<?>[]{
-					Basic.class,
-					Blunt.class,
-					Polearm.class,
-					Heavy.class,
-					Shield.class
-			};
-			WEP_T5.probs = new float[]{ 6, 5, 5, 4, 4 };
+			WEAPON.probs = new float[]{ 1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 4, 5, 4 };
 			
 			//see Generator.randomArmor
 			ARMOR.classes = new Class<?>[]{
@@ -596,14 +555,6 @@ public class Generator {
 		}
 		return a;
 	}
-
-	public static final Category[] wepTiers = new Category[]{
-			Category.WEP_T1,
-			Category.WEP_T2,
-			Category.WEP_T3,
-			Category.WEP_T4,
-			Category.WEP_T5
-	};
 
 	public static MeleeWeapon randomWeapon(){
 		return randomWeapon(Dungeon.getScaleFactor() / Constants.CHAPTER_LENGTH);
