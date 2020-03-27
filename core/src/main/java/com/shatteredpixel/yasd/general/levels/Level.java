@@ -207,73 +207,105 @@ public abstract class Level implements Bundlable {
 		}
 		return map;
 	}
-	//TODO: fix this for individual locations!
-	public boolean[] passable() {
+
+	public boolean passable(int pos) {
+		return map[pos].passable;
+	}
+
+	public final boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			passable[i] = map[i].passable;
+			passable[i] = passable(i);
 		}
 		return passable;
 	}
 
-	public boolean[] losBlocking() {
+	public boolean losBlocking(int pos) {
+		if (Blob.volumeAt(this, pos, DarkGas.class) > 0 || Blob.volumeAt(this, pos, SmokeScreen.class) > 0) {
+			return true;
+		}
+		return map[pos].losBlocking;
+	}
+
+	public final boolean[] losBlocking() {
 		boolean[] losBlocking = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			losBlocking[i] = map[i].losBlocking;
-			if (Blob.volumeAt(this, i, DarkGas.class) > 0 || Blob.volumeAt(this, i, SmokeScreen.class) > 0) {
-				losBlocking[i] = true;
-			}
+			losBlocking[i] = losBlocking(i);
 		}
 		return losBlocking;
 	}
 
-	public boolean[] flammable() {
+	public boolean flammable(int pos) {
+		return map[pos].flamable;
+	}
+
+	public final boolean[] flammable() {
 		boolean[] flammable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			flammable[i] = map[i].flamable;
+			flammable[i] = flammable(i);
 		}
 		return flammable;
 	}
 
-	public boolean[] secret() {
+	public boolean secret(int pos) {
+		return map[pos].secret;
+	}
+
+	public final boolean[] secret() {
 		boolean[] secret = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			secret[i] = map[i].secret;
+			secret[i] = secret(i);
 		}
 		return secret;
 	}
 
-	public boolean[] solid() {
+	public boolean solid(int pos) {
+		return map[pos].solid;
+	}
+
+	public final boolean[] solid() {
 		boolean[] solid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			solid[i] = map[i].solid;
+			solid[i] = solid(i);
 		}
 		return solid;
 	}
 
-	public boolean[] avoid() {
+	public boolean avoid(int pos) {
+		if (traps.containsKey(pos) && (traps.get(pos).active && traps.get(pos).visible)) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
+			return true;
+		}
+		return map[pos].avoid;
+	}
+
+	public final boolean[] avoid() {
 		boolean[] avoid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			avoid[i] = map[i].avoid;
-			if (traps.containsKey(i) && (traps.get(i).active && traps.get(i).visible)) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
-				avoid[i] = true;
-			}
+			avoid[i] = avoid(i);
 		}
 		return avoid;
 	}
 
-	public boolean[] liquid() {
+	public boolean liquid(int pos) {
+		return map[pos].liquid;
+	}
+
+	public final boolean[] liquid() {
 		boolean[] liquid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			liquid[i] = map[i].liquid;
+			liquid[i] = liquid(i);
 		}
 		return liquid;
 	}
 
-	public boolean[] pit() {
+	public boolean pit(int cell) {
+		return map[cell].pit;
+	}
+
+	public final boolean[] pit() {
 		boolean[] pit = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
-			pit[i] = map[i].pit;
+			pit[i] = pit(i);
 		}
 		return pit;
 	}

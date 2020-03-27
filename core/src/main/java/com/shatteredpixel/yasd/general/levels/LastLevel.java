@@ -63,14 +63,8 @@ public class LastLevel extends Level {
 	private int pedestal;
 
 	@Override
-	public boolean[] passable() {
-		boolean[] passable = super.passable();
-		for (int i = 0; i < length(); i++) {
-			if (map[i].pit) {//Pits can't be jumped into on this level.
-				passable[i] = false;
-			}
-		}
-		return passable;
+	public boolean passable(int pos) {
+		return super.passable(pos) & !pit(pos);
 	}
 
 	@Override

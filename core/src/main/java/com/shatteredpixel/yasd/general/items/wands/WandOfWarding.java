@@ -119,7 +119,7 @@ public class WandOfWarding extends DamageWand {
 				GLog.w( Messages.get(this, "bad_location"));
 			}
 		} else if (canPlaceWard(bolt.collisionPos)){
-			Ward ward = new Ward();
+			Ward ward = Mob.create(Ward.class);
 			ward.pos = bolt.collisionPos;
 			ward.wandLevel = (int)actualLevel();
 			GameScene.add(ward, 1f);

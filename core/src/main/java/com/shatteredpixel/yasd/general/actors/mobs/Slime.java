@@ -65,13 +65,13 @@ public class Slime extends Mob {
 	
 	@Override
 	protected Item createLoot() {
-		Generator.Category c = Generator.Category.WEP_T2;
 		MeleeWeapon w;
 		do {
-			w = (MeleeWeapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+			w = Generator.randomWeapon();
 		} while (w == null);
 		w.random();
 		w.level(0);
+		w.setTier(2);
 		return w;
 	}
 
