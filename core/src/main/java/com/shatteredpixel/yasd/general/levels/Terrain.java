@@ -62,7 +62,7 @@ public enum Terrain {
 		@Override
 		public void setup() {
 			passable = true;
-			flamable = true;
+			flammable = true;
 		}
 	},
 	EMPTY_WELL {
@@ -127,7 +127,7 @@ public enum Terrain {
 		public void setup() {
 			passable = true;
 			losBlocking = true;
-			flamable = true;
+			flammable = true;
 			solid = true;
 		}
 
@@ -140,7 +140,7 @@ public enum Terrain {
 		@Override
 		public void setup() {
 			passable = true;
-			flamable = true;
+			flammable = true;
 		}
 	},
 	ENTRANCE {
@@ -197,7 +197,7 @@ public enum Terrain {
 	BARRICADE {
 		@Override
 		public void setup() {
-			flamable = true;
+			flammable = true;
 			solid = true;
 			losBlocking = true;
 		}
@@ -213,7 +213,7 @@ public enum Terrain {
 		public void setup() {
 			passable = true;
 			losBlocking = true;
-			flamable = true;
+			flammable = true;
 		}
 
 		@Override
@@ -226,7 +226,7 @@ public enum Terrain {
 		public void setup() {
 			passable = true;
 			losBlocking = true;
-			flamable = true;
+			flammable = true;
 		}
 
 		@Override
@@ -308,7 +308,7 @@ public enum Terrain {
 		@Override
 		public void setup() {
 			passable = true;
-			flamable = true;
+			flammable = true;
 		}
 	},
 	WELL {
@@ -337,7 +337,7 @@ public enum Terrain {
 	BOOKSHELF {
 		@Override
 		public void setup() {
-			flamable = true;
+			flammable = true;
 			solid = true;
 			losBlocking = true;
 		}
@@ -349,14 +349,46 @@ public enum Terrain {
 		}
 	};
 
-	public boolean passable 	= false;
-	public boolean losBlocking  = false;
-	public boolean flamable 	= false;
-	public boolean secret 		= false;
-	public boolean solid 		= false;
-	public boolean avoid 		= false;
-	public boolean liquid 		= false;
-	public boolean pit 			= false;
+	protected boolean passable 	    = false;
+	protected boolean losBlocking   = false;
+	protected boolean flammable     = false;
+	protected boolean secret 		= false;
+	protected boolean solid 		= false;
+	protected boolean avoid 		= false;
+	protected boolean liquid 		= false;
+	protected boolean pit 			= false;
+
+	public boolean passable() {
+		return passable;
+	}
+
+	public boolean losBlocking() {
+		return losBlocking;
+	}
+
+	public boolean flammable() {
+		return flammable;
+	}
+
+	public boolean secret() {
+		return secret;
+	}
+
+	public boolean solid() {
+		return solid;
+	}
+
+	public boolean avoid() {
+		return avoid;
+	}
+
+	public boolean liquid() {
+		return liquid;
+	}
+
+	public boolean pit() {
+		return pit;
+	}
 
 	Terrain() {
 		setup();
@@ -369,7 +401,7 @@ public enum Terrain {
 	}
 
 	public boolean explodable() {
-		return flamable;
+		return flammable;
 	}
 
 	protected void triggerTrap(int cell, Trap trap) {

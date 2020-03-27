@@ -84,12 +84,8 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
-	public boolean[] liquid() {//All passable tiles are considered "liquid" due to being underwater.
-		boolean[] liquid = new boolean[length()];
-		for (int i = 0; i < liquid.length; i++) {
-			liquid[i] = map[i].liquid || map[i].passable;
-		}
-		return liquid;
+	public boolean liquid(int pos) {
+		return super.liquid(pos) || passable(pos);
 	}
 
 	@Override

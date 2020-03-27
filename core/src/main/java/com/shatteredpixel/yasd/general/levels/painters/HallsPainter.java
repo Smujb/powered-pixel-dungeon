@@ -49,7 +49,7 @@ public class HallsPainter extends RegularPainter {
 				
 				int count = 0;
 				for (int j = 0; j < PathFinder.NEIGHBOURS8.length; j++) {
-					if (map[i + PathFinder.NEIGHBOURS8[j]].passable) {
+					if (map[i + PathFinder.NEIGHBOURS8[j]].passable()) {
 						count++;
 					}
 				}

@@ -209,7 +209,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean passable(int pos) {
-		return map[pos].passable;
+		return map[pos].passable();
 	}
 
 	public final boolean[] passable() {
@@ -224,7 +224,7 @@ public abstract class Level implements Bundlable {
 		if (Blob.volumeAt(this, pos, DarkGas.class) > 0 || Blob.volumeAt(this, pos, SmokeScreen.class) > 0) {
 			return true;
 		}
-		return map[pos].losBlocking;
+		return map[pos].losBlocking();
 	}
 
 	public final boolean[] losBlocking() {
@@ -236,7 +236,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean flammable(int pos) {
-		return map[pos].flamable;
+		return map[pos].flammable();
 	}
 
 	public final boolean[] flammable() {
@@ -248,7 +248,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean secret(int pos) {
-		return map[pos].secret;
+		return map[pos].secret();
 	}
 
 	public final boolean[] secret() {
@@ -260,7 +260,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean solid(int pos) {
-		return map[pos].solid;
+		return map[pos].solid();
 	}
 
 	public final boolean[] solid() {
@@ -275,7 +275,7 @@ public abstract class Level implements Bundlable {
 		if (traps.containsKey(pos) && (traps.get(pos).active && traps.get(pos).visible)) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
 			return true;
 		}
-		return map[pos].avoid;
+		return map[pos].avoid();
 	}
 
 	public final boolean[] avoid() {
@@ -287,7 +287,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean liquid(int pos) {
-		return map[pos].liquid;
+		return map[pos].liquid();
 	}
 
 	public final boolean[] liquid() {
@@ -299,7 +299,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean pit(int cell) {
-		return map[cell].pit;
+		return map[cell].pit();
 	}
 
 	public final boolean[] pit() {
@@ -959,7 +959,7 @@ public abstract class Level implements Bundlable {
 			//int flags = Terrain.flags[map[i]];
 			passable[i]		=  map[i].passable;
 			losBlocking[i]	=  map[i].losBlocking;
-			flammable[i]		=  map[i].flamable;
+			flammable[i]		=  map[i].flammable;
 			secret[i]		=  map[i].secret;
 			solid[i]		=  map[i].solid;
 			avoid[i]		=  map[i].avoid;
@@ -1042,7 +1042,7 @@ public abstract class Level implements Bundlable {
 		//int flags = Terrain.flags[terrain];
 		//level.passable()[cell]		=  map[cell].passable;
 		//level.losBlocking[cell]	    =  map[cell].losBlocking;
-		//level.flammable()[cell]		=  map[cell].flamable;
+		//level.flammable()[cell]		=  map[cell].flammable;
 		//level.secret[cell]		    =  map[cell].secret;
 		//level.solid()[cell]			=  map[cell].solid;
 		//level.avoid()[cell]			=  map[cell].avoid;

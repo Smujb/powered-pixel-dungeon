@@ -123,7 +123,7 @@ public class Bomb extends Item {
 		if (Actor.findChar( cell ) != null && !(Actor.findChar( cell ) instanceof Hero) ){
 			ArrayList<Integer> candidates = new ArrayList<>();
 			for (int i : PathFinder.NEIGHBOURS8)
-				if (Dungeon.level.map[cell + i].passable)
+				if (Dungeon.level.passable(cell + i))
 					candidates.add(cell + i);
 			int newCell = candidates.isEmpty() ? cell : Random.element(candidates);
 			Dungeon.level.drop( this, newCell ).sprite.drop( cell );

@@ -109,7 +109,7 @@ public class Goo extends Mob {
 	@Override
 	public boolean act() {
 
-		if (Dungeon.level.map[pos].liquid && HP < HT) {
+		if (Dungeon.level.liquid(pos) && HP < HT) {
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 			if (HP*2 >= HT) {
 				BossHealthBar.bleed(false);

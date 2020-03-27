@@ -61,7 +61,6 @@ public class DarkGas extends Blob {
             for (int i = area.left; i < area.right; i++){
                 for (int j = area.top; j < area.bottom; j++){
                     cell = i + j*l.width();
-                    l.losBlocking()[cell] = off[cell] > 0 || l.map[cell].losBlocking;
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                         if (!ch.isImmune(this.getClass())) {
                             if (ch instanceof Hero) {
@@ -113,13 +112,6 @@ public class DarkGas extends Blob {
     public DarkGas setOwner(Char entity) {
         this.ownerID = entity.id();
         return this;
-    }
-
-    @Override
-    public void clear(int cell) {
-        super.clear(cell);
-        Level l = Dungeon.level;
-        l.losBlocking()[cell] = cur[cell] > 0 || l.map[cell].losBlocking;
     }
 
     private static final String STRENGTH = "strength";
