@@ -362,7 +362,8 @@ public abstract class Mob extends Char {
 		
 		enemy = chooseEnemy();
 		
-		boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
+		//boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
+		boolean enemyInFOV = notice(enemy) && (properties.contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
 
 		return state.act( enemyInFOV, justAlerted );
 	}
@@ -436,7 +437,7 @@ public abstract class Mob extends Char {
 			} else if ( alignment == Alignment.ALLY ) {
 				//look for hostile mobs to attack
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY && notice(mob))
+					if (mob.alignment == Alignment.ENEMY)
 						//intelligent allies do not target mobs which are passive, wandering, or asleep
 						if (!intelligentAlly ||
 								(mob.state != mob.SLEEPING && mob.state != mob.PASSIVE && mob.state != mob.WANDERING)) {
@@ -447,7 +448,7 @@ public abstract class Mob extends Char {
 			} else if (alignment == Alignment.ENEMY) {
 				//look for ally mobs to attack
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ALLY && notice(mob))
+					if (mob.alignment == Alignment.ALLY)
 						enemies.add(mob);
 
 				//and look for the hero

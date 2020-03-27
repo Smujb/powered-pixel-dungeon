@@ -989,7 +989,8 @@ public abstract class Char extends Actor {
 		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class)),
 				new HashSet<Class>()),
 		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class, LimitedAir.class))),
-		IMMOVABLE;
+		IMMOVABLE,
+		IGNORES_INVISIBLE;
 
 		private HashSet<Class> resistances;
 		private HashSet<Class> immunities;

@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.BasicArmor;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
-import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.general.items.armor.HeavyArmor;
 import com.shatteredpixel.yasd.general.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.general.items.armor.LightArmor;
@@ -74,11 +73,11 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
+import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFocus;
-import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
 import com.shatteredpixel.yasd.general.items.rings.RingOfHaste;
-import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
+import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPower;
 import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfTenacity;
@@ -189,12 +188,7 @@ public class Generator {
 	public enum Category {
 		WEAPON	( 6,    MeleeWeapon.class),
 		
-		ARMOR	( 4,    Armor.class ),
-		ARM_T1  (0,     Armor.class ),
-		ARM_T2  (0,     Armor.class ),
-		ARM_T3  (0,     Armor.class ),
-		ARM_T4  (0,     Armor.class ),
-		ARM_T5  (0,     Armor.class ),
+		ARMOR	( 6,    Armor.class ),
 		
 		MISSILE ( 3,    MissileWeapon.class ),
 		MIS_T1  ( 0,    MissileWeapon.class ),
@@ -371,37 +365,6 @@ public class Generator {
 					HeavyArmor.class,
 			};
 			ARMOR.probs = new float[]{  0, 0, 0, 5, 5, 5, 5 };
-
-			ARM_T1.classes = new Class<?>[]{
-					ClothArmor.class,
-					HuntressArmor.class,
-					RogueArmor.class,
-					MageArmor.class
-			};
-			ARM_T1.probs = new float[]{ 1, 1, 1, 1 };
-
-			ARM_T2.classes = new Class<?>[]{
-					LightArmor.class
-			};
-
-			ARM_T2.probs = new float[]{ 1 };
-
-			ARM_T3.classes = new Class<?>[]{
-					ChainArmor.class
-			};
-
-			ARM_T3.probs = new float[]{ 1 };
-
-			ARM_T4.classes = new Class<?>[]{
-					BasicArmor.class
-			};
-
-			ARM_T4.probs = new float[]{ 1 };
-
-			ARM_T5.classes = new Class<?>[]{
-					HeavyArmor.class,
-			};
-			ARM_T5.probs = new float[]{ 3 };
 			
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
