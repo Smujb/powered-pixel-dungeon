@@ -338,7 +338,7 @@ public class DungeonTileSheet {
 	public static final int DOOR_SIDEWAYS_OVERHANG_LOCKED   = WALLS_OVERHANG+12;
 	public static final int WALL_OVERHANG_CRACKED           = WALLS_OVERHANG+WIDTH;
 	public static final int WALL_OVERHANG_WOODEN            = WALLS_OVERHANG+WIDTH*2;
-	public static final int DOOR_SIDEWAYS_OVERHANG_BRONZE   = DOOR_SIDEWAYS_OVERHANG_LOCKED+WIDTH;//+WIDTH as it's on the next line
+	public static final int DOOR_SIDEWAYS_OVERHANG_BRONZE   = DOOR_SIDEWAYS_OVERHANG_LOCKED+WIDTH*2;//+WIDTH*2 as it's 2 lines down.
 
 	public static int stitchWallOverhangTile(Terrain tile, Terrain rightBelow, Terrain below, Terrain leftBelow){
 		int visual;
