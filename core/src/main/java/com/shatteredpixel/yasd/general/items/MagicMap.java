@@ -410,12 +410,12 @@ public class MagicMap extends Item {
 				}
 				break;
 			case AC_SCENE:
-				TextScene.init("The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system.\nAs dark energy has crept up from below the usually harmless sewer creatures have become more and more dangerous. The city sends guard patrols down here to try and maintain safety for those above, but they are slowly failing.\nThis place is dangerous, but at least the evil magic at work here is weak.", null, null, 0, new Callback() {
+				TextScene.init("The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system.\nAs dark energy has crept up from below the usually harmless sewer creatures have become more and more dangerous. The city sends guard patrols down here to try and maintain safety for those above, but they are slowly failing.\nThis place is dangerous, but at least the evil magic at work here is weak.", null, null, 0, 0.67f, new Callback() {
 					@Override
 					public void call() {
 						MainGame.switchScene(GameScene.class);
 					}
-				}, 0.67f, null);
+				}, null, false);
 				break;
 		}
 	}

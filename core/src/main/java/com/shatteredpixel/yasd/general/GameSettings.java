@@ -59,6 +59,7 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	private static final String KEY_BRIGHTNESS	= "brightness";
 	private static final String KEY_GRID 	    = "visual_grid";
 	private static final String KEY_CUTSCENES 	    	= "cutscenes";
+	private static final String KEY_FAST_INTERLEVEL_SCENE 	    	= "fast-scenes";
 	
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
@@ -138,6 +139,14 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 
 	public static boolean cutscenes() {
 		return getBoolean( KEY_CUTSCENES, true );
+	}
+
+	public static void fastInterlevelScene( boolean value ){
+		put( KEY_FAST_INTERLEVEL_SCENE, value );
+	}
+
+	public static boolean fastInterlevelScene() {
+		return getBoolean( KEY_FAST_INTERLEVEL_SCENE, false );
 	}
 
 	//Interface

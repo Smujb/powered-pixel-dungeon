@@ -205,6 +205,18 @@ public class WndSettings extends WndTabbed {
 			chkCutscenes.setRect(0, tileGrid.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
 			chkCutscenes.checked(GameSettings.cutscenes());
 			add(chkCutscenes);
+
+			CheckBox chkInterlevelScene = new CheckBox( Messages.get(this, "fast") ) {
+				@Override
+				protected void onClick() {
+					super.onClick();
+					GameSettings.fastInterlevelScene(checked());
+				}
+			};
+
+			chkInterlevelScene.setRect(0, chkCutscenes.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
+			chkInterlevelScene.checked(GameSettings.fastInterlevelScene());
+			add(chkInterlevelScene);
 		}
 	}
 

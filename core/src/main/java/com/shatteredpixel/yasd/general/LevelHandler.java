@@ -183,12 +183,12 @@ public class LevelHandler {
 		xPos = Dungeon.xPos;
 		yPos = Dungeon.yPos;
 		zPos = Dungeon.zPos;
-		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, 0.67f, getThread());
+		}, getThread(), GameSettings.fastInterlevelScene());
 	}
 
 	public static void doInit() {
@@ -196,12 +196,12 @@ public class LevelHandler {
 		xPos = 0;
 		yPos = 1;
 		zPos = 0;
-		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, 0.67f, new Thread() {
+		}, new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -210,7 +210,7 @@ public class LevelHandler {
 					throw new RuntimeException(e);
 				}
 			}
-		});
+		}, GameSettings.fastInterlevelScene());
 	}
 
 	public static void move(int xPos, int yPos, int zPos, String msg, Mode mode) {
@@ -218,12 +218,12 @@ public class LevelHandler {
 		LevelHandler.yPos = yPos;
 		LevelHandler.zPos = zPos;
 		LevelHandler.mode = mode;
-		TextScene.init(msg, Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), new Callback() {
+		TextScene.init(msg, Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel(xPos, yPos, zPos, false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, 0.67f, getThread());
+		}, getThread(), GameSettings.fastInterlevelScene());
 	}
 
 	public static void resetMode() {

@@ -62,6 +62,7 @@ public class TextScene extends PixelScene {
 	private static float scrollSpeed = 0;
 	private static Callback onFinish = null;
 	private static float fadeTime;
+	private static boolean autoFinish;
 
 	@Override
 	public void create() {
@@ -149,35 +150,34 @@ public class TextScene extends PixelScene {
 
 		float p = timeLeft / fadeTime;
 
-		if (waitingTime > 10f) {
-			fadeOut();
-		}
-
 		switch (phase) {
 
 			case FADE_IN:
-
 				message.alpha(1 - p);
 				if ((timeLeft -= Game.elapsed) <= 0) {
 					if ((thread == null || !thread.isAlive())) {
-						if (continueText != null) {
-							message.text(continueText);
-							message.setPos(
-									(Camera.main.width - message.width()) / 2,
-									(Camera.main.height - message.height()) / 2
-							);
-							align( message );
-						}
-						PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
-							@Override
-							protected void onClick(PointerEvent event) {
-								if (phase != Phase.FADE_OUT) {
-									fadeOut();
-									destroy();
-								}
+						if (autoFinish) {
+							fadeOut();
+						} else {
+							if (continueText != null) {
+								message.text(continueText);
+								message.setPos(
+										(Camera.main.width - message.width()) / 2,
+										(Camera.main.height - message.height()) / 2
+								);
+								align(message);
 							}
-						};
-						add(hotArea);
+							PointerArea hotArea = new PointerArea(0, 0, Camera.main.width, Camera.main.height) {
+								@Override
+								protected void onClick(PointerEvent event) {
+									if (phase != Phase.FADE_OUT) {
+										fadeOut();
+										destroy();
+									}
+								}
+							};
+							add(hotArea);
+						}
 					} else {
 						phase = Phase.STATIC;
 					}
@@ -198,7 +198,7 @@ public class TextScene extends PixelScene {
 		}
 	}
 
-	public static void init(String text, String continueText, String bgTex, float scrollSpeed, Callback onFinish, float fadeTime, Thread thread) {
+	public static void init(String text, String continueText, String bgTex, float scrollSpeed, float fadeTime, Callback onFinish, Thread thread, boolean autoFinish) {
 		String firstLine = text;
 		Callback callback = onFinish;
 		if (text.contains("\n")) {
@@ -207,7 +207,7 @@ public class TextScene extends PixelScene {
 			callback = new Callback() {
 				@Override
 				public void call() {
-					init(finalText, continueText, bgTex, scrollSpeed, onFinish, fadeTime, thread);
+					init(finalText, continueText, bgTex, scrollSpeed, fadeTime, onFinish, thread, autoFinish);
 				}
 			};
 		}
@@ -218,6 +218,7 @@ public class TextScene extends PixelScene {
 		TextScene.onFinish = callback;
 		TextScene.fadeTime = fadeTime;
 		TextScene.continueText = continueText;
+		TextScene.autoFinish = autoFinish;
 
 		MainGame.switchScene(TextScene.class);
 	}

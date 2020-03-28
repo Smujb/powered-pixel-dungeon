@@ -56,12 +56,12 @@ public class Lore {
 
 		String text = Messages.get(Lore.class, CHAPTERS.get(level.getClass()));
 		if (!text.contains("missed_string")) {
-			TextScene.init(text, null, level.loadImg(), 5, new Callback() {
+			TextScene.init(text, null, level.loadImg(), 5, 0.67f, new Callback() {
 				@Override
 				public void call() {
 					MainGame.switchScene(GameScene.class);
 				}
-			}, 0.67f, null);
+			}, null, false);
 		}
 	}
 }
