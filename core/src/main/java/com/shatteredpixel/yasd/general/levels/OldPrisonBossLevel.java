@@ -259,11 +259,11 @@ public class OldPrisonBossLevel extends Level {
 		traps.clear();
 
 		for (int i = 0; i < length(); i++){
-			if (map[i] == INACTIVE_TRAP) {
+			if (map[i] == EMPTY_SP) {
 				Trap t = new GrippingTrap().reveal();
 				t.active = false;
 				setTrap(t, i);
-				map[i] = INACTIVE_TRAP;
+				map[i] = EMPTY;
 			}
 		}
 	}
@@ -478,7 +478,7 @@ public class OldPrisonBossLevel extends Level {
 	private static final Terrain L = LOCKED_DOOR;
 	private static final Terrain e = EMPTY;
 
-	private static final Terrain T = INACTIVE_TRAP;
+	private static final Terrain T = EMPTY_SP;
 
 	private static final Terrain E = ENTRANCE;
 	private static final Terrain X = EXIT;

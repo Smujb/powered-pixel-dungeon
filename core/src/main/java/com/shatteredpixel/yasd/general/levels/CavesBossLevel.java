@@ -161,7 +161,7 @@ public class CavesBossLevel extends Level {
 
 		for (int i=0; i < length(); i++) {
 			if (map[i] == EMPTY && Random.Int( 6 ) == 0) {
-				map[i] = INACTIVE_TRAP;
+				//map[i] = INACTIVE_TRAP;
 				Trap t = new ToxicTrap().reveal();
 				t.active = false;
 				setTrap(t, i);

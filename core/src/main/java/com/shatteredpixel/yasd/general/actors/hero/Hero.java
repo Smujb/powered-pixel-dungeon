@@ -1659,7 +1659,7 @@ public class Hero extends Char {
 							chance = 1f;
 							
 						//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
-						} else if (Dungeon.level.map[p] == Terrain.SECRET_TRAP) {
+						} else if (Dungeon.level.traps.containsKey(p) && !Dungeon.level.traps.get(p).visible/*Dungeon.level.map[p] == Terrain.SECRET_TRAP*/) {
 							chance = 0.4f - (Dungeon.yPos / 250f);
 							
 						//unintentional door detection scales from 20% at floor 0 to 0% at floor 20

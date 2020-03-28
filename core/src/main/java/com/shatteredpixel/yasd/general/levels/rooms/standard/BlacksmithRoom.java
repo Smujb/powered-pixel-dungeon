@@ -51,7 +51,7 @@ public class BlacksmithRoom extends StandardRoom {
 	public void paint(Level level ) {
 
 		Painter.fill( level, this, Terrain.WALL );
-		Painter.fill( level, this, 1, Terrain.TRAP );
+		Painter.fill( level, this, 1, Terrain.EMPTY );
 		Painter.fill( level, this, 2, Terrain.EMPTY_SP );
 		
 		for (int i=0; i < 2; i++) {
@@ -80,7 +80,7 @@ public class BlacksmithRoom extends StandardRoom {
 
 		for(Point p : getPoints()) {
 			int cell = level.pointToCell(p);
-			if (level.map[cell] == Terrain.TRAP){
+			if (level.map[cell] == Terrain.EMPTY){
 				level.setTrap(new BurningTrap().reveal(), cell);
 			}
 		}

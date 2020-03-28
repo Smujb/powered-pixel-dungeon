@@ -77,7 +77,7 @@ public class MinefieldRoom extends StandardRoom {
 				}
 			}
 
-			Painter.set(level, pos, Terrain.SECRET_TRAP);
+			Painter.set(level, pos, Terrain.EMPTY);
 			level.setTrap(new ExplosiveTrap().hide(), pos);
 
 		}

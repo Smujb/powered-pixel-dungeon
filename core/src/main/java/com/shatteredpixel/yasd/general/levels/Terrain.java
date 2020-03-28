@@ -34,9 +34,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.features.HighGrass;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
 public enum Terrain {
@@ -245,39 +243,6 @@ public enum Terrain {
 		@Override
 		public Terrain discover() {
 			return DOOR;
-		}
-	},
-	TRAP {
-		@Override
-		public void setup() {
-			avoid = true;
-		}
-
-		@Override
-		public void press(int cell, boolean hard) {
-			Trap trap = Dungeon.level.traps.get(cell);
-			triggerTrap(cell, trap);
-		}
-	},
-	SECRET_TRAP {
-		@Override
-		public void setup() {
-			passable = true;
-			secret = true;
-		}
-
-		@Override
-		public Terrain discover() {
-			return TRAP;
-		}
-
-		@Override
-		public void press(int cell, boolean hard) {
-			if (hard) {
-				Trap trap = Dungeon.level.traps.get(cell);
-				GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
-				triggerTrap(cell, trap);
-			}
 		}
 	},
 	INACTIVE_TRAP {

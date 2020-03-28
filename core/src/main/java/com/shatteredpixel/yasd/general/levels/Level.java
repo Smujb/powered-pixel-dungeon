@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
@@ -104,13 +105,16 @@ import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
+import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
 import com.shatteredpixel.yasd.general.tiles.DungeonTileSheet;
 import com.shatteredpixel.yasd.general.utils.BArray;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
@@ -136,9 +140,6 @@ import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
 import static com.shatteredpixel.yasd.general.levels.Terrain.FURROWED_GRASS;
 import static com.shatteredpixel.yasd.general.levels.Terrain.GRASS;
 import static com.shatteredpixel.yasd.general.levels.Terrain.HIGH_GRASS;
-import static com.shatteredpixel.yasd.general.levels.Terrain.INACTIVE_TRAP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.SECRET_TRAP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.TRAP;
 import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
 import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
 import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
@@ -168,7 +169,6 @@ public abstract class Level implements Bundlable {
 
 	public int version;
 
-	//FIXME: make Terrain[][] (2D array). Possibly also 3D if I make 3D levels.
 	public Terrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
@@ -210,7 +210,7 @@ public abstract class Level implements Bundlable {
 
 	//NOTE: to avoid lag I recommend using passable(pos), losBlocking(pos), etc instead of passable()[pos], losBlocking()[pos], etc when possible.
 	public boolean passable(int pos) {
-		return map[pos].passable();
+		return map[pos].passable() & !avoid(pos);
 	}
 
 	public final boolean[] passable() {
@@ -249,6 +249,9 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean secret(int pos) {
+		if (traps.containsKey(pos) && !traps.get(pos).visible) {
+			return true;
+		}
 		return map[pos].secret();
 	}
 
@@ -273,10 +276,12 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean avoid(int pos) {
-		if (traps.containsKey(pos) && (traps.get(pos).active && traps.get(pos).visible)) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
+		Trap trap = trap(pos);
+		if (trap != null && trap.active && trap.visible) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
 			return true;
+		} else {
+			return map[pos].avoid();
 		}
-		return map[pos].avoid();
 	}
 
 	public final boolean[] avoid() {
@@ -311,7 +316,7 @@ public abstract class Level implements Bundlable {
 		return pit;
 	}
 	
-	public Feeling feeling = Feeling.NONE;
+	public Feeling feeling = Feeling.DANGER;
 	
 	public int entrance;
 	public int exit;
@@ -956,40 +961,13 @@ public abstract class Level implements Bundlable {
 
 	public void buildFlagMaps() {
 		
-		/*for (int i=0; i < length(); i++) {
-			//int flags = Terrain.flags[map[i]];
-			passable[i]		=  map[i].passable;
-			losBlocking[i]	=  map[i].losBlocking;
-			flammable[i]		=  map[i].flammable;
-			secret[i]		=  map[i].secret;
-			solid[i]		=  map[i].solid;
-			avoid[i]		=  map[i].avoid;
-			water[i]		=  map[i].liquid;
-			pit[i]			=  map[i].pit;
-		}*/
-		
-		/*SmokeScreen s = (SmokeScreen)blobs.get(SmokeScreen.class);
-		if (s != null && s.volume > 0){
-			for (int i=0; i < length(); i++) {
-				losBlocking[i]	= losBlocking[i] || s.cur[i] > 0;
-			}
-		}*/
-		
 		int lastRow = length() - width();
 		for (int i=0; i < width(); i++) {
-			//passable[i] = avoid[i] = false;
-			//losBlocking[i] = true;
 			map[i] = WALL;
-			//passable[lastRow + i] = avoid[lastRow + i] = false;
-			//losBlocking[lastRow + i] = true;
 			map[lastRow + i] = WALL;
 		}
 		for (int i=width(); i < lastRow; i += width()) {
-			//passable[i] = avoid[i] = false;
-			//losBlocking[i] = true;
 			map[i] = WALL;
-			//passable[i + width()-1] = avoid[i + width()-1] = false;
-			//losBlocking[i + width()-1] = true;
 			map[i + width()-1] = WALL;
 		}
 	}
@@ -1036,7 +1014,7 @@ public abstract class Level implements Bundlable {
 		Level level = this;
 		Painter.set( level, cell, terrain );
 
-		if (terrain != TRAP && terrain != SECRET_TRAP && terrain != INACTIVE_TRAP){
+		if (terrain != EMPTY){
 			level.traps.remove( cell );
 		}
 	}
@@ -1121,6 +1099,10 @@ public abstract class Level implements Bundlable {
 		GameScene.updateMap( pos );
 	}
 
+	public Trap trap(int cell) {
+		return traps.get(cell);
+	}
+
 	public Trap setTrap( Trap trap, int pos ){
 		Trap existingTrap = traps.get(pos);
 		if (existingTrap != null){
@@ -1133,7 +1115,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void disarmTrap( int pos ) {
-		set(pos, INACTIVE_TRAP);
+		//set(pos, INACTIVE_TRAP);
 		GameScene.updateMap(pos);
 	}
 
@@ -1186,9 +1168,8 @@ public abstract class Level implements Bundlable {
 	protected final void pressCell(int cell, boolean hard) {
 
 		map[cell].press(cell, hard);//See Terrain.press()
-		/*Trap trap = null;
-		
-		switch (map[cell]) {
+		Trap trap = trap(cell);
+		/*switch (map[cell]) {
 
 			case SECRET_TRAP:
 				if (hard) {
@@ -1213,9 +1194,11 @@ public abstract class Level implements Bundlable {
 			case DOOR:
 				Door.enter(cell);
 				break;
-		}
+		}*/
 
-		if (trap != null) {
+		if (trap != null && trap.active && (hard || trap.visible)) {
+
+			if (!trap.visible) GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
 			
 			TimekeepersHourglass.timeFreeze timeFreeze =
 					Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
@@ -1248,7 +1231,7 @@ public abstract class Level implements Bundlable {
 				trap.trigger();
 
 			}
-		}*/
+		}
 		
 		Plant plant = plants.get( cell );
 		if (plant != null) {
@@ -1439,8 +1422,8 @@ public abstract class Level implements Bundlable {
 			case EMPTY:
 			case EMPTY_SP:
 			case EMPTY_DECO:
-			case SECRET_TRAP:
-				return Messages.get(Level.class, "floor_name");
+			//case SECRET_TRAP:
+			//	return Messages.get(Level.class, "floor_name");
 			case GRASS:
 				return Messages.get(Level.class, "grass_name");
 			case WATER:
@@ -1482,8 +1465,8 @@ public abstract class Level implements Bundlable {
 			case STATUE:
 			case STATUE_SP:
 				return Messages.get(Level.class, "statue_name");
-			case INACTIVE_TRAP:
-				return Messages.get(Level.class, "inactive_trap_name");
+			//case INACTIVE_TRAP:
+		//		return Messages.get(Level.class, "inactive_trap_name");
 			case BOOKSHELF:
 				return Messages.get(Level.class, "bookshelf_name");
 			case ALCHEMY:
@@ -1523,8 +1506,8 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "barricade_desc");
 			case SIGN:
 				return Messages.get(Level.class, "sign_desc");
-			case INACTIVE_TRAP:
-				return Messages.get(Level.class, "inactive_trap_desc");
+			//case INACTIVE_TRAP:
+			//	return Messages.get(Level.class, "inactive_trap_desc");
 			case STATUE:
 			case STATUE_SP:
 				return Messages.get(Level.class, "statue_desc");

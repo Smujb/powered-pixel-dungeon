@@ -56,18 +56,6 @@ public class SmokeScreen extends Blob {
 	}
 	
 	@Override
-	public void clear(int cell) {
-		super.clear(cell);
-		Level l = Dungeon.level;
-	}
-	
-	@Override
-	public void fullyClear() {
-		super.fullyClear();
-		Dungeon.level.buildFlagMaps();
-	}
-	
-	@Override
 	public String tileDesc() {
 		return Messages.get(this, "desc");
 	}

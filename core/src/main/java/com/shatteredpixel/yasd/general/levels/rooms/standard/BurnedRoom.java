@@ -59,24 +59,20 @@ public class BurnedRoom extends PatchRoom {
 				if (!patch[xyToPatchCoords(j, i)])
 					continue;
 				int cell = i * level.width() + j;
-				Terrain t;
+				Terrain t = Terrain.EMPTY;
 				switch (Random.Int( 5 )) {
 					case 0: default:
-						t = Terrain.EMPTY;
 						break;
 					case 1:
 						t = Terrain.EMBERS;
 						break;
 					case 2:
-						t = Terrain.TRAP;
 						level.setTrap(new BurningTrap().reveal(), cell);
 						break;
 					case 3:
-						t = Terrain.SECRET_TRAP;
 						level.setTrap(new BurningTrap().hide(), cell);
 						break;
 					case 4:
-						t = Terrain.INACTIVE_TRAP;
 						BurningTrap trap = new BurningTrap();
 						trap.reveal().active = false;
 						level.setTrap(trap, cell);

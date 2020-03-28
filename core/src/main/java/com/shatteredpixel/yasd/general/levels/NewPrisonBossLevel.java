@@ -596,7 +596,7 @@ public class NewPrisonBossLevel extends Level {
 										int cell = mazeCells[i].left+x + width()*(mazeCells[i].top+y);
 										if (heaps.get(cell) == null){
 											setTrap(new TenguDartTrap().hide(), cell);
-											Painter.set(this, cell, SECRET_TRAP);
+											//Painter.set(this, cell, SECRET_TRAP);
 											CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
 										}
 									}
@@ -688,7 +688,7 @@ public class NewPrisonBossLevel extends Level {
 				int x = i % 7;
 				int y = i / 7;
 				int cell = x+tenguCell.left+1 + (y+tenguCell.top+1)*width();
-				Dungeon.level.set(cell, SECRET_TRAP);
+				//Dungeon.level.set(cell, SECRET_TRAP);
 				setTrap(new TenguDartTrap().hide(), cell);
 				CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
 			} else {

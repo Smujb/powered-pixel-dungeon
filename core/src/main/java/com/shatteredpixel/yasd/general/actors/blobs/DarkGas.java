@@ -61,6 +61,7 @@ public class DarkGas extends Blob {
             for (int i = area.left; i < area.right; i++){
                 for (int j = area.top; j < area.bottom; j++){
                     cell = i + j*l.width();
+                    l.pressCell(cell);
                     if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
                         if (!ch.isImmune(this.getClass())) {
                             if (ch instanceof Hero) {
@@ -82,7 +83,7 @@ public class DarkGas extends Blob {
                                 if (barrier != null) {//Extend shield if possible
                                     existingShield = barrier.shielding();
                                 }
-                                int shield = owner.HT / Random.IntRange(10,20) + existingShield;
+                                int shield = owner.HT / 30 + existingShield;
                                 int healing = shield/3;
                                 if (shield > strength/2 + 2 & healing > 0 & !(owner.HP >= owner.HT)) {//Converts some shielding to HP if it grows enough
                                     healing = Math.min(owner.missingHP(),healing);

@@ -46,6 +46,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.DM300Sprite;
@@ -104,8 +105,8 @@ public class DM300 extends Mob {
 	@Override
 	public void move( int step ) {
 		super.move( step );
-		
-		if (Dungeon.level.map[step] == Terrain.INACTIVE_TRAP && HP < HT) {
+		Trap trap = Dungeon.level.trap(step);
+		if (trap != null && !trap.active && HP < HT) {
 			
 			HP += Random.Int( 1, HT - HP );
 			sprite.emitter().burst( ElmoParticle.FACTORY, 5 );

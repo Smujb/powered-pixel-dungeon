@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.effects.Wound;
-import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.watabou.noosa.audio.Sample;
 
 public class GrippingTrap extends Trap {
@@ -53,7 +52,7 @@ public class GrippingTrap extends Trap {
 		}
 		//this trap is not disarmed by being triggered
 		reveal();
-		Dungeon.level.set(pos, Terrain.TRAP);
+		//Dungeon.level.set(pos, Terrain.TRAP);
 		activate();
 	}
 

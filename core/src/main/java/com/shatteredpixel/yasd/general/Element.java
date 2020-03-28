@@ -108,7 +108,7 @@ public enum Element {
 				}
 				break;
 			case DESTRUCTION:
-				Buff.affect(defender, Vulnerable.class, Vulnerable.DURATION/4f);
+				Buff.affect(defender, Vulnerable.class, 5);
 				break;
 			case FIRE:
 				Buff.affect(defender, Burning.class).reignite(defender);
@@ -146,7 +146,7 @@ public enum Element {
 				}
 				break;
 			case DARK:
-				Buff.affect(defender, Weakness.class, Weakness.DURATION/4f);
+				Buff.affect(defender, Weakness.class, 5);
 				break;
 			case DRAIN:
 				int healed = damage / 2;

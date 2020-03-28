@@ -37,7 +37,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
 
@@ -55,7 +54,7 @@ public class FlashingTrap extends Trap {
 		}
 		//this trap is not disarmed by being triggered
 		reveal();
-		Dungeon.level.set(pos, Terrain.TRAP);
+		//Dungeon.level.set(pos, Terrain.TRAP);
 		activate();
 	}
 	

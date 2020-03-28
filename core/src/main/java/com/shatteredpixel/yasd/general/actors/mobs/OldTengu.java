@@ -212,12 +212,10 @@ public class OldTengu extends Mob {
 				tries = 15;
 				do {
 					trapPos = Random.Int( level.length() );
-				} while (tries-- > 0 && level.map[trapPos] != Terrain.INACTIVE_TRAP
-						&& level.map[trapPos] != Terrain.TRAP);
+				} while (tries-- > 0 && !level.traps.containsKey(pos));
 				
-				if (level.map[trapPos] == Terrain.INACTIVE_TRAP) {
+				if (level.map[trapPos] == Terrain.EMPTY && (level.trap(trapPos) == null || !level.trap(trapPos).active)) {
 					level.setTrap( new  GrippingTrap().reveal(), trapPos );
-					Dungeon.level.set( trapPos, Terrain.TRAP );
 					ScrollOfMagicMapping.discover( trapPos );
 				}
 			}
