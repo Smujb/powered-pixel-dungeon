@@ -94,11 +94,7 @@ public class LevelHandler {
 					if (mode == Mode.CONTINUE) {
 						restore();
 					} else {
-						//if (Dungeon.hero != null) {
-							switchDepth(xPos, yPos, zPos, mode);
-						//} else {
-						//	initGame();
-						//}
+						switchDepth(xPos, yPos, zPos, mode);
 					}
 
 					if (Dungeon.bossLevel()) {

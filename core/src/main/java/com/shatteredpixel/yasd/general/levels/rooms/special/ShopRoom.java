@@ -165,13 +165,16 @@ public class ShopRoom extends SpecialRoom {
 	private Armor generateArmor(int level) {
 		Armor armor;
 		int minTier = level/6;
-		int maxTier = level/6 + 2;
+		int maxTier = minTier + 2;
 		armor = (Armor) Generator.randomArmor().identify().upgrade();
 		armor.cursed = false;
 		if (armor.hasCurseGlyph()) {
 			armor.inscribe(Armor.Glyph.random());
 		}
 		armor.setTier(Math.min(5, Random.Int(minTier, maxTier)));
+		if (armor.tier < 1) {
+			armor.setTier(1);
+		}
 		if (armor.tier == minTier & armor.isUpgradable()) {//Extra upgrade if possible and Armour is at minimum amount
 			armor.upgrade();
 		} else if (armor.tier == maxTier & armor.level() > 1) {
@@ -183,12 +186,15 @@ public class ShopRoom extends SpecialRoom {
 	private MeleeWeapon generateWeapon(int level) {
 		MeleeWeapon weapon;
 		int minTier = level/6;
-		int maxTier = level/6 + 2;
+		int maxTier = minTier + 2;
 
 		weapon = (MeleeWeapon) Generator.random(Generator.Category.WEAPON).identify().upgrade();
 		weapon.cursed = false;
 		if (weapon.hasCurseEnchant()) {
 			weapon.enchant(Weapon.Enchantment.random());
+		}
+		if (weapon.tier < 1) {
+			weapon.setTier(1);
 		}
 		weapon.setTier(Math.min(5, Random.Int(minTier, maxTier)));
 		if (weapon.tier == minTier & weapon.isUpgradable()) {//Extra upgrade if possible and Armour is at minimum amount

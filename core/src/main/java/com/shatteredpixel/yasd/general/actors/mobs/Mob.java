@@ -363,7 +363,8 @@ public abstract class Mob extends Char {
 		enemy = chooseEnemy();
 		
 		//boolean enemyInFOV = enemy != null && enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
-		boolean enemyInFOV = enemy != null && notice(enemy) && (properties.contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
+		//boolean enemyInFOV = (enemy != null && notice(enemy) && (properties.contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0));
+		boolean enemyInFOV = enemy != null && (properties().contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
 
 		return state.act( enemyInFOV, justAlerted );
 	}
@@ -416,13 +417,13 @@ public abstract class Mob extends Char {
 			if ( buff(Amok.class) != null) {
 				//try to find an enemy mob to attack first.
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY && mob != this && notice(mob))
+					if (mob.alignment == Alignment.ENEMY && mob != this)
 							enemies.add(mob);
 				
 				if (enemies.isEmpty()) {
 					//try to find ally mobs to attack second.
 					for (Mob mob : Dungeon.level.mobs)
-						if (mob.alignment == Alignment.ALLY && mob != this && notice(mob))
+						if (mob.alignment == Alignment.ALLY && mob != this)
 							enemies.add(mob);
 					
 					if (enemies.isEmpty()) {
@@ -447,15 +448,12 @@ public abstract class Mob extends Char {
 			//if the mob is an enemy...
 			} else if (alignment == Alignment.ENEMY) {
 				//look for ally mobs to attack
-				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ALLY)
+				for (Mob mob : Dungeon.level.mobs) {
+					if (mob.alignment == Alignment.ALLY) {
 						enemies.add(mob);
-
-				//and look for the hero
-				if (notice(Dungeon.hero)) {
-					enemies.add(Dungeon.hero);
+					}
 				}
-				
+				enemies.add(Dungeon.hero);
 			}
 			
 			Charm charm = buff( Charm.class );
@@ -473,9 +471,10 @@ public abstract class Mob extends Char {
 				//go after the closest potential enemy, preferring the hero if two are equidistant
 				Char closest = null;
 				for (Char curr : enemies){
-					if (closest == null
+					if ((closest == null
 							|| Dungeon.level.distance(pos, curr.pos) < Dungeon.level.distance(pos, closest.pos)
-							|| Dungeon.level.distance(pos, curr.pos) == Dungeon.level.distance(pos, closest.pos) && curr == Dungeon.hero){
+							|| Dungeon.level.distance(pos, curr.pos) == Dungeon.level.distance(pos, closest.pos) && curr == Dungeon.hero )
+							&& notice(curr)){
 						closest = curr;
 					}
 				}

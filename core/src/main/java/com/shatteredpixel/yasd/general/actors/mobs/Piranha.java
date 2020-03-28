@@ -55,13 +55,6 @@ public class Piranha extends WaterMob {
 		state = SLEEPING;
 	}
 	
-	/*public Piranha() {
-		super();
-		
-		HP = HT = 10 + Dungeon.getScaleFactor() * 5;
-		defenseSkill = 10 + Dungeon.getScaleFactor() * 2;
-	}*/
-	
 	@Override
 	protected boolean act() {
 		
@@ -73,21 +66,6 @@ public class Piranha extends WaterMob {
 			return super.act();
 		}
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( Dungeon.getScaleFactor(), 4 + Dungeon.getScaleFactor() * 2 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 20 + Dungeon.getScaleFactor() * 2;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, Dungeon.getScaleFactor());
-	}*/
 	
 	@Override
 	public void die(@NotNull DamageSrc cause ) {

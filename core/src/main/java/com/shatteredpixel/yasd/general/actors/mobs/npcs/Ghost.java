@@ -323,8 +323,8 @@ public class Ghost extends NPC {
 				weapon.level(itemLevel);
 				armor.level(itemLevel);
 
-				//33% chance to be enchanted
-				if (Random.Int(3) == 0){
+				if (Random.Int(4) == 0 || weapon.cursed || armor.cursed){
+					weapon.cursed = armor.cursed = false;
 					weapon.enchant();
 					armor.inscribe();
 				}

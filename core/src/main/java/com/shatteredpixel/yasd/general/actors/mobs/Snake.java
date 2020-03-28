@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.sprites.SnakeSprite;
 
@@ -36,24 +37,22 @@ public class Snake extends Mob {
 		spriteClass = SnakeSprite.class;
 
 		healthFactor = 0.25f;
-		//HP = HT = 4;
+		numTypes = 2;
 		evasionFactor = 6f;
-		//defenseSkill = 30;
 		
 		EXP = 2;
 		
 		loot = Generator.random(Generator.Category.SEED);
 		lootChance = 0.25f;
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 1, 4 );
-	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
-		return 12;
-	}*/
-	
+	public Element elementalType() {
+		switch (type) {
+			case 0: default:
+				return Element.PHYSICAL;
+			case 1:
+				return Element.VENOM;
+		}
+	}
 }
