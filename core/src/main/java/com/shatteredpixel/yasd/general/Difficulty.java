@@ -32,13 +32,20 @@ import org.jetbrains.annotations.Contract;
 public enum Difficulty {
 	EASY,
 	MEDIUM,
-	HARD;
+	HARD,
+	IMPOSSIBLE;
+
+	public static int maxDiff() {
+		return Badges.isUnlocked(Badges.Badge.VICTORY_ALL_CLASSES) ? 4 : 3;
+	}
 
 	@Contract(pure = true)
 	public float mobHealthFactor() {
 		switch (this) {
 			case EASY:
 				return 2/3f;
+			case IMPOSSIBLE:
+				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
@@ -51,6 +58,8 @@ public enum Difficulty {
 		switch (this) {
 			case EASY:
 				return 0.5f;
+			case IMPOSSIBLE:
+				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
@@ -63,6 +72,8 @@ public enum Difficulty {
 		switch (this) {
 			case EASY:
 				return 2/3f;
+			case IMPOSSIBLE:
+				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
@@ -77,8 +88,10 @@ public enum Difficulty {
 				return 3;
 			case MEDIUM: default://Medium = 6 drop in durability per hit (100 hits until break)
 				return 6;
-			case HARD://Hard = 12 drop in durability per hit (50 hits until break)
+			case HARD://Hard = 12 drop in durability per hit (83 hits until break)
 				return 12;
+			case IMPOSSIBLE:
+				return 20;//Impossible= 20 drop in durability per hit (50 hits until break)
 		}
 	}
 
@@ -91,6 +104,8 @@ public enum Difficulty {
 				return MEDIUM;
 			case 3:
 				return HARD;
+			case 4:
+				return IMPOSSIBLE;
 		}
 	}
 }

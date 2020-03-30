@@ -307,7 +307,7 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	}
 
 	public static int difficulty() {
-		return getInt( KEY_DIFFICULTY, 10, 0, 10 );
+		return getInt( KEY_DIFFICULTY, 2, 0, 4 );
 	}
 	
 }

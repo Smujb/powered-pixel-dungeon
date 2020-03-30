@@ -151,7 +151,7 @@ public class WndStartGame extends Window {
 		add(start);
 
 		OptionSlider difficulty = new OptionSlider(Messages.get(this, "difficulty"),
-				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, 3) {
+				Messages.get(this, "easy"), Messages.get(this, "hard"), 1, Difficulty.maxDiff()) {
 			@Override
 			protected void onChange() {
 				GameSettings.difficulty(getSelectedValue());

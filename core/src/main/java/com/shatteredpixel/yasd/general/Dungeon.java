@@ -249,6 +249,8 @@ public class Dungeon {
 			return Messages.get(Dungeon.class, "medium");
 		} else if (difficulty == Difficulty.HARD) {
 			return Messages.get(Dungeon.class, "hard");
+		} else if (difficulty == Difficulty.IMPOSSIBLE) {
+			return Messages.get(Dungeon.class, "impossible");
 		} else {
 			return "??";
 		}

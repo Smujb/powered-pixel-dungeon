@@ -1251,7 +1251,7 @@ public abstract class Level implements Bundlable {
 			if (c.buff(MagicalSight.class) != null){
 				sense = 8;
 			}
-			if (((Hero)c).subClass == HeroSubClass.SNIPER){
+			if (c instanceof Hero && ((Hero)c).subClass == HeroSubClass.SNIPER){
 				sense *= 1.5f;
 			}
 		}
@@ -1292,17 +1292,7 @@ public abstract class Level implements Bundlable {
 					}
 
 				}
-			} /*else if (((Hero)c).heroClass == HeroClass.HUNTRESS) {
-				for (Mob mob : mobs) {
-					int p = mob.pos;
-					if (distance( c.pos, p) == 2) {
-
-						if (!fieldOfView[p]){
-							Dungeon.hero.mindVisionEnemies.add(mob);
-						}
-					}
-				}
-			}*/
+			}
 
 			for (Mob mob : mobs) {
 				if (Dungeon.hero.notice(mob) && !fieldOfView[mob.pos]) {
