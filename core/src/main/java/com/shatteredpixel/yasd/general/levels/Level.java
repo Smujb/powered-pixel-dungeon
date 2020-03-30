@@ -1166,35 +1166,7 @@ public abstract class Level implements Bundlable {
 	//a 'soft' press ignores hidden traps
 	//a 'hard' press triggers all things
 	protected final void pressCell(int cell, boolean hard) {
-
-		map[cell].press(cell, hard);//See Terrain.press()
 		Trap trap = trap(cell);
-		/*switch (map[cell]) {
-
-			case SECRET_TRAP:
-				if (hard) {
-					trap = traps.get(cell);
-					GLog.i(Messages.get(Level.class, "hidden_trap", trap.name));
-				}
-				break;
-
-			case TRAP:
-				trap = traps.get(cell);
-				break;
-
-			case HIGH_GRASS:
-			case FURROWED_GRASS:
-				HighGrass.trample(this, cell);
-				break;
-
-			case WELL:
-				WellWater.affectCell(cell);
-				break;
-
-			case DOOR:
-				Door.enter(cell);
-				break;
-		}*/
 
 		if (trap != null && trap.active && (hard || trap.visible)) {
 
@@ -1232,6 +1204,8 @@ public abstract class Level implements Bundlable {
 
 			}
 		}
+
+		map[cell].press(cell, hard);//See Terrain.press()
 		
 		Plant plant = plants.get( cell );
 		if (plant != null) {
