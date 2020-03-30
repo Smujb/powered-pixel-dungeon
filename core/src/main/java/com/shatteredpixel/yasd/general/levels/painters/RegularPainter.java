@@ -365,20 +365,17 @@ public abstract class RegularPainter extends Painter {
 			}
 		} else {
 			for (int i = 0; i < l.length(); i ++) {
-				if (l.map[i] == Terrain.EMPTY){
+				if (l.passable(i) && !(l.flammable(i) || l.liquid(i))){
 					validCells.add(i);
 				}
 			}
 		}
 
-		if (l.feeling == Level.Feeling.DANGER) {//4x traps up to 1 every 2 valid tiles on dangerous floors.
-			nTraps *= Math.min(nTraps*4, validCells.size()/2);
+		if (l.feeling == Level.Feeling.DANGER) {//3x traps up to 1 every 2 valid tiles on dangerous floors.
+			nTraps *= Math.min(nTraps*3, validCells.size()/2);
 		} else {//no more than one trap every 5 valid tiles normally.
 			nTraps = Math.min(nTraps, validCells.size()/5);
 		}
-		
-
-
 		
 		for (int i = 0; i < nTraps; i++) {
 			
@@ -390,8 +387,6 @@ public abstract class RegularPainter extends Painter {
 				trap.reveal();
 			}
 			l.setTrap( trap, trapPos );
-			//some traps will not be hidden
-			//l.map[trapPos] = trap.visible ? Terrain.TRAP : Terrain.SECRET_TRAP;
 		}
 	}
 	
