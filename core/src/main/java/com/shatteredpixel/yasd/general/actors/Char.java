@@ -834,15 +834,15 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public boolean notice(@NotNull Char defender) {
+	public final boolean notice(@NotNull Char defender) {
 		return Random.Float() < noticeChance(defender);
 	}
 
 	public float noticeChance(@NotNull Char defender) {
-		if (Dungeon.level.distance(pos, defender.pos) < viewDistance*1.5f) {
-			float perception = (noticeSkill()) / (Math.max(1, Dungeon.level.distance(pos, defender.pos)+2));
+		if (Dungeon.level.distance(pos, defender.pos) < viewDistance) {
+			float perception = (noticeSkill(defender)) / (Math.max(1, Dungeon.level.distance(pos, defender.pos)+2));
 			if (!fieldOfView(defender.pos)) {
-				perception /= 4;
+				perception /= 2;
 			}
 			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error
@@ -855,7 +855,7 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public float noticeSkill() {
+	public float noticeSkill(Char enemy) {
 		float perception = this.noticeSkill;
 
 		if (this.buff(MindVision.class) != null) {

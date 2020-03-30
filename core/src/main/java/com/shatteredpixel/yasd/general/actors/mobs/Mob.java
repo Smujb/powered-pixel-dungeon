@@ -327,12 +327,14 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public float noticeSkill() {
+	public float noticeSkill(Char enemy) {
+		float stealth;
 		if (hasBelongings()) {
-			return super.noticeSkill();
+			stealth = super.noticeSkill(enemy);
 		} else {
-			return (int) (normalPerception(level) * perceptionFactor);
+			stealth = (normalPerception(level) * perceptionFactor);
 		}
+		return stealth;
 	}
 
 	public CharSprite sprite() {
@@ -362,11 +364,11 @@ public abstract class Mob extends Char {
 		
 		enemy = chooseEnemy();
 
-		boolean enemyInFOV = enemy != null && (properties().contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
+		boolean enemyInFOV = enemy != null && Dungeon.level.distance(this.pos, enemy.pos) < viewDistance && (properties().contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
 
 		return state.act( enemyInFOV, justAlerted );
 	}
-	
+
 	//FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
 	protected boolean intelligentAlly = false;
 	
@@ -472,7 +474,8 @@ public abstract class Mob extends Char {
 					if ((closest == null
 							|| Dungeon.level.distance(pos, curr.pos) < Dungeon.level.distance(pos, closest.pos)
 							|| Dungeon.level.distance(pos, curr.pos) == Dungeon.level.distance(pos, closest.pos) && curr == Dungeon.hero )
-							&& notice(curr)){
+							//&& notice(curr)){
+					){
 						closest = curr;
 					}
 				}
@@ -999,7 +1002,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && noticeEnemy()/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
+			if (enemyInFOV && notice(enemy)/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
 
 				enemySeen = true;
 
@@ -1034,7 +1037,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || noticeEnemy()/*Random.Float( distance( enemy ) / 2f + enemy.sneakSkill() ) < 1)*/)) {
+			if (enemyInFOV && (justAlerted || notice(enemy))) {
 
 				enemySeen = true;
 
@@ -1129,7 +1132,7 @@ public abstract class Mob extends Char {
 
 			} else {
 
-				if (enemyInFOV) {
+				if (enemyInFOV && notice(enemy)) {
 					target = enemy.pos;
 				} else if (enemy == null) {
 					state = WANDERING;

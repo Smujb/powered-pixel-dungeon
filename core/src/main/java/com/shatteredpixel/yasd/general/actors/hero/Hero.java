@@ -418,9 +418,9 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public float noticeSkill() {
+	public float noticeSkill(Char enemy) {
 		noticeSkill = 4 + getPerception();
-		return super.noticeSkill();
+		return super.noticeSkill(enemy);
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle ) {

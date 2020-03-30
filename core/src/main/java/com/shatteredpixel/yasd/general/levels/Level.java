@@ -316,7 +316,7 @@ public abstract class Level implements Bundlable {
 		return pit;
 	}
 	
-	public Feeling feeling = Feeling.DANGER;
+	public Feeling feeling = Feeling.NONE;
 	
 	public int entrance;
 	public int exit;
