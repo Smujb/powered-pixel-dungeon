@@ -74,8 +74,8 @@ public class HallsLevel extends RegularLevel {
 		color1 = 0x801500;
 		color2 = 0xa68521;
 
-		minScaleFactor = 26;
-		maxScaleFactor = 28;
+		minScaleFactor = 25;
+		maxScaleFactor = 30;
 	}
 
 	@Override

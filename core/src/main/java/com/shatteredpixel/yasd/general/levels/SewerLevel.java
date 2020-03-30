@@ -70,7 +70,7 @@ public class SewerLevel extends RegularLevel {
 		color2 = 0x59994a;
 
 		minScaleFactor = 2;
-		maxScaleFactor = 4;
+		maxScaleFactor = 6;
 	}
 
 

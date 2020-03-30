@@ -70,8 +70,8 @@ public class CavesLevel extends RegularLevel {
 
 		viewDistance = Math.min(6, viewDistance);
 
-		minScaleFactor = 14;
-		maxScaleFactor = 16;
+		minScaleFactor = 13;
+		maxScaleFactor = 18;
 	}
 	
 	@Override

@@ -36,7 +36,7 @@ public enum Difficulty {
 	IMPOSSIBLE;
 
 	public static int maxDiff() {
-		return Badges.isUnlocked(Badges.Badge.VICTORY_ALL_CLASSES) ? 4 : 3;
+		return Badges.isUnlocked(Badges.Badge.VICTORY_ALL_CLASSES) ? 4 : 3;//Lock Impossible mode until the player has won with all classes.
 	}
 
 	@Contract(pure = true)
@@ -44,12 +44,12 @@ public enum Difficulty {
 		switch (this) {
 			case EASY:
 				return 2/3f;
-			case IMPOSSIBLE:
-				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
 				return 1 + 1/3f;
+			case IMPOSSIBLE:
+				return 2f;
 		}
 	}
 
@@ -58,12 +58,12 @@ public enum Difficulty {
 		switch (this) {
 			case EASY:
 				return 0.5f;
-			case IMPOSSIBLE:
-				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
 				return 1.5f;
+			case IMPOSSIBLE:
+				return 2f;
 		}
 	}
 
@@ -72,12 +72,12 @@ public enum Difficulty {
 		switch (this) {
 			case EASY:
 				return 2/3f;
-			case IMPOSSIBLE:
-				return 2f;
 			case MEDIUM: default:
 				return 1f;
 			case HARD:
 				return 1 + 1/3f;
+			case IMPOSSIBLE:
+				return 2f;
 		}
 	}
 
@@ -91,7 +91,7 @@ public enum Difficulty {
 			case HARD://Hard = 12 drop in durability per hit (83 hits until break)
 				return 12;
 			case IMPOSSIBLE:
-				return 20;//Impossible= 20 drop in durability per hit (50 hits until break)
+				return 20;//Impossible = 20 drop in durability per hit (50 hits until break)
 		}
 	}
 
