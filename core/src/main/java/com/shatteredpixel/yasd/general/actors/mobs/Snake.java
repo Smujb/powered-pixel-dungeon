@@ -36,9 +36,9 @@ public class Snake extends Mob {
 	{
 		spriteClass = SnakeSprite.class;
 
-		healthFactor = 0.25f;
+		healthFactor = 0.4f;
 		numTypes = 2;
-		evasionFactor = 6f;
+		evasionFactor = 2f;
 		
 		EXP = 2;
 		

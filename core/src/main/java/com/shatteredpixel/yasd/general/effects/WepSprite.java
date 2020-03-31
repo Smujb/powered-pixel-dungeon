@@ -73,18 +73,20 @@ public class WepSprite extends ItemSprite {
 		PointF dest = DungeonTilemap.tileToWorld(target.pos);
 		PointF d = PointF.diff(dest, src);
 		angle = 135 - (float) (Math.atan2(d.x, d.y) / 3.1415926 * 180);
-		//angularSpeed = 100;
-		x = source.sprite.x;//.center().x;
-		y = source.sprite.y;//.center().y;
+		angularSpeed = 100;
+		//speed = PointF.inter(center(), d, 3f);
+		center(source.sprite.center());
+		//x = source.sprite.x;//.center().x;
+		//y = source.sprite.y;//.center().y;
 		if (d.x > 0)
-			x += 2 * SIZE / 3;
+			x += width / 2;
 		else if (d.x < 0)
-			x -= 2 * SIZE / 3;
+			x -= width / 2;
 
 		if (d.y > 0)
-			y += 2 * SIZE / 3;
+			y += height / 2;
 		else if (d.y < 0)
-			y -= 2 * SIZE / 3;
+			y -= height / 2;
 	}
 
 	public void stabEffect() {

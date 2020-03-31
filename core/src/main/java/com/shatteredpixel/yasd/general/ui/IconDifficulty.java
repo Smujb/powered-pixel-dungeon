@@ -36,6 +36,9 @@ public class IconDifficulty extends Image {
 		super();
 
 		switch( Dungeon.difficulty ){
+			case IMPOSSIBLE:
+				copy( Icons.WARNING.get() );
+				break;
 			case HARD:
 				copy( Icons.DIFF3.get() );
 				break;

@@ -354,6 +354,8 @@ public class Necromancer extends Mob {
 			
 			//no loot or exp
 			maxLvl = -5;
+
+			lootChance = 0f;
 			
 			//Less HP than Shattered, more damage
 			healthFactor = 0.5f;

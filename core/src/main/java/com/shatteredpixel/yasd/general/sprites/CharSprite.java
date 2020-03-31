@@ -272,11 +272,6 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 					/*KindOfWeapon weapon = ch.belongings.getCurrentWeapon();
 					if (weapon != null && !(weapon instanceof MissileWeapon)) {
 						weaponImg = new WepSprite(weapon);
-						//weaponImg.place(ch.pos);
-						//weaponImg.center(CharSprite.this);
-						//weaponImg.angularSpeed = 500;
-						//weaponImg.angle = 215;
-						//weaponImg.flipHorizontal = cell <= ch.pos;
 						weaponImg.setChars(ch, enemy);
 						if (weapon instanceof Fist || weapon instanceof Polearm) {
 							weaponImg.stabEffect();
