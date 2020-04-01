@@ -63,6 +63,7 @@ import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
+import com.shatteredpixel.yasd.general.levels.TilemapTest;
 import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
@@ -316,7 +317,8 @@ public class Dungeon {
 				level = new UnderwaterLevel().setParent(surface);
 			}
 		}
-		//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
+
+		level = new TilemapTest();//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
 		if (create) {
 			if (level == null) {
 				level = new DeadEndLevel();

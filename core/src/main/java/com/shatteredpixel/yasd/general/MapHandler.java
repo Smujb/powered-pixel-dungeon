@@ -61,6 +61,13 @@ public class MapHandler {
 				TiledMapTileLayer.Cell cell = tiles.getCell(x, y);
 				TiledMapTile tile = cell.getTile();
 				int tileId = tile.getId();
+				int pos = level.XY(x, y);
+				level.map[pos] = mapToTerrain(tileId);
+				if (level.map[pos] == Terrain.ENTRANCE) {
+					level.entrance = pos;
+				} else if (level.map[pos] == Terrain.EXIT || level.map[pos] == Terrain.LOCKED_EXIT) {
+					level.exit = pos;
+				}
 			}
 		}
 	}
@@ -79,10 +86,23 @@ public class MapHandler {
 				return Terrain.EMBERS;
 			case 5:
 				return Terrain.EMPTY_SP;
-			case 7:
+			case 6:
 				return Terrain.ENTRANCE;
-			case 8:
+			case 7:
 				return Terrain.EXIT;
+			case 8:
+				return Terrain.EMPTY_WELL;
+			case 9:
+				return Terrain.WELL;
+			case 10:
+				return Terrain.PEDESTAL;
+			case 12:
+				return Terrain.WALL;
+			case 13:
+				return Terrain.WALL_DECO;
+			case 14:
+				return Terrain.BOOKSHELF;
+
 		}
 		return Terrain.CHASM;
 	}
