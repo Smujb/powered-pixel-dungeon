@@ -56,6 +56,8 @@ public class Guard extends Mob {
 		healthFactor = 2f;
 		damageFactor = 2/3f;
 
+		elementaldrFactor = 1.5f;
+
 		EXP = 7;
 
 		loot = Generator.Category.ARMOR;

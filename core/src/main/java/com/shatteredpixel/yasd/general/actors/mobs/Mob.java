@@ -328,13 +328,16 @@ public abstract class Mob extends Char {
 
 	@Override
 	public float noticeSkill(Char enemy) {
-		float stealth;
+		float perception;
 		if (hasBelongings()) {
-			stealth = super.noticeSkill(enemy);
+			perception = super.noticeSkill(enemy);
 		} else {
-			stealth = (normalPerception(level) * perceptionFactor);
+			perception = (normalPerception(level) * perceptionFactor);
 		}
-		return stealth;
+		if (enemySeen) {
+			perception *= 2;
+		}
+		return perception;
 	}
 
 	public CharSprite sprite() {
@@ -1125,7 +1128,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			enemySeen = enemyInFOV;
+			enemySeen = notice(enemy);
 
 			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
 
@@ -1152,6 +1155,7 @@ public abstract class Mob extends Char {
 					if (!enemyInFOV) {
 						sprite.showLost();
 						state = WANDERING;
+						enemy = null;
 						target = Dungeon.level.randomDestination();
 					}
 					return true;

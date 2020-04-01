@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
@@ -524,7 +525,13 @@ public class Item implements Bundlable {
 		return null;
 	}
 
-	public Emitter emitter() { return null; }
+	public Emitter emitter() {
+		Emitter emitter = new Emitter();
+		if (cursed) {
+			emitter.pour(ShadowParticle.CURSE, 0.25f);
+		}
+		return emitter;
+	}
 	
 	public String info() {
 		return desc();

@@ -535,8 +535,8 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public Emitter emitter() {
-		if (seal == null) return super.emitter();
-		Emitter emitter = new Emitter();
+		Emitter emitter = super.emitter();
+		if (seal == null) return emitter;
 		emitter.pos(ItemSpriteSheet.film.width(image)/2f + 2f, ItemSpriteSheet.film.height(image)/3f);
 		emitter.fillTarget = false;
 		emitter.pour(Speck.factory( Speck.RED_LIGHT ), 0.6f);
