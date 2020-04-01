@@ -51,28 +51,36 @@ public class MapHandler {
 		items = map.getLayers().get(ITEMS_LAYER).getObjects();
 	}
 
-	public static void build(Level level, String mapName) {
+	public static boolean build(Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		int width = tiles.getWidth();
 		int height = tiles.getHeight();
 		level.setSize(width, height);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				TiledMapTileLayer.Cell cell = tiles.getCell(x, y);
-				TiledMapTile tile = cell.getTile();
-				int tileId = tile.getId();
+				Terrain toSet;
 				int pos = level.XY(x, y);
-				level.map[pos] = mapToTerrain(tileId);
-				if (level.map[pos] == Terrain.ENTRANCE) {
-					level.entrance = pos;
-				} else if (level.map[pos] == Terrain.EXIT || level.map[pos] == Terrain.LOCKED_EXIT) {
-					level.exit = pos;
+				TiledMapTileLayer.Cell cell = tiles.getCell(x, y);
+				if (cell == null) {
+					toSet = Terrain.CHASM;
+				} else {
+					TiledMapTile tile = cell.getTile();
+					int tileId = tile.getId();
+					toSet = mapToTerrain(tileId);
+					//Ideally levels should only have one exit and entrance, so only one of these tiles should be placed. If more are used, only the last one will be the real exit/entrance.
+					if (toSet == Terrain.ENTRANCE) {
+						level.entrance = pos;
+					} else if (toSet == Terrain.EXIT || toSet == Terrain.LOCKED_EXIT || toSet == Terrain.UNLOCKED_EXIT) {
+						level.exit = pos;
+					}
 				}
+				level.map[pos] = toSet;
 			}
 		}
+		return true;
 	}
 
-	public static Terrain mapToTerrain(int tile) {
+	private static Terrain mapToTerrain(int tile) {
 		switch (tile) {
 			case 0:
 				return Terrain.CHASM;
@@ -87,21 +95,49 @@ public class MapHandler {
 			case 5:
 				return Terrain.EMPTY_SP;
 			case 6:
-				return Terrain.ENTRANCE;
+				return Terrain.WATER;
 			case 7:
-				return Terrain.EXIT;
+				return Terrain.ENTRANCE;
 			case 8:
-				return Terrain.EMPTY_WELL;
+				return Terrain.EXIT;
 			case 9:
-				return Terrain.WELL;
+				return Terrain.EMPTY_WELL;
 			case 10:
+				return Terrain.WELL;
+			case 11:
 				return Terrain.PEDESTAL;
-			case 12:
-				return Terrain.WALL;
 			case 13:
-				return Terrain.WALL_DECO;
+				return Terrain.WALL;
 			case 14:
+				return Terrain.WALL_DECO;
+			case 15:
 				return Terrain.BOOKSHELF;
+			case 16:
+				return Terrain.CRACKED_WALL;
+			case 17:
+				return Terrain.BARRICADE;
+			case 19:
+				return Terrain.DOOR;
+			case 21:
+				return Terrain.LOCKED_DOOR;
+			case 22:
+				return Terrain.UNLOCKED_EXIT;
+			case 23:
+				return Terrain.LOCKED_EXIT;
+			case 24:
+				return Terrain.BRONZE_LOCKED_DOOR;
+			case 25:
+				return Terrain.SIGN;
+			case 26:
+				return Terrain.STATUE;
+			case 27:
+				return Terrain.STATUE_SP;
+			case 28:
+				return Terrain.ALCHEMY;
+			case 29:
+				return Terrain.HIGH_GRASS;
+			case 30:
+				return Terrain.FURROWED_GRASS;
 
 		}
 		return Terrain.CHASM;

@@ -27,13 +27,29 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.MapHandler;
 
 public class TilemapTest extends Level {
+
+	@Override
+	public String tilesTex() {
+		return Assets.TILES_SEWERS;
+	}
+
+	@Override
+	public String waterTex() {
+		return Assets.WATER_SEWERS;
+	}
+
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_SEWERS;
+	}
+
 	@Override
 	protected boolean build() {
-		MapHandler.build(this, "maps/sewerdungeon-test.tmx");
-		return true;
+		return MapHandler.build(this, "maps/sewerdungeon-test.tmx");
 	}
 
 	@Override
