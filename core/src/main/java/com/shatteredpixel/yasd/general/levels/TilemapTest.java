@@ -32,6 +32,8 @@ import com.shatteredpixel.yasd.general.MapHandler;
 
 public class TilemapTest extends Level {
 
+	public static final String MAP_NAME = "maps/sewerdungeon-test.tmx";
+
 	@Override
 	public String tilesTex() {
 		return Assets.TILES_SEWERS;
@@ -49,12 +51,12 @@ public class TilemapTest extends Level {
 
 	@Override
 	protected boolean build() {
-		return MapHandler.build(this, "maps/sewerdungeon-test.tmx");
+		return MapHandler.build(this, MAP_NAME);
 	}
 
 	@Override
 	protected void createMobs() {
-
+		MapHandler.createMobs(this, MAP_NAME);
 	}
 
 	@Override

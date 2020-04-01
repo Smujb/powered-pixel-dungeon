@@ -29,11 +29,16 @@ package com.shatteredpixel.yasd.general;
 
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+
+import java.util.ArrayList;
 
 public class MapHandler {
 
@@ -79,6 +84,63 @@ public class MapHandler {
 		}
 		return true;
 	}
+
+	private static final String KEY_NAME = "className";
+	private static final String KEY_NUMBER = "number";
+	private static final String KEY_LEVEL = "level";
+
+	public static void createMobs(Level level, String mapName) {
+		loadMap(new TmxMapLoader().load(mapName));
+		for (int i = 0; i < mobs.getCount(); i++) {
+			if (mobs.get(i) instanceof RectangleMapObject) {
+				RectangleMapObject object = (RectangleMapObject) mobs.get(i);
+				ArrayList<Integer> objectCells = new ArrayList<>();
+				int width = tiles.getWidth();
+				int height = tiles.getHeight();
+				for (int x = 0; x < width; x++) {
+					for (int y = 0; y < height; y++) {
+						if (object.getRectangle().contains(x, y)) {
+							objectCells.add(level.XY(x, y));
+						}
+					}
+				}
+				MapProperties properties = object.getProperties();
+				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_NUMBER) && properties.containsKey(KEY_LEVEL)) {
+					String name = (String) properties.get(KEY_NAME);
+					int number = (int) properties.get(KEY_NUMBER);
+					int mobLvl = (int) properties.get(KEY_LEVEL);
+					if (number > objectCells.size()) {
+						number = objectCells.size();
+					}
+					for (int j = 0; j < number; j++) {
+						try {
+							Class <? extends Mob> mobClass = (Class<? extends Mob>) Class.forName(name);
+							Mob mob;
+							if (mobLvl > 0) {//Default to level scale factor if mobLvl isn't defined
+								mob = Mob.create(mobClass, mobLvl);
+							} else {
+								mob = Mob.create(mobClass, level);
+							}
+							mob.pos = -1;
+							for (Integer cell : objectCells) {
+								if (level.passable(cell)) {
+									mob.pos = cell;
+								}
+							}
+							if (mob.pos != -1) {
+								level.mobs.add(mob);
+							}
+						} catch (ClassNotFoundException e) {
+							throw new RuntimeException(e);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	//TBA
+	public void createItems(Level level, String mapName) {}
 
 	private static Terrain mapToTerrain(int tile) {
 		switch (tile) {

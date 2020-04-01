@@ -54,7 +54,11 @@
 </data>
  </layer>
  <objectgroup id="4" name="mobs">
-  <object id="4" x="32" y="80" width="16" height="16"/>
+  <object id="4" name="Rats" type="Mob" x="16" y="32" width="32" height="64">
+   <properties>
+    <property name="number" type="int" value="2"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="items"/>
 </map>
