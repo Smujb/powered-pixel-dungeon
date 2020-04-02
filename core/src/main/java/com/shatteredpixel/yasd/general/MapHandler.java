@@ -36,6 +36,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.watabou.utils.Random;
@@ -92,6 +93,20 @@ public class MapHandler {
 		return true;
 	}
 
+	public static ArrayList<Integer> occupyingCells(Rectangle rect, Level level) {
+		ArrayList<Integer> objectCells = new ArrayList<>();
+		int rectX = Math.round(rect.x/TILE_WIDTH);
+		int rectY = Math.round(rect.y/TILE_WIDTH);
+		int rectWidth = Math.round(rect.width/TILE_WIDTH);
+		int rectHeight = Math.round(rect.height/TILE_WIDTH);
+		for (int x = rectX; x < rectX + rectWidth; x++) {
+			for (int y = rectY; y < rectY + rectHeight; y++) {
+				objectCells.add(level.XY(x, level.height()-y));
+			}
+		}
+		return objectCells;
+	}
+
 	private static final String KEY_NAME = "className";
 	private static final String KEY_NUMBER = "number";
 	private static final String KEY_LEVEL = "level";
@@ -102,18 +117,8 @@ public class MapHandler {
 		for (int i = 0; i < mobs.getCount(); i++) {
 			if (mobs.get(i) instanceof RectangleMapObject) {
 				RectangleMapObject object = (RectangleMapObject) mobs.get(i);
-				ArrayList<Integer> objectCells = new ArrayList<>();
 				Rectangle rect = object.getRectangle();
-				int mapHeight = tiles.getHeight();
-				int rectX = Math.round(rect.x/TILE_WIDTH);
-				int rectY = Math.round(rect.y/TILE_WIDTH);
-				int rectWidth = Math.round(rect.width/TILE_WIDTH);
-				int rectHeight = Math.round(rect.height/TILE_WIDTH);
-				for (int x = rectX; x < rectX + rectWidth; x++) {
-					for (int y = rectY; y < rectY + rectHeight; y++) {
-						objectCells.add(level.XY(x, mapHeight-y));
-					}
-				}
+				ArrayList<Integer> objectCells = occupyingCells(rect, level);
 				MapProperties properties = object.getProperties();
 				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_NUMBER) && properties.containsKey(KEY_LEVEL)) {
 					String name = (String) properties.get(KEY_NAME);
@@ -154,12 +159,39 @@ public class MapHandler {
 	private static final String KEY_QUANTITY = "quantity";
 	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
-	//TBA
-	public void createItems(@NotNull Level level, String mapName) {
+	public static void createItems(@NotNull Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		for (int i = 0; i < items.getCount(); i++) {
 			if (items.get(i) instanceof RectangleMapObject) {
-
+				RectangleMapObject object = (RectangleMapObject) items.get(i);
+				Rectangle rect = object.getRectangle();
+				ArrayList<Integer> objectCells = occupyingCells(rect, level);
+				MapProperties properties = object.getProperties();
+				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_QUANTITY)) {
+					String className = (String) properties.get(KEY_NAME);
+					int quantity = (int) properties.get(KEY_QUANTITY);
+					for (int j = 0; j < quantity; j++) {
+						Item item;
+						try {
+							Class<? extends Item> itemClass = (Class<? extends Item>) Class.forName(NAME_ITEM + className);
+							item = itemClass.newInstance();
+						} catch (ClassNotFoundException e) {
+							throw new RuntimeException(e);
+						} catch (IllegalAccessException e) {
+							throw new RuntimeException(e);
+						} catch (InstantiationException e) {
+							throw new RuntimeException(e);
+						}
+						if (!objectCells.isEmpty()) {
+							int pos;
+							do {
+								int num = Random.Int(objectCells.size());
+								pos = objectCells.get(num);
+							} while (!level.passable(pos));
+							level.drop(item, pos);
+						}
+					}
+				}
 			}
 		}
 	}

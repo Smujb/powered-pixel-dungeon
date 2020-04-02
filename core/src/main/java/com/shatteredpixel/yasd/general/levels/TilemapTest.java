@@ -61,6 +61,6 @@ public class TilemapTest extends Level {
 
 	@Override
 	protected void createItems() {
-
+		MapHandler.createItems(this, MAP_NAME);
 	}
 }
