@@ -1011,11 +1011,12 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void set( int cell, Terrain terrain ){
-		Level level = this;
-		Painter.set( level, cell, terrain );
+		if (cell < map.length) {
+			Painter.set(this, cell, terrain);
+		}
 
 		if (terrain != EMPTY){
-			level.traps.remove( cell );
+			traps.remove( cell );
 		}
 	}
 	

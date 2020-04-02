@@ -82,6 +82,8 @@ import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -318,7 +320,8 @@ public class Dungeon {
 			}
 		}
 
-		level = new TilemapTest();//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
+		level = new TilemapTest();
+		//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
 		if (create) {
 			if (level == null) {
 				level = new DeadEndLevel();
@@ -367,15 +370,18 @@ public class Dungeon {
 		return result;
 	}
 	
+	@Contract(pure = true)
 	public static boolean shopOnLevel() {
 		return bossLevel(yPos +1) & yPos + 1 != Constants.CHAPTER_LENGTH*4;
 	}
 	
+	@Contract(pure = true)
 	public static boolean bossLevel() {
 		return bossLevel(yPos);
 	}
 	
-	public static boolean bossLevel( int depth ) {
+	@Contract(pure = true)
+	public static boolean bossLevel(int depth ) {
 		return depth % Constants.CHAPTER_LENGTH == 0;
 	}
 	

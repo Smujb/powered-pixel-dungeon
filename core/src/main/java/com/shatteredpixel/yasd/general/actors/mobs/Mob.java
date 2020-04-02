@@ -1128,7 +1128,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			enemySeen = notice(enemy);
+			enemySeen = enemyInFOV;
 
 			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
 

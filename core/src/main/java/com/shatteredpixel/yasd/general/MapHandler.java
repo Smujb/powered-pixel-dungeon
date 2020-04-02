@@ -34,13 +34,20 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class MapHandler {
+
+	private static final int TILE_WIDTH = 16;//16*16 tile size
 
 	private static final String TILES_LAYER = "tiles";
 	private static final String MOBS_LAYER = "mobs";
@@ -56,7 +63,7 @@ public class MapHandler {
 		items = map.getLayers().get(ITEMS_LAYER).getObjects();
 	}
 
-	public static boolean build(Level level, String mapName) {
+	public static boolean build(@NotNull Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		int width = tiles.getWidth();
 		int height = tiles.getHeight();
@@ -64,7 +71,7 @@ public class MapHandler {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				Terrain toSet;
-				int pos = level.XY(x, y);
+				int pos = level.XY(x, width-y);
 				TiledMapTileLayer.Cell cell = tiles.getCell(x, y);
 				if (cell == null) {
 					toSet = Terrain.CHASM;
@@ -79,7 +86,7 @@ public class MapHandler {
 						level.exit = pos;
 					}
 				}
-				level.map[pos] = toSet;
+				level.set(pos, toSet);
 			}
 		}
 		return true;
@@ -88,20 +95,22 @@ public class MapHandler {
 	private static final String KEY_NAME = "className";
 	private static final String KEY_NUMBER = "number";
 	private static final String KEY_LEVEL = "level";
+	private static final String NAME_MOB = "com.shatteredpixel.yasd.general.actors.mobs.";
 
-	public static void createMobs(Level level, String mapName) {
+	public static void createMobs(@NotNull Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		for (int i = 0; i < mobs.getCount(); i++) {
 			if (mobs.get(i) instanceof RectangleMapObject) {
 				RectangleMapObject object = (RectangleMapObject) mobs.get(i);
 				ArrayList<Integer> objectCells = new ArrayList<>();
-				int width = tiles.getWidth();
-				int height = tiles.getHeight();
-				for (int x = 0; x < width; x++) {
-					for (int y = 0; y < height; y++) {
-						if (object.getRectangle().contains(x, y)) {
-							objectCells.add(level.XY(x, y));
-						}
+				Rectangle rect = object.getRectangle();
+				int rectX = (int) rect.x/TILE_WIDTH;
+				int rectY = (int) rect.y/TILE_WIDTH;
+				int rectWidth = (int) rect.width/TILE_WIDTH;
+				int rectHeight = (int) rect.height/TILE_WIDTH;
+				for (int x = rectX; x <= rectX + rectWidth; x++) {
+					for (int y = rectY; y < rectY + rectHeight; y++) {
+						objectCells.add(level.XY(x, y));
 					}
 				}
 				MapProperties properties = object.getProperties();
@@ -114,20 +123,16 @@ public class MapHandler {
 					}
 					for (int j = 0; j < number; j++) {
 						try {
-							Class <? extends Mob> mobClass = (Class<? extends Mob>) Class.forName(name);
+							Class <? extends Mob> mobClass = (Class<? extends Mob>) Class.forName( NAME_MOB + name );
 							Mob mob;
 							if (mobLvl > 0) {//Default to level scale factor if mobLvl isn't defined
 								mob = Mob.create(mobClass, mobLvl);
 							} else {
 								mob = Mob.create(mobClass, level);
 							}
-							mob.pos = -1;
-							for (Integer cell : objectCells) {
-								if (level.passable(cell)) {
-									mob.pos = cell;
-								}
-							}
-							if (mob.pos != -1) {
+							if (!objectCells.isEmpty()) {
+								int num = Random.Int(objectCells.size());
+								mob.pos = objectCells.remove(num);
 								level.mobs.add(mob);
 							}
 						} catch (ClassNotFoundException e) {
@@ -139,9 +144,14 @@ public class MapHandler {
 		}
 	}
 
-	//TBA
-	public void createItems(Level level, String mapName) {}
+	//Ues the same KEY_NAME
+	private static final String KEY_QUANTITY = "quantity";
+	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
+	//TBA
+	public void createItems(@NotNull Level level, String mapName) {}
+
+	@Contract(pure = true)
 	private static Terrain mapToTerrain(int tile) {
 		switch (tile) {
 			case 0:
