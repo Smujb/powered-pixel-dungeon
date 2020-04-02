@@ -36,6 +36,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
@@ -158,6 +159,7 @@ public class MapHandler {
 	}
 
 	//Ues the same KEY_NAME and KEY_NUMBER
+	private static final String KEY_TYPE = "heapType";
 	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
 	public static void createItems(@NotNull Level level, String mapName) {
@@ -169,6 +171,10 @@ public class MapHandler {
 				ArrayList<Integer> objectCells = occupyingCells(rect, level);
 				MapProperties properties = object.getProperties();
 				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_NUMBER)) {
+					Heap.Type type = Heap.Type.HEAP;
+					if (properties.containsKey(KEY_TYPE)) {
+						type = Enum.valueOf(Heap.Type.class, (String) properties.get(KEY_TYPE));
+					}
 					String className = (String) properties.get(KEY_NAME);
 					int quantity = (int) properties.get(KEY_NUMBER);
 					for (int j = 0; j < quantity; j++) {
@@ -189,7 +195,7 @@ public class MapHandler {
 								int num = Random.Int(objectCells.size());
 								pos = objectCells.get(num);
 							} while (!level.passable(pos));
-							level.drop(item, pos);
+							level.drop(item, pos).type = type;
 						}
 					}
 				}
