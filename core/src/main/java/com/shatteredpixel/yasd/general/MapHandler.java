@@ -104,13 +104,14 @@ public class MapHandler {
 				RectangleMapObject object = (RectangleMapObject) mobs.get(i);
 				ArrayList<Integer> objectCells = new ArrayList<>();
 				Rectangle rect = object.getRectangle();
-				int rectX = (int) rect.x/TILE_WIDTH;
-				int rectY = (int) rect.y/TILE_WIDTH;
-				int rectWidth = (int) rect.width/TILE_WIDTH;
-				int rectHeight = (int) rect.height/TILE_WIDTH;
-				for (int x = rectX; x <= rectX + rectWidth; x++) {
+				int mapHeight = tiles.getHeight();
+				int rectX = Math.round(rect.x/TILE_WIDTH);
+				int rectY = Math.round(rect.y/TILE_WIDTH);
+				int rectWidth = Math.round(rect.width/TILE_WIDTH);
+				int rectHeight = Math.round(rect.height/TILE_WIDTH);
+				for (int x = rectX; x < rectX + rectWidth; x++) {
 					for (int y = rectY; y < rectY + rectHeight; y++) {
-						objectCells.add(level.XY(x, y));
+						objectCells.add(level.XY(x, mapHeight-y));
 					}
 				}
 				MapProperties properties = object.getProperties();
@@ -131,8 +132,13 @@ public class MapHandler {
 								mob = Mob.create(mobClass, level);
 							}
 							if (!objectCells.isEmpty()) {
-								int num = Random.Int(objectCells.size());
-								mob.pos = objectCells.remove(num);
+								do {
+									if (objectCells.isEmpty()) {
+										break;
+									}
+									int num = Random.Int(objectCells.size());
+									mob.pos = objectCells.remove(num);
+								} while (!level.passable(mob.pos));
 								level.mobs.add(mob);
 							}
 						} catch (ClassNotFoundException e) {
@@ -149,7 +155,14 @@ public class MapHandler {
 	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
 	//TBA
-	public void createItems(@NotNull Level level, String mapName) {}
+	public void createItems(@NotNull Level level, String mapName) {
+		loadMap(new TmxMapLoader().load(mapName));
+		for (int i = 0; i < items.getCount(); i++) {
+			if (items.get(i) instanceof RectangleMapObject) {
+
+			}
+		}
+	}
 
 	@Contract(pure = true)
 	private static Terrain mapToTerrain(int tile) {
