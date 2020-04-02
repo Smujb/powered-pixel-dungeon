@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.keys;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class IronKey extends Key {
@@ -36,7 +37,7 @@ public class IronKey extends Key {
 	}
 
 	public IronKey() {
-		this( 0, 0, 0);
+		this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
 	}
 
 	public IronKey( int x, int y, int z ) {

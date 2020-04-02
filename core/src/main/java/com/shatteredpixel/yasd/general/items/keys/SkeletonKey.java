@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.keys;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class SkeletonKey extends Key {
@@ -35,9 +36,7 @@ public class SkeletonKey extends Key {
 		image = ItemSpriteSheet.SKELETON_KEY;
 	}
 	
-	public SkeletonKey() {
-		this( 0, 0, 0 );
-	}
+	public SkeletonKey(){this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos); }
 
 	public SkeletonKey( int x, int y, int z ) {
 		super();

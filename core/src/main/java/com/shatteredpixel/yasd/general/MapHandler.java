@@ -109,6 +109,8 @@ public class MapHandler {
 
 	private static final String KEY_NAME = "className";
 	private static final String KEY_NUMBER = "number";
+
+
 	private static final String KEY_LEVEL = "level";
 	private static final String NAME_MOB = "com.shatteredpixel.yasd.general.actors.mobs.";
 
@@ -155,8 +157,7 @@ public class MapHandler {
 		}
 	}
 
-	//Ues the same KEY_NAME
-	private static final String KEY_QUANTITY = "quantity";
+	//Ues the same KEY_NAME and KEY_NUMBER
 	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
 	public static void createItems(@NotNull Level level, String mapName) {
@@ -167,9 +168,9 @@ public class MapHandler {
 				Rectangle rect = object.getRectangle();
 				ArrayList<Integer> objectCells = occupyingCells(rect, level);
 				MapProperties properties = object.getProperties();
-				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_QUANTITY)) {
+				if (properties.containsKey(KEY_NAME) && properties.containsKey(KEY_NUMBER)) {
 					String className = (String) properties.get(KEY_NAME);
-					int quantity = (int) properties.get(KEY_QUANTITY);
+					int quantity = (int) properties.get(KEY_NUMBER);
 					for (int j = 0; j < quantity; j++) {
 						Item item;
 						try {
