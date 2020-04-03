@@ -60,6 +60,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.Terrain.*;
@@ -204,7 +206,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell( Char ch ) {
+	public void occupyCell(@NotNull Char ch ) {
 		
 		super.occupyCell( ch );
 

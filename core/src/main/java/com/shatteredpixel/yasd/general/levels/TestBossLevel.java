@@ -43,6 +43,8 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.shatteredpixel.yasd.general.levels.Terrain.*;
 
 public class TestBossLevel extends Level {
@@ -88,7 +90,7 @@ public class TestBossLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell(Char ch) {
+	public void occupyCell(@NotNull Char ch) {
 		super.occupyCell(ch);
 		int cell = ch.pos;
 		if (ch == Dungeon.hero && insideRoom(cell) && !bossSpawned) {

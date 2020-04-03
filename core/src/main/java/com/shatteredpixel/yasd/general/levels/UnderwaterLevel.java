@@ -46,6 +46,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class UnderwaterLevel extends Level {
@@ -177,7 +179,7 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell(Char ch) {
+	public void occupyCell(@NotNull Char ch) {
 		super.occupyCell(ch);
 		if (bubbleLocations.contains(ch.pos)) {
 			ch.sprite.flash();

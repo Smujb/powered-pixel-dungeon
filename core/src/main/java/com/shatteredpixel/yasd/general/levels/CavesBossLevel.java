@@ -53,6 +53,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.shatteredpixel.yasd.general.levels.Terrain.*;
 
 public class CavesBossLevel extends Level {
@@ -230,7 +232,7 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public void occupyCell( Char ch ) {
+	public void occupyCell(@NotNull Char ch ) {
 		
 		super.occupyCell( ch );
 		

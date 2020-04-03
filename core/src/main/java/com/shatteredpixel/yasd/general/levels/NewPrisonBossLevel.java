@@ -66,6 +66,8 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.Terrain.*;
@@ -554,7 +556,7 @@ public class NewPrisonBossLevel extends Level {
 	private boolean[] triggered = new boolean[]{false, false, false, false};
 	
 	@Override
-	public void occupyCell(Char ch) {
+	public void occupyCell(@NotNull Char ch) {
 		super.occupyCell(ch);
 		
 		if (ch == Dungeon.hero){

@@ -128,6 +128,7 @@ import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -628,14 +629,13 @@ public abstract class Level implements Bundlable {
 		bundle.put( FEELING, feeling );
 	}
 
-	public boolean processAreas(int pos, Hero hero) {
+	private void processAreas(int pos, Hero hero) {
 		for (InteractiveArea area : interactiveAreas) {
 			if (area.posInside(this, pos)) {
 				area.trigger(hero);
-				return true;
+				return;
 			}
 		}
-		return false;
 	}
 
 	public Terrain tunnelTile() {
@@ -1159,7 +1159,7 @@ public abstract class Level implements Bundlable {
 		return result;
 	}
 	
-	public void occupyCell( Char ch ){
+	public void occupyCell(@NotNull Char ch ){
 		if (!ch.isFlying()){
 			
 			if (pit(ch.pos)) {
@@ -1176,8 +1176,6 @@ public abstract class Level implements Bundlable {
 		} else {
 			if (map[ch.pos] == DOOR){
 				Door.enter( ch.pos );
-				int[] locations = posToXY(ch.pos);
-				interactiveAreas.add(new Exit().setPos(locations[0], locations[1], 1, 1));
 			}
 		}
 	}
@@ -1230,6 +1228,8 @@ public abstract class Level implements Bundlable {
 		}
 		//TODO: make fully interactive not press-based
 		processAreas(cell, Dungeon.hero);
+		int[] locations = posToXY(cell);
+		interactiveAreas.add(new Exit().setPos(locations[0], locations[1], 1, 1));
 
 		map[cell].press(cell, hard);//See Terrain.press()
 		
@@ -1239,7 +1239,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 	
-	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
+	public void updateFieldOfView(@NotNull Char c, boolean[] fieldOfView ) {
 
 		int cx = c.pos % width();
 		int cy = c.pos / width();

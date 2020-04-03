@@ -29,14 +29,18 @@ package com.shatteredpixel.yasd.general.levels.interactive;
 
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.Rectangle;
+public abstract class InteractiveArea implements Bundlable {
 
-public abstract class InteractiveArea extends Rectangle implements Bundlable {
+	protected int x;
+	protected int y;
+	protected int width;
+	protected int height;
 
 	public abstract void trigger(Hero hero);
 
@@ -45,6 +49,7 @@ public abstract class InteractiveArea extends Rectangle implements Bundlable {
 		this.height = height;
 		this.x = x;
 		this.y = y;
+		GLog.i("created area with x, y, width, height: " + x +"," + y + "," + width + "," + height);
 		return this;
 	}
 
@@ -52,7 +57,9 @@ public abstract class InteractiveArea extends Rectangle implements Bundlable {
 		int[] coords = level.posToXY(pos);
 		int posX = coords[0];
 		int posY = coords[1];
-		return contains(posX, posY);
+		return posX >= x && posX < x + width
+				&& posY >= y && posY < y + height;
+		//return contains(posX, posY);
 	}
 
 	private static final String X = "x";
