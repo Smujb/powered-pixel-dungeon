@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -67,6 +68,8 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
+import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
@@ -123,6 +126,8 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -200,6 +205,7 @@ public abstract class Level implements Bundlable {
 		return locations;
 	}
 
+	@Contract(pure = true)
 	public static Terrain[] basicMap(int size) {
 		Terrain[] map = new Terrain[size];
 		for (int i = 0; i < size; i++) {
@@ -277,7 +283,7 @@ public abstract class Level implements Bundlable {
 
 	public boolean avoid(int pos) {
 		Trap trap = trap(pos);
-		if (trap != null && trap.active && trap.visible) {//I hope to get rid of Terrain.TRAP, Terrain.HIDDEN_TRAP, etc altogether.
+		if (trap != null && trap.active && trap.visible) {
 			return true;
 		} else {
 			return map[pos].avoid();
@@ -328,6 +334,7 @@ public abstract class Level implements Bundlable {
 	public SparseArray<Heap> heaps;
 	public HashMap<Class<? extends Blob>,Blob> blobs;
 	public SparseArray<Plant> plants;
+	public ArrayList<InteractiveArea> interactiveAreas;
 	public SparseArray<Trap> traps;
 	public HashSet<CustomTilemap> customTiles;
 	public HashSet<CustomTilemap> customWalls;
@@ -356,7 +363,7 @@ public abstract class Level implements Bundlable {
 	private static final String MOBS		= "mobs";
 	private static final String BLOBS		= "blobs";
 	private static final String FEELING		= "feeling";
-	private static final String STATE		= "state";
+	private static final String INTERACTIVE = "interactive-area";
 
 	public void create() {
 
@@ -454,6 +461,7 @@ public abstract class Level implements Bundlable {
 			blobs = new HashMap<>();
 			plants = new SparseArray<>();
 			traps = new SparseArray<>();
+			interactiveAreas = new ArrayList<>();
 			customTiles = new HashSet<>();
 			customWalls = new HashSet<>();
 			
@@ -488,15 +496,6 @@ public abstract class Level implements Bundlable {
 		
 		heroFOV     = new boolean[length];
 		
-		//passable	= new boolean[length];
-		//losBlocking	= new boolean[length];
-		//flammable	= new boolean[length];
-		//secret		= new boolean[length];
-		//solid		= new boolean[length];
-		//avoid		= new boolean[length];
-		//water		= new boolean[length];
-		//pit			= new boolean[length];
-		
 		PathFinder.setMapSize(w, h);
 	}
 	
@@ -527,10 +526,11 @@ public abstract class Level implements Bundlable {
 		blobs = new HashMap<>();
 		plants = new SparseArray<>();
 		traps = new SparseArray<>();
+		interactiveAreas = new ArrayList<>();
 		customTiles = new HashSet<>();
 		customWalls = new HashSet<>();
 		
-		map		= (Terrain[]) bundle.getEnumArray( MAP, Terrain.class );
+		map		= bundle.getEnumArray( MAP, Terrain.class );
 
 		visited	= bundle.getBooleanArray( VISITED );
 		mapped	= bundle.getBooleanArray( MAPPED );
@@ -558,6 +558,16 @@ public abstract class Level implements Bundlable {
 			Trap trap = (Trap)p;
 			traps.put( trap.pos, trap );
 		}
+
+		int x = 0;
+		do {
+			if (bundle.contains(INTERACTIVE + x)) {
+				interactiveAreas.add((InteractiveArea) bundle.get(INTERACTIVE + x));
+			} else {
+				break;
+			}
+			x++;
+		} while (true);
 
 		collection = bundle.getCollection( CUSTOM_TILES );
 		for (Bundlable p : collection) {
@@ -589,11 +599,6 @@ public abstract class Level implements Bundlable {
 		if (feeling == Feeling.DARK)
 			viewDistance = Math.round(viewDistance/2f);
 
-		//if (bundle.contains( "mobs_to_spawn" )) {
-		//	for (Class<? extends Mob> mob : bundle.getClassArray("mobs_to_spawn")) {
-		//		if (mob != null) mobsToSpawn.add(mob);
-		//	}
-		//}
 		
 		buildFlagMaps();
 		cleanWalls();
@@ -613,12 +618,24 @@ public abstract class Level implements Bundlable {
 		bundle.put( HEAPS, heaps.valueList() );
 		bundle.put( PLANTS, plants.valueList() );
 		bundle.put( TRAPS, traps.valueList() );
+		for (int x = 0; x < interactiveAreas.size(); x++) {
+			bundle.put(INTERACTIVE + x, interactiveAreas.get(x));
+		}
 		bundle.put( CUSTOM_TILES, customTiles );
 		bundle.put( CUSTOM_WALLS, customWalls );
 		bundle.put( MOBS, mobs );
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
-		//bundle.put( "mobs_to_spawn", mobsToSpawn.toArray(new Class[0]));
+	}
+
+	public boolean processAreas(int pos, Hero hero) {
+		for (InteractiveArea area : interactiveAreas) {
+			if (area.posInside(this, pos)) {
+				area.trigger(hero);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Terrain tunnelTile() {
@@ -912,6 +929,10 @@ public abstract class Level implements Bundlable {
 			return TIME_TO_RESPAWN;
 		}
 	}
+
+	public final String fileName() {
+		return GamesInProgress.depthFile(GamesInProgress.curSlot, Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+	}
 	
 	public int randomRespawnCell() {
 		int cell;
@@ -1141,7 +1162,7 @@ public abstract class Level implements Bundlable {
 	public void occupyCell( Char ch ){
 		if (!ch.isFlying()){
 			
-			if (pit()[ch.pos]){
+			if (pit(ch.pos)) {
 				if (ch == Dungeon.hero) {
 					Chasm.heroFall(ch.pos);
 				} else if (ch instanceof Mob) {
@@ -1155,6 +1176,8 @@ public abstract class Level implements Bundlable {
 		} else {
 			if (map[ch.pos] == DOOR){
 				Door.enter( ch.pos );
+				int[] locations = posToXY(ch.pos);
+				interactiveAreas.add(new Exit().setPos(locations[0], locations[1], 1, 1));
 			}
 		}
 	}
@@ -1205,6 +1228,8 @@ public abstract class Level implements Bundlable {
 
 			}
 		}
+		//TODO: make fully interactive not press-based
+		processAreas(cell, Dungeon.hero);
 
 		map[cell].press(cell, hard);//See Terrain.press()
 		

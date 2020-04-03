@@ -585,11 +585,11 @@ public class Dungeon {
 		}
 	}
 	
-	public static void saveLevel( int save ) throws IOException {
+	public static void saveLevel( Level level ) throws IOException {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile( GamesInProgress.depthFile( save, xPos, yPos, zPos ), bundle );
+		FileUtils.bundleToFile( level.fileName()/*GamesInProgress.depthFile( save, xPos, yPos, zPos )*/, bundle );
 	}
 	
 	public static void saveAll() throws IOException {
@@ -597,7 +597,7 @@ public class Dungeon {
 			
 			Actor.fixTime();
 			saveGame( GamesInProgress.curSlot );
-			saveLevel( GamesInProgress.curSlot );
+			saveLevel( level );
 
 			GamesInProgress.set( GamesInProgress.curSlot, yPos, challenges, hero );
 
