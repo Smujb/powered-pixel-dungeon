@@ -501,7 +501,7 @@ public class v0_7_X_Changes {
 				"_-_ Bosses now resist grim traps, Yog is immune\n" +
 				"_-_ Pitfall traps do not work on boss floors\n" +
 				"_-_ Reduced poison dart trap damage scaling\n" +
-				"_-_ Rockfall traps trigger in a 5x5 AOE when cast from reclaim trap\n" +
+				"_-_ Rockfall traps interact in a 5x5 AOE when cast from reclaim trap\n" +
 				"_-_ Bosses will resist weakening traps"));
 		
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_PLATE, new ItemSprite.Glowing( 0x660022 )), "Enchant/Glyph Nerfs",

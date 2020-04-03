@@ -68,7 +68,6 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
-import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
@@ -629,13 +628,13 @@ public abstract class Level implements Bundlable {
 		bundle.put( FEELING, feeling );
 	}
 
-	private void processAreas(int pos, Hero hero) {
+	public InteractiveArea findArea(int pos) {
 		for (InteractiveArea area : interactiveAreas) {
 			if (area.posInside(this, pos)) {
-				area.trigger(hero);
-				return;
+				return area;
 			}
 		}
+		return null;
 	}
 
 	public Terrain tunnelTile() {
@@ -1226,10 +1225,6 @@ public abstract class Level implements Bundlable {
 
 			}
 		}
-		//TODO: make fully interactive not press-based
-		processAreas(cell, Dungeon.hero);
-		int[] locations = posToXY(cell);
-		interactiveAreas.add(new Exit().setPos(locations[0], locations[1], 1, 1));
 
 		map[cell].press(cell, hard);//See Terrain.press()
 		

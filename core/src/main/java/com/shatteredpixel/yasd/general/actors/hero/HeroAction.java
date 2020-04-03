@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.hero;
 
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 
 public class HeroAction {
 	
@@ -61,6 +62,14 @@ public class HeroAction {
 		public Char ch;
 		public Interact( Char ch ) {
 			this.ch = ch;
+		}
+	}
+
+	public static class InteractCell extends HeroAction {
+		public InteractiveArea area;
+		public InteractCell( InteractiveArea area, int dst ) {
+			this.area = area;
+			this.dst = dst;
 		}
 	}
 	

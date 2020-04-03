@@ -101,6 +101,7 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
+import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
@@ -590,7 +591,10 @@ public class Hero extends Char {
 				
 			} else if (curAction instanceof HeroAction.Alchemy) {
 				actResult = actAlchemy( (HeroAction.Alchemy)curAction );
-				
+
+			} else if (curAction instanceof HeroAction.InteractCell) {
+				actResult = actInteractCell( (HeroAction.InteractCell)curAction );
+
 			} else {
 				actResult = false;
 			}
@@ -607,7 +611,7 @@ public class Hero extends Char {
 		ready = false;
 	}
 	
-	private void ready() {
+	public void ready() {
 		if (sprite.looping()) sprite.idle();
 		curAction = null;
 		damageInterrupt = true;
@@ -649,8 +653,26 @@ public class Hero extends Char {
 			return false;
 		}
 	}
+
+	private boolean actInteractCell(@NotNull HeroAction.InteractCell action ) {
+		int dst = action.dst;
+		InteractiveArea area = action.area;
+		if (area.posInside(Dungeon.level, pos)) {
+			area.interact(this);
+			return false;
+
+		} else if (getCloser( dst )) {
+
+			return true;
+
+		} else {
+			ready();
+			return false;
+		}
+
+	}
 	
-	private boolean actInteract( HeroAction.Interact action ) {
+	private boolean actInteract(@NotNull HeroAction.Interact action ) {
 		
 		Char ch = action.ch;
 
@@ -872,7 +894,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actDescend( HeroAction.Descend action ) {
+	private boolean actDescend(@NotNull HeroAction.Descend action ) {
 		int stairs = action.dst;
 		if (pos == stairs) {
 			
@@ -1223,68 +1245,74 @@ public class Hero extends Char {
 	}
 	
 	public boolean handle( int cell ) {
-		
+
 		if (cell == -1) {
 			return false;
 		}
-		
+
 		Char ch;
 		Heap heap;
-		
-		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
-			
-			curAction = new HeroAction.Alchemy( cell );
-			
-		} else if (fieldOfView[cell] && (ch = Actor.findChar( cell )) instanceof Mob) {
+		InteractiveArea area = Dungeon.level.findArea(cell);
+
+		if (area != null) {
+
+			curAction = new HeroAction.InteractCell(area, cell);
+
+		} else if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
+
+			curAction = new HeroAction.Alchemy(cell);
+
+		} else if (fieldOfView[cell] && (ch = Actor.findChar(cell)) instanceof Mob) {
 
 			if (ch.alignment != Alignment.ENEMY && ch.buff(Amok.class) == null) {
-				curAction = new HeroAction.Interact( ch );
+				curAction = new HeroAction.Interact(ch);
 			} else {
-				curAction = new HeroAction.Attack( ch );
+				curAction = new HeroAction.Attack(ch);
 			}
 
-		} else if ((heap = Dungeon.level.heaps.get( cell )) != null
+		} else if ((heap = Dungeon.level.heaps.get(cell)) != null
 				//moving to an item doesn't auto-pickup when enemies are near...
 				&& (visibleEnemies.size() == 0 || cell == pos ||
 				//...but only for standard heaps, chests and similar open as normal.
 				(heap.type != Type.HEAP && heap.type != Type.FOR_SALE))) {
 
 			switch (heap.type) {
-			case HEAP:
-				curAction = new HeroAction.PickUp( cell );
-				break;
-			case FOR_SALE:
-				curAction = heap.size() == 1 && heap.peek().price() > 0 ?
-					new HeroAction.Buy( cell ) :
-					new HeroAction.PickUp( cell );
-				break;
-			default:
-				curAction = new HeroAction.OpenChest( cell );
+				case HEAP:
+					curAction = new HeroAction.PickUp(cell);
+					break;
+				case FOR_SALE:
+					curAction = heap.size() == 1 && heap.peek().price() > 0 ?
+							new HeroAction.Buy(cell) :
+							new HeroAction.PickUp(cell);
+					break;
+				default:
+					curAction = new HeroAction.OpenChest(cell);
 			}
-			
+
 		} else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR || Dungeon.level.map[cell] == Terrain.LOCKED_EXIT || Dungeon.level.map[cell] == Terrain.BRONZE_LOCKED_DOOR) {
 
-			curAction = new HeroAction.Unlock( cell );
-			
+			curAction = new HeroAction.Unlock(cell);
+
 		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&&  Dungeon.level.hasExit) {
-			
-			curAction = new HeroAction.Descend( cell );
-			
+				&& Dungeon.level.hasExit) {
+
+			curAction = new HeroAction.Descend(cell);
+
 		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE
 				&& Dungeon.level.hasEntrance) {
-			
-			curAction = new HeroAction.Ascend( cell );
-			
-		} else  {
+
+			curAction = new HeroAction.Ascend(cell);
+
+		} else {
 
 			walkingToVisibleTrapInFog = !Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
 					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible;
-			
-			curAction = new HeroAction.Move( cell );
+
+			curAction = new HeroAction.Move(cell);
 			lastAction = null;
-			
+
 		}
+
 
 		return true;
 	}

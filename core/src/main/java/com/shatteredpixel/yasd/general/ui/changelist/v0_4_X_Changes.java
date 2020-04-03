@@ -81,7 +81,7 @@ public class v0_4_X_Changes {
 				"_-_ Reduced sacrificial curse bleed by ~33%\n" +
 				"_-_ Reworked glyph of brimstone, now grants shielding instead of healing\n" +
 				"_-_ Reworked glyph of stone, now reduces speed in doorways\n" +
-				"_-_ Thrown potions now trigger traps and plants"));
+				"_-_ Thrown potions now interact traps and plants"));
 	}
 	
 	public static void add_v0_4_2_Changes( ArrayList<ChangeInfo> changeInfos ){

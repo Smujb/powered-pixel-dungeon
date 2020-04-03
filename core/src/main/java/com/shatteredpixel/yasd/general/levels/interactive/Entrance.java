@@ -27,12 +27,53 @@
 
 package com.shatteredpixel.yasd.general.levels.interactive;
 
+import com.shatteredpixel.yasd.general.Badges;
+import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.items.Amulet;
+import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.plants.Swiftthistle;
+import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.shatteredpixel.yasd.general.scenes.SurfaceScene;
+import com.shatteredpixel.yasd.general.windows.WndMessage;
+import com.watabou.noosa.Game;
+import com.watabou.utils.Callback;
 
 public class Entrance extends InteractiveArea {
 	@Override
-	public void trigger(Hero hero) {
-		LevelHandler.ascend();
+	public void interact(Hero hero) {
+		if (Dungeon.yPos == 1) {
+
+			if (hero.belongings.getItem(Amulet.class) == null) {
+				Game.runOnRenderThread(new Callback() {
+					@Override
+					public void call() {
+						GameScene.show(new WndMessage(Messages.get(hero, "leave")));
+					}
+				});
+				hero.ready();
+			} else {
+				Badges.silentValidateHappyEnd();
+				Dungeon.win(Amulet.class);
+				Dungeon.deleteGame(GamesInProgress.curSlot, true);
+				Game.switchScene(SurfaceScene.class);
+			}
+
+		} else {
+
+			hero.curAction = null;
+
+			Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);
+			if (buff != null) buff.detach();
+			buff = hero.buff(Swiftthistle.TimeBubble.class);
+			if (buff != null) buff.detach();
+
+			LevelHandler.ascend();
+
+		}
 	}
 }

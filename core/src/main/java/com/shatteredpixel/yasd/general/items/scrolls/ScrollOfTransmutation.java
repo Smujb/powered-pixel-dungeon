@@ -105,7 +105,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		}
 		
 		if (result == null){
-			//This shouldn't ever trigger
+			//This shouldn't ever interact
 			GLog.n( Messages.get(this, "nothing") );
 			this.collect( curUser.belongings.backpack, curUser);
 		} else {

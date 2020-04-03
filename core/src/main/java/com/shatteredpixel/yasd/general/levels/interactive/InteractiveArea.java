@@ -42,7 +42,7 @@ public abstract class InteractiveArea implements Bundlable {
 	protected int width;
 	protected int height;
 
-	public abstract void trigger(Hero hero);
+	public abstract void interact(Hero hero);
 
 	public InteractiveArea setPos(int x, int y, int  width, int height) {
 		this.width = width;

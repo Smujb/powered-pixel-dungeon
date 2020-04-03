@@ -28,11 +28,21 @@
 package com.shatteredpixel.yasd.general.levels.interactive;
 
 import com.shatteredpixel.yasd.general.LevelHandler;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
+import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 
 public class Exit extends InteractiveArea {
 	@Override
-	public void trigger(Hero hero) {
+	public void interact(Hero hero) {
+		hero.curAction = null;
+
+		Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);
+		if (buff != null) buff.detach();
+		buff = hero.buff(Swiftthistle.TimeBubble.class);
+		if (buff != null) buff.detach();
+
 		LevelHandler.descend();
 	}
 }

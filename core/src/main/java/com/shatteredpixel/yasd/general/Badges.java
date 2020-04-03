@@ -415,7 +415,7 @@ public class Badges {
 		// 2) When an item is upgraded (ScrollOfUpgrade, ScrollOfWeaponUpgrade, ShortSword, WandOfMagicMissile)
 		// 3) When an item is identified
 
-		// Note that artifacts should never trigger this badge as they are alternatively upgraded
+		// Note that artifacts should never interact this badge as they are alternatively upgraded
 		if (!item.levelKnown || item instanceof Artifact) {
 			return;
 		}

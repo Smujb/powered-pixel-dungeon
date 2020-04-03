@@ -437,7 +437,7 @@ public class DungeonTileSheet {
 		Random.seed();
 	}
 
-	//These alt visuals will trigger 50% of the time (45% of the time if a rare alt is also present)
+	//These alt visuals will interact 50% of the time (45% of the time if a rare alt is also present)
 	public static SparseArray<Integer> commonAltVisuals = new SparseArray<>();
 	static {
 		commonAltVisuals.put(FLOOR,                 FLOOR_ALT_1);
@@ -462,7 +462,7 @@ public class DungeonTileSheet {
 		commonAltVisuals.put(FURROWED_OVERHANG,     FURROWED_OVERHANG_ALT);
 	}
 
-	//These alt visuals trigger 5% of the time (and also override common alts when they show up)
+	//These alt visuals interact 5% of the time (and also override common alts when they show up)
 	public static SparseArray<Integer> rareAltVisuals = new SparseArray<>();
 	static {
 		rareAltVisuals.put(FLOOR,               FLOOR_ALT_2);

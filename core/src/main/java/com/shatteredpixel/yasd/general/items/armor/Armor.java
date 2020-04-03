@@ -217,7 +217,7 @@ public class Armor extends KindofMisc {
 	public void affixSeal(BrokenSeal seal){
 		this.seal = seal;
 		/*if (seal.level() > 0){
-			//doesn't trigger upgrading logic such as affecting curses/glyphs
+			//doesn't interact upgrading logic such as affecting curses/glyphs
 			level(Math.min(level()+1,3));
 			Badges.validateItemLevelAquired(this);
 		}*/
