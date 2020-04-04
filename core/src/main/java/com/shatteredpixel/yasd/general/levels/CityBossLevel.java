@@ -37,6 +37,8 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -49,7 +51,17 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.BOOKSHELF;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_DOOR;
+import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_EXIT;
+import static com.shatteredpixel.yasd.general.levels.Terrain.PEDESTAL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.STATUE_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
 
 public class CityBossLevel extends Level {
 	
@@ -134,8 +146,9 @@ public class CityBossLevel extends Level {
 			map[i] = EMPTY_SP;
 		}
 		
-		exit = (TOP - 1) * width() + CENTER;
-		map[exit] = LOCKED_EXIT;
+		int exit = (TOP - 1) * width() + CENTER;
+		interactiveAreas.add(new Exit().setPos(this, exit));
+		map[getExitPos()] = LOCKED_EXIT;
 		
 		arenaDoor = (TOP + HALL_HEIGHT) * width() + CENTER;
 		map[arenaDoor] = Terrain.DOOR;
@@ -146,8 +159,9 @@ public class CityBossLevel extends Level {
 		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
 		Painter.fill( this, LEFT + HALL_WIDTH - 1, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
 		
-		entrance = (TOP + HALL_HEIGHT + 3 + Random.Int( CHAMBER_HEIGHT - 2 )) * width() + LEFT + (/*1 +*/ Random.Int( HALL_WIDTH-2 ));
-		map[entrance] = ENTRANCE;
+		int entrance = (TOP + HALL_HEIGHT + 3 + Random.Int( CHAMBER_HEIGHT - 2 )) * width() + LEFT + (/*1 +*/ Random.Int( HALL_WIDTH-2 ));
+		interactiveAreas.add(new Entrance().setPos(this, entrance));
+		map[getEntrance().getPos(this)] = ENTRANCE;
 		
 		for (int i=0; i < length() - width(); i++) {
 			if (map[i] == EMPTY && Random.Int( 10 ) == 0) {
@@ -187,7 +201,7 @@ public class CityBossLevel extends Level {
 				pos =
 					Random.IntRange( LEFT + 1, LEFT + HALL_WIDTH - 2 ) +
 					Random.IntRange( TOP + HALL_HEIGHT + 2, TOP + HALL_HEIGHT  + CHAMBER_HEIGHT ) * width();
-			} while (pos == entrance);
+			} while (pos == getEntrance().getPos(this));
 			drop( item, pos ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
 		}
 	}
@@ -196,7 +210,7 @@ public class CityBossLevel extends Level {
 	public int randomRespawnCell() {
 		int cell;
 		do {
-			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}

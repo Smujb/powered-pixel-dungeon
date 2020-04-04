@@ -198,7 +198,7 @@ public abstract class RegularLevel extends Level {
 			
 			do {
 				mob.pos = pointToCell(roomToSpawn.random());
-			} while (findMob(mob.pos) != null || !passable(mob.pos) || mob.pos == exit);
+			} while (findMob(mob.pos) != null || !passable(mob.pos) || mob.pos == getExitPos());
 
 			mobsToSpawn--;
 			mobs.add(mob);
@@ -208,7 +208,7 @@ public abstract class RegularLevel extends Level {
 				
 				do {
 					mob.pos = pointToCell(roomToSpawn.random());
-				} while (findMob(mob.pos) != null || !passable(mob.pos) || mob.pos == exit);
+				} while (findMob(mob.pos) != null || !passable(mob.pos) || mob.pos == getExitPos());
 
 				mobsToSpawn--;
 				mobs.add(mob);
@@ -244,7 +244,7 @@ public abstract class RegularLevel extends Level {
 					&& Actor.findChar( cell ) == null
 					&& passable(cell)
 					&& room.canPlaceCharacter(cellToPoint(cell), this)
-					&& cell != exit) {
+					&& cell != getExitPos()) {
 				return cell;
 			}
 			
@@ -411,7 +411,7 @@ public abstract class RegularLevel extends Level {
 			if (room != null && room != roomEntrance) {
 				int pos = pointToCell(room.random());
 				if (passable(pos)
-						&& pos != exit
+						&& pos != getExitPos()
 						&& heaps.get(pos) == null) {
 					
 					Trap t = traps.get(pos);

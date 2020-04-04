@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.sewerboss;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.ExitRoom;
@@ -64,8 +65,9 @@ public class SewerBossExitRoom extends ExitRoom {
 		Painter.fill( level, c.x-1, c.y-1, 3, 2, Terrain.WALL );
 		Painter.fill( level, c.x-1, c.y+1, 3, 1, Terrain.EMPTY_SP );
 		
-		level.exit = level.pointToCell(c);
-		Painter.set( level, level.exit, Terrain.LOCKED_EXIT );
+		int exit = level.pointToCell(c);
+		level.interactiveAreas.add(new Exit().setPos(level, exit));
+		Painter.set( level, level.getExitPos(), Terrain.LOCKED_EXIT );
 		
 		CustomTilemap vis = new SewerExit();
 		vis.pos(c.x-1, c.y);

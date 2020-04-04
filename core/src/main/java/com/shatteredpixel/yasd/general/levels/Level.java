@@ -325,9 +325,6 @@ public abstract class Level implements Bundlable {
 	}
 	
 	public Feeling feeling = Feeling.NONE;
-	
-	public int entrance;
-	public int exit;
 
 	//when a boss level has become locked.
 	public boolean locked = false;
@@ -537,8 +534,8 @@ public abstract class Level implements Bundlable {
 		visited	= bundle.getBooleanArray( VISITED );
 		mapped	= bundle.getBooleanArray( MAPPED );
 		
-		entrance	= bundle.getInt( ENTRANCE );
-		exit		= bundle.getInt( EXIT );
+		//entrance	= bundle.getInt( ENTRANCE );
+		//exit		= bundle.getInt( EXIT );
 
 		locked      = bundle.getBoolean( LOCKED );
 		
@@ -614,8 +611,8 @@ public abstract class Level implements Bundlable {
 		bundle.put( MAP, map );
 		bundle.put( VISITED, visited );
 		bundle.put( MAPPED, mapped );
-		bundle.put( ENTRANCE, entrance );
-		bundle.put( EXIT, exit );
+		//bundle.put( ENTRANCE, entrance );
+		//bundle.put( EXIT, exit );
 		bundle.put( LOCKED, locked );
 		bundle.put( HEAPS, heaps.valueList() );
 		bundle.put( PLANTS, plants.valueList() );
@@ -638,7 +635,8 @@ public abstract class Level implements Bundlable {
 		}
 		return null;
 	}
-	//Used for single-entrance/exit levels. Will only return first result.
+
+	//Both are used for single-entrance/exit levels. Will only return first result.
 	public Entrance getEntrance() {
 		for (InteractiveArea area : interactiveAreas) {
 			if (area instanceof Entrance) {
@@ -654,6 +652,57 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		return null;
+	}
+
+	public int getEntrancePos() {
+		Entrance entrance = getEntrance();
+		if (entrance == null) {
+			return -1;
+		} else {
+			return entrance.getPos(this);
+		}
+	}
+
+	public int getExitPos() {
+		Exit exit = getExit();
+		if (exit == null) {
+			return -1;
+		} else {
+			return exit.getPos(this);
+		}
+	}
+
+	public void setEntrance(int pos) {
+		Entrance entrance;
+		do {
+			entrance = getEntrance();
+			if (entrance != null) {
+				interactiveAreas.remove(entrance);
+			}
+		} while (entrance != null);
+		if (pos > 0 && pos < map.length) {
+			interactiveAreas.add(new Entrance().setPos(this, pos));
+			map[pos] = Terrain.ENTRANCE;
+		}
+	}
+
+	public void setExit(int pos) {
+		Exit exit;
+		do {
+			exit = getExit();
+			if (exit != null) {
+				interactiveAreas.remove(exit);
+			}
+		} while (exit != null);
+		if (pos > 0 && pos < map.length) {
+			interactiveAreas.add(new Exit().setPos(this, pos));
+			map[pos] = Terrain.EXIT;
+		}
+	}
+
+	public void clearExitEntrance() {
+		setEntrance(-1);
+		setExit(-1);
 	}
 
 	public Terrain tunnelTile() {
@@ -1039,7 +1088,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public int XY(int x, int y) {
-		return x + y * width();
+		return x + y * height();
 	}
 
 	public int[] posToXY(int pos) {

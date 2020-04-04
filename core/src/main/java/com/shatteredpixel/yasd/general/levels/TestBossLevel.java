@@ -79,8 +79,8 @@ public class TestBossLevel extends Level {
 		buildFlagMaps();
 		cleanWalls();
 
-		entrance = 23 + width * 6;
-		exit = 0;
+		//entrance = 23 + width * 6;
+		//exit = 0;
 
 		return true;
 	}
@@ -129,7 +129,7 @@ public class TestBossLevel extends Level {
 	protected void createItems() {
 		Item item = Bones.get();
 		if (item != null) {
-			drop(item, exit - 1).type = Heap.Type.REMAINS;
+			drop(item, getExitPos() - 1).type = Heap.Type.REMAINS;
 		}
 	}
 

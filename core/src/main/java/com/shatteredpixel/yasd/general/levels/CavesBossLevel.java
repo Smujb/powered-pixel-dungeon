@@ -39,6 +39,8 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.ToxicTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
@@ -135,9 +137,10 @@ public class CavesBossLevel extends Level {
 
 		Painter.fillEllipse( this, space, EMPTY );
 
-		exit = space.left + space.width()/2 + (space.top - 1) * width();
-		
-		map[exit] = LOCKED_EXIT;
+		int exit = space.left + space.width()/2 + (space.top - 1) * width();
+		interactiveAreas.add(new Exit().setPos(this, exit));
+
+		map[getExitPos()] = LOCKED_EXIT;
 		
 		Painter.fill( this, ROOM_LEFT - 1, ROOM_TOP - 1,
 			ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, WALL );
@@ -150,9 +153,10 @@ public class CavesBossLevel extends Level {
 		arenaDoor = Random.Int( ROOM_LEFT, ROOM_RIGHT ) + (ROOM_BOTTOM + 1) * width();
 		map[arenaDoor] = Terrain.DOOR;
 		
-		entrance = Random.Int( ROOM_LEFT + 1, ROOM_RIGHT - 1 ) +
+		int entrance = Random.Int( ROOM_LEFT + 1, ROOM_RIGHT - 1 ) +
 			Random.Int( ROOM_TOP + 1, ROOM_BOTTOM - 1 ) * width();
-		map[entrance] = ENTRANCE;
+		interactiveAreas.add(new Entrance().setPos(this, entrance));
+		map[getEntrance().getPos(this)] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate( width, height, 0.30f, 6, true );
 		for (int i=0; i < length(); i++) {
@@ -217,7 +221,7 @@ public class CavesBossLevel extends Level {
 			int pos;
 			do {
 				pos = Random.IntRange( ROOM_LEFT, ROOM_RIGHT ) + Random.IntRange( ROOM_TOP + 1, ROOM_BOTTOM ) * width();
-			} while (pos == entrance);
+			} while (pos == getEntrance().getPos(this));
 			drop( item, pos ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
 		}
 	}
@@ -226,7 +230,7 @@ public class CavesBossLevel extends Level {
 	public int randomRespawnCell() {
 		int cell;
 		do {
-			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}

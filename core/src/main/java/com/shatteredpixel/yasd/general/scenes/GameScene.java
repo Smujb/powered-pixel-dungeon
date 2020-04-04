@@ -349,7 +349,7 @@ public class GameScene extends PixelScene {
 		
 		switch (LevelHandler.mode()) {
 			case RESURRECT:
-				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.level.entrance);
+				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.level.getEntrance().getPos(Dungeon.level));
 				new Flare(8, 32).color(0xFFFF66, true).show(hero, 2f);
 				break;
 			case RETURN:

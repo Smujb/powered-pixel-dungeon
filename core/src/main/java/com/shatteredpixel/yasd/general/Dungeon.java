@@ -353,7 +353,7 @@ public class Dungeon {
 		Actor.clear();
 
 		level.reset();
-		switchLevel( level, level.entrance );
+		switchLevel( level, level.getEntrancePos() );
 	}
 
 	public static long seedCurDepth(){
@@ -387,9 +387,9 @@ public class Dungeon {
 	public static void switchLevel( final Level level, int pos ) {
 		
 		if (pos == -2){
-			pos = level.exit;
+			pos = level.getExitPos();
 		} else if (pos < 0 || pos >= level.length()){
-			pos = level.entrance;
+			pos = level.getEntrancePos();
 		}
 		
 		PathFinder.setMapSize(level.width(), level.height());

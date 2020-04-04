@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 
 public class DeadEndLevel extends Level {
 
@@ -69,10 +70,11 @@ public class DeadEndLevel extends Level {
 				Terrain.WATER;
 		}
 		
-		entrance = SIZE * width() + SIZE / 2 + 1;
-		map[entrance] = Terrain.ENTRANCE;
-		
-		exit = 0;
+		//entrance = SIZE * width() + SIZE / 2 + 1;
+		interactiveAreas.add(new Entrance().setPos(this, SIZE * width() + SIZE / 2 + 1));
+		map[getEntrance().getPos(this)] = Terrain.ENTRANCE;
+
+		//exit = 0;
 		
 		return true;
 	}
@@ -96,7 +98,7 @@ public class DeadEndLevel extends Level {
 	
 	@Override
 	public int randomRespawnCell() {
-		return entrance-width();
+		return getEntrancePos()-width();
 	}
 
 }

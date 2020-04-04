@@ -31,6 +31,8 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Amulet;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
@@ -98,14 +100,16 @@ public class LastLevel extends Level {
 		Painter.fill( this, mid - 2, 9, 5, 7, EMPTY);
 		Painter.fill( this, mid - 3, 10, 7, 5, EMPTY);
 
-		entrance = (height-2) * width() + mid;
-		map[entrance] = ENTRANCE;
+		//entrance = (height-2) * width() + mid;
+		interactiveAreas.add(new Entrance().setPos(this, (height-2) * width() + mid));
+		map[getEntrance().getPos(this)] = ENTRANCE;
 
 		pedestal = 12*(width()) + mid;
 		map[pedestal] = PEDESTAL;
 		map[pedestal-1-width()] = map[pedestal+1-width()] = map[pedestal-1+width()] = map[pedestal+1+width()] = STATUE_SP;
 
-		exit = pedestal;
+		//exit = pedestal;
+		interactiveAreas.add(new Exit().setPos(this, pedestal));
 
 		int pos = pedestal;
 
@@ -150,7 +154,7 @@ public class LastLevel extends Level {
 	public int randomRespawnCell() {
 		int cell;
 		do {
-			cell = entrance + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}

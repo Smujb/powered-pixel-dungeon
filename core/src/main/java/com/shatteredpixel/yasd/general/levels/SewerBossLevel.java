@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.builders.Builder;
 import com.shatteredpixel.yasd.general.levels.builders.FigureEightBuilder;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.painters.SewerPainter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
@@ -57,7 +58,7 @@ public class SewerBossLevel extends SewerLevel {
 		color2 = 0x59994a;
 	}
 	
-	private int stairs = 0;
+	private Entrance stairs = null;
 	
 	@Override
 	protected ArrayList<Room> initRooms() {
@@ -139,7 +140,7 @@ public class SewerBossLevel extends SewerLevel {
 			int pos;
 			do {
 				pos = pointToCell(roomEntrance.random());
-			} while (pos == entrance || solid(pos));
+			} while (pos == getEntrance().getPos(this) || solid(pos));
 			drop( item, pos ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
 		}
 	}
@@ -149,35 +150,35 @@ public class SewerBossLevel extends SewerLevel {
 		int pos;
 		do {
 			pos = pointToCell(roomEntrance.random());
-		} while (pos == entrance || !passable(pos) || Actor.findChar(pos) != null);
+		} while (pos == getEntrance().getPos(this) || !passable(pos) || Actor.findChar(pos) != null);
 		return pos;
 	}
 
 	
 	public void seal() {
-		if (entrance != 0) {
+		if (getEntrance() != null) {
 
 			super.seal();
+			int pos = getEntrance().getPos(this);
+			set( pos, Terrain.WATER );
+			GameScene.updateMap( pos );
+			GameScene.ripple( pos );
 			
-			set( entrance, Terrain.WATER );
-			GameScene.updateMap( entrance );
-			GameScene.ripple( entrance );
-			
-			stairs = entrance;
-			entrance = 0;
+			stairs = getEntrance();
+			//entrance = 0;
 		}
 	}
 	
 	public void unseal() {
-		if (stairs != 0) {
+		if (stairs != null) {
 
 			super.unseal();
 			
-			entrance = stairs;
-			stairs = 0;
+			interactiveAreas.add(stairs);
+			stairs = null;
 			
-			set( entrance, Terrain.ENTRANCE );
-			GameScene.updateMap( entrance );
+			set( getEntrance().getPos(this), Terrain.ENTRANCE );
+			GameScene.updateMap( getEntrance().getPos(this) );
 
 		}
 	}
@@ -185,8 +186,8 @@ public class SewerBossLevel extends SewerLevel {
 	@Override
 	public Group addVisuals() {
 		super.addVisuals();
-		if (map[exit-1] != Terrain.WALL_DECO) visuals.add(new PrisonLevel.Torch(exit-1));
-		if (map[exit+1] != Terrain.WALL_DECO) visuals.add(new PrisonLevel.Torch(exit+1));
+		if (map[getExitPos()-1] != Terrain.WALL_DECO) visuals.add(new PrisonLevel.Torch(getExitPos()-1));
+		if (map[getExitPos()+1] != Terrain.WALL_DECO) visuals.add(new PrisonLevel.Torch(getExitPos()+1));
 		return visuals;
 	}
 	
@@ -201,7 +202,7 @@ public class SewerBossLevel extends SewerLevel {
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		stairs = bundle.getInt( STAIRS );
+		stairs = (Entrance) bundle.get( STAIRS );
 		roomExit = roomEntrance;
 	}
 }

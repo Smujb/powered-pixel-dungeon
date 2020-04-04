@@ -39,6 +39,8 @@ import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -49,7 +51,14 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_EXIT;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
 
 public class HallsBossLevel extends Level {
 	
@@ -73,7 +82,7 @@ public class HallsBossLevel extends Level {
 	private static final int ROOM_TOP		= HEIGHT / 2 - 1;
 	private static final int ROOM_BOTTOM	= HEIGHT / 2 + 1;
 	
-	private int stairs = -1;
+	private Entrance stairs = null;
 	private boolean enteredArena = false;
 	private boolean keyDropped = false;
 	
@@ -107,7 +116,7 @@ public class HallsBossLevel extends Level {
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		stairs = bundle.getInt( STAIRS );
+		stairs = (Entrance) bundle.get( STAIRS );
 		enteredArena = bundle.getBoolean( ENTERED );
 		keyDropped = bundle.getBoolean( DROPPED );
 	}
@@ -124,7 +133,8 @@ public class HallsBossLevel extends Level {
 			Painter.fill(this, 2 + i * 4, top, 4, bottom - top + 1, EMPTY);
 			
 			if (i == 2) {
-				exit = (i * 4 + 3) + (top - 1) * width();
+				int exit = (i * 4 + 3) + (top - 1) * width();
+				interactiveAreas.add(new Exit().setPos(this, exit));
 			}
 			
 			for (int j = 0; j < 4; j++) {
@@ -135,16 +145,17 @@ public class HallsBossLevel extends Level {
 			}
 		}
 		
-		map[exit] = LOCKED_EXIT;
+		map[getExit().getPos(this)] = LOCKED_EXIT;
 		
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1,
 				ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, WALL);
 		Painter.fill(this, ROOM_LEFT, ROOM_TOP,
 				ROOM_RIGHT - ROOM_LEFT + 1, ROOM_BOTTOM - ROOM_TOP + 1, EMPTY);
 		
-		entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1) +
+		int entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1) +
 				Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * width();
-		map[entrance] = ENTRANCE;
+		interactiveAreas.add(new Entrance().setPos(this, entrance));
+		map[getEntrance().getPos(this)] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate(width, height, 0.30f, 6, true);
 		for (int i = 0; i < length(); i++) {
@@ -177,14 +188,14 @@ public class HallsBossLevel extends Level {
 			int pos;
 			do {
 				pos = Random.IntRange( ROOM_LEFT, ROOM_RIGHT ) + Random.IntRange( ROOM_TOP + 1, ROOM_BOTTOM ) * width();
-			} while (pos == entrance);
+			} while (pos == getEntrance().getPos(this));
 			drop( item, pos ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
 		}
 	}
 	
 	@Override
 	public int randomRespawnCell() {
-		int pos = entrance == -1 ? stairs : entrance;
+		int pos = getEntrance() == null ? stairs.getPos(this) : getEntrance().getPos(this);
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
@@ -197,7 +208,7 @@ public class HallsBossLevel extends Level {
 		
 		super.occupyCell( ch );
 		
-		if (!enteredArena && ch == Dungeon.hero && ch.pos != entrance) {
+		if (!enteredArena && ch == Dungeon.hero && ch.pos != getEntrancePos()) {
 			
 			enteredArena = true;
 			seal();
@@ -210,7 +221,7 @@ public class HallsBossLevel extends Level {
 				doMagic( i * width() + ROOM_LEFT - 1 );
 				doMagic( i * width() + ROOM_RIGHT + 1 );
 			}
-			doMagic( entrance );
+			doMagic( getEntrance().getPos(this) );
 			GameScene.updateMap();
 
 			Dungeon.observe();
@@ -224,8 +235,9 @@ public class HallsBossLevel extends Level {
 			GameScene.add( boss );
 			boss.spawnFists();
 			
-			stairs = entrance;
-			entrance = -1;
+			stairs = getEntrance();
+			interactiveAreas.remove(stairs);
+			//entrance = -1;
 		}
 	}
 	
@@ -241,9 +253,12 @@ public class HallsBossLevel extends Level {
 			keyDropped = true;
 			unseal();
 			
-			entrance = stairs;
-			set( entrance, ENTRANCE );
-			GameScene.updateMap( entrance );
+			//entrance = stairs;
+
+			interactiveAreas.add(stairs);
+
+			set( getEntrance().getPos(this), ENTRANCE );
+			GameScene.updateMap( getEntrance().getPos(this) );
 		}
 		
 		return super.drop( item, cell );

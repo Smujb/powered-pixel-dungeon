@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.sewerboss;
 
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
@@ -54,9 +55,10 @@ public class SewerBossEntranceRoom extends EntranceRoom {
 		Painter.fill( level, left+1, top+2, width()-2, 1, Terrain.WATER);
 		
 		do {
-			level.entrance = level.pointToCell(random(3));
-		} while (level.findMob(level.entrance) != null);
-		Painter.set( level, level.entrance, Terrain.ENTRANCE );
+			//level.entrance = level.pointToCell(random(3));
+			level.interactiveAreas.add(new Entrance().setPos(level, level.pointToCell(random(3))));
+		} while (level.findMob(level.getEntrance().getPos(level)) != null);
+		Painter.set( level, level.getEntrance().getPos(level), Terrain.ENTRANCE );
 		
 		for (Room.Door door : connected.values()) {
 			door.set( Room.Door.Type.REGULAR );

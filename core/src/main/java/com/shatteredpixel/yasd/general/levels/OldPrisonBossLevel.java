@@ -155,8 +155,8 @@ public class OldPrisonBossLevel extends Level {
 		cleanWalls();
 
 		state = State.START;
-		entrance = 5+2*32;
-		exit = 0;
+		//entrance = 5+2*32;
+		//exit = 0;
 
 		resetTraps();
 
@@ -275,12 +275,12 @@ public class OldPrisonBossLevel extends Level {
 		buildFlagMaps();
 		cleanWalls();
 
-		exit = entrance = 0;
-		for (int i = 0; i < length(); i ++)
-			if (map[i] == ENTRANCE)
-				entrance = i;
-			else if (map[i] == EXIT)
-				exit = i;
+		//exit = entrance = 0;
+	//	for (int i = 0; i < length(); i ++)
+		//	if (map[i] == ENTRANCE)
+				//entrance = i;
+			//else if (map[i] == EXIT)
+				//exit = i;
 
 		BArray.setFalse(visited);
 		BArray.setFalse(mapped);

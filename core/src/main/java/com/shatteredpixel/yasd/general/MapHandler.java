@@ -40,6 +40,8 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.Contract;
@@ -81,11 +83,10 @@ public class MapHandler {
 					TiledMapTile tile = cell.getTile();
 					int tileId = tile.getId();
 					toSet = mapToTerrain(tileId);
-					//Ideally levels should only have one exit and entrance, so only one of these tiles should be placed. If more are used, only the last one will be the real exit/entrance.
 					if (toSet == Terrain.ENTRANCE) {
-						level.entrance = pos;
+						level.interactiveAreas.add(new Entrance().setPos(level, pos));
 					} else if (toSet == Terrain.EXIT || toSet == Terrain.LOCKED_EXIT || toSet == Terrain.UNLOCKED_EXIT) {
-						level.exit = pos;
+						level.interactiveAreas.add(new Exit().setPos(level, pos));
 					}
 				}
 				level.set(pos, toSet);

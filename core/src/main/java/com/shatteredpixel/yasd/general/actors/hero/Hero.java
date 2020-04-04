@@ -1293,17 +1293,17 @@ public class Hero extends Char {
 
 			curAction = new HeroAction.Unlock(cell);
 
-		} else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
+		} /*else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
 				&& Dungeon.level.hasExit) {
 
 			curAction = new HeroAction.Descend(cell);
 
-		} else if (cell == Dungeon.level.entrance || Dungeon.level.map[cell] == Terrain.ENTRANCE
+		} else if (cell == Dungeon.level.getEntrance().getPos(Dungeon.level)
 				&& Dungeon.level.hasEntrance) {
 
 			curAction = new HeroAction.Ascend(cell);
 
-		} else {
+		}*/ else {
 
 			walkingToVisibleTrapInFog = !Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
 					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible;

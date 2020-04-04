@@ -283,7 +283,7 @@ public class Wandmaker extends NPC {
 				Wandmaker npc = new Wandmaker();
 				do {
 					npc.pos = level.pointToCell(room.random());
-				} while (npc.pos == level.entrance);
+				} while (npc.pos == level.getEntrancePos());
 				level.mobs.add( npc );
 
 				spawned = true;

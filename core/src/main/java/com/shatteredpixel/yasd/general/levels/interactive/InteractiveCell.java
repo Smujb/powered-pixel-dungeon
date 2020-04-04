@@ -35,12 +35,12 @@ public abstract class InteractiveCell extends InteractiveArea {
 
 	public InteractiveCell setPos(@NotNull Level level, int pos) {
 		int[] position = level.posToXY(pos);
-		int x = position[0];
-		int y = position[1];
+		x = position[0];
+		y = position[1];
 		return (InteractiveCell) this.setPos(x, y, 1, 1);
 	}
 
-	public int getPos(Level level) {
+	public int getPos(@NotNull Level level) {
 		return level.XY(x, y);
 	}
 }

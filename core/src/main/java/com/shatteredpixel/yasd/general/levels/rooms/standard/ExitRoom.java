@@ -54,16 +54,13 @@ public class ExitRoom extends StandardRoom {
 			door.set( Room.Door.Type.REGULAR );
 		}
 		
-		level.exit = level.pointToCell(random( 2 ));
-		if (!level.hasExit) {
-			Painter.set(level, level.exit, Terrain.EMPTY);
-		} else {
-			Painter.set(level, level.exit, Terrain.EXIT);
-		}
+		int exit = level.pointToCell(random( 2 ));
+		level.setExit(exit);
+		//level.interactiveAreas.add(new Exit().setPos(level, exit));
 	}
 	
 	@Override
 	public boolean canPlaceCharacter(Point p, Level l) {
-		return super.canPlaceCharacter(p, l) && l.pointToCell(p) != l.exit;
+		return super.canPlaceCharacter(p, l) && l.pointToCell(p) != l.getExitPos();
 	}
 }

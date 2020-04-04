@@ -289,14 +289,14 @@ public class LevelHandler {
 
 		switch (mode) {
 			default:
-				Dungeon.switchLevel(level, level.entrance);
+				Dungeon.switchLevel(level, level.getEntrancePos());
 				break;
 			case FALL:
 				Buff.affect( Dungeon.hero, Chasm.Falling.class );
 				Dungeon.switchLevel(level, level.fallCell(fallIntoPit));
 				break;
 			case ASCEND:
-				Dungeon.switchLevel(level, level.exit);
+				Dungeon.switchLevel(level, level.getExit().getPos(level));
 				break;
 			case RETURN:
 				Dungeon.switchLevel(level, returnPos);

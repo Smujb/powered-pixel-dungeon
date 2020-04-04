@@ -44,6 +44,8 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.HeavyBoomerang;
 import com.shatteredpixel.yasd.general.levels.features.Maze;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.TenguDartTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
@@ -70,7 +72,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.Terrain.EXIT;
+import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_DOOR;
+import static com.shatteredpixel.yasd.general.levels.Terrain.SECRET_DOOR;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
 
 public class NewPrisonBossLevel extends Level {
 	
@@ -163,7 +174,8 @@ public class NewPrisonBossLevel extends Level {
 				i += 14;
 				cell += width();
 			}
-			exit = pointToCell(levelExit);
+			interactiveAreas.add(new Exit().setPos(this, pointToCell(levelExit)));
+			//exit = ;
 		}
 	}
 	
@@ -191,15 +203,15 @@ public class NewPrisonBossLevel extends Level {
 	                                       new Point(8, 23), new Point(12, 23)};
 	
 	private void setMapStart(){
-		entrance = ENTRANCE_POS;
-		exit = 0;
+		clearExitEntrance();
+		interactiveAreas.add(new Entrance().setPos(this, ENTRANCE_POS));
 		
 		Painter.fill(this, 0, 0, 32, 32, WALL);
 		
 		//Start
 		Painter.fill(this, entranceRoom, WALL);
 		Painter.fill(this, entranceRoom, 1, EMPTY);
-		Painter.set(this, entrance, ENTRANCE);
+		Painter.set(this, getEntrance().getPos(this), ENTRANCE);
 		
 		Painter.fill(this, startHallway, WALL);
 		Painter.fill(this, startHallway, 1, EMPTY);
@@ -244,7 +256,7 @@ public class NewPrisonBossLevel extends Level {
 	                                                         new Point(8, 23), new Point(12, 23)};
 	
 	private void setMapMazes(){
-		exit = entrance = 0;
+		clearExitEntrance();
 		
 		Painter.fill(this, 0, 0, 32, 32, WALL);
 		
@@ -282,7 +294,7 @@ public class NewPrisonBossLevel extends Level {
 	private static final Rect arena = new Rect(3, 1, 18, 16);
 	
 	private void setMapArena(){
-		exit = entrance = 0;
+		clearExitEntrance();
 		
 		Painter.fill(this, 0, 0, 32, 32, WALL);
 		
@@ -361,7 +373,8 @@ public class NewPrisonBossLevel extends Level {
 			cell += width();
 		}
 		
-		exit = pointToCell(levelExit);
+		int exit = pointToCell(levelExit);
+		interactiveAreas.add(new Exit().setPos(this, exit));
 	}
 	
 	//keep track of removed items as the level is changed. Dump them back into the level at the end.
