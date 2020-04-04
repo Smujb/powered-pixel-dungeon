@@ -79,8 +79,9 @@ public class TestBossLevel extends Level {
 		buildFlagMaps();
 		cleanWalls();
 
-		//entrance = 23 + width * 6;
-		//exit = 0;
+
+		setEntrance(getPos(23, 6));
+		setExit(0);
 
 		return true;
 	}

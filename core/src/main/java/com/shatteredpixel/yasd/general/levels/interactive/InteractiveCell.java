@@ -34,13 +34,13 @@ import org.jetbrains.annotations.NotNull;
 public abstract class InteractiveCell extends InteractiveArea {
 
 	public InteractiveCell setPos(@NotNull Level level, int pos) {
-		int[] position = level.posToXY(pos);
+		int[] position = level.getXY(pos);
 		x = position[0];
 		y = position[1];
 		return (InteractiveCell) this.setPos(x, y, 1, 1);
 	}
 
 	public int getPos(@NotNull Level level) {
-		return level.XY(x, y);
+		return level.getPos(x, y);
 	}
 }

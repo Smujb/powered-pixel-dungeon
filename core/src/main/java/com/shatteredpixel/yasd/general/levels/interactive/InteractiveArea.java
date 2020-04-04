@@ -54,7 +54,7 @@ public abstract class InteractiveArea implements Bundlable {
 	}
 
 	public boolean posInside(@NotNull Level level, int pos) {
-		int[] coords = level.posToXY(pos);
+		int[] coords = level.getXY(pos);
 		int posX = coords[0];
 		int posY = coords[1];
 		return posX >= x && posX < x + width

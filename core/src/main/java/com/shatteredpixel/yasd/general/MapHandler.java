@@ -75,7 +75,7 @@ public class MapHandler {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				Terrain toSet;
-				int pos = level.XY(x, width-y);
+				int pos = level.getPos(x, width-y);
 				TiledMapTileLayer.Cell cell = tiles.getCell(x, y);
 				if (cell == null) {
 					toSet = Terrain.CHASM;
@@ -103,7 +103,7 @@ public class MapHandler {
 		int rectHeight = Math.round(rect.height/TILE_WIDTH);
 		for (int x = rectX; x < rectX + rectWidth; x++) {
 			for (int y = rectY; y < rectY + rectHeight; y++) {
-				objectCells.add(level.XY(x, level.height()-y));
+				objectCells.add(level.getPos(x, level.height()-y));
 			}
 		}
 		return objectCells;

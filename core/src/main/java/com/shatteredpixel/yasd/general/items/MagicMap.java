@@ -385,7 +385,7 @@ public class MagicMap extends Item {
 		switch (action) {
 			case AC_DEBUG:
 				GLog.p("Position in Dungeon (X, Y, Z): " + Dungeon.xPos + ", " + Dungeon.yPos + ", " + Dungeon.zPos + ".");
-				int[] coords = Dungeon.level.posToXY(hero.pos);
+				int[] coords = Dungeon.level.getXY(hero.pos);
 				GLog.p("Position in map (X, Y): " + coords[0] + ", " + coords[1] + ".");
 				break;
 			case AC_MAP:
