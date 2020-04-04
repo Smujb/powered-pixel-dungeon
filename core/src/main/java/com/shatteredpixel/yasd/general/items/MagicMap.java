@@ -91,7 +91,6 @@ public class MagicMap extends Item {
 		actions.add(AC_TEST);
 		actions.add(AC_KILL);
 		actions.add(AC_ITEM);
-		actions.add(AC_SCENE);
 		return actions;
 	}
 

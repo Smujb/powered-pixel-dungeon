@@ -68,6 +68,8 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
@@ -632,6 +634,23 @@ public abstract class Level implements Bundlable {
 		for (InteractiveArea area : interactiveAreas) {
 			if (area.posInside(this, pos)) {
 				return area;
+			}
+		}
+		return null;
+	}
+	//Used for single-entrance/exit levels. Will only return first result.
+	public Entrance getEntrance() {
+		for (InteractiveArea area : interactiveAreas) {
+			if (area instanceof Entrance) {
+				return (Entrance) area;
+			}
+		}
+		return null;
+	}
+	public Exit getExit() {
+		for (InteractiveArea area : interactiveAreas) {
+			if (area instanceof Exit) {
+				return (Exit) area;
 			}
 		}
 		return null;

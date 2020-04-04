@@ -27,22 +27,20 @@
 
 package com.shatteredpixel.yasd.general.levels.interactive;
 
-import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
-import com.shatteredpixel.yasd.general.plants.Swiftthistle;
+import com.shatteredpixel.yasd.general.levels.Level;
 
-public class Exit extends InteractiveCell {
-	@Override
-	public void interact(Hero hero) {
-		hero.curAction = null;
+import org.jetbrains.annotations.NotNull;
 
-		Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);
-		if (buff != null) buff.detach();
-		buff = hero.buff(Swiftthistle.TimeBubble.class);
-		if (buff != null) buff.detach();
+public abstract class InteractiveCell extends InteractiveArea {
 
-		LevelHandler.descend();
+	public InteractiveCell setPos(@NotNull Level level, int pos) {
+		int[] position = level.posToXY(pos);
+		int x = position[0];
+		int y = position[1];
+		return (InteractiveCell) this.setPos(x, y, 1, 1);
+	}
+
+	public int getPos(Level level) {
+		return level.XY(x, y);
 	}
 }

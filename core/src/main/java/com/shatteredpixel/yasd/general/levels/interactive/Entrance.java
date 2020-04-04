@@ -43,7 +43,7 @@ import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 
-public class Entrance extends InteractiveArea {
+public class Entrance extends InteractiveCell {
 	@Override
 	public void interact(Hero hero) {
 		if (Dungeon.yPos == 1) {
