@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -171,6 +172,8 @@ public abstract class Level implements Bundlable {
 
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
+
+	public String key;
 	
 	private static final float TIME_TO_RESPAWN = 50;
 
@@ -351,8 +354,7 @@ public abstract class Level implements Bundlable {
 	private static final String MAP			= "map";
 	private static final String VISITED		= "visited";
 	private static final String MAPPED		= "mapped";
-	private static final String ENTRANCE	= "entrance";
-	private static final String EXIT		= "exit";
+	private static final String KEY			= "key";
 	private static final String LOCKED      = "locked";
 	private static final String HEAPS		= "heaps";
 	private static final String PLANTS		= "plants";
@@ -364,7 +366,9 @@ public abstract class Level implements Bundlable {
 	private static final String FEELING		= "feeling";
 	private static final String INTERACTIVE = "interactive-area";
 
-	public void create() {
+	public void create(String key) {
+
+		this.key = key;
 
 		Random.seed( Dungeon.seedCurDepth() );
 		
@@ -533,7 +537,9 @@ public abstract class Level implements Bundlable {
 
 		visited	= bundle.getBooleanArray( VISITED );
 		mapped	= bundle.getBooleanArray( MAPPED );
-		
+
+		key = bundle.getString(KEY);
+
 		//entrance	= bundle.getInt( ENTRANCE );
 		//exit		= bundle.getInt( EXIT );
 
@@ -613,6 +619,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( MAPPED, mapped );
 		//bundle.put( ENTRANCE, entrance );
 		//bundle.put( EXIT, exit );
+		bundle.put( KEY, key );
 		bundle.put( LOCKED, locked );
 		bundle.put( HEAPS, heaps.valueList() );
 		bundle.put( PLANTS, plants.valueList() );
@@ -998,7 +1005,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public final String fileName() {
-		return GamesInProgress.depthFile(GamesInProgress.curSlot, Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+		return LevelHandler.filename(key, GamesInProgress.curSlot);
 	}
 	
 	public int randomRespawnCell() {

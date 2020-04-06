@@ -55,10 +55,8 @@ import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
-import com.shatteredpixel.yasd.general.levels.LastLevel;
 import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.LootLevel;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
@@ -82,10 +80,11 @@ import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Dungeon {
@@ -164,6 +163,8 @@ public class Dungeon {
 	public static int yPos;
 	public static int xPos;
 	public static int zPos;
+	public static String key;
+	public static boolean underwater = false;
 	public static int gold;
 
 	public static boolean testing = false;
@@ -175,11 +176,11 @@ public class Dungeon {
 
 	public static int version;
 
-	public static Difficulty difficulty = Difficulty.MEDIUM;//1 = easy, 2 = medium, 3 = hard. I could use strings, but numbers will probably be better in the long run
+	public static Difficulty difficulty = Difficulty.MEDIUM;
 
 	public static long seed;
 
-	private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_Y + 1][Constants.MAX_Z + 1];
+	//private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_Y + 1][Constants.MAX_Z + 1];
 	
 	public static void init() {
 
@@ -212,6 +213,10 @@ public class Dungeon {
 		
 		yPos = 1;
 		xPos = 0;
+		zPos = 0;
+		key = keyForDepth();
+		underwater = false;
+
 		gold = 0;
 
 		droppedItems = new SparseArray<>();
@@ -235,13 +240,6 @@ public class Dungeon {
 		Badges.reset();
 		
 		GamesInProgress.selectedClass.initHero( hero );
-		for (int x = 0; x <= Constants.MAX_X; x++) {
-			for (int y = 0; y <= Constants.MAX_Y; y++) {
-				for (int z = 0; z <= Constants.MAX_Z; z++) {
-					loadedDepths[x][y][z] = false;
-				}
-			}
-		}
 	}
 
 	public static String getDifficultyTitle() {
@@ -262,7 +260,7 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
-	private static final ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
+	/*private static final ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
 			DeadEndLevel.class,//Floor 0, shouldn't ever be here
 			FirstLevel.class,
 			SewerLevel.class,
@@ -295,51 +293,92 @@ public class Dungeon {
 			HallsLevel.class,
 			HallsBossLevel.class,//Floor 30, boss
 			LastLevel.class//Floor 31, last level
-	));
+	));*/
+
+	private static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
+	static {
+		staticLevels.put("sewers5", SewerBossLevel.class);
+		staticLevels.put("prison5", NewPrisonBossLevel.class);
+		staticLevels.put("caves5", CavesBossLevel.class);
+		staticLevels.put("city5", CityBossLevel.class);
+		staticLevels.put("halls5", HallsBossLevel.class);
+		//Ambitious Imp shop
+		staticLevels.put("halls0", LastShopLevel.class);
+		//First level spawns different mobs and rooms. Might rework later.
+		staticLevels.put("sewers0", FirstLevel.class);
+	}
+
+	@Contract(pure = true)
+	public static String keyForDepth() {
+		return keyForDepth(yPos);
+	}
+
+	private static final String SEWERS_ID = "sewers";
+	private static final String PRISON_ID = "prison";
+	private static final String CAVES_ID = "caves";
+	private static final String CITY_ID = "city";
+	private static final String HALLS_ID = "halls";
+	private static final String UNDERWATER_ID = "underwater";
+
+	@Contract(pure = true)
+	public static String keyForDepth(int yPos) {
+		String key = "none";
+		int depthInChapter = yPos+1%Constants.CHAPTER_LENGTH;
+		if (yPos < Constants.CHAPTER_LENGTH) {
+			key = SEWERS_ID + depthInChapter;
+		} else if (yPos <= Constants.CHAPTER_LENGTH * 2) {
+			key = PRISON_ID + depthInChapter;
+		} else if (yPos <= Constants.CHAPTER_LENGTH * 3) {
+			key = CAVES_ID + depthInChapter;
+		} else if (yPos <= Constants.CHAPTER_LENGTH * 4) {
+			key = CITY_ID + depthInChapter;
+		} else if (yPos <= Constants.CHAPTER_LENGTH * 5) {
+			key = HALLS_ID + depthInChapter;
+		}
+		if (underwater) {
+			key = UNDERWATER_ID + key;
+		}
+		return key;
+	}
 	
-	public static Level newLevel(int x, int y, int z,
-								 boolean create
+	public static Level newLevel(@NotNull String key, boolean create
 			/*Allows me to use newLevel without switching to that level.
-			Also increases performance when the level isn't actually going to be used.*/ ) {
-		
+			Also increases performance when the level isn't actually going to be used.*/) {
+
 		Level level;
-		Class <? extends Level> levelClass = DeadEndLevel.class;//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that I haven't defined a level class.
-		if (x == 0 && z == 0 && y < levelClasses.size()) {
-			levelClass = levelClasses.get(y);
-		} else if (x == 1) {
-			levelClass = LootLevel.class;
+		//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that I haven't defined a level class.
+		Class<? extends Level> levelClass = DeadEndLevel.class;
+		if (staticLevels.containsKey(key)) {
+			levelClass = staticLevels.get(key);
+		} else if (key.contains(SEWERS_ID)) {
+			levelClass = SewerLevel.class;
+		} else if (key.contains(PRISON_ID)) {
+			levelClass = PrisonLevel.class;
+		} else if (key.contains(CAVES_ID)) {
+			levelClass = CavesLevel.class;
+		} else if (key.contains(CITY_ID)) {
+			levelClass = CityLevel.class;
+		} else if (key.contains(HALLS_ID)) {
+			levelClass = HallsLevel.class;
 		}
 
 		level = Reflection.newInstance(levelClass);
 
-		if (z == 1) {//Underwater levels.
-			Level surface = LevelHandler.getLevel(x, y, 0, GamesInProgress.curSlot);
+		if (key.contains("underwater/")) {//Underwater levels.
+			Level surface = LevelHandler.getLevel(key.replace("underwater/", ""), GamesInProgress.curSlot);
 			if (surface != null) {
 				level = new UnderwaterLevel().setParent(surface);
 			}
 		}
 
-		//level = new TilemapTest();
 		//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
 		if (create) {
 			if (level == null) {
 				level = new DeadEndLevel();
 			}
-			level.create();
+			level.create(key);
 		}
 		return level;
-	}
-
-	static void setLoaded(int x, int y, int z) {
-		loadedDepths[x][y][z] = true;
-	}
-
-	static void unLoad(int x, int y, int z) {
-		loadedDepths[x][y][z] = false;
-	}
-
-	static boolean depthLoaded(int x, int y, int z) {
-		return loadedDepths[x][y][z];
 	}
 
 
@@ -496,9 +535,8 @@ public class Dungeon {
 	static final String _DIFFICULTY = "difficulty";
 	private static final String DIFFICULTY = "difficulty-level";
 	private static final String LEVELSLOADED= "levels-loaded";
-	private static final String XPOS	    = "xPos";
 	private static final String YPOS 		= "yPos";
-	private static final String ZPOS 		= "zPos";
+	private static final String KEY 		= "key";
 	private static final String TESTING 	= "testing";
 
 	private static String levelKey(int x, int y, int z) {
@@ -516,19 +554,9 @@ public class Dungeon {
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
 			bundle.put(YPOS, yPos);
-			bundle.put(XPOS, xPos);
-			bundle.put(ZPOS, zPos);
+			bundle.put( KEY, key == null || key.isEmpty() ? keyForDepth() : key );
 			bundle.put( DIFFICULTY, difficulty );
 			bundle.put( TESTING, testing );
-
-			for (int x = 0; x <= Constants.MAX_X; x++) {
-				for (int y = 0; y <= Constants.MAX_Y; y++) {
-					for (int z = 0; z <= Constants.MAX_Z; z++) {
-						bundle.put(levelKey(x, y, z), loadedDepths[x][y][z]);
-						// = bundle.getBoolean(LEVELSLOADED + x + "_" + y + "_" + z);
-					}
-				}
-			}
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -537,8 +565,6 @@ public class Dungeon {
 			for (int p : portedItems.keyArray()){
 				bundle.put(Messages.format(PORTED, p), portedItems.get(p));
 			}
-
-			//ModHandler.mod.storeInBundle( bundle );
 
 			quickslot.storePlaceholders( bundle );
 
@@ -589,7 +615,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		FileUtils.bundleToFile( level.fileName()/*GamesInProgress.depthFile( save, xPos, yPos, zPos )*/, bundle );
+		FileUtils.bundleToFile( level.fileName(), bundle );
 	}
 	
 	public static void saveAll() throws IOException {
@@ -620,15 +646,8 @@ public class Dungeon {
 
 		testing = bundle.contains(TESTING) ? GameSettings.testing() : bundle.getBoolean(TESTING);
 
+		key = bundle.contains(KEY) ? bundle.getString(KEY) : keyForDepth();
 		//xPos = bundle.contains(XPOS) ? bundle.getInt(XPOS) : 0;
-
-		for (int x = 0; x <= Constants.MAX_X; x++) {
-			for (int y = 0; y <= Constants.MAX_Y; y++) {
-				for (int z = 0; z <= Constants.MAX_Z; z++) {
-					loadedDepths[x][y][z] = bundle.getBoolean(levelKey(x, y, z));
-				}
-			}
-		}
 
 		Actor.restoreNextID( bundle );
 
@@ -702,9 +721,7 @@ public class Dungeon {
 		
 		gold = bundle.getInt( GOLD );
 
-		xPos = bundle.getInt( XPOS );
 		yPos = bundle.getInt( YPOS );
-		zPos = bundle.getInt( ZPOS );
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );
@@ -742,23 +759,6 @@ public class Dungeon {
 			return hero.levelToScaleFactor();
 		} else {
 			return 0;
-		}
-	}
-
-
-	
-	public static Level loadLevel( int save ) throws IOException {
-		
-		Dungeon.level = null;
-		Actor.clear();
-		//Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.depthFile(save, xPos, yPos, zPos));
-		//Level level = (Level) bundle.get(Dungeon.LEVEL);
-		Level level = LevelHandler.getLevel(xPos, yPos, zPos, save);
-		
-		if (level == null){
-			throw new IOException();
-		} else {
-			return level;
 		}
 	}
 	

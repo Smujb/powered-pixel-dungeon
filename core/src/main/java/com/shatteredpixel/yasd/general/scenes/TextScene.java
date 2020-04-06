@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.watabou.gltextures.TextureCache;
@@ -70,7 +69,7 @@ public class TextScene extends PixelScene {
 
 		if (bgTex == null) {
 			try {
-				bgTex = Dungeon.newLevel(LevelHandler.xPos, LevelHandler.yPos, LevelHandler.zPos, false).loadImg();
+				bgTex = Dungeon.newLevel(Dungeon.keyForDepth(), false).loadImg();
 				if (bgTex == null || bgTex.isEmpty()) bgTex = Assets.SHADOW;
 			} catch (Exception e) {
 				bgTex = Assets.SHADOW;

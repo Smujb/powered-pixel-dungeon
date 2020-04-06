@@ -369,7 +369,7 @@ public class MagicMap extends Item {
 			RedButton btnGo = new RedButton( "GO" ) {
 				@Override
 				protected void onClick() {
-					LevelHandler.move(position[0], position[1], position[2], "TEST", LevelHandler.Mode.DESCEND);
+					LevelHandler.move(Dungeon.keyForDepth(position[1]), "TEST", LevelHandler.Mode.DESCEND, position[1]);
 				}
 			};
 			btnGo.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
