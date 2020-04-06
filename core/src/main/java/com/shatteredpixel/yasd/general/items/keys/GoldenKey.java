@@ -37,14 +37,12 @@ public class GoldenKey extends Key {
 	}
 
 	public GoldenKey() {
-		this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+		this(Dungeon.key);
 	}
 
-	public GoldenKey( int x, int y, int z ) {
+	public GoldenKey( String key ) {
 		super();
-		this.yPos = y;
-		this.xPos = x;
-		this.zPos = z;
+		this.levelKey = key;
 	}
 
 }

@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
@@ -75,12 +74,12 @@ public abstract class LockedRoom extends SpecialRoom {
 
 	private void setKeyDoor(Level level) {
 		entrance().set(Door.Type.LOCKED);
-		level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+		level.addItemToSpawn(new IronKey(level.key));
 	}
 
 	private void setBronzeKeyDoor(Level level) {
 		entrance().set(Door.Type.BRONZE);
-		level.addItemToSpawn(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+		level.addItemToSpawn(new BronzeKey(level.key));
 	}
 
 	private void setCrackedWallDoor(Level level) {

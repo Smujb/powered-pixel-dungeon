@@ -121,6 +121,7 @@ public class Dungeon {
 		public int count = 0;
 
 		//for items which can only be dropped once, should directly access count otherwise.
+		@Contract(pure = true)
 		public boolean dropped(){
 			return count != 0;
 		}
@@ -160,10 +161,9 @@ public class Dungeon {
 
 	public static QuickSlot quickslot = new QuickSlot();
 	
-	public static int yPos;
-	public static int xPos;
-	public static int zPos;
+	public static int depth;
 	public static String key;
+
 	public static boolean underwater = false;
 	public static int gold;
 
@@ -211,9 +211,7 @@ public class Dungeon {
 		quickslot.reset();
 		QuickSlotButton.reset();
 		
-		yPos = 1;
-		xPos = 0;
-		zPos = 0;
+		depth = 1;
 		key = keyForDepth();
 		underwater = false;
 
@@ -256,61 +254,27 @@ public class Dungeon {
 		}
 	}
 
-	public static boolean isChallenged( int mask ) {
+	@Contract(pure = true)
+	public static boolean isChallenged(int mask ) {
 		return (challenges & mask) != 0;
 	}
 
-	/*private static final ArrayList<Class<? extends Level>> levelClasses = new ArrayList<>(Arrays.asList(
-			DeadEndLevel.class,//Floor 0, shouldn't ever be here
-			FirstLevel.class,
-			SewerLevel.class,
-			SewerLevel.class,
-			SewerLevel.class,
-			SewerLevel.class,
-			SewerBossLevel.class,//Floor 6, boss
-			PrisonLevel.class,
-			PrisonLevel.class,
-			PrisonLevel.class,
-			PrisonLevel.class,
-			PrisonLevel.class,
-			NewPrisonBossLevel.class,//Floor 12, boss.
-			CavesLevel.class,
-			CavesLevel.class,
-			CavesLevel.class,
-			CavesLevel.class,
-			CavesLevel.class,
-			CavesBossLevel.class,//Floor 18, boss
-			CityLevel.class,
-			CityLevel.class,
-			CityLevel.class,
-			CityLevel.class,
-			CityLevel.class,
-			CityBossLevel.class,//Floor 24, boss
-			LastShopLevel.class,//Floor 25, Imp
-			HallsLevel.class,
-			HallsLevel.class,
-			HallsLevel.class,
-			HallsLevel.class,
-			HallsBossLevel.class,//Floor 30, boss
-			LastLevel.class//Floor 31, last level
-	));*/
-
 	private static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
 	static {
-		staticLevels.put("sewers5", SewerBossLevel.class);
-		staticLevels.put("prison5", NewPrisonBossLevel.class);
-		staticLevels.put("caves5", CavesBossLevel.class);
-		staticLevels.put("city5", CityBossLevel.class);
-		staticLevels.put("halls5", HallsBossLevel.class);
+		staticLevels.put("sewers - 5", SewerBossLevel.class);
+		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
+		staticLevels.put("caves - 5", CavesBossLevel.class);
+		staticLevels.put("city - 5", CityBossLevel.class);
+		staticLevels.put("halls - 5", HallsBossLevel.class);
 		//Ambitious Imp shop
-		staticLevels.put("halls0", LastShopLevel.class);
+		staticLevels.put("halls - 0", LastShopLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
-		staticLevels.put("sewers0", FirstLevel.class);
+		staticLevels.put("sewers - 0", FirstLevel.class);
 	}
 
 	@Contract(pure = true)
 	public static String keyForDepth() {
-		return keyForDepth(yPos);
+		return keyForDepth(depth);
 	}
 
 	private static final String SEWERS_ID = "sewers";
@@ -318,22 +282,23 @@ public class Dungeon {
 	private static final String CAVES_ID = "caves";
 	private static final String CITY_ID = "city";
 	private static final String HALLS_ID = "halls";
-	private static final String UNDERWATER_ID = "underwater";
+	private static final String UNDERWATER_ID = "(underwater) ";
 
 	@Contract(pure = true)
-	public static String keyForDepth(int yPos) {
+	static String keyForDepth(int yPos) {
 		String key = "none";
-		int depthInChapter = yPos+1%Constants.CHAPTER_LENGTH;
+		int depthInChapter = yPos-1%Constants.CHAPTER_LENGTH;
+		String depthMarker = " - " + depthInChapter;
 		if (yPos < Constants.CHAPTER_LENGTH) {
-			key = SEWERS_ID + depthInChapter;
+			key = SEWERS_ID + depthMarker;
 		} else if (yPos <= Constants.CHAPTER_LENGTH * 2) {
-			key = PRISON_ID + depthInChapter;
+			key = PRISON_ID + depthMarker;
 		} else if (yPos <= Constants.CHAPTER_LENGTH * 3) {
-			key = CAVES_ID + depthInChapter;
+			key = CAVES_ID + depthMarker;
 		} else if (yPos <= Constants.CHAPTER_LENGTH * 4) {
-			key = CITY_ID + depthInChapter;
+			key = CITY_ID + depthMarker;
 		} else if (yPos <= Constants.CHAPTER_LENGTH * 5) {
-			key = HALLS_ID + depthInChapter;
+			key = HALLS_ID + depthMarker;
 		}
 		if (underwater) {
 			key = UNDERWATER_ID + key;
@@ -364,8 +329,8 @@ public class Dungeon {
 
 		level = Reflection.newInstance(levelClass);
 
-		if (key.contains("underwater/")) {//Underwater levels.
-			Level surface = LevelHandler.getLevel(key.replace("underwater/", ""), GamesInProgress.curSlot);
+		if (key.contains(UNDERWATER_ID)) {//Underwater levels.
+			Level surface = LevelHandler.getLevel(key.replace(UNDERWATER_ID, ""), GamesInProgress.curSlot);
 			if (surface != null) {
 				level = new UnderwaterLevel().setParent(surface);
 			}
@@ -396,7 +361,7 @@ public class Dungeon {
 	}
 
 	public static long seedCurDepth(){
-		return seedForDepth(yPos);
+		return seedForDepth(depth);
 	}
 
 	public static long seedForDepth(int depth){
@@ -410,12 +375,12 @@ public class Dungeon {
 	
 	@Contract(pure = true)
 	public static boolean shopOnLevel() {
-		return bossLevel(yPos +1) & yPos + 1 != Constants.CHAPTER_LENGTH*4;
+		return bossLevel(depth +1) & depth + 1 != Constants.CHAPTER_LENGTH*4;
 	}
 	
 	@Contract(pure = true)
 	public static boolean bossLevel() {
-		return bossLevel(yPos);
+		return bossLevel(depth);
 	}
 	
 	@Contract(pure = true)
@@ -472,7 +437,7 @@ public class Dungeon {
 	}
 
 	public static void dropToChasm( Item item ) {
-		int depth = Dungeon.yPos + 1;
+		int depth = Dungeon.depth + 1;
 		ArrayList<Item> dropped = Dungeon.droppedItems.get( depth );
 		if (dropped == null) {
 			Dungeon.droppedItems.put( depth, dropped = new ArrayList<>() );
@@ -482,10 +447,10 @@ public class Dungeon {
 
 	public static boolean posNeeded() {
 		//2 POS each floor set
-		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (yPos / Constants.CHAPTER_LENGTH) * 2);
+		int posLeftThisSet = 2 - (LimitedDrops.STRENGTH_POTIONS.count - (depth / Constants.CHAPTER_LENGTH) * 2);
 		if (posLeftThisSet <= 0) return false;
 
-		int floorThisSet = (yPos % 5);
+		int floorThisSet = (depth % 5);
 
 		//pos drops every two floors, (numbers 1-2, and 3-4) with a 50% chance for the earlier one each time.
 		int targetPOSLeft = 2 - floorThisSet/2;
@@ -501,21 +466,21 @@ public class Dungeon {
 		if (isChallenged(Challenges.NO_SCROLLS)){
 			return false;
 		} else {
-			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (yPos / Constants.CHAPTER_LENGTH) * Constants.SOU_PER_CHAPTER);
+			souLeftThisSet = 3 - (LimitedDrops.UPGRADE_SCROLLS.count - (depth / Constants.CHAPTER_LENGTH) * Constants.SOU_PER_CHAPTER);
 		}
 		if (souLeftThisSet <= 0) return false;
 
-		int floorThisSet = (yPos % 5);
+		int floorThisSet = (depth % 5);
 		//chance is floors left / scrolls left
 		return Random.Int(5 - floorThisSet) < souLeftThisSet;
 	}
 	
 	public static boolean esNeeded() {
 		//1 AS each floor set
-		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (yPos / Constants.CHAPTER_LENGTH));
+		int asLeftThisSet = 1 - (LimitedDrops.ENCHANT_STONE.count - (depth / Constants.CHAPTER_LENGTH));
 		if (asLeftThisSet <= 0) return false;
 
-		int floorThisSet = (yPos % 5);
+		int floorThisSet = (depth % 5);
 		//chance is floors left / scrolls left
 		return Random.Int(5 - floorThisSet) < asLeftThisSet;
 	}
@@ -535,13 +500,10 @@ public class Dungeon {
 	static final String _DIFFICULTY = "difficulty";
 	private static final String DIFFICULTY = "difficulty-level";
 	private static final String LEVELSLOADED= "levels-loaded";
-	private static final String YPOS 		= "yPos";
+	private static final String YPOS 		= "depth";
+	private static final String UNDERWATER 		= "underwater";
 	private static final String KEY 		= "key";
 	private static final String TESTING 	= "testing";
-
-	private static String levelKey(int x, int y, int z) {
-		return LEVELSLOADED + x + "_" + y + "_" + z;
-	}
 	
 	public static void saveGame( int save ) {
 		try {
@@ -553,8 +515,9 @@ public class Dungeon {
 			bundle.put( CHALLENGES, challenges );
 			bundle.put( HERO, hero );
 			bundle.put( GOLD, gold );
-			bundle.put(YPOS, yPos);
+			bundle.put(YPOS, depth);
 			bundle.put( KEY, key == null || key.isEmpty() ? keyForDepth() : key );
+			bundle.put( UNDERWATER, underwater );
 			bundle.put( DIFFICULTY, difficulty );
 			bundle.put( TESTING, testing );
 
@@ -625,7 +588,7 @@ public class Dungeon {
 			saveGame( GamesInProgress.curSlot );
 			saveLevel( level );
 
-			GamesInProgress.set( GamesInProgress.curSlot, yPos, challenges, hero );
+			GamesInProgress.set( GamesInProgress.curSlot, depth, challenges, hero );
 
 		}
 	}
@@ -647,6 +610,8 @@ public class Dungeon {
 		testing = bundle.contains(TESTING) ? GameSettings.testing() : bundle.getBoolean(TESTING);
 
 		key = bundle.contains(KEY) ? bundle.getString(KEY) : keyForDepth();
+
+		underwater = bundle.getBoolean(UNDERWATER);
 		//xPos = bundle.contains(XPOS) ? bundle.getInt(XPOS) : 0;
 
 		Actor.restoreNextID( bundle );
@@ -657,9 +622,7 @@ public class Dungeon {
 		Dungeon.challenges = bundle.getInt( CHALLENGES );
 		
 		Dungeon.level = null;
-		Dungeon.xPos = -1;
-		Dungeon.yPos = -1;
-		Dungeon.zPos = -1;
+		Dungeon.depth = -1;
 		
 		Scroll.restore( bundle );
 		Potion.restore( bundle );
@@ -721,7 +684,7 @@ public class Dungeon {
 		
 		gold = bundle.getInt( GOLD );
 
-		yPos = bundle.getInt( YPOS );
+		depth = bundle.getInt( YPOS );
 		
 		Statistics.restoreFromBundle( bundle );
 		Generator.restoreFromBundle( bundle );

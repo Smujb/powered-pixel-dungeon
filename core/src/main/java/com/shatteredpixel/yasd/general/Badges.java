@@ -560,7 +560,7 @@ public class Badges {
 	public static void validateBossSlain() {
 		Badge badge = null;
 		//TODO: make this not based on depth either
-		switch (Dungeon.yPos) {
+		switch (Dungeon.depth) {
 			case 6:
 				badge = Badge.BOSS_SLAIN_1;
 				break;

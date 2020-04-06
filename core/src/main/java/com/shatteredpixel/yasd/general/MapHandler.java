@@ -165,6 +165,7 @@ public class MapHandler {
 
 	public static void createItems(@NotNull Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
+		Dungeon.key = level.key;//Ensures keys load correctly.
 		for (int i = 0; i < items.getCount(); i++) {
 			if (items.get(i) instanceof RectangleMapObject) {
 				RectangleMapObject object = (RectangleMapObject) items.get(i);

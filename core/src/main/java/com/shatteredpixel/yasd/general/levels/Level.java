@@ -372,7 +372,7 @@ public abstract class Level implements Bundlable {
 
 		Random.seed( Dungeon.seedCurDepth() );
 		
-		if (!Dungeon.bossLevel() && Dungeon.xPos == 0) {
+		if (!Dungeon.bossLevel()) {
 
 			if (Dungeon.isChallenged(Challenges.NO_FOOD)){
 				addItemToSpawn( new SmallRation() );
@@ -396,12 +396,12 @@ public abstract class Level implements Bundlable {
 
 			//one scroll of transmutation is guaranteed to spawn somewhere on chapter 2-4
 			int enchChapter = (int)((Dungeon.seed / 10) % 3) + 1;
-			if ( Dungeon.yPos / Constants.CHAPTER_LENGTH == enchChapter &&
-					Dungeon.seed % 4 + 1 == Dungeon.yPos % Constants.CHAPTER_LENGTH){
+			if ( Dungeon.depth / Constants.CHAPTER_LENGTH == enchChapter &&
+					Dungeon.seed % 4 + 1 == Dungeon.depth % Constants.CHAPTER_LENGTH){
 				addItemToSpawn( new StoneOfEnchantment() );
 			}
 			
-			if ( Dungeon.yPos == ((Dungeon.seed % 3) + 1)){
+			if ( Dungeon.depth == ((Dungeon.seed % 3) + 1)){
 				addItemToSpawn( new StoneOfIntuition() );
 			}
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR)) {
@@ -411,7 +411,7 @@ public abstract class Level implements Bundlable {
 			DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
 			if (rose != null && rose.isIdentified() && !rose.cursed){
 				//aim to drop 1 petal every 2 floors
-				int petalsNeeded = (int) Math.ceil((float)((Dungeon.yPos / 2) - rose.droppedPetals) / 3);
+				int petalsNeeded = (int) Math.ceil((float)((Dungeon.depth / 2) - rose.droppedPetals) / 3);
 
 				for (int i=1; i <= petalsNeeded; i++) {
 					//the player may miss a single petal and still max their rose.
@@ -422,10 +422,10 @@ public abstract class Level implements Bundlable {
 				}
 			}
 			
-			if (Dungeon.yPos > 1) {
+			if (Dungeon.depth > 1) {
 				switch (Random.Int( 10 )) {
 					case 0:
-						if (!Dungeon.bossLevel(Dungeon.yPos + 1)) {
+						if (!Dungeon.bossLevel(Dungeon.depth + 1)) {
 							feeling = Feeling.CHASM;
 						}
 						break;

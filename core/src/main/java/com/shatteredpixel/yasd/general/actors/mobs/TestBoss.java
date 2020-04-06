@@ -215,7 +215,7 @@ public class TestBoss extends Mob {
 		super.die( cause );
 
 		GameScene.bossSlain();
-		Dungeon.level.drop( new  SkeletonKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ), pos ).sprite.drop();
+		Dungeon.level.drop( new  SkeletonKey( Dungeon.key ), pos ).sprite.drop();
 
 		//60% chance of 2 shards, 30% chance of 3, 10% chance for 4. Average of 2.5
 		int blobs = Random.chances(new  float[]{0, 0, 6, 3, 1});

@@ -120,9 +120,9 @@ public class PoolRoom extends SpecialRoom {
 		//1 floor set higher in probability, never cursed
 		do {
 			if (Random.Int(2) == 0) {
-				prize = Generator.randomWeapon((Dungeon.yPos / Constants.CHAPTER_LENGTH) + 1);
+				prize = Generator.randomWeapon((Dungeon.depth / Constants.CHAPTER_LENGTH) + 1);
 			} else {
-				prize = Generator.randomArmor((Dungeon.yPos / Constants.CHAPTER_LENGTH) + 1);
+				prize = Generator.randomArmor((Dungeon.depth / Constants.CHAPTER_LENGTH) + 1);
 
 			}
 		} while (prize.cursed || Challenges.isItemBlocked(prize));

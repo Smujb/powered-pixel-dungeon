@@ -43,17 +43,17 @@ public class DistortionTrap extends Trap{
 
 	@Override
 	public void activate() {
-		//InterlevelScene.returnDepth = Dungeon.yPos;
+		//InterlevelScene.returnDepth = Dungeon.depth;
 		Belongings belongings = Dungeon.hero.belongings;
 		
 		for (Notes.Record rec : Notes.getRecords()){
-			if (rec.yPos() == Dungeon.yPos){
+			if (rec.getKey().equals(Dungeon.key)){
 				Notes.remove(rec);
 			}
 		}
 		
 		for (Item i : belongings){
-			if (i instanceof LloydsBeacon && ((LloydsBeacon) i).returnDepth == Dungeon.yPos)
+			if (i instanceof LloydsBeacon && ((LloydsBeacon) i).returnDepth == Dungeon.depth)
 					((LloydsBeacon) i).returnDepth = -1;
 		}
 

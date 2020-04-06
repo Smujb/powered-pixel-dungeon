@@ -145,7 +145,7 @@ public class King extends Mob {
 	public void die(@NotNull DamageSrc cause ) {
 
 		GameScene.bossSlain();
-		Dungeon.level.drop( new SkeletonKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ), pos ).sprite.drop();
+		Dungeon.level.drop( new SkeletonKey( Dungeon.key ), pos ).sprite.drop();
 
 		Dungeon.level.drop(new Torch(), ((CityBossLevel)Dungeon.level).pedestal( nextPedestal )).sprite.drop(pos);
 		

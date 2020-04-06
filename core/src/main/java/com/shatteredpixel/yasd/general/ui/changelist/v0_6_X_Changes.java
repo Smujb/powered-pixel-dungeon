@@ -336,7 +336,7 @@ public class v0_6_X_Changes {
 				"\n" +
 				"Earthroot is also problematic, as its 50% damage resist makes it an extremely potent tool against bosses, yet not so useful against regular enemies. My hope is that this change levels its power out over both situations.\n" +
 				"\n" +
-				"_-_ Earthroot now blocks up to a certain amount of damage, based on yPos, rather than 50% damage"));
+				"_-_ Earthroot now blocks up to a certain amount of damage, based on depth, rather than 50% damage"));
 		
 		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.POTION_CRIMSON, null), new PotionOfHealing().trueName(),
 				"Heal potion drops have had their RNG bounded in shattered for a long time, but this bound was always fairly lax. This meant that people who wanted to slowly farm for potions could still amass large numbers of them. I have decided to reign this in more harshly.\n" +

@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Challenges;
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -62,10 +61,10 @@ public class VaultRoom extends LockedRoom {
 		i2 = prize( level );
 		level.drop( i1, c ).type = Heap.Type.CRYSTAL_CHEST;
 		level.drop( i2, c + PathFinder.NEIGHBOURS8[Random.Int( 8 )]).type = Heap.Type.CRYSTAL_CHEST;
-		level.addItemToSpawn( new CrystalKey( Dungeon.xPos, Dungeon.yPos, Dungeon.zPos ) );
+		level.addItemToSpawn( new CrystalKey( level.key ) );
 		
 		//entrance().set( Door.Type.LOCKED );
-		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.depth, Dungeon.zPos) );
 	}
 	
 	private Item prize( Level level ) {

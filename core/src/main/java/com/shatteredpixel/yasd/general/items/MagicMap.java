@@ -30,8 +30,6 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.GameSettings;
-import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
@@ -314,12 +312,12 @@ public class MagicMap extends Item {
 			titlebar.setRect(0, 0, getWidth(), 0);
 			add( titlebar );
 
-			RenderedTextBlock message = PixelScene.renderTextBlock( "Choose xPos, yPos and zPos:", 6 );
+			RenderedTextBlock message = PixelScene.renderTextBlock( "Choose xPos, depth and zPos:", 6 );
 			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );
 
-			int[] position = new int[] {Dungeon.xPos, Dungeon.yPos, Dungeon.zPos};
+			/*int[] position = new int[] {Dungeon.xPos, Dungeon.depth, Dungeon.zPos};
 
 			OptionSlider xPosSlider = new OptionSlider("Choose xPos (Currently: " + Dungeon.xPos + ", target: " + position[0] + ")",
 					"0", "" + Constants.MAX_X, 0, Constants.MAX_X) {
@@ -333,7 +331,7 @@ public class MagicMap extends Item {
 			xPosSlider.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(xPosSlider);
 
-			OptionSlider yPosSlider = new OptionSlider("Choose yPos (Currently: " + Dungeon.yPos + ", target: " + position[1] + ")",
+			OptionSlider yPosSlider = new OptionSlider("Choose depth (Currently: " + Dungeon.depth + ", target: " + position[1] + ")",
 					"0", "" + Constants.MAX_Y, 0, Constants.MAX_Y) {
 				@Override
 				protected void onChange() {
@@ -341,7 +339,7 @@ public class MagicMap extends Item {
 					update();
 				}
 			};
-			yPosSlider.setSelectedValue(Dungeon.yPos);
+			yPosSlider.setSelectedValue(Dungeon.depth);
 			yPosSlider.setRect(0, xPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(yPosSlider);
 
@@ -353,7 +351,7 @@ public class MagicMap extends Item {
 					update();
 				}
 			};
-			zPosSlider.setSelectedValue(Dungeon.yPos);
+			zPosSlider.setSelectedValue(Dungeon.depth);
 			zPosSlider.setRect(0, yPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
 			add(zPosSlider);
 
@@ -375,7 +373,7 @@ public class MagicMap extends Item {
 			btnGo.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
-			resize(getWidth(), (int) btnGo.bottom());
+			resize(getWidth(), (int) btnGo.bottom());*/
 		}
 	}
 
@@ -384,7 +382,7 @@ public class MagicMap extends Item {
 		super.execute(hero, action);
 		switch (action) {
 			case AC_DEBUG:
-				GLog.p("Position in Dungeon (X, Y, Z): " + Dungeon.xPos + ", " + Dungeon.yPos + ", " + Dungeon.zPos + ".");
+				GLog.p("Current level key: " + Dungeon.key + " (capitalisation important).");
 				int[] coords = Dungeon.level.getXY(hero.pos);
 				GLog.p("Position in map (X, Y): " + coords[0] + ", " + coords[1] + ".");
 				break;

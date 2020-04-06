@@ -66,7 +66,7 @@ public class SecretLarderRoom extends SecretRoom {
 			level.plant(new BlandfruitBush.Seed(), level.pointToCell(c));
 		}
 		
-		int extraFood = (int)(Hunger.STARVING - Hunger.HUNGRY) * (1 + Dungeon.yPos / Constants.CHAPTER_LENGTH);
+		int extraFood = (int)(Hunger.STARVING - Hunger.HUNGRY) * (1 + Dungeon.depth / Constants.CHAPTER_LENGTH);
 		
 		while (extraFood > 0){
 			Food food;

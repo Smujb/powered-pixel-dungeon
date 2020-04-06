@@ -142,7 +142,7 @@ public class Mimic extends Mob {
 		
 		Mimic m = new  Mimic();
 		m.items = new  ArrayList<>( items );
-		m.adjustStats( Dungeon.yPos);
+		m.adjustStats( Dungeon.depth);
 		m.pos = pos;
 		m.state = m.HUNTING;
 		GameScene.add( m, 1 );

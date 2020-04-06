@@ -64,7 +64,7 @@ public class EntranceRoom extends StandardRoom {
 			level.setEntrance(cell);
 		} while (level.findMob(level.getEntrancePos()) != null);
 
-		if (Dungeon.yPos == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
+		if (Dungeon.depth == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
 			int pos;
 			do {
 				//can't be on bottom row of tiles
@@ -76,7 +76,7 @@ public class EntranceRoom extends StandardRoom {
 			level.drop( p, pos );
 		}
 
-		if (Dungeon.yPos == 2){
+		if (Dungeon.depth == 2){
 			if (!Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1)){
 				for (Room.Door door : connected.values()) {
 					door.set( Door.Type.HIDDEN );

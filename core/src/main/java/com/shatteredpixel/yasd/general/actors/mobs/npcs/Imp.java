@@ -199,7 +199,7 @@ public class Imp extends NPC {
 		}
 		
 		public static void spawn( CityLevel level ) {
-			if (!spawned && Dungeon.yPos > 16 && Random.Int( 20 - Dungeon.yPos) == 0) {
+			if (!spawned && Dungeon.depth > 16 && Random.Int( 20 - Dungeon.depth) == 0) {
 				
 				Imp npc = new Imp();
 				do {

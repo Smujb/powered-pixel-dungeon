@@ -155,7 +155,7 @@ public class StatusPane extends Component {
 		level.hardlight( 0xFFEBA4 );
 		add( level );
 
-		depth = new BitmapText( Integer.toString( Dungeon.yPos), PixelScene.pixelFont );
+		depth = new BitmapText( Integer.toString( Dungeon.depth), PixelScene.pixelFont );
 		depth.hardlight( 0xCACFC2 );
 		depth.measure();
 		add( depth );
@@ -305,7 +305,7 @@ public class StatusPane extends Component {
 		public JournalButton() {
 			super();
 
-			width = bg.width + 13; //includes the yPos display to the left
+			width = bg.width + 13; //includes the depth display to the left
 			height = bg.height + 4;
 		}
 

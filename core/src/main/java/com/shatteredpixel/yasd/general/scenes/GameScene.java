@@ -356,18 +356,18 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				if (Dungeon.bossLevel(Dungeon.yPos -1) && GameSettings.cutscenes()) {
+				if (Dungeon.bossLevel(Dungeon.depth -1) && GameSettings.cutscenes()) {
 					Lore.showChapter(Dungeon.level);
 				}
 				/*
-				if (Dungeon.hero.isAlive() && Dungeon.yPos != 22) {
+				if (Dungeon.hero.isAlive() && Dungeon.depth != 22) {
 					Badges.validateNoKilling();
 				}*/
 				break;
 			default:
 		}
 
-		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.yPos);
+		ArrayList<Item> dropped = Dungeon.droppedItems.get( Dungeon.depth);
 		if (dropped != null) {
 			for (Item item : dropped) {
 				int pos = Dungeon.level.randomRespawnCell();
@@ -381,10 +381,10 @@ public class GameScene extends PixelScene {
 					Dungeon.level.drop( item, pos );
 				}
 			}
-			Dungeon.droppedItems.remove( Dungeon.yPos);
+			Dungeon.droppedItems.remove( Dungeon.depth);
 		}
 		
-		ArrayList<Item> ported = Dungeon.portedItems.get( Dungeon.yPos);
+		ArrayList<Item> ported = Dungeon.portedItems.get( Dungeon.depth);
 		if (ported != null){
 			//TODO currently items are only ported to boss rooms, so this works well
 			//might want to have a 'near entrance' function if items can be ported elsewhere
@@ -400,7 +400,7 @@ public class GameScene extends PixelScene {
 			}
 			Dungeon.level.heaps.get(pos).type = Heap.Type.CHEST;
 			Dungeon.level.heaps.get(pos).sprite.link(); //sprite reset to show chest
-			Dungeon.portedItems.remove( Dungeon.yPos);
+			Dungeon.portedItems.remove( Dungeon.depth);
 		}
 
 		Dungeon.hero.next();
@@ -418,9 +418,9 @@ public class GameScene extends PixelScene {
 		Camera.main.panTo(hero.center(), 2.5f);
 
 		if (LevelHandler.mode() != LevelHandler.Mode.NONE) {
-			if (Dungeon.yPos == Statistics.deepestFloor
+			if (Dungeon.depth == Statistics.deepestFloor
 					&& (LevelHandler.mode() == LevelHandler.Mode.DESCEND || LevelHandler.mode() == LevelHandler.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.yPos);
+				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -432,7 +432,7 @@ public class GameScene extends PixelScene {
 			} else if (LevelHandler.mode() == LevelHandler.Mode.RESET) {
 				GLog.h(Messages.get(this, "warp"));
 			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.yPos);
+				GLog.h(Messages.get(this, "return"), Dungeon.depth);
 			}
 
 			switch (Dungeon.level.feeling) {

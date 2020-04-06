@@ -46,14 +46,16 @@ public abstract class Key extends Item {
 		stackable = true;
 		unique = true;
 	}
-	
-	public int yPos;
-	public int xPos;
-	public int zPos;
+
+	public String levelKey;
+
+	//public int depth;
+	//public int xPos;
+	//public int zPos;
 	
 	@Override
 	public boolean isSimilar(@NotNull Item item ) {
-		return super.isSimilar(item) && ((Key)item).yPos == yPos && ((Key) item).zPos == zPos && ((Key)item).xPos == xPos;
+		return super.isSimilar(item) && ((Key) item).levelKey.equals(levelKey);
 	}
 
 	@Override
@@ -67,24 +69,27 @@ public abstract class Key extends Item {
 		return true;
 	}
 
-	private static final String YPOS = "yPos";
-	private static final String XPOS = "xPos";
-	private static final String ZPOS = "zPos";
+	//private static final String YPOS = "depth";
+	//private static final String XPOS = "xPos";
+	//private static final String ZPOS = "zPos";
+	private static final String KEY = "key";
 	
 	@Override
 	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
-		bundle.put( YPOS, yPos );
-		bundle.put( XPOS, xPos );
-		bundle.put( ZPOS, zPos );
+		//bundle.put( YPOS, depth );
+		//bundle.put( XPOS, xPos );
+		//bundle.put( ZPOS, zPos );
+		bundle.put(KEY, levelKey);
 	}
 	
 	@Override
 	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
-		yPos = bundle.getInt( YPOS );
-		xPos = bundle.getInt( XPOS );
-		zPos = bundle.getInt( ZPOS );
+		//depth = bundle.getInt( YPOS );
+		//xPos = bundle.getInt( XPOS );
+		//zPos = bundle.getInt( ZPOS );
+		levelKey = bundle.getString(KEY);
 	}
 	
 	@Override

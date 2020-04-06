@@ -59,6 +59,6 @@ public class ScrollOfPassage extends ExoticScroll {
 		buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
 
-		LevelHandler.returnTo(Math.max(1, (Dungeon.yPos - 1 - (Dungeon.yPos -2)%5)), -1);
+		LevelHandler.returnTo(Math.max(1, (Dungeon.depth - 1 - (Dungeon.depth -2)%5)), -1);
 	}
 }

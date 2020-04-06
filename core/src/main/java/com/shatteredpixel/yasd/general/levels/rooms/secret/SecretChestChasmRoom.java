@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.keys.GoldenKey;
@@ -91,28 +90,28 @@ public class SecretChestChasmRoom extends SecretRoom {
 		p = new Point(left+1, top+1);
 		Painter.set(level, p, Terrain.EMPTY_SP);
 		if (chests > 0) {
-			level.drop(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos), level.pointToCell(p));
+			level.drop(new GoldenKey(level.key), level.pointToCell(p));
 			chests--;
 		}
 		
 		p.x = right-1;
 		Painter.set(level, p, Terrain.EMPTY_SP);
 		if (chests > 0) {
-			level.drop(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos), level.pointToCell(p));
+			level.drop(new GoldenKey(level.key), level.pointToCell(p));
 			chests--;
 		}
 		
 		p.y = bottom-1;
 		Painter.set(level, p, Terrain.EMPTY_SP);
 		if (chests > 0) {
-			level.drop(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos), level.pointToCell(p));
+			level.drop(new GoldenKey(level.key), level.pointToCell(p));
 			chests--;
 		}
 		
 		p.x = left+1;
 		Painter.set(level, p, Terrain.EMPTY_SP);
 		if (chests > 0) {
-			level.drop(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos), level.pointToCell(p));
+			level.drop(new GoldenKey(level.key), level.pointToCell(p));
 			chests--;
 		}
 		

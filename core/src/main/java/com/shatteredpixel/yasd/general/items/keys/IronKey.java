@@ -37,14 +37,12 @@ public class IronKey extends Key {
 	}
 
 	public IronKey() {
-		this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+		this(Dungeon.key);
 	}
 
-	public IronKey( int x, int y, int z ) {
+	public IronKey( String key ) {
 		super();
-		this.yPos = y;
-		this.xPos = x;
-		this.zPos = z;
+		this.levelKey = key;
 	}
 
 }

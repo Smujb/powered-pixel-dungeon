@@ -39,7 +39,7 @@ public class AltarRoom extends SpecialRoom {
 	public void paint( Level level ) {
 		
 		Painter.fill( level, this, Terrain.WALL );
-		Painter.fill( level, this, 1, Dungeon.bossLevel( Dungeon.yPos + 1 ) ? Terrain.HIGH_GRASS : Terrain.CHASM );
+		Painter.fill( level, this, 1, Dungeon.bossLevel( Dungeon.depth + 1 ) ? Terrain.HIGH_GRASS : Terrain.CHASM );
 
 		Point c = center();
 		Door door = entrance();
@@ -62,7 +62,7 @@ public class AltarRoom extends SpecialRoom {
 		if (fire == null) {
 			fire = new SacrificialFire();
 		}
-		fire.seed( level, c.x + c.y * level.width(), 5 + Dungeon.yPos * 5 );
+		fire.seed( level, c.x + c.y * level.width(), 5 + Dungeon.depth * 5 );
 		level.blobs.put( SacrificialFire.class, fire );
 
 		door.set( Door.Type.EMPTY );

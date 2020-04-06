@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Challenges;
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -66,7 +65,7 @@ public class PitRoom extends SpecialRoom {
 			remains = level.pointToCell(random());
 		}
 		
-		level.drop( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos), remains ).type = Heap.Type.SKELETON;
+		level.drop( new IronKey(level.key), remains ).type = Heap.Type.SKELETON;
 		Item mainLoot = null;
 		do {
 			switch (Random.Int(3)){

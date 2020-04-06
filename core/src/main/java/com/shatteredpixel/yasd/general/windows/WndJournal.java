@@ -149,21 +149,21 @@ public class WndJournal extends WndTabbed {
 		protected Image icon;
 		
 		public ListItem( Image icon, String text ) {
-			this(icon, text, -1);
+			this(icon, text, null);
 		}
 		
-		public ListItem( Image icon, String text, int d ) {
+		public ListItem( Image icon, String text, String key ) {
 			super();
 			
 			this.icon.copy(icon);
 			
 			label.text( text );
 			
-			if (d >= 0) {
-				depth.text(Integer.toString(d));
+			if (key != null) {
+				depth.text(key);
 				depth.measure();
 				
-				if (d == Dungeon.yPos) {
+				if (key.equals(Dungeon.keyForDepth())) {
 					label.hardlight(TITLE_COLOR);
 					depth.hardlight(TITLE_COLOR);
 				}
@@ -272,7 +272,7 @@ public class WndJournal extends WndTabbed {
 			
 			public GuideItem( String page ){
 				super( new ItemSprite( ItemSpriteSheet.GUIDE_PAGE, null),
-						Messages.titleCase(Document.ADVENTURERS_GUIDE.pageTitle(page)), -1);
+						Messages.titleCase(Document.ADVENTURERS_GUIDE.pageTitle(page)));
 				
 				this.page = page;
 				found = Document.ADVENTURERS_GUIDE.hasPage(page);
@@ -508,7 +508,7 @@ public class WndJournal extends WndTabbed {
 			}
 			for(Notes.Record rec : keys){
 				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
-						Messages.titleCase(rec.desc()), rec.yPos() );
+						Messages.titleCase(rec.desc()), rec.getKey() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
 				
@@ -533,7 +533,7 @@ public class WndJournal extends WndTabbed {
 			}
 			for (Notes.Record rec : landmarks) {
 				ListItem item = new ListItem( Icons.get(Icons.DEPTH),
-						Messages.titleCase(rec.desc()), rec.yPos() );
+						Messages.titleCase(rec.desc()), rec.getKey() );
 				item.setRect( 0, pos, width(), ITEM_HEIGHT );
 				content.add( item );
 				

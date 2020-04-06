@@ -54,7 +54,7 @@ public class CryptRoom extends SpecialRoom {
 		Door entrance = entrance();
 		
 		//entrance.set( Door.Type.LOCKED );
-		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.depth, Dungeon.zPos) );
 		
 		if (entrance.x == left) {
 			Painter.set( level, new Point( right-1, top+1 ), Terrain.STATUE );
@@ -80,7 +80,7 @@ public class CryptRoom extends SpecialRoom {
 	private static Item prize( Level level ) {
 		
 		//1 floor set higher than normal
-		Armor prize = Generator.randomArmor( (Dungeon.yPos / Constants.CHAPTER_LENGTH) + 1);
+		Armor prize = Generator.randomArmor( (Dungeon.depth / Constants.CHAPTER_LENGTH) + 1);
 		
 		if (Challenges.isItemBlocked(prize)){
 			return new Gold().random();

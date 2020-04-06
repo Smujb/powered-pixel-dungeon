@@ -326,11 +326,11 @@ public class CursedWand {
 
 			//inter-level teleportation
 			case 2:
-				if (Dungeon.yPos > 1 && !Dungeon.bossLevel()) {
+				if (Dungeon.depth > 1 && !Dungeon.bossLevel()) {
 
-					//each yPos has 1 more weight than the previous yPos.
-					float[] depths = new float[Dungeon.yPos -1];
-					for (int i = 1; i < Dungeon.yPos; i++) depths[i-1] = i;
+					//each depth has 1 more weight than the previous depth.
+					float[] depths = new float[Dungeon.depth -1];
+					for (int i = 1; i < Dungeon.depth; i++) depths[i-1] = i;
 					int depth = 1+Random.chances(depths);
 
 					Buff buff = Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);

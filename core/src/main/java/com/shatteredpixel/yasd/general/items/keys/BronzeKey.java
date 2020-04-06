@@ -36,13 +36,11 @@ public class BronzeKey extends Key {
 	}
 
 	public BronzeKey() {
-		this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+		this(Dungeon.key);
 	}
 
-	public BronzeKey( int x, int y, int z ) {
+	public BronzeKey( String key ) {
 		super();
-		this.yPos = y;
-		this.xPos = x;
-		this.zPos = z;
+		this.levelKey = key;
 	}
 }

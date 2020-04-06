@@ -227,7 +227,7 @@ public class Ghost extends NPC {
 		private static final String TYPE        = "type";
 		private static final String GIVEN		= "given";
 		private static final String PROCESSED	= "processed";
-		private static final String DEPTH		= "yPos";
+		private static final String DEPTH		= "depth";
 		private static final String WEAPON		= "getWeapons";
 		private static final String ARMOR		= "getArmors";
 		
@@ -272,7 +272,7 @@ public class Ghost extends NPC {
 		}
 		
 		public static void spawn( SewerLevel level ) {
-			if (!spawned && Dungeon.yPos > 1 && Random.Int( 5 - Dungeon.yPos) == 0) {
+			if (!spawned && Dungeon.depth > 1 && Random.Int( 5 - Dungeon.depth) == 0) {
 				
 				Ghost ghost = new Ghost();
 				do {
@@ -281,13 +281,13 @@ public class Ghost extends NPC {
 				level.mobs.add( ghost );
 				
 				spawned = true;
-				//dungeon yPos determines type of quest.
+				//dungeon depth determines type of quest.
 				//depth2=fetid rat, 3=gnoll trickster, 4=great crab
-				type = Dungeon.yPos -1;
+				type = Dungeon.depth -1;
 				
 				given = false;
 				processed = false;
-				depth = Dungeon.yPos;
+				depth = Dungeon.depth;
 
 				//50%:tier2, 30%:tier3, 15%:tier4, 5%:tier5
 				float itemTierRoll = Random.Float();
@@ -333,7 +333,7 @@ public class Ghost extends NPC {
 		}
 		
 		public static void process() {
-			if (spawned && given && !processed && (depth == Dungeon.yPos)) {
+			if (spawned && given && !processed && (depth == Dungeon.depth)) {
 				GLog.n( Messages.get(Ghost.class, "find_me") );
 				Sample.INSTANCE.play( Assets.SND_GHOST );
 				processed = true;

@@ -111,7 +111,7 @@ public class Constants {
     //SoU per chapter
     public static final int SOU_PER_CHAPTER = 3;
 
-    //Level types. Change it if you want to change yPos system.
+    //Level types. Change it if you want to change depth system.
     public static final ArrayList<ArrayList<Class <? extends Level>>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
             new ArrayList<>(Arrays.asList(
                     DeadEndLevel.class,//Floor 0, shouldn't ever be here

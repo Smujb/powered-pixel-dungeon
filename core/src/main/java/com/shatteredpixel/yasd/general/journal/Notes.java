@@ -33,6 +33,9 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -40,42 +43,33 @@ public class Notes {
 	
 	public static abstract class Record implements Comparable<Record>, Bundlable {
 		
-		protected int yPos;
-		protected int zPos;
-		protected int xPos;
+		protected String key;
 
-		public int yPos(){
-			return yPos;
-		}
-
-		public int xPos(){
-			return xPos;
-		}
-
-		public int zPos(){
-			return zPos;
+		public String getKey() {
+			return key;
 		}
 		
 		public abstract String desc();
 		
+		@Contract(value = "null -> false", pure = true)
 		@Override
 		public abstract boolean equals(Object obj);
 		
 		@Override
-		public int compareTo( Record another ) {
-			return another.yPos() - yPos();
+		public int compareTo(@NotNull Record another ) {
+			return key == null || another.key.equals(key) ? 0 : 1;
 		}
 		
-		private static final String DEPTH	= "yPos";
+		private static final String KEY = "key";
 		
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-			yPos = bundle.getInt( DEPTH );
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
+			key = bundle.getString(KEY);
 		}
 
 		@Override
-		public void storeInBundle( Bundle bundle ) {
-			bundle.put( DEPTH, yPos);
+		public void storeInBundle(@NotNull Bundle bundle ) {
+			bundle.put(KEY, key);
 		}
 	}
 	
@@ -103,15 +97,13 @@ public class Notes {
 		
 		public LandmarkRecord() {}
 
-		public LandmarkRecord(Landmark landmark, int depth) {
-			this(landmark, Dungeon.xPos, depth, Dungeon.zPos);
+		public LandmarkRecord(Landmark landmark) {
+			this(landmark, Dungeon.key);
 		}
 		
-		public LandmarkRecord(Landmark landmark, int xPos, int yPos, int zPos ) {
+		public LandmarkRecord(Landmark landmark, String key) {
 			this.landmark = landmark;
-			this.xPos = xPos;
-			this.zPos = zPos;
-			this.yPos = yPos;
+			this.key = key;
 		}
 		
 		@Override
@@ -119,23 +111,24 @@ public class Notes {
 			return landmark.desc();
 		}
 		
+		@Contract(value = "null -> false", pure = true)
 		@Override
 		public boolean equals(Object obj) {
 			return (obj instanceof LandmarkRecord)
 					&& landmark == ((LandmarkRecord) obj).landmark
-					&& yPos() == ((LandmarkRecord) obj).yPos();
+					&& getKey().equals(((LandmarkRecord) obj).getKey());
 		}
 		
 		private static final String LANDMARK	= "landmark";
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			landmark = Landmark.valueOf(bundle.getString(LANDMARK));
 		}
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( LANDMARK, landmark.toString() );
 		}
@@ -150,20 +143,10 @@ public class Notes {
 		public KeyRecord( Key key ){
 			this.key = key;
 		}
-		
-		@Override
-		public int yPos() {
-			return key.yPos;
-		}
 
 		@Override
-		public int xPos() {
-			return key.xPos;
-		}
-
-		@Override
-		public int zPos() {
-			return key.zPos;
+		public String getKey() {
+			return key.levelKey;
 		}
 
 		@Override
@@ -192,13 +175,13 @@ public class Notes {
 		private static final String KEY	= "key";
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			key = (Key) bundle.get(KEY);
 		}
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( KEY, key );
 		}
@@ -224,9 +207,9 @@ public class Notes {
 	}
 	
 	public static boolean add( Landmark landmark ) {
-		LandmarkRecord l = new LandmarkRecord( landmark, Dungeon.yPos);
+		LandmarkRecord l = new LandmarkRecord( landmark);
 		if (!records.contains(l)) {
-			boolean result = records.add(new LandmarkRecord(landmark, Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+			boolean result = records.add(new LandmarkRecord(landmark, Dungeon.key));
 			Collections.sort(records);
 			return result;
 		}
@@ -234,7 +217,7 @@ public class Notes {
 	}
 	
 	public static boolean remove( Landmark landmark ) {
-		return records.remove( new LandmarkRecord(landmark, Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		return records.remove( new LandmarkRecord(landmark, Dungeon.key) );
 	}
 	
 	public static boolean add( Key key ){

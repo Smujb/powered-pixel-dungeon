@@ -60,7 +60,7 @@ public class GamesInProgress {
 	private static final String DATA_FOLDER = "data/";
 	private static final String SLOT_FOLDER = "slot%d";
 	private static final String XPOS = "xPos%d";
-	private static final String YPOS = "yPos%d";
+	private static final String YPOS = "depth%d";
 	private static final String ZPOS = "zPos%d.dat";
 	private static final String GAME_FILE	= "game.dat";
 	

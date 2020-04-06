@@ -37,14 +37,12 @@ public class CrystalKey extends Key {
 	}
 
 	public CrystalKey() {
-		this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos);
+		this(Dungeon.key);
 	}
 	
-	public CrystalKey( int x, int y, int z ) {
+	public CrystalKey( String key ) {
 		super();
-		this.yPos = y;
-		this.xPos = x;
-		this.zPos = z;
+		this.levelKey = key;
 	}
 	
 }

@@ -68,7 +68,7 @@ public class StatueRoom extends LockedRoom {
 		Door door = entrance();
 		
 		//door.set( Door.Type.LOCKED );
-		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos) );
+		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.depth, Dungeon.zPos) );
 		
 		if (door.x == left) {
 			

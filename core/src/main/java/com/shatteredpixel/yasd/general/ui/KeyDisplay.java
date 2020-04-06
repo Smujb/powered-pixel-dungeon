@@ -79,15 +79,14 @@ public class KeyDisplay extends Visual {
 	public void updateKeys(){
 		keys = new int[keyMap.size()+1];
 		
-		for (Notes.KeyRecord rec : Notes.getRecords(Notes.KeyRecord.class)){
-			if (rec.xPos() == Dungeon.xPos && rec.zPos() == Dungeon.zPos) {
-				if (rec.yPos() < Dungeon.yPos) {
-					//only ever 1 black key
-					keys[0] = 1;
-				} else if (rec.yPos() == Dungeon.yPos) {
-					keys[keyMap.get(rec.type())] += rec.quantity();
-				}
+		for (Notes.KeyRecord rec : Notes.getRecords(Notes.KeyRecord.class)) {
+			if (!rec.getKey().equals(Dungeon.key)) {
+				//only ever 1 black key
+				keys[0] = 1;
+			} else {
+				keys[keyMap.get(rec.type())] += rec.quantity();
 			}
+
 		}
 		
 		totalKeys = 0;

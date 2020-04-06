@@ -127,7 +127,7 @@ public class MirrorImage extends NPC {
 			if (user instanceof Hero){
 				baseEvasion = 4 + ((Hero)user).lvl;
 			} else {
-				baseEvasion = 4 + Dungeon.yPos;
+				baseEvasion = 4 + Dungeon.depth;
 			}
 			int heroEvasion = user.defenseSkill(enemy);
 			

@@ -83,7 +83,7 @@ public class BeaconOfReturning extends Spell {
 		}
 	}
 	
-	//we reset return yPos when beacons are dropped to prevent
+	//we reset return depth when beacons are dropped to prevent
 	//having two stacks of beacons with different return locations
 	
 	@Override
@@ -99,7 +99,7 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	private void setBeacon(Hero hero ){
-		returnDepth = Dungeon.yPos;
+		returnDepth = Dungeon.depth;
 		returnPos = hero.pos;
 		
 		hero.spend( 1f );
@@ -126,7 +126,7 @@ public class BeaconOfReturning extends Spell {
 			}
 		}
 		
-		if (returnDepth == Dungeon.yPos) {
+		if (returnDepth == Dungeon.depth) {
 			ScrollOfTeleportation.appear( hero, returnPos );
 			for(Mob m : Dungeon.level.mobs){
 				if (m.pos == hero.pos){
@@ -171,7 +171,7 @@ public class BeaconOfReturning extends Spell {
 		return returnDepth != -1 ? WHITE : null;
 	}
 	
-	private static final String DEPTH	= "yPos";
+	private static final String DEPTH	= "depth";
 	private static final String POS		= "pos";
 	
 	@Override

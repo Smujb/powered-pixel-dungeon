@@ -57,7 +57,7 @@ public class v0_5_X_Changes {
 				"Dev commentary will be added here in the future."));
 		
 		changes.addButton( new ChangeButton( Icons.get(Icons.DEPTH), "New Dungeon Visual Style!",
-				"_-_ Walls and some terrain now have yPos\n" +
+				"_-_ Walls and some terrain now have depth\n" +
 				"_-_ Characters & items are raised & cast shadows\n" +
 				"_-_ Added a visible tile grid in the settings menu"));
 		

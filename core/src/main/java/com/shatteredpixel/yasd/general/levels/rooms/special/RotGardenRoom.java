@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.RotHeart;
 import com.shatteredpixel.yasd.general.actors.mobs.RotLasher;
@@ -53,10 +52,10 @@ public class RotGardenRoom extends SpecialRoom {
 		Door entrance = entrance();
 		if (level instanceof RegularLevel && ((RegularLevel) level).hasPitRoom()) {
 			entrance.set(Door.Type.BRONZE);
-			level.addItemToSpawn(new BronzeKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+			level.addItemToSpawn(new BronzeKey(level.key));
 		} else {
 			entrance.set(Door.Type.LOCKED);
-			level.addItemToSpawn(new IronKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+			level.addItemToSpawn(new IronKey(level.key));
 		}
 
 		Painter.fill(level, this, Terrain.WALL);

@@ -36,13 +36,11 @@ public class SkeletonKey extends Key {
 		image = ItemSpriteSheet.SKELETON_KEY;
 	}
 	
-	public SkeletonKey(){this(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos); }
+	public SkeletonKey(){this(Dungeon.key); }
 
-	public SkeletonKey( int x, int y, int z ) {
+	public SkeletonKey( String key ) {
 		super();
-		this.yPos = y;
-		this.xPos = x;
-		this.zPos = z;
-	}
+		this.levelKey = key;
+}
 
 }

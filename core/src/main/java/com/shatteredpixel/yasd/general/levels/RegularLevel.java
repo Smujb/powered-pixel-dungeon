@@ -124,7 +124,7 @@ public abstract class RegularLevel extends Level {
 			initRooms.add(s);
 		}
 		
-		int secrets = SecretRoom.secretsForFloor(Dungeon.yPos);
+		int secrets = SecretRoom.secretsForFloor(Dungeon.depth);
 		for (int i = 0; i < secrets; i++)
 			initRooms.add(SecretRoom.createRoom());
 		
@@ -149,7 +149,7 @@ public abstract class RegularLevel extends Level {
 	protected abstract Painter painter();
 	
 	protected int nTraps() {
-		return Random.NormalIntRange( 1, 3+(Dungeon.yPos /3) );
+		return Random.NormalIntRange( 1, 3+(Dungeon.depth /3) );
 	}
 	
 	protected Class<?>[] trapClasses(){
@@ -162,19 +162,19 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	public int nMobs() {
-		switch(Dungeon.yPos) {
+		switch(Dungeon.depth) {
 			case 1:
 				//mobs are not randomly spawned on floor 1.
 				return 0;
 			default:
-				return 2 + Dungeon.yPos % 5 + Random.Int(5);
+				return 2 + Dungeon.depth % 5 + Random.Int(5);
 		}
 	}
 	
 	@Override
 	protected void createMobs() {
 		//on floor 1, 8 pre-set mobs are created so the player can get level 2.
-		int mobsToSpawn = Dungeon.yPos == 1 ? 8 : nMobs();
+		int mobsToSpawn = Dungeon.depth == 1 ? 8 : nMobs();
 
 		ArrayList<Room> stdRooms = new ArrayList<>();
 		for (Room room : rooms) {
@@ -295,7 +295,7 @@ public abstract class RegularLevel extends Level {
 				type = Heap.Type.CHEST;
 				break;
 			case 5:
-				type = Dungeon.yPos > 1 ? Heap.Type.MIMIC : Heap.Type.CHEST;
+				type = Dungeon.depth > 1 ? Heap.Type.MIMIC : Heap.Type.CHEST;
 				break;
 			default:
 				type = Heap.Type.HEAP;
@@ -314,7 +314,7 @@ public abstract class RegularLevel extends Level {
 				Heap dropped = drop( toDrop, cell );
 				if (heaps.get(cell) == dropped) {
 					dropped.type = Heap.Type.LOCKED_CHEST;
-					addItemToSpawn(new GoldenKey(Dungeon.xPos, Dungeon.yPos, Dungeon.zPos));
+					addItemToSpawn(new GoldenKey(key));
 				}
 			} else {
 				Heap dropped = drop( toDrop, cell );
@@ -358,8 +358,8 @@ public abstract class RegularLevel extends Level {
 
 		int foundPages = allPages.size() - (missingPages.size() + 2);
 
-		//chance to find a page scales with pages missing and yPos
-		if (missingPages.size() > 0 && Random.Float() < (Dungeon.yPos /(float)(foundPages + 1))){
+		//chance to find a page scales with pages missing and depth
+		if (missingPages.size() > 0 && Random.Float() < (Dungeon.depth /(float)(foundPages + 1))){
 			GuidePage p = new GuidePage();
 			p.page(missingPages.get(0));
 			int cell = randomDropCell();

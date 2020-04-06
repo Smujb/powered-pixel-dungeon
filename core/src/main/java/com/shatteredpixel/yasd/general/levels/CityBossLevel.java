@@ -168,7 +168,7 @@ public class CityBossLevel extends Level {
 				map[i] = EMPTY_DECO;
 			} else if (map[i] == WALL
 					&& DungeonTileSheet.floorTile(map[i + width()])
-					&& Random.Int( 21 - Dungeon.yPos) == 0) {
+					&& Random.Int( 21 - Dungeon.depth) == 0) {
 				map[i] = WALL_DECO;
 			}
 		}
