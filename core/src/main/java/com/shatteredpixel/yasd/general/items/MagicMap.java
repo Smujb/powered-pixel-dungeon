@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
@@ -56,6 +57,7 @@ import com.shatteredpixel.yasd.general.windows.WndError;
 import com.watabou.noosa.Camera;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PlatformSupport;
+import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
@@ -178,7 +180,7 @@ public class MagicMap extends Item {
 									GLog.p("Successfully fetched item.");
 								} catch (ClassNotFoundException e) {
 									MainGame.reportException(e);
-									MainGame.scene().addToFront(new WndError(e.getMessage()));
+									MainGame.scene().addToFront(new WndError(e.getLocalizedMessage()));
 								}
 								window.update();
 							}
@@ -304,56 +306,58 @@ public class MagicMap extends Item {
 
 	public static class WndChooseDepth extends Window {
 
+		private String[] key;
+
+		private int[] depth;
+
 		WndChooseDepth(Item item) {
 			super();
+			depth = new int[1];
+			key = new String[1];
 			IconTitle titlebar = new IconTitle();
 			titlebar.icon(new ItemSprite(item.image() , null));
 			titlebar.label(Messages.titleCase(item.name()));
 			titlebar.setRect(0, 0, getWidth(), 0);
 			add( titlebar );
 
-			RenderedTextBlock message = PixelScene.renderTextBlock( "Choose xPos, depth and zPos:", 6 );
+			RenderedTextBlock message = PixelScene.renderTextBlock( "Choose depth and level key:", 6 );
 			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );
 
-			/*int[] position = new int[] {Dungeon.xPos, Dungeon.depth, Dungeon.zPos};
+			RedButton btnChoose = new RedButton( "Enter Key" ) {
+				@Override
+				protected void onClick() {
+					MainGame.platform.promptTextInput("Enter key of level to fetch: ", Random.element(Dungeon.staticLevels.keySet().toArray(new String[0])), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
 
-			OptionSlider xPosSlider = new OptionSlider("Choose xPos (Currently: " + Dungeon.xPos + ", target: " + position[0] + ")",
-					"0", "" + Constants.MAX_X, 0, Constants.MAX_X) {
+						@Override
+						public void onSelect(boolean positive, String text) {
+							if (positive) {
+								key[0] = text.toLowerCase();
+								if (Dungeon.newLevel(key[0], false) != null) {
+									GLog.p("Level exists.");
+								} else {
+									GLog.n("You won't find anything much there...");
+								}
+							}
+						}
+					});
+				}
+			};
+			btnChoose.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
+			add( btnChoose );
+
+			OptionSlider depthSlider = new OptionSlider("Choose depth (Currently: " + Dungeon.depth + ")",
+					"0", "" + Constants.MAX_DEPTH, 0, Constants.MAX_DEPTH) {
 				@Override
 				protected void onChange() {
-					position[0] = getSelectedValue();
+					depth[0] = getSelectedValue();
 					update();
 				}
 			};
-			xPosSlider.setSelectedValue(GameSettings.brightness());
-			xPosSlider.setRect(0, message.bottom() + GAP, getWidth(), BTN_HEIGHT);
-			add(xPosSlider);
-
-			OptionSlider yPosSlider = new OptionSlider("Choose depth (Currently: " + Dungeon.depth + ", target: " + position[1] + ")",
-					"0", "" + Constants.MAX_Y, 0, Constants.MAX_Y) {
-				@Override
-				protected void onChange() {
-					position[1] = getSelectedValue();
-					update();
-				}
-			};
-			yPosSlider.setSelectedValue(Dungeon.depth);
-			yPosSlider.setRect(0, xPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
-			add(yPosSlider);
-
-			OptionSlider zPosSlider = new OptionSlider("Choose zPos (Currently: " + Dungeon.zPos + ", target: " + position[2] + ")",
-					"0", "" + Constants.MAX_Z, 0, Constants.MAX_Z) {
-				@Override
-				protected void onChange() {
-					position[2] = getSelectedValue();
-					update();
-				}
-			};
-			zPosSlider.setSelectedValue(Dungeon.depth);
-			zPosSlider.setRect(0, yPosSlider.bottom() + GAP, getWidth(), BTN_HEIGHT);
-			add(zPosSlider);
+			depthSlider.setSelectedValue(Dungeon.depth);
+			depthSlider.setRect(0, btnChoose.bottom() + GAP, getWidth(), BTN_HEIGHT);
+			add(depthSlider);
 
 			RedButton btnCancel = new RedButton( "CANCEL" ) {
 				@Override
@@ -361,19 +365,19 @@ public class MagicMap extends Item {
 					hide();
 				}
 			};
-			btnCancel.setRect(0, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnCancel.setRect(0, depthSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnCancel );
 
 			RedButton btnGo = new RedButton( "GO" ) {
 				@Override
 				protected void onClick() {
-					LevelHandler.move(Dungeon.keyForDepth(position[1]), "TEST", LevelHandler.Mode.DESCEND, position[1]);
+					LevelHandler.move(key[0], "TEST", LevelHandler.Mode.DESCEND, depth[0]);
 				}
 			};
-			btnGo.setRect(getWidth()/2, zPosSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
+			btnGo.setRect(getWidth()/2, depthSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
 			add( btnGo );
 
-			resize(getWidth(), (int) btnGo.bottom());*/
+			resize(getWidth(), (int) btnGo.bottom());
 		}
 	}
 

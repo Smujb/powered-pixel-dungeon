@@ -53,6 +53,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Component;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -152,22 +154,19 @@ public class WndJournal extends WndTabbed {
 			this(icon, text, null);
 		}
 		
-		public ListItem( Image icon, String text, String key ) {
+		public ListItem( Image icon, String text, @Nullable String key ) {
 			super();
 			
 			this.icon.copy(icon);
 			
-			label.text( text );
-			
-			if (key != null) {
+			label.text( "(" +  key + ") " + text );
+			if (key == null || key.equals(Dungeon.keyForDepth())) {
+				label.hardlight(TITLE_COLOR);
+			}
+			/*if (key != null) {
 				depth.text(key);
 				depth.measure();
-				
-				if (key.equals(Dungeon.keyForDepth())) {
-					label.hardlight(TITLE_COLOR);
-					depth.hardlight(TITLE_COLOR);
-				}
-			}
+			}*/
 		}
 		
 		@Override

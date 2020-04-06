@@ -57,10 +57,14 @@ import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.LootLevel;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
+import com.shatteredpixel.yasd.general.levels.TestBossLevel;
+import com.shatteredpixel.yasd.general.levels.TilemapTest;
 import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
@@ -180,7 +184,7 @@ public class Dungeon {
 
 	public static long seed;
 
-	//private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_Y + 1][Constants.MAX_Z + 1];
+	//private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_DEPTH + 1][Constants.MAX_Z + 1];
 	
 	public static void init() {
 
@@ -259,7 +263,7 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
-	private static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
+	public static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
 	static {
 		staticLevels.put("sewers - 5", SewerBossLevel.class);
 		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
@@ -270,6 +274,11 @@ public class Dungeon {
 		staticLevels.put("halls - 0", LastShopLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
 		staticLevels.put("sewers - 0", FirstLevel.class);
+		//testing stuff
+		staticLevels.put("test boss", TestBossLevel.class);
+		staticLevels.put("test", TilemapTest.class);
+		staticLevels.put("old tengu", OldPrisonBossLevel.class);
+		staticLevels.put("loot", LootLevel.class);
 	}
 
 	@Contract(pure = true)
@@ -285,19 +294,19 @@ public class Dungeon {
 	private static final String UNDERWATER_ID = "(underwater) ";
 
 	@Contract(pure = true)
-	static String keyForDepth(int yPos) {
+	static String keyForDepth(int depth) {
 		String key = "none";
-		int depthInChapter = yPos-1%Constants.CHAPTER_LENGTH;
+		int depthInChapter = depth-1%Constants.CHAPTER_LENGTH;
 		String depthMarker = " - " + depthInChapter;
-		if (yPos < Constants.CHAPTER_LENGTH) {
+		if (depth < Constants.CHAPTER_LENGTH) {
 			key = SEWERS_ID + depthMarker;
-		} else if (yPos <= Constants.CHAPTER_LENGTH * 2) {
+		} else if (depth <= Constants.CHAPTER_LENGTH * 2) {
 			key = PRISON_ID + depthMarker;
-		} else if (yPos <= Constants.CHAPTER_LENGTH * 3) {
+		} else if (depth <= Constants.CHAPTER_LENGTH * 3) {
 			key = CAVES_ID + depthMarker;
-		} else if (yPos <= Constants.CHAPTER_LENGTH * 4) {
+		} else if (depth <= Constants.CHAPTER_LENGTH * 4) {
 			key = CITY_ID + depthMarker;
-		} else if (yPos <= Constants.CHAPTER_LENGTH * 5) {
+		} else if (depth <= Constants.CHAPTER_LENGTH * 5) {
 			key = HALLS_ID + depthMarker;
 		}
 		if (underwater) {
@@ -310,9 +319,8 @@ public class Dungeon {
 			/*Allows me to use newLevel without switching to that level.
 			Also increases performance when the level isn't actually going to be used.*/) {
 
-		Level level;
-		//Instead of array out of bounds exception, just load an invalid level. This is an easy way to know that what broke was that I haven't defined a level class.
-		Class<? extends Level> levelClass = DeadEndLevel.class;
+		Level level = null;
+		Class<? extends Level> levelClass = null;
 		if (staticLevels.containsKey(key)) {
 			levelClass = staticLevels.get(key);
 		} else if (key.contains(SEWERS_ID)) {
@@ -326,8 +334,9 @@ public class Dungeon {
 		} else if (key.contains(HALLS_ID)) {
 			levelClass = HallsLevel.class;
 		}
-
-		level = Reflection.newInstance(levelClass);
+		if (levelClass != null) {
+			level = Reflection.newInstance(levelClass);
+		}
 
 		if (key.contains(UNDERWATER_ID)) {//Underwater levels.
 			Level surface = LevelHandler.getLevel(key.replace(UNDERWATER_ID, ""), GamesInProgress.curSlot);

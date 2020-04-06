@@ -98,15 +98,10 @@ public class Constants {
     public static final int BONUS_FLOORS = 1;
 
     //Number of floors.
-    public static final int MAX_Y = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
-
-    //Number of paths.
-    public static final int MAX_X = 3;
-
-    public static final int MAX_Z = 3;
+    public static final int MAX_DEPTH = CHAPTER_LENGTH * NUM_CHAPTERS + BONUS_FLOORS;
 
     //Hero exp cap
-    public static final int HERO_EXP_CAP = MAX_Y + 4;
+    public static final int HERO_EXP_CAP = MAX_DEPTH + 4;
 
     //SoU per chapter
     public static final int SOU_PER_CHAPTER = 3;
