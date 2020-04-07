@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.general.effects.Identification;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.journal.Notes.Landmark;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
@@ -57,7 +57,7 @@ public class WaterOfAwareness extends WellWater {
 		
 		for (int i=0; i < Dungeon.level.length(); i++) {
 			
-			Terrain terr = Dungeon.level.map[i];
+			KindOfTerrain terr = Dungeon.level.map[i];
 			if (terr.secret()) {
 				
 				Dungeon.level.discover( i );

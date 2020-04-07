@@ -43,7 +43,7 @@ import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -119,7 +119,7 @@ public class WandOfPrismaticLight extends DamageWand {
 				if (Dungeon.level.discoverable[cell])
 					Dungeon.level.mapped[cell] = true;
 
-				Terrain terr = Dungeon.level.map[cell];
+				KindOfTerrain terr = Dungeon.level.map[cell];
 				if (terr.secret()) {
 
 					Dungeon.level.discover( cell );

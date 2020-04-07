@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Wandmaker;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
@@ -50,7 +51,7 @@ public class PrisonPainter extends RegularPainter {
 		
 		int w = level.width();
 		int l = level.length();
-		Terrain[] map = level.map;
+		KindOfTerrain[] map = level.map;
 		
 		for (int i=w + 1; i < l - w - 1; i++) {
 			if (map[i] == Terrain.EMPTY) {

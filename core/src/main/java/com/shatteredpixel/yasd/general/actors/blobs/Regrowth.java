@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 
@@ -49,8 +50,8 @@ public class Regrowth extends Blob {
 				for (int j = area.top; j < area.bottom; j++) {
 					cell = i + j*Dungeon.level.width();
 					if (off[cell] > 0) {
-						Terrain c = Dungeon.level.map[cell];
-						Terrain c1 = c;
+						KindOfTerrain c = Dungeon.level.map[cell];
+						KindOfTerrain c1 = c;
 						if (c == Terrain.EMPTY || c == Terrain.EMBERS || c == Terrain.EMPTY_DECO) {
 							c1 = (cur[cell] > 9 && Actor.findChar( cell ) == null)
 									? Terrain.HIGH_GRASS : Terrain.GRASS;

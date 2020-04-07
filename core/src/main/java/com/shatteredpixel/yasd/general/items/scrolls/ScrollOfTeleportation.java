@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
@@ -156,7 +157,7 @@ public class ScrollOfTeleportation extends Scroll {
 		
 		for (Room r : level.rooms()){
 			if (r instanceof SpecialRoom){
-				Terrain terr;
+				KindOfTerrain terr;
 				boolean locked = false;
 				for (Point p : r.getPoints()){
 					terr = level.map[level.pointToCell(p)];
@@ -205,7 +206,7 @@ public class ScrollOfTeleportation extends Scroll {
 			Dungeon.level.occupyCell(hero );
 			if (secretDoor && level.map[doorPos] == Terrain.SECRET_DOOR){
 				Sample.INSTANCE.play( Assets.SND_SECRET );
-				Terrain oldValue = Dungeon.level.map[doorPos];
+				KindOfTerrain oldValue = Dungeon.level.map[doorPos];
 				GameScene.discoverTile( doorPos, oldValue );
 				Dungeon.level.discover( doorPos );
 				ScrollOfMagicMapping.discover( doorPos );

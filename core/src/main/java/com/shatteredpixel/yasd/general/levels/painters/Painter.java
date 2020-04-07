@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Point;
@@ -46,19 +47,19 @@ public abstract class Painter {
 	
 	// Static methods
 
-	public static void set( Level level, int cell, Terrain value ) {
+	public static void set( Level level, int cell, KindOfTerrain value ) {
 		level.map[cell] = value;
 	}
 	
-	public static void set( Level level, int x, int y, Terrain value ) {
+	public static void set( Level level, int x, int y, KindOfTerrain value ) {
 		set( level, x + y * level.width(), value );
 	}
 	
-	public static void set( Level level, Point p, Terrain value ) {
+	public static void set( Level level, Point p, KindOfTerrain value ) {
 		set( level, p.x, p.y, value );
 	}
 	
-	public static void fill( Level level, int x, int y, int w, int h, Terrain value ) {
+	public static void fill( Level level, int x, int y, int w, int h, KindOfTerrain value ) {
 		
 		int width = level.width();
 		
@@ -68,19 +69,19 @@ public abstract class Painter {
 		}
 	}
 	
-	public static void fill( Level level, Rect rect, Terrain value ) {
+	public static void fill( Level level, Rect rect, KindOfTerrain value ) {
 		fill( level, rect.left, rect.top, rect.width(), rect.height(), value );
 	}
 	
-	public static void fill( Level level, Rect rect, int m, Terrain value ) {
+	public static void fill( Level level, Rect rect, int m, KindOfTerrain value ) {
 		fill( level, rect.left + m, rect.top + m, rect.width() - m*2, rect.height() - m*2, value );
 	}
 	
-	public static void fill( Level level, Rect rect, int l, int t, int r, int b, Terrain value ) {
+	public static void fill( Level level, Rect rect, int l, int t, int r, int b, KindOfTerrain value ) {
 		fill( level, rect.left + l, rect.top + t, rect.width() - (l + r), rect.height() - (t + b), value );
 	}
 	
-	public static void drawLine( Level level, Point from, Point to, Terrain value){
+	public static void drawLine( Level level, Point from, Point to, KindOfTerrain value){
 		float x = from.x;
 		float y = from.y;
 		float dx = to.x - from.x;
@@ -104,15 +105,15 @@ public abstract class Painter {
 		}
 	}
 
-	public static void fillEllipse(Level level, Rect rect, Terrain value ) {
+	public static void fillEllipse(Level level, Rect rect, KindOfTerrain value ) {
 		fillEllipse( level, rect.left, rect.top, rect.width(), rect.height(), value );
 	}
 
-	public static void fillEllipse(Level level, Rect rect, int m, Terrain value ) {
+	public static void fillEllipse(Level level, Rect rect, int m, KindOfTerrain value ) {
 		fillEllipse( level, rect.left + m, rect.top + m, rect.width() - m*2, rect.height() - m*2, value );
 	}
 	
-	public static void fillEllipse(Level level, int x, int y, int w, int h, Terrain value){
+	public static void fillEllipse(Level level, int x, int y, int w, int h, KindOfTerrain value){
 
 		//radii
 		double radH = h/2f;
@@ -145,7 +146,7 @@ public abstract class Painter {
 
 	}
 	
-	public static Point drawInside( Level level, Room room, Point from, int n, Terrain value ) {
+	public static Point drawInside( Level level, Room room, Point from, int n, KindOfTerrain value ) {
 		
 		Point step = new Point();
 		if (from.x == room.left) {

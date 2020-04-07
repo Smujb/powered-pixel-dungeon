@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.plants.Plant;
@@ -79,7 +80,7 @@ public class WandOfRegrowth extends Wand {
 
 		//ignore tiles which can't have anything grow in them.
 		for (Iterator<Integer> i = affectedCells.iterator(); i.hasNext();) {
-			Terrain c = Dungeon.level.map[i.next()];
+			KindOfTerrain c = Dungeon.level.map[i.next()];
 			if (!(c == Terrain.EMPTY ||
 					c == Terrain.EMBERS ||
 					c == Terrain.EMPTY_DECO ||
@@ -111,7 +112,7 @@ public class WandOfRegrowth extends Wand {
 		placePlants(numPlants, numDews, numPods, numStars);
 
 		for (int i : affectedCells){
-			Terrain c = Dungeon.level.map[i];
+			KindOfTerrain c = Dungeon.level.map[i];
 			if (c == Terrain.EMPTY ||
 					c == Terrain.EMBERS ||
 					c == Terrain.EMPTY_DECO) {

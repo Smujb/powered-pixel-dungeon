@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
@@ -329,7 +330,7 @@ public class ItemSprite extends MovieClip {
 					if (water) {
 						GameScene.ripple(heap.pos);
 					} else {
-						Terrain cell = Dungeon.level.map[heap.pos];
+						KindOfTerrain cell = Dungeon.level.map[heap.pos];
 						water = (cell == Terrain.WELL || cell == Terrain.ALCHEMY);
 					}
 

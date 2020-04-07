@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
@@ -41,7 +42,7 @@ public abstract class DungeonTilemap extends Tilemap {
 
 	public static final int SIZE = 16;
 
-	protected Terrain[] map;
+	protected KindOfTerrain[] map;
 
 	public DungeonTilemap(String tex) {
 		super(tex, new TextureFilm( tex, SIZE, SIZE ) );
@@ -54,7 +55,7 @@ public abstract class DungeonTilemap extends Tilemap {
 		super.map(new int[data.length], cols);
 	}
 
-	public void map(Terrain[] data, int cols) {
+	public void map(KindOfTerrain[] data, int cols) {
 		map = data;
 		super.map(new int[data.length], cols);
 	}
@@ -83,7 +84,7 @@ public abstract class DungeonTilemap extends Tilemap {
 		}
 	}
 
-	protected abstract int getTileVisual(int pos, Terrain tile, boolean flat);
+	protected abstract int getTileVisual(int pos, KindOfTerrain tile, boolean flat);
 
 	public int screenToTile(int x, int y ){
 		return screenToTile(x, y, false);
@@ -123,7 +124,7 @@ public abstract class DungeonTilemap extends Tilemap {
 		return true;
 	}
 	
-	public void discover( int pos, Terrain oldValue ) {
+	public void discover( int pos, KindOfTerrain oldValue ) {
 		
 		int visual = getTileVisual( pos, oldValue, false);
 		if (visual < 0) return;

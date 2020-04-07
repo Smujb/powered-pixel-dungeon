@@ -99,6 +99,7 @@ import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
@@ -854,7 +855,7 @@ public class Hero extends Char {
 		if (Dungeon.level.adjacent( pos, doorCell )) {
 			
 			boolean hasKey = false;
-			Terrain door = Dungeon.level.map[doorCell];
+			KindOfTerrain door = Dungeon.level.map[doorCell];
 			
 			if (door == Terrain.LOCKED_DOOR
 					&& Notes.keyCount(new IronKey(Dungeon.key)) > 0) {
@@ -1459,13 +1460,13 @@ public class Hero extends Char {
 	public static void reallyDie( DamageSrc cause ) {
 		
 		int length = Dungeon.level.length();
-		Terrain[] map = Dungeon.level.map;
+		KindOfTerrain[] map = Dungeon.level.map;
 		boolean[] visited = Dungeon.level.visited;
 		boolean[] discoverable = Dungeon.level.discoverable;
 		
 		for (int i=0; i < length; i++) {
 			
-			Terrain terr = map[i];
+			KindOfTerrain terr = map[i];
 			
 			if (discoverable[i]) {
 				
@@ -1574,7 +1575,7 @@ public class Hero extends Char {
 		if (curAction instanceof HeroAction.Unlock) {
 
 			int doorCell = ((HeroAction.Unlock)curAction).dst;
-			Terrain door = Dungeon.level.map[doorCell];
+			KindOfTerrain door = Dungeon.level.map[doorCell];
 			
 			if (Dungeon.level.distance(pos, doorCell) <= 1) {
 				boolean hasKey = false;
@@ -1697,7 +1698,7 @@ public class Hero extends Char {
 						
 						if (Random.Float() < chance) {
 						
-							Terrain oldValue = Dungeon.level.map[p];
+							KindOfTerrain oldValue = Dungeon.level.map[p];
 							
 							GameScene.discoverTile( p, oldValue );
 							

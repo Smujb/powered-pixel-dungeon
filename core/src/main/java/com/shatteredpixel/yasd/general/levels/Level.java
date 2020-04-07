@@ -106,6 +106,8 @@ import com.shatteredpixel.yasd.general.levels.rooms.standard.StatuesRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StripedRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StudyRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.SuspiciousChestRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.CustomTerrain;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
@@ -180,7 +182,7 @@ public abstract class Level implements Bundlable {
 
 	public int version;
 
-	public Terrain[] map;
+	public KindOfTerrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
 	public boolean[] discoverable;
@@ -533,8 +535,10 @@ public abstract class Level implements Bundlable {
 		interactiveAreas = new ArrayList<>();
 		customTiles = new HashSet<>();
 		customWalls = new HashSet<>();
-		
-		map		= bundle.getEnumArray( MAP, Terrain.class );
+
+
+		loadMap(bundle);
+		//map		= bundle.getEnumArray( MAP, Terrain.class );
 
 		visited	= bundle.getBooleanArray( VISITED );
 		mapped	= bundle.getBooleanArray( MAPPED );
@@ -615,7 +619,8 @@ public abstract class Level implements Bundlable {
 		bundle.put( VERSION, Game.versionCode );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );
-		bundle.put( MAP, map );
+		storeMap(bundle);
+		//bundle.put( MAP, map );
 		bundle.put( VISITED, visited );
 		bundle.put( MAPPED, mapped );
 		//bundle.put( ENTRANCE, entrance );
@@ -634,6 +639,34 @@ public abstract class Level implements Bundlable {
 		bundle.put( BLOBS, blobs.values() );
 		bundle.put( FEELING, feeling );
 	}
+
+	private void storeMap(Bundle bundle) {
+		for (int i = 0; i < map.length; i++) {
+			KindOfTerrain terrain = map[i];
+			if (terrain instanceof Terrain) {
+				bundle.put(MAP + i, ((Terrain) terrain).name());
+			} else if (terrain instanceof CustomTerrain){
+				bundle.put(MAP + i, (Bundlable) terrain);
+			} else {
+				bundle.put(MAP + i, CHASM);
+			}
+		}
+	}
+
+	private void loadMap(Bundle bundle) {
+		for (int i = 0; i < length(); i++) {
+			KindOfTerrain terrain;
+			String name = bundle.getString(MAP + i);
+			try {
+				terrain = (KindOfTerrain) Class.forName(name.replace("class ", "")).newInstance();
+				((CustomTerrain)terrain).restoreFromBundle(bundle);
+			} catch (Exception e) {
+				terrain = Enum.valueOf(Terrain.class, name);
+			}
+			map[i] = terrain;
+		}
+	}
+
 
 	public InteractiveArea findArea(int pos) {
 		for (InteractiveArea area : interactiveAreas) {
@@ -733,7 +766,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	public Terrain swapWaterAlts(int pos) {
+	public KindOfTerrain swapWaterAlts(int pos) {
 		int above = pos + PathFinder.CIRCLE4[0];
 		int right = pos + PathFinder.CIRCLE4[1];
 		int below = pos + PathFinder.CIRCLE4[2];
@@ -1106,7 +1139,7 @@ public abstract class Level implements Bundlable {
 		return coords;
 	}
 
-	public void set( int cell, Terrain terrain ){
+	public void set( int cell, KindOfTerrain terrain ){
 		if (cell < map.length) {
 			Painter.set(this, cell, terrain);
 		}

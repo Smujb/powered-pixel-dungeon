@@ -60,6 +60,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ShockingTrap;
@@ -215,7 +216,7 @@ public class CursedWand {
 						if (Actor.findChar(pos) != null && bolt.dist > 1) {
 							pos = bolt.path.get(bolt.dist - 1);
 						}
-						Terrain terrain = Dungeon.level.map[pos];
+						KindOfTerrain terrain = Dungeon.level.map[pos];
 
 						if (terrain == Terrain.EMPTY ||
 								terrain == Terrain.EMBERS ||

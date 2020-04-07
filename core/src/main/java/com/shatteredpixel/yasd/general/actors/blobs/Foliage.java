@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.journal.Notes;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -43,7 +44,7 @@ public class Foliage extends Blob {
 	@Override
 	protected void evolve() {
 
-		Terrain[] map = Dungeon.level.map;
+		KindOfTerrain[] map = Dungeon.level.map;
 		
 		boolean visible = false;
 

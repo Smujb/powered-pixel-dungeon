@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.noosa.Image;
 import com.watabou.utils.PathFinder;
@@ -45,7 +46,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 	}
 
 	@Override
-	protected int getTileVisual(int pos, Terrain tile, boolean flat) {
+	protected int getTileVisual(int pos, KindOfTerrain tile, boolean flat) {
 		int visual = DungeonTileSheet.directVisuals.get(tile, -1);
 		if (visual != -1) return DungeonTileSheet.getVisualWithAlts(visual, pos);
 
@@ -107,7 +108,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 
 	}
 
-	public static Image tile(int pos, Terrain tile ) {
+	public static Image tile(int pos, KindOfTerrain tile ) {
 		Image img = new Image( instance.texture );
 		img.frame( instance.tileset.get( instance.getTileVisual( pos, tile, true ) ) );
 		return img;

@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.Bundle;
@@ -47,7 +46,6 @@ public class AcidPool extends Blob {
     }
 
     private int damageOnStep = 0;
-    private Terrain terrain;
 
     @Override
     public String tileDesc() {
@@ -65,14 +63,12 @@ public class AcidPool extends Blob {
     @Override
     public void storeInBundle(Bundle bundle) {
         bundle.put(DAMAGE,damageOnStep);
-        bundle.put(TERRAIN, terrain);
         super.storeInBundle(bundle);
     }
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
         damageOnStep = bundle.getInt(DAMAGE);
-        terrain = bundle.getEnum(TERRAIN, Terrain.class);
         super.restoreFromBundle(bundle);
     }
 
@@ -86,17 +82,11 @@ public class AcidPool extends Blob {
     @Override
     public void seed(Level level, int cell, int amount) {
         super.seed(level, cell, amount);
-        terrain = level.map[cell];
-        if (terrain != Terrain.EXIT & terrain != Terrain.ENTRANCE) {
-            Dungeon.level.set(cell, Terrain.WATER);
-        }
-        GameScene.updateMap(cell);
     }
 
     @Override
     public void clear(int cell) {
         super.clear(cell);
-        Dungeon.level.set(cell, terrain);
         GameScene.updateMap(cell);
     }
 

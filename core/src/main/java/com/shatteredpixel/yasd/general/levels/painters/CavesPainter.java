@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
@@ -47,7 +48,7 @@ public class CavesPainter extends RegularPainter {
 		
 		int w = level.width();
 		int l = level.length();
-		Terrain[] map = level.map;
+		KindOfTerrain[] map = level.map;
 		
 		for (Room room : rooms) {
 			if (!(room instanceof EmptyRoom || room instanceof CaveRoom)) {

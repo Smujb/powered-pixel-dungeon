@@ -29,6 +29,8 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
+import com.shatteredpixel.yasd.general.levels.terrain.CustomTerrain;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -49,7 +51,7 @@ public class WndInfoCell extends Window {
 		
 		super();
 		
-		Terrain tile = Dungeon.level.map[cell];
+		KindOfTerrain tile = Dungeon.level.map[cell];
 		if (Dungeon.level.liquid()[cell]) {
 			tile = Terrain.WATER;
 		} else if (Dungeon.level.pit()[cell]) {
@@ -83,14 +85,24 @@ public class WndInfoCell extends Window {
 			if (customName != null) {
 				titlebar.label(customName);
 			} else {
-				titlebar.label(Dungeon.level.tileName(tile));
+				String name = "";
+				if (tile instanceof Terrain) {
+					name = Dungeon.level.tileName((Terrain)tile);
+				} else if (tile instanceof CustomTerrain) {
+					name = ((CustomTerrain)tile).name();
+				}
+				titlebar.label(name);
 			}
 
 			String customDesc = customTile.desc(x, y);
 			if (customDesc != null) {
 				desc += customDesc;
 			} else {
-				desc += Dungeon.level.tileDesc(tile);
+				if (tile instanceof Terrain) {
+					desc += Dungeon.level.tileDesc((Terrain) tile);
+				} else if (tile instanceof CustomTerrain) {
+					desc += ((CustomTerrain)tile).desc();
+				}
 			}
 
 		} else {
@@ -102,8 +114,19 @@ public class WndInfoCell extends Window {
 			} else {
 				titlebar.icon(DungeonTerrainTilemap.tile( cell, tile ));
 			}
-			titlebar.label(Dungeon.level.tileName(tile));
-			desc += Dungeon.level.tileDesc(tile);
+			String name = "";
+			if (tile instanceof Terrain) {
+				name = Dungeon.level.tileName((Terrain)tile);
+			} else if (tile instanceof CustomTerrain) {
+				name = ((CustomTerrain)tile).name();
+			}
+			titlebar.label(name);
+			if (tile instanceof Terrain) {
+				desc += Dungeon.level.tileDesc((Terrain)tile);
+			} else if (tile instanceof CustomTerrain) {
+				desc += ((CustomTerrain)tile).desc();
+			}
+			//desc += Dungeon.level.tileDesc(tile);
 
 		}
 		titlebar.setRect(0, 0, WIDTH, 0);

@@ -32,6 +32,9 @@ import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.features.HighGrass;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public enum Terrain implements KindOfTerrain {
 
 	NONE {
@@ -356,12 +359,23 @@ public enum Terrain implements KindOfTerrain {
 
 	public abstract void setup();
 
-	public Terrain discover() {
+	public KindOfTerrain discover() {
 		return this;
 	}
 
 	public boolean explodable() {
 		return flammable;
+	}
+
+	@Override
+	public boolean waterStitchable() {
+		return new HashSet<>(Arrays.asList(
+				Terrain.EMPTY, Terrain.GRASS, Terrain.EMPTY_WELL,
+				Terrain.ENTRANCE, Terrain.EXIT, Terrain.EMBERS,
+				Terrain.BARRICADE, Terrain.HIGH_GRASS, Terrain.FURROWED_GRASS, Terrain.EMPTY_DECO,
+				Terrain.SIGN, Terrain.WELL, Terrain.STATUE, Terrain.ALCHEMY,
+				Terrain.DOOR, Terrain.OPEN_DOOR, Terrain.LOCKED_DOOR, Terrain.BRONZE_LOCKED_DOOR
+		)).contains(this);
 	}
 
 	public void press(int cell, boolean hard) {

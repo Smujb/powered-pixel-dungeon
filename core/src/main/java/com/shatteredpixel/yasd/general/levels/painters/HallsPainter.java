@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.painters;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.PathFinder;
@@ -40,7 +41,7 @@ public class HallsPainter extends RegularPainter {
 	@Override
 	protected void decorate(Level level, ArrayList<Room> rooms) {
 		
-		Terrain[] map = level.map;
+		KindOfTerrain[] map = level.map;
 		int w = level.width();
 		int l = level.length();
 		

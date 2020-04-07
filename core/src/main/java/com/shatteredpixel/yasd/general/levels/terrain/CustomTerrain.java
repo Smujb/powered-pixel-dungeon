@@ -27,29 +27,10 @@
 
 package com.shatteredpixel.yasd.general.levels.terrain;
 
-public interface KindOfTerrain {
-	//Don't extend this directly for custom tiles, extend CustomTerrain
-	boolean passable();
+import com.watabou.utils.Bundlable;
 
-	boolean losBlocking();
-
-	boolean flammable();
-
-	boolean secret();
-
-	boolean solid();
-
-	boolean avoid();
-
-	boolean liquid();
-
-	boolean pit();
-
-	boolean explodable();
-
-	boolean waterStitchable();
-
-	KindOfTerrain discover();
-
-	void press(int cell, boolean hard);
+//Merges bundlable and KindOfTerrain.
+public interface CustomTerrain extends KindOfTerrain, Bundlable {
+	String desc();
+	String name();
 }

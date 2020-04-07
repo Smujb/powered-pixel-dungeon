@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.watabou.noosa.Image;
@@ -57,7 +57,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		instance = this;
 	}
 
-	protected int getTileVisual(int pos, Terrain tile, boolean flat){
+	protected int getTileVisual(int pos, KindOfTerrain tile, boolean flat){
 		if (traps.get(pos) != null){
 			Trap trap = traps.get(pos);
 			if (!trap.visible)
@@ -84,7 +84,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		return -1;
 	}
 
-	public static Image tile(int pos, Terrain tile ) {
+	public static Image tile(int pos, KindOfTerrain tile ) {
 		RectF uv = instance.tileset.get( instance.getTileVisual( pos, tile, true ) );
 		if (uv == null) return null;
 		
