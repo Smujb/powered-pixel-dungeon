@@ -55,6 +55,7 @@ import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
+import com.shatteredpixel.yasd.general.levels.LastLevel;
 import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.LootLevel;
@@ -263,6 +264,14 @@ public class Dungeon {
 		return (challenges & mask) != 0;
 	}
 
+	private static final String SEWERS_ID = "sewers";
+	private static final String PRISON_ID = "prison";
+	private static final String CAVES_ID = "caves";
+	private static final String CITY_ID = "city";
+	private static final String HALLS_ID = "halls";
+	private static final String LAST_ID = "last";
+	private static final String UNDERWATER_ID = "(underwater) ";
+
 	public static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
 	static {
 		staticLevels.put("sewers - 5", SewerBossLevel.class);
@@ -274,6 +283,8 @@ public class Dungeon {
 		staticLevels.put("halls - 0", LastShopLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
 		staticLevels.put("sewers - 0", FirstLevel.class);
+		//Amulet depth
+		staticLevels.put( LAST_ID, LastLevel.class );
 		//testing stuff
 		staticLevels.put("test boss", TestBossLevel.class);
 		staticLevels.put("test", TilemapTest.class);
@@ -285,13 +296,6 @@ public class Dungeon {
 	public static String keyForDepth() {
 		return keyForDepth(depth);
 	}
-
-	private static final String SEWERS_ID = "sewers";
-	private static final String PRISON_ID = "prison";
-	private static final String CAVES_ID = "caves";
-	private static final String CITY_ID = "city";
-	private static final String HALLS_ID = "halls";
-	private static final String UNDERWATER_ID = "(underwater) ";
 
 	@Contract(pure = true)
 	static String keyForDepth(int depth) {
@@ -308,6 +312,8 @@ public class Dungeon {
 			key = CITY_ID + depthMarker;
 		} else if (depth <= Constants.CHAPTER_LENGTH * 5) {
 			key = HALLS_ID + depthMarker;
+		} else if (depth == Constants.MAX_DEPTH) {
+			key = LAST_ID;
 		}
 		if (underwater) {
 			key = UNDERWATER_ID + key;
@@ -333,19 +339,24 @@ public class Dungeon {
 			levelClass = CityLevel.class;
 		} else if (key.contains(HALLS_ID)) {
 			levelClass = HallsLevel.class;
+		} else if (key.equals(LAST_ID)) {
+			levelClass = LastLevel.class;
 		}
 		if (levelClass != null) {
 			level = Reflection.newInstance(levelClass);
 		}
 
-		if (key.contains(UNDERWATER_ID)) {//Underwater levels.
+		//Underwater levels.
+		if (key.contains(UNDERWATER_ID)) {
 			Level surface = LevelHandler.getLevel(key.replace(UNDERWATER_ID, ""), GamesInProgress.curSlot);
-			if (surface != null) {
-				level = new UnderwaterLevel().setParent(surface);
+			if (surface == null) {
+				surface = newLevel(key.replace(UNDERWATER_ID, ""), true);
 			}
+			level = new UnderwaterLevel().setParent(surface);
 		}
 
-		//Can return null if there's no level set for that location - but only if create is disabled. This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
+		//Can return null if there's no level set for that location - but only if create is disabled.
+		// This can allow me to use [if (newLevel(x, y, z, false) != null)] to find if a proper level exists there.
 		if (create) {
 			if (level == null) {
 				level = new DeadEndLevel();
@@ -355,10 +366,9 @@ public class Dungeon {
 		return level;
 	}
 
-
-	//Probably going to update this later.
+	@Contract(pure = true)
 	public static boolean underwater() {
-		return level instanceof UnderwaterLevel;
+		return underwater;
 	}
 	
 	public static void resetLevel() {

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.terrain;
 
 public interface KindOfTerrain {
+	//TODO: refactor levels to use this
 	boolean passable();
 
 	boolean losBlocking();

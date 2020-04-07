@@ -56,9 +56,9 @@ public class TestBossLevel extends Level {
 		viewDistance = 12;
 	}
 
-	public final int ENTRANCE_LOCATION = 23 + width * 13;
+	private final int ENTRANCE_LOCATION = 23 + width * 13;
 
-	public boolean bossSpawned = false;
+	private boolean bossSpawned = false;
 
 	@Override
 	public String tilesTex() {
