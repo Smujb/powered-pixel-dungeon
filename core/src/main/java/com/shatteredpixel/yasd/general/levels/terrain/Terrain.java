@@ -378,7 +378,5 @@ public enum Terrain implements KindOfTerrain {
 		)).contains(this);
 	}
 
-	public void press(int cell, boolean hard) {
-
-	}
+	public void press(int cell, boolean hard) {}
 }

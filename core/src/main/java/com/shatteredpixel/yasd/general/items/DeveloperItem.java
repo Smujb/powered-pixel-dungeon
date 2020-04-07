@@ -86,17 +86,17 @@ public class DeveloperItem extends Item {
 		ArrayList<String> actions =  super.actions(hero);
 		actions.add(AC_DEBUG);
 		actions.add(AC_MAP);
-		actions.add(AC_TP);
-		actions.add(AC_TEST);
 		actions.add(AC_KILL);
+		actions.add(AC_TP);
 		actions.add(AC_ITEM);
+		actions.add(AC_CHOOSEDEPTH);
 		return actions;
 	}
 
 	private static final String AC_DEBUG = "debug";
 	private static final String AC_MAP = "map";
 	private static final String AC_TP = "tp";
-	private static final String AC_TEST = "test";
+	private static final String AC_CHOOSEDEPTH = "test";
 	private static final String AC_ITEM = "item";
 	private static final String AC_KILL = "kill";
 
@@ -396,7 +396,7 @@ public class DeveloperItem extends Item {
 			case AC_TP:
 				new ScrollOfTeleportation().empoweredRead();
 				break;
-			case AC_TEST:
+			case AC_CHOOSEDEPTH:
 				MainGame.scene().addToFront(new WndChooseDepth(this));
 				break;
 			case AC_ITEM:

@@ -27,27 +27,6 @@
 
 package com.shatteredpixel.yasd.general;
 
-import com.shatteredpixel.yasd.general.levels.CavesBossLevel;
-import com.shatteredpixel.yasd.general.levels.CavesLevel;
-import com.shatteredpixel.yasd.general.levels.CityBossLevel;
-import com.shatteredpixel.yasd.general.levels.CityLevel;
-import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
-import com.shatteredpixel.yasd.general.levels.FirstLevel;
-import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
-import com.shatteredpixel.yasd.general.levels.HallsLevel;
-import com.shatteredpixel.yasd.general.levels.LastLevel;
-import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.LootLevel;
-import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
-import com.shatteredpixel.yasd.general.levels.OldPrisonBossLevel;
-import com.shatteredpixel.yasd.general.levels.PrisonLevel;
-import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
-import com.shatteredpixel.yasd.general.levels.SewerLevel;
-import com.shatteredpixel.yasd.general.levels.TestBossLevel;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Constants {
     /*
     Purpose of this file is to have constants that can be used to quickly tweak in-game things.
@@ -105,62 +84,6 @@ public class Constants {
 
     //SoU per chapter
     public static final int SOU_PER_CHAPTER = 3;
-
-    //Level types. Change it if you want to change depth system.
-    public static final ArrayList<ArrayList<Class <? extends Level>>> LEVEL_TYPES = new ArrayList<>(Arrays.asList(
-            new ArrayList<>(Arrays.asList(
-                    DeadEndLevel.class,//Floor 0, shouldn't ever be here
-                    FirstLevel.class,
-                    SewerLevel.class,
-                    SewerLevel.class,
-                    SewerLevel.class,
-                    SewerLevel.class,
-                    SewerBossLevel.class,//Floor 6, boss
-                    PrisonLevel.class,
-                    PrisonLevel.class,
-                    PrisonLevel.class,
-                    PrisonLevel.class,
-                    PrisonLevel.class,
-                    NewPrisonBossLevel.class,//Floor 12, boss.
-                    CavesLevel.class,
-                    CavesLevel.class,
-                    CavesLevel.class,
-                    CavesLevel.class,
-                    CavesLevel.class,
-                    CavesBossLevel.class,//Floor 18, boss
-                    CityLevel.class,
-                    CityLevel.class,
-                    CityLevel.class,
-                    CityLevel.class,
-                    CityLevel.class,
-                    CityBossLevel.class,//Floor 24, boss
-                    //LastShopLevel.class,//Floor 25, Imp (removed for now)
-                    HallsLevel.class,
-                    HallsLevel.class,
-                    HallsLevel.class,
-                    HallsLevel.class,
-                    HallsLevel.class,
-                    HallsBossLevel.class,//Floor 30, boss
-                    LastLevel.class//Floor 31, last level
-            )),
-            new ArrayList<>(Arrays.asList(
-                    LootLevel.class,
-                    LootLevel.class,
-                    LootLevel.class,
-                    LootLevel.class,
-                    LootLevel.class
-            )),
-            new ArrayList<>(Arrays.asList(
-                    DeadEndLevel.class,
-                    TestBossLevel.class,
-                    NewPrisonBossLevel.class,
-                    OldPrisonBossLevel.class,
-                    CavesBossLevel.class,
-                    CityBossLevel.class,
-                    HallsBossLevel.class
-            ))
-
-    ));
 
     //
     //############################## UI STUFF ##############################
