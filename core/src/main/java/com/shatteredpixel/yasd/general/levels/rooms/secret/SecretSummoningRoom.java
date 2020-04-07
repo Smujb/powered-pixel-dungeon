@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.secret;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.SummoningTrap;
 import com.watabou.utils.Point;

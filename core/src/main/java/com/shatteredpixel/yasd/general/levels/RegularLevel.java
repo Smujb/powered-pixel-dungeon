@@ -49,6 +49,7 @@ import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.ExitRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StandardRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BlazingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.BurningTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ChillingTrap;

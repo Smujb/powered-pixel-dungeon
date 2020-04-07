@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.CrystalKey;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.PathFinder;

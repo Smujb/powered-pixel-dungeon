@@ -32,8 +32,8 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
+import com.shatteredpixel.yasd.general.items.DeveloperItem;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.MagicMap;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -67,6 +67,9 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.DeviceCompat;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 public enum HeroClass {
 
@@ -128,9 +131,10 @@ public enum HeroClass {
 	}
 
 	public static void initTest(Hero hero) {
-		new MagicMap().collect(hero.belongings.backpack, hero);
+		new DeveloperItem().collect(hero.belongings.backpack, hero);
 	}
 
+	@Contract(pure = true)
 	public Badges.Badge masteryBadge() {
 		switch (this) {
 			case WARRIOR:
@@ -145,7 +149,7 @@ public enum HeroClass {
 		return null;
 	}
 
-	private static void initWarrior( Hero hero ) {
+	private static void initWarrior(@NotNull Hero hero ) {
 		(hero.belongings.miscs[0] = new Basic()).identify();
 		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -163,7 +167,7 @@ public enum HeroClass {
 		hero.STR();
 	}
 
-	private static void initMage( Hero hero ) {
+	private static void initMage(@NotNull Hero hero ) {
 		MagesStaff staff;
 		
 		staff = new MagesStaff(new WandOfMagicMissile());
@@ -182,7 +186,7 @@ public enum HeroClass {
 		hero.setFocus(5);
 	}
 
-	private static void initRogue( Hero hero ) {
+	private static void initRogue(@NotNull Hero hero ) {
 		(hero.belongings.miscs[0] = new Sneak()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 
@@ -204,7 +208,7 @@ public enum HeroClass {
 		hero.setEvasion(5);
 	}
 
-	private static void initHuntress( Hero hero ) {
+	private static void initHuntress(@NotNull Hero hero ) {
 
 		(hero.belongings.miscs[0] = new Fist()).identify();
 		(hero.belongings.miscs[1] = new HuntressArmor()).identify();

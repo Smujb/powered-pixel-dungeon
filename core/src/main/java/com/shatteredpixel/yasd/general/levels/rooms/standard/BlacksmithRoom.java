@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.standard;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.BurningTrap;
 import com.watabou.utils.Point;

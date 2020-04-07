@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
 import com.shatteredpixel.yasd.general.actors.mobs.Skeleton;
 import com.shatteredpixel.yasd.general.actors.mobs.Swarm;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Wandmaker;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.noosa.Halo;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -61,7 +62,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 public class PrisonLevel extends RegularLevel {
 

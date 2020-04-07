@@ -36,7 +36,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.SpellSprite;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.utils.GLog;

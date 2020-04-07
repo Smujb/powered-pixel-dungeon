@@ -39,7 +39,7 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blooming;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.plants.Starflower;

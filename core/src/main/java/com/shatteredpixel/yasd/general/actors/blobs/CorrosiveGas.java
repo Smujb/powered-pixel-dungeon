@@ -34,8 +34,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 

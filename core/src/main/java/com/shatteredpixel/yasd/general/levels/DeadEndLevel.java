@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 
 public class DeadEndLevel extends Level {
 

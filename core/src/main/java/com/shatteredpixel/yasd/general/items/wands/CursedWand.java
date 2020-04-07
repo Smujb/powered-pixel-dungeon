@@ -60,7 +60,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ShockingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.SummoningTrap;

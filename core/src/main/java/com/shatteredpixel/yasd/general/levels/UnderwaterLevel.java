@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;

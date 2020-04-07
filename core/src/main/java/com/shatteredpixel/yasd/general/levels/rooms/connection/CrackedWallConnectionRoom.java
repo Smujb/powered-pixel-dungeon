@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.connection;
 
 import com.shatteredpixel.yasd.general.items.bombs.Bomb;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 
 public class CrackedWallConnectionRoom extends ConnectionRoom {
 	@Override

@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.HeavyBoomerang;
 import com.shatteredpixel.yasd.general.levels.rooms.MazeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EmptyRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.GrippingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -64,7 +65,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 //Exists to support pre-0.7.5 saves
 public class OldPrisonBossLevel extends Level {

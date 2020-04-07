@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;

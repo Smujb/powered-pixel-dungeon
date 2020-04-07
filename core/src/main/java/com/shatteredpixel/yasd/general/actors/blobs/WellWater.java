@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;

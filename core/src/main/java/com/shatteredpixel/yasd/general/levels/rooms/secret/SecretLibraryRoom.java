@@ -40,7 +40,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTerror;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTransmutation;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;

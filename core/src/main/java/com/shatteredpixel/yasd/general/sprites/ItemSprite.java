@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.gltextures.SmartTexture;

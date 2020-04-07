@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Succubus;
 import com.shatteredpixel.yasd.general.items.Torch;
 import com.shatteredpixel.yasd.general.levels.painters.HallsPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BlazingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
@@ -63,7 +64,7 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 public class HallsLevel extends RegularLevel {
 

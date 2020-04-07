@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.npcs.Blacksmith;
 import com.shatteredpixel.yasd.general.levels.painters.CavesPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BurningTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ConfusionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
@@ -60,7 +61,7 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class CavesLevel extends RegularLevel {
 

@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.DungeonTileSheet;
@@ -51,17 +52,17 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.BOOKSHELF;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
-import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_DOOR;
-import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_EXIT;
-import static com.shatteredpixel.yasd.general.levels.Terrain.PEDESTAL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.STATUE_SP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.BOOKSHELF;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.LOCKED_DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.LOCKED_EXIT;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.PEDESTAL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class CityBossLevel extends Level {
 	

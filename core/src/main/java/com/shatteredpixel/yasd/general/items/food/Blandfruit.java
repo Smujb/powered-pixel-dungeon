@@ -46,7 +46,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfPurity;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant.Seed;
 import com.shatteredpixel.yasd.general.plants.Sungrass;

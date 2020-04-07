@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.TestBoss;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EmptyRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.Group;
@@ -45,7 +46,7 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 public class TestBossLevel extends Level {
 

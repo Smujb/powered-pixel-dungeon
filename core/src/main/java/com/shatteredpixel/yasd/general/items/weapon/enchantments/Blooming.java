@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.watabou.utils.PathFinder;

@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.journal.GuidePage;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Point;

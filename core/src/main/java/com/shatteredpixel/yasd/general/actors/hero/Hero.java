@@ -99,7 +99,7 @@ import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;

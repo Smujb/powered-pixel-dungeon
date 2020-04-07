@@ -72,7 +72,7 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.Tomahawk;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.Trident;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.watabou.utils.Point;

@@ -106,6 +106,7 @@ import com.shatteredpixel.yasd.general.levels.rooms.standard.StatuesRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StripedRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StudyRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.SuspiciousChestRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -138,19 +139,19 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
-import static com.shatteredpixel.yasd.general.levels.Terrain.DEEP_WATER;
-import static com.shatteredpixel.yasd.general.levels.Terrain.DOOR;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMBERS;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.FURROWED_GRASS;
-import static com.shatteredpixel.yasd.general.levels.Terrain.GRASS;
-import static com.shatteredpixel.yasd.general.levels.Terrain.HIGH_GRASS;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.DEEP_WATER;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMBERS;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.FURROWED_GRASS;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.GRASS;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.HIGH_GRASS;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public abstract class Level implements Bundlable {
 	
@@ -1013,7 +1014,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int( length() );
 		} while ((Dungeon.level == this && heroFOV[cell])
-				|| !map[cell].passable
+				|| !passable(cell)
 				|| Actor.findChar( cell ) != null);
 		return cell;
 	}

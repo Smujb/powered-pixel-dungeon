@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;

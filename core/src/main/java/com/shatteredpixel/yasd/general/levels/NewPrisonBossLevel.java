@@ -47,6 +47,7 @@ import com.shatteredpixel.yasd.general.levels.features.Maze;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.TenguDartTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -72,16 +73,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
-import static com.shatteredpixel.yasd.general.levels.Terrain.DOOR;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_SP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EXIT;
-import static com.shatteredpixel.yasd.general.levels.Terrain.LOCKED_DOOR;
-import static com.shatteredpixel.yasd.general.levels.Terrain.SECRET_DOOR;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EXIT;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.LOCKED_DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.SECRET_DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class NewPrisonBossLevel extends Level {
 	

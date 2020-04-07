@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Warlock;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.levels.painters.CityPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BlazingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
@@ -59,7 +60,7 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class CityLevel extends RegularLevel {
 

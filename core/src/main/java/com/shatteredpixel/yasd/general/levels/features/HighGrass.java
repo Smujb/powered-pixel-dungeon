@@ -42,7 +42,7 @@ import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Camouflage;
 import com.shatteredpixel.yasd.general.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.Random;
 

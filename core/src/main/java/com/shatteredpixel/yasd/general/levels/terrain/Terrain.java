@@ -1,43 +1,38 @@
 /*
  *
- *  * Pixel Dungeon
- *  * Copyright (C) 2012-2015 Oleg Dolya
- *  *
- *  * Shattered Pixel Dungeon
- *  * Copyright (C) 2014-2019 Evan Debenham
- *  *
- *  * Yet Another Shattered Dungeon
- *  * Copyright (C) 2014-2020 Samuel Braithwaite
- *  *
- *  * This program is free software: you can redistribute it and/or modify
- *  * it under the terms of the GNU General Public License as published by
- *  * the Free Software Foundation, either version 3 of the License, or
- *  * (at your option) any later version.
- *  *
- *  * This program is distributed in the hope that it will be useful,
- *  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  * GNU General Public License for more details.
- *  *
- *  * You should have received a copy of the GNU General Public License
- *  * along with this program.  If not, see <http://www.gnu.org/licenses/>
+ *   Pixel Dungeon
+ *   Copyright (C) 2012-2015 Oleg Dolya
+ *
+ *   Shattered Pixel Dungeon
+ *   Copyright (C) 2014-2019 Evan Debenham
+ *
+ *   Yet Another Shattered Dungeon
+ *   Copyright (C) 2014-2020 Samuel Braithwaite
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
  *
  */
 
-package com.shatteredpixel.yasd.general.levels;
+package com.shatteredpixel.yasd.general.levels.terrain;
 
-import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
-import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.features.HighGrass;
-import com.shatteredpixel.yasd.general.levels.traps.Trap;
-import com.shatteredpixel.yasd.general.plants.Swiftthistle;
-import com.watabou.noosa.audio.Sample;
 
-public enum Terrain {
+public enum Terrain implements KindOfTerrain {
 
 	NONE {
 		@Override
@@ -367,47 +362,6 @@ public enum Terrain {
 
 	public boolean explodable() {
 		return flammable;
-	}
-
-	protected void triggerTrap(int cell, Trap trap) {
-		if (trap != null) {
-
-			TimekeepersHourglass.timeFreeze timeFreeze =
-					Dungeon.hero.buff(TimekeepersHourglass.timeFreeze.class);
-
-			Swiftthistle.TimeBubble bubble =
-					Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
-
-			if (bubble != null){
-
-				Sample.INSTANCE.play(Assets.SND_TRAP);
-
-				Dungeon.level.discover(cell);
-
-				bubble.setDelayedPress(cell);
-
-			} else if (timeFreeze != null){
-
-				Sample.INSTANCE.play(Assets.SND_TRAP);
-
-				Dungeon.level.discover(cell);
-
-				timeFreeze.setDelayedPress(cell);
-
-			} else {
-
-				if (Dungeon.hero.pos == cell) {
-					Dungeon.hero.interrupt();
-				}
-
-				trap.trigger();
-
-			}
-		}
-	}
-
-	public void press(int cell) {
-		press(cell, false);
 	}
 
 	public void press(int cell, boolean hard) {

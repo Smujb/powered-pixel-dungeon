@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.items.Amulet;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
 import com.watabou.utils.PathFinder;
@@ -41,14 +42,14 @@ import com.watabou.utils.Random;
 
 import java.util.Arrays;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.CHASM;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY;
-import static com.shatteredpixel.yasd.general.levels.Terrain.EMPTY_DECO;
-import static com.shatteredpixel.yasd.general.levels.Terrain.ENTRANCE;
-import static com.shatteredpixel.yasd.general.levels.Terrain.PEDESTAL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.STATUE_SP;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL;
-import static com.shatteredpixel.yasd.general.levels.Terrain.WATER;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.CHASM;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.PEDESTAL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class LastLevel extends Level {
 

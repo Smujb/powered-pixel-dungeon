@@ -45,7 +45,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;

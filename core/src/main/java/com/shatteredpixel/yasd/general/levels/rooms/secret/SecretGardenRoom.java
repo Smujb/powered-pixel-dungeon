@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.actors.blobs.Foliage;
 import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Patch;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.plants.Starflower;
 import com.watabou.utils.Random;

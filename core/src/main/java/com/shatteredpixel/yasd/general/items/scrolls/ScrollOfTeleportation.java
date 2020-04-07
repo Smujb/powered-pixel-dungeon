@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;

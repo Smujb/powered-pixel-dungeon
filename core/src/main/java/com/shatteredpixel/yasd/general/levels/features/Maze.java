@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.features;
 
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;

@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.sewerboss;
 import com.shatteredpixel.yasd.general.actors.mobs.Goo;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Point;
 

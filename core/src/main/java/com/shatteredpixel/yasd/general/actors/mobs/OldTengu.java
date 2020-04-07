@@ -43,7 +43,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.OldPrisonBossLevel;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.GrippingTrap;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;

@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.badlogic.gdx.utils.ArrayMap;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.Random;
 import com.watabou.utils.SparseArray;
 

@@ -41,9 +41,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.shatteredpixel.yasd.general.scenes.TextScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.CheckBox;
@@ -55,19 +53,20 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.shatteredpixel.yasd.general.windows.WndError;
 import com.watabou.noosa.Camera;
-import com.watabou.utils.Callback;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-public class MagicMap extends Item {
+public class DeveloperItem extends Item {
 	/*
 	This file is mainly not translated as it is for my personal use and the use of testers. Any developer of a mod of this one can feel free to translate it or replace the strings.
+
+	Basically a set of developer tools, allows me to instantly warp to any level and instantly obtain any item so I can test stuff without needing the PC
 	 */
 
 	{
-		image = ItemSpriteSheet.ARTIFACT_SPELLBOOK;
+		image = ItemSpriteSheet.SKULL;
 
 		cursed = false;
 	}
@@ -100,7 +99,6 @@ public class MagicMap extends Item {
 	private static final String AC_TEST = "test";
 	private static final String AC_ITEM = "item";
 	private static final String AC_KILL = "kill";
-	private static final String AC_SCENE = "scene";
 
 
 	private static final int BTN_HEIGHT	= 20;
@@ -409,14 +407,6 @@ public class MagicMap extends Item {
 					mob.die(new Char.DamageSrc(Element.DARK, this));
 					GLog.i("All ded");
 				}
-				break;
-			case AC_SCENE:
-				TextScene.init("The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system.\nAs dark energy has crept up from below the usually harmless sewer creatures have become more and more dangerous. The city sends guard patrols down here to try and maintain safety for those above, but they are slowly failing.\nThis place is dangerous, but at least the evil magic at work here is weak.", null, null, 0, 0.67f, new Callback() {
-					@Override
-					public void call() {
-						MainGame.switchScene(GameScene.class);
-					}
-				}, null, false);
 				break;
 		}
 	}

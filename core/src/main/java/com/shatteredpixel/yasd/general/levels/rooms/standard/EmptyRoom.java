@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 
 //other rooms should only extend emptyRoom if they do not add significant terrain

@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
 import com.watabou.utils.Random;

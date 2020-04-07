@@ -35,7 +35,7 @@ import com.shatteredpixel.yasd.general.items.food.ChargrilledMeat;
 import com.shatteredpixel.yasd.general.items.food.Food;
 import com.shatteredpixel.yasd.general.items.food.Pasty;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.plants.BlandfruitBush;
 import com.watabou.utils.Point;

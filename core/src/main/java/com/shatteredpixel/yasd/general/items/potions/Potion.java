@@ -53,7 +53,7 @@ import com.shatteredpixel.yasd.general.items.potions.exotic.PotionOfShroudingFog
 import com.shatteredpixel.yasd.general.items.potions.exotic.PotionOfSnapFreeze;
 import com.shatteredpixel.yasd.general.items.potions.exotic.PotionOfStormClouds;
 import com.shatteredpixel.yasd.general.journal.Catalog;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Blindweed;
 import com.shatteredpixel.yasd.general.plants.Dreamfoil;

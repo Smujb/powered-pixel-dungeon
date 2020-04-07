@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.effects.Ripple;
 import com.shatteredpixel.yasd.general.items.DewVial;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.painters.SewerPainter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.AlarmTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ChillingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ConfusionTrap;
@@ -61,7 +62,7 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class SewerLevel extends RegularLevel {
 

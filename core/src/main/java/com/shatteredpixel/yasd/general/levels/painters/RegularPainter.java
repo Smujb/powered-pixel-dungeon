@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Patch;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EmptyRoom;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;

@@ -42,7 +42,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfPurity;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;

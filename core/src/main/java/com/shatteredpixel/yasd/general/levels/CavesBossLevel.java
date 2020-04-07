@@ -42,6 +42,7 @@ import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.ToxicTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -57,7 +58,7 @@ import com.watabou.utils.Rect;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 public class CavesBossLevel extends Level {
 	

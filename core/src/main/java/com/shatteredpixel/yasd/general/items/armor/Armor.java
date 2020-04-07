@@ -62,7 +62,7 @@ import com.shatteredpixel.yasd.general.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Thorns;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Viscosity;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;

@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.traps.DisintegrationTrap;
 import com.shatteredpixel.yasd.general.levels.traps.PoisonDartTrap;

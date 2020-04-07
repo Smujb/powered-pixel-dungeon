@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.ImpShopkeeper;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
 import com.watabou.utils.Bundle;

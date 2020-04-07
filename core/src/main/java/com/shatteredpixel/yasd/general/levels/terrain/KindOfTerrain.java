@@ -25,16 +25,26 @@
  *
  */
 
-package com.shatteredpixel.yasd.general.levels.rooms.connection;
+package com.shatteredpixel.yasd.general.levels.terrain;
 
-import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
-import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+public interface KindOfTerrain {
+	boolean passable();
 
-public class PitConnectionRoom extends ConnectionRoom {
-	@Override
-	public void paint(Level level) {
-		TunnelRoom.paint(this, level, Terrain.CHASM);
-		level.addItemToSpawn(new PotionOfLevitation());
-	}
+	boolean losBlocking();
+
+	boolean flammable();
+
+	boolean secret();
+
+	boolean solid();
+
+	boolean avoid();
+
+	boolean liquid();
+
+	boolean pit();
+
+	boolean explodable();
+
+	void press(int cell, boolean hard);
 }

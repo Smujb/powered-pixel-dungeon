@@ -41,12 +41,13 @@ import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.ExitRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.ImpShopRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
 
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
 
 public class LastShopLevel extends RegularLevel {
 	

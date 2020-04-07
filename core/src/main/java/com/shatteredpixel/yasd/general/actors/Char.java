@@ -97,7 +97,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.ShockingDart;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;

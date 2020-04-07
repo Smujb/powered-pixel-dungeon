@@ -64,7 +64,7 @@ import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;

@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.general.levels.rooms.sewerboss.GooBossRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.sewerboss.SewerBossEntranceRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.sewerboss.SewerBossExitRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StandardRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;

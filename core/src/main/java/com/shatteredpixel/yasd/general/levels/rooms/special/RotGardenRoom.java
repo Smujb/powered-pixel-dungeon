@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.Terrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
