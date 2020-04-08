@@ -43,6 +43,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.FileUtils;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
@@ -53,16 +55,18 @@ public class LevelHandler {
 	public static int depth;
 	public static String key;
 
+	@NotNull
 	public static String filename(String key, int slot) {
 		return GamesInProgress.slotFolder(slot) + "/" + key + ".dat";
 	}
 
-	public static Level getLevel(String key) {
+	private static Level getLevel(String key) {
 		return getLevel(key, GamesInProgress.curSlot);
 	}
 
 
-	public static Level getLevel(String key, int save) {
+	@Nullable
+	static Level getLevel(String key, int save) {
 
 		try {
 			Bundle bundle = FileUtils.bundleFromFile(filename(key, save));
@@ -77,6 +81,8 @@ public class LevelHandler {
 	}
 	private static Mode mode;
 	
+	@NotNull
+	@Contract(" -> new")
 	private static Thread getThread() {
 		return new Thread() {
 			@Override
@@ -250,10 +256,9 @@ public class LevelHandler {
 		if (mode != Mode.RESET) {
 			level = getLevel(key);
 		}
+		Dungeon.level = null;
+		Actor.clear();
 		if (level == null) {
-
-			Dungeon.level = null;
-			Actor.clear();
 
 			if (yPos > Statistics.deepestFloor) {
 				Statistics.deepestFloor = yPos;
@@ -296,9 +301,9 @@ public class LevelHandler {
 		Dungeon.loadGame( GamesInProgress.curSlot );
 		Dungeon.level = null;
 		Actor.clear();
-		if (Dungeon.depth == -1) {
+		if (Dungeon.key == null) {
 			Dungeon.depth = Statistics.deepestFloor;
-			Dungeon.switchLevel( getLevel(Dungeon.key), -1 );
+			Dungeon.switchLevel( getLevel(Dungeon.key = Dungeon.keyForDepth()), -1 );
 		} else {
 			level = getLevel( Dungeon.key, GamesInProgress.curSlot );
 			Dungeon.switchLevel( level, Dungeon.hero.pos );

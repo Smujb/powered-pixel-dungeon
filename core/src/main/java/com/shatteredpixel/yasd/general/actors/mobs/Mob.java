@@ -1081,7 +1081,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if ( enemyInFOV ) {
+			if ( enemyInFOV && notice( enemy, false ) ) {
 
 				enemySeen = true;
 
@@ -1144,6 +1144,11 @@ public abstract class Mob extends Char {
 
 				} else {
 					spend( TICK );
+					if (enemy == null) {
+						sprite.showLost();
+						state = WANDERING;
+						target = Dungeon.level.randomDestination();
+					}
 					return true;
 				}
 			}
