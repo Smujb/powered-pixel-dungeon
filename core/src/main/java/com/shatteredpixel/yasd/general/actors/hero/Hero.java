@@ -1255,11 +1255,7 @@ public class Hero extends Char {
 		Heap heap;
 		InteractiveArea area = Dungeon.level.findArea(cell);
 
-		if (area != null) {
-
-			curAction = new HeroAction.InteractCell(area, cell);
-
-		} else if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
+		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 
 			curAction = new HeroAction.Alchemy(cell);
 
@@ -1294,17 +1290,11 @@ public class Hero extends Char {
 
 			curAction = new HeroAction.Unlock(cell);
 
-		} /*else if ((cell == Dungeon.level.exit || Dungeon.level.map[cell] == Terrain.EXIT || Dungeon.level.map[cell] == Terrain.UNLOCKED_EXIT)
-				&& Dungeon.level.hasExit) {
+		} if (area != null) {
 
-			curAction = new HeroAction.Descend(cell);
+			curAction = new HeroAction.InteractCell(area, cell);
 
-		} else if (cell == Dungeon.level.getEntrance().getPos(Dungeon.level)
-				&& Dungeon.level.hasEntrance) {
-
-			curAction = new HeroAction.Ascend(cell);
-
-		}*/ else {
+		} else {
 
 			walkingToVisibleTrapInFog = !Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
 					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible;

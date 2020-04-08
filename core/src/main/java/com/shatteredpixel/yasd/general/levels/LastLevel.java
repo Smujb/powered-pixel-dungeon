@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Amulet;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
-import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -110,7 +109,7 @@ public class LastLevel extends Level {
 		map[pedestal-1-width()] = map[pedestal+1-width()] = map[pedestal-1+width()] = map[pedestal+1+width()] = STATUE_SP;
 
 		//exit = pedestal;
-		interactiveAreas.add(new Exit().setPos(this, pedestal));
+		//interactiveAreas.add(new Exit().setPos(this, pedestal));
 
 		int pos = pedestal;
 
@@ -132,7 +131,13 @@ public class LastLevel extends Level {
 
 		return true;
 	}
-	
+
+	@Override
+	//Acts as if the exit is on the pedestal even though the level has no exit
+	public int getExitPos() {
+		return pedestal;
+	}
+
 	@Override
 	public Mob createMob() {
 		return null;
