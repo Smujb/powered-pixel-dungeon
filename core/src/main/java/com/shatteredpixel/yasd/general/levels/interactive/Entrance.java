@@ -58,9 +58,11 @@ public class Entrance extends InteractiveCell {
 				hero.ready();
 			} else {
 				Badges.silentValidateHappyEnd();
-				Dungeon.win(Amulet.class);
+				if (!Dungeon.testing) {
+					Dungeon.win(Amulet.class);
+					Game.switchScene(SurfaceScene.class);
+				}
 				Dungeon.deleteGame(GamesInProgress.curSlot, true);
-				Game.switchScene(SurfaceScene.class);
 			}
 
 		} else {
