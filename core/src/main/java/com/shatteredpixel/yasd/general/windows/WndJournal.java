@@ -163,10 +163,6 @@ public class WndJournal extends WndTabbed {
 			if (key == null || key.equals(Dungeon.keyForDepth())) {
 				label.hardlight(TITLE_COLOR);
 			}
-			/*if (key != null) {
-				depth.text(key);
-				depth.measure();
-			}*/
 		}
 		
 		@Override

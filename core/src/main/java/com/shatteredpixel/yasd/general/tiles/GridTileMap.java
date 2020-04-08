@@ -49,7 +49,7 @@ public class GridTileMap extends DungeonTilemap {
 	}
 
 	@Override
-	protected int getTileVisual(int pos, KindOfTerrain tile, boolean flat) {
+	public int getTileVisual(int pos, KindOfTerrain tile, boolean flat) {
 		if (gridSetting == -1 || (pos % mapWidth) % 2 != (pos / mapWidth) % 2){
 			return -1;
 		} else if (DungeonTileSheet.floorTile(tile) || tile == Terrain.HIGH_GRASS || tile == Terrain.FURROWED_GRASS) {

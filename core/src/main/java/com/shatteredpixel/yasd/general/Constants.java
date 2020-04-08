@@ -59,7 +59,7 @@ public class Constants {
     //Number of misc slots for char.
     public static final int MISC_SLOTS = 5;
 
-    //Want to mod MainGame without morale? Go ahead.
+    //Want to mod YASD without morale? Go ahead.
     public static final boolean MORALE = true;
 
     //

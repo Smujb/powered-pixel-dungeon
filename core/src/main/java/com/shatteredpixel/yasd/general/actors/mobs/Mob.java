@@ -367,7 +367,7 @@ public abstract class Mob extends Char {
 		
 		enemy = chooseEnemy();
 
-		boolean enemyInFOV = enemy != null && Dungeon.level.distance(this.pos, enemy.pos) < viewDistance && (properties().contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
+		boolean enemyInFOV = enemy != null && Dungeon.level.distance(pos, enemy.pos) < viewDistance && (properties().contains(Property.IGNORES_INVISIBLE) | enemy.invisible <= 0);
 
 		return state.act( enemyInFOV, justAlerted );
 	}
@@ -431,9 +431,8 @@ public abstract class Mob extends Char {
 					
 					if (enemies.isEmpty()) {
 						//try to find the hero third
-						if (notice(Dungeon.hero)) {
-							enemies.add(Dungeon.hero);
-						}
+						enemies.add(Dungeon.hero);
+
 					}
 				}
 				
@@ -972,15 +971,6 @@ public abstract class Mob extends Char {
 		return false;
 
 	}
-
-	private boolean noticeEnemy() {
-		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-			if (mob.alignment == this.alignment && notice(mob)) {
-				return true;
-			}
-		}
-		return (notice(Dungeon.hero) && alignment == Alignment.ENEMY);
-	}
 	
 	public void notice() {
 		sprite.showAlert();
@@ -1005,7 +995,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && notice(enemy)/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
+			if (enemyInFOV && notice(enemy, false)/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
 
 				enemySeen = true;
 
@@ -1040,7 +1030,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || notice(enemy))) {
+			if (enemyInFOV && (justAlerted || notice(enemy, false))) {
 
 				enemySeen = true;
 
@@ -1136,10 +1126,12 @@ public abstract class Mob extends Char {
 
 			} else {
 
-				if (enemyInFOV && notice(enemy)) {
+				if (enemyInFOV && notice(enemy, true)) {
 					target = enemy.pos;
-				} else if (enemy == null) {
+				} else {
+					sprite.showLost();
 					state = WANDERING;
+					enemy = null;
 					target = Dungeon.level.randomDestination();
 					return true;
 				}
@@ -1152,12 +1144,6 @@ public abstract class Mob extends Char {
 
 				} else {
 					spend( TICK );
-					if (!enemyInFOV) {
-						sprite.showLost();
-						state = WANDERING;
-						enemy = null;
-						target = Dungeon.level.randomDestination();
-					}
 					return true;
 				}
 			}

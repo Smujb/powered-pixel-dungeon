@@ -27,6 +27,8 @@
 
 package com.shatteredpixel.yasd.general.levels.terrain;
 
+import com.watabou.noosa.Group;
+
 public interface KindOfTerrain {
 	//Don't extend this directly for custom tiles, extend CustomTerrain
 	boolean passable();
@@ -48,6 +50,8 @@ public interface KindOfTerrain {
 	boolean explodable();
 
 	boolean waterStitchable();
+
+	Group getVisual(int pos);
 
 	KindOfTerrain discover();
 

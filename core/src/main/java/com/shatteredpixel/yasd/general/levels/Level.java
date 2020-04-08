@@ -1425,8 +1425,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (Mob mob : mobs) {
-				if (Dungeon.hero.notice(mob) && !fieldOfView[mob.pos]) {
-					//GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
+				if (Dungeon.hero.notice(mob, Dungeon.hero.enemy() == mob) && !fieldOfView[mob.pos]) {
 					Dungeon.hero.mindVisionEnemies.add(mob);
 				}
 			}

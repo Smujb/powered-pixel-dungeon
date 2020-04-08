@@ -113,9 +113,4 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 		img.frame( instance.tileset.get( instance.getTileVisual( pos, tile, true ) ) );
 		return img;
 	}
-
-	@Override
-	protected boolean needsRender(int pos) {
-		return super.needsRender(pos);// && data[pos] != DungeonTileSheet.WATER; (water tiles do need render now)
-	}
 }

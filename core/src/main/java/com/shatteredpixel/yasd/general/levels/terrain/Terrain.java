@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.blobs.WellWater;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.features.HighGrass;
+import com.watabou.noosa.Group;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -365,6 +366,12 @@ public enum Terrain implements KindOfTerrain {
 
 	public boolean explodable() {
 		return flammable;
+	}
+
+	@Override
+	//TODO: make this work.
+	public Group getVisual(int pos) {
+		return null;
 	}
 
 	@Override
