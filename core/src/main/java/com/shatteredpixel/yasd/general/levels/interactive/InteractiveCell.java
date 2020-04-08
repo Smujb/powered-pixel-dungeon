@@ -40,6 +40,11 @@ public abstract class InteractiveCell extends InteractiveArea {
 		return (InteractiveCell) this.setPos(x, y, 1, 1);
 	}
 
+	@Override
+	public InteractiveArea setPos(int x, int y, int width, int height) {
+		return super.setPos(x, y, 1, 1);
+	}
+
 	public int getPos(@NotNull Level level) {
 		return level.getPos(x, y);
 	}

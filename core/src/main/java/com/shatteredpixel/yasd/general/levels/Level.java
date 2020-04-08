@@ -478,6 +478,7 @@ public abstract class Level implements Bundlable {
 		
 		createMobs();
 		createItems();
+		createAreas();
 
 		Random.seed();
 	}
@@ -949,6 +950,8 @@ public abstract class Level implements Bundlable {
 	abstract protected void createMobs();
 
 	abstract protected void createItems();
+
+	protected void createAreas() {}
 
 	public void seal(){
 		if (!locked) {

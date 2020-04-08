@@ -98,7 +98,7 @@ public class AndroidGame extends AndroidApplication {
 		support = new AndroidPlatformSupport();
 		
 		support.updateSystemUI();
-		//TODO: Add support for switching games
+
 		MainGame mainGame = new MainGame(support);//Reflection.newInstance(MainGame.class, support);
 		initialize(mainGame, config);
 		

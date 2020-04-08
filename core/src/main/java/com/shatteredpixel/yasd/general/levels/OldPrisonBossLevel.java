@@ -489,8 +489,6 @@ public class OldPrisonBossLevel extends Level {
 	private static final Terrain M = WALL_DECO;
 	private static final Terrain P = PEDESTAL;
 
-	//TODO if I ever need to store more static maps I should externalize them instead of hard-coding
-	//Especially as I means I won't be limited to legal identifiers
 	private static final Terrain[] MAP_START =
 			{       W, W, W, W, W, M, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,
 					W, W, W, W, e, e, e, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W, W,

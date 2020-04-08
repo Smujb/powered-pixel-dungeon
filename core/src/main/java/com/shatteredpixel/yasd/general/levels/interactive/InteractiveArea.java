@@ -36,7 +36,7 @@ import com.watabou.utils.Bundle;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class InteractiveArea implements Bundlable {
-	//TODO: Maybe InteractiveArea should be a list of InteractiveCell s, rather than being a superclass?
+
 	protected int x;
 	protected int y;
 	protected int width;

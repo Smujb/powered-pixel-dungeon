@@ -39,9 +39,12 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
+import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
+import com.shatteredpixel.yasd.general.levels.interactive.LevelSwitchArea;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.Contract;
@@ -56,15 +59,18 @@ public class MapHandler {
 	private static final String TILES_LAYER = "tiles";
 	private static final String MOBS_LAYER = "mobs";
 	private static final String ITEMS_LAYER = "items";
+	private static final String AREAS_LAYER = "areas";
 
 	private static TiledMapTileLayer tiles;
 	private static MapObjects mobs;
 	private static MapObjects items;
+	private static MapObjects areas;
 
 	private static void loadMap(Map map) {
 		tiles = (TiledMapTileLayer) map.getLayers().get(TILES_LAYER);
 		mobs = map.getLayers().get(MOBS_LAYER).getObjects();
 		items = map.getLayers().get(ITEMS_LAYER).getObjects();
+		areas = map.getLayers().get(AREAS_LAYER).getObjects();
 	}
 
 	public static boolean build(@NotNull Level level, String mapName) {
@@ -199,6 +205,47 @@ public class MapHandler {
 							} while (!level.passable(pos));
 							level.drop(item, pos).type = type;
 						}
+					}
+				}
+			}
+		}
+	}
+
+	private static final String NAME_AREA = "com.shatteredpixel.yasd.general.levels.interactive.";
+	//Level switch area
+	private static final String KEY_MODE = "mode";
+	private static final String KEY_DEPTH = "depth";
+	private static final String KEY_KEY = "key";
+	private static final String KEY_MESSAGE = "message";
+
+	public static void createAreas(@NotNull Level level, String mapName) {
+		loadMap(new TmxMapLoader().load(mapName));
+		for (int i = 0; i < areas.getCount(); i++) {
+			if (areas.get(i) instanceof RectangleMapObject) {
+				RectangleMapObject object = (RectangleMapObject) areas.get(i);
+				Rectangle rect = object.getRectangle();
+				MapProperties properties = object.getProperties();
+				if (properties.containsKey(KEY_NAME)) {
+					String className = (String) properties.get(KEY_NAME);
+					InteractiveArea area;
+					try {
+						Class<? extends InteractiveArea> areaClass = (Class<? extends InteractiveArea>) Class.forName(NAME_AREA + className);
+						area = areaClass.newInstance();
+					} catch (ClassNotFoundException e) {
+						throw new RuntimeException(e);
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					} catch (InstantiationException e) {
+						throw new RuntimeException(e);
+					}
+					area.setPos((int) rect.x/TILE_WIDTH, (int) rect.y/TILE_WIDTH, (int) rect.width/TILE_WIDTH, (int) rect.height/TILE_WIDTH);
+					if (area instanceof LevelSwitchArea && properties.containsKey(KEY_MODE) && properties.containsKey( KEY_DEPTH ) && properties.containsKey( KEY_KEY ) && properties.containsKey( KEY_MESSAGE )) {
+						LevelSwitchArea switchArea = ((LevelSwitchArea)area);
+						LevelHandler.Mode mode = Enum.valueOf(LevelHandler.Mode.class, (String) properties.get(KEY_MODE));
+						int depth = (int) properties.get(KEY_DEPTH);
+						String key = (String) properties.get(KEY_KEY);
+						String message = Messages.get(level, (String) properties.get(KEY_MESSAGE));
+						switchArea.initVars(key, message, mode, depth);
 					}
 				}
 			}

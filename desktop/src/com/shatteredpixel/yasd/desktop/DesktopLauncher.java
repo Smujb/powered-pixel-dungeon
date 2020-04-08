@@ -64,8 +64,6 @@ public class DesktopLauncher {
         config.foregroundFPS = 0;
         config.backgroundFPS = -1;
 
-        //TODO rather than hardcoding these values when running debug
-        // it would be nice to be able to fetch them from gradle in some way
         config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
         if (config.title == null) {
             config.title = "Yet Another Shattered Dungeon";
@@ -73,7 +71,7 @@ public class DesktopLauncher {
 
         Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
         if (Game.version == null) {
-            Game.version = "0.7.5d-INDEV";
+            Game.version = "0.2.21";
         }
 
         try {
@@ -81,7 +79,6 @@ public class DesktopLauncher {
         } catch (NumberFormatException e) {
             Game.versionCode = 380;
         }
-        //TODO: Add support for switching games
         new LwjglApplication(new MainGame(new com.shatteredpixel.yasd.desktop.DesktopPlatformSupport()), config);
     }
 }
