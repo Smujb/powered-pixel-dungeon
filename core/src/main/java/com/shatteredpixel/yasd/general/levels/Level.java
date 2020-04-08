@@ -1572,7 +1572,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 	
-	public String tileDesc( Terrain tile ) {
+	public String tileDesc(@NotNull Terrain tile ) {
 		
 		switch (tile) {
 			case CHASM:

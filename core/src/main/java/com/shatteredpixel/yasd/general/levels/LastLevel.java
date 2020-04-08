@@ -39,6 +39,8 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.CHASM;
@@ -183,7 +185,7 @@ public class LastLevel extends Level {
 	}
 
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");

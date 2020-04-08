@@ -291,7 +291,7 @@ public class CityBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");

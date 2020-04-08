@@ -62,6 +62,8 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class SewerLevel extends RegularLevel {
@@ -198,7 +200,7 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(SewerLevel.class, "empty_deco_desc");

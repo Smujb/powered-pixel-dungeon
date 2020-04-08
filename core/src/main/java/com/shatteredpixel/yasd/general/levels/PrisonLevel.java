@@ -60,6 +60,8 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
@@ -196,7 +198,7 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");

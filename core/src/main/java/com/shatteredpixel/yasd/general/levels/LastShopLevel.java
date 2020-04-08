@@ -45,6 +45,8 @@ import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
@@ -171,7 +173,7 @@ public class LastShopLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");

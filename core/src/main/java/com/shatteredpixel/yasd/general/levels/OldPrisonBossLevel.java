@@ -247,7 +247,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");

@@ -1290,7 +1290,7 @@ public class Hero extends Char {
 
 			curAction = new HeroAction.Unlock(cell);
 
-		} if (area != null) {
+		} else if (area != null) {
 
 			curAction = new HeroAction.InteractCell(area, cell);
 

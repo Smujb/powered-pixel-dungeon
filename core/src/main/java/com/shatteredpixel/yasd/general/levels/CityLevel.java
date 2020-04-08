@@ -60,6 +60,8 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class CityLevel extends RegularLevel {
@@ -201,7 +203,7 @@ public class CityLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");

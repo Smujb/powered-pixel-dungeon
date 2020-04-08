@@ -283,7 +283,7 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(Terrain tile) {
+	public String tileDesc(@NotNull Terrain tile) {
 		switch (tile) {
 			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");
