@@ -27,48 +27,32 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
-import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.MapHandler;
 
-public class TilemapTest extends TiledMapLevel {
+public abstract class TiledMapLevel extends Level {
+	private String name;
 
-	private static final String MAP_NAME = "maps/sewerdungeon-test.tmx";
-
-	TilemapTest() {
-		super(MAP_NAME);
+	TiledMapLevel(String filename) {
+		name = filename;
 	}
 
 	@Override
-	public String tilesTex() {
-		return Assets.TILES_SEWERS;
-	}
-
-	@Override
-	public String waterTex() {
-		return Assets.WATER_SEWERS;
-	}
-
-	@Override
-	public String loadImg() {
-		return Assets.LOADING_SEWERS;
-	}
-
-	/*@Override
 	protected boolean build() {
-		return MapHandler.build(this, MAP_NAME);
+		return MapHandler.build(this, name);
 	}
 
 	@Override
 	protected void createMobs() {
-		MapHandler.createMobs(this, MAP_NAME);
+		MapHandler.createMobs(this, name);
 	}
 
 	@Override
 	protected void createItems() {
-		MapHandler.createItems(this, MAP_NAME);
+		MapHandler.createItems(this, name);
 	}
 
 	@Override
 	protected void createAreas() {
-		MapHandler.createAreas(this, MAP_NAME);
-	}*/
+		MapHandler.createAreas(this, name);
+	}
 }

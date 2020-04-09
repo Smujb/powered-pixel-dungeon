@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.levels.interactive;
 
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
@@ -44,12 +43,11 @@ public abstract class InteractiveArea implements Bundlable {
 
 	public abstract void interact(Hero hero);
 
-	public InteractiveArea setPos(int x, int y, int  width, int height) {
+	public InteractiveArea setPos(int x, int y, int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.x = x;
 		this.y = y;
-		GLog.i("created area with x, y, width, height: " + x +"," + y + "," + width + "," + height);
 		return this;
 	}
 

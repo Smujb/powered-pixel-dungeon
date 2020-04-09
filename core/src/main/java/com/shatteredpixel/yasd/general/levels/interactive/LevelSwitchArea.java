@@ -36,15 +36,15 @@ import com.watabou.utils.Bundle;
 
 public class LevelSwitchArea extends InteractiveArea {
 
-	private LevelHandler.Mode mode;
 	private int depth;
 	private String key;
 	private String message;
+	private int pos;
 
-	public LevelSwitchArea initVars(String key, String message, LevelHandler.Mode mode, int depth) {
+	public LevelSwitchArea initVars(String key, String message, int pos, int depth) {
 		this.depth = depth;
-		this.mode = mode;
 		this.key = key;
+		this.pos = pos;
 		this.message = message;
 		return this;
 	}
@@ -57,10 +57,10 @@ public class LevelSwitchArea extends InteractiveArea {
 		if (buff != null) buff.detach();
 		buff = hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
-		LevelHandler.move(key, message, mode, depth);
+		LevelHandler.move(key, message, LevelHandler.Mode.MOVE, depth, pos);
 	}
 
-	private static final String MODE = "mode";
+	private static final String POS = "pos";
 	private static final String DEPTH = "depth";
 	private static final String KEY = "key";
 	private static final String MESSAGE = "message";
@@ -71,15 +71,15 @@ public class LevelSwitchArea extends InteractiveArea {
 		bundle.put(MESSAGE, message);
 		bundle.put(KEY, key);
 		bundle.put(DEPTH, depth);
-		bundle.put(MODE, mode);
+		bundle.put(POS, pos);
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		mode = bundle.getEnum(MODE, LevelHandler.Mode.class);
+		pos = bundle.getInt(POS);
 		depth = bundle.getInt(DEPTH);
 		key = bundle.getString(KEY);
-
+		message = bundle.getString(MESSAGE);
 	}
 }

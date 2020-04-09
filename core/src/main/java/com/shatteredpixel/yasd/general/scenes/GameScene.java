@@ -415,7 +415,7 @@ public class GameScene extends PixelScene {
 		}
 		Camera.main.panTo(hero.center(), 2.5f);
 
-		if (LevelHandler.mode() != LevelHandler.Mode.NONE) {
+		if (LevelHandler.mode() != LevelHandler.Mode.MOVE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (LevelHandler.mode() == LevelHandler.Mode.DESCEND || LevelHandler.mode() == LevelHandler.Mode.FALL)) {
 				GLog.h(Messages.get(this, "descend"), Dungeon.depth);

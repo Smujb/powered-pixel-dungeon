@@ -50,7 +50,7 @@ import java.io.IOException;
 
 public class LevelHandler {
 
-	private static int returnPos;
+	private static int pos;
 	private static boolean fallIntoPit;
 	public static int depth;
 	public static String key;
@@ -77,7 +77,7 @@ public class LevelHandler {
 	}
 
 	public enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, NONE, INIT
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, MOVE, INIT
 	}
 	private static Mode mode;
 	
@@ -142,40 +142,38 @@ public class LevelHandler {
 	}
 
 	public static void descend() {
-		move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND, Dungeon.depth + 1);
+		move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND, Dungeon.depth + 1, -1);
 	}
 
 	public static void ascend() {
-		move(Dungeon.keyForDepth(Dungeon.depth -1), Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND, Dungeon.depth - 1);
+		move(Dungeon.keyForDepth(Dungeon.depth -1), Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND, Dungeon.depth - 1, -1);
 	}
 
 	public static void fall(boolean fallIntoPit, boolean bossLevel) {
 		LevelHandler.fallIntoPit = fallIntoPit;
 		if (bossLevel) {//If falling from a boss level, the hero will fall back onto the same floor and it will reset.
 			Dungeon.level.reset();
-			move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth);
+			move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth, -1);
 		} else {
-			move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth + 1);
+			move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth + 1, -1);
 		}
 	}
 
 	public static void reset() {
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET, Dungeon.depth);
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET, Dungeon.depth, -1);
 	}
 
 	public static void resurrect() {
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT, Dungeon.depth);
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT, Dungeon.depth, -1);
 	}
 
 	public static void returnTo(int depth, int pos) {
-		move(Dungeon.keyForDepth(depth), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, depth);
-		returnPos = pos;
+		move(Dungeon.keyForDepth(depth), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, depth, pos);
 	}
 
 	public static void dive(int pos) {
 		Dungeon.underwater = !Dungeon.underwater;
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, Dungeon.depth);
-		returnPos = pos;
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, Dungeon.depth, pos);
 	}
 
 	public static void doRestore() {
@@ -191,6 +189,8 @@ public class LevelHandler {
 	public static void doInit() {
 		mode = Mode.DESCEND;
 		depth = 1;
+		pos = -1;
+		key = Dungeon.keyForDepth();
 		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
@@ -208,10 +208,11 @@ public class LevelHandler {
 		}, GameSettings.fastInterlevelScene());
 	}
 
-	public static void move(String key, String msg, Mode mode, int yPos) {
-		LevelHandler.depth = yPos;
+	public static void move(String key, String msg, Mode mode, int depth, int pos) {
+		LevelHandler.depth = depth;
 		LevelHandler.mode = mode;
 		LevelHandler.key = key;
+		LevelHandler.pos = pos;
 		TextScene.init(msg, Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
@@ -221,7 +222,7 @@ public class LevelHandler {
 	}
 
 	public static void resetMode() {
-		mode = Mode.NONE;
+		mode = Mode.MOVE;
 	}
 
 	private static void initGame() throws IOException {
@@ -234,12 +235,12 @@ public class LevelHandler {
 		switchDepth(1, Mode.DESCEND, Dungeon.keyForDepth());
 	}
 
-	private static void switchDepth(int yPos, final Mode mode, String key) throws IOException {
+	private static void switchDepth(int depth, final Mode mode, String key) throws IOException {
 		if (Dungeon.hero != null && Dungeon.level != null) {
 			Mob.holdMobs( Dungeon.level );
 			Dungeon.saveAll();
 		}
-		Dungeon.depth = yPos;
+		Dungeon.depth = depth;
 		if (mode.equals(Mode.RESURRECT) & Dungeon.hero != null & Dungeon.level != null) {
 			if (Dungeon.level.locked) {
 				Dungeon.hero.resurrect( Dungeon.key);
@@ -260,8 +261,8 @@ public class LevelHandler {
 		Actor.clear();
 		if (level == null) {
 
-			if (yPos > Statistics.deepestFloor) {
-				Statistics.deepestFloor = yPos;
+			if (depth > Statistics.deepestFloor) {
+				Statistics.deepestFloor = depth;
 
 				Statistics.completedWithNoKilling = Statistics.qualifiedForNoKilling;
 			}
@@ -274,8 +275,21 @@ public class LevelHandler {
 			}
 
 		}
-
-		switch (mode) {
+		int pos = LevelHandler.pos;
+		if (pos < 0) {
+			if (mode == Mode.ASCEND) {
+				pos = level.getExitPos();
+			} else if (mode == Mode.FALL) {
+				pos = level.fallCell(fallIntoPit);
+			} else {
+				pos = level.getEntrancePos();
+			}
+		}
+		if (mode == Mode.FALL) {
+			Buff.affect( Dungeon.hero, Chasm.Falling.class );
+		}
+		Dungeon.switchLevel(level, pos);
+		/*switch (mode) {
 			default:
 				Dungeon.switchLevel(level, level.getEntrancePos());
 				break;
@@ -287,9 +301,9 @@ public class LevelHandler {
 				Dungeon.switchLevel(level, level.getExit().getPos(level));
 				break;
 			case RETURN:
-				Dungeon.switchLevel(level, returnPos);
+				Dungeon.switchLevel(level, pos);
 				break;
-		}
+		}*/
 	}
 
 	private static void restore() throws IOException {

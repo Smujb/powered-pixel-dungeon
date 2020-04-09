@@ -213,7 +213,7 @@ public class MapHandler {
 
 	private static final String NAME_AREA = "com.shatteredpixel.yasd.general.levels.interactive.";
 	//Level switch area
-	private static final String KEY_MODE = "mode";
+	private static final String KEY_POS = "pos";
 	private static final String KEY_DEPTH = "depth";
 	private static final String KEY_KEY = "key";
 	private static final String KEY_MESSAGE = "message";
@@ -238,15 +238,28 @@ public class MapHandler {
 					} catch (InstantiationException e) {
 						throw new RuntimeException(e);
 					}
-					area.setPos((int) rect.x/TILE_WIDTH, (int) rect.y/TILE_WIDTH, (int) rect.width/TILE_WIDTH, (int) rect.height/TILE_WIDTH);
-					if (area instanceof LevelSwitchArea && properties.containsKey(KEY_MODE) && properties.containsKey( KEY_DEPTH ) && properties.containsKey( KEY_KEY ) && properties.containsKey( KEY_MESSAGE )) {
+					if (area instanceof LevelSwitchArea) {
 						LevelSwitchArea switchArea = ((LevelSwitchArea)area);
-						LevelHandler.Mode mode = Enum.valueOf(LevelHandler.Mode.class, (String) properties.get(KEY_MODE));
-						int depth = (int) properties.get(KEY_DEPTH);
-						String key = (String) properties.get(KEY_KEY);
-						String message = Messages.get(level, (String) properties.get(KEY_MESSAGE));
-						switchArea.initVars(key, message, mode, depth);
+						int pos = -1;
+						if (properties.containsKey(KEY_POS) && properties.get(KEY_POS) instanceof Integer) {
+							pos = (int) properties.get(KEY_POS);
+						}
+						int depth = 1;
+						if (properties.containsKey(KEY_DEPTH) && properties.get(KEY_DEPTH) instanceof Integer) {
+							depth = (int) properties.get(KEY_DEPTH);
+						}
+						String key = Dungeon.keyForDepth(depth);
+						if (properties.containsKey(KEY_KEY) && properties.get(KEY_KEY) instanceof String) {
+							key = (String) properties.get(KEY_KEY);
+						}
+						String message = "";
+						if (properties.containsKey(KEY_MESSAGE) && properties.get(KEY_MESSAGE) instanceof String) {
+							message = Messages.get(level, (String) properties.get(KEY_MESSAGE));
+						}
+						area = switchArea.initVars(key, message, pos, depth);
 					}
+					area.setPos((int) rect.x/TILE_WIDTH, level.height()-(int) rect.y/TILE_WIDTH, Math.max(1, (int) rect.width/TILE_WIDTH), Math.max(1, (int) rect.height/TILE_WIDTH));
+					level.interactiveAreas.add(area);
 				}
 			}
 		}
