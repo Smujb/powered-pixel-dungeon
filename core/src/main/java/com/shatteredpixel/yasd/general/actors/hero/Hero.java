@@ -1254,7 +1254,7 @@ public class Hero extends Char {
 		Char ch;
 		Heap heap;
 		InteractiveArea area = Dungeon.level.findArea(cell);
-
+		//TODO: replace this with an InteractiveArea
 		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 
 			curAction = new HeroAction.Alchemy(cell);

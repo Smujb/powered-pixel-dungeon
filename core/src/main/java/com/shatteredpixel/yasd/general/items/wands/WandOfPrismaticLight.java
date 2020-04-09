@@ -73,17 +73,15 @@ public class WandOfPrismaticLight extends DamageWand {
 	@Override
 	public void onZap(Ballistica beam) {
 		affectMap(beam);
-		
-		if (Dungeon.level.viewDistance < 6 ){
-			if (Dungeon.isChallenged(Challenges.DARKNESS)){
-				Buff.prolong( curUser, Light.class, 2f + level() );
-			} else {
-				Buff.prolong( curUser, Light.class, 10f+level()*5 );
-			}
+
+		if (Dungeon.isChallenged(Challenges.DARKNESS)) {
+			Buff.prolong(curUser, Light.class, 2f + level());
+		} else {
+			Buff.prolong(curUser, Light.class, 10f + level() * 5);
 		}
-		
+
 		Char ch = Actor.findChar(beam.collisionPos);
-		if (ch != null){
+		if (ch != null) {
 			processSoulMark(ch, chargesPerCast());
 			affectTarget(ch);
 		}
@@ -92,7 +90,7 @@ public class WandOfPrismaticLight extends DamageWand {
 	private void affectTarget(Char ch){
 
 		//three in (5+lvl) chance of failing
-		if (Random.Int(5+level()) >= 3) {
+		if (Random.Int((int) (5 + actualLevel())) >= 3) {
 			Buff.prolong(ch, Blindness.class, 2f + (level() * 0.333f));
 			ch.sprite.emitter().burst(Speck.factory(Speck.LIGHT), 6 );
 		}
@@ -120,7 +118,7 @@ public class WandOfPrismaticLight extends DamageWand {
 					Dungeon.level.mapped[cell] = true;
 
 				KindOfTerrain terr = Dungeon.level.map[cell];
-				if (terr.secret()) {
+				if (Dungeon.level.secret(cell)) {
 
 					Dungeon.level.discover( cell );
 
@@ -138,13 +136,6 @@ public class WandOfPrismaticLight extends DamageWand {
 
 		GameScene.updateFog();
 	}
-
-	/*@Override
-	protected void fx( Ballistica beam, Callback callback ) {
-		curUser.sprite.parent.add(
-				new Beam.LightRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(beam.collisionPos)));
-		callback.call();
-	}*/
 
 	@Override
 	public void onHit(MagesStaff staff, Char attacker, Char defender, int damage) {
