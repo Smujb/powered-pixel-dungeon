@@ -289,21 +289,6 @@ public class LevelHandler {
 			Buff.affect( Dungeon.hero, Chasm.Falling.class );
 		}
 		Dungeon.switchLevel(level, pos);
-		/*switch (mode) {
-			default:
-				Dungeon.switchLevel(level, level.getEntrancePos());
-				break;
-			case FALL:
-				Buff.affect( Dungeon.hero, Chasm.Falling.class );
-				Dungeon.switchLevel(level, level.fallCell(fallIntoPit));
-				break;
-			case ASCEND:
-				Dungeon.switchLevel(level, level.getExit().getPos(level));
-				break;
-			case RETURN:
-				Dungeon.switchLevel(level, pos);
-				break;
-		}*/
 	}
 
 	private static void restore() throws IOException {

@@ -1310,6 +1310,8 @@ public abstract class Level implements Bundlable {
 			
 			Swiftthistle.TimeBubble bubble =
 					Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
+
+			trap.trigger();
 			
 			if (bubble != null){
 				
@@ -1357,7 +1359,7 @@ public abstract class Level implements Bundlable {
 			boolean[] blocking;
 			
 			if (c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN) {
-				blocking = Dungeon.level.losBlocking().clone();
+				blocking = Dungeon.level.losBlocking();
 				for (int i = 0; i < blocking.length; i++){
 					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)){
 						blocking[i] = false;

@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.MapHandler;
 import com.shatteredpixel.yasd.general.levels.Level;
 
 public abstract class TiledMapLevel extends Level {
+	//No need to bundle, as after create() is called this is no longer needed.
 	private String name;
 
 	public TiledMapLevel(String filename) {
