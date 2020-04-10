@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
@@ -40,6 +41,7 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -53,6 +55,7 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.shatteredpixel.yasd.general.windows.WndError;
 import com.watabou.noosa.Camera;
+import com.watabou.noosa.Image;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Random;
 
@@ -308,13 +311,15 @@ public class DeveloperItem extends Item {
 
 		private int[] depth;
 
-		WndChooseDepth(Item item) {
+		WndChooseDepth(Level level) {
 			super();
 			depth = new int[1];
+			depth[0] = Dungeon.depth;
 			key = new String[1];
+			key[0] = Dungeon.key;
 			IconTitle titlebar = new IconTitle();
-			titlebar.icon(new ItemSprite(item.image() , null));
-			titlebar.label(Messages.titleCase(item.name()));
+			titlebar.icon(new Image( level.loadImg() ));
+			titlebar.label("Choose Level");
 			titlebar.setRect(0, 0, getWidth(), 0);
 			add( titlebar );
 
@@ -322,7 +327,6 @@ public class DeveloperItem extends Item {
 			message.maxWidth(getWidth());
 			message.setPos(0, titlebar.bottom() + GAP);
 			add( message );
-
 			RedButton btnChoose = new RedButton( "Enter Key" ) {
 				@Override
 				protected void onClick() {
@@ -332,7 +336,10 @@ public class DeveloperItem extends Item {
 						public void onSelect(boolean positive, String text) {
 							if (positive) {
 								key[0] = text.toLowerCase();
-								if (Dungeon.newLevel(key[0], false) != null) {
+								Level level = Dungeon.newLevel(key[0], false);
+								if (level != null) {
+									icon(new Image(level.loadImg() == null ? level.loadImg() : Assets.SHADOW));
+									WndChooseDepth.this.update();
 									GLog.p("Level exists.");
 								} else {
 									GLog.n("You won't find anything much there...");
@@ -369,7 +376,7 @@ public class DeveloperItem extends Item {
 			RedButton btnGo = new RedButton( "GO" ) {
 				@Override
 				protected void onClick() {
-					LevelHandler.move(key[0], "TEST", LevelHandler.Mode.DESCEND, depth[0], -1);
+					LevelHandler.move(key[0], "", LevelHandler.Mode.MOVE, depth[0], -1);
 				}
 			};
 			btnGo.setRect(getWidth()/2, depthSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);
@@ -397,14 +404,14 @@ public class DeveloperItem extends Item {
 				new ScrollOfTeleportation().empoweredRead();
 				break;
 			case AC_CHOOSEDEPTH:
-				MainGame.scene().addToFront(new WndChooseDepth(this));
+				MainGame.scene().addToFront(new WndChooseDepth(Dungeon.level));
 				break;
 			case AC_ITEM:
 				MainGame.scene().addToFront(new WndGetItem(this));
 				break;
 			case AC_KILL:
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
-					mob.die(new Char.DamageSrc(Element.DARK, this));
+					mob.die(new Char.DamageSrc(Element.DARK).ignoreDefense());
 					GLog.i("All ded");
 				}
 				break;

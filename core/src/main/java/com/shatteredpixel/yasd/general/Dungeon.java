@@ -275,6 +275,7 @@ public class Dungeon {
 
 	public static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
 	static {
+		//Bosses
 		staticLevels.put("sewers - 5", SewerBossLevel.class);
 		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
 		staticLevels.put("caves - 5", CavesBossLevel.class);

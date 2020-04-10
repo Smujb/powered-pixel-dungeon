@@ -159,6 +159,8 @@ public class OldPrisonBossLevel extends Level {
 		//entrance = 5+2*32;
 		//exit = 0;
 
+		setEntrance(getPos(5, 2));
+
 		resetTraps();
 
 		return true;
