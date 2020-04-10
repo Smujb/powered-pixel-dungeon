@@ -25,14 +25,15 @@
  *
  */
 
-package com.shatteredpixel.yasd.general.levels;
+package com.shatteredpixel.yasd.general.levels.tiled;
 
 import com.shatteredpixel.yasd.general.MapHandler;
+import com.shatteredpixel.yasd.general.levels.Level;
 
 public abstract class TiledMapLevel extends Level {
 	private String name;
 
-	TiledMapLevel(String filename) {
+	public TiledMapLevel(String filename) {
 		name = filename;
 	}
 

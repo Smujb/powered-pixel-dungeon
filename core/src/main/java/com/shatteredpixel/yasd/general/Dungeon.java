@@ -65,10 +65,11 @@ import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.levels.TestBossLevel;
-import com.shatteredpixel.yasd.general.levels.TilemapTest;
+import com.shatteredpixel.yasd.general.levels.tiled.TilemapTest;
 import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.yasd.general.levels.tiled.TilemapTest2;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -288,6 +289,7 @@ public class Dungeon {
 		//testing stuff
 		staticLevels.put("test boss", TestBossLevel.class);
 		staticLevels.put("test", TilemapTest.class);
+		staticLevels.put("test 2", TilemapTest2.class);
 		staticLevels.put("old tengu", OldPrisonBossLevel.class);
 		staticLevels.put("loot", LootLevel.class);
 	}
@@ -300,9 +302,9 @@ public class Dungeon {
 	@Contract(pure = true)
 	static String keyForDepth(int depth) {
 		String key = "none";
-		int depthInChapter = depth-1%Constants.CHAPTER_LENGTH;
+		int depthInChapter = (depth-1)%Constants.CHAPTER_LENGTH;
 		String depthMarker = " - " + depthInChapter;
-		if (depth < Constants.CHAPTER_LENGTH) {
+		if (depth <= Constants.CHAPTER_LENGTH) {
 			key = SEWERS_ID + depthMarker;
 		} else if (depth <= Constants.CHAPTER_LENGTH * 2) {
 			key = PRISON_ID + depthMarker;

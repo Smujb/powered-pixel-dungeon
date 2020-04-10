@@ -60,7 +60,7 @@
    <properties>
     <property name="className" value="LevelSwitchArea"/>
     <property name="depth" type="int" value="1"/>
-    <property name="key" value="test boss"/>
+    <property name="key" value="test 2"/>
     <property name="pos" type="int" value="-1"/>
    </properties>
   </object>

@@ -25,7 +25,7 @@
  *
  */
 
-package com.shatteredpixel.yasd.general.levels;
+package com.shatteredpixel.yasd.general.levels.tiled;
 
 import com.shatteredpixel.yasd.general.Assets;
 
@@ -52,23 +52,4 @@ public class TilemapTest extends TiledMapLevel {
 		return Assets.LOADING_SEWERS;
 	}
 
-	/*@Override
-	protected boolean build() {
-		return MapHandler.build(this, MAP_NAME);
-	}
-
-	@Override
-	protected void createMobs() {
-		MapHandler.createMobs(this, MAP_NAME);
-	}
-
-	@Override
-	protected void createItems() {
-		MapHandler.createItems(this, MAP_NAME);
-	}
-
-	@Override
-	protected void createAreas() {
-		MapHandler.createAreas(this, MAP_NAME);
-	}*/
 }
