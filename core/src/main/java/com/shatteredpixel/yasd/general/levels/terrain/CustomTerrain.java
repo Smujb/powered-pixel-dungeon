@@ -29,8 +29,62 @@ package com.shatteredpixel.yasd.general.levels.terrain;
 
 import com.watabou.utils.Bundlable;
 
-//Merges bundlable and KindOfTerrain.
-public interface CustomTerrain extends KindOfTerrain, Bundlable {
-	String desc();
-	String name();
+//Merges bundlable and KindOfTerrain. Also makes some of the abstract functions of KindOfTerrain into variables.
+public abstract class CustomTerrain implements KindOfTerrain, Bundlable {
+	public abstract String desc();
+	public abstract String name();
+
+	protected boolean passable 	    = false;
+	protected boolean losBlocking   = false;
+	protected boolean flammable     = false;
+	protected boolean secret 		= false;
+	protected boolean solid 		= false;
+	protected boolean avoid 		= false;
+	protected boolean liquid 		= false;
+	protected boolean pit 			= false;
+
+	@Override
+	public boolean passable() {
+		return passable;
+	}
+
+	@Override
+	public boolean losBlocking() {
+		return losBlocking;
+	}
+
+	@Override
+	public boolean flammable() {
+		return flammable;
+	}
+
+	@Override
+	public boolean secret() {
+		return secret;
+	}
+
+	@Override
+	public boolean solid() {
+		return solid;
+	}
+
+	@Override
+	public boolean avoid() {
+		return avoid;
+	}
+
+	@Override
+	public boolean liquid() {
+		return liquid;
+	}
+
+	@Override
+	public boolean pit() {
+		return pit;
+	}
+
+	@Override
+	public KindOfTerrain discover() {
+		return this;
+	}
 }

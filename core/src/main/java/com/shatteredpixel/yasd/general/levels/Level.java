@@ -1352,63 +1352,63 @@ public abstract class Level implements Bundlable {
 
 		int cx = c.pos % width();
 		int cy = c.pos / width();
-		
-		boolean sighted = c.buff( Blindness.class ) == null && c.buff( Shadows.class ) == null
-						&& c.buff( TimekeepersHourglass.timeStasis.class ) == null && c.isAlive();
+
+		boolean sighted = c.buff(Blindness.class) == null && c.buff(Shadows.class) == null
+				&& c.buff(TimekeepersHourglass.timeStasis.class) == null && c.isAlive();
 		if (sighted) {
 			boolean[] blocking;
-			
+
 			if (c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN) {
 				blocking = Dungeon.level.losBlocking();
-				for (int i = 0; i < blocking.length; i++){
-					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)){
+				for (int i = 0; i < blocking.length; i++) {
+					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)) {
 						blocking[i] = false;
 					}
 				}
 			} else {
 				blocking = Dungeon.level.losBlocking();
 			}
-			
+
 			int viewDist = c.viewDistance;
 			if (c instanceof Hero && ((Hero) c).subClass == HeroSubClass.SNIPER) viewDist *= 1.5f;
-			
-			ShadowCaster.castShadow( cx, cy, fieldOfView, blocking, viewDist );
+
+			ShadowCaster.castShadow(cx, cy, fieldOfView, blocking, viewDist);
 		} else {
 			BArray.setFalse(fieldOfView);
 		}
-		
+
 		int sense = 1;
 		//Currently only the hero can get mind vision
-		if (c.isAlive() && c == Dungeon.hero) {
-			for (Buff b : c.buffs( MindVision.class )) {
-				sense = Math.max( ((MindVision)b).distance, sense );
+		if (c.isAlive() && c instanceof Hero) {
+			for (Buff b : c.buffs(MindVision.class)) {
+				sense = Math.max(((MindVision) b).distance, sense);
 			}
-			if (c.buff(MagicalSight.class) != null){
+			if (c.buff(MagicalSight.class) != null) {
 				sense = 8;
 			}
-			if (c instanceof Hero && ((Hero)c).subClass == HeroSubClass.SNIPER){
+			if (((Hero) c).subClass == HeroSubClass.SNIPER) {
 				sense *= 1.5f;
 			}
 		}
-		
+
 		//uses rounding
 		if (!sighted || sense > 1) {
-			
+
 			int[][] rounding = ShadowCaster.rounding;
-			
+
 			int left, right;
 			int pos;
-			for (int y = Math.max(0, cy - sense); y <= Math.min(height()-1, cy + sense); y++) {
+			for (int y = Math.max(0, cy - sense); y <= Math.min(height() - 1, cy + sense); y++) {
 				if (rounding[sense][Math.abs(cy - y)] < Math.abs(cy - y)) {
 					left = cx - rounding[sense][Math.abs(cy - y)];
 				} else {
 					left = sense;
-					while (rounding[sense][left] < rounding[sense][Math.abs(cy - y)]){
+					while (rounding[sense][left] < rounding[sense][Math.abs(cy - y)]) {
 						left--;
 					}
 					left = cx - left;
 				}
-				right = Math.min(width()-1, cx + cx - left);
+				right = Math.min(width() - 1, cx + cx - left);
 				left = Math.max(0, left);
 				pos = left + y * width();
 				System.arraycopy(discoverable, pos, fieldOfView, pos, right - left + 1);
@@ -1416,49 +1416,50 @@ public abstract class Level implements Bundlable {
 		}
 
 		//Currently only the hero can get mind vision or awareness
-		if (c.isAlive() && c == Dungeon.hero) {
-			Dungeon.hero.mindVisionEnemies.clear();
-			if (c.buff( MindVision.class ) != null) {
-				for (Mob mob : mobs) {
-					int p = mob.pos;
-
-					if (!fieldOfView[p]){
-						Dungeon.hero.mindVisionEnemies.add(mob);
-					}
-
-				}
-			}
+		if (c.isAlive() && c instanceof Hero) {
+			ArrayList<Mob> oldMindVisionEnemies = (ArrayList<Mob>) ((Hero)c).mindVisionEnemies.clone();
+			((Hero)c).mindVisionEnemies.clear();
 
 			for (Mob mob : mobs) {
-				if (Dungeon.hero.notice(mob, Dungeon.hero.enemy() == mob) && !fieldOfView[mob.pos]) {
-					Dungeon.hero.mindVisionEnemies.add(mob);
+				int p = mob.pos;
+				if (c.buff(MindVision.class) != null) {
+
+					if (!fieldOfView[p]) {
+						((Hero)c).mindVisionEnemies.add(mob);
+					}
+
+				} else if (c.notice(mob, oldMindVisionEnemies.contains(mob)) && !fieldOfView[p]) {
+					/*if (!oldMindVisionEnemies.contains(mob)) {
+						GLog.i(Messages.get(Hero.class, "mob_nearby", mob.name));
+					}*/
+					((Hero)c).mindVisionEnemies.add(mob);
 				}
 			}
 
-			
-			for (Mob m : Dungeon.hero.mindVisionEnemies) {
+
+			for (Mob m : ((Hero)c).mindVisionEnemies) {
 				for (int i : PathFinder.NEIGHBOURS9) {
 					fieldOfView[m.pos + i] = true;
 				}
 			}
-			
-			if (c.buff( Awareness.class ) != null) {
+
+			if (c.buff(Awareness.class) != null) {
 				for (Heap heap : heaps.valueList()) {
 					int p = heap.pos;
 					for (int i : PathFinder.NEIGHBOURS9)
-						fieldOfView[p+i] = true;
+						fieldOfView[p + i] = true;
 				}
 			}
 
-			for (Mob ward : mobs){
-				if (ward instanceof WandOfWarding.Ward){
-					if (ward.fieldOfView == null || ward.fieldOfView.length != length()){
+			for (Mob ward : mobs) {
+				if (ward instanceof WandOfWarding.Ward) {
+					if (ward.fieldOfView == null || ward.fieldOfView.length != length()) {
 						ward.fieldOfView = new boolean[length()];
-						Dungeon.level.updateFieldOfView( ward, ward.fieldOfView );
+						Dungeon.level.updateFieldOfView(ward, ward.fieldOfView);
 					}
-					for (Mob m : mobs){
+					for (Mob m : mobs) {
 						if (ward.fieldOfView[m.pos] && !fieldOfView[m.pos] &&
-								!Dungeon.hero.mindVisionEnemies.contains(m)){
+								!Dungeon.hero.mindVisionEnemies.contains(m)) {
 							Dungeon.hero.mindVisionEnemies.add(m);
 						}
 					}

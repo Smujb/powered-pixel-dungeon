@@ -51,7 +51,7 @@ public interface KindOfTerrain {
 
 	boolean waterStitchable();
 
-	Group getVisual(int pos);
+	Group getVisual(int pos, int x, int y);
 
 	KindOfTerrain discover();
 

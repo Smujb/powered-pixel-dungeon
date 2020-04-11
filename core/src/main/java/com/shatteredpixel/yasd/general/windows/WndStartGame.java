@@ -194,8 +194,7 @@ public class WndStartGame extends Window {
 
 		int bottom = (int) difficulty.bottom();
 
-		//NOTE: Disable for next version.
-		if (true) {
+		if (longPress) {
 			bottom += 20;
 			final CheckBox BoxTesting = new CheckBox("TEST MODE"){
 				@Override

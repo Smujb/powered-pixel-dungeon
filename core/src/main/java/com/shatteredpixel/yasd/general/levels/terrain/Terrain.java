@@ -322,34 +322,42 @@ public enum Terrain implements KindOfTerrain {
 	protected boolean liquid 		= false;
 	protected boolean pit 			= false;
 
+	@Override
 	public boolean passable() {
 		return passable;
 	}
 
+	@Override
 	public boolean losBlocking() {
 		return losBlocking;
 	}
 
+	@Override
 	public boolean flammable() {
 		return flammable;
 	}
 
+	@Override
 	public boolean secret() {
 		return secret;
 	}
 
+	@Override
 	public boolean solid() {
 		return solid;
 	}
 
+	@Override
 	public boolean avoid() {
 		return avoid;
 	}
 
+	@Override
 	public boolean liquid() {
 		return liquid;
 	}
 
+	@Override
 	public boolean pit() {
 		return pit;
 	}
@@ -360,17 +368,18 @@ public enum Terrain implements KindOfTerrain {
 
 	public abstract void setup();
 
+	@Override
 	public KindOfTerrain discover() {
 		return this;
 	}
 
+	@Override
 	public boolean explodable() {
 		return flammable;
 	}
 
 	@Override
-	//TODO: make this work.
-	public Group getVisual(int pos) {
+	public Group getVisual(int pos, int x, int y) {
 		return null;
 	}
 
@@ -386,4 +395,6 @@ public enum Terrain implements KindOfTerrain {
 	}
 
 	public void press(int cell, boolean hard) {}
+
+
 }

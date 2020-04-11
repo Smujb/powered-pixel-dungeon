@@ -37,6 +37,7 @@ public class Basic extends MeleeWeapon {
 
 		tier=1;
 	}
+
 	@Override
 	public int image() {
 		switch (tier) {

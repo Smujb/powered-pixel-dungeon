@@ -39,7 +39,7 @@ public class DungeonWallsTilemap extends DungeonTilemap {
 	}
 
 	@Override
-	protected int getTileVisual(int pos, KindOfTerrain tile, boolean flat){
+	public int getTileVisual(int pos, KindOfTerrain tile, boolean flat){
 
 		if (flat) return -1;
 

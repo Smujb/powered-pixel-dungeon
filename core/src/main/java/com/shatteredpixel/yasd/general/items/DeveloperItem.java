@@ -318,7 +318,7 @@ public class DeveloperItem extends Item {
 			key = new String[1];
 			key[0] = Dungeon.key;
 			IconTitle titlebar = new IconTitle();
-			titlebar.icon(new Image( level.loadImg() ));
+			titlebar.icon( new Image( level.loadImg() ));
 			titlebar.label("Choose Level");
 			titlebar.setRect(0, 0, getWidth(), 0);
 			add( titlebar );

@@ -40,7 +40,7 @@ import java.util.Arrays;
 public class Tilemap extends Visual {
 
 	protected SmartTexture texture;
-	protected TextureFilm tileset;
+	public TextureFilm tileset;
 
 	protected int[] data;
 	protected int mapWidth;
