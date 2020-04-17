@@ -29,17 +29,16 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.Archs;
+import com.shatteredpixel.yasd.general.ui.DiscordButton;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.LanguageButton;
-import com.shatteredpixel.yasd.general.ui.DiscordButton;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.windows.WndSettings;
 import com.shatteredpixel.yasd.general.windows.WndStartGame;
@@ -73,9 +72,9 @@ public class TitleScene extends PixelScene {
 		add( title );
 
 		float topRegion = Math.max(title.height, h*0.45f);
-
 		title.x = (w - title.width()) / 2f;
-		if (GameSettings.landscape()) {
+
+		if (landscape()) {
 			title.y = (topRegion - title.height()) / 2f;
 		} else {
 			title.y = 20 + (topRegion - title.height() - 20) / 2f;
@@ -178,11 +177,11 @@ public class TitleScene extends PixelScene {
 		add(btnAbout);
 		
 		final int BTN_HEIGHT = 21;
-		int GAP = (int)(h - topRegion - (GameSettings.landscape() ? 3 : 4)*BTN_HEIGHT)/3;
-		GAP /= GameSettings.landscape() ? 3 : 4;
+		int GAP = (int)(h - topRegion - (landscape() ? 3 : 4)*BTN_HEIGHT)/3;
+		GAP /= landscape() ? 3 : 4;
 		GAP = Math.max(GAP, 2);
 
-		if (GameSettings.landscape()) {
+		if (landscape()) {
 			btnPlay.setRect(title.x-50, topRegion+GAP, ((title.width()+100)/2)-1, BTN_HEIGHT);
 			align(btnPlay);
 			btnSettings.setRect(btnPlay.right()+2, btnPlay.top(), btnPlay.width(), BTN_HEIGHT);

@@ -74,12 +74,10 @@ public class AndroidGame extends AndroidApplication {
 		GameSettings.set(instance.getPreferences("ShatteredPixelDungeon"));
 		
 		//set desired orientation (if it exists) before initializing the app.
-		if (GameSettings.landscapeFromSettings() != null) {
-			if (GameSettings.landscapeFromSettings()){
-				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-			} else {
-				instance.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-			}
+		if (GameSettings.landscape() != null) {
+			AndroidGame.instance.setRequestedOrientation( GameSettings.landscape() ?
+					ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE :
+					ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT );
 		}
 		
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();

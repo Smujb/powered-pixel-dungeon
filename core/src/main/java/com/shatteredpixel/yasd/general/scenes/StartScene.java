@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
@@ -85,13 +84,14 @@ public class StartScene extends PixelScene {
 		add(title);
 		
 		ArrayList<GamesInProgress.Info> games = GamesInProgress.checkAll();
-		
-		int slotGap = GameSettings.landscape() ? 5 : 10;
+
+
+		int slotGap = landscape() ? 5 : 10;
 		int slotCount = Math.min(GamesInProgress.MAX_SLOTS, games.size()+1);
 		int slotsHeight = slotCount*SLOT_HEIGHT + (slotCount-1)* slotGap;
 		
 		float yPos = (h - slotsHeight)/2f;
-		if (GameSettings.landscape()) yPos += 8;
+		if (landscape()) yPos += 8;
 		
 		for (GamesInProgress.Info game : games) {
 			SaveSlotButton existingGame = new SaveSlotButton();

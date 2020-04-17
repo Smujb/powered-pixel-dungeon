@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.ui.Archs;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
@@ -71,9 +70,9 @@ public class AboutScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final float colWidth = Camera.main.width / (GameSettings.landscape() ? 2 : 1);
-		final float colTop = (Camera.main.height / 2) - (GameSettings.landscape() ? 30 : 90);
-		final float wataOffset = GameSettings.landscape() ? colWidth : 0;
+		final float colWidth = Camera.main.width / (landscape() ? 2 : 1);
+		final float colTop = (Camera.main.height / 2) - (landscape() ? 30 : 90);
+		final float wataOffset = landscape() ? colWidth : 0;
 
 		Image shpx = Icons.YENDOR.get();
 		shpx.x = (colWidth - shpx.width()) / 2;
@@ -118,9 +117,7 @@ public class AboutScene extends PixelScene {
 
 		Image wata = Icons.WATA.get();
 		wata.x = wataOffset + (colWidth - wata.width()) / 2;
-		wata.y = GameSettings.landscape() ?
-						colTop:
-						shpxlink.top() + wata.height + 20;
+		wata.y = landscape() ? colTop: shpxlink.top() + wata.height + 20;
 		align(wata);
 		add( wata );
 

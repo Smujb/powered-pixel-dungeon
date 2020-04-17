@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -59,9 +58,9 @@ public class WndDocument extends Window {
 	private ArrayList<docPage> pages = new ArrayList<>();
 	
 	public WndDocument( Document doc ){
-		
-		int w = GameSettings.landscape() ? WIDTH_L : WIDTH_P;
-		int h = GameSettings.landscape() ? HEIGHT_L : HEIGHT_P;
+
+		int w = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
+		int h = PixelScene.landscape() ? HEIGHT_L : HEIGHT_P;
 		
 		resize(w, h);
 		

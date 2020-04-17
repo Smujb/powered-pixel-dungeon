@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
@@ -44,7 +43,7 @@ public class WndOptions extends Window {
 	public WndOptions( String title, String message, String... options ) {
 		super();
 
-		int width = GameSettings.landscape() ? WIDTH_L : WIDTH_P;
+		int width = PixelScene.landscape() ? WIDTH_L : WIDTH_P;
 
 		RenderedTextBlock tfTitle = PixelScene.renderTextBlock( title, 9 );
 		tfTitle.hardlight( TITLE_COLOR );

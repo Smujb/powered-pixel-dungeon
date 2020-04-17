@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.effects.BadgeBanner;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -89,8 +88,8 @@ public class BadgesScene extends PixelScene {
 		blankBadges = Math.max(0, blankBadges);
 
 		//guarantees a max of 5 rows in landscape, and 8 in portrait, assuming a max of 40 buttons
-		int nCols = GameSettings.landscape() ? 7 : 4;
-		if (badges.size() + blankBadges > 32 && !GameSettings.landscape())	nCols++;
+		int nCols = landscape() ? 7 : 4;
+		if (badges.size() + blankBadges > 32 && !landscape())	nCols++;
 
 		int nRows = 1 + (blankBadges + badges.size())/nCols;
 

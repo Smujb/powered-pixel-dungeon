@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
+import com.watabou.utils.Point;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -102,8 +103,14 @@ public class DesktopLauncher {
         GameSettings.set( new Lwjgl3Preferences( "pd-prefs", basePath) );
         FileUtils.setDefaultFileProperties( Files.FileType.External, basePath );
 
-        config.setWindowSizeLimits( 800, 450, -1, -1 );
-        config.setWindowedMode( 1920, 1080 );
+        config.setWindowSizeLimits( 960, 640, -1, -1 );
+        Point p = GameSettings.windowResolution();
+        config.setWindowedMode( p.x, p.y );
+        config.setAutoIconify( true );
+
+        //we set fullscreen/maximized in the listener as doing it through the config seems to be buggy
+        DesktopWindowListener listener = new DesktopWindowListener();
+        config.setWindowListener( listener );
 
         new Lwjgl3Application(new MainGame(new DesktopPlatformSupport()), config);
     }

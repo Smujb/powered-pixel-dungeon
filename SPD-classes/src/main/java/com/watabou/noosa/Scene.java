@@ -67,6 +67,10 @@ public class Scene extends Group {
 	public void onResume(){
 	
 	}
+
+	public static boolean landscape(){
+		return Game.width > Game.height;
+	}
 	
 	@Override
 	public void update() {
