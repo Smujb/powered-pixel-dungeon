@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Brute;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
+import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.scenes.WelcomeScene;
 import com.watabou.noosa.Game;
@@ -213,6 +214,12 @@ public class MainGame extends Game {
 				Assets.SND_MIMIC );
 
 		
+	}
+
+	@Override
+	public void destroy(){
+		super.destroy();
+		GameScene.endActorThread();
 	}
 
 	public static void switchNoFade(Class<? extends PixelScene> c){

@@ -209,7 +209,10 @@ public abstract class Actor implements Bundlable {
 	public static boolean processing(){
 		return current != null;
 	}
-	
+
+	public static boolean keepActorThreadAlive = true;
+
+
 	public static void process() {
 		
 		boolean doNext;
@@ -290,7 +293,7 @@ public abstract class Actor implements Bundlable {
 				}
 			}
 
-		} while (true);
+		} while (keepActorThreadAlive);
 	}
 	
 	public static void add( Actor actor ) {

@@ -164,9 +164,8 @@ public class Game implements ApplicationListener {
 	public void finish(){
 		Gdx.app.exit();
 	}
-	
-	@Override
-	public void dispose() {
+
+	public void destroy(){
 		if (scene != null) {
 			scene.destroy();
 			scene = null;
@@ -176,7 +175,12 @@ public class Game implements ApplicationListener {
 		Music.INSTANCE.stop();
 		Sample.INSTANCE.reset();
 	}
-	
+
+	@Override
+	public void dispose() {
+		destroy();
+	}
+
 	public static void resetScene() {
 		switchScene( sceneClass );
 	}

@@ -513,6 +513,13 @@ public class GameScene extends PixelScene {
 		
 		super.destroy();
 	}
+
+	public static void endActorThread(){
+		if (actorThread.isAlive()){
+			Actor.keepActorThreadAlive = false;
+			actorThread.interrupt();
+		}
+	}
 	
 	@Override
 	public synchronized void onPause() {
