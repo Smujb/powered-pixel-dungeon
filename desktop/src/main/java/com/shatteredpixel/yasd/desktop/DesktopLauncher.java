@@ -41,6 +41,7 @@ import javax.swing.JOptionPane;
 public class DesktopLauncher {
     public static void main (String[] arg) {
 
+        final LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -48,14 +49,30 @@ public class DesktopLauncher {
                 PrintWriter pw = new PrintWriter(sw);
                 throwable.printStackTrace(pw);
                 pw.flush();
-                JOptionPane.showMessageDialog(null, "Yet Another Shattered Dungeon has crashed!\n\n" +
+                JOptionPane.showMessageDialog(null, config.title + " has crashed, sorry about that!\n\n" +
                         "Stack trace below:\n\n" +
                         sw.toString(), "Game Crash!", JOptionPane.ERROR_MESSAGE);
                 Gdx.app.exit();
             }
         });
 
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        //LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+
+        config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
+        if (config.title == null) {
+            config.title = System.getProperty("Specification-Name");
+        }
+
+        Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
+        if (Game.version == null) {
+            Game.version = System.getProperty("Specification-Version");
+        }
+
+        try {
+            Game.versionCode = Integer.parseInt(DesktopLauncher.class.getPackage().getImplementationVersion());
+        } catch (NumberFormatException e) {
+            Game.versionCode = Integer.parseInt(System.getProperty("Implementation-Version"));
+        }
 
         config.width = 1920;
         config.height = 1080;
@@ -64,21 +81,6 @@ public class DesktopLauncher {
         config.foregroundFPS = 0;
         config.backgroundFPS = -1;
 
-        config.title = DesktopLauncher.class.getPackage().getSpecificationTitle();
-        if (config.title == null) {
-            config.title = "Yet Another Shattered Dungeon";
-        }
-
-        Game.version = DesktopLauncher.class.getPackage().getSpecificationVersion();
-        if (Game.version == null) {
-            Game.version = "0.2.21";
-        }
-
-        try {
-            Game.versionCode = Integer.parseInt(DesktopLauncher.class.getPackage().getImplementationVersion());
-        } catch (NumberFormatException e) {
-            Game.versionCode = 380;
-        }
         new LwjglApplication(new MainGame(new com.shatteredpixel.yasd.desktop.DesktopPlatformSupport()), config);
     }
 }

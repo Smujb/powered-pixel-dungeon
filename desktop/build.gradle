@@ -29,15 +29,9 @@ sourceCompatibility = targetCompatibility = 1.8
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-task runDebug(dependsOn: classes, type: JavaExec) {
-    main = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
-    classpath = sourceSets.main.runtimeClasspath
-
-    ignoreExitValue = true
-}
-
 sourceCompatibility = targetCompatibility = appJavaCompatibility
 
+ext.mainClass = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
 sourceSets.main.resources.srcDirs = [new File(project(':core').projectDir, "/src/main/assets"),
                                      new File(project(':desktop').projectDir,"/src/main/assets")]
 
@@ -48,11 +42,21 @@ task releaseJAR(dependsOn: classes, type: Jar) {
     from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }
 
     manifest {
-        attributes 'Main-Class': "com.shatteredpixel.yasd.desktop.DesktopLauncher"
+        attributes 'Main-Class': mainClass
         attributes 'Specification-Name': appName
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode
     }
+}
+
+task runDebug(dependsOn: classes, type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    ignoreExitValue = true
+    main = mainClass
+    systemProperty 'Specification-Name', appName
+    systemProperty 'Specification-Version', appVersionName + "-INDEV"
+    systemProperty 'Implementation-Version', appVersionCode
 }
 
 dependencies {

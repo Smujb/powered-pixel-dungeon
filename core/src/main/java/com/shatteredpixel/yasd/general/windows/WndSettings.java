@@ -46,7 +46,7 @@ import com.watabou.utils.DeviceCompat;
 public class WndSettings extends WndTabbed {
 
 	private static final int WIDTH		    = 112;
-	private static final int HEIGHT         = 150;
+	private static final int HEIGHT         = 180;
 	private static final int SLIDER_HEIGHT	= 24;
 	private static final int BTN_HEIGHT	    = 18;
 	private static final int GAP_TINY 		= 2;
