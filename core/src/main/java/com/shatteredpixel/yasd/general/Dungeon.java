@@ -185,8 +185,6 @@ public class Dungeon {
 	public static Difficulty difficulty = Difficulty.MEDIUM;
 
 	public static long seed;
-
-	//private static boolean [][][] loadedDepths = new boolean [Constants.MAX_X + 1][Constants.MAX_DEPTH + 1][Constants.MAX_Z + 1];
 	
 	public static void init() {
 

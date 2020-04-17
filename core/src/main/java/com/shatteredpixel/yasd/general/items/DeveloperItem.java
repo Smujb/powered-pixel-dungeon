@@ -391,7 +391,7 @@ public class DeveloperItem extends Item {
 		super.execute(hero, action);
 		switch (action) {
 			case AC_DEBUG:
-				GLog.p("Current level key: " + Dungeon.key + " (capitalisation important).");
+				GLog.p("Current level key: " + Dungeon.key + " (capitalisation important).\n");
 				int[] coords = Dungeon.level.getXY(hero.pos);
 				GLog.p("Position in map (X, Y): " + coords[0] + ", " + coords[1] + ".");
 				break;

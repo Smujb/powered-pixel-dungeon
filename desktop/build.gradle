@@ -27,33 +27,28 @@
 apply plugin: "java"
 sourceCompatibility = targetCompatibility = 1.8
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-
-ext {
-    mainClassName = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
-    //desktop-specific resources and shared resources
-    //TODO shared resources can probably be moved out of android module, right?
-    assetsDirs = ["../android/src/main/assets", "assets/"]
-}
-
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-task runDebug(type: JavaExec) {
-    main = mainClassName
+task runDebug(dependsOn: classes, type: JavaExec) {
+    main = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
     classpath = sourceSets.main.runtimeClasspath
-    sourceSets.main.resources.srcDirs = assetsDirs
 
     ignoreExitValue = true
 }
 
-task releaseJAR(type: Jar) {
+sourceCompatibility = targetCompatibility = appJavaCompatibility
+
+sourceSets.main.resources.srcDirs = [new File(project(':core').projectDir, "/src/main/assets"),
+                                     new File(project(':desktop').projectDir,"/src/main/assets")]
+
+
+task releaseJAR(dependsOn: classes, type: Jar) {
 
     from sourceSets.main.output
-    sourceSets.main.resources.srcDirs = assetsDirs
     from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }
 
     manifest {
-        attributes 'Main-Class': mainClassName
+        attributes 'Main-Class': "com.shatteredpixel.yasd.desktop.DesktopLauncher"
         attributes 'Specification-Name': appName
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode

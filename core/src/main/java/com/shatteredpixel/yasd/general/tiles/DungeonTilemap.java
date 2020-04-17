@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Tilemap;
@@ -37,6 +36,8 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
+
+import org.jetbrains.annotations.NotNull;
 
 public abstract class DungeonTilemap extends Tilemap {
 
@@ -51,11 +52,11 @@ public abstract class DungeonTilemap extends Tilemap {
 	@Override
 	//we need to retain two arrays, map is the dungeon tilemap which we can reference.
 	// Data is our own internal image representation of the tiles, which may differ.
-	public void map(int[] data, int cols) {
+	public void map(@NotNull int[] data, int cols) {
 		super.map(new int[data.length], cols);
 	}
 
-	public void map(KindOfTerrain[] data, int cols) {
+	public void map(@NotNull KindOfTerrain[] data, int cols) {
 		map = data;
 		super.map(new int[data.length], cols);
 	}

@@ -36,13 +36,13 @@ buildscript {
 }
 
 allprojects {
-
     ext {
         appName = 'Yet Another Shattered Dungeon'
         appPackageName = 'com.smujamesb.yasd'
 
         appVersionCode = 426
         appVersionName = '0.2.22'
+        appJavaCompatibility = 1.8
 
         appAndroidCompileSDK = 29
         appAndroidMinSDK = 14

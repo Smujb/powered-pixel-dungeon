@@ -45,7 +45,7 @@ public class MeleeWeapon extends Weapon {
 	public int tier;
 
 	public float damageMultiplier = 1f;
-	public float defenseFactorMultiplier = 0f;
+	public float defenseMultiplier = 0f;
 
 	public boolean dualWieldpenalty = false;
 	public boolean sneakBenefit = false;
@@ -69,43 +69,63 @@ public class MeleeWeapon extends Weapon {
 
 	public int STRReq(int lvl){
 		lvl = Math.max(0, lvl);
-		//strength req decreases at +1,+3,+6,+10,etc.
+		//Str req is 7 + tier * 3, so 10 for T1, 13 for T2, 16 for T3, etc, and is decreased by 1 per upgrade.
 		return  (7 + Math.round(tier * 3)) - lvl;
 	}
-	
+
+	@Override
+	public int defenseFactor(Char owner) {
+		return (int) ((max()/2)*defenseMultiplier);
+	}
+
 	@Override
 	public int damageRoll(Char owner) {
-		if (sneakBenefit) {
-			Char enemy = null;
-			if (owner instanceof Hero) {
-				enemy = ((Hero) owner).enemy();
-			} else if (owner instanceof Mob){
-				enemy = ((Mob)owner).getEnemy();
-			}
-			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(owner)) {
-				//deals 50% toward max to max on surprise (plus more if the hero's sneakSkill is higher), instead of min to max.
-				float multiplier = 0.5f + (1f - enemy.noticeChance(owner, true)) * 0.5f;
-				int diff = max() - min();
-				int damage = augment.damageFactor(Random.NormalIntRange(
-						min() + Math.round(diff*multiplier),
-						max()));
-				int exStr = owner.STR() - STRReq();
-				if (exStr > 0) {
-					damage += Random.IntRange(0, exStr);
-				}
-				return damage;
-			}
-		}
+
 		int damage = augment.damageFactor(super.damageRoll( owner ));
 
-		if (owner instanceof Hero & owner.STR() != Integer.MAX_VALUE) {
+		if (owner instanceof Hero & owner.STR() < Integer.MAX_VALUE) {
 			int exStr = owner.STR() - STRReq();
 			if (exStr > 0) {
 				damage += Random.IntRange( 0, exStr );
 			}
 		}
-		
+		if (sneakBenefit) {
+			Char enemy = null;
+			float bonus = 0;
+			if (curUser instanceof Hero) {
+				enemy = ((Hero) curUser).enemy();
+			} else if (curUser instanceof Mob) {
+				enemy = ((Mob) curUser).getEnemy();
+			}
+			if (enemy != null) {
+				bonus = 1f-enemy.noticeChance(curUser, true);
+			}
+			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(curUser) && curUser.canSurpriseAttack()) {
+				damage *= (2 + bonus);
+			}
+		}
 		return damage;
+	}
+
+	public float getDamageMultiplier(Char owner) {
+		float multiplier = 1f;
+		multiplier *= DLY;
+		multiplier *= 1/ACC;
+		multiplier *= 2/RCH+1;
+		multiplier *= 1f-(defenseMultiplier/2);
+		if (dualWieldpenalty) {
+			multiplier *= 1.2f;
+		}
+		if (breaksArmor(owner)) {
+			multiplier *= 0.8f;
+		}
+		if (!canSurpriseAttack) {
+			multiplier *= 1.3;
+		}
+		if (sneakBenefit) {
+			multiplier *= 0.6f;
+		}
+		return multiplier;
 	}
 
 	public int defaultSTRReq() {
@@ -163,7 +183,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "acc_decrease", Math.round((1f-ACC)*100));
 			}
 
-			if (RCH > 1f) {
+			if (RCH > 1) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "reach_increase", RCH - 1);
 			}
 
@@ -171,7 +191,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "dual_wield_penalty");
 			}
 
-			if (breaksArmor(Dungeon.hero)) {
+			if (breaksArmor(curUser)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "breaks_armour");
 			}
 
@@ -179,7 +199,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "cant_surprise_attk");
 			}
 
-			if (defenseFactor(Dungeon.hero) > 0) {
+			if (defenseFactor(curUser) > 0) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", 0,  defenseFactor(Dungeon.hero));
 			}
 

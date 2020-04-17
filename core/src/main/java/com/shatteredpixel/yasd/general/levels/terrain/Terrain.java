@@ -395,6 +395,4 @@ public enum Terrain implements KindOfTerrain {
 	}
 
 	public void press(int cell, boolean hard) {}
-
-
 }
