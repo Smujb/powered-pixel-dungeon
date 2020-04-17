@@ -36,7 +36,6 @@ import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
 import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.input.InputHandler;
-import com.watabou.input.KeyEvent;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
@@ -104,11 +103,8 @@ public class Game implements ApplicationListener {
 		dispWidth = Gdx.graphics.getDisplayMode().width;
 		
 		Blending.useDefault();
-		
-		inputHandler = new InputHandler();
-		Gdx.input.setInputProcessor(inputHandler);
-		Gdx.input.setCatchKey(KeyEvent.BACK, true);
-		Gdx.input.setCatchKey(KeyEvent.MENU, true);
+
+		inputHandler = new InputHandler( Gdx.input );
 		
 		//refreshes texture and vertex data stored on the gpu
 		TextureCache.reload();

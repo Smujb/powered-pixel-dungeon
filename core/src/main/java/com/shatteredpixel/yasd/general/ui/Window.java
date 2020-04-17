@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.ui;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.effects.ShadowBox;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
@@ -162,11 +163,11 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	@Override
 	public boolean onSignal( KeyEvent event ) {
 		if (event.pressed) {
-			switch (event.code) {
-				case KeyEvent.BACK:
+			switch (KeyBindings.getBinding( event )) {
+				case BACK:
 					onBackPressed();
 					return true;
-				case KeyEvent.MENU:
+				case MENU:
 					onMenuPressed();
 					return true;
 			}
