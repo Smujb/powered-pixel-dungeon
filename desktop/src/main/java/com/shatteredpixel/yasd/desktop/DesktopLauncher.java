@@ -27,11 +27,16 @@
 
 package com.shatteredpixel.yasd.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl.LwjglPreferences;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.noosa.Game;
+import com.watabou.utils.FileUtils;
+import com.watabou.utils.GameSettings;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -80,6 +85,24 @@ public class DesktopLauncher {
         //uncapped (but vsynced) framerate when focused, paused when not focused
         config.foregroundFPS = 0;
         config.backgroundFPS = -1;
+
+        //TODO this is currently the same location and filenames as the old desktop codebase
+        // If I want to move it now would be the time
+        if (SharedLibraryLoader.isWindows) {
+            if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
+                config.preferencesDirectory = "Application Data/.shatteredpixel/Shattered Pixel Dungeon/";
+            } else {
+                config.preferencesDirectory = "AppData/Roaming/.shatteredpixel/Shattered Pixel Dungeon/";
+            }
+        } else if (SharedLibraryLoader.isMac) {
+            config.preferencesDirectory = "Library/Application Support/Shattered Pixel Dungeon/";
+        } else if (SharedLibraryLoader.isLinux) {
+            config.preferencesDirectory = ".shatteredpixel/shattered-pixel-dungeon/";
+        }
+        GameSettings.set( new LwjglPreferences( "pd-prefs", config.preferencesDirectory) );
+
+        FileUtils.setDefaultFileProperties( Files.FileType.External, config.preferencesDirectory );
+
 
         new LwjglApplication(new MainGame(new com.shatteredpixel.yasd.desktop.DesktopPlatformSupport()), config);
     }

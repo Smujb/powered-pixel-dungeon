@@ -54,7 +54,6 @@ public class AndroidGame extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		instance = this;
 		
 		try {
@@ -72,7 +71,7 @@ public class AndroidGame extends AndroidApplication {
 		builder.build();
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
-		GameSettings.setPrefsFromInstance(instance);
+		GameSettings.set(instance.getPreferences("ShatteredPixelDungeon"));
 		
 		//set desired orientation (if it exists) before initializing the app.
 		if (GameSettings.landscapeFromSettings() != null) {
