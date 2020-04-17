@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.general.actors.mobs.Brute;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
@@ -143,6 +144,11 @@ public class MainGame extends Game {
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.general.actors.mobs.OldTengu.class,
 				"com.shatteredpixel.yasd.general.actors.mobs.Tengu" );
+
+		//v0.7.6
+		com.watabou.utils.Bundle.addAlias(
+				Brute.ArmoredBrute.class,
+				"com.shatteredpixel.yasd.general.actors.mobs.Brute.Shielded");
 	}
 	
 	@Override

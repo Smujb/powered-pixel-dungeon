@@ -41,7 +41,7 @@ public class Bestiary {
 			} else if (cl == Thief.class) {
 				cl = Thief.Bandit.class;
 			} else if (cl == Brute.class) {
-				cl = Brute.Shielded.class;
+				cl = Brute.ArmoredBrute.class;
 			} else if (cl == Monk.class) {
 				cl = Monk.Senior.class;
 			} else if (cl == Scorpio.class) {

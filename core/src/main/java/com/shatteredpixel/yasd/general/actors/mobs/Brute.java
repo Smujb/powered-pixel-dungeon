@@ -30,20 +30,21 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.BruteSprite;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
+import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 public class Brute extends Mob {
 	
@@ -60,20 +61,49 @@ public class Brute extends Mob {
 		loot = Gold.class;
 		lootChance = 0.5f;
 	}
-	
-	private boolean enraged = false;
-	
+
+
+	protected boolean hasRaged = false;
+
+	private static final String HAS_RAGED = "has_raged";
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		enraged = HP < HT / 4;
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(HAS_RAGED, hasRaged);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		hasRaged = bundle.getBoolean(HAS_RAGED);
 	}
 	
 	@Override
 	public int damageRoll() {
-		return enraged ?
+		return buff(BruteRage.class) != null ?
 			super.damageRoll()*3 :
 			super.damageRoll();
+	}
+
+	public boolean isAlive() {
+		if (HP > 0){
+			return  true;
+		} else {
+			if (!hasRaged){
+				triggerEnrage();
+			}
+			return buff(BruteRage.class) != null;
+		}
+	}
+
+	protected void triggerEnrage(){
+		Buff.affect(this, BruteRage.class).setShield(HT/2 + 4);
+		if (Dungeon.level.heroFOV[pos]) {
+			sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged") );
+		}
+		spend( TICK );
+		hasRaged = true;
 	}
 	
 	@Override
@@ -85,20 +115,47 @@ public class Brute extends Mob {
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 8);
 	}
-	
-	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
-		super.damage( dmg, src);
-		
-		if (isAlive() && !enraged && HP < HT / 4) {
-			enraged = true;
-			spend( TICK );
-			if (Dungeon.level.heroFOV[pos]) {
-				sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged") );
-			}
-			Buff.affect(this, Barrier.class).setShield(HT/2);
-			HP = 1;
+
+	public static class BruteRage extends ShieldBuff {
+
+		{
+			type = buffType.POSITIVE;
 		}
+
+		@Override
+		public boolean act() {
+
+			if (target.HP > 0){
+				detach();
+				return true;
+			}
+
+			absorbDamage( 4 );
+
+			if (shielding() <= 0){
+				target.die(new DamageSrc(Element.NATURAL));
+			}
+
+			spend( TICK );
+
+			return true;
+		}
+
+		@Override
+		public int icon () {
+			return BuffIndicator.FURY;
+		}
+
+		@Override
+		public String toString () {
+			return Messages.get(this, "name");
+		}
+
+		@Override
+		public String desc () {
+			return Messages.get(this, "desc", shielding());
+		}
+
 	}
 	
 	{
@@ -107,12 +164,52 @@ public class Brute extends Mob {
 		immunities.add( Grim.class);
 	}
 
-	public static class Shielded extends Brute {
+	public static class ArmoredBrute extends Brute {
 
 		{
 			spriteClass = ShieldedSprite.class;
 			drFactor = 2f;
+
+			lootChance = 0.33f;
 			//HP = HT = 60;
+		}
+		@Override
+		protected void triggerEnrage () {
+			Buff.affect(this, ArmoredRage.class).setShield(HT/2 + 1);
+			if (Dungeon.level.heroFOV[pos]) {
+				sprite.showStatus( CharSprite.NEGATIVE, Messages.get(this, "enraged") );
+			}
+			spend( TICK );
+			hasRaged = true;
+		}
+
+		@Override
+		protected Item createLoot () {
+			return Generator.randomArmor().setTier(4);
+		}
+
+		//similar to regular brute rate, but deteriorates much slower. 60 turns to death total.
+		public static class ArmoredRage extends Brute.BruteRage {
+
+			@Override
+			public boolean act() {
+
+				if (target.HP > 0){
+					detach();
+					return true;
+				}
+
+				absorbDamage( 1 );
+
+				if (shielding() <= 0){
+					target.die(new DamageSrc(Element.NATURAL));
+				}
+
+				spend( 3*TICK );
+
+				return true;
+			}
+
 		}
 	}
 }
