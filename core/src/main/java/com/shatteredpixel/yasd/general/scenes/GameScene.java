@@ -473,6 +473,14 @@ public class GameScene extends PixelScene {
 		fadeIn();
 
 	}
+
+	public static void checkKeyHold(){
+		cellSelector.processKeyHold();
+	}
+
+	public static void resetKeyHold(){
+		cellSelector.resetKeyHold();
+	}
 	
 	public void destroy() {
 		

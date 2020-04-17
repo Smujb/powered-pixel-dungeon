@@ -630,6 +630,12 @@ public class Hero extends Char {
 			lastAction = curAction;
 		}
 		curAction = null;
+		GameScene.resetKeyHold();
+	}
+
+	@Override
+	public void onMotionComplete() {
+		GameScene.checkKeyHold();
 	}
 	
 	public void resume() {
