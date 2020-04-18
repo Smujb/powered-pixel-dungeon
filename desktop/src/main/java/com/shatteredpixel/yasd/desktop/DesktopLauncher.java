@@ -111,6 +111,8 @@ public class DesktopLauncher {
         //we set fullscreen/maximized in the listener as doing it through the config seems to be buggy
         DesktopWindowListener listener = new DesktopWindowListener();
         config.setWindowListener( listener );
+        //TODO: use YASD icons
+        config.setWindowIcon( "icon_16.png", "icon_32.png", "icon_64.png", "icon_128.png", "icon_256.png" );
 
         new Lwjgl3Application(new MainGame(new DesktopPlatformSupport()), config);
     }
