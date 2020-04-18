@@ -75,6 +75,10 @@ public class MagicMissile extends Emitter {
 	public static final int DARK 			= 12;
 	public static final int POISON          = 13;
 
+	public static final int SHAMAN_RED      = 14;
+	public static final int SHAMAN_BLUE     = 15;
+	public static final int SHAMAN_PURPLE   = 16;
+
 	public static final int SPIRAL          = 100;
 	public static final int FOLIAGE_CONE    = 101;
 	public static final int COIN            = 102;
@@ -167,6 +171,19 @@ public class MagicMissile extends Emitter {
 			case WARD:
 				size( 4 );
 				pour( WardParticle.FACTORY, 0.01f );
+				break;
+
+			case SHAMAN_RED:
+				size( 2 );
+				pour( ShamanParticle.RED, 0.01f );
+				break;
+			case SHAMAN_BLUE:
+				size( 2 );
+				pour( ShamanParticle.BLUE, 0.01f );
+				break;
+			case SHAMAN_PURPLE:
+				size( 2 );
+				pour( ShamanParticle.PURPLE, 0.01f );
 				break;
 
 			case FIRE_CONE:
@@ -392,6 +409,60 @@ public class MagicMissile extends Emitter {
 			this.y = y - speed.y * lifespan;
 			
 			acc.set( 0, 0 );
+		}
+	}
+
+	public static class ShamanParticle extends EarthParticle{
+
+		public static final Emitter.Factory RED = new Factory() {
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+						.reset( x, y, ColorMath.random(0xFF4D4D, 0x801A1A) );
+			}
+		};
+
+		public static final Emitter.Factory BLUE = new Factory() {
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+						.reset( x, y, ColorMath.random(0x6699FF, 0x1A3C80) );
+			}
+		};
+
+		public static final Emitter.Factory PURPLE = new Factory() {
+			@Override
+			public void emit( Emitter emitter, int index, float x, float y ) {
+				((ShamanParticle)emitter.recycle( ShamanParticle.class ))
+						.reset( x, y, ColorMath.random(0xBB33FF, 0x5E1A80) );
+			}
+		};
+
+		int startColor;
+		int endColor;
+
+		public ShamanParticle() {
+			super();
+
+			lifespan = 0.6f;
+			acc.set( 0, 0 );
+		}
+
+		public void reset( float x, float y, int endColor ){
+			super.reset( x, y );
+
+			size( 1 );
+
+			this.endColor = endColor;
+			startColor = ColorMath.random(0x805500, 0x332500);
+
+			speed.set( Random.Float( -10, +10 ), Random.Float( -10, +10 ) );
+		}
+
+		@Override
+		public void update() {
+			super.update();
+			color( ColorMath.interpolate( endColor, startColor, (left / lifespan) ));
 		}
 	}
 	

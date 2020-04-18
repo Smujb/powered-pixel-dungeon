@@ -57,6 +57,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.FireImbue;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.FrostImbue;
 import com.shatteredpixel.yasd.general.actors.buffs.Haste;
+import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
@@ -97,9 +98,9 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.ShockingDart;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Earthroot;
@@ -420,7 +421,9 @@ public abstract class Char extends Actor {
 	public static boolean hit(Char attacker, Char defender) {
 		float acuRoll = Random.Float(attacker.attackSkill(defender));
 		float defRoll = Random.Float(defender.defenseSkill(attacker));
+		if (attacker.buff(  Hex.class) != null) acuRoll *= 0.8f;
 		if (attacker.buff(Bless.class) != null) acuRoll *= 1.25f;
+		if (defender.buff(  Hex.class) != null) defRoll *= 0.8f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (attacker.elementalType().isMagical()) {
 			if (Dungeon.level.adjacent(attacker.pos, defender.pos)) {//Magical mobs have reduced accuracy at melee range.

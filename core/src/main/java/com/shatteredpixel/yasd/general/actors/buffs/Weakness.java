@@ -25,6 +25,8 @@
  *
  */
 
+//TODO need to re-evaluate various cases cases where this was used
+// now that warlocks give a different debuff and shamen have 3 different ones
 package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.messages.Messages;

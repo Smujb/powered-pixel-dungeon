@@ -30,22 +30,18 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 
-public class Vulnerable extends FlavourBuff {
+public class Hex extends FlavourBuff {
 
-	public static final float DURATION = 40f;
+	public static final float DURATION	= 30f;
 
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
 	}
 
-	public float defenseFactor() {
-		return (float) Math.pow( 0.98, cooldown());
-	}
-
 	@Override
 	public int icon() {
-		return BuffIndicator.VULNERABLE;
+		return BuffIndicator.HEX;
 	}
 
 	@Override
@@ -60,7 +56,7 @@ public class Vulnerable extends FlavourBuff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", defenseFactor(), dispTurns());
+		return Messages.get(this, "desc", dispTurns());
 	}
-}
 
+}
