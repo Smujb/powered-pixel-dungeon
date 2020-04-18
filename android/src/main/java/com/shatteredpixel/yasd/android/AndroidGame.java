@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
@@ -43,6 +44,7 @@ import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
+import com.watabou.utils.FileUtils;
 
 public class AndroidGame extends AndroidApplication {
 	
@@ -66,6 +68,9 @@ public class AndroidGame extends AndroidApplication {
 		} catch (PackageManager.NameNotFoundException e) {
 			Game.versionCode = 0;
 		}
+
+
+		FileUtils.setDefaultFileProperties( Files.FileType.Local, "" );
 
 		UCEHandler.Builder builder = new UCEHandler.Builder(this);
 		builder.build();
@@ -96,7 +101,7 @@ public class AndroidGame extends AndroidApplication {
 		
 		support.updateSystemUI();
 
-		MainGame mainGame = new MainGame(support);//Reflection.newInstance(MainGame.class, support);
+		MainGame mainGame = new MainGame(support);
 		initialize(mainGame, config);
 		
 		view = (GLSurfaceView)graphics.getView();

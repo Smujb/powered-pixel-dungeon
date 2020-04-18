@@ -38,8 +38,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileUtils {
-	
-	// Files
 
 	// Helper methods for setting/using a default base path and file address mode
 
@@ -75,35 +73,37 @@ public class FileUtils {
 				return null;
 		}
 	}
-	
+
+	// Files
+
 	public static boolean fileExists( String name ){
 		FileHandle file = getFileHandle( name );
 		return file.exists() && !file.isDirectory();
 	}
-	
+
 	public static boolean deleteFile( String name ){
 		return getFileHandle( name ).delete();
 	}
-	
+
 	// Directories
-	
+
 	public static boolean dirExists( String name ){
 		FileHandle dir = getFileHandle( name );
 		return dir.exists() && dir.isDirectory();
 	}
-	
+
 	public static boolean deleteDir( String name ){
 		FileHandle dir = getFileHandle( name );
-		
+
 		if (dir == null || !dir.isDirectory()){
 			return false;
 		} else {
 			return dir.deleteDirectory();
 		}
 	}
-	
+
 	// bundle reading
-	
+
 	//only works for base path
 	public static Bundle bundleFromFile( String fileName ) throws IOException{
 		FileHandle file = getFileHandle( fileName );
@@ -113,15 +113,15 @@ public class FileUtils {
 			return bundleFromStream(file.read());
 		}
 	}
-	
+
 	private static Bundle bundleFromStream( InputStream input ) throws IOException{
 		Bundle bundle = Bundle.read( input );
 		input.close();
 		return bundle;
 	}
-	
+
 	// bundle writing
-	
+
 	//only works for base path
 	public static void bundleToFile( String fileName, Bundle bundle ) throws IOException{
 		try {
@@ -135,7 +135,7 @@ public class FileUtils {
 			}
 		}
 	}
-	
+
 	private static void bundleToStream( OutputStream output, Bundle bundle ) throws IOException{
 		Bundle.write( bundle, output );
 		output.close();

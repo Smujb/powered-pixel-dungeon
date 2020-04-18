@@ -39,13 +39,12 @@ import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.windows.WndGame;
 import com.shatteredpixel.yasd.general.windows.WndHero;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
-import com.watabou.input.PointerEvent;
+import com.watabou.input.KeyAction;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NinePatch;
-import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.ui.Button;
@@ -95,14 +94,18 @@ public class StatusPane extends Component {
 		bg = new NinePatch( Assets.STATUS, 0, 0, 128, 36, 85, 0, 45, 0 );
 		add( bg );
 
-		add( new PointerArea( 0, 1, 31, 31 ) {
+
+		add( new Button(){
 			@Override
-			protected void onClick( PointerEvent event ) {
-				Image sprite = Dungeon.hero.sprite;
-				Camera.main.panTo( sprite.center(), 5f );
+			protected void onClick () {
+				Camera.main.panTo( Dungeon.hero.sprite.center(), 5f );
 				GameScene.show( new WndHero() );
 			}
-		} );
+			@Override
+			public KeyAction keyAction() {
+				return KeyAction.HERO_INFO;
+			}
+		}.setRect( 0, 1, 30, 30 ));
 
 		difficulty = new IconDifficulty();
 		add( difficulty );
@@ -307,6 +310,11 @@ public class StatusPane extends Component {
 
 			width = bg.width + 13; //includes the depth display to the left
 			height = bg.height + 4;
+		}
+
+		@Override
+		public KeyAction keyAction() {
+			return KeyAction.JOURNAL;
 		}
 
 		@Override

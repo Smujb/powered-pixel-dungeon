@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.ui;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.watabou.input.KeyAction;
 
 public class LootIndicator extends Tag {
 	
@@ -45,7 +46,13 @@ public class LootIndicator extends Tag {
 		
 		visible = false;
 	}
-	
+
+	@Override
+	public KeyAction keyAction() {
+		return KeyAction.TAG_LOOT;
+	}
+
+
 	@Override
 	protected void createChildren() {
 		super.createChildren();

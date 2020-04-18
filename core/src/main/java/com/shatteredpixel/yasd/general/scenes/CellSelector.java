@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
+import com.watabou.input.KeyAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
@@ -60,7 +61,7 @@ public class CellSelector extends ScrollArea {
 		dragThreshold = PixelScene.defaultZoom * DungeonTilemap.SIZE / 2;
 
 		mouseZoom = camera.zoom;
-		KeyEvent.addKeyListener(movementListener);
+		KeyEvent.addKeyListener( keyListener );
 	}
 
 
@@ -214,19 +215,32 @@ public class CellSelector extends ScrollArea {
 		
 	}
 
-	private KeyEvent heldKey = null;
-	private int heldKeyTurns = 0;
+	private KeyAction heldAction = null;
+	private int heldTurns = 0;
 
-	private Signal.Listener<KeyEvent> movementListener = new Signal.Listener<KeyEvent>() {
+	private Signal.Listener<KeyEvent> keyListener = new Signal.Listener<KeyEvent>() {
 		@Override
 		public boolean onSignal(KeyEvent event) {
+			KeyAction action = KeyBindings.getBinding( event );
 			if (!event.pressed){
-				if (heldKey != null && heldKey.code == event.code) {
+				if (heldAction != null && heldAction == action) {
 					resetKeyHold();
 					return true;
+				} else {
+					switch (action) {
+						case ZOOM_IN:
+							zoom(camera.zoom + 1);
+							return true;
+						case ZOOM_OUT:
+							zoom(camera.zoom - 1);
+							return true;
+						case ZOOM_DEFAULT:
+							zoom(PixelScene.defaultZoom);
+							return true;
+					}
 				}
-			} else if (moveFromKey(event)) {
-				heldKey = event;
+			} else if (moveFromKey(action)) {
+				heldAction = action;
 				return true;
 			}
 
@@ -234,11 +248,11 @@ public class CellSelector extends ScrollArea {
 		}
 	};
 
-	private boolean moveFromKey(KeyEvent event){
+	private boolean moveFromKey(KeyAction event){
 		boolean moved = true;
 		int cell = Dungeon.hero.pos;
 		//TODO implement game actions, instead of using keys directly
-		switch (KeyBindings.getBinding( event )){
+		switch (event){
 			case N:
 				cell += -Dungeon.level.width();
 				break;
@@ -271,7 +285,7 @@ public class CellSelector extends ScrollArea {
 			//each step when keyboard moving takes 0.15s, 0.125s, 0.1s, 0.1s, ...
 			// this is to make it easier to move 1 or 2 steps without overshooting
 			CharSprite.setMoveInterval( CharSprite.DEFAULT_MOVE_INTERVAL +
-					Math.max(0, 0.05f - heldKeyTurns*0.025f));
+					Math.max(0, 0.05f - heldTurns *0.025f));
 			select(cell);
 		}
 
@@ -279,16 +293,16 @@ public class CellSelector extends ScrollArea {
 	}
 
 	public void processKeyHold(){
-		if (heldKey != null){
+		if (heldAction != null){
 			enabled = true;
-			heldKeyTurns++;
-			moveFromKey(heldKey);
+			heldTurns++;
+			moveFromKey(heldAction);
 		}
 	}
 
 	public void resetKeyHold(){
-		heldKey = null;
-		heldKeyTurns = 0;
+		heldAction = null;
+		heldTurns = 0;
 		CharSprite.setMoveInterval( CharSprite.DEFAULT_MOVE_INTERVAL );
 	}
 	
@@ -316,6 +330,12 @@ public class CellSelector extends ScrollArea {
 		if (enabled != value){
 			enabled = value;
 		}
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+		KeyEvent.removeKeyListener( keyListener );
 	}
 
 	public static abstract class Listener {

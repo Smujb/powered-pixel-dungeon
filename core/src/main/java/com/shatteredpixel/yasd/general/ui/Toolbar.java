@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTerrainTilemap;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
+import com.watabou.input.KeyAction;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
@@ -85,6 +86,11 @@ public class Toolbar extends Component {
 				Dungeon.hero.rest(false);
 			}
 
+			@Override
+			public KeyAction keyAction() {
+				return KeyAction.WAIT;
+			}
+
 			protected boolean onLongClick() {
 				examining = false;
 				Dungeon.hero.rest(true);
@@ -102,6 +108,11 @@ public class Toolbar extends Component {
 					informer.onSelect(null);
 					Dungeon.hero.search(true);
 				}
+			}
+
+			@Override
+			public KeyAction keyAction() {
+				return KeyAction.SEARCH;
 			}
 
 			@Override
@@ -127,6 +138,11 @@ public class Toolbar extends Component {
 			@Override
 			protected void onClick() {
 				GameScene.show(new WndBag(Dungeon.hero.belongings.backpack, null, WndBag.Mode.ALL, null));
+			}
+
+			@Override
+			public KeyAction keyAction() {
+				return KeyAction.INVENTORY;
 			}
 			
 			@Override

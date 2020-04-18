@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.watabou.input.KeyAction;
 import com.watabou.noosa.Image;
 
 public class ActionIndicator extends Tag {
@@ -45,6 +46,11 @@ public class ActionIndicator extends Tag {
 
 		setSize( 24, 24 );
 		visible = false;
+	}
+
+	@Override
+	public KeyAction keyAction() {
+		return KeyAction.TAG_ACTION;
 	}
 
 	@Override

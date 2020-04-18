@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.watabou.input.KeyAction;
 import com.watabou.noosa.Image;
 
 public class ResumeIndicator extends Tag {
@@ -42,6 +43,11 @@ public class ResumeIndicator extends Tag {
 
 		visible = false;
 
+	}
+
+	@Override
+	public KeyAction keyAction() {
+		return KeyAction.TAG_RESUME;
 	}
 
 	@Override

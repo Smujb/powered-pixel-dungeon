@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.shatteredpixel.yasd.general.windows.WndBag.Listener;
+import com.watabou.input.KeyAction;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.PathFinder;
@@ -112,6 +113,10 @@ public class QuickSlotButton extends Button {
 				}
 			}
 			@Override
+			public KeyAction keyAction() {
+				return QuickSlotButton.this.keyAction();
+			}
+			@Override
 			protected boolean onLongClick() {
 				return QuickSlotButton.this.onLongClick();
 			}
@@ -144,6 +149,22 @@ public class QuickSlotButton extends Button {
 		crossB.x = x + (width - crossB.width) / 2;
 		crossB.y = y + (height - crossB.height) / 2;
 		PixelScene.align(crossB);
+	}
+
+	@Override
+	public KeyAction keyAction() {
+		switch (slotNum){
+			case 0:
+				return KeyAction.QUICKSLOT_1;
+			case 1:
+				return KeyAction.QUICKSLOT_2;
+			case 2:
+				return KeyAction.QUICKSLOT_3;
+			case 3:
+				return KeyAction.QUICKSLOT_4;
+			default:
+				return super.keyAction();
+		}
 	}
 	
 	@Override
