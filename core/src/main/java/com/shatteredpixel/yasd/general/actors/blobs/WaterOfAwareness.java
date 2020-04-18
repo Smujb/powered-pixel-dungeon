@@ -85,6 +85,8 @@ public class WaterOfAwareness extends WellWater {
 		} else {
 			item.identify();
 			Badges.validateItemLevelAquired( item );
+
+			Sample.INSTANCE.play( Assets.SND_DRINK );
 			
 			emitter.parent.add( new Identification( DungeonTilemap.tileCenterToWorld( pos ) ) );
 			

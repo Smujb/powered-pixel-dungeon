@@ -112,8 +112,8 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 				((Wand) item).updateLevel();
 			}
 		}
-		
-		if (procced) {
+
+		if (procced && owner != null) {
 			owner.sprite.emitter().start( ShadowParticle.UP, 0.05f, 10 );
 			if (owner instanceof Hero) {
 				owner.updateHT(false); //for ring of might
@@ -125,7 +125,7 @@ public class ScrollOfRemoveCurse extends InventoryScroll {
 	}
 	
 	public static boolean uncursable( Item item ){
-		if ((item instanceof EquipableItem || item instanceof Wand) && (!item.isIdentified() || item.cursed)){
+		if (item instanceof EquipableItem && (!item.isIdentified() || item.cursed)){
 			return true;
 		} else if (item instanceof Weapon){
 			return ((Weapon)item).hasCurseEnchant();

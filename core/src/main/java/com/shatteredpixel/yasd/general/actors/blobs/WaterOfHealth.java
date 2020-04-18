@@ -34,10 +34,12 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.items.DewVial;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
+import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRemoveCurse;
 import com.shatteredpixel.yasd.general.journal.Notes.Landmark;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -72,10 +74,13 @@ public class WaterOfHealth extends WellWater {
 	protected Item affectItem( Item item, int pos ) {
 		if (item instanceof DewVial && !((DewVial)item).isFull()) {
 			((DewVial)item).fill();
-			return item;
+			CellEmitter.get( pos ).start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
+		} else if (ScrollOfRemoveCurse.uncurse( null, item )){
+			CellEmitter.get( pos ).start( ShadowParticle.UP, 0.05f, 10 );
 		}
-		
-		return null;
+
+		Sample.INSTANCE.play( Assets.SND_DRINK );
+		return item;
 	}
 	
 	@Override
