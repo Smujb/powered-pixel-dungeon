@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -47,6 +48,7 @@ import com.shatteredpixel.yasd.general.ui.changelist.v0_6_X_Changes;
 import com.shatteredpixel.yasd.general.ui.changelist.v0_7_X_Changes;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.NinePatch;
+import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.ui.Component;
 
 import java.util.ArrayList;
@@ -58,6 +60,8 @@ public class ChangesScene extends PixelScene {
 	@Override
 	public void create() {
 		super.create();
+
+		Music.INSTANCE.play( Assets.THEME, true );
 
 		int w = Camera.main.width;
 		int h = Camera.main.height;

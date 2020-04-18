@@ -644,15 +644,10 @@ public class Hero extends Char {
 		damageInterrupt = false;
 		next();
 	}
-	
-	//FIXME this is a fairly crude way to track this, really it would be nice to have a short
-	//history of hero actions
-	public boolean justMoved = false;
-	
+
 	private boolean actMove( HeroAction.Move action ) {
 
 		if (getCloser( action.dst )) {
-			justMoved = true;
 			return true;
 
 		} else {
@@ -1138,6 +1133,10 @@ public class Hero extends Char {
 	}
 	
 	private boolean walkingToVisibleTrapInFog = false;
+
+	//FIXME this is a fairly crude way to track this, really it would be nice to have a short
+	//history of hero actions
+	public boolean justMoved = false;
 	
 	protected boolean getCloser( final int target ) {
 
@@ -1231,6 +1230,8 @@ public class Hero extends Char {
 			move(step);
 
 			spend( 1 / speed );
+
+			justMoved = true;
 			
 			search(false);
 			

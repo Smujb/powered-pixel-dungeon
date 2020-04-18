@@ -81,8 +81,8 @@ public class WandOfCorruption extends Wand {
 	//Note that some debuffs here have a 0% chance to be applied.
 	// This is because the wand of corruption considers them to be a certain level of harmful
 	// for the purposes of reducing resistance, but does not actually apply them itself
-	
-	private static final float MINOR_DEBUFF_WEAKEN = 7/8f;
+
+	private static final float MINOR_DEBUFF_WEAKEN = 1/4f;
 	private static final HashMap<Class<? extends Buff>, Float> MINOR_DEBUFFS = new HashMap<>();
 	static{
 		MINOR_DEBUFFS.put(Weakness.class,       2f);
@@ -99,8 +99,8 @@ public class WandOfCorruption extends Wand {
 		MINOR_DEBUFFS.put(Burning.class,        0f);
 		MINOR_DEBUFFS.put(Poison.class,         0f);
 	}
-	
-	private static final float MAJOR_DEBUFF_WEAKEN = 4/5f;
+
+	private static final float MAJOR_DEBUFF_WEAKEN = 1/2f;
 	private static final HashMap<Class<? extends Buff>, Float> MAJOR_DEBUFFS = new HashMap<>();
 	static{
 		MAJOR_DEBUFFS.put(Amok.class,           3f);

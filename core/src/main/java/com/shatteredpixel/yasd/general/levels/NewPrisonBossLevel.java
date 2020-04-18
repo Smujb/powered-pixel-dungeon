@@ -480,14 +480,14 @@ public class NewPrisonBossLevel extends Level {
 			case FIGHT_START:
 				
 				clearEntities( tenguCell ); //clear anything not in tengu's cell
+
+				setMapMazes();
+				cleanMapState();
 				
 				Actor.remove(tengu);
 				mobs.remove(tengu);
 				TargetHealthIndicator.instance.target(null);
 				tengu.sprite.kill();
-				
-				setMapMazes();
-				cleanMapState();
 				
 				GameScene.flash(0xFFFFFF);
 				Sample.INSTANCE.play(Assets.SND_BLAST);
