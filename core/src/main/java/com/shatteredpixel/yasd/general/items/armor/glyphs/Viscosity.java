@@ -49,8 +49,6 @@ public class Viscosity extends Glyph {
 	@Override
 	public int proc( Armor armor, Char attacker, Char defender, int damage ) {
 
-		//int realDamage = damage - defender.drRoll(Element.PHYSICAL);
-
 		if (damage <= 0) {
 			return 0;
 		}

@@ -106,6 +106,7 @@ public class WandOfWarding extends DamageWand {
 		Char ch = Actor.findChar(bolt.collisionPos);
 		if (!curUser.fieldOfView[bolt.collisionPos] || !Dungeon.level.passable(bolt.collisionPos)){
 			GLog.w( Messages.get(this, "bad_location"));
+			Dungeon.level.pressCell(bolt.collisionPos);
 			
 		} else if (ch != null){
 			if (ch instanceof Ward){
@@ -117,7 +118,9 @@ public class WandOfWarding extends DamageWand {
 				ch.sprite.emitter().burst(MagicMissile.WardParticle.UP, ((Ward) ch).tier);
 			} else {
 				GLog.w( Messages.get(this, "bad_location"));
+				Dungeon.level.pressCell(bolt.collisionPos);
 			}
+
 		} else if (canPlaceWard(bolt.collisionPos)){
 			Ward ward = Mob.create(Ward.class);
 			ward.pos = bolt.collisionPos;
@@ -128,6 +131,7 @@ public class WandOfWarding extends DamageWand {
 			ward.alignment = curUser.alignment;
 		} else {
 			GLog.w( Messages.get(this, "bad_location"));
+			Dungeon.level.pressCell(bolt.collisionPos);
 		}
 	}
 
