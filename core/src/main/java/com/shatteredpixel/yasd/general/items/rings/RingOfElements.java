@@ -100,7 +100,7 @@ public class RingOfElements extends Ring {
 		RESISTS.add( ToxicGas.class );
 		RESISTS.add( Electricity.class );
 		
-		/*RESISTS.add( Shaman.LightningBolt.class );
+		/*RESISTS.add( DM100.LightningBolt.class );
 		RESISTS.add( Warlock.DarkBolt.class );
 		RESISTS.add( Eye.DeathGaze.class );
 		RESISTS.add( Yog.BurningFist.DarkBolt.class );*/

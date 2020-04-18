@@ -94,7 +94,7 @@ public class Bestiary {
 				case 1:
 					return Eye.class;
 				case 2:
-					return Shaman.class;
+					return DM100.class;
 			}
 		}
 		return Wraith.class;
@@ -134,7 +134,7 @@ public class Bestiary {
 		ArrayList<Class<? extends Mob>> mobs = new  ArrayList<>(Arrays.asList(
 				Skeleton.class,
 				Swarm.class,
-				Shaman.class,
+				DM100.class,
 				Guard.class,
 				Necromancer.class
 		));
@@ -152,7 +152,7 @@ public class Bestiary {
 				Bat.class,
 				Brute.class,
 				Spinner.class,
-				Shaman.class
+				DM100.class
 		));
 		return mobs.get(Random.chances(chances));
 	}

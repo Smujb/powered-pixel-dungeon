@@ -30,54 +30,31 @@ package com.shatteredpixel.yasd.general.sprites;
 import com.shatteredpixel.yasd.general.Assets;
 import com.watabou.noosa.TextureFilm;
 
-public class ShamanSprite extends MobSprite {
+public class DM100Sprite extends MobSprite {
 	
-	public ShamanSprite() {
+	public DM100Sprite() {
 		super();
 		
-		texture( Assets.SHAMAN );
-		
-		TextureFilm frames = new TextureFilm( texture, 12, 15 );
-		
-		idle = new Animation( 2, true );
-		idle.frames( frames, 0, 0, 0, 1, 0, 0, 1, 1 );
-		
-		run = new Animation( 12, true );
-		run.frames( frames, 4, 5, 6, 7 );
-		
-		attack = new Animation( 12, false );
-		attack.frames( frames, 2, 3, 0 );
+		texture( Assets.DM300 );
+
+		TextureFilm frames = new TextureFilm( texture, 22, 20 );
+
+		idle = new Animation( 10, true );
+		idle.frames( frames, 0, 1 );
+
+		run = new Animation( 10, true );
+		run.frames( frames, 2, 3 );
+
+		attack = new Animation( 15, false );
+		attack.frames( frames, 4, 5, 6, 0 );
 		
 		zap = attack.clone();
-		
-		die = new Animation( 12, false );
-		die.frames( frames, 8, 9, 10 );
+
+		die = new Animation( 20, false );
+		die.frames( frames, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 8 );
 		
 		play( idle );
+
+		scale.set( 0.6f );
 	}
-	/*@Override
-	public void zap( int pos ) {
-
-		Char enemy = Actor.findChar(pos);
-
-		if (enemy != null) {
-			parent.add(new Lightning(center(), enemy.sprite.destinationCenter(), new Callback() {
-				@Override
-				public void call() {
-					ch.onZapComplete();
-				}
-			}));
-		} else {
-			parent.add(new Lightning(center(), pos, new Callback() {
-				@Override
-				public void call() {
-					ch.onZapComplete();
-				}
-			}));
-		}
-		Sample.INSTANCE.play( Assets.SND_LIGHTNING );
-
-		turnTo( ch.pos, pos );
-		play( zap );
-	}*/
 }

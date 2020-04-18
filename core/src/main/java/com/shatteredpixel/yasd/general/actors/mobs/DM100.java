@@ -30,12 +30,12 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
-import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
+import com.shatteredpixel.yasd.general.sprites.DM100Sprite;
 
-public class Shaman extends Mob {
+public class DM100 extends Mob {
 	
 	{
-		spriteClass = ShamanSprite.class;
+		spriteClass = DM100Sprite.class;
 
 		healthFactor = 0.7f;
 		damageFactor = 1.3f;

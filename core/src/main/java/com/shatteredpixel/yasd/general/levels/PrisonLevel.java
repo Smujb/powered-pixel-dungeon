@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Guard;
 import com.shatteredpixel.yasd.general.actors.mobs.Necromancer;
-import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
+import com.shatteredpixel.yasd.general.actors.mobs.DM100;
 import com.shatteredpixel.yasd.general.actors.mobs.Skeleton;
 import com.shatteredpixel.yasd.general.actors.mobs.Swarm;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Wandmaker;
@@ -135,7 +135,7 @@ public class PrisonLevel extends RegularLevel {
 		return new Class[] {
 				Skeleton.class,
 				Swarm.class,
-				Shaman.class,
+				DM100.class,
 				Guard.class,
 				Necromancer.class
 		};
