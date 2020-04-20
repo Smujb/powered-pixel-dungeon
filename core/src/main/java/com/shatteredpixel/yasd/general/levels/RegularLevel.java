@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
+import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.journal.GuidePage;
 import com.shatteredpixel.yasd.general.items.keys.GoldenKey;
 import com.shatteredpixel.yasd.general.journal.Document;
@@ -334,6 +335,9 @@ public abstract class RegularLevel extends Level {
 				map[cell] = Terrain.GRASS;
 			}
 		}
+
+		//use a separate generator for this to prevent held items and meta progress from affecting levelgen
+		Random.pushGenerator( Dungeon.seedCurDepth() );
 		
 		Item item = Bones.get();
 		if (item != null) {
@@ -342,6 +346,25 @@ public abstract class RegularLevel extends Level {
 				map[cell] = Terrain.GRASS;
 			}
 			drop( item, cell ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
+		}
+
+		DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
+		if (rose != null && rose.isIdentified() && !rose.cursed){
+			//aim to drop 1 petal every 2 floors
+			int petalsNeeded = (int) Math.ceil((float)((Dungeon.depth / 2) - rose.droppedPetals) / 3);
+
+			for (int i=1; i <= petalsNeeded; i++) {
+				//the player may miss a single petal and still max their rose.
+				if (rose.droppedPetals < 11) {
+					item = new DriedRose.Petal();
+					int cell = randomDropCell();
+					drop( item, cell ).type = Heap.Type.HEAP;
+					if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
+						map[cell] = Terrain.GRASS;
+					}
+					rose.droppedPetals++;
+				}
+			}
 		}
 
 		//guide pages
@@ -369,6 +392,8 @@ public abstract class RegularLevel extends Level {
 			}
 			drop( p, cell );
 		}
+
+		Random.popGenerator();
 
 	}
 	

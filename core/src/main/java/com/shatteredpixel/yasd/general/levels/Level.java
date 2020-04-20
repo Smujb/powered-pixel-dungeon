@@ -59,7 +59,6 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Torch;
-import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.food.SmallRation;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
@@ -409,20 +408,6 @@ public abstract class Level implements Bundlable {
 			}
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR)) {
 				addItemToSpawn( new PotionOfLevitation());
-			}
-
-			DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
-			if (rose != null && rose.isIdentified() && !rose.cursed){
-				//aim to drop 1 petal every 2 floors
-				int petalsNeeded = (int) Math.ceil((float)((Dungeon.depth / 2) - rose.droppedPetals) / 3);
-
-				for (int i=1; i <= petalsNeeded; i++) {
-					//the player may miss a single petal and still max their rose.
-					if (rose.droppedPetals < 11) {
-						addItemToSpawn(new DriedRose.Petal());
-						rose.droppedPetals++;
-					}
-				}
 			}
 			
 			if (Dungeon.depth > 1) {

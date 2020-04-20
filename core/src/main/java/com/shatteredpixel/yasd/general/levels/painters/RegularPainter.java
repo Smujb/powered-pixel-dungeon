@@ -27,13 +27,15 @@
 
 package com.shatteredpixel.yasd.general.levels.painters;
 
+import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Patch;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EmptyRoom;
+import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.watabou.utils.Graph;
 import com.watabou.utils.PathFinder;
@@ -193,7 +195,13 @@ public abstract class RegularPainter extends Painter {
 						d.type = Room.Door.Type.UNLOCKED;
 					}
 				}
-				
+
+				//entrance doors on floor 2 are hidden if the player hasn't beaten the first boss
+				if (Dungeon.depth == 2 && !Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1) && r instanceof EntranceRoom){
+					d.type = Room.Door.Type.HIDDEN;
+				}
+
+
 				switch (d.type) {
 					case EMPTY:
 						l.map[door] = Terrain.EMPTY;

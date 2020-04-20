@@ -27,14 +27,13 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
-import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.journal.GuidePage;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
@@ -64,6 +63,10 @@ public class EntranceRoom extends StandardRoom {
 			level.setEntrance(cell);
 		} while (level.findMob(level.getEntrancePos()) != null);
 
+		//use a separate generator here so meta progression doesn't affect levelgen
+		Random.pushGenerator();
+
+		//places the first guidebook page on floor 1
 		if (Dungeon.depth == 1 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_INTRO_PAGE)){
 			int pos;
 			do {
@@ -76,26 +79,19 @@ public class EntranceRoom extends StandardRoom {
 			level.drop( p, pos );
 		}
 
-		if (Dungeon.depth == 2){
-			if (!Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1)){
-				for (Room.Door door : connected.values()) {
-					door.set( Door.Type.HIDDEN );
-				}
-			}
-
-			if (!Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_SEARCH_PAGE)){
-				int pos;
-				do {
-					//can't be on bottom row of tiles
-					pos = level.pointToCell(new Point( Random.IntRange( left + 1, right - 1 ),
-							Random.IntRange( top + 1, bottom - 2 )));
-				} while (pos == level.getEntrance().getPos(level) || level.findMob(level.getEntrance().getPos(level)) != null);
-				GuidePage p = new GuidePage();
-				p.page(Document.GUIDE_SEARCH_PAGE);
-				level.drop( p, pos );
-			}
-
+		//places the third guidebook page on floor 2
+		if (Dungeon.depth == 2 && !Document.ADVENTURERS_GUIDE.hasPage(Document.GUIDE_SEARCH_PAGE)){
+			int pos;
+			do {
+				//can't be on bottom row of tiles
+				pos = level.pointToCell(new Point( Random.IntRange( left + 1, right - 1 ),
+						Random.IntRange( top + 1, bottom - 2 )));
+			} while (pos == level.getEntrancePos() || level.findMob(level.getEntrancePos()) != null);
+			GuidePage p = new GuidePage();
+			p.page(Document.GUIDE_SEARCH_PAGE);
+			level.drop( p, pos );
 		}
+		Random.popGenerator();
 
 	}
 	
