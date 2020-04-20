@@ -274,27 +274,7 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			@Override
 			public void call() {
 				if (ch.hasBelongings()) {
-					/*KindOfWeapon weapon = ch.belongings.getCurrentWeapon();
-					if (weapon != null && !(weapon instanceof MissileWeapon)) {
-						weaponImg = new WepSprite(weapon);
-						weaponImg.setChars(ch, enemy);
-						if (weapon instanceof Fist || weapon instanceof Polearm) {
-							weaponImg.stabEffect();
-						} else {
-							weaponImg.rotateEffect();
-						}
-						parent.add(weaponImg);
-						parent.update();
-						parent.add( new Delayer( WepSprite.TIME ) {
-							@Override
-							protected void onComplete() {
-								weaponImg.killAndErase();
-								parent.erase( weaponImg );
-								weaponImg = null;
-							}
-						} );
-
-					}*/
+					//TODO weapon anims
 					callback.call();
 				} else {
 					ch.elementalType().FX(ch, cell, callback);
