@@ -46,7 +46,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
-import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Flare;
@@ -154,25 +153,8 @@ public class CursedWand {
 						cursedFX(user, bolt, new Callback() {
 							public void call() {
 								Char ch = Actor.findChar( bolt.collisionPos );
-								if (ch == user){
+								if (ch != null && !ch.properties().contains(Char.Property.IMMOVABLE)) {
 									ScrollOfTeleportation.teleportUser(user);
-								} else if (ch != null && !ch.properties().contains(Char.Property.IMMOVABLE)) {
-									int count = 10;
-									int pos;
-									do {
-										pos = Dungeon.level.randomRespawnCell();
-										if (count-- <= 0) {
-											break;
-										}
-									} while (pos == -1);
-									if (pos == -1 || Dungeon.bossLevel()) {
-										GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
-									} else {
-										ch.pos = pos;
-										if (((Mob) ch).state == ((Mob) ch).HUNTING)((Mob) ch).state = ((Mob) ch).WANDERING;
-										ch.sprite.place(ch.pos);
-										ch.sprite.visible = Dungeon.level.heroFOV[pos];
-									}
 								}
 								afterZap.call();
 							}
@@ -295,6 +277,10 @@ public class CursedWand {
 
 			//sheep transformation
 			case 0:
+				if (user != Dungeon.hero){
+					cursedZap(origin, user, bolt, afterZap);
+					return;
+				}
 				cursedFX(user, bolt, new Callback() {
 					public void call() {
 						Char ch = Actor.findChar( bolt.collisionPos );
@@ -402,6 +388,12 @@ public class CursedWand {
 
 			//crashes the game, yes, really.
 			case 2:
+
+				if (user != Dungeon.hero){
+					cursedZap(origin, user, bolt, afterZap);
+					return;
+				}
+
 				try {
 					Dungeon.saveAll();
 					if(Messages.lang() != Languages.ENGLISH){
@@ -435,7 +427,7 @@ public class CursedWand {
 			//random transmogrification
 			case 3:
 				//skips this effect if there is no item to transmogrify
-				if (origin == null || !Dungeon.hero.belongings.contains(origin)){
+				if (origin == null || user != Dungeon.hero || !Dungeon.hero.belongings.contains(origin)){
 					cursedZap(origin, user, bolt, afterZap);
 					return;
 				}

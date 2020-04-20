@@ -68,8 +68,8 @@ public class ScrollOfRecharging extends Scroll {
 		Buff.append(curUser, Recharging.class, BUFF_DURATION/3f);
 	}
 	
-	public static void charge( Char hero ) {
-		hero.sprite.centerEmitter().burst( EnergyParticle.FACTORY, 15 );
+	public static void charge( Char ch ) {
+		ch.sprite.centerEmitter().burst( EnergyParticle.FACTORY, 15 );
 	}
 	
 	@Override
