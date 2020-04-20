@@ -102,6 +102,9 @@ public class MeleeWeapon extends Weapon {
 			}
 			if (enemy instanceof Mob && ((Mob) enemy).surprisedBy(curUser) && curUser.canSurpriseAttack()) {
 				damage *= (2 + bonus);
+				if (damage < max()) {
+					damage = max();
+				}
 			}
 		}
 		return damage;

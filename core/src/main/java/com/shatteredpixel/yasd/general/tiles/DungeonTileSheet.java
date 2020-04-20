@@ -427,11 +427,14 @@ public class DungeonTileSheet {
 	public static byte[] tileVariance;
 
 	public static void setupVariance(int size, long seed){
-		Random.seed( seed );
+		Random.pushGenerator( seed );
+
 		tileVariance = new byte[size];
-		for (int i = 0; i < tileVariance.length; i++)
-			tileVariance[i] = (byte)Random.Int(100);
-		Random.seed();
+		for (int i = 0; i < tileVariance.length; i++) {
+			tileVariance[i] = (byte) Random.Int(100);
+		}
+
+		Random.popGenerator();
 	}
 
 	//These alt visuals will interact 50% of the time (45% of the time if a rare alt is also present)

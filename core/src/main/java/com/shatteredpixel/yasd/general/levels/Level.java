@@ -373,7 +373,7 @@ public abstract class Level implements Bundlable {
 
 		this.key = key;
 
-		Random.seed( Dungeon.seedCurDepth() );
+		Random.pushGenerator( Dungeon.seedCurDepth() );
 		
 		if (!Dungeon.bossLevel()) {
 
@@ -480,7 +480,7 @@ public abstract class Level implements Bundlable {
 		createItems();
 		createAreas();
 
-		Random.seed();
+		Random.popGenerator();
 	}
 	
 	public void setSize(int w, int h){

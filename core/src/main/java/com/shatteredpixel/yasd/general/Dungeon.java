@@ -198,8 +198,8 @@ public class Dungeon {
 
 		Actor.clear();
 		Actor.resetNextID();
-		
-		Random.seed( seed );
+
+		Random.pushGenerator( seed );
 
 		Scroll.initLabels();
 		Potion.initColors();
@@ -208,7 +208,7 @@ public class Dungeon {
 		SpecialRoom.initForRun();
 		SecretRoom.initForRun();
 
-		Random.seed();
+		Random.resetGenerators();
 		
 		Statistics.reset();
 		Notes.reset();
@@ -386,11 +386,14 @@ public class Dungeon {
 	}
 
 	public static long seedForDepth(int depth){
-		Random.seed( seed );
-		for (int i = 0; i < depth; i ++)
+		Random.pushGenerator( seed );
+
+		for (int i = 0; i < depth; i ++) {
 			Random.Long(); //we don't care about these values, just need to go through them
+		}
 		long result = Random.Long();
-		Random.seed();
+
+		Random.popGenerator();
 		return result;
 	}
 	
