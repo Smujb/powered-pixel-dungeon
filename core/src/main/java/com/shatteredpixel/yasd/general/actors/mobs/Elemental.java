@@ -27,34 +27,41 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
-import com.shatteredpixel.yasd.general.actors.buffs.Frost;
-import com.shatteredpixel.yasd.general.actors.buffs.Wet;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfFrost;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
+import com.shatteredpixel.yasd.general.items.quest.Embers;
+import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.yasd.general.items.wands.CursedWand;
+import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.ElementalSprite;
+import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-public class Elemental extends Mob {
+import java.util.ArrayList;
+
+public abstract class Elemental extends Mob {
 
 	{
 		spriteClass = ElementalSprite.class;
 
 		healthFactor = 0.7f;
 		damageFactor = 0.8f;
-		
+
 		EXP = 10;
-		
+
 		flying = true;
-		
-		loot = Reflection.newInstance( PotionOfLiquidFlame.class );
+
+		loot = Reflection.newInstance(PotionOfLiquidFlame.class);
 		lootChance = 0.1f;
-		
+
 		properties.add(Property.FIERY);
 	}
 
@@ -63,16 +70,26 @@ public class Elemental extends Mob {
 		return Element.FIRE;
 	}
 
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 16, 28 );
-	}
-	
+	private int rangedCooldown = Random.NormalIntRange(3, 5);
+
 	@Override
-	public int attackSkill( Char target ) {
-		return 30;
-	}*/
-	
+	protected boolean act() {
+		if (state == HUNTING) {
+			rangedCooldown--;
+		}
+
+		return super.act();
+	}
+
+	@Override
+	public boolean canAttack(Char enemy) {
+		if (rangedCooldown <= 0) {
+			return new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
+		} else {
+			return super.canAttack(enemy);
+		}
+	}
+
 	@Override
 	public int drRoll(Element element) {
 		if (element == Element.WATER) {
@@ -83,24 +100,139 @@ public class Elemental extends Mob {
 	}
 
 	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-
-		Buff.affect( enemy, Burning.class ).reignite( enemy );
-		
-		return damage;
-	}
-	
-	@Override
-	public void add( Buff buff ) {
-		if (buff instanceof Frost || buff instanceof Chill || buff instanceof Wet) {
-				if (Dungeon.level.liquid()[this.pos])
-					damage( Random.NormalIntRange( HT / 2, HT ), new DamageSrc(Element.COLD, null));
-				else
-					damage( Random.NormalIntRange( 1, HT * 2 / 3 ), new DamageSrc(Element.COLD, null));
+	public void add(Buff buff) {
+		if (harmfulBuffs.contains(buff.getClass())) {
+			damage(Random.NormalIntRange(HT / 2, HT * 3 / 5), buff);
 		} else {
-			super.add( buff );
+			super.add(buff);
 		}
 	}
-	
+
+	protected ArrayList<Class<? extends Buff>> harmfulBuffs = new ArrayList<>();
+
+	private static final String COOLDOWN = "cooldown";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(COOLDOWN, rangedCooldown);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		if (bundle.contains(COOLDOWN)) {
+			rangedCooldown = bundle.getInt(COOLDOWN);
+		}
+	}
+	public static class Fire extends Elemental {
+
+		{
+			spriteClass = ElementalSprite.Fire.class;
+
+			loot = new PotionOfLiquidFlame();
+			lootChance = 1/8f;
+
+			properties.add( Property.FIERY );
+
+			harmfulBuffs.add( com.shatteredpixel.yasd.general.actors.buffs.Frost.class );
+			harmfulBuffs.add( Chill.class );
+		}
+
+		@Override
+		public Element elementalType() {
+			return Element.FIRE;
+		}
+	}
+
+	public static class NewbornFire extends Fire {
+
+		{
+			spriteClass = ElementalSprite.NewbornFire.class;
+
+			HP = HT/4; //32
+
+			defenseSkill = 12;
+
+			EXP = 7;
+
+			loot = new Embers();
+			lootChance = 1f;
+
+			properties.add(Property.MINIBOSS);
+		}
+
+	}
+
+	public static class Frost extends Elemental {
+
+		{
+			spriteClass = ElementalSprite.Frost.class;
+
+			loot = new PotionOfFrost();
+			lootChance = 1 / 8f;
+
+			properties.add(Property.ICY);
+
+			harmfulBuffs.add(Burning.class);
+		}
+
+		@Override
+		public Element elementalType() {
+			return Element.COLD;
+		}
+	}
+
+	public static class Shock extends Elemental {
+
+		{
+			spriteClass = ElementalSprite.Shock.class;
+
+			loot = new ScrollOfRecharging();
+			lootChance = 1 / 4f;
+
+			properties.add(Property.ELECTRIC);
+		}
+
+		@Override
+		public Element elementalType() {
+			return Element.ELECTRIC;
+		}
+	}
+
+	public static class Chaos extends Elemental {
+
+		{
+			spriteClass = ElementalSprite.Chaos.class;
+
+			loot = new ScrollOfTransmutation();
+			lootChance = 1f;
+		}
+
+		@Override
+		public int attackProc(Char enemy, int damage) {
+			CursedWand.cursedZap( null, this, new Ballistica( pos, enemy.pos, Ballistica.MAGIC_BOLT ), new Callback() {
+				@Override
+				public void call() {
+					next();
+				}
+			} );
+			return super.attackProc(enemy, damage);
+		}
+	}
+
+	public static Class<? extends Elemental> random(){
+		if (Random.Int( 25 ) == 0){
+			return Chaos.class;
+		}
+
+		float roll = Random.Float();
+		if (roll < 0.4f){
+			return Fire.class;
+		} else if (roll < 0.8f){
+			return Frost.class;
+		} else {
+			return Shock.class;
+		}
+	}
 }

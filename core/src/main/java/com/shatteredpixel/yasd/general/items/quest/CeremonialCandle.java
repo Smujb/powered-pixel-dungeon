@@ -32,7 +32,8 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.NewbornElemental;
+import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.items.Heap;
@@ -105,7 +106,7 @@ public class CeremonialCandle extends Item {
 				heapBottom.pickUp();
 				heapLeft.pickUp();
 
-				NewbornElemental elemental = new NewbornElemental();
+				Elemental.NewbornFire elemental = Mob.create(Elemental.NewbornFire.class, Dungeon.level);
 				Char ch = Actor.findChar( ritualPos );
 				if (ch != null) {
 					ArrayList<Integer> candidates = new ArrayList<>();

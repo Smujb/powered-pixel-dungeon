@@ -130,7 +130,7 @@ public class CityLevel extends RegularLevel {
 		return new Class[] {
 				Warlock.class,
 				Monk.class,
-				Elemental.class,
+				Elemental.random(),
 				Golem.class
 		};
 	}
