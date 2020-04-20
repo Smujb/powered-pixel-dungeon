@@ -43,6 +43,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
@@ -53,6 +54,13 @@ public class DesktopLauncher {
         } else {
             title = DesktopLauncher.class.getPackage().getSpecificationTitle();
         }
+
+        try {
+            UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
