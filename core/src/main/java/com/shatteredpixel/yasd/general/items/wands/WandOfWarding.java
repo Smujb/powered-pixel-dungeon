@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -230,9 +231,14 @@ public class WandOfWarding extends DamageWand {
 			properties.add(Property.IMMOVABLE);
 
 			viewDistance = 3;
+			range = viewDistance;
 			state = WANDERING;
 
 			name = Messages.get(this, "name_" + tier );
+		}
+
+		{
+			immunities.add( Corruption.class );
 		}
 
 		@Override
@@ -266,6 +272,7 @@ public class WandOfWarding extends DamageWand {
 			if (tier < 6){
 				tier++;
 				viewDistance++;
+				range++;
 				name = Messages.get(this, "name_" + tier );
 				updateSpriteState();
 				GameScene.updateFog(pos, viewDistance+1);
@@ -357,56 +364,6 @@ public class WandOfWarding extends DamageWand {
 		public int damageRoll() {
 			return Random.NormalIntRange(Math.round(realMin(wandLevel)), Math.round(realMax(wandLevel)));
 		}
-
-		/*@Override
-		protected boolean doAttack(Char enemy) {
-			boolean visible = fieldOfView[pos] || fieldOfView[enemy.pos];
-			if (visible) {
-				sprite.zap( enemy.pos );
-			} else {
-				zap();
-			}
-
-			return !visible;
-		}
-
-		private void zap() {
-			spend( 1f );
-
-			//always hits
-			int dmg = Random.NormalIntRange( 2 + wandLevel, 8 + 8*wandLevel );
-			enemy.damage( dmg, WandOfWarding.class, Element.DESTRUCTION, false );
-			if (enemy.isAlive()){
-				Wand.processSoulMark(enemy, wandLevel, 1);
-			}
-
-			if (!enemy.isAlive() && enemy == Dungeon.hero) {
-				Dungeon.fail( getClass() );
-			}
-
-			totalZaps++;
-			switch(tier){
-				case 1: default:
-					if (totalZaps >= tier){
-						die(this);
-					}
-					break;
-				case 2: case 3:
-					if (totalZaps > tier){
-						die(this);
-					}
-					break;
-				case 4:
-					damage(5, this, Element.MAGICAL, false );
-					break;
-				case 5:
-					damage(6, this, Element.MAGICAL, false );
-					break;
-				case 6:
-					damage(7, this, Element.MAGICAL, false );
-					break;
-			}
-		}*/
 
 		@Override
 		protected boolean getCloser(int target) {

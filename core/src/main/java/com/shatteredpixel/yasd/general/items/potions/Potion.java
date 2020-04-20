@@ -527,7 +527,12 @@ public class Potion extends Item {
 				result = Reflection.newInstance(types.get(Random.element(ingredients).getClass()));
 				
 			}
-			
+
+			if (seeds.size() == 1){
+				result.identify();
+			}
+
+
 			while (result instanceof PotionOfHealing
 					&& (Dungeon.isChallenged(Challenges.NO_HEALING)
 					|| Random.Int(10) < Dungeon.LimitedDrops.COOKING_HP.count)) {

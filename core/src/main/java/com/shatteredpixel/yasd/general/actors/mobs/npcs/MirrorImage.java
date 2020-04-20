@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
+import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -197,6 +198,7 @@ public class MirrorImage extends NPC {
 		immunities.add( ToxicGas.class );
 		immunities.add( CorrosiveGas.class );
 		immunities.add( Burning.class );
+		immunities.add( Corruption.class );
 	}
 	
 	public static class MirrorInvis extends Invisibility {

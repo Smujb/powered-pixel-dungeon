@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.NPC;
@@ -300,6 +301,10 @@ public class WandOfLivingEarth extends DamageWand {
 			actPriority = MOB_PRIO + 1;
 
 			HP = HT = 0;
+		}
+
+		{
+			immunities.add( Corruption.class );
 		}
 
 		@Override

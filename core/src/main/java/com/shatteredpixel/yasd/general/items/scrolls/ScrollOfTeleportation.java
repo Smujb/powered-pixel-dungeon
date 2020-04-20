@@ -127,7 +127,7 @@ public class ScrollOfTeleportation extends Scroll {
 			if (count-- <= 0) {
 				break;
 			}
-		} while (pos == -1);
+		} while (pos == -1 || Dungeon.level.secret(pos));
 		
 		if (pos == -1) {
 			
@@ -174,7 +174,7 @@ public class ScrollOfTeleportation extends Scroll {
 			int cell;
 			for (Point p : r.charPlaceablePoints(level)){
 				cell = level.pointToCell(p);
-				if (level.passable(cell) && !level.visited[cell] && Actor.findChar(cell) == null){
+				if (level.passable(cell) && !level.visited[cell] && !level.secret(cell)){
 					candidates.add(cell);
 				}
 			}
