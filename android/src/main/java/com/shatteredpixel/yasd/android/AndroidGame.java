@@ -27,14 +27,11 @@
 
 package com.shatteredpixel.yasd.android;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -43,7 +40,6 @@ import com.rohitss.uceh.UCEHandler;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.watabou.noosa.Game;
-import com.watabou.noosa.audio.Music;
 import com.watabou.utils.FileUtils;
 
 public class AndroidGame extends AndroidApplication {
@@ -105,28 +101,6 @@ public class AndroidGame extends AndroidApplication {
 		initialize(mainGame, config);
 		
 		view = (GLSurfaceView)graphics.getView();
-		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			TelephonyManager mgr =
-					(TelephonyManager) instance.getSystemService(Activity.TELEPHONY_SERVICE);
-			mgr.listen(new PhoneStateListener(){
-				
-				@Override
-				public void onCallStateChanged(int state, String incomingNumber)
-				{
-					if( state == TelephonyManager.CALL_STATE_RINGING ) {
-						Music.INSTANCE.pause();
-						
-					} else if( state == TelephonyManager.CALL_STATE_IDLE ) {
-						if (!Game.instance.isPaused()) {
-							Music.INSTANCE.resume();
-						}
-					}
-					
-					super.onCallStateChanged(state, incomingNumber);
-				}
-			}, PhoneStateListener.LISTEN_CALL_STATE);
-		}
 	}
 	
 	@Override

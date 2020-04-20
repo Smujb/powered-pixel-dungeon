@@ -166,7 +166,7 @@ public class WndStartGame extends Window {
 					Icons.get( GameSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 				@Override
 				protected void onClick() {
-					MainGame.scene().add(new WndChallenges(GameSettings.challenges(), true) {
+					MainGame.scene().addToFront(new WndChallenges(GameSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
 							icon( Icons.get( GameSettings.challenges() > 0 ?
@@ -272,8 +272,7 @@ public class WndStartGame extends Window {
 		protected void onClick() {
 			super.onClick();
 			if(cl.locked()){
-				MainGame.scene().add(
-						new WndMessage(cl.unlockMsg()));
+				MainGame.scene().addToFront( new WndMessage(cl.unlockMsg()));
 			} else {
 				GamesInProgress.selectedClass = cl;
 			}
@@ -307,7 +306,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
+					MainGame.scene().addToFront(new WndMessage(Messages.get(cl, cl.name() + "_desc_item")));
 				}
 			};
 			heroItem.setSize(BTN_SIZE, BTN_SIZE);
@@ -317,7 +316,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
+					MainGame.scene().addToFront(new WndMessage(Messages.get(cl, cl.name() + "_desc_loadout")));
 				}
 			};
 			heroLoadout.setSize(BTN_SIZE, BTN_SIZE);
@@ -327,7 +326,7 @@ public class WndStartGame extends Window {
 				@Override
 				protected void onClick() {
 					if (cl == null) return;
-					MainGame.scene().add(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
+					MainGame.scene().addToFront(new WndMessage(Messages.get(cl, cl.name() + "_desc_misc")));
 				}
 			};
 			heroMisc.setSize(BTN_SIZE, BTN_SIZE);
@@ -341,7 +340,7 @@ public class WndStartGame extends Window {
 					for (HeroSubClass sub : cl.subClasses()){
 						msg += "\n\n" + sub.desc();
 					}
-					MainGame.scene().add(new WndMessage(msg));
+					MainGame.scene().addToFront(new WndMessage(msg));
 				}
 			};
 			heroSubclass.setSize(BTN_SIZE, BTN_SIZE);
