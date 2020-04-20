@@ -57,7 +57,7 @@ public class Notes {
 		
 		@Override
 		public int compareTo(@NotNull Record another ) {
-			return key == null || another.key.equals(key) ? 0 : 1;
+			return (key == null || another.key == null) || another.key.equals(key) ? 0 : 1;
 		}
 		
 		private static final String KEY = "key";
