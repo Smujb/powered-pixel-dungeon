@@ -27,34 +27,49 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Hex;
-import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
-import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
+import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
 import com.watabou.utils.Random;
 
+//TODO stats on these might be a bit weak
 public abstract class Shaman extends Mob {
 
 	{
 		EXP = 6;
-		maxLvl = 14;
 
-		loot = Generator.Category.SCROLL;
-		lootChance = 0.33f;
+		damageFactor = 0.75f;
+		baseSpeed = 1.5f;
+		accuracyFactor = 2f;
+
+		loot = Generator.Category.WAND;
+		lootChance = 0.05f; //initially, see rollToDropLoot
 	}
 
 
 	//used so resistances can differentiate between melee and magical attacks
 
-	protected abstract void debuff( Char enemy );
-
 	@Override
 	public String description() {
 		return super.description() + "\n\n" + Messages.get(this, "spell_desc");
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		//each drop makes future drops 1/3 as likely
+		// so loot chance looks like: 1/33, 1/100, 1/300, 1/900, etc.
+		lootChance *= Math.pow(1/3f, Dungeon.LimitedDrops.SHAMAN_WAND.count);
+		super.rollToDropLoot();
+		super.rollToDropLoot();
+	}
+
+	@Override
+	protected Item createLoot() {
+		Dungeon.LimitedDrops.SHAMAN_WAND.count++;
+		return super.createLoot();
 	}
 
 	public static class RedShaman extends Shaman {
@@ -63,8 +78,8 @@ public abstract class Shaman extends Mob {
 		}
 
 		@Override
-		protected void debuff( Char enemy ) {
-			Buff.prolong( enemy, Weakness.class, Weakness.DURATION );
+		public Element elementalType() {
+			return Element.DARK;
 		}
 	}
 
@@ -74,8 +89,8 @@ public abstract class Shaman extends Mob {
 		}
 
 		@Override
-		protected void debuff( Char enemy ) {
-			Buff.prolong( enemy, Vulnerable.class, Vulnerable.DURATION );
+		public Element elementalType() {
+			return Element.DESTRUCTION;
 		}
 	}
 
@@ -85,8 +100,8 @@ public abstract class Shaman extends Mob {
 		}
 
 		@Override
-		protected void debuff( Char enemy ) {
-			Buff.prolong( enemy, Hex.class, Hex.DURATION );
+		public Element elementalType() {
+			return Element.AIR;
 		}
 	}
 

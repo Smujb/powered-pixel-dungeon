@@ -27,11 +27,13 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.sprites.BanditSprite;
 import com.shatteredpixel.yasd.general.sprites.ThiefSprite;
 import com.watabou.utils.Random;
@@ -50,6 +52,18 @@ public class Thief extends Mob {
 		lootChance = 0.25f;
 
 		properties.add(Property.UNDEAD);
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		lootChance *= Math.pow(1/3f, Dungeon.LimitedDrops.THEIF_MISC.count);
+		super.rollToDropLoot();
+	}
+
+	@Override
+	protected Item createLoot() {
+		Dungeon.LimitedDrops.THEIF_MISC.count++;
+		return super.createLoot();
 	}
 
 	public static class Bandit extends Thief {

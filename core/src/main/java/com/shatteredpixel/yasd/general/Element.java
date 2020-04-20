@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
 import com.shatteredpixel.yasd.general.actors.buffs.Combo;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
+import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
@@ -139,6 +140,7 @@ public enum Element {
 				Buff.affect(defender, Roots.class, Paralysis.DURATION);
 				break;
 			case AIR:
+				Buff.affect(defender, Hex.class, 5);
 				break;
 			case ACID:
 				if (Random.Int(2) == 0) {
