@@ -203,7 +203,7 @@ public class CityBossLevel extends Level {
 					Random.IntRange( LEFT + 1, LEFT + HALL_WIDTH - 2 ) +
 					Random.IntRange( TOP + HALL_HEIGHT + 2, TOP + HALL_HEIGHT  + CHAMBER_HEIGHT ) * width();
 			} while (pos == getEntrance().getPos(this));
-			drop( item, pos ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
+			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 	}
 	

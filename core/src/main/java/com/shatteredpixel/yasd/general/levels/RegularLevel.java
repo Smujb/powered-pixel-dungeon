@@ -322,7 +322,7 @@ public abstract class RegularLevel extends Level {
 				Heap dropped = drop( toDrop, cell );
 				dropped.type = type;
 				if (type == Heap.Type.SKELETON){
-					dropped.setHauntedIfCursed(0.75f);
+					dropped.setHauntedIfCursed();
 				}
 			}
 			
@@ -345,7 +345,7 @@ public abstract class RegularLevel extends Level {
 			if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
 				map[cell] = Terrain.GRASS;
 			}
-			drop( item, cell ).setHauntedIfCursed(1f).type = Heap.Type.REMAINS;
+			drop( item, cell ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 
 		DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
