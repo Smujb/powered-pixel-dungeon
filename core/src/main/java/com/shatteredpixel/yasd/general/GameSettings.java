@@ -118,7 +118,7 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 	}
 	
 	public static int brightness() {
-		return getInt( KEY_BRIGHTNESS, 0, -2, 2 );
+		return getInt( KEY_BRIGHTNESS, 0, -1, 1 );
 	}
 	
 	public static void visualGrid( int value ){
@@ -126,9 +126,7 @@ public class GameSettings extends com.watabou.utils.GameSettings {
 		GameScene.updateMap();
 	}
 	
-	public static int visualGrid() {
-		return getInt( KEY_GRID, 0, -1, 3 );
-	}
+	public static int visualGrid(){		return getInt( KEY_GRID, 0, -1, 2 );	}
 
 	public static void cutscenes( boolean value ){
 		put( KEY_CUTSCENES, value );

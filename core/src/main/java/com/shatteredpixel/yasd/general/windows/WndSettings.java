@@ -130,62 +130,69 @@ public class WndSettings extends WndTabbed {
 				add(scale);
 			}
 
-			CheckBox chkSaver = new CheckBox( Messages.get(this, "saver") ) {
-				@Override
-				protected void onClick() {
-					super.onClick();
-					if (checked()) {
-						checked(!checked());
-						MainGame.scene().add(new WndOptions(
-								Messages.get(DisplayTab.class, "saver"),
-								Messages.get(DisplayTab.class, "saver_desc"),
-								Messages.get(DisplayTab.class, "okay"),
-								Messages.get(DisplayTab.class, "cancel")) {
-							@Override
-							protected void onSelect(int index) {
-								if (index == 0) {
-									checked(!checked());
-									GameSettings.powerSaver(checked());
-								}
-							}
-						});
-					} else {
-						GameSettings.powerSaver(checked());
-					}
-				}
-			};
-			if (PixelScene.maxScreenZoom >= 2) {
-				chkSaver.setRect(0, scale.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-				chkSaver.checked(GameSettings.powerSaver());
-				add(chkSaver);
-			}
+			float bottom = scale.bottom();
 
-			//TODO need to disable this in some situations. (desktop, android splitscreen)
-			RedButton btnOrientation = new RedButton( PixelScene.landscape() ?
-					Messages.get(this, "portrait")
-					: Messages.get(this, "landscape") ) {
-				@Override
-				protected void onClick() {
-					GameSettings.landscape(!PixelScene.landscape());
+			if (!DeviceCompat.isDesktop()) {
+				CheckBox chkSaver = new CheckBox( Messages.get( this, "saver" ) ) {
+					@Override
+					protected void onClick() {
+						super.onClick();
+						if (checked()) {
+							checked( !checked() );
+							MainGame.scene().add( new WndOptions(
+									Messages.get( DisplayTab.class, "saver" ),
+									Messages.get( DisplayTab.class, "saver_desc" ),
+									Messages.get( DisplayTab.class, "okay" ),
+									Messages.get( DisplayTab.class, "cancel" ) ) {
+								@Override
+								protected void onSelect( int index ) {
+									if (index == 0) {
+										checked( !checked() );
+										GameSettings.powerSaver( checked() );
+									}
+								}
+							} );
+						} else {
+							GameSettings.powerSaver( checked() );
+						}
+					}
+				};
+				if (PixelScene.maxScreenZoom >= 2) {
+					chkSaver.setRect( 0, scale.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT );
+					chkSaver.checked( GameSettings.powerSaver() );
+					add( chkSaver );
 				}
-			};
-			btnOrientation.setRect(0, chkSaver.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
-			add( btnOrientation );
+
+				//TODO also need to disable this in android splitscreen
+				RedButton btnOrientation = new RedButton( PixelScene.landscape() ?
+						Messages.get( this, "portrait" )
+						: Messages.get( this, "landscape" ) ) {
+					@Override
+					protected void onClick() {
+						GameSettings.landscape( !PixelScene.landscape() );
+					}
+				};
+				btnOrientation.setRect( 0, chkSaver.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT );
+				add( btnOrientation );
+
+				bottom = btnOrientation.bottom();
+			}
 
 
 			OptionSlider brightness = new OptionSlider(Messages.get(this, "brightness"),
-					Messages.get(this, "dark"), Messages.get(this, "bright"), -2, 2) {
+
+					Messages.get(this, "dark"), Messages.get(this, "bright"), -1, 1) {
 				@Override
 				protected void onChange() {
 					GameSettings.brightness(getSelectedValue());
 				}
 			};
 			brightness.setSelectedValue(GameSettings.brightness());
-			brightness.setRect(0, btnOrientation.bottom() + GAP_LRG, WIDTH, SLIDER_HEIGHT);
+			brightness.setRect(0, bottom + GAP_LRG, WIDTH, SLIDER_HEIGHT);
 			add(brightness);
 
 			OptionSlider tileGrid = new OptionSlider(Messages.get(this, "visual_grid"),
-					Messages.get(this, "off"), Messages.get(this, "high"), -1, 3) {
+					Messages.get(this, "off"), Messages.get(this, "high"), -1, 2) {
 				@Override
 				protected void onChange() {
 					GameSettings.visualGrid(getSelectedValue());
@@ -285,7 +292,7 @@ public class WndSettings extends WndTabbed {
 			chkFlipTags.checked(GameSettings.flipTags());
 			add(chkFlipTags);
 
-			OptionSlider slots = new OptionSlider(Messages.get(this, "quickslots"), "0", "4", 0, 4) {
+			/*OptionSlider slots = new OptionSlider(Messages.get(this, "quickslots"), "0", "4", 0, 4) {
 				@Override
 				protected void onChange() {
 					GameSettings.quickSlots(getSelectedValue());
@@ -294,7 +301,7 @@ public class WndSettings extends WndTabbed {
 			};
 			slots.setSelectedValue(GameSettings.quickSlots());
 			slots.setRect(0, chkFlipTags.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
-			add(slots);
+			add(slots);*/
 
 			CheckBox chkFullscreen = new CheckBox( Messages.get(this, "fullscreen") ) {
 				@Override
@@ -303,7 +310,7 @@ public class WndSettings extends WndTabbed {
 					GameSettings.fullscreen(checked());
 				}
 			};
-			chkFullscreen.setRect( 0, slots.bottom() + GAP_SML, WIDTH, BTN_HEIGHT );
+			chkFullscreen.setRect( 0, chkFlipTags.bottom() + GAP_SML, WIDTH, BTN_HEIGHT );
 			chkFullscreen.checked(GameSettings.fullscreen());
 			if (DeviceCompat.isDesktop()){
 				chkFullscreen.text( "Fullscreen" );
