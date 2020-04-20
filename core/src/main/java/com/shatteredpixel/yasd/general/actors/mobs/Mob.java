@@ -1030,35 +1030,46 @@ public abstract class Mob extends Char {
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
 			if (enemyInFOV && (justAlerted || notice(enemy, false))) {
 
-				enemySeen = true;
-
-				notice();
-				alerted = true;
-				state = HUNTING;
-				target = enemy.pos;
-
-				if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
-					for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
-						if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
-							mob.beckon( target );
-						}
-					}
-				}
+				return noticeEnemy();
 
 			} else {
 
-				enemySeen = false;
+				return continueWandering();
+			}
+		}
 
-				int oldPos = pos;
-				if (target != -1 && getCloser( target )) {
-					spend( 1 / speed() );
-					return moveSprite( oldPos, pos );
-				} else {
-					target = Dungeon.level.randomDestination();
-					spend( TICK );
+		protected boolean noticeEnemy(){
+			enemySeen = true;
+
+			notice();
+			alerted = true;
+			state = HUNTING;
+			target = enemy.pos;
+
+			if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
+				for (Mob mob : Dungeon.level.mobs) {
+					if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
+						mob.beckon( target );
+					}
 				}
 
 			}
+
+			return true;
+		}
+
+		protected boolean continueWandering(){
+			enemySeen = false;
+
+			int oldPos = pos;
+			if (target != -1 && getCloser( target )) {
+				spend( 1 / speed() );
+				return moveSprite( oldPos, pos );
+			} else {
+				target = Dungeon.level.randomDestination();
+				spend( TICK );
+			}
+
 			return true;
 		}
 	}
