@@ -162,6 +162,15 @@ public class WandOfTransfusion extends Wand {
 	}
 
 	@Override
+	public String statsDesc() {
+		int selfDMG = Math.round(Dungeon.hero.HT*0.10f);
+		if (levelKnown)
+			return Messages.get(this, "stats_desc", selfDMG, selfDMG + 3*level(), 5+2*level(), 3+level()/2, 6+level());
+		else
+			return Messages.get(this, "stats_desc", selfDMG, selfDMG, 5, 3, 6);
+	}
+
+	@Override
 	protected void fx(Ballistica beam, Callback callback) {
 		curUser.sprite.parent.add(
 				new Beam.HealthRay(curUser.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(beam.collisionPos)));
