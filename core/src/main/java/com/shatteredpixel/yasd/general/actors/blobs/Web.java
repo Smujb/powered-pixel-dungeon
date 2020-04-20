@@ -28,39 +28,42 @@
 package com.shatteredpixel.yasd.general.actors.blobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.WebParticle;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
 
 public class Web extends Blob {
+
+	{
+		//acts before the hero, to ensure terrain is adjusted correctly
+		actPriority = HERO_PRIO+1;
+	}
 	
 	@Override
 	protected void evolve() {
 
 		int cell;
 
+		Level l = Dungeon.level;
 		for (int i = area.left; i < area.right; i++){
 			for (int j = area.top; j < area.bottom; j++){
-				cell = i + j*Dungeon.level.width();
+				cell = i + j*l.width();
 				off[cell] = cur[cell] > 0 ? cur[cell] - 1 : 0;
 
-				if (off[cell] > 0) {
-
-					volume += off[cell];
-
-					Char ch = Actor.findChar( cell );
-					if (ch != null && !ch.isImmune(this.getClass())) {
-						Buff.prolong( ch, Roots.class, TICK );
-					}
-				}
+				volume += off[cell];
 			}
 		}
 	}
-	
+
+	//affects characters as they step on it. See Level.OccupyCell and Level.PressCell
+	public static void affectChar( Char ch ){
+		Buff.prolong( ch, Roots.class, 5f );
+	}
+
 	@Override
 	public void use( BlobEmitter emitter ) {
 		super.use( emitter );

@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.DarkGas;
 import com.shatteredpixel.yasd.general.actors.blobs.SmokeScreen;
+import com.shatteredpixel.yasd.general.actors.blobs.Web;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -277,6 +278,9 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean solid(int pos) {
+		if (Blob.volumeAt(this, pos, Web.class) > 0) {
+			return true;
+		}
 		return map[pos].solid();
 	}
 
@@ -1256,6 +1260,11 @@ public abstract class Level implements Bundlable {
 	}
 	
 	public void occupyCell(@NotNull Char ch ){
+		if (!ch.isImmune(Web.class) && Blob.volumeAt(ch.pos, Web.class) > 0){
+			blobs.get(Web.class).clear(ch.pos);
+			Web.affectChar( ch );
+		}
+
 		if (!ch.isFlying()){
 			
 			if (pit(ch.pos)) {
@@ -1330,6 +1339,10 @@ public abstract class Level implements Bundlable {
 		Plant plant = plants.get( cell );
 		if (plant != null) {
 			plant.trigger();
+		}
+
+		if (hard && Blob.volumeAt(cell, Web.class) > 0){
+			blobs.get(Web.class).clear(cell);
 		}
 	}
 	
