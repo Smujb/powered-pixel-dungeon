@@ -171,6 +171,8 @@ public class Buff extends Actor {
 	}
 	
 	public static void detach(Char target, Class<? extends Buff> cl) {
-		detach( target.buff( cl ) );
+		for ( Buff b : target.buffs( cl )){
+			b.detach();
+		}
 	}
 }

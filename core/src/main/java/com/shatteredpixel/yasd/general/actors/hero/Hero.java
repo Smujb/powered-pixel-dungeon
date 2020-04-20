@@ -533,7 +533,7 @@ public class Hero extends Char {
 		}
 		
 		checkVisibleMobs();
-		if (buff(FlavourBuff.class) != null) {
+		if (!buffs(FlavourBuff.class).isEmpty()) {
 			BuffIndicator.refreshHero();
 		}
 		
