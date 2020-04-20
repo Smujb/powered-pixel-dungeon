@@ -296,7 +296,7 @@ public class WndSettings extends WndTabbed {
 			slots.setRect(0, chkFlipTags.bottom() + GAP_TINY, WIDTH, SLIDER_HEIGHT);
 			add(slots);
 
-			CheckBox chkFullscreen = new CheckBox( Messages.get(this, "nav_bar") ) {
+			CheckBox chkFullscreen = new CheckBox( Messages.get(this, "fullscreen") ) {
 				@Override
 				protected void onClick() {
 					super.onClick();

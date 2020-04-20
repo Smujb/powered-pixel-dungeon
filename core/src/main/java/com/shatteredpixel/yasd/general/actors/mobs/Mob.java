@@ -570,7 +570,7 @@ public abstract class Mob extends Char {
 
 				path = null;
 
-				if (Actor.findChar(target) == null && Dungeon.level.passable(target)) {
+				if (Actor.findChar(target) == null && (Dungeon.level.passable(target) || (flying && Dungeon.level.avoid(target)))) {
 					step = target;
 				}
 
@@ -600,7 +600,7 @@ public abstract class Mob extends Char {
 								path.add(target);
 							}
 
-						} else if (!path.isEmpty()) {
+						} else {
 							//if the new  target is simply 1 earlier in the xPos shorten the xPos
 							if (path.getLast() == target) {
 

@@ -152,6 +152,15 @@ public class QuickSlotButton extends Button {
 	}
 
 	@Override
+	public void update() {
+		super.update();
+		if (targeting && lastTarget != null && lastTarget.sprite != null){
+			crossM.point(lastTarget.sprite.center(crossM));
+		}
+	}
+
+
+	@Override
 	public KeyAction keyAction() {
 		switch (slotNum){
 			case 0:
