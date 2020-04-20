@@ -40,7 +40,6 @@ import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.general.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.general.items.armor.MageArmor;
 import com.shatteredpixel.yasd.general.items.armor.RogueArmor;
-import com.shatteredpixel.yasd.general.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.yasd.general.items.bags.PotionBandolier;
 import com.shatteredpixel.yasd.general.items.bags.ScrollHolder;
 import com.shatteredpixel.yasd.general.items.bags.VelvetPouch;
@@ -189,15 +188,15 @@ public enum HeroClass {
 	private static void initRogue(@NotNull Hero hero ) {
 		(hero.belongings.miscs[0] = new Sneak()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
-
-		CloakOfShadows cloak = new CloakOfShadows();
-		(hero.belongings.miscs[2] = cloak).identify();
-		hero.belongings.miscs[2].activate( hero );
+		//TODO Add another unique item for Rogue
+		//CloakOfShadows cloak = new CloakOfShadows();
+		//(hero.belongings.miscs[2] = cloak).identify();
+		//hero.belongings.miscs[2].activate( hero );
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
 
-		Dungeon.quickslot.setSlot(0, cloak);
+		//Dungeon.quickslot.setSlot(0, cloak);
 		Dungeon.quickslot.setSlot(1, knives);
 
 		new VelvetPouch().collect();
