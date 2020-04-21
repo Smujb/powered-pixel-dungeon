@@ -33,8 +33,10 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
+import com.shatteredpixel.yasd.UpdateImpl;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.Point;
@@ -84,6 +86,10 @@ public class DesktopLauncher {
             Game.versionCode = Integer.parseInt(DesktopLauncher.class.getPackage().getImplementationVersion());
         } catch (NumberFormatException e) {
             Game.versionCode = Integer.parseInt(System.getProperty("Implementation-Version"));
+        }
+
+        if (UpdateImpl.supportsUpdates()){
+            Updates.service = UpdateImpl.getUpdateService();
         }
 
 

@@ -30,6 +30,8 @@ package com.watabou.utils;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public abstract class PlatformSupport {
+
+	public abstract boolean connectedToUnmeteredNetwork();
 	
 	public abstract void updateDisplaySize();
 	

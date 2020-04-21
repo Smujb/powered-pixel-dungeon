@@ -41,6 +41,11 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class DesktopPlatformSupport extends PlatformSupport {
+    @Override
+    public boolean connectedToUnmeteredNetwork() {
+        return true; //no easy way to check this in desktop, just assume user doesn't care
+    }
+
 
     @Override
     public void updateDisplaySize() {

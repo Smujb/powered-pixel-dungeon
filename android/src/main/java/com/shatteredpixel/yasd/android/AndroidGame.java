@@ -37,8 +37,10 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
+import com.shatteredpixel.yasd.UpdateImpl;
 import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
 
@@ -65,6 +67,9 @@ public class AndroidGame extends AndroidApplication {
 			Game.versionCode = 0;
 		}
 
+		if (UpdateImpl.supportsUpdates()){
+			Updates.service = UpdateImpl.getUpdateService();
+		}
 
 		FileUtils.setDefaultFileProperties( Files.FileType.Local, "" );
 

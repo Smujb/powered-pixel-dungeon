@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.LanguageButton;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
+import com.shatteredpixel.yasd.general.ui.UpdateNotification;
 import com.shatteredpixel.yasd.general.windows.WndSettings;
 import com.shatteredpixel.yasd.general.windows.WndStartGame;
 import com.watabou.glwrap.Blending;
@@ -221,6 +222,11 @@ public class TitleScene extends PixelScene {
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos( w - btnExit.width(), 0 );
 		add( btnExit );
+
+		UpdateNotification updInfo = new UpdateNotification();
+		updInfo.setRect(4, h-BTN_HEIGHT, updInfo.reqWidth() + 6, BTN_HEIGHT-4);
+		add(updInfo);
+
 
 		fadeIn();
 	}
