@@ -57,9 +57,9 @@ public class BasicArmor extends Armor {
 	@Override
 	public String name() {
 		if (tier < 4) {
-			return Glyph.getName(Disc.class, glyph);
+			return Glyph.getName(Disc.class, glyph, cursedKnown);
 		} else  {
-			return Glyph.getName(Scale.class, glyph);
+			return Glyph.getName(Scale.class, glyph, cursedKnown);
 		}
 	}
 

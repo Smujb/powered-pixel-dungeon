@@ -528,8 +528,8 @@ public class Item implements Bundlable {
 
 	public Emitter emitter() {
 		Emitter emitter = new Emitter();
-		if (cursed) {
-			emitter.pour(ShadowParticle.CURSE, 0.25f);
+		if (cursed && cursedKnown) {
+			emitter.pour(ShadowParticle.CURSE, 0.15f);
 		}
 		return emitter;
 	}

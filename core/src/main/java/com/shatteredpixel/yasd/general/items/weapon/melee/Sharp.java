@@ -52,7 +52,7 @@ public class Sharp extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		return Enchantment.getName(Scimitar.class, enchantment);
+		return Enchantment.getName(Scimitar.class, enchantment, cursedKnown);
 	}
 
 	@Override

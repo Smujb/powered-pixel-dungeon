@@ -448,7 +448,7 @@ public class Armor extends KindofMisc {
 	
 	@Override
 	public String name() {
-		return Glyph.getName(this.getClass(), glyph);
+		return Glyph.getName(this.getClass(), glyph, cursedKnown);
 	}
 
 	@Override
@@ -645,9 +645,9 @@ public class Armor extends KindofMisc {
 	
 	public static abstract class Glyph implements Bundlable {
 
-		public static String getName(Class<? extends Armor> armClass, Glyph gly) {
+		public static String getName(Class<? extends Armor> armClass, Glyph gly, boolean showGlyph) {
 			String name = Messages.get(armClass, "name");
-			if (gly != null) {
+			if (gly != null && showGlyph) {
 				name = gly.name(name);
 			}
 			return name;

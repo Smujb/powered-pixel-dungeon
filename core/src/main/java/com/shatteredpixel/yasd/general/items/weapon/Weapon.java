@@ -257,7 +257,7 @@ abstract public class Weapon extends KindOfWeapon {
 	@Override
 	public String name() {
 		//return enchantment != null && (cursedKnown || !enchantment.curse()) ? enchantment.name( super.name() ) : super.name();
-		return Enchantment.getName(this.getClass(), enchantment);
+		return Enchantment.getName(this.getClass(), enchantment, cursedKnown);
 	}
 	
 	@Override
@@ -323,9 +323,9 @@ abstract public class Weapon extends KindOfWeapon {
 	public static abstract class Enchantment implements Bundlable {
 
 		//Why is this static when it takes an enchant as an argument? Well, it prevents me doing a null-check every time I want to use it (as enchantment can be null and often is)
-		public static String getName(Class<? extends Weapon> weaponClass, Enchantment ench) {
+		public static String getName(Class<? extends Weapon> weaponClass, Enchantment ench, boolean showEnchant) {
 			String name = Messages.get(weaponClass, "name");
-			if (ench != null) {
+			if (ench != null && showEnchant) {
 				name = ench.name(name);
 			}
 			return name;

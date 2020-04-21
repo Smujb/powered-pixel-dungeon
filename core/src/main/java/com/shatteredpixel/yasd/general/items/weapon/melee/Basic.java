@@ -76,15 +76,15 @@ public class Basic extends MeleeWeapon {
 	public String name() {
 		switch (tier) {
 			case 1:
-				return Enchantment.getName(WornShortsword.class, enchantment);
+				return Enchantment.getName(WornShortsword.class, enchantment, cursedKnown);
 			case 2:
-				return Enchantment.getName(Shortsword.class, enchantment);
+				return Enchantment.getName(Shortsword.class, enchantment, cursedKnown);
 			case 3:
-				return Enchantment.getName(Sword.class, enchantment);
+				return Enchantment.getName(Sword.class, enchantment, cursedKnown);
 			case 4:
-				return Enchantment.getName(Longsword.class, enchantment);
+				return Enchantment.getName(Longsword.class, enchantment, cursedKnown);
 			case 5: default:
-				return Enchantment.getName(Greatsword.class, enchantment);
+				return Enchantment.getName(Greatsword.class, enchantment, cursedKnown);
 
 		}
 	}

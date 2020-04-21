@@ -68,9 +68,9 @@ public class Blunt extends MeleeWeapon {//War Hammer will get reworked.
 	@Override
 	public String name() {
 		if (tier < 4) {
-			return Enchantment.getName(Mace.class, enchantment);
+			return Enchantment.getName(Mace.class, enchantment, cursedKnown);
 		} else  {
-			return Enchantment.getName(WarHammer.class, enchantment);
+			return Enchantment.getName(WarHammer.class, enchantment, cursedKnown);
 		}
 	}
 

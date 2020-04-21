@@ -48,7 +48,7 @@ public class Long extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		return Enchantment.getName(Whip.class, enchantment);
+		return Enchantment.getName(Whip.class, enchantment, cursedKnown);
 	}
 
 	private static class Whip extends MeleeWeapon {}

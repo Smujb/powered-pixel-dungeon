@@ -25,20 +25,37 @@
  *
  */
 apply plugin: "java"
-sourceCompatibility = targetCompatibility = 1.8
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
 sourceCompatibility = targetCompatibility = appJavaCompatibility
 
 ext.mainClass = "com.shatteredpixel.yasd.desktop.DesktopLauncher"
 sourceSets.main.resources.srcDirs = [new File(project(':core').projectDir, "/src/main/assets"),
                                      new File(project(':desktop').projectDir,"/src/main/assets")]
 
+sourceSets {
+    debug
+    release
+}
 
-task releaseJAR(dependsOn: classes, type: Jar) {
+task debug(dependsOn: classes, type: JavaExec) {
+    classpath = sourceSets.debug.runtimeClasspath + sourceSets.main.runtimeClasspath
+    ignoreExitValue = true
 
+    main = mainClass
+    systemProperty 'Specification-Title', appName
+    systemProperty 'Specification-Version', appVersionName + "-INDEV"
+    systemProperty 'Implementation-Version', appVersionCode
+}
+
+//need a separate task to compile dependencies first, seeing as we're setting them up in an odd way
+task compileForRelease(dependsOn: classes, type: JavaCompile){
+    classpath = sourceSets.release.runtimeClasspath + sourceSets.main.runtimeClasspath
+}
+
+task release(dependsOn: compileForRelease, type: Jar) {
     from sourceSets.main.output
+    from { sourceSets.release.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }
     from { configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) } }
 
     manifest {
@@ -47,16 +64,6 @@ task releaseJAR(dependsOn: classes, type: Jar) {
         attributes 'Specification-Version': appVersionName
         attributes 'Implementation-Version': appVersionCode
     }
-}
-
-task runDebug(dependsOn: classes, type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-
-    ignoreExitValue = true
-    main = mainClass
-    systemProperty 'Specification-Title', appName
-    systemProperty 'Specification-Version', appVersionName + "-INDEV"
-    systemProperty 'Implementation-Version', appVersionCode
 }
 
 dependencies {

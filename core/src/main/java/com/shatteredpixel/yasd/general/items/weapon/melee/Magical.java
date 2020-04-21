@@ -45,7 +45,7 @@ public class Magical extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		return Enchantment.getName(RunicBlade.class, enchantment);
+		return Enchantment.getName(RunicBlade.class, enchantment, cursedKnown);
 	}
 
 	@Override

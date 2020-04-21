@@ -62,9 +62,9 @@ public class Shield extends MeleeWeapon {
 	@Override
 	public String name() {
 		if (tier >= 4) {
-			return Enchantment.getName(Greatshield.class, enchantment);
+			return Enchantment.getName(Greatshield.class, enchantment, cursedKnown);
 		} else {
-			return Enchantment.getName(RoundShield.class, enchantment);
+			return Enchantment.getName(RoundShield.class, enchantment, cursedKnown);
 		}
 	}
 
