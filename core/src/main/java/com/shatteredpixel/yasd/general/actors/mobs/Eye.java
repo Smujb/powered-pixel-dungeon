@@ -32,6 +32,8 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.items.Dewdrop;
+import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -80,6 +82,24 @@ public class Eye extends Mob {
 	private int beamTarget = -1;
 	private int beamCooldown;
 	public boolean beamCharged;
+
+	//generates an average of 1 dew, 0.25 seeds, and 0.25 stones
+	@Override
+	protected Item createLoot() {
+		Item loot;
+		switch(Random.Int(4)){
+			case 0: case 1: default:
+				loot = new Dewdrop().quantity(2);
+				break;
+			case 3:
+				loot = Generator.random(Generator.Category.SEED);
+				break;
+			case 4:
+				loot = Generator.random(Generator.Category.STONE);
+				break;
+		}
+		return loot;
+	}
 
 	@Override
     public boolean canAttack(Char enemy) {

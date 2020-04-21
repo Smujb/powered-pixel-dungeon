@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.items.food.Food;
+import com.shatteredpixel.yasd.general.items.food.Pasty;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MonkSprite;
 import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
@@ -177,6 +178,7 @@ public class Monk extends Mob {
 			spriteClass = SeniorSprite.class;
 			damageFactor = 0.7f;
 
+			loot = new Pasty();
 			lootChance = 0.2f;
 		}
 

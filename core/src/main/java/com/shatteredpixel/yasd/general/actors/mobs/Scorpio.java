@@ -27,18 +27,19 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
+import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.sprites.AcidicSprite;
 import com.shatteredpixel.yasd.general.sprites.ScorpioSprite;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 public class Scorpio extends Mob {
 	
@@ -57,8 +58,8 @@ public class Scorpio extends Mob {
 
 		baseSpeed = 0.8f;
 
-		loot = new  PotionOfHealing();
-		lootChance = 0.2f;
+		loot = Generator.Category.POTION;
+		lootChance = 0.5f;
 
 		properties.add(Property.DEMONIC);
 	}
@@ -90,13 +91,12 @@ public class Scorpio extends Mob {
 	
 	@Override
 	protected Item createLoot() {
-		//(9-count) / 9 chance of getting healing, otherwise mystery meat
-		if (Random.Float() < ((9f - Dungeon.LimitedDrops.SCORPIO_HP.count) / 9f)) {
-			Dungeon.LimitedDrops.SCORPIO_HP.count++;
-			return (Item)loot;
-		} else {
-			return new  MysteryMeat();
-		}
+		Class<?extends Potion> loot;
+		do{
+			loot = (Class<? extends Potion>) Random.oneOf(Generator.Category.POTION.classes);
+		} while (loot == PotionOfHealing.class);
+
+		return Reflection.newInstance(loot);
 	}
 
 	public static class Acidic extends Scorpio {

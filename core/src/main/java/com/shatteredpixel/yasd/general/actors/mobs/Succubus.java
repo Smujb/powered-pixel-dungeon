@@ -37,13 +37,17 @@ import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
+import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
+import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.SuccubusSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 
@@ -65,9 +69,9 @@ public class Succubus extends Mob {
 		
 		EXP = 12;
 		maxLvl = 25;
-		
-		loot = new  ScrollOfLullaby();
-		lootChance = 0.05f;
+
+		loot = Generator.Category.SCROLL;
+		lootChance = 0.33f;
 
 		properties.add(Property.DEMONIC);
 	}
@@ -95,6 +99,16 @@ public class Succubus extends Mob {
 		}
 		
 		return damage;
+	}
+
+	@Override
+	protected Item createLoot() {
+		Class<?extends Scroll> loot;
+		do{
+			loot = (Class<? extends Scroll>) Random.oneOf(Generator.Category.SCROLL.classes);
+		} while (loot == ScrollOfIdentify.class);
+
+		return Reflection.newInstance(loot);
 	}
 	
 	@Override
