@@ -44,7 +44,6 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.general.items.armor.curses.Bulk;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Brimstone;
@@ -440,16 +439,14 @@ public class Belongings implements Iterable<Item> {
 				stealth += 1 + CurArmour.level()/3f;
 			}
 			int penalty = CurArmour.tier;
-			if (CurArmour instanceof RogueArmor) {
-				stealth += CurArmour.level() + 1;
-			} else {
-				if (owner instanceof Hero) {
-					if (((Hero)owner).heroClass == HeroClass.ROGUE) {
-						penalty /= 2;
-					}
+
+			if (owner instanceof Hero) {
+				if (((Hero) owner).heroClass == HeroClass.ROGUE) {
+					penalty /= 2;
 				}
-				stealth -= penalty;
 			}
+			stealth -= penalty;
+
 			stealth *= CurArmour.STE;
 		}
 		return stealth;

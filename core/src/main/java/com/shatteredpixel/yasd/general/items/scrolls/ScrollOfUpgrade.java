@@ -54,6 +54,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	protected void onItemSelected( Item item ) {
 		if (curUser instanceof Hero) {
 			upgrade(curUser);
+
 		}
 
 		//logic for telling the user when item properties change from upgrades

@@ -198,10 +198,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public float speed() {
 		float speed = super.speed();
-		ArrayList<Armor> Armors = hero.belongings.getArmors();//Applies speed factor for all armours
-		for (int i=0; i < Armors.size(); i++) {
-			speed *= Armors.get(i).speedFactor(this, speed);
-		}
+		speed *= hero.belongings.SpeedFactor(speed);
 		return speed;
 	}
 	

@@ -31,11 +31,9 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
-import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
@@ -62,7 +60,6 @@ import com.shatteredpixel.yasd.general.items.armor.glyphs.Stone;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Swiftness;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Thorns;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Viscosity;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -226,6 +223,7 @@ public class Armor extends KindofMisc {
 		}
 	}
 
+
 	public int appearance() {
 		return 1;
 	}
@@ -285,69 +283,6 @@ public class Armor extends KindofMisc {
 
 	public int magicalDRRoll(int lvl) {
 		return Random.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl));
-	}
-	
-	public float evasionFactor( Char owner, float evasion ){
-		
-		if (hasGlyph(Stone.class, owner) && !((Stone)glyph).testingEvasion()){
-			return 0;
-		}
-		
-		if (owner instanceof Hero){
-			int aEnc = STRReq() - owner.STR();
-			if (aEnc > 0) evasion /= Math.pow(1.5, aEnc);
-			
-			Momentum momentum = owner.buff(Momentum.class);
-			if (momentum != null){
-				evasion += momentum.evasionBonus(Math.max(0, -aEnc));
-			}
-		}
-		
-		return Math.round(evasion + augment.evasionFactor(level()) * EVA);
-	}
-
-	public float speedFactor( Char owner, float speed ){
-		
-		if (owner instanceof Hero) {
-			int aEnc = STRReq() - owner.STR();
-			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
-		}
-		
-		if (hasGlyph(Swiftness.class, owner)) {
-			boolean enemyNear = false;
-			for (Char ch : Actor.chars()){
-				if (Dungeon.level.adjacent(ch.pos, owner.pos) && owner.alignment != ch.alignment){
-					enemyNear = true;
-					break;
-				}
-			}
-			if (!enemyNear) speed *= (1.2f + 0.04f * level());
-		} else if (hasGlyph(Flow.class, owner) && Dungeon.level.liquid()[owner.pos]){
-			speed *= 2f;
-		}
-		
-		if (hasGlyph(Bulk.class, owner) &&
-				(Dungeon.level.map[owner.pos] == Terrain.DOOR
-						|| Dungeon.level.map[owner.pos] == Terrain.OPEN_DOOR )) {
-			speed /= 3f;
-		}
-		
-		return Math.round(speed * speedFactor);
-		
-	}
-
-	public float stealthMultiplier(Char owner) {
-		float stealth = owner.sneakSkill();
-		return (stealth/stealthFactor(owner,stealth));
-	}
-	
-	public float stealthFactor( Char owner, float stealth ){
-		
-		if (hasGlyph(Obfuscation.class, owner)){
-			stealth += 1 + level()/3f;
-		}
-		
-		return Math.round(stealth * STE);
 	}
 
 	@Override

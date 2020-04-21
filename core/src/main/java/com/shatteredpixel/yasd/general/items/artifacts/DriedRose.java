@@ -657,9 +657,9 @@ public class DriedRose extends Artifact {
 		public float speed() {
 			float speed = super.speed();
 			
-			if (rose != null && rose.armor != null){
-				speed = rose.armor.speedFactor(this, speed);
-			}
+			//if (rose != null && rose.armor != null){
+		//		speed = rose.armor.speedFactor(this, speed);
+		//	}
 			
 			return speed;
 		}
@@ -668,9 +668,9 @@ public class DriedRose extends Artifact {
 		public int defenseSkill(Char enemy) {
 			int defense = super.defenseSkill(enemy);
 
-			if (defense != 0 && rose != null && rose.armor != null ){
-				defense = Math.round(rose.armor.evasionFactor( this, defense ));
-			}
+		//	if (defense != 0 && rose != null && rose.armor != null ){
+		//		defense = Math.round(rose.armor.evasionFactor( this, defense ));
+		//	}
 			
 			return defense;
 		}
@@ -679,9 +679,9 @@ public class DriedRose extends Artifact {
 		public float sneakSkill() {
 			float stealth = super.sneakSkill();
 			
-			if (rose != null && rose.armor != null){
-				stealth = rose.armor.stealthFactor(this, stealth);
-			}
+		//	if (rose != null && rose.armor != null){
+		//		stealth = rose.armor.stealthFactor(this, stealth);
+		//	}
 			
 			return stealth;
 		}

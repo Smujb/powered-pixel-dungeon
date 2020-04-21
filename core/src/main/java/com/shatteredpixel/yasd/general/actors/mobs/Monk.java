@@ -27,39 +27,34 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
-import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.food.Food;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MonkSprite;
 import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
+import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Monk extends Mob {
-	
+
 	{
 		spriteClass = MonkSprite.class;
 
 
 		healthFactor = 0.8f;
 		damageFactor = 0.6f;
-		
+
 		EXP = 11;
 		maxLvl = 21;
 
 		attackDelay = 0.5f;
-		
-		loot = new  Food();
+
+		loot = new Food();
 		lootChance = 0.083f;
 
 		properties.add(Property.UNDEAD);
@@ -79,61 +74,101 @@ public class Monk extends Mob {
 	public int drRoll(Element element) {
 		return Random.NormalIntRange(0, 2);
 	}*/
-	
+
 	@Override
 	public void rollToDropLoot() {
-		Imp.Quest.process( this );
-		
+		Imp.Quest.process(this);
+
 		super.rollToDropLoot();
 	}
 
-	private int hitsToDisarm = 0;
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		
-		if (enemy.hasBelongings()) {
-			int index = Random.Int(enemy.belongings.miscs.length);
-			KindofMisc item = enemy.belongings.miscs[index];
-			
-			if ((item != null)
-					&& !(item instanceof Fist)
-					&& !item.cursed) {
-				if (hitsToDisarm == 0) hitsToDisarm = Random.NormalIntRange(4, 8);
 
-				if (--hitsToDisarm == 0) {
-					enemy.belongings.miscs[index] = null;
-					Dungeon.quickslot.convertToPlaceholder(item);
-					Item.updateQuickslot();
-					Dungeon.level.drop(item, enemy.pos).sprite.drop();
-					if (enemy == Dungeon.hero) {
-						GLog.w(Messages.get(this, "disarm", item.name()));
-					}
-				}
-			}
+	protected float focusCooldown = 0;
+
+	protected boolean act() {
+		boolean result = super.act();
+		if (buff(Focus.class) == null && state == HUNTING && focusCooldown <= 0) {
+			Buff.affect(this, Focus.class);
 		}
-		
-		return damage;
+		return result;
 	}
+
+	@Override
+	public void spend(float time) {
+		focusCooldown -= time;
+		super.spend(time);
+	}
+
+	@Override
+	public void move(int step) {
+		// moving reduces cooldown by an additional 0.67, giving a total reduction of 1.67f.
+		// basically monks will become focused notably faster if you kite them.
+		focusCooldown -= 0.67f;
+		super.move(step);
+	}
+
+	@Override
+	public int defenseSkill(Char enemy) {
+		if (buff(Focus.class) != null) {
+			return 100_000_000;
+		}
+		return 0; //testing
+	}
+
+	@Override
+	public String defenseVerb() {
+		Focus f = buff(Focus.class);
+		if (f == null) {
+			return super.defenseVerb();
+		} else {
+			f.detach();
+			//TODO this might be a bit too fast
+			focusCooldown = Random.NormalFloat(4, 6);
+			return Messages.get(this, "parried");
+		}
+	}
+
 	
 	{
 		immunities.add( Amok.class );
 		immunities.add( Terror.class );
 	}
 
-	private static String DISARMHITS = "hitsToDisarm";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(DISARMHITS, hitsToDisarm);
+	private static String FOCUS_COOLDOWN = "focus_cooldown";
+
+
+	public void storeInBundle( Bundle bundle ) {
+		super.storeInBundle( bundle );
+		bundle.put( FOCUS_COOLDOWN, focusCooldown );
 	}
 
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		hitsToDisarm = bundle.getInt(DISARMHITS);
+	public void restoreFromBundle( Bundle bundle ) {
+		super.restoreFromBundle( bundle );
+		focusCooldown = bundle.getInt( FOCUS_COOLDOWN );
+	}
+
+	public static class Focus extends Buff {
+
+		{
+			type = buffType.POSITIVE;
+			announced = true;
+		}
+
+		@Override
+		public int icon() {
+			return BuffIndicator.MIND_VISION;
+		}
+
+		@Override
+		public String toString() {
+			return Messages.get(this, "name");
+		}
+
+		@Override
+		public String desc() {
+			return Messages.get(this, "desc");
+		}
 	}
 
 	public static class Senior extends Monk {
@@ -141,15 +176,16 @@ public class Monk extends Mob {
 		{
 			spriteClass = SeniorSprite.class;
 			damageFactor = 0.7f;
+
+			lootChance = 0.2f;
 		}
 
 		@Override
-		public int attackProc( Char enemy, int damage ) {
-			damage = super.attackProc( enemy, damage );
-			if (Random.Int( 10 ) == 0) {
-				Buff.prolong( enemy, Paralysis.class, 1.1f );
-			}
-			return super.attackProc( enemy, damage );
+		public void move( int step ) {
+			// on top of the existing move bonus, senior monks get a further 1.66 cooldown reduction
+			// for a total of 3.33, double the normal 1.67 for regular monks
+			focusCooldown -= 1.66f;
+			super.move(step);
 		}
 
 	}

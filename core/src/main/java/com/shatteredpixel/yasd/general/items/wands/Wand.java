@@ -107,6 +107,8 @@ public abstract class Wand extends KindofMisc {
 		return level;
 	}
 
+
+
 	@Override
 	public ArrayList<String> actions(Hero hero) {
 		ArrayList<String> actions = super.actions(hero);
