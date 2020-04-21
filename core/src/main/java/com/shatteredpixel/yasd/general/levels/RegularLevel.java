@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Bones;
+import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -164,13 +165,10 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	public int nMobs() {
-		switch(Dungeon.depth) {
-			case 1:
-				//mobs are not randomly spawned on floor 1.
-				return 0;
-			default:
-				return 2 + Dungeon.depth % 5 + Random.Int(5);
+		if (Dungeon.depth == 1) {//mobs are not randomly spawned on floor 1.
+			return 0;
 		}
+		return 3 + Dungeon.getScaleFactor() % Constants.CHAPTER_LENGTH + Random.Int(3);
 	}
 	
 	@Override
