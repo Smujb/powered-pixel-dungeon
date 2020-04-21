@@ -35,9 +35,9 @@ public class RogueArmor extends ClothArmor {
 	{
 		image = ItemSpriteSheet.ARMOR_ROGUE;
 		DRfactor = 0.75f;
-		magicalDRFactor = 0.5f;
-		EVA = 1.5f;
-		STE = 1.5f;
+		magicalDRFactor = 0.75f;
+		EVA = 1.25f;
+		STE = 1.25f;
 	}
 
 	@Override

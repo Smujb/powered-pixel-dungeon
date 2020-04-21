@@ -852,11 +852,11 @@ public abstract class Char extends Actor {
 				perception /= 2f;
 			}
 			if (alreadySeen) {
-				perception *= 5;
+				perception *= 4;
 			}
 			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error
-			if (perception + stealth == 0) {
+			if (stealth == 0) {
 				return 0f;
 			}
 			return perception/(perception + stealth);
