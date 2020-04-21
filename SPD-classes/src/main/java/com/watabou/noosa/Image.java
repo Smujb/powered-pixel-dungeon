@@ -97,6 +97,8 @@ public class Image extends Visual {
 	public void copy( Image other ) {
 		texture = other.texture;
 		frame = new RectF( other.frame );
+
+		scale = other.scale;
 		
 		width = other.width;
 		height = other.height;
