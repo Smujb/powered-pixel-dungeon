@@ -73,6 +73,11 @@ public class Ghoul extends Mob {
 	}
 
 	@Override
+	public float spawningWeight() {
+		return 0.5f;
+	}
+
+	@Override
 	protected boolean act() {
 		//create a child
 		if (partnerID == -1){

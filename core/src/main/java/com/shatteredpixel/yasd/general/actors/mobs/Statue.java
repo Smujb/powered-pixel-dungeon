@@ -74,6 +74,11 @@ public class Statue extends Mob implements Callback {
 	}
 
 	int ankhs = Math.max(1, level / Constants.CHAPTER_LENGTH);//1 Ankh per chapter
+
+	@Override
+	public float spawningWeight() {
+		return 0f;
+	}
 	
 	public Statue() {
 		super();

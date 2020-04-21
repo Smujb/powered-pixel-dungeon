@@ -73,6 +73,11 @@ public class Mimic extends Mob {
 		if (items != null) bundle.put( ITEMS, items );
 		bundle.put( LEVEL, level );
 	}
+
+	@Override
+	public float spawningWeight() {
+		return 0f;
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override

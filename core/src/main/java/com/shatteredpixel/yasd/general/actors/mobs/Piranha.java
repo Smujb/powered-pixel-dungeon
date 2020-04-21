@@ -66,6 +66,11 @@ public class Piranha extends WaterMob {
 			return super.act();
 		}
 	}
+
+	@Override
+	public float spawningWeight() {
+		return 0;
+	}
 	
 	@Override
 	public void die(@NotNull DamageSrc cause ) {
