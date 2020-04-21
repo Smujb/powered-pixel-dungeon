@@ -113,6 +113,10 @@ public class Game implements ApplicationListener {
 	
 	@Override
 	public void resize(int width, int height) {
+		if (width == 0 || height == 0){
+			return;
+		}
+
 		Blending.useDefault();
 		TextureCache.reload();
 		Vertexbuffer.refreshAllBuffers();

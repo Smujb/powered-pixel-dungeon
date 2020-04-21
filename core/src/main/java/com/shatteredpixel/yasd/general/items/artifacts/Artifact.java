@@ -98,17 +98,6 @@ public class Artifact extends KindofMisc {
 	}
 
 	@Override
-	public int buffedVisiblyUpgraded() {
-		return visiblyUpgraded();
-	}
-
-	@Override
-	public int buffedLvl() {
-		//level isn't affected by buffs/debuffs
-		return level();
-	}
-
-	@Override
 	public boolean doUnequip(Char hero, boolean collect, boolean single ) {
 		if (super.doUnequip( hero, collect, single )) {
 

@@ -256,7 +256,10 @@ public class MainGame extends Game {
 	
 	@Override
 	public void resize( int width, int height ) {
-		
+		if (width == 0 || height == 0){
+			return;
+		}
+
 		if (scene instanceof PixelScene &&
 				(height != Game.height || width != Game.width)) {
 			((PixelScene) scene).saveWindows();
