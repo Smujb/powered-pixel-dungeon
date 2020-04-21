@@ -37,6 +37,8 @@ import com.shatteredpixel.yasd.general.actors.mobs.Succubus;
 import com.shatteredpixel.yasd.general.items.Torch;
 import com.shatteredpixel.yasd.general.levels.painters.HallsPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.Room;
+import com.shatteredpixel.yasd.general.levels.rooms.special.DemonSpawnerRoom;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BlazingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
@@ -65,6 +67,8 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class HallsLevel extends RegularLevel {
@@ -78,6 +82,18 @@ public class HallsLevel extends RegularLevel {
 
 		minScaleFactor = 25;
 		maxScaleFactor = 30;
+	}
+
+	@Override
+	protected ArrayList<Room> initRooms() {
+		ArrayList<Room> rooms = super.initRooms();
+
+		rooms.add(new DemonSpawnerRoom());
+		if (Dungeon.depth == 24){
+			rooms.add(new DemonSpawnerRoom());
+		}
+
+		return rooms;
 	}
 
 	@Override
