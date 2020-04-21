@@ -27,11 +27,13 @@
 
 package com.shatteredpixel.yasd.general.levels.traps;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.effects.Splash;
+import com.watabou.utils.PathFinder;
 
 public class OozeTrap extends Trap {
 
@@ -42,11 +44,14 @@ public class OozeTrap extends Trap {
 
 	@Override
 	public void activate() {
-		Char ch = Actor.findChar( pos );
-
-		if (ch != null && !ch.flying){
-			Buff.affect(ch, Ooze.class).set( 20f );
-			Splash.at( pos, 0x000000, 5);
+		for( int i : PathFinder.NEIGHBOURS9) {
+			if (!Dungeon.level.solid(pos + i)) {
+				Splash.at( pos + i, 0x000000, 5);
+				Char ch = Actor.findChar( pos + i );
+				if (ch != null && !ch.flying){
+					Buff.affect(ch, Ooze.class).set( 20f );
+				}
+			}
 		}
 	}
 }

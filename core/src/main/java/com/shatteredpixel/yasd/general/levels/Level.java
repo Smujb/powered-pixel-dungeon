@@ -1001,7 +1001,8 @@ public abstract class Level implements Bundlable {
 				for (Mob mob : mobs.toArray(new Mob[0])){
 					if (mob.alignment == Char.Alignment.ENEMY) count++;
 				}
-				
+
+				//TODO some mobs should count for less (ripper shouldn't count at all, ghouls should be 1/2, special enemies should be 0
 				if (count < nMobs()) {
 
 					Mob mob = createMob();

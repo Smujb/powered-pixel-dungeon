@@ -74,24 +74,30 @@ public class DisarmingTrap extends Trap{
 
 			if (weapon != null && !weapon.cursed) {
 
-				int cell = Dungeon.level.randomRespawnCell();
-				if (cell != -1) {
-					hero.belongings.miscs[0] = null;
-					Dungeon.quickslot.clearItem(weapon);
-					Item.updateQuickslot();
+				int cell;
+				do {
+					cell = Dungeon.level.randomRespawnCell();
 
-					Dungeon.level.drop(weapon, cell).seen = true;
-					for (int i : PathFinder.NEIGHBOURS9)
-						Dungeon.level.visited[cell+i] = true;
-					GameScene.updateFog();
+					PathFinder.buildDistanceMap(pos, Dungeon.level.passable());
+				} while (cell == -1 || PathFinder.distance[cell] < 10 || PathFinder.distance[cell] > 20);
 
-					GLog.w( Messages.get(this, "disarm") );
-
-					Sample.INSTANCE.play(Assets.SND_TELEPORT);
-					CellEmitter.get(pos).burst(Speck.factory(Speck.LIGHT), 4);
-
+				for (int i = 0; i < hero.belongings.miscs.length; i++) {
+					if (hero.belongings.miscs[i] == weapon) {
+						hero.belongings.miscs[i] = null;
+					}
 				}
+				Dungeon.quickslot.clearItem(weapon);
+				weapon.updateQuickslot();
 
+				Dungeon.level.drop(weapon, cell).seen = true;
+				for (int i : PathFinder.NEIGHBOURS9)
+					Dungeon.level.mapped[cell+i] = true;
+				GameScene.updateFog(cell, 1);
+
+				GLog.w( Messages.get(this, "disarm") );
+
+				Sample.INSTANCE.play(Assets.SND_TELEPORT);
+				CellEmitter.get(pos).burst(Speck.factory(Speck.LIGHT), 4);
 			}
 		}
 	}

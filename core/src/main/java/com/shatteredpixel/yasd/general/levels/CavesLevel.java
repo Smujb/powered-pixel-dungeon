@@ -41,7 +41,6 @@ import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.traps.BurningTrap;
 import com.shatteredpixel.yasd.general.levels.traps.ConfusionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
-import com.shatteredpixel.yasd.general.levels.traps.ExplosiveTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FrostTrap;
 import com.shatteredpixel.yasd.general.levels.traps.GrippingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.GuardianTrap;
@@ -119,18 +118,18 @@ public class CavesLevel extends RegularLevel {
 
 	@Override
 	protected Class<?>[] trapClasses() {
-		return new Class[]{ BurningTrap.class, PoisonDartTrap.class, FrostTrap.class, StormTrap.class, CorrosionTrap.class,
-				GrippingTrap.class, ExplosiveTrap.class, RockfallTrap.class,  GuardianTrap.class,
-				ConfusionTrap.class, SummoningTrap.class, WarpingTrap.class,
-				PitfallTrap.class };
+		return new Class[]{
+				BurningTrap.class, PoisonDartTrap.class, FrostTrap.class, StormTrap.class, CorrosionTrap.class,
+				GrippingTrap.class, RockfallTrap.class,  GuardianTrap.class,
+				ConfusionTrap.class, SummoningTrap.class, WarpingTrap.class, PitfallTrap.class };
 	}
 
 	@Override
 	protected float[] trapChances() {
-		return new float[]{ 8, 8, 8, 8, 8,
-				4, 4, 4, 4,
+		return new float[]{
+				4, 4, 4, 4, 4,
 				2, 2, 2,
-				1 };
+				1, 1, 1, 1};
 	}
 
 	@Override

@@ -44,7 +44,6 @@ import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.DisarmingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.DisintegrationTrap;
 import com.shatteredpixel.yasd.general.levels.traps.DistortionTrap;
-import com.shatteredpixel.yasd.general.levels.traps.ExplosiveTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FlashingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FrostTrap;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
@@ -66,7 +65,7 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class HallsLevel extends RegularLevel {
 
@@ -124,18 +123,18 @@ public class HallsLevel extends RegularLevel {
 
 	@Override
 	protected Class<?>[] trapClasses() {
-		return new Class[]{ FrostTrap.class, StormTrap.class, CorrosionTrap.class, BlazingTrap.class, DisintegrationTrap.class,
-				ExplosiveTrap.class, RockfallTrap.class, FlashingTrap.class, GuardianTrap.class, WeakeningTrap.class,
-				SummoningTrap.class, WarpingTrap.class, CursingTrap.class, GrimTrap.class,
-				PitfallTrap.class, DisarmingTrap.class, DistortionTrap.class };
+		return new Class[]{
+				FrostTrap.class, StormTrap.class, CorrosionTrap.class, BlazingTrap.class, DisintegrationTrap.class,
+				RockfallTrap.class, FlashingTrap.class, GuardianTrap.class, WeakeningTrap.class,
+				DisarmingTrap.class, SummoningTrap.class, WarpingTrap.class, CursingTrap.class, GrimTrap.class, PitfallTrap.class, DistortionTrap.class };
 	}
 
 	@Override
 	protected float[] trapChances() {
-		return new float[]{ 8, 8, 8, 8, 8,
+		return new float[]{
 				4, 4, 4, 4, 4,
 				2, 2, 2, 2,
-				1, 1, 1 };
+				1, 1, 1, 1, 1, 1, 1 };
 	}
 
 	@Override

@@ -81,7 +81,7 @@ public class WornDartTrap extends Trap {
 							reset(pos, finalTarget.sprite, new Dart(), new Callback() {
 								@Override
 								public void call() {
-								int dmg = Random.NormalIntRange(1, 4);
+								int dmg =  Random.NormalIntRange(4, 8);
 								finalTarget.damage( dmg, new Char.DamageSrc(Element.ACID, this) );
 								if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
 									Dungeon.fail( trap.getClass()  );

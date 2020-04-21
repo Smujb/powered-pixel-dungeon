@@ -152,7 +152,7 @@ public abstract class RegularLevel extends Level {
 	protected abstract Painter painter();
 	
 	protected int nTraps() {
-		return Random.NormalIntRange( 1, 3+(Dungeon.depth /3) );
+		return Random.NormalIntRange( 2, 3 + (getScaleFactor()/5) );
 	}
 	
 	protected Class<?>[] trapClasses(){
@@ -168,7 +168,7 @@ public abstract class RegularLevel extends Level {
 		if (Dungeon.depth == 1) {//mobs are not randomly spawned on floor 1.
 			return 0;
 		}
-		return 3 + Dungeon.getScaleFactor() % Constants.CHAPTER_LENGTH + Random.Int(3);
+		return 3 + getScaleFactor() % Constants.CHAPTER_LENGTH + Random.Int(3);
 	}
 	
 	@Override

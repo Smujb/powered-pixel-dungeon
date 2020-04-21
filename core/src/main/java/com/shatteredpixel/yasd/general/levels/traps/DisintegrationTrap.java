@@ -36,8 +36,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.items.Heap;
-import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
@@ -83,24 +81,6 @@ public class DisintegrationTrap extends Trap {
 				if (!hero.isAlive()){
 					Dungeon.fail( getClass() );
 					GLog.n( Messages.get(this, "ondeath") );
-				} else {
-					Item item = hero.belongings.randomUnequipped();
-					Bag bag = hero.belongings.backpack;
-					//bags do not protect against this trap
-					if (item instanceof Bag){
-						bag = (Bag)item;
-						item = Random.element(bag.items);
-					}
-					if (item == null || item.level() > 0 || item.unique) return;
-					if (!item.stackable){
-						item.detachAll(bag);
-						GLog.w( Messages.get(this, "one", item.name()) );
-					} else {
-						int n = Random.NormalIntRange(1, (item.quantity()+1)/2);
-						for(int i = 1; i <= n; i++)
-							item.detach(bag);
-						GLog.w( Messages.get(this, "some", item.name()) );
-					}
 				}
 			}
 		}

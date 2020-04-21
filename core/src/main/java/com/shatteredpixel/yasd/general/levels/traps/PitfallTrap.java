@@ -27,9 +27,12 @@
 
 package com.shatteredpixel.yasd.general.levels.traps;
 
+import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -37,6 +40,7 @@ import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.utils.PathFinder;
 
 public class PitfallTrap extends Trap {
 
@@ -48,33 +52,60 @@ public class PitfallTrap extends Trap {
 	@Override
 	public void activate() {
 		
-		if( Dungeon.bossLevel() || Dungeon.depth > 25){
+		if( Dungeon.bossLevel() || Dungeon.depth >= Constants.MAX_DEPTH){
 			GLog.w(Messages.get(this, "no_pit"));
 			return;
 		}
-		
-		Heap heap = Dungeon.level.heaps.get( pos );
 
-		if (heap != null){
-			for (Item item : heap.items){
-				Dungeon.dropToChasm(item);
-			}
-			heap.sprite.kill();
-			GameScene.discard(heap);
-			Dungeon.level.heaps.remove( pos );
+		//TODO visuals
+		DelayedPit p = Buff.affect(Dungeon.hero, DelayedPit.class, 1);
+		p.depth = Dungeon.depth;
+		p.pos = pos;
+
+		if (pos == Dungeon.hero.pos){
+			GLog.n(Messages.get(this, "triggered_hero"));
+		} else if (Dungeon.level.heroFOV[pos]){
+			GLog.n(Messages.get(this, "triggered"));
 		}
 
-		Char ch = Actor.findChar( pos );
-
-		if (ch != null && !ch.flying) {
-			if (ch == Dungeon.hero) {
-				Chasm.heroFall(pos);
-			} else {
-				Chasm.mobFall((Mob) ch);
-			}
-		}
 	}
 
-	//TODO these used to become chasms when disarmed, but the functionality was problematic
-	//because it could block routes, perhaps some way to make this work elegantly?
+	public static class DelayedPit extends FlavourBuff {
+
+		int pos;
+		int depth;
+		@Override
+		public boolean act() {
+			if (depth == Dungeon.depth) {
+				for (int i : PathFinder.NEIGHBOURS9) {
+					int cell = pos + i;
+
+					Heap heap = Dungeon.level.heaps.get(cell);
+
+					if (heap != null) {
+						for (Item item : heap.items) {
+							Dungeon.dropToChasm(item);
+						}
+						heap.sprite.kill();
+						GameScene.discard(heap);
+						Dungeon.level.heaps.remove(cell);
+					}
+
+					Char ch = Actor.findChar(cell);
+
+					if (ch != null && !ch.flying) {
+						if (ch == Dungeon.hero) {
+							Chasm.heroFall(cell);
+						} else {
+							Chasm.mobFall((Mob) ch);
+						}
+					}
+
+				}
+			}
+			detach();
+			return true;
+
+		}
+	}
 }

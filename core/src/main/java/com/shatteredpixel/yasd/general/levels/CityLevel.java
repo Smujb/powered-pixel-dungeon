@@ -42,7 +42,7 @@ import com.shatteredpixel.yasd.general.levels.traps.CorrosionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.CursingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.DisarmingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.DisintegrationTrap;
-import com.shatteredpixel.yasd.general.levels.traps.ExplosiveTrap;
+import com.shatteredpixel.yasd.general.levels.traps.DistortionTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FlashingTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FrostTrap;
 import com.shatteredpixel.yasd.general.levels.traps.GuardianTrap;
@@ -108,21 +108,21 @@ public class CityLevel extends RegularLevel {
 				.setGrass(feeling == Feeling.GRASS ? 0.80f : 0.20f, 3)
 				.setTraps(nTraps(), trapClasses(), trapChances());
 	}
-	
+
 	@Override
 	protected Class<?>[] trapClasses() {
-		return new Class[]{ FrostTrap.class, StormTrap.class, CorrosionTrap.class, BlazingTrap.class, DisintegrationTrap.class,
-				ExplosiveTrap.class, RockfallTrap.class, FlashingTrap.class, GuardianTrap.class, WeakeningTrap.class,
-				SummoningTrap.class, WarpingTrap.class, CursingTrap.class,
-				PitfallTrap.class, DisarmingTrap.class };
+		return new Class[]{
+				FrostTrap.class, StormTrap.class, CorrosionTrap.class, BlazingTrap.class, DisintegrationTrap.class,
+				RockfallTrap.class, FlashingTrap.class, GuardianTrap.class, WeakeningTrap.class,
+				DisarmingTrap.class, SummoningTrap.class, WarpingTrap.class, CursingTrap.class, PitfallTrap.class, DistortionTrap.class };
 	}
 
 	@Override
 	protected float[] trapChances() {
-		return new float[]{ 8, 8, 8, 8, 8,
+		return new float[]{
 				4, 4, 4, 4, 4,
-				2, 2, 2,
-				1, 1 };
+				2, 2, 2, 2,
+				1, 1, 1, 1, 1, 1 };
 	}
 
 	@Override
