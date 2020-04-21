@@ -43,14 +43,15 @@ public class Ghoul extends Mob {
 	{
 		spriteClass = GhoulSprite.class;
 
-		HP = HT = 50;
-		defenseSkill = 18;
+		healthFactor = 0.7f;
+		damageFactor = 0.8f;
 
 		EXP = 5;
 		maxLvl = 20;
 
 		SLEEPING = new Sleeping();
 		WANDERING = new Wandering();
+		HUNTING = new Hunting();
 		state = SLEEPING;
 
 		properties.add(Property.UNDEAD);
@@ -140,6 +141,54 @@ public class Ghoul extends Mob {
 				}
 			} else {
 				return super.continueWandering();
+			}
+		}
+	}
+
+	//TODO currently very similar to super.Hunting and is largely a stop-gap, need to refactor
+	private class Hunting extends Mob.Hunting {
+
+		@Override
+		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
+			enemySeen = enemyInFOV;
+			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
+
+				return doAttack( enemy );
+
+			} else {
+
+				if (enemyInFOV) {
+					target = enemy.pos;
+				} else if (enemy == null) {
+					state = WANDERING;
+					target = Dungeon.level.randomDestination();
+					return true;
+				}
+
+				int oldPos = pos;
+				if (target != -1 && getCloser( target )) {
+
+					spend( 1 / speed() );
+					return moveSprite( oldPos,  pos );
+
+				} else {
+
+					Ghoul partner = (Ghoul) Actor.findById( partnerID );
+					if (!enemyInFOV) {
+						spend( TICK );
+						sprite.showLost();
+						state = WANDERING;
+						target = Dungeon.level.randomDestination();
+
+						//try to move closer to partner if they can't move to hero
+					} else if (partner != null && getCloser(partner.pos)) {
+						spend( 1 / speed() );
+						return moveSprite( oldPos,  pos );
+					} else {
+						spend( TICK );
+					}
+					return true;
+				}
 			}
 		}
 	}

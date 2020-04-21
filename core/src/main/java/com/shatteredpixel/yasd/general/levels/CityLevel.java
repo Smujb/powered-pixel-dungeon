@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
+import com.shatteredpixel.yasd.general.actors.mobs.Ghoul;
 import com.shatteredpixel.yasd.general.actors.mobs.Golem;
 import com.shatteredpixel.yasd.general.actors.mobs.Monk;
 import com.shatteredpixel.yasd.general.actors.mobs.Warlock;
@@ -131,7 +132,8 @@ public class CityLevel extends RegularLevel {
 				Warlock.class,
 				Monk.class,
 				Elemental.random(),
-				Golem.class
+				Golem.class,
+				Ghoul.class
 		};
 	}
 
@@ -141,7 +143,8 @@ public class CityLevel extends RegularLevel {
 				3,
 				3,
 				4,
-				1
+				2,
+				4
 		};
 	}
 

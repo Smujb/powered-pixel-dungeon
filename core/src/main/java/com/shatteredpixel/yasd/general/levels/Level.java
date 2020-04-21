@@ -173,6 +173,8 @@ public abstract class Level implements Bundlable {
 	protected int height;
 	protected int length;
 
+	private Class lastMob = null;
+
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
 
@@ -371,6 +373,7 @@ public abstract class Level implements Bundlable {
 	private static final String BLOBS		= "blobs";
 	private static final String FEELING		= "feeling";
 	private static final String INTERACTIVE = "interactive-area";
+	private static final String LAST_MOB    = "last-mob";
 
 	public void create(String key) {
 
@@ -526,6 +529,8 @@ public abstract class Level implements Bundlable {
 		customTiles = new HashSet<>();
 		customWalls = new HashSet<>();
 
+		lastMob = bundle.getClass(LAST_MOB);
+
 
 		loadMap(bundle);
 		//map		= bundle.getEnumArray( MAP, Terrain.class );
@@ -609,6 +614,7 @@ public abstract class Level implements Bundlable {
 		bundle.put( VERSION, Game.versionCode );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );
+		bundle.put( LAST_MOB, lastMob );
 		storeMap(bundle);
 		//bundle.put( MAP, map );
 		bundle.put( VISITED, visited );
@@ -814,9 +820,13 @@ public abstract class Level implements Bundlable {
 		if (mobChances().length != mobClasses().length) {
 			throw new AssertionError("Mob classes must be equal in length to mob chances!");
 		}
-		int type = Random.chances(mobChances());
-		Class<? extends Mob> mob = (Class<? extends Mob>) mobClasses()[type];
-		mob = Bestiary.swapMobAlt(mob);
+		Class<? extends Mob> mob;
+		do {
+			int type = Random.chances(mobChances());
+			mob = (Class<? extends Mob>) mobClasses()[type];
+			mob = Bestiary.swapMobAlt(mob);
+		} while ((mob == lastMob || mob.isInstance(lastMob)) & mobClasses().length > 1);
+		lastMob = mob;
 		return Mob.create(mob, this);
 	}
 
