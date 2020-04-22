@@ -558,6 +558,11 @@ public abstract class Char extends Actor {
 			} else {
 				damage = belongings.attackProc(enemy, damage);
 			}
+			if (!enemy.isAlive() && enemy == Dungeon.hero){
+				Dungeon.fail(getClass());
+				GLog.n( Messages.capitalize(Messages.get(Char.class, "kill", name())) );
+			}
+			return damage;
 		}
 		elementalType().attackProc(damage, this, enemy);
 		return damage;
