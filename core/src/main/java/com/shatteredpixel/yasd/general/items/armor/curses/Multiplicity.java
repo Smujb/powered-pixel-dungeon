@@ -99,7 +99,7 @@ public class Multiplicity extends Armor.Glyph {
 
 					if (Char.hasProp(m, Char.Property.LARGE)){
 						for ( int i : spawnPoints){
-							if (!Dungeon.level.openSpace[i]){
+							if (!Dungeon.level.openSpace(i)){
 								spawnPoints.remove(i);
 							}
 						}

@@ -564,7 +564,7 @@ public abstract class Mob extends Char {
 
 				if (Actor.findChar( target ) == null
 						&& (Dungeon.level.passable(target) || (flying && Dungeon.level.avoid(target)))
-						&& (!Char.hasProp(this, Char.Property.LARGE) || Dungeon.level.openSpace[target])) {
+						&& canOccupy(Dungeon.level, target)) {
 					step = target;
 				}
 
@@ -623,7 +623,7 @@ public abstract class Mob extends Char {
 						int cell = path.get(i);
 						if (!Dungeon.level.passable(cell)
 								|| (!flying && Dungeon.level.avoid(target))
-								|| (Char.hasProp(this, Char.Property.LARGE) && !Dungeon.level.openSpace[cell])
+								|| canOccupy(Dungeon.level, cell)
 								|| (fieldOfView[cell] && Actor.findChar(cell) != null)) {
 							newPath = true;
 							break;

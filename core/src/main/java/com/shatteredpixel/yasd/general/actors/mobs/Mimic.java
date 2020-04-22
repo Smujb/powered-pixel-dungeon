@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MimicSprite;
@@ -208,18 +209,18 @@ public class Mimic extends Mob {
 		return true;
 	}
 
-	public static Mimic spawnAt( int pos, Item item ){
-		return spawnAt( pos, Arrays.asList(item), Mimic.class);
+	public static Mimic spawnAt(int pos, Item item, Level level){
+		return spawnAt( pos, Arrays.asList(item), Mimic.class, level);
 	}
 
-	public static Mimic spawnAt( int pos, Item item, Class<? extends Mimic> mimicType ) {
-		return spawnAt(pos, Arrays.asList(item), mimicType);
+	public static Mimic spawnAt(int pos, Item item, Class<? extends Mimic> mimicType, Level level) {
+		return spawnAt(pos, Arrays.asList(item), mimicType, level);
 	}
 
-	public static Mimic spawnAt( int pos, List<Item> items, Class<? extends Mimic> mimicType ) {
+	public static Mimic spawnAt(int pos, List<Item> items, Class<? extends Mimic> mimicType, Level level) {
 		
-		Mimic m = Mob.create(mimicType);
-		m.items = new  ArrayList<>( items );
+		Mimic m = Mob.create(mimicType, level);
+		m.items = new ArrayList<>( items );
 		m.enemySeen = true;
 		m.pos = pos;
 

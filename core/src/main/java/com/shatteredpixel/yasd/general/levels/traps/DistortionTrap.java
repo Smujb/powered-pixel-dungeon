@@ -126,7 +126,7 @@ public class DistortionTrap extends Trap{
 							mob = Mob.spawnAt(Piranha.class, point);
 							break;
 						case 2:
-							mob = Mimic.spawnAt(point, new ArrayList<>(), Mimic.class);
+							mob = Mimic.spawnAt(point, new ArrayList<>(), Mimic.class, Dungeon.level);
 							((Mimic)mob).stopHiding();
 							mob.alignment = Char.Alignment.ENEMY;
 							break;
@@ -140,7 +140,7 @@ public class DistortionTrap extends Trap{
 					break;
 			}
 
-			if (Char.hasProp(mob, Char.Property.LARGE) && !Dungeon.level.openSpace[point]){
+			if (Char.canOccupy(mob, Dungeon.level, pos)){
 				continue;
 			}
 

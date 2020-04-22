@@ -147,7 +147,7 @@ public class EtherealChains extends Artifact {
 			//prefer to the earliest point on the xPos
 			if (!Dungeon.level.solid(i)
 					&& Actor.findChar(i) == null
-					&& (!Char.hasProp(enemy, Char.Property.LARGE) || Dungeon.level.openSpace[i])){
+					&& enemy.canOccupy(Dungeon.level, i)){
 				bestPos = i;
 				break;
 			}

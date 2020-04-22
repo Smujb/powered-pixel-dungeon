@@ -68,7 +68,7 @@ public class VaultRoom extends LockedRoom {
 		i2 = prize( level );
 		level.drop( i1, c ).type = Heap.Type.CRYSTAL_CHEST;
 		if (Random.Int(10) == 0){
-			level.mobs.add(Mimic.spawnAt(c + PathFinder.NEIGHBOURS8[Random.Int(8)], i2, CrystalMimic.class));
+			level.mobs.add(Mimic.spawnAt(c + PathFinder.NEIGHBOURS8[Random.Int(8)], i2, CrystalMimic.class, level));
 		} else {
 			level.drop(i2, c + PathFinder.NEIGHBOURS8[Random.Int(8)]).type = Heap.Type.CRYSTAL_CHEST;
 		}

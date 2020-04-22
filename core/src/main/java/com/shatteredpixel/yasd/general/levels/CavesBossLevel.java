@@ -233,7 +233,7 @@ public class CavesBossLevel extends Level {
 		do {
 			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

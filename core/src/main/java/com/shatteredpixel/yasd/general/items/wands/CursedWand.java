@@ -367,7 +367,7 @@ public class CursedWand {
 			case 1:
 				cursedFX(user, bolt, new Callback() {
 					public void call() {
-						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<>(), GoldenMimic.class);
+						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<>(), GoldenMimic.class, Dungeon.level);
 						if (mimic != null) {
 							mimic.stopHiding();
 							mimic.alignment = Char.Alignment.ENEMY;

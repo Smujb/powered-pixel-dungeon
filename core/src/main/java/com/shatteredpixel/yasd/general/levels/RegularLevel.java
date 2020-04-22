@@ -246,7 +246,7 @@ public abstract class RegularLevel extends Level {
 			if (!heroFOV[cell]
 					&& Actor.findChar( cell ) == null
 					&& passable(cell)
-					&& (!Char.hasProp(ch, Char.Property.LARGE) || openSpace[cell])
+					&& Char.canOccupy(ch, this, cell)
 					&& room.canPlaceCharacter(cellToPoint(cell), this)
 					&& cell != getExitPos()) {
 				return cell;
@@ -310,7 +310,7 @@ public abstract class RegularLevel extends Level {
 				case 5:
 				default:
 					if (Dungeon.depth > 1 && findMob(cell) == null) {
-						mobs.add(Mimic.spawnAt(cell, toDrop));
+						mobs.add(Mimic.spawnAt(cell, toDrop, this));
 						continue;
 					}
 					type = Heap.Type.CHEST;
@@ -320,7 +320,7 @@ public abstract class RegularLevel extends Level {
 			if ((toDrop instanceof Artifact && Random.Int(2) == 0) ||
 					(toDrop.isUpgradable() && Random.Int(4 - toDrop.level()) == 0)){
 				if (Dungeon.depth > 1 && Random.Int(10) == 0 && findMob(cell) == null){
-					mobs.add(Mimic.spawnAt(cell, toDrop, GoldenMimic.class));
+					mobs.add(Mimic.spawnAt(cell, toDrop, GoldenMimic.class, this));
 				} else {
 					Heap dropped = drop(toDrop, cell);
 					if (heaps.get(cell) == dropped) {

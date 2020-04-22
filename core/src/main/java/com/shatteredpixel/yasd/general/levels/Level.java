@@ -190,8 +190,6 @@ public abstract class Level implements Bundlable {
 	public boolean[] visited;
 	public boolean[] mapped;
 	public boolean[] discoverable;
-	//TODO calculate this dynamically like the other map flags
-	public boolean[] openSpace;
 
 	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 6;
 	
@@ -337,6 +335,20 @@ public abstract class Level implements Bundlable {
 			pit[i] = pit(i);
 		}
 		return pit;
+	}
+
+	public boolean openSpace(int cell) {
+		return !solid(cell) &&
+				(!solid(cell-1) || !solid(cell+1)) &&
+				(!solid(cell-width()) || !solid(cell+width()));
+	}
+
+	public boolean[] openSpace() {
+		boolean[] space = new boolean[map.length];
+		for (int i = 0; i < map.length; i++) {
+			space[i] = openSpace(i);
+		}
+		return space;
 	}
 	
 	public Feeling feeling = Feeling.NONE;
@@ -497,7 +509,7 @@ public abstract class Level implements Bundlable {
 		visited     = new boolean[length];
 		mapped      = new boolean[length];
 
-		openSpace   = new boolean[length];
+		//openSpace   = new boolean[length];
 
 		heroFOV     = new boolean[length];
 		
@@ -618,7 +630,7 @@ public abstract class Level implements Bundlable {
 		for (Heap h : heaps.valueList()){
 			if (h.type == Heap.Type.MIMIC){
 				heaps.remove(h.pos);
-				mobs.add(Mimic.spawnAt(h.pos, h.items, Mimic.class));
+				mobs.add(Mimic.spawnAt(h.pos, h.items, Mimic.class, this));
 			}
 		}
 	}
@@ -1069,7 +1081,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int( length() );
 		} while (!passable(cell)
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}
@@ -1122,11 +1134,11 @@ public abstract class Level implements Bundlable {
 			map[i + width()-1] = WALL;
 		}
 
-		for (int i=0; i < length(); i++) {
+		/*for (int i=0; i < length(); i++) {
 			openSpace[i] = !solid(i) &&
 					(!solid(i - 1) || !solid(i + 1)) &&
 					(!solid(i - width()) || !solid(i + width()));
-		}
+		}*/
 	}
 
 	public void destroy( int pos ) {
@@ -1176,11 +1188,11 @@ public abstract class Level implements Bundlable {
 			traps.remove( cell );
 		}
 
-		for (int i=0; i < length(); i++) {
+		/*for (int i=0; i < length(); i++) {
 			openSpace[i] = !solid(i) &&
 					(!solid(i - 1) || !solid(i + 1)) &&
 					(!solid(i - width()) || !solid(i + width()));
-		}
+		}*/
 	}
 	
 	public Heap drop( Item item, int cell ) {

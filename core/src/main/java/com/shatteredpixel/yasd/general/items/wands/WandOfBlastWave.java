@@ -128,7 +128,7 @@ public class WandOfBlastWave extends DamageWand {
 		//large characters cannot be moved into non-open space
 		if (Char.hasProp(ch, Char.Property.LARGE)) {
 			for (int i = 1; i <= dist; i++) {
-				if (!Dungeon.level.openSpace[trajectory.path.get(i)]){
+				if (!Dungeon.level.openSpace(trajectory.path.get(i))){
 					dist = i-1;
 					collided = true;
 					break;

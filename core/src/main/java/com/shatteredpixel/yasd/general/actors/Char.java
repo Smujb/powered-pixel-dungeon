@@ -100,6 +100,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.ShockingDart;
+import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
@@ -264,7 +265,7 @@ public abstract class Char extends Actor {
 			return true;
 		}
 
-		if (properties.contains(Property.LARGE) && !Dungeon.level.openSpace[Dungeon.hero.pos]){
+		if (properties.contains(Property.LARGE) && !Dungeon.level.openSpace(Dungeon.hero.pos)){
 			return true;
 		}
 
@@ -954,6 +955,22 @@ public abstract class Char extends Actor {
 
 	public void onOperateComplete() {
 		next();
+	}
+
+	@Contract("null, _, _ -> true")
+	public static boolean canOccupy(@Nullable Char ch, Level level, int cell) {
+		if (ch == null) {
+			return true;
+		} else {
+			return ch.canOccupy(level, cell);
+		}
+	}
+
+	public boolean canOccupy(Level level, int cell) {
+		if (Char.hasProp(this, Property.LARGE)) {
+			return level.openSpace(cell);
+		}
+		return true;
 	}
 
 	protected final HashSet<Class> resistances = new HashSet<>();

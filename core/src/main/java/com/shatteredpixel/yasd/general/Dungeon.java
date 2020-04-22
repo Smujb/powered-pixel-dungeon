@@ -866,7 +866,7 @@ public class Dungeon {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace, passable );
+			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
 
 		for (Char c : Actor.chars()) {
@@ -893,7 +893,7 @@ public class Dungeon {
 		}
 
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace, passable );
+			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
 		
 		for (Char c : Actor.chars()) {
@@ -916,7 +916,7 @@ public class Dungeon {
 		}
 
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace, passable );
+			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
 		
 		for (Char c : Actor.chars()) {

@@ -80,7 +80,7 @@ public class SummoningTrap extends Trap {
 
 		for (Integer point : respawnPoints) {
 			Mob mob = Dungeon.level.createMob();
-			if (Char.hasProp(mob, Char.Property.LARGE) && !Dungeon.level.openSpace[point]){
+			if (Char.hasProp(mob, Char.Property.LARGE) && !Dungeon.level.openSpace(point)){
 				continue;
 			}
 			if (mob != null) {
@@ -93,7 +93,7 @@ public class SummoningTrap extends Trap {
 
 		//important to process the visuals and pressing of cells last, so spawned mobs have a chance to occupy cells first
 		Trap t;
-		for (Mob mob : mobs){
+		for (Mob mob : mobs) {
 			//manually interact traps first to avoid sfx spam
 			if ((t = Dungeon.level.traps.get(mob.pos)) != null && t.active){
 				t.disarm();

@@ -158,7 +158,7 @@ public class LastShopLevel extends RegularLevel {
 		do {
 			cell = pointToCell( roomEntrance.random() );
 		} while (!passable(cell)
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

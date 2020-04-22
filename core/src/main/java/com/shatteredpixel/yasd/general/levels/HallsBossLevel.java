@@ -201,7 +201,7 @@ public class HallsBossLevel extends Level {
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
-				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

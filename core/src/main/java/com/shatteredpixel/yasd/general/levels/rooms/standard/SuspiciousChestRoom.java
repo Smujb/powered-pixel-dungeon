@@ -63,7 +63,7 @@ public class SuspiciousChestRoom extends EmptyRoom {
 		Painter.set(level, center, Terrain.PEDESTAL);
 
 		if (Random.Int(3) == 0) {
-			level.mobs.add(Mimic.spawnAt(center, i));
+			level.mobs.add(Mimic.spawnAt(center, i, level));
 		} else {
 			level.drop(i, center).type = Heap.Type.CHEST;
 		}
