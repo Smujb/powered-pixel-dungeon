@@ -28,14 +28,16 @@
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Challenges;
+import com.shatteredpixel.yasd.general.actors.mobs.CrystalMimic;
+import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.CrystalKey;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -60,7 +62,11 @@ public class VaultRoom extends LockedRoom {
 		i1 = prize( level );
 		i2 = prize( level );
 		level.drop( i1, c ).type = Heap.Type.CRYSTAL_CHEST;
-		level.drop( i2, c + PathFinder.NEIGHBOURS8[Random.Int( 8 )]).type = Heap.Type.CRYSTAL_CHEST;
+		if (Random.Int(10) == 0){
+			level.mobs.add(Mimic.spawnAt(c + PathFinder.NEIGHBOURS8[Random.Int(8)], i2, CrystalMimic.class));
+		} else {
+			level.drop(i2, c + PathFinder.NEIGHBOURS8[Random.Int(8)]).type = Heap.Type.CRYSTAL_CHEST;
+		}
 		level.addItemToSpawn( new CrystalKey( level.key ) );
 		
 		//entrance().set( Door.Type.LOCKED );

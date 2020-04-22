@@ -243,17 +243,8 @@ public abstract class Mob extends Char {
 		}
 		mob.level = level;
 		mob.updateHT(true);
-		/*switch (Dungeon.difficulty) {
-			case 1://Easy = -25% max HP
-				mob.HP = mob.HT*=0.75f;
-				break;
-			case 2: default://Medium = regular max HP
-				break;
-			case 3://Hard = +25% max HP
-				mob.HP = mob.HT*=1.25f;
-				break;
-		}*/
 		mob.HP = mob.HT *= Dungeon.difficulty.mobHealthFactor();
+		mob.onCreate();
 		//Bosses (obviously) have higher HP
 		if (mob.properties().contains(Property.BOSS)) {
 			mob.HP = mob.HT *= 5;
@@ -275,6 +266,8 @@ public abstract class Mob extends Char {
 	public static <T extends Mob> T create(Class<T> type) {
 		return create(type, Dungeon.level);
 	}
+
+	protected void onCreate() {};
 
 	@Override
 	public int damageRoll() {

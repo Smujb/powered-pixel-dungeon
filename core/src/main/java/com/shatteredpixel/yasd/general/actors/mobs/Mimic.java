@@ -57,7 +57,7 @@ import java.util.List;
 
 public class Mimic extends Mob {
 	
-	private int level;
+	protected int level;
 	
 	{
 		spriteClass = MimicSprite.class;
@@ -209,12 +209,16 @@ public class Mimic extends Mob {
 	}
 
 	public static Mimic spawnAt( int pos, Item item ){
-		return spawnAt( pos, Arrays.asList(item));
+		return spawnAt( pos, Arrays.asList(item), Mimic.class);
 	}
 
-	public static Mimic spawnAt( int pos, List<Item> items ) {
+	public static Mimic spawnAt( int pos, Item item, Class<? extends Mimic> mimicType ) {
+		return spawnAt(pos, Arrays.asList(item), mimicType);
+	}
+
+	public static Mimic spawnAt( int pos, List<Item> items, Class<? extends Mimic> mimicType ) {
 		
-		Mimic m = Mob.create(Mimic.class);
+		Mimic m = Mob.create(mimicType);
 		m.items = new  ArrayList<>( items );
 		m.enemySeen = true;
 		m.pos = pos;

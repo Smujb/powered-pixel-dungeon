@@ -45,6 +45,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Recharging;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.mobs.GoldenMimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -361,12 +362,12 @@ public class CursedWand {
 				afterZap.call();
 				break;
 
-			//superpowered mimic
+
+			//golden mimic
 			case 1:
 				cursedFX(user, bolt, new Callback() {
 					public void call() {
-						//TODO make this a gold mimic instead of boosting stats artificially
-						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<Item>());
+						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<>(), GoldenMimic.class);
 						if (mimic != null) {
 							mimic.stopHiding();
 							mimic.alignment = Char.Alignment.ENEMY;
@@ -376,7 +377,9 @@ public class CursedWand {
 								reward = Generator.random(Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR,
 										Generator.Category.RING, Generator.Category.WAND));
 							} while (reward.level() < 1);
-							Sample.INSTANCE.play(Assets.SND_MIMIC, 1, 1, 0.5f);
+							//play vfx/sfx manually as mimic isn't in the scene yet
+							Sample.INSTANCE.play(Assets.SND_MIMIC, 1, 0.85f);
+							CellEmitter.get(mimic.pos).burst(Speck.factory(Speck.STAR), 10);
 							mimic.items.clear();
 							mimic.items.add(reward);
 							GameScene.add(mimic);
