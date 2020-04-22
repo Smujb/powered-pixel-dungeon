@@ -187,7 +187,6 @@ public class Hero extends Char {
 	
 	public Hero() {
 		super();
-		name = Messages.get(this, "name");
 		belongings = new Belongings(this);
 		
 		HP = HT = 20;
@@ -441,8 +440,9 @@ public class Hero extends Char {
 		return subClass == null || subClass == HeroSubClass.NONE ? heroClass.title() : subClass.title();
 	}
 
-	public String givenName(){
-		return name.equals(Messages.get(this, "name")) ? className() : name;
+	@Override
+	public String name() {
+		return className();
 	}
 	
 	public void live() {

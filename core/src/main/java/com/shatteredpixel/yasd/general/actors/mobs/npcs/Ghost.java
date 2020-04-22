@@ -167,13 +167,13 @@ public class Ghost extends NPC {
 			switch (Quest.type){
 				case 1: default:
 					questBoss = Mob.create(FetidRat.class);
-					txt_quest = Messages.get(this, "rat_1", Dungeon.hero.givenName()); break;
+					txt_quest = Messages.get(this, "rat_1", Dungeon.hero.name()); break;
 				case 2:
 					questBoss = Mob.create(GnollTrickster.class);
-					txt_quest = Messages.get(this, "gnoll_1", Dungeon.hero.givenName()); break;
+					txt_quest = Messages.get(this, "gnoll_1", Dungeon.hero.name()); break;
 				case 3:
 					questBoss = Mob.create(GreatCrab.class);
-					txt_quest = Messages.get(this, "crab_1", Dungeon.hero.givenName()); break;
+					txt_quest = Messages.get(this, "crab_1", Dungeon.hero.name()); break;
 			}
 
 			questBoss.pos = Dungeon.level.randomRespawnCell();

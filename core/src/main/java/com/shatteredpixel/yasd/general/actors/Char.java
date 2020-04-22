@@ -126,7 +126,6 @@ public abstract class Char extends Actor {
 
 	public CharSprite sprite;
 
-	public String name;
 	public int defenseSkill = 0;
 	public int attackSkill = 0;
 	public int noticeSkill = 0;
@@ -336,6 +335,10 @@ public abstract class Char extends Actor {
 		//pre-0.7.0
 	}
 
+	public String name(){
+		return Messages.get(this, "name");
+	}
+
 	public final boolean attack(Char enemy) {
 		return attack(enemy, false);
 	}
@@ -397,10 +400,10 @@ public abstract class Char extends Actor {
 				if (enemy == Dungeon.hero) {
 
 					Dungeon.fail(getClass());
-					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name)));
+					GLog.n(Messages.capitalize(Messages.get(Char.class, "kill", name())));
 
 				} else if (this == Dungeon.hero) {
-					GLog.i(Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name)));
+					GLog.i(Messages.capitalize(Messages.get(Char.class, "defeat", enemy.name())));
 				}
 			}
 

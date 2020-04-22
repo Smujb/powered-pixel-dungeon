@@ -234,11 +234,15 @@ public class WandOfWarding extends DamageWand {
 			range = viewDistance;
 			state = WANDERING;
 
-			name = Messages.get(this, "name_" + tier );
 		}
 
 		{
 			immunities.add( Corruption.class );
+		}
+
+		@Override
+		public String name() {
+			return Messages.get(this, "name_" + tier);
 		}
 
 		@Override
@@ -273,7 +277,6 @@ public class WandOfWarding extends DamageWand {
 				tier++;
 				viewDistance++;
 				range++;
-				name = Messages.get(this, "name_" + tier );
 				updateSpriteState();
 				GameScene.updateFog(pos, viewDistance+1);
 			}
@@ -448,7 +451,6 @@ public class WandOfWarding extends DamageWand {
 			super.restoreFromBundle(bundle);
 			tier = bundle.getInt(TIER);
 			viewDistance = 2 + tier;
-			name = Messages.get(this, "name_" + tier );
 			wandLevel = bundle.getInt(WAND_LEVEL);
 			totalZaps = bundle.getInt(TOTAL_ZAPS);
 		}

@@ -254,7 +254,6 @@ public class TestBoss extends Mob {
 
 	static public class Tower extends Mob {
 		{
-			name = "lightning tower";
 			spriteClass = LitTowerSprite.class;
 
 			HP = HT = 600;

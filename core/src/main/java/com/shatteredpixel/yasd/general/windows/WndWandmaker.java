@@ -42,6 +42,8 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
+import org.jetbrains.annotations.NotNull;
+
 public class WndWandmaker extends Window {
 
 	private static final int WIDTH		= 120;
@@ -93,7 +95,7 @@ public class WndWandmaker extends Window {
 		resize(WIDTH, (int) btnWand2.bottom());
 	}
 	
-	private void selectReward( Wandmaker wandmaker, Item item, Wand reward ) {
+	private void selectReward(Wandmaker wandmaker, @NotNull Item item, @NotNull Wand reward ) {
 		
 		hide();
 		
@@ -106,7 +108,7 @@ public class WndWandmaker extends Window {
 			Dungeon.level.drop( reward, wandmaker.pos ).sprite.drop();
 		}
 		
-		wandmaker.yell( Messages.get(this, "farewell", Dungeon.hero.givenName()) );
+		wandmaker.yell( Messages.get(this, "farewell", Dungeon.hero.name()) );
 		wandmaker.destroy();
 		
 		wandmaker.sprite.die();
