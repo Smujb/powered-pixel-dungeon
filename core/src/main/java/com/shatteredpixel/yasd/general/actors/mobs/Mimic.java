@@ -29,26 +29,29 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Challenges;
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
+import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MimicSprite;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -60,6 +63,17 @@ public class Mimic extends Mob {
 		spriteClass = MimicSprite.class;
 
 		properties.add(Property.DEMONIC);
+		properties.add(Property.MINIBOSS);
+
+		damageFactor = 1.5f;
+		accuracyFactor = 1.5f;
+		evasionFactor = 0.6f;
+
+		EXP = 0;
+
+		//mimics are neutral when hidden
+		alignment = Alignment.NEUTRAL;
+		state = PASSIVE;
 	}
 	
 	public ArrayList<Item> items;
@@ -85,23 +99,95 @@ public class Mimic extends Mob {
 		if (bundle.contains( ITEMS )) {
 			items = new  ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
 		}
-		adjustStats( bundle.getInt( LEVEL ) );
+		if (state != PASSIVE && alignment == Alignment.NEUTRAL){
+			alignment = Alignment.ENEMY;
+		}
 		super.restoreFromBundle(bundle);
 	}
-	
+
+	@Override
+	public String name() {
+		if (alignment == Alignment.NEUTRAL){
+			return Messages.get(Heap.class, "chest");
+		} else {
+			return super.name();
+		}
+	}
+
+	@Override
+	public String description() {
+		if (alignment == Alignment.NEUTRAL){
+			return Messages.get(Heap.class, "chest_desc");
+		} else {
+			return super.description();
+		}
+	}
+
+	@Override
+	public int damageRoll() {
+		return alignment == Alignment.NEUTRAL ? (int) (super.damageRoll() * 1.5f) : super.damageRoll();
+	}
+
+	@Override
+	public CharSprite sprite() {
+		MimicSprite sprite = (MimicSprite) super.sprite();
+		if (alignment == Alignment.NEUTRAL) sprite.hideMimic();
+		return sprite;
+	}
+
+	@Override
+	public void beckon( int cell ) {
+		// Do nothing
+	}
+
+	@Override
+	public boolean interact() {
+		if (alignment != Alignment.NEUTRAL){
+			return super.interact();
+		}
+		stopHiding();
+		doAttack(Dungeon.hero);
+		Dungeon.hero.busy();
+		Dungeon.hero.sprite.operate(pos);
+		return false;
+	}
+
+	@Override
+	public void onAttackComplete() {
+		super.onAttackComplete();
+		if (alignment == Alignment.NEUTRAL){
+			alignment = Alignment.ENEMY;
+			Dungeon.hero.spendAndNext(1f);
+		}
+	}
+
+	@Override
+	public void damage(int dmg, @NotNull DamageSrc src) {
+		if (state == PASSIVE){
+			alignment = Alignment.ENEMY;
+			stopHiding();
+		}
+		super.damage(dmg, src);
+	}
+
+	public void stopHiding(){
+		state = HUNTING;
+		if (Dungeon.level.heroFOV[pos] && Actor.chars().contains(this)) {
+			enemy = Dungeon.hero;
+			target = Dungeon.hero.pos;
+			enemySeen = true;
+			GLog.w(Messages.get(this, "reveal") );
+			CellEmitter.get(pos).burst(Speck.factory(Speck.STAR), 10);
+			Sample.INSTANCE.play(Assets.SND_MIMIC);
+		}
+	}
+
+
+
 	@Override
 	public int attackSkill( Char target ) {
-		return 9 + level;
-	}
-	
-	public void adjustStats( int level ) {
-		this.level = level;
-		
-		HP = HT = (1 + level) * 6;
-		EXP = 2 + 2 * (level - 1) / Constants.CHAPTER_LENGTH;
-		defenseSkill = attackSkill( null ) / 2;
-		
-		enemySeen = true;
+
+		return alignment == Alignment.NEUTRAL ? INFINITE_ACCURACY : super.attackSkill(target);
 	}
 	
 	@Override
@@ -122,42 +208,16 @@ public class Mimic extends Mob {
 		return true;
 	}
 
+	public static Mimic spawnAt( int pos, Item item ){
+		return spawnAt( pos, Arrays.asList(item));
+	}
+
 	public static Mimic spawnAt( int pos, List<Item> items ) {
-		if (Dungeon.level.pit()[pos]) return null;
-		Char ch = Actor.findChar( pos );
-		if (ch != null) {
-			ArrayList<Integer> candidates = new  ArrayList<>();
-			for (int n : PathFinder.NEIGHBOURS8) {
-				int cell = pos + n;
-				if ((Dungeon.level.passable(cell) || Dungeon.level.avoid(cell)) && Actor.findChar( cell ) == null) {
-					candidates.add( cell );
-				}
-			}
-			if (candidates.size() > 0) {
-				int newPos = Random.element( candidates );
-				Actor.addDelayed( new  Pushing( ch, ch.pos, newPos ), -1 );
-				
-				ch.pos = newPos;
-				Dungeon.level.occupyCell(ch );
-				
-			} else {
-				return null;
-			}
-		}
 		
-		Mimic m = new  Mimic();
+		Mimic m = Mob.create(Mimic.class);
 		m.items = new  ArrayList<>( items );
-		m.adjustStats( Dungeon.depth);
+		m.enemySeen = true;
 		m.pos = pos;
-		m.state = m.HUNTING;
-		GameScene.add( m, 1 );
-		
-		m.sprite.turnTo( pos, Dungeon.hero.pos );
-		
-		if (Dungeon.level.heroFOV[m.pos]) {
-			CellEmitter.get( pos ).burst( Speck.factory( Speck.STAR ), 10 );
-			Sample.INSTANCE.play( Assets.SND_MIMIC );
-		}
 
 		//generate an extra reward for killing the mimic
 		Item reward = null;

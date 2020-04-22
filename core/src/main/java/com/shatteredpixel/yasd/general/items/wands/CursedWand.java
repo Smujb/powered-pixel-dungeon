@@ -365,9 +365,11 @@ public class CursedWand {
 			case 1:
 				cursedFX(user, bolt, new Callback() {
 					public void call() {
+						//TODO make this a gold mimic instead of boosting stats artificially
 						Mimic mimic = Mimic.spawnAt(bolt.collisionPos, new ArrayList<Item>());
 						if (mimic != null) {
-							mimic.adjustStats(Dungeon.getScaleFactor() * 2);
+							mimic.stopHiding();
+							mimic.alignment = Char.Alignment.ENEMY;
 							mimic.HP = mimic.HT;
 							Item reward;
 							do {
@@ -377,6 +379,7 @@ public class CursedWand {
 							Sample.INSTANCE.play(Assets.SND_MIMIC, 1, 1, 0.5f);
 							mimic.items.clear();
 							mimic.items.add(reward);
+							GameScene.add(mimic);
 						} else {
 							GLog.i(Messages.get(CursedWand.class, "nothing"));
 						}

@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels.traps;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Brute;
 import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
 import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
@@ -125,8 +126,10 @@ public class DistortionTrap extends Trap{
 							mob = Mob.spawnAt(Piranha.class, point);
 							break;
 						case 2:
-							Mimic.spawnAt(point, new ArrayList<>());
-							continue; //mimics spawn themselves, no need to do more
+							mob = Mimic.spawnAt(point, new ArrayList<>());
+							((Mimic)mob).stopHiding();
+							mob.alignment = Char.Alignment.ENEMY;
+							break;
 						case 3:
 							mob = Mob.spawnAt(Statue.class, point);
 							break;

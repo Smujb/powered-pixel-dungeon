@@ -32,17 +32,12 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Fire;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Burning;
-import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
-import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
@@ -59,7 +54,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,7 +71,7 @@ public class Heap implements Bundlable {
 		TOMB,
 		SKELETON,
 		REMAINS,
-		MIMIC
+		MIMIC //remains for pre-0.8.0 compatibility. There are converted to mimics on level load
 	}
 	public Type type = Type.HEAP;
 	
@@ -92,11 +86,7 @@ public class Heap implements Bundlable {
 	public void open( Hero hero ) {
 		switch (type) {
 		case MIMIC:
-			if (Mimic.spawnAt(pos, items) != null) {
-				destroy();
-			} else {
-				type = Type.CHEST;
-			}
+			type = Type.CHEST;
 			break;
 		case TOMB:
 			Wraith.spawnAt( pos );
@@ -212,15 +202,6 @@ public class Heap implements Bundlable {
 	
 	public void burn() {
 
-		if (type == Type.MIMIC) {
-			Mimic m = Mimic.spawnAt( pos, items );
-			if (m != null) {
-				Buff.affect( m, Burning.class ).reignite( m );
-				m.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
-				destroy();
-			}
-		}
-
 		if (type != Type.HEAP) {
 			return;
 		}
@@ -318,14 +299,6 @@ public class Heap implements Bundlable {
 	}
 	
 	public void freeze() {
-
-		if (type == Type.MIMIC) {
-			Mimic m = Mimic.spawnAt( pos, items );
-			if (m != null) {
-				Buff.prolong( m, Frost.class, Frost.duration( m ) * Random.Float( 1.0f, 1.5f ) );
-				destroy();
-			}
-		}
 
 		if (type != Type.HEAP) {
 			return;

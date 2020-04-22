@@ -27,12 +27,13 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
+import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.Random;
 
 public class SuspiciousChestRoom extends EmptyRoom {
@@ -62,7 +63,7 @@ public class SuspiciousChestRoom extends EmptyRoom {
 		Painter.set(level, center, Terrain.PEDESTAL);
 
 		if (Random.Int(3) == 0) {
-			level.drop(i, center).type = Heap.Type.MIMIC;
+			level.mobs.add(Mimic.spawnAt(center, i));
 		} else {
 			level.drop(i, center).type = Heap.Type.CHEST;
 		}

@@ -27,12 +27,13 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
+import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.Random;
 
 public class TreasuryRoom extends LockedRoom {
@@ -52,7 +53,11 @@ public class TreasuryRoom extends LockedRoom {
 			do {
 				pos = level.pointToCell(random());
 			} while (level.map[pos] != Terrain.EMPTY || level.heaps.get( pos ) != null);
-			level.drop( new Gold().random(), pos ).type = (Random.Int(20) == 0 && heapType == Heap.Type.CHEST ? Heap.Type.MIMIC : heapType);
+			if (heapType == Heap.Type.CHEST && Random.Int(5 ) == 0){
+				level.mobs.add(Mimic.spawnAt(pos, new Gold().random()));
+			} else {
+				level.drop( new Gold().random(), pos ).type = heapType;
+			}
 		}
 		
 		if (heapType == Heap.Type.HEAP) {
