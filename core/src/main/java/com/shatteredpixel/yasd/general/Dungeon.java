@@ -865,6 +865,9 @@ public class Dungeon {
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
+		if (Char.hasProp(ch, Char.Property.LARGE)){
+			BArray.and( pass, Dungeon.level.openSpace, passable );
+		}
 
 		for (Char c : Actor.chars()) {
 			if (visible[c.pos]) {
@@ -888,6 +891,10 @@ public class Dungeon {
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
+
+		if (Char.hasProp(ch, Char.Property.LARGE)){
+			BArray.and( pass, Dungeon.level.openSpace, passable );
+		}
 		
 		for (Char c : Actor.chars()) {
 			if (visible[c.pos]) {
@@ -906,6 +913,10 @@ public class Dungeon {
 			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
+		}
+
+		if (Char.hasProp(ch, Char.Property.LARGE)){
+			BArray.and( pass, Dungeon.level.openSpace, passable );
 		}
 		
 		for (Char c : Actor.chars()) {

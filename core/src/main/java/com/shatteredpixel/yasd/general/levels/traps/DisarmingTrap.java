@@ -53,7 +53,7 @@ public class DisarmingTrap extends Trap{
 		Heap heap = Dungeon.level.heaps.get( pos );
 
 		if (heap != null){
-			int cell = Dungeon.level.randomRespawnCell();
+			int cell = Dungeon.level.randomRespawnCell(null);
 
 			if (cell != -1) {
 				Item item = heap.pickUp();
@@ -77,7 +77,7 @@ public class DisarmingTrap extends Trap{
 				int cell;
 				int tries = 20;
 				do {
-					cell = Dungeon.level.randomRespawnCell();
+					cell = Dungeon.level.randomRespawnCell(null);
 					if (tries-- < 0 && cell != -1) break;
 
 					PathFinder.buildDistanceMap(pos, Dungeon.level.passable());

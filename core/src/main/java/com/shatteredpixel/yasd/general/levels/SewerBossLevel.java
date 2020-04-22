@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Slime;
 import com.shatteredpixel.yasd.general.items.Heap;
@@ -147,11 +148,14 @@ public class SewerBossLevel extends SewerLevel {
 	}
 
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char ch) {
 		int pos;
 		do {
 			pos = pointToCell(roomEntrance.random());
-		} while (pos == getEntrance().getPos(this) || !passable(pos) || Actor.findChar(pos) != null);
+		} while (pos == getEntrancePos()
+				|| !passable(pos)
+				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[pos])
+				|| Actor.findChar(pos) != null);
 		return pos;
 	}
 

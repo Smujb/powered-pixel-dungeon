@@ -177,7 +177,7 @@ public class OldPrisonBossLevel extends Level {
 	protected void createItems() {
 		Item item = Bones.get();
 		if (item != null) {
-			drop( item, randomRespawnCell() ).setHauntedIfCursed().type = Heap.Type.REMAINS;
+			drop( item, randomRespawnCell(null) ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 		drop(new IronKey(key), randomPrisonCell());
 	}
@@ -227,7 +227,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char target) {
 		int pos = 5+2*32; //random cell adjacent to the entrance.
 		int cell;
 		do {

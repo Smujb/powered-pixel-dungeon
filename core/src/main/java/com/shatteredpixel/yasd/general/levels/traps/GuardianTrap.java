@@ -63,7 +63,7 @@ public class GuardianTrap extends Trap {
 		for (int i = 0; i < (Dungeon.getScaleFactor() - 5)/5; i++){
 			Guardian guardian = new Guardian();
 			guardian.state = guardian.WANDERING;
-			guardian.pos = Dungeon.level.randomRespawnCell();
+			guardian.pos = Dungeon.level.randomRespawnCell(guardian);
 			GameScene.add(guardian);
 			guardian.beckon(Dungeon.hero.pos );
 		}

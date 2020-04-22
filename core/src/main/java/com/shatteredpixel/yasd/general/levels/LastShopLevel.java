@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.levels;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -152,11 +153,13 @@ public class LastShopLevel extends RegularLevel {
 	}
 	
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char ch) {
 		int cell;
 		do {
 			cell = pointToCell( roomEntrance.random() );
-		} while (!passable(cell) || Actor.findChar(cell) != null);
+		} while (!passable(cell)
+				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Actor.findChar(cell) != null);
 		return cell;
 	}
 	

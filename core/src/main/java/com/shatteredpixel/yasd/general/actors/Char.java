@@ -263,6 +263,10 @@ public abstract class Char extends Actor {
 			return true;
 		}
 
+		if (properties.contains(Property.LARGE) && !Dungeon.level.openSpace[Dungeon.hero.pos]){
+			return true;
+		}
+
 		int curPos = pos;
 
 		moveSprite(pos, Dungeon.hero.pos);
@@ -1021,6 +1025,7 @@ public abstract class Char extends Actor {
 				new HashSet<Class>( Arrays.asList(Frost.class, Chill.class))),
 		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class, Elemental.Shock.class )),
 				new HashSet<Class>()),
+		LARGE,
 		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class, LimitedAir.class))),
 		IMMOVABLE,
 		IGNORES_INVISIBLE;
@@ -1048,6 +1053,11 @@ public abstract class Char extends Actor {
 		public HashSet<Class> immunities(){
 			return new HashSet<>(immunities);
 		}
+	}
+
+	@Contract(value = "null, _ -> false", pure = true)
+	public static boolean hasProp(Char ch, Property p){
+		return (ch != null && ch.properties.contains(p));
 	}
 
 	public static class DamageSrc {

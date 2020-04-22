@@ -195,12 +195,14 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char ch) {
 		int pos = getEntrance() == null ? stairs.getPos(this) : getEntrance().getPos(this);
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable(cell) || Actor.findChar(cell) != null);
+		} while (!passable(cell)
+				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Actor.findChar(cell) != null);
 		return cell;
 	}
 	

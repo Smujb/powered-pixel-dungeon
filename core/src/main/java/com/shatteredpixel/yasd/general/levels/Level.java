@@ -190,6 +190,8 @@ public abstract class Level implements Bundlable {
 	public boolean[] mapped;
 	public boolean[] discoverable;
 
+	public boolean[] openSpace;
+
 	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 6;
 	
 	public boolean[] heroFOV;
@@ -493,7 +495,9 @@ public abstract class Level implements Bundlable {
 		
 		visited     = new boolean[length];
 		mapped      = new boolean[length];
-		
+
+		openSpace   = new boolean[length];
+
 		heroFOV     = new boolean[length];
 		
 		PathFinder.setMapSize(w, h);
@@ -613,7 +617,7 @@ public abstract class Level implements Bundlable {
 		for (Heap h : heaps.valueList()){
 			if (h.type == Heap.Type.MIMIC){
 				heaps.remove(h.pos);
-				mobs.add(Mimic.spawnAt(h.pos, h.items));
+				mobs.add(Mimic.spawnAt(h.pos, h.items, Mimic.class));
 			}
 		}
 	}
@@ -1027,7 +1031,7 @@ public abstract class Level implements Bundlable {
 
 					Mob mob = createMob();
 					mob.state = mob.WANDERING;
-					mob.pos = randomRespawnCell();
+					mob.pos = randomRespawnCell(mob);
 					if (Dungeon.hero.isAlive() && mob.pos != -1 && distance(Dungeon.hero.pos, mob.pos) >= 4) {
 						GameScene.add( mob );
 						if (Statistics.amuletObtained) {
@@ -1055,13 +1059,13 @@ public abstract class Level implements Bundlable {
 		return LevelHandler.filename(key, GamesInProgress.curSlot);
 	}
 	
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char ch) {
 		int cell;
 		do {
 			cell = Random.Int( length() );
-		} while ((Dungeon.level == this && heroFOV[cell])
-				|| !passable(cell)
-				|| Actor.findChar( cell ) != null);
+		} while (!passable(cell)
+				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Actor.findChar(cell) != null);
 		return cell;
 	}
 	
@@ -1112,6 +1116,12 @@ public abstract class Level implements Bundlable {
 			map[i] = WALL;
 			map[i + width()-1] = WALL;
 		}
+
+		for (int i=0; i < length(); i++) {
+			openSpace[i] = !solid(i) &&
+					(!solid(i - 1) || !solid(i + 1)) &&
+					(!solid(i - width()) || !solid(i + width()));
+		}
 	}
 
 	public void destroy( int pos ) {
@@ -1159,6 +1169,12 @@ public abstract class Level implements Bundlable {
 
 		if (terrain != EMPTY){
 			traps.remove( cell );
+		}
+
+		for (int i=0; i < length(); i++) {
+			openSpace[i] = !solid(i) &&
+					(!solid(i - 1) || !solid(i + 1)) &&
+					(!solid(i - width()) || !solid(i + width()));
 		}
 	}
 	
@@ -1273,7 +1289,7 @@ public abstract class Level implements Bundlable {
 	public int fallCell( boolean fallIntoPit ) {
 		int result;
 		do {
-			result = randomRespawnCell();
+			result = randomRespawnCell(null);
 		} while (traps.get(result) != null
 				|| findMob(result) != null
 				|| heaps.get(result) != null);

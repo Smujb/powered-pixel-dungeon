@@ -126,7 +126,7 @@ public class DistortionTrap extends Trap{
 							mob = Mob.spawnAt(Piranha.class, point);
 							break;
 						case 2:
-							mob = Mimic.spawnAt(point, new ArrayList<>());
+							mob = Mimic.spawnAt(point, new ArrayList<>(), Mimic.class);
 							((Mimic)mob).stopHiding();
 							mob.alignment = Char.Alignment.ENEMY;
 							break;
@@ -138,6 +138,10 @@ public class DistortionTrap extends Trap{
 				case 4:
 					mob = Reflection.newInstance(Random.element(RARE));
 					break;
+			}
+
+			if (Char.hasProp(mob, Char.Property.LARGE) && !Dungeon.level.openSpace[point]){
+				continue;
 			}
 
 			mob.maxLvl = Constants.HERO_EXP_CAP;

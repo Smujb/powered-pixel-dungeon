@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Amulet;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
@@ -159,11 +160,13 @@ public class LastLevel extends Level {
 	}
 
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char ch) {
 		int cell;
 		do {
 			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
-		} while (!passable(cell) || Actor.findChar(cell) != null);
+		} while (!passable(cell)
+				|| (Char.hasProp(ch, Char.Property.LARGE) && !openSpace[cell])
+				|| Actor.findChar(cell) != null);
 		return cell;
 	}
 

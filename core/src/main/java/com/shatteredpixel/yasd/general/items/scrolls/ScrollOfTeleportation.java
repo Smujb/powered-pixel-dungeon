@@ -113,7 +113,7 @@ public class ScrollOfTeleportation extends Scroll {
 		
 	}
 	
-	public static void teleportUser(Char  hero ) {
+	public static void teleportUser(Char  ch ) {
 
 		if (Dungeon.bossLevel()){
 			GLog.w( Messages.get(ScrollOfTeleportation.class, "no_tele") );
@@ -123,7 +123,7 @@ public class ScrollOfTeleportation extends Scroll {
 		int count = 10;
 		int pos;
 		do {
-			pos = Dungeon.level.randomRespawnCell();
+			pos = Dungeon.level.randomRespawnCell(ch);
 			if (count-- <= 0) {
 				break;
 			}
@@ -137,8 +137,8 @@ public class ScrollOfTeleportation extends Scroll {
 			
 			GLog.i( Messages.get(ScrollOfTeleportation.class, "tele") );
 			
-			appear( hero, pos );
-			Dungeon.level.occupyCell(hero );
+			appear( ch, pos );
+			Dungeon.level.occupyCell(ch );
 			Dungeon.observe();
 			GameScene.updateFog();
 			

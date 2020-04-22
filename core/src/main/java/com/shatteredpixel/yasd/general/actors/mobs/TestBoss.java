@@ -188,7 +188,7 @@ public class TestBoss extends Mob {
 		towerPositions.clear();
 		int[] positions = new  int[numBolts()];
 		for (int i = 0; i < positions.length; i++) {
-			positions[i] = Dungeon.level.randomRespawnCell();
+			positions[i] = Dungeon.level.randomRespawnCell(this);
 		}
 		for (final int i : positions) {
 			MagicMissile.boltFromChar( sprite.parent,

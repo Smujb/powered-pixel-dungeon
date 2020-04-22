@@ -208,7 +208,7 @@ public class CityBossLevel extends Level {
 	}
 	
 	@Override
-	public int randomRespawnCell() {
+	public int randomRespawnCell(Char target) {
 		int cell;
 		do {
 			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
