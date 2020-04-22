@@ -45,6 +45,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
+import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
@@ -189,6 +190,16 @@ public class Statue extends Mob implements Callback {
 		}
 		spend(1f);
 		next();
+	}
+
+	@Override
+	public CharSprite sprite() {
+		CharSprite sprite = super.sprite();
+		ArrayList<Armor> armors = belongings.getArmors();
+		if (armors.size() > 0) {
+			((StatueSprite) sprite).setArmor(armors.get(0).appearance());
+		}
+		return sprite;
 	}
 
 	private Wand wandToAttack(Char enemy) {
