@@ -112,8 +112,6 @@ public class MagicMissile extends Emitter {
 	public void reset( int type, PointF from, PointF to, Callback callback ) {
 		this.callback = callback;
 		
-		revive();
-		
 		this.to = to;
 		
 		x = from.x;
@@ -223,6 +221,8 @@ public class MagicMissile extends Emitter {
 				pour( Speck.factory( Speck.BUBBLE_GREEN ), 0.05f );
 				break;
 		}
+
+		revive();
 	}
 	
 	public void size( float size ) {

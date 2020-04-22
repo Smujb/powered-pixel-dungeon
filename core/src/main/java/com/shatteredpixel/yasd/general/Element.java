@@ -56,6 +56,7 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
@@ -88,6 +89,7 @@ public enum Element {
 	VENOM( true ),
 	HOLY( true ),
 	DRAIN( true ),
+	LIGHT( true ),
 	DARK( true );
 
 
@@ -96,6 +98,9 @@ public enum Element {
 			case HOLY:
 				if (defender.properties().contains(Char.Property.UNDEAD) || defender.properties().contains(Char.Property.DEMONIC)) {
 					damage *= 1.5;
+				}
+				if (defender == Dungeon.hero) {
+					GameScene.flash(0xFFFFFF);
 				}
 				break;
 			case PHYSICAL:

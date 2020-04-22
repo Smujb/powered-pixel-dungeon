@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -216,6 +215,18 @@ public class Blacksmith extends NPC {
 		Sample.INSTANCE.play( Assets.SND_EVOKE );
 		ScrollOfUpgrade.upgrade( Dungeon.hero );
 		Item.evoke( Dungeon.hero );
+
+		if (second.isEquipped( Dungeon.hero )) {
+			((EquipableItem)second).doUnequip( Dungeon.hero, false );
+		}
+		second.detach( Dungeon.hero.belongings.backpack );
+
+		if (second instanceof Armor){
+			BrokenSeal seal = ((Armor) second).checkSeal();
+			if (seal != null){
+				Dungeon.level.drop( seal, Dungeon.hero.pos );
+			}
+		}
 		
 		if (first.isEquipped( Dungeon.hero )) {
 			((EquipableItem)first).doUnequip( Dungeon.hero, true );
@@ -227,20 +238,6 @@ public class Blacksmith extends NPC {
 		if (first instanceof MissileWeapon && !Dungeon.hero.belongings.contains(first)) {
 			if (!first.collect()){
 				Dungeon.level.drop( first, Dungeon.hero.pos );
-			}
-		}
-		Dungeon.hero.spendAndNext( 2f );
-		Badges.validateItemLevelAquired( first );
-		
-		if (second.isEquipped( Dungeon.hero )) {
-			((EquipableItem)second).doUnequip( Dungeon.hero, false );
-		}
-		second.detach( Dungeon.hero.belongings.backpack );
-		
-		if (second instanceof Armor){
-			BrokenSeal seal = ((Armor) second).checkSeal();
-			if (seal != null){
-				Dungeon.level.drop( seal, Dungeon.hero.pos );
 			}
 		}
 		

@@ -73,8 +73,8 @@ public class WndInfoItem extends Window {
 		txtInfo.maxWidth(width);
 		txtInfo.setPos(titlebar.left(), titlebar.bottom() + GAP);
 		add( txtInfo );
-		
-		resize( width, (int)(txtInfo.top() + txtInfo.height()) );
+
+		resize( width, (int)(txtInfo.bottom() + 2) );
 	}
 	
 	private void fillFields( Item item ) {
@@ -97,7 +97,7 @@ public class WndInfoItem extends Window {
 		txtInfo.maxWidth(width);
 		txtInfo.setPos(titlebar.left(), titlebar.bottom() + GAP);
 		add( txtInfo );
-		
-		resize( width, (int)(txtInfo.top() + txtInfo.height()) );
+
+		resize( width, (int)(txtInfo.bottom() + 2) );
 	}
 }

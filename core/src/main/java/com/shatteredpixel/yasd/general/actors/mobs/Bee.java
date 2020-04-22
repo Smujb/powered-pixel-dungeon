@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -85,6 +86,15 @@ public class Bee extends Mob {
 		potPos = bundle.getInt( POTPOS );
 		potHolder = bundle.getInt( POTHOLDER );
 		if (bundle.contains(ALIGMNENT)) alignment = bundle.getEnum( ALIGMNENT, Alignment.class);
+	}
+
+	@Override
+	public void add(Buff buff) {
+		super.add(buff);
+		if (buff instanceof Corruption){
+			intelligentAlly = false;
+			setPotInfo(-1, null);
+		}
 	}
 	
 	public void spawn( int level ) {

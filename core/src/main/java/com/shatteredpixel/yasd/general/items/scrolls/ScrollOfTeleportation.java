@@ -34,11 +34,11 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -174,7 +174,7 @@ public class ScrollOfTeleportation extends Scroll {
 			int cell;
 			for (Point p : r.charPlaceablePoints(level)){
 				cell = level.pointToCell(p);
-				if (level.passable(cell) && !level.visited[cell] && !level.secret(cell)){
+				if (level.passable(cell) && !level.visited[cell] && !level.secret(cell) && Actor.findChar(cell) == null){
 					candidates.add(cell);
 				}
 			}
