@@ -166,6 +166,11 @@ public abstract class Elemental extends Mob {
 			properties.add(Property.MINIBOSS);
 		}
 
+		@Override
+		public boolean reset() {
+			return true;
+		}
+
 	}
 
 	public static class Frost extends Elemental {
