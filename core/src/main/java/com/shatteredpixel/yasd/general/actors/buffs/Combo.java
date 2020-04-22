@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.ActionIndicator;
@@ -213,6 +214,15 @@ public class Combo extends Buff implements ActionIndicator.Action {
 		private void doAttack(final Char enemy){
 
 			AttackIndicator.target(enemy);
+
+			if (enemy.defenseSkill(target) >= Char.INFINITE_EVASION){
+				enemy.sprite.showStatus( CharSprite.NEUTRAL, enemy.defenseVerb() );
+				Sample.INSTANCE.play(Assets.SND_MISS);
+				detach();
+				ActionIndicator.clearAction(Combo.this);
+				target.spendAndNext(target.attackDelay());
+				return;
+			}
 
 			int dmg = target.damageRoll();
 
