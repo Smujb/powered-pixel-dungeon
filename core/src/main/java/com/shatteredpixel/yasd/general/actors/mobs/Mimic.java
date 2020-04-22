@@ -223,6 +223,13 @@ public class Mimic extends Mob {
 		m.enemySeen = true;
 		m.pos = pos;
 
+		m.generatePrize();
+
+		return m;
+	}
+
+	protected void generatePrize(){
+
 		//generate an extra reward for killing the mimic
 		Item reward = null;
 		do {
@@ -244,9 +251,7 @@ public class Mimic extends Mob {
 					break;
 			}
 		} while (reward == null || Challenges.isItemBlocked(reward));
-		m.items.add(reward);
-		
-		return m;
+		items.add(reward);
 	}
 	
 	{
