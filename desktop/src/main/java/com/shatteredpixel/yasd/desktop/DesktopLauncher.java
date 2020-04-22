@@ -48,7 +48,12 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class DesktopLauncher {
-    public static void main (String[] arg) {
+
+    public static void main (String[] args) {
+
+        if (!DesktopLaunchValidator.verifyValidJVMState(args)){
+            return;
+        }
 
         final String title;
         if (DesktopLauncher.class.getPackage().getSpecificationTitle() == null){
