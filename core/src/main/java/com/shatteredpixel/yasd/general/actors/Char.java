@@ -116,6 +116,7 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -1056,7 +1057,7 @@ public abstract class Char extends Actor {
 	}
 
 	@Contract(value = "null, _ -> false", pure = true)
-	public static boolean hasProp(Char ch, Property p){
+	public static boolean hasProp(@Nullable Char ch, Property p){
 		return (ch != null && ch.properties.contains(p));
 	}
 

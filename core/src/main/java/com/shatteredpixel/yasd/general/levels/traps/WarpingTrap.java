@@ -69,7 +69,7 @@ public class WarpingTrap extends Trap {
 				int count = 10;
 				int pos;
 				do {
-					pos = Dungeon.level.randomRespawnCell(null);
+					pos = Dungeon.level.randomRespawnCell();
 					if (count-- <= 0) {
 						break;
 					}
@@ -95,7 +95,7 @@ public class WarpingTrap extends Trap {
 		Heap heap = Dungeon.level.heaps.get(pos);
 		
 		if (heap != null){
-			int cell = Dungeon.level.randomRespawnCell(null);
+			int cell = Dungeon.level.randomRespawnCell();
 			
 			Item item = heap.pickUp();
 			

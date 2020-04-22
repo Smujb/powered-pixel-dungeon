@@ -135,6 +135,7 @@ import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -189,7 +190,7 @@ public abstract class Level implements Bundlable {
 	public boolean[] visited;
 	public boolean[] mapped;
 	public boolean[] discoverable;
-
+	//TODO calculate this dynamically like the other map flags
 	public boolean[] openSpace;
 
 	public int viewDistance = Dungeon.isChallenged( Challenges.DARKNESS ) ? 2 : 6;
@@ -1058,8 +1059,12 @@ public abstract class Level implements Bundlable {
 	public final String fileName() {
 		return LevelHandler.filename(key, GamesInProgress.curSlot);
 	}
+
+	public final int randomRespawnCell() {
+		return randomRespawnCell(null);
+	}
 	
-	public int randomRespawnCell(Char ch) {
+	public int randomRespawnCell(@Nullable Char ch) {
 		int cell;
 		do {
 			cell = Random.Int( length() );
@@ -1289,7 +1294,7 @@ public abstract class Level implements Bundlable {
 	public int fallCell( boolean fallIntoPit ) {
 		int result;
 		do {
-			result = randomRespawnCell(null);
+			result = randomRespawnCell();
 		} while (traps.get(result) != null
 				|| findMob(result) != null
 				|| heaps.get(result) != null);

@@ -107,7 +107,7 @@ public class UnderwaterLevel extends Level {
 			}
 		}
 		for (int i = 0; i < NUM_BUBBLES; i++) {
-			bubbleLocations.add(randomRespawnCell(this));
+			bubbleLocations.add(randomRespawnCell());
 		}
 		return true;
 	}
@@ -131,7 +131,7 @@ public class UnderwaterLevel extends Level {
 	protected void createMobs() {
 		for (int i = 0; i < nMobs(); i++) {
 			Mob mob = createMob();
-			mob.pos = randomRespawnCell(this);
+			mob.pos = randomRespawnCell();
 			mobs.add(mob);
 		}
 	}
@@ -157,7 +157,7 @@ public class UnderwaterLevel extends Level {
 					break;
 
 			}
-			drop(item, randomRespawnCell(this)).type = Heap.Type.SKELETON;
+			drop(item, randomRespawnCell()).type = Heap.Type.SKELETON;
 		}
 	}
 

@@ -51,6 +51,8 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 
 public class SewerBossLevel extends SewerLevel {
@@ -148,7 +150,7 @@ public class SewerBossLevel extends SewerLevel {
 	}
 
 	@Override
-	public int randomRespawnCell(Char ch) {
+	public int randomRespawnCell(@Nullable Char ch) {
 		int pos;
 		do {
 			pos = pointToCell(roomEntrance.random());

@@ -98,7 +98,7 @@ public class TestBossLevel extends Level {
 		if (ch == Dungeon.hero && insideRoom(cell) && !bossSpawned) {
 			TestBoss boss = new TestBoss();
 			boss.state = boss.WANDERING;
-			boss.pos = randomRespawnCell(this);
+			boss.pos = randomRespawnCell(boss);
 			GameScene.add( boss );
 			bossSpawned = true;
 			Dungeon.level.set(ENTRANCE_LOCATION, WALL);
