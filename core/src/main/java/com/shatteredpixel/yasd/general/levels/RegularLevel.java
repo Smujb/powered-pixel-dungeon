@@ -296,7 +296,7 @@ public abstract class RegularLevel extends Level {
 				map[cell] = Terrain.GRASS;
 			}
 
-			Heap.Type type = null;
+			Heap.Type type;
 			switch (Random.Int( 20 )) {
 				case 0:
 					type = Heap.Type.SKELETON;
@@ -308,12 +308,14 @@ public abstract class RegularLevel extends Level {
 					type = Heap.Type.CHEST;
 					break;
 				case 5:
-				default:
 					if (Dungeon.depth > 1 && findMob(cell) == null) {
 						mobs.add(Mimic.spawnAt(cell, toDrop, this));
 						continue;
 					}
 					type = Heap.Type.CHEST;
+					break;
+				default:
+					type = Heap.Type.HEAP;
 					break;
 			}
 
