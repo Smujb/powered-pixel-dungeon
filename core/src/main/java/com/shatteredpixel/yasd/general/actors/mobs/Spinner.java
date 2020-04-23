@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SpinnerSprite;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -177,6 +178,24 @@ public class Spinner extends Mob {
 
 	private int right(int direction){
 		return direction == 7 ? 0 : direction+1;
+	}
+
+
+	private static final String WEB_COOLDOWN = "web_cooldown";
+	private static final String LAST_ENEMY_POS = "last_enemy_pos";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(WEB_COOLDOWN, webCoolDown);
+		bundle.put(LAST_ENEMY_POS, lastEnemyPos);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		webCoolDown = bundle.getInt( WEB_COOLDOWN );
+		lastEnemyPos = bundle.getInt( LAST_ENEMY_POS );
 	}
 
 	{
