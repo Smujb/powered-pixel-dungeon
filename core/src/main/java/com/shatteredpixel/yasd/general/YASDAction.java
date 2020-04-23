@@ -33,10 +33,12 @@ import com.watabou.input.KeyBindings;
 
 public class YASDAction extends GameAction {
 
+	//--Existing actions from GameAction
 	public static final int NONE        = GameAction.NONE;
 
 	public static final int BACK        = GameAction.BACK;
 	public static final int MENU        = GameAction.MENU;
+	//--
 
 	public static final int HERO_INFO   = 3;
 	public static final int JOURNAL     = 4;
@@ -58,18 +60,19 @@ public class YASDAction extends GameAction {
 
 	public static final int ZOOM_IN     = 17;
 	public static final int ZOOM_OUT    = 18;
-	public static final int ZOOM_DEFAULT= 19;
 
-	public static final int N           = 20;
-	public static final int NE          = 21;
-	public static final int E           = 22;
-	public static final int SE          = 23;
-	public static final int S           = 24;
+	public static final int N           = 19;
+	public static final int E           = 20;
+	public static final int S           = 21;
+	public static final int W           = 22;
+	public static final int NE          = 23;
+	public static final int SE          = 24;
 	public static final int SW          = 25;
-	public static final int W           = 26;
-	public static final int NW          = 27;
+	public static final int NW          = 26;
 
-	public static void initialize() {
+	public static final int TOTAL_ACTIONS = 27;
+
+	public static void initDefaults() {
 
 		KeyBindings.addName(NONE,           "none");
 
@@ -96,16 +99,15 @@ public class YASDAction extends GameAction {
 
 		KeyBindings.addName(ZOOM_IN,        "zoom_in");
 		KeyBindings.addName(ZOOM_OUT,       "zoom_out");
-		KeyBindings.addName(ZOOM_DEFAULT,   "zoom_default");
 
-		KeyBindings.addName(N,              "none");
-		KeyBindings.addName(NE,             "none");
-		KeyBindings.addName(E,              "none");
-		KeyBindings.addName(SE,             "none");
-		KeyBindings.addName(S,              "none");
-		KeyBindings.addName(SW,             "none");
-		KeyBindings.addName(W,              "none");
-		KeyBindings.addName(NW,             "none");
+		KeyBindings.addName(N,              "n");
+		KeyBindings.addName(E,              "e");
+		KeyBindings.addName(S,              "s");
+		KeyBindings.addName(W,              "w");
+		KeyBindings.addName(NE,             "ne");
+		KeyBindings.addName(SE,             "se");
+		KeyBindings.addName(SW,             "sw");
+		KeyBindings.addName(NW,             "nw");
 
 		//default key bindings
 		KeyBindings.addBinding( Input.Keys.BACK, GameAction.BACK );
@@ -114,7 +116,6 @@ public class YASDAction extends GameAction {
 		KeyBindings.addBinding( Input.Keys.H, YASDAction.HERO_INFO );
 		KeyBindings.addBinding( Input.Keys.J, YASDAction.JOURNAL );
 
-		KeyBindings.addBinding( Input.Keys.NUMPAD_5, YASDAction.WAIT );
 		KeyBindings.addBinding( Input.Keys.SPACE,    YASDAction.WAIT );
 		KeyBindings.addBinding( Input.Keys.S,        YASDAction.SEARCH );
 
@@ -133,12 +134,12 @@ public class YASDAction extends GameAction {
 		KeyBindings.addBinding( Input.Keys.PLUS,   YASDAction.ZOOM_IN );
 		KeyBindings.addBinding( Input.Keys.EQUALS, YASDAction.ZOOM_IN );
 		KeyBindings.addBinding( Input.Keys.MINUS,  YASDAction.ZOOM_OUT );
-		KeyBindings.addBinding( Input.Keys.SLASH,  YASDAction.ZOOM_DEFAULT );
 
 		KeyBindings.addBinding( Input.Keys.UP,    YASDAction.N );
 		KeyBindings.addBinding( Input.Keys.RIGHT, YASDAction.E );
 		KeyBindings.addBinding( Input.Keys.DOWN,  YASDAction.S );
 		KeyBindings.addBinding( Input.Keys.LEFT,  YASDAction.W );
+		KeyBindings.addBinding( Input.Keys.NUMPAD_5,  YASDAction.WAIT );
 		KeyBindings.addBinding( Input.Keys.NUMPAD_8,  YASDAction.N );
 		KeyBindings.addBinding( Input.Keys.NUMPAD_9,  YASDAction.NE );
 		KeyBindings.addBinding( Input.Keys.NUMPAD_6,  YASDAction.E );
@@ -147,6 +148,16 @@ public class YASDAction extends GameAction {
 		KeyBindings.addBinding( Input.Keys.NUMPAD_1,  YASDAction.SW );
 		KeyBindings.addBinding( Input.Keys.NUMPAD_4,  YASDAction.W );
 		KeyBindings.addBinding( Input.Keys.NUMPAD_7,  YASDAction.NW );
+
+	}
+
+	//file name? perhaps
+
+	public static void loadBindings(){
+
+	}
+
+	public static void saveBindings(){
 
 	}
 }

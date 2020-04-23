@@ -338,6 +338,19 @@ public class WndSettings extends WndTabbed {
 			chkFont.setRect(0, chkFullscreen.bottom() + GAP_TINY, WIDTH, BTN_HEIGHT);
 			chkFont.checked(GameSettings.systemFont());
 			add(chkFont);
+
+			if (DeviceCompat.isDesktop()){
+				RedButton btnKeyBindings = new RedButton(Messages.get(this, "key_bindings")){
+					@Override
+					protected void onClick() {
+						super.onClick();
+						MainGame.scene().addToFront(new WndKeyBindings());
+					}
+				};
+
+				btnKeyBindings.setRect(0, chkFont.bottom() + GAP_SML, WIDTH, BTN_HEIGHT);
+				add(btnKeyBindings);
+			}
 		}
 
 	}

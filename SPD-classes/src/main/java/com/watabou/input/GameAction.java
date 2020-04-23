@@ -34,4 +34,5 @@ public class GameAction {
 	public static final int BACK        = 1;
 	public static final int MENU        = 2;
 
+	public static final int TOTAL_ACTIONS = 3;
 }

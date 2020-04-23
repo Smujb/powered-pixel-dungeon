@@ -29,13 +29,13 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
-import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
@@ -51,7 +51,6 @@ import static com.shatteredpixel.yasd.general.YASDAction.S;
 import static com.shatteredpixel.yasd.general.YASDAction.SE;
 import static com.shatteredpixel.yasd.general.YASDAction.SW;
 import static com.shatteredpixel.yasd.general.YASDAction.W;
-import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_DEFAULT;
 import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_IN;
 import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_OUT;
 
@@ -242,9 +241,6 @@ public class CellSelector extends ScrollArea {
 							return true;
 						case ZOOM_OUT:
 							zoom(camera.zoom - 1);
-							return true;
-						case ZOOM_DEFAULT:
-							zoom(PixelScene.defaultZoom);
 							return true;
 					}
 				}
