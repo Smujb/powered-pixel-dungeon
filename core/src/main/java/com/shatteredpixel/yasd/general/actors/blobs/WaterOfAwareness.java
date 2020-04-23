@@ -58,7 +58,7 @@ public class WaterOfAwareness extends WellWater {
 		for (int i=0; i < Dungeon.level.length(); i++) {
 			
 			KindOfTerrain terr = Dungeon.level.map[i];
-			if (terr.secret()) {
+			if (Dungeon.level.secret(i)) {
 				
 				Dungeon.level.discover( i );
 				

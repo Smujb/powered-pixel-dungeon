@@ -1673,23 +1673,23 @@ public class Hero extends Char {
 						if (foresight){
 							chance = 1f;
 
-						//otherwise if the trap isn't searchable, searching always fails
+							//otherwise if the trap isn't searchable, searching always fails
 						} else if (trap != null && !trap.canBeSearched){
 							chance = 0f;
 
-						//intentional searches always succeed against regular traps and doors
+							//intentional searches always succeed against regular traps and doors
 						} else if (intentional){
 							chance = 1f;
-						
-						//unintentional searches always fail with a cursed talisman
+
+							//unintentional searches always fail with a cursed talisman
 						} else if (cursed) {
 							chance = 0f;
-							
-						//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
-						} else if (Dungeon.level.traps.containsKey(p) && !Dungeon.level.traps.get(p).visible/*Dungeon.level.map[p] == Terrain.SECRET_TRAP*/) {
+
+							//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
+						} else if (Dungeon.level.traps.containsKey(p)) {
 							chance = 0.4f - (Dungeon.depth / 250f);
-							
-						//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
+
+							//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
 						} else {
 							chance = 0.2f - (Dungeon.depth / 100f);
 						}
