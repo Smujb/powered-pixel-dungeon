@@ -856,15 +856,16 @@ public class Dungeon {
 		else
 			BArray.setFalse(passable);
 	}
-
+	//TODO: Pathfinding for large mobs isn't working properly
 	public static PathFinder.Path findPath(Char ch, int from, int to, boolean[] pass, boolean[] visible ) {
 
 		setupPassable();
-		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
+		if (ch.flying || ch.buff( Amok.class ) != null) {
 			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
 		}
+
 		if (Char.hasProp(ch, Char.Property.LARGE)){
 			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
@@ -878,15 +879,15 @@ public class Dungeon {
 		return PathFinder.find( from, to, passable );
 
 	}
-	
+
 	public static int findStep(Char ch, int from, int to, boolean[] pass, boolean[] visible ) {
 
 		if (Dungeon.level.adjacent( from, to )) {
-			return Actor.findChar( to ) == null && (pass[to] || Dungeon.level.avoid()[to]) ? to : -1;
+			return Actor.findChar( to ) == null && (pass[to] || Dungeon.level.avoid(to)) ? to : -1;
 		}
 
 		setupPassable();
-		if (ch.isFlying() || ch.buff( Amok.class ) != null) {
+		if (ch.flying || ch.buff( Amok.class ) != null) {
 			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
@@ -895,21 +896,21 @@ public class Dungeon {
 		if (Char.hasProp(ch, Char.Property.LARGE)){
 			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
-		
+
 		for (Char c : Actor.chars()) {
 			if (visible[c.pos]) {
 				passable[c.pos] = false;
 			}
 		}
-		
+
 		return PathFinder.getStep( from, to, passable );
 
 	}
-	
+
 	public static int flee(Char ch, int cur, int from, boolean[] pass, boolean[] visible ) {
 
 		setupPassable();
-		if (ch.isFlying()) {
+		if (ch.flying) {
 			BArray.or( pass, Dungeon.level.avoid(), passable );
 		} else {
 			System.arraycopy( pass, 0, passable, 0, Dungeon.level.length() );
@@ -918,16 +919,16 @@ public class Dungeon {
 		if (Char.hasProp(ch, Char.Property.LARGE)){
 			BArray.and( pass, Dungeon.level.openSpace(), passable );
 		}
-		
+
 		for (Char c : Actor.chars()) {
 			if (visible[c.pos]) {
 				passable[c.pos] = false;
 			}
 		}
 		passable[cur] = true;
-		
+
 		return PathFinder.getStepBack( cur, from, passable );
-		
+
 	}
 
 }

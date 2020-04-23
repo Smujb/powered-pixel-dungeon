@@ -918,7 +918,7 @@ public abstract class Char extends Actor {
 		if (Dungeon.level.adjacent( step, pos ) && (buff( Vertigo.class ) != null || (drunk != null && drunk.stumbleChance()))) {
 			sprite.interruptMotion();
 			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			if (!(Dungeon.level.passable(newPos) || Dungeon.level.avoid(newPos)) || Actor.findChar( newPos ) != null)
+			if (!(Dungeon.level.passable(newPos) || Dungeon.level.avoid(newPos)) || Actor.findChar( newPos ) != null || !this.canOccupy(Dungeon.level, newPos))
 				return;
 			else {
 				sprite.move(pos, newPos);
@@ -930,7 +930,9 @@ public abstract class Char extends Actor {
 			Door.leave( pos );
 		}
 
-		pos = step;
+		if (canOccupy(Dungeon.level, step)) {
+			pos = step;
+		}
 
 		if (this != Dungeon.hero) {
 			sprite.visible = Dungeon.level.heroFOV[pos];
