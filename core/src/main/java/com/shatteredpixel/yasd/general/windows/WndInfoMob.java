@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -64,7 +65,10 @@ public class WndInfoMob extends WndTitledMessage {
 
 			health = new HealthBar();
 			health.level(mob);
-			add( health );
+			//WndInfoMob doesn't display HP bars for neutral chars. This includes shopkeepers, npcs, etc and... Mimics!
+			if (mob.alignment != Char.Alignment.NEUTRAL) {
+				add(health);
+			}
 
 			buffs = new BuffIndicator( mob );
 			add( buffs );
