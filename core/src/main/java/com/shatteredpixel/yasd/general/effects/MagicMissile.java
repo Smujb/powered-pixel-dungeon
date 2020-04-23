@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.effects;
 
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.effects.particles.CorrosionParticle;
+import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.effects.particles.PoisonParticle;
@@ -79,6 +80,7 @@ public class MagicMissile extends Emitter {
 	public static final int SHAMAN_BLUE     = 15;
 	public static final int SHAMAN_PURPLE   = 16;
 	public static final int TOXIC_VENT      = 17;
+	public static final int ELMO            = 18;
 
 	public static final int SPIRAL          = 100;
 	public static final int FOLIAGE_CONE    = 101;
@@ -188,6 +190,10 @@ public class MagicMissile extends Emitter {
 			case TOXIC_VENT:
 				size( 10 );
 				pour( Speck.factory(Speck.TOXIC), 0.02f );
+				break;
+			case ELMO:
+				size( 5 );
+				pour( ElmoParticle.FACTORY, 0.01f );
 				break;
 
 			case FIRE_CONE:

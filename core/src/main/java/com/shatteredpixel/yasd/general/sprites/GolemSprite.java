@@ -28,10 +28,14 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.noosa.particles.Emitter;
 
 public class GolemSprite extends MobSprite {
+
+	Emitter teleParticles;
 	
 	public GolemSprite() {
 		super();
@@ -66,5 +70,34 @@ public class GolemSprite extends MobSprite {
 			emitter().burst( ElmoParticle.FACTORY, 4 );
 		}
 		super.onComplete( anim );
+	}
+
+	@Override
+	public void link(Char ch) {
+		super.link(ch);
+
+		teleParticles = emitter();
+		teleParticles.autoKill = false;
+		teleParticles.pour(ElmoParticle.FACTORY, 0.05f);
+		teleParticles.on = false;
+	}
+
+	@Override
+	public void update() {
+		super.update();
+		if (teleParticles != null){
+			teleParticles.pos( this );
+			teleParticles.visible = visible;
+		}
+	}
+
+	public void teleParticles(boolean value){
+		if (teleParticles != null) teleParticles.on = value;
+	}
+
+	@Override
+	public synchronized void play(Animation anim, boolean force) {
+		if (teleParticles != null) teleParticles.on = false;
+		super.play(anim, force);
 	}
 }

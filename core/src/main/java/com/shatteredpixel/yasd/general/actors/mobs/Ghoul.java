@@ -166,7 +166,7 @@ public class Ghoul extends Mob {
 					target = enemy.pos;
 				} else if (enemy == null) {
 					state = WANDERING;
-					target = Dungeon.level.randomDestination();
+					target = Dungeon.level.randomDestination(Ghoul.this);
 					return true;
 				}
 
@@ -183,7 +183,7 @@ public class Ghoul extends Mob {
 						spend( TICK );
 						sprite.showLost();
 						state = WANDERING;
-						target = Dungeon.level.randomDestination();
+						target = Dungeon.level.randomDestination(Ghoul.this);
 
 						//try to move closer to partner if they can't move to hero
 					} else if (partner != null && getCloser(partner.pos)) {

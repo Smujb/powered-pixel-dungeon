@@ -1068,7 +1068,7 @@ public abstract class Mob extends Char {
 				spend( 1 / speed() );
 				return moveSprite( oldPos, pos );
 			} else {
-				target = Dungeon.level.randomDestination();
+				target = Dungeon.level.randomDestination(Mob.this);
 				spend( TICK );
 			}
 
@@ -1143,7 +1143,7 @@ public abstract class Mob extends Char {
 					sprite.showLost();
 					state = WANDERING;
 					enemy = null;
-					target = Dungeon.level.randomDestination();
+					target = Dungeon.level.randomDestination(Mob.this);
 					return true;
 				}
 				
@@ -1158,7 +1158,7 @@ public abstract class Mob extends Char {
 					if (enemy == null) {
 						sprite.showLost();
 						state = WANDERING;
-						target = Dungeon.level.randomDestination();
+						target = Dungeon.level.randomDestination(Mob.this);
 					}
 					return true;
 				}
