@@ -310,7 +310,7 @@ public enum Element {
 				break;
 			case VENOM:
 				MagicMissile.boltFromChar( ch.sprite.parent,
-						MagicMissile.POISON,
+						MagicMissile.TOXIC_VENT,
 						ch.sprite,
 						cell,
 						attack);

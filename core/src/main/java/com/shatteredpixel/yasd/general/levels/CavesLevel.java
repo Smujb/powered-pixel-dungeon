@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Bat;
 import com.shatteredpixel.yasd.general.actors.mobs.Brute;
+import com.shatteredpixel.yasd.general.actors.mobs.DM200;
 import com.shatteredpixel.yasd.general.actors.mobs.Shaman;
 import com.shatteredpixel.yasd.general.actors.mobs.Spinner;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Blacksmith;
@@ -138,7 +139,8 @@ public class CavesLevel extends RegularLevel {
 				Bat.class,
 				Brute.class,
 				Spinner.class,
-				Shaman.random()
+				Shaman.random(),
+				DM200.class
 		};
 	}
 
@@ -148,7 +150,8 @@ public class CavesLevel extends RegularLevel {
 				5,
 				3,
 				2,
-				4
+				4,
+				3
 		};
 	}
 
