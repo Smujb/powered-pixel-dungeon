@@ -113,7 +113,7 @@ public class QuickSlotButton extends Button {
 				}
 			}
 			@Override
-			public KeyAction keyAction() {
+			public int keyAction() {
 				return QuickSlotButton.this.keyAction();
 			}
 			@Override
@@ -161,7 +161,7 @@ public class QuickSlotButton extends Button {
 
 
 	@Override
-	public KeyAction keyAction() {
+	public int keyAction() {
 		switch (slotNum){
 			case 0:
 				return KeyAction.QUICKSLOT_1;

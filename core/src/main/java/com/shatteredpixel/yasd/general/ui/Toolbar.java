@@ -94,7 +94,7 @@ public class Toolbar extends Component {
 			}
 
 			@Override
-			public KeyAction keyAction() {
+			public int keyAction() {
 				return KeyAction.WAIT;
 			}
 
@@ -118,7 +118,7 @@ public class Toolbar extends Component {
 			}
 
 			@Override
-			public KeyAction keyAction() {
+			public int keyAction() {
 				return KeyAction.SEARCH;
 			}
 
@@ -140,7 +140,7 @@ public class Toolbar extends Component {
 			}
 
 			@Override
-			public KeyAction keyAction() {
+			public int keyAction() {
 				return KeyAction.INVENTORY;
 			}
 			

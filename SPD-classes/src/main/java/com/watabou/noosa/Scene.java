@@ -31,6 +31,9 @@ import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.utils.Signal;
 
+import static com.watabou.input.KeyAction.BACK;
+import static com.watabou.input.KeyAction.MENU;
+
 public class Scene extends Group {
 	
 	private Signal.Listener<KeyEvent> keyListener;

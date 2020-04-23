@@ -102,7 +102,7 @@ public class StatusPane extends Component {
 				GameScene.show( new WndHero() );
 			}
 			@Override
-			public KeyAction keyAction() {
+			public int keyAction() {
 				return KeyAction.HERO_INFO;
 			}
 		}.setRect( 0, 1, 30, 30 ));
@@ -313,7 +313,7 @@ public class StatusPane extends Component {
 		}
 
 		@Override
-		public KeyAction keyAction() {
+		public int keyAction() {
 			return KeyAction.JOURNAL;
 		}
 

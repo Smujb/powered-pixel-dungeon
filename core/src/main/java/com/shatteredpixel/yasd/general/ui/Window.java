@@ -40,6 +40,9 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.utils.Signal;
 
+import static com.watabou.input.KeyAction.BACK;
+import static com.watabou.input.KeyAction.MENU;
+
 public class Window extends Group implements Signal.Listener<KeyEvent> {
 
 	protected int width;
