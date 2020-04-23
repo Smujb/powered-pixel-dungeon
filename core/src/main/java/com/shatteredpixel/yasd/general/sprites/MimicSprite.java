@@ -33,8 +33,15 @@ import com.watabou.noosa.TextureFilm;
 
 public class MimicSprite extends MobSprite {
 
-
 	private Animation hiding;
+
+	//TODO when Github is working properly add updated sprite https://github.com/00-Evan/shattered-pixel-dungeon/blob/b23a091ed640ef3be01a7dab8f27811187fec3ef/core/src/main/assets/mimic.png
+	{
+		//adjust shadow slightly to account for 1 empty bottom pixel (used for border while hiding)
+		perspectiveRaise    = 5 / 16f; //5 pixels
+		shadowWidth         = 1f;
+		shadowOffset        = -0.4f;
+	}
 
 	protected int texOffset(){
 		return 0;

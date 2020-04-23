@@ -135,6 +135,11 @@ public class Spinner extends Mob {
 			}
 		}
 
+		//in case target is at the edge of the map and there are no more cells in the path
+		if (b.path.size() <= collisionIndex){
+			return -1;
+		}
+
 		int webPos = b.path.get( collisionIndex+1 );
 
 		if (Dungeon.level.passable(webPos)){
