@@ -35,7 +35,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
-import com.watabou.input.KeyAction;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
@@ -46,14 +46,14 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
 
-import static com.watabou.input.KeyAction.E;
-import static com.watabou.input.KeyAction.S;
-import static com.watabou.input.KeyAction.SE;
-import static com.watabou.input.KeyAction.SW;
-import static com.watabou.input.KeyAction.W;
-import static com.watabou.input.KeyAction.ZOOM_DEFAULT;
-import static com.watabou.input.KeyAction.ZOOM_IN;
-import static com.watabou.input.KeyAction.ZOOM_OUT;
+import static com.shatteredpixel.yasd.general.YASDAction.E;
+import static com.shatteredpixel.yasd.general.YASDAction.S;
+import static com.shatteredpixel.yasd.general.YASDAction.SE;
+import static com.shatteredpixel.yasd.general.YASDAction.SW;
+import static com.shatteredpixel.yasd.general.YASDAction.W;
+import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_DEFAULT;
+import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_IN;
+import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_OUT;
 
 public class CellSelector extends ScrollArea {
 
@@ -224,7 +224,7 @@ public class CellSelector extends ScrollArea {
 		
 	}
 
-	private int heldAction = KeyAction.NONE;
+	private int heldAction = YASDAction.NONE;
 	private int heldTurns = 0;
 
 	private Signal.Listener<KeyEvent> keyListener = new Signal.Listener<KeyEvent>() {
@@ -262,10 +262,10 @@ public class CellSelector extends ScrollArea {
 		int cell = Dungeon.hero.pos;
 		//TODO implement game actions, instead of using keys directly
 		switch (event){
-			case KeyAction.N:
+			case YASDAction.N:
 				cell += -Dungeon.level.width();
 				break;
-			case KeyAction.NE:
+			case YASDAction.NE:
 				cell += +1-Dungeon.level.width();
 				break;
 			case E:
@@ -283,7 +283,7 @@ public class CellSelector extends ScrollArea {
 			case W:
 				cell += -1;
 				break;
-			case KeyAction.NW:
+			case YASDAction.NW:
 				cell += -1-Dungeon.level.width();
 				break;
 			default:
@@ -302,7 +302,7 @@ public class CellSelector extends ScrollArea {
 	}
 
 	public void processKeyHold(){
-		if (heldAction != KeyAction.NONE){
+		if (heldAction != YASDAction.NONE){
 			enabled = true;
 			heldTurns++;
 			moveFromKey(heldAction);
@@ -310,7 +310,7 @@ public class CellSelector extends ScrollArea {
 	}
 
 	public void resetKeyHold(){
-		heldAction = KeyAction.NONE;
+		heldAction = YASDAction.NONE;
 		heldTurns = 0;
 		CharSprite.setMoveInterval( CharSprite.DEFAULT_MOVE_INTERVAL );
 	}

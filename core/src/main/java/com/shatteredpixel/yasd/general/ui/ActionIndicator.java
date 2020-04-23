@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.watabou.input.KeyAction;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.noosa.Image;
 
 public class ActionIndicator extends Tag {
@@ -50,7 +50,7 @@ public class ActionIndicator extends Tag {
 
 	@Override
 	public int keyAction() {
-		return KeyAction.TAG_ACTION;
+		return YASDAction.TAG_ACTION;
 	}
 
 	@Override

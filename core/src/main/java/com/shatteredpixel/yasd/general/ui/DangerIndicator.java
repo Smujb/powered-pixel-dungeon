@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.ui;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.watabou.input.KeyAction;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
@@ -56,7 +56,7 @@ public class DangerIndicator extends Tag {
 
 	@Override
 	public int keyAction() {
-		return KeyAction.TAG_DANGER;
+		return YASDAction.TAG_DANGER;
 	}
 
 

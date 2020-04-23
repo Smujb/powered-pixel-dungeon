@@ -159,6 +159,7 @@ public class MainGame extends Game {
 		super.create();
 
 		updateSystemUI();
+		YASDAction.initialize();
 		
 		Music.INSTANCE.enable( GameSettings.music() );
 		Music.INSTANCE.volume( GameSettings.musicVol()/10f );

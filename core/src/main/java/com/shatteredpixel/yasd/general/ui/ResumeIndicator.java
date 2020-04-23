@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.watabou.input.KeyAction;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.noosa.Image;
 
 public class ResumeIndicator extends Tag {
@@ -47,7 +47,7 @@ public class ResumeIndicator extends Tag {
 
 	@Override
 	public int keyAction() {
-		return KeyAction.TAG_RESUME;
+		return YASDAction.TAG_RESUME;
 	}
 
 	@Override

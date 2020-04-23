@@ -27,7 +27,7 @@
 
 package com.watabou.noosa.ui;
 
-import com.watabou.input.KeyAction;
+import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
@@ -85,7 +85,7 @@ public class Button extends Component {
 	private Signal.Listener<KeyEvent> keyListener;
 
 	public int keyAction(){
-		return KeyAction.NONE;
+		return GameAction.NONE;
 	}
 	
 	@Override

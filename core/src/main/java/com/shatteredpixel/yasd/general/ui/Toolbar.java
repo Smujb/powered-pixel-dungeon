@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTerrainTilemap;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
-import com.watabou.input.KeyAction;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
@@ -95,7 +95,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public int keyAction() {
-				return KeyAction.WAIT;
+				return YASDAction.WAIT;
 			}
 
 			protected boolean onLongClick() {
@@ -119,7 +119,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public int keyAction() {
-				return KeyAction.SEARCH;
+				return YASDAction.SEARCH;
 			}
 
 			@Override
@@ -141,7 +141,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public int keyAction() {
-				return KeyAction.INVENTORY;
+				return YASDAction.INVENTORY;
 			}
 			
 			@Override

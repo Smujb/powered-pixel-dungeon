@@ -40,8 +40,8 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.utils.Signal;
 
-import static com.watabou.input.KeyAction.BACK;
-import static com.watabou.input.KeyAction.MENU;
+import static com.shatteredpixel.yasd.general.YASDAction.BACK;
+import static com.shatteredpixel.yasd.general.YASDAction.MENU;
 
 public class Window extends Group implements Signal.Listener<KeyEvent> {
 

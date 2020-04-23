@@ -27,12 +27,10 @@
 
 package com.watabou.noosa;
 
+import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.utils.Signal;
-
-import static com.watabou.input.KeyAction.BACK;
-import static com.watabou.input.KeyAction.MENU;
 
 public class Scene extends Group {
 	
@@ -44,11 +42,11 @@ public class Scene extends Group {
 			public boolean onSignal( KeyEvent event ) {
 				if (Game.instance != null && event.pressed) {
 					switch (KeyBindings.getBinding( event )) {
-						case BACK:
-							onBackPressed();
-							break;
-						case MENU:
+						case GameAction.MENU:
 							onMenuPressed();
+							break;
+						case GameAction.BACK:
+							onBackPressed();
 							break;
 					}
 				}
