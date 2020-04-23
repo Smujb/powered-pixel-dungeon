@@ -867,7 +867,7 @@ public class Dungeon {
 		}
 
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace(), passable );
+			BArray.and( pass, ch.passableTerrain(level), passable );
 		}
 
 		for (Char c : Actor.chars()) {
@@ -894,7 +894,7 @@ public class Dungeon {
 		}
 
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace(), passable );
+			BArray.and( pass, ch.passableTerrain(level), passable );
 		}
 
 		for (Char c : Actor.chars()) {
@@ -917,7 +917,7 @@ public class Dungeon {
 		}
 
 		if (Char.hasProp(ch, Char.Property.LARGE)){
-			BArray.and( pass, Dungeon.level.openSpace(), passable );
+			BArray.and( pass, ch.passableTerrain(level), passable );
 		}
 
 		for (Char c : Actor.chars()) {

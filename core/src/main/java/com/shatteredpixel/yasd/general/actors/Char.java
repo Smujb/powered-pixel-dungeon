@@ -959,6 +959,22 @@ public abstract class Char extends Actor {
 		next();
 	}
 
+	public final boolean[] passableTerrain(Level level) {
+		boolean[] passable = new boolean[level.length()];
+		for (int i = 0; i < level.length(); i++) {
+			passable[i] = canOccupy(level, i);
+		}
+		return passable;
+	}
+
+	public static boolean[] passableTerrain(Char ch, Level level) {
+		boolean[] passable = new boolean[level.length()];
+		for (int i = 0; i < level.length(); i++) {
+			passable[i] = canOccupy(ch, level, i);
+		}
+		return passable;
+	}
+
 	@Contract("null, _, _ -> true")
 	public static boolean canOccupy(@Nullable Char ch, Level level, int cell) {
 		if (ch == null) {
