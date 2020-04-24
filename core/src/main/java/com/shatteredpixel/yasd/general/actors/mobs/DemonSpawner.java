@@ -60,7 +60,18 @@ public class DemonSpawner extends Mob {
 		properties.add(Property.MINIBOSS);
 	}
 
+	@Override
+	public void beckon(int cell) {
+		//do nothing
+	}
+
+	@Override
+	public boolean reset() {
+		return true;
+	}
+
 	private float spawnCooldown = 50;
+
 
 	@Override
 	protected boolean act() {

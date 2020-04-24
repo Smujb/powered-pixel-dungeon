@@ -338,9 +338,19 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean openSpace(int cell) {
-		return passable(cell) &&
-				(passable(cell-1) || passable(cell+1)) &&
-				(passable(cell-width()) || passable(cell+width()));
+		if (solid(cell)){
+			return false;
+		} else {
+			for (int j = 0; j < PathFinder.CIRCLE8.length; j++){
+				if (solid(cell+PathFinder.CIRCLE8[j])) {
+					return false;
+				} else if (!solid(cell+PathFinder.CIRCLE8[(j+1)%8])
+						&& !solid(cell+PathFinder.CIRCLE8[(j+2)%8])) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean[] openSpace() {

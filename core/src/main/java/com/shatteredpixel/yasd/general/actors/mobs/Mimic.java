@@ -125,6 +125,17 @@ public class Mimic extends Mob {
 	}
 
 	@Override
+	protected boolean act() {
+		if (alignment == Alignment.NEUTRAL && state != PASSIVE){
+			alignment = Alignment.ENEMY;
+			GLog.w(Messages.get(this, "reveal") );
+			CellEmitter.get(pos).burst(Speck.factory(Speck.STAR), 10);
+			Sample.INSTANCE.play(Assets.SND_MIMIC);
+		}
+		return super.act();
+	}
+
+	@Override
 	public int damageRoll() {
 		return alignment == Alignment.NEUTRAL ? (int) (super.damageRoll() * 1.5f) : super.damageRoll();
 	}

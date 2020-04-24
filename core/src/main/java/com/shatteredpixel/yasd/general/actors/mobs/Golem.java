@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
+import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
@@ -108,6 +109,8 @@ public class Golem extends Mob {
 			if (Actor.findChar(target) == null) {
 				ScrollOfTeleportation.appear(this, target);
 				selfTeleCooldown = 30;
+			} else {
+				target = Dungeon.level.randomDestination(this);
 			}
 			teleporting = false;
 			spend(TICK);
@@ -137,6 +140,9 @@ public class Golem extends Mob {
 
 						if (bestPos != enemy.pos){
 							ScrollOfTeleportation.appear(enemy, bestPos);
+							if (enemy instanceof Hero){
+								((Hero) enemy).interrupt();
+							}
 						}
 
 						enemyTeleCooldown = 20;
