@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.rings.RingOfFuror;
@@ -60,6 +61,7 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Vampiric;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -138,6 +140,15 @@ abstract public class Weapon extends KindOfWeapon {
 	public void curse() {
 		super.curse();
 		enchant(Enchantment.randomCurse());
+	}
+
+	@Override
+	public Emitter emitter() {
+		Emitter emitter = super.emitter();
+		if (enchantment != null && !enchantment.curse() && cursedKnown) {
+			emitter.pour(Speck.factory(Speck.HALO), 0.15f);
+		}
+		return emitter;
 	}
 
 	private static final String USES_LEFT_TO_ID = "uses_left_to_id";
