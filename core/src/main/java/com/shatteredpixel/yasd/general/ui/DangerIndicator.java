@@ -114,13 +114,13 @@ public class DangerIndicator extends Tag {
 	protected void onClick() {
 		if (Dungeon.hero.visibleEnemies() > 0) {
 
-			Mob target = Dungeon.hero.visibleEnemy(enemyIndex++);
 
-			TargetHealthIndicator.instance.target(target == TargetHealthIndicator.instance.target() ? null : target);
+			Mob target = Dungeon.hero.visibleEnemy(++enemyIndex);
 
-			if (Dungeon.hero.curAction == null) {
-				Camera.main.panTo(target.sprite.center(), 5f);
-			}
+			QuickSlotButton.target(target);
+			if (Dungeon.hero.canAttack(target)) AttackIndicator.target(target);
+
+			if (Dungeon.hero.curAction == null) Camera.main.panTo(target.sprite.center(), 5f);
 		}
 	}
 }

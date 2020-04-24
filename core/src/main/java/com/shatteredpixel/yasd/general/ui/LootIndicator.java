@@ -49,12 +49,6 @@ public class LootIndicator extends Tag {
 	}
 
 	@Override
-	public GameAction keyAction() {
-		return YASDAction.TAG_LOOT;
-	}
-
-
-	@Override
 	protected void createChildren() {
 		super.createChildren();
 		
@@ -63,7 +57,11 @@ public class LootIndicator extends Tag {
 				if (Dungeon.hero.handle(Dungeon.hero.pos)){
 					Dungeon.hero.next();
 				}
+			}
 
+			@Override
+			public GameAction keyAction() {
+				return YASDAction.TAG_LOOT;
 			}
 		};
 		slot.showParams( true, false, false );
