@@ -879,7 +879,7 @@ public abstract class Char extends Actor {
 				perception /= 2f;
 			}
 			if (alreadySeen) {
-				perception *= 4;
+				perception *= 2;
 			}
 			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error

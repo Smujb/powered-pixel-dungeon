@@ -31,6 +31,11 @@ import com.badlogic.gdx.Input;
 import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.LinkedHashMap;
+
 public class YASDAction extends GameAction {
 
 	//--Existing actions from GameAction
@@ -74,47 +79,58 @@ public class YASDAction extends GameAction {
 	public static final GameAction SW          = new YASDAction("sw");
 	public static final GameAction NW          = new YASDAction("nw");
 
-	public static void initDefaults() {
+	private static final LinkedHashMap<Integer, GameAction> defaultBindings = new LinkedHashMap<>();
+	static {
+		defaultBindings.put( Input.Keys.BACK,        YASDAction.BACK );
+		defaultBindings.put( Input.Keys.MENU,        YASDAction.MENU );
 
-		KeyBindings.addKeyBinding( Input.Keys.BACK,        YASDAction.BACK );
-		KeyBindings.addKeyBinding( Input.Keys.MENU,        YASDAction.MENU );
+		defaultBindings.put( Input.Keys.H,           YASDAction.HERO_INFO );
+		defaultBindings.put( Input.Keys.J,           YASDAction.JOURNAL );
 
-		KeyBindings.addKeyBinding( Input.Keys.H,           YASDAction.HERO_INFO );
-		KeyBindings.addKeyBinding( Input.Keys.J,           YASDAction.JOURNAL );
+		defaultBindings.put( Input.Keys.SPACE,       YASDAction.WAIT );
+		defaultBindings.put( Input.Keys.S,           YASDAction.SEARCH );
 
-		KeyBindings.addKeyBinding( Input.Keys.SPACE,       YASDAction.WAIT );
-		KeyBindings.addKeyBinding( Input.Keys.S,           YASDAction.SEARCH );
+		defaultBindings.put( Input.Keys.I,           YASDAction.INVENTORY );
+		defaultBindings.put( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
+		defaultBindings.put( Input.Keys.W,           YASDAction.QUICKSLOT_2 );
+		defaultBindings.put( Input.Keys.E,           YASDAction.QUICKSLOT_3 );
+		defaultBindings.put( Input.Keys.R,           YASDAction.QUICKSLOT_4 );
 
-		KeyBindings.addKeyBinding( Input.Keys.I,           YASDAction.INVENTORY );
-		KeyBindings.addKeyBinding( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
-		KeyBindings.addKeyBinding( Input.Keys.W,           YASDAction.QUICKSLOT_2 );
-		KeyBindings.addKeyBinding( Input.Keys.E,           YASDAction.QUICKSLOT_3 );
-		KeyBindings.addKeyBinding( Input.Keys.R,           YASDAction.QUICKSLOT_4 );
+		defaultBindings.put( Input.Keys.A,           YASDAction.TAG_ATTACK );
+		defaultBindings.put( Input.Keys.TAB,         YASDAction.TAG_DANGER );
+		defaultBindings.put( Input.Keys.D,           YASDAction.TAG_ACTION );
+		defaultBindings.put( Input.Keys.ENTER,       YASDAction.TAG_LOOT );
+		defaultBindings.put( Input.Keys.T,           YASDAction.TAG_RESUME );
 
-		KeyBindings.addKeyBinding( Input.Keys.A,           YASDAction.TAG_ATTACK );
-		KeyBindings.addKeyBinding( Input.Keys.TAB,         YASDAction.TAG_DANGER );
-		KeyBindings.addKeyBinding( Input.Keys.D,           YASDAction.TAG_ACTION );
-		KeyBindings.addKeyBinding( Input.Keys.ENTER,       YASDAction.TAG_LOOT );
-		KeyBindings.addKeyBinding( Input.Keys.T,           YASDAction.TAG_RESUME );
+		defaultBindings.put( Input.Keys.PLUS,        YASDAction.ZOOM_IN );
+		defaultBindings.put( Input.Keys.EQUALS,      YASDAction.ZOOM_IN );
+		defaultBindings.put( Input.Keys.MINUS,       YASDAction.ZOOM_OUT );
 
-		KeyBindings.addKeyBinding( Input.Keys.PLUS,        YASDAction.ZOOM_IN );
-		KeyBindings.addKeyBinding( Input.Keys.EQUALS,      YASDAction.ZOOM_IN );
-		KeyBindings.addKeyBinding( Input.Keys.MINUS,       YASDAction.ZOOM_OUT );
+		defaultBindings.put( Input.Keys.UP,          YASDAction.N );
+		defaultBindings.put( Input.Keys.RIGHT,       YASDAction.E );
+		defaultBindings.put( Input.Keys.DOWN,        YASDAction.S );
+		defaultBindings.put( Input.Keys.LEFT,        YASDAction.W );
 
-		KeyBindings.addKeyBinding( Input.Keys.UP,          YASDAction.N );
-		KeyBindings.addKeyBinding( Input.Keys.RIGHT,       YASDAction.E );
-		KeyBindings.addKeyBinding( Input.Keys.DOWN,        YASDAction.S );
-		KeyBindings.addKeyBinding( Input.Keys.LEFT,        YASDAction.W );
+		defaultBindings.put( Input.Keys.NUMPAD_5,    YASDAction.WAIT );
+		defaultBindings.put( Input.Keys.NUMPAD_8,    YASDAction.N );
+		defaultBindings.put( Input.Keys.NUMPAD_9,    YASDAction.NE );
+		defaultBindings.put( Input.Keys.NUMPAD_6,    YASDAction.E );
+		defaultBindings.put( Input.Keys.NUMPAD_3,    YASDAction.SE );
+		defaultBindings.put( Input.Keys.NUMPAD_2,    YASDAction.S );
+		defaultBindings.put( Input.Keys.NUMPAD_1,    YASDAction.SW );
+		defaultBindings.put( Input.Keys.NUMPAD_4,    YASDAction.W );
+		defaultBindings.put( Input.Keys.NUMPAD_7,    YASDAction.NW );
+	}
 
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_5,    YASDAction.WAIT );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_8,    YASDAction.N );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_9,    YASDAction.NE );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_6,    YASDAction.E );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_3,    YASDAction.SE );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_2,    YASDAction.S );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_1,    YASDAction.SW );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_4,    YASDAction.W );
-		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_7,    YASDAction.NW );
+	@NotNull
+	@Contract(" -> new")
+	public static LinkedHashMap<Integer, GameAction> getDefaults() {
+		return new LinkedHashMap(defaultBindings);
+	}
+
+	//TODO save functionality for changed keys
+	public static void initialize(){
+		KeyBindings.setAllBindings(getDefaults());
 
 	}
 

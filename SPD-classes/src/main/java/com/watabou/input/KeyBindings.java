@@ -40,11 +40,28 @@ public class KeyBindings {
 		bindings.put(keyCode, action);
 	}
 
-	public static boolean isKeyBound(int keyCode ){
-		return bindings.containsKey( keyCode );
+	public static void clearKeyBindings(){
+		bindings.clear();
 	}
 
-	public static GameAction getActionForKey(KeyEvent event ){
+	public static LinkedHashMap<Integer, GameAction> getAllBindings(){
+		return new LinkedHashMap<>(bindings);
+	}
+
+	public static void setAllBindings(LinkedHashMap<Integer, GameAction> newBindings){
+		bindings = new LinkedHashMap<>(newBindings);
+	}
+
+	public static boolean acceptUnbound = false;
+
+	public static boolean isKeyBound(int keyCode){
+		if (keyCode <= 0 || keyCode > 255){
+			return false;
+		}
+		return acceptUnbound || bindings.containsKey( keyCode );
+	}
+
+	public static GameAction getActionForKey(KeyEvent event){
 		return bindings.get( event.code );
 	}
 
@@ -59,12 +76,12 @@ public class KeyBindings {
 	}
 
 	public static String getKeyName( int keyCode ){
-		String result = Input.Keys.toString(keyCode);
-
-		if (result.equals("Plus")){
+		if (keyCode == Input.Keys.UNKNOWN){
+			return "None";
+		} else if (keyCode == Input.Keys.PLUS){
 			return "+";
 		} else {
-			return result;
+			return Input.Keys.toString(keyCode);
 		}
 	}
 
