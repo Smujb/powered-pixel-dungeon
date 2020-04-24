@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
@@ -38,13 +37,15 @@ import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Gold;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
+import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.BruteSprite;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 public class Brute extends Mob {
 	
@@ -105,15 +106,14 @@ public class Brute extends Mob {
 		spend( TICK );
 		hasRaged = true;
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
-		return 23;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 8);
+	public void die(@NotNull DamageSrc cause) {
+		super.die(cause);
+
+		if (cause.getCause() == Chasm.class){
+			hasRaged = true; //don't let enrage trigger for chasm deaths
+		}
 	}
 
 	public static class BruteRage extends ShieldBuff {
