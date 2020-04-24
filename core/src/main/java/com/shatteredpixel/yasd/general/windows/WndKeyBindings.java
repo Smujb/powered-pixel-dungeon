@@ -142,6 +142,7 @@ public class WndKeyBindings extends Window {
 			@Override
 			protected void onClick() {
 				KeyBindings.setAllBindings(changedBindings);
+				YASDAction.saveBindings();
 				hide();
 			}
 		};
