@@ -32,7 +32,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.watabou.noosa.Game;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Point;
@@ -51,8 +51,8 @@ public class DesktopPlatformSupport extends PlatformSupport {
 
     @Override
     public void updateDisplaySize() {
-        if (!GameSettings.fullscreen()) {
-            GameSettings.windowResolution( new Point( Game.width, Game.height ) );
+        if (!YASDSettings.fullscreen()) {
+            YASDSettings.windowResolution( new Point( Game.width, Game.height ) );
         }
     }
 
@@ -61,10 +61,10 @@ public class DesktopPlatformSupport extends PlatformSupport {
         Gdx.app.postRunnable( new Runnable() {
             @Override
             public void run () {
-                if (GameSettings.fullscreen()){
+                if (YASDSettings.fullscreen()){
                     Gdx.graphics.setFullscreenMode( Gdx.graphics.getDisplayMode() );
                 } else {
-                    Point p = GameSettings.windowResolution();
+                    Point p = YASDSettings.windowResolution();
                     Gdx.graphics.setWindowedMode( p.x, p.y );
                 }
             }

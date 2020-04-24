@@ -38,7 +38,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
 import com.shatteredpixel.yasd.UpdateImpl;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
@@ -77,11 +77,13 @@ public class AndroidGame extends AndroidApplication {
 		builder.build();
 		// grab preferences directly using our instance first
 		// so that we don't need to rely on Gdx.app, which isn't initialized yet.
-		GameSettings.set(instance.getPreferences("ShatteredPixelDungeon"));
+		// Note that we use a different prefs name on android for legacy purposes,
+		// this is the default prefs filename given to an android app (.xml is automatically added to it)
+		YASDSettings.set(instance.getPreferences("ShatteredPixelDungeon"));
 		
 		//set desired orientation (if it exists) before initializing the app.
-		if (GameSettings.landscape() != null) {
-			AndroidGame.instance.setRequestedOrientation( GameSettings.landscape() ?
+		if (YASDSettings.landscape() != null) {
+			AndroidGame.instance.setRequestedOrientation( YASDSettings.landscape() ?
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE :
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT );
 		}

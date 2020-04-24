@@ -31,11 +31,13 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3FileHandle;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.shatteredpixel.yasd.UpdateImpl;
-import com.shatteredpixel.yasd.general.GameSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
@@ -107,9 +109,6 @@ public class DesktopLauncher {
 
         config.setTitle( title );
 
-        //TODO this is currently the same location and filenames as the old desktop codebase
-        // If I want to move it now would be the time
-
         String basePath = "";
         if (SharedLibraryLoader.isWindows) {
             if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
@@ -122,12 +121,21 @@ public class DesktopLauncher {
         } else if (SharedLibraryLoader.isLinux) {
             basePath = ".shatteredpixel/shattered-pixel-dungeon/";
         }
+
+
+		//copy over prefs from old file location from legacy desktop codebase
+		FileHandle oldPrefs = new Lwjgl3FileHandle(basePath + "pd-prefs", Files.FileType.External);
+		FileHandle newPrefs = new Lwjgl3FileHandle(basePath + YASDSettings.DEFAULT_PREFS_FILE, Files.FileType.External);
+		if (oldPrefs.exists() && !newPrefs.exists()){
+			oldPrefs.copyTo(newPrefs);
+		}
+
         config.setPreferencesConfig( basePath, Files.FileType.External );
-        GameSettings.set( new Lwjgl3Preferences( "pd-prefs", basePath) );
+        YASDSettings.set( new Lwjgl3Preferences( YASDSettings.DEFAULT_PREFS_FILE, basePath) );
         FileUtils.setDefaultFileProperties( Files.FileType.External, basePath );
 
         config.setWindowSizeLimits( 960, 640, -1, -1 );
-        Point p = GameSettings.windowResolution();
+        Point p = YASDSettings.windowResolution();
         config.setWindowedMode( p.x, p.y );
         config.setAutoIconify( true );
 

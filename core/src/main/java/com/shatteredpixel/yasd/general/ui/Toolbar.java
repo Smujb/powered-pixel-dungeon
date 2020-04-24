@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
@@ -173,12 +173,12 @@ public class Toolbar extends Component {
 	protected void layout() {
 
 		for(int i = 0; i <= 3; i++) {
-			if (i == 0 && !GameSettings.flipToolbar() ||
-					i == 3 && GameSettings.flipToolbar()) {
+			if (i == 0 && !YASDSettings.flipToolbar() ||
+					i == 3 && YASDSettings.flipToolbar()) {
 				btnQuick[i].border(0, 2);
 				btnQuick[i].frame(106, 0, 19, 24);
-			} else if (i == 0 && GameSettings.flipToolbar() ||
-					i == 3 && !GameSettings.flipToolbar()) {
+			} else if (i == 0 && YASDSettings.flipToolbar() ||
+					i == 3 && !YASDSettings.flipToolbar()) {
 				btnQuick[i].border(2, 1);
 				btnQuick[i].frame(86, 0, 20, 24);
 			} else {
@@ -189,7 +189,7 @@ public class Toolbar extends Component {
 		}
 
 		float right = width;
-		switch(Mode.valueOf(GameSettings.toolbarMode())){
+		switch(Mode.valueOf(YASDSettings.toolbarMode())){
 			case SPLIT:
 				btnWait.setPos(x, y);
 				btnSearch.setPos(btnWait.right(), y);
@@ -238,7 +238,7 @@ public class Toolbar extends Component {
 		}
 		right = width;
 
-		if (GameSettings.flipToolbar()) {
+		if (YASDSettings.flipToolbar()) {
 
 			btnWait.setPos( (right - btnWait.right()), y);
 			btnSearch.setPos( (right - btnSearch.right()), y);

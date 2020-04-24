@@ -42,7 +42,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.PixmapPacker;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.shatteredpixel.yasd.android.windows.WndAndroidTextInput;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
@@ -71,8 +71,8 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	}
 	
 	public void updateDisplaySize(){
-		if (GameSettings.landscape() != null) {
-			AndroidGame.instance.setRequestedOrientation( GameSettings.landscape() ?
+		if (YASDSettings.landscape() != null) {
+			AndroidGame.instance.setRequestedOrientation( YASDSettings.landscape() ?
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE :
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT );
 		}
@@ -97,9 +97,9 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		
 		//force power saver in this case as all devices must run at at least 2x scale.
 		if (Game.dispWidth < renderWidth*2 || Game.dispHeight < renderHeight*2)
-			GameSettings.put( GameSettings.KEY_POWER_SAVER, true );
+			YASDSettings.put( YASDSettings.KEY_POWER_SAVER, true );
 		
-		if (GameSettings.powerSaver()){
+		if (YASDSettings.powerSaver()){
 			
 			int maxZoom = (int)Math.min(Game.dispWidth/renderWidth, Game.dispHeight/renderHeight);
 			
@@ -152,7 +152,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 				}
 				
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-					if (GameSettings.fullscreen()) {
+					if (YASDSettings.fullscreen()) {
 						AndroidGame.instance.getWindow().getDecorView().setSystemUiVisibility(
 								View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 										| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -250,7 +250,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		if (Gdx.files.absolute("/system/fonts/NotoSansCJK-Regular.ttc").exists()) {
 			//typefaces are 0-JP, 1-KR, 2-SC, 3-TC.
 			int typeFace;
-			switch (GameSettings.language()) {
+			switch (YASDSettings.language()) {
 				case JAPANESE:
 					typeFace = 0;
 					break;

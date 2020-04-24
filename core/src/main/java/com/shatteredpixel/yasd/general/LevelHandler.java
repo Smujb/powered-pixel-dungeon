@@ -183,7 +183,7 @@ public class LevelHandler {
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, getThread(), GameSettings.fastInterlevelScene());
+		}, getThread(), YASDSettings.fastInterlevelScene());
 	}
 
 	public static void doInit() {
@@ -205,7 +205,7 @@ public class LevelHandler {
 					throw new RuntimeException(e);
 				}
 			}
-		}, GameSettings.fastInterlevelScene());
+		}, YASDSettings.fastInterlevelScene());
 	}
 
 	public static void move(String key, String msg, Mode mode, int depth, int pos) {
@@ -218,7 +218,7 @@ public class LevelHandler {
 			public void call() {
 				MainGame.switchScene(GameScene.class);
 			}
-		}, getThread(), GameSettings.fastInterlevelScene());
+		}, getThread(), YASDSettings.fastInterlevelScene());
 	}
 
 	public static void resetMode() {

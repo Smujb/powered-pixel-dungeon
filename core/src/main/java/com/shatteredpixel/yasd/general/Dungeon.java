@@ -191,11 +191,11 @@ public class Dungeon {
 	public static void init() {
 
 		version = Game.versionCode;
-		challenges = GameSettings.challenges();
+		challenges = YASDSettings.challenges();
 
 		seed = DungeonSeed.randomSeed();
 
-		testing = GameSettings.testing();
+		testing = YASDSettings.testing();
 
 		Actor.clear();
 		Actor.resetNextID();
@@ -632,7 +632,7 @@ public class Dungeon {
 
 		difficulty = bundle.contains(DIFFICULTY) ? bundle.getEnum(DIFFICULTY, Difficulty.class) : Difficulty.fromInt(bundle.getInt(_DIFFICULTY));
 
-		testing = bundle.contains(TESTING) ? GameSettings.testing() : bundle.getBoolean(TESTING);
+		testing = bundle.contains(TESTING) ? YASDSettings.testing() : bundle.getBoolean(TESTING);
 
 		key = bundle.contains(KEY) ? bundle.getString(KEY) : keyForDepth();
 

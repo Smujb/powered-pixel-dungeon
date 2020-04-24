@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -77,7 +77,7 @@ public class WndLangs extends Window {
 					MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
-							GameSettings.language(langs.get(langIndex));
+							YASDSettings.language(langs.get(langIndex));
 							Game.platform.resetGenerators();
 						}
 						@Override

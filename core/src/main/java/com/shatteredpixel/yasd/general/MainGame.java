@@ -161,10 +161,10 @@ public class MainGame extends Game {
 		updateSystemUI();
 		YASDAction.loadBindings();
 		
-		Music.INSTANCE.enable( GameSettings.music() );
-		Music.INSTANCE.volume( GameSettings.musicVol()/10f );
-		Sample.INSTANCE.enable( GameSettings.soundFx() );
-		Sample.INSTANCE.volume( GameSettings.SFXVol()/10f );
+		Music.INSTANCE.enable( YASDSettings.music() );
+		Music.INSTANCE.volume( YASDSettings.musicVol()/10f );
+		Sample.INSTANCE.enable( YASDSettings.soundFx() );
+		Sample.INSTANCE.volume( YASDSettings.SFXVol()/10f );
 
 		Sample.INSTANCE.load(
 				Assets.SND_CLICK,

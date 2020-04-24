@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.messages;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.yasd.general.MainGame;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -83,7 +83,7 @@ public class Messages {
 	};
 
 	static{
-		setup(GameSettings.language());
+		setup(YASDSettings.language());
 	}
 
 	public static void setup( Languages lang ){

@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.watabou.gltextures.BufferTexture;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.noosa.Image;
@@ -176,7 +176,7 @@ public class FogOfWar extends Image {
 		this.visible = visible;
 		this.visited = visited;
 		this.mapped = mapped;
-		this.brightness = GameSettings.brightness() + 1;
+		this.brightness = YASDSettings.brightness() + 1;
 
 		moveToUpdating();
 		

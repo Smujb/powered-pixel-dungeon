@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Rankings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
@@ -52,7 +52,7 @@ public class WelcomeScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final int previousVersion = GameSettings.version();
+		final int previousVersion = YASDSettings.version();
 
 		if (MainGame.versionCode == previousVersion) {
 			MainGame.switchNoFade(TitleScene.class);
@@ -103,7 +103,7 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					GameSettings.version(MainGame.versionCode);
+					YASDSettings.version(MainGame.versionCode);
 					WelcomeScene.this.add(new WndStartGame(1, false));
 				} else {
 					updateVersion(previousVersion);
@@ -172,7 +172,7 @@ public class WelcomeScene extends PixelScene {
 			}
 		}
 		
-		GameSettings.version(MainGame.versionCode);
+		YASDSettings.version(MainGame.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {

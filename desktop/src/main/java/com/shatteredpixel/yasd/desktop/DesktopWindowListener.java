@@ -30,13 +30,13 @@ package com.shatteredpixel.yasd.desktop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Window;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3WindowListener;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 
 public class DesktopWindowListener implements Lwjgl3WindowListener {
 
 	@Override
 	public void created ( Lwjgl3Window lwjgl3Window ) {
-		if (GameSettings.fullscreen()){
+		if (YASDSettings.fullscreen()){
 			lwjgl3Window.postRunnable( new Runnable() {
 				@Override
 				public void run () {
@@ -44,14 +44,14 @@ public class DesktopWindowListener implements Lwjgl3WindowListener {
 				}
 			} );
 		}
-		if (GameSettings.windowMaximized()) {
+		if (YASDSettings.windowMaximized()) {
 			lwjgl3Window.maximizeWindow();
 		}
 	}
 
 	@Override
 	public void maximized ( boolean b ) {
-		GameSettings.windowMaximized( b );
+		YASDSettings.windowMaximized( b );
 	}
 
 	@Override

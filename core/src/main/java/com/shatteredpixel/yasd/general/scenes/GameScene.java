@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.Lore;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -179,10 +179,10 @@ public class GameScene extends PixelScene {
 
 		Music.INSTANCE.play( Assets.TUNE, true );
 
-		GameSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + GameSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + YASDSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -354,7 +354,7 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				if (Dungeon.bossLevel(Dungeon.depth -1) && GameSettings.cutscenes()) {
+				if (Dungeon.bossLevel(Dungeon.depth -1) && YASDSettings.cutscenes()) {
 					Lore.showChapter(Dungeon.level);
 				}
 				/*
@@ -618,9 +618,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = GameSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = YASDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (GameSettings.flipTags()) {
+		if (YASDSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

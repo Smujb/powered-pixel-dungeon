@@ -44,7 +44,7 @@ import android.widget.TextView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidGraphics;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.android.AndroidGame;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -125,7 +125,7 @@ public class WndAndroidTextInput extends Window {
 
 				textInput = new EditText((AndroidApplication)Gdx.app);
 				textInput.setText( initialValue );
-				if (!GameSettings.systemFont()){
+				if (!YASDSettings.systemFont()){
 					textInput.setTypeface( Typeface.createFromAsset(AndroidGame.instance.getAssets(), "pixel_font.ttf") );
 				}
 				textInput.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});

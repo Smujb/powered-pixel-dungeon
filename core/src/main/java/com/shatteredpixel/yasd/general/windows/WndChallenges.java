@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Challenges;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -112,7 +112,7 @@ public class WndChallenges extends Window {
 					value |= Challenges.MASKS[i];
 				}
 			}
-			GameSettings.challenges( value );
+			YASDSettings.challenges( value );
 		}
 
 		super.onBackPressed();

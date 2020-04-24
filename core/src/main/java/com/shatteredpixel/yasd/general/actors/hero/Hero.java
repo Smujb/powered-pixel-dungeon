@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.GameSettings;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
@@ -1063,7 +1063,7 @@ public class Hero extends Char {
 			Camera.main.shake(GameMath.gate(0.5f, shake, 5), Math.max(shake/3f,2.5f));
 
 			if (shake > 0.5f) {
-				if (GameSettings.vibrate()) {
+				if (YASDSettings.vibrate()) {
 					MainGame.vibrate(Math.min(250, (int) (shake * 50)));
 				}
 				if (shake > 1f) {
