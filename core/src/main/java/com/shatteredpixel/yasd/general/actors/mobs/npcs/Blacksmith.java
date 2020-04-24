@@ -38,6 +38,8 @@ import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.quest.DarkGold;
 import com.shatteredpixel.yasd.general.items.quest.Pickaxe;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.general.items.wands.Wand;
+import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
@@ -234,7 +236,12 @@ public class Blacksmith extends NPC {
 		if (first instanceof MissileWeapon && first.quantity() > 1){
 			first = first.split(1);
 		}
-		first.level(first.level()+1); //prevents on-upgrade effects like enchant/glyph removal
+		int level = first.level();
+		//adjust for curse infusion
+		if (first instanceof Weapon && ((Weapon) first).curseInfusionBonus) level--;
+		if (first instanceof Armor && ((Armor) first).curseInfusionBonus) level--;
+		if (first instanceof Wand && ((Wand) first).curseInfusionBonus) level--;
+		first.level(level+1); //prevents on-upgrade effects like enchant/glyph removal
 		if (first instanceof MissileWeapon && !Dungeon.hero.belongings.contains(first)) {
 			if (!first.collect()){
 				Dungeon.level.drop( first, Dungeon.hero.pos );

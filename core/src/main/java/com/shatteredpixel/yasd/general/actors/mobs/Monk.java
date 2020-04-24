@@ -28,9 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.items.food.Food;
 import com.shatteredpixel.yasd.general.items.food.Pasty;
@@ -126,12 +124,6 @@ public class Monk extends Mob {
 			focusCooldown = Random.NormalFloat(6, 7);
 			return Messages.get(this, "parried");
 		}
-	}
-
-	
-	{
-		immunities.add( Amok.class );
-		immunities.add( Terror.class );
 	}
 
 

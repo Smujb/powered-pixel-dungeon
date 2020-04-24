@@ -30,9 +30,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Amok;
-import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
-import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -68,12 +65,6 @@ public class Golem extends Mob {
 		Imp.Quest.process( this );
 		
 		super.rollToDropLoot();
-	}
-	
-	{
-		immunities.add( Amok.class );
-		immunities.add( Terror.class );
-		immunities.add( Sleep.class );
 	}
 
 	private boolean teleporting = false;

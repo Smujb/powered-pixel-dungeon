@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
-import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.WarlockSprite;
 import com.watabou.utils.Random;
@@ -101,9 +100,5 @@ public class Warlock extends Mob {
 		}
 
 		return loot;
-	}
-
-	{
-		resistances.add( Grim.class );
 	}
 }

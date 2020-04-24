@@ -31,8 +31,6 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
-import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.actors.mobs.FetidRat;
 import com.shatteredpixel.yasd.general.actors.mobs.GnollTrickster;
 import com.shatteredpixel.yasd.general.actors.mobs.GreatCrab;
@@ -193,11 +191,6 @@ public class Ghost extends NPC {
 		}
 
 		return false;
-	}
-	
-	{
-		immunities.add( Paralysis.class );
-		immunities.add( Roots.class );
 	}
 
 	public static class Quest {

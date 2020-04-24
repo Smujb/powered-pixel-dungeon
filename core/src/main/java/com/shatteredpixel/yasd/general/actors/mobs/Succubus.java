@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
-import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -158,7 +157,6 @@ public class Succubus extends Mob {
 	}
 	
 	{
-		immunities.add( Sleep.class );
 		immunities.add( Charm.class );
 	}
 }

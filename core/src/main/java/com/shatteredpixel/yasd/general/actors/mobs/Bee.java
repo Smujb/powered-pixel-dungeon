@@ -30,10 +30,8 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
-import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.BeeSprite;
 import com.watabou.utils.Bundle;
@@ -194,10 +192,5 @@ public class Bee extends Mob {
 		} else {
 			return super.description();
 		}
-	}
-	
-	{
-		immunities.add( Poison.class );
-		immunities.add( Amok.class );
 	}
 }

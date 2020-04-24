@@ -450,13 +450,13 @@ public abstract class RegularLevel extends Level {
 				int pos = pointToCell(room.random());
 				if (passable(pos)
 						&& pos != getExitPos()
-						&& heaps.get(pos) == null) {
+						&& heaps.get(pos) == null
+						&& Actor.findChar(pos) == null) {
 					
 					Trap t = traps.get(pos);
 					
 					//items cannot spawn on traps which destroy items
-					if (t == null ||
-							! (t instanceof BurningTrap || t instanceof BlazingTrap
+					if (!(t instanceof BurningTrap || t instanceof BlazingTrap
 							|| t instanceof ChillingTrap || t instanceof FrostTrap
 							|| t instanceof ExplosiveTrap || t instanceof DisintegrationTrap)) {
 						

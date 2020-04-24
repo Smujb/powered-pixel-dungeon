@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.PinCushion;
-import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
@@ -141,7 +140,6 @@ public class Wraith extends Mob {
 	
 	{
 		immunities.add( Grim.class );
-		immunities.add( Terror.class );
 	}
 
 	private void blink() {
