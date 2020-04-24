@@ -27,13 +27,13 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
-import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.ScrollPane;
 import com.shatteredpixel.yasd.general.ui.Window;
+import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.ui.Component;
@@ -92,8 +92,9 @@ public class WndKeyBindings extends Window {
 		add(scrollingList);
 
 		int y = 0;
-		//start at 3. No bindings for NONE, BACK, and MENU.
-		for (int action = 3; action < YASDAction.TOTAL_ACTIONS; action++){
+		for (GameAction action : GameAction.allActions()){
+			//start at 3. No bindings for NONE, BACK, and MENU.
+			if (action.code() < 3) continue;
 			BindingListItem item = new BindingListItem(action);
 			item.setRect(0, y, WIDTH, 12);
 			bindingsList.add(item);
@@ -144,7 +145,7 @@ public class WndKeyBindings extends Window {
 		private static final int DEFAULT = 0xFFFFFF;
 		private static final int UNBOUND = 0x888888;
 
-		private int gameAction;
+		private GameAction gameAction;
 		private int key1;
 		private int key2;
 
@@ -156,14 +157,14 @@ public class WndKeyBindings extends Window {
 		private ColorBlock sep2;
 		private ColorBlock sep3;
 
-		public BindingListItem( int action ){
+		public BindingListItem( GameAction action ){
 			gameAction = action;
 
-			actionName = PixelScene.renderTextBlock(Messages.get(WndKeyBindings.class, KeyBindings.getName(action)), 6 );
+			actionName = PixelScene.renderTextBlock(Messages.get(WndKeyBindings.class, action.name()), 6 );
 			actionName.setHightlighting(false);
 			add(actionName);
 
-			ArrayList<Integer> keys = KeyBindings.getBindings(action);
+			ArrayList<Integer> keys = KeyBindings.getKeysForAction(action);
 
 			if (keys.size() >= 1){
 				key1Name = PixelScene.renderTextBlock( KeyBindings.getKeyName(keys.get(0)), 6 );
@@ -171,7 +172,7 @@ public class WndKeyBindings extends Window {
 			} else {
 				key1Name = PixelScene.renderTextBlock( Messages.get(WndKeyBindings.class, "unbound"), 6 );
 				key1Name.hardlight(UNBOUND);
-				key1 = YASDAction.NONE;
+				key1 = 0;
 			}
 			add(key1Name);
 
@@ -181,7 +182,7 @@ public class WndKeyBindings extends Window {
 			} else {
 				key2Name = PixelScene.renderTextBlock( Messages.get(WndKeyBindings.class, "unbound"), 6 );
 				key2Name.hardlight(UNBOUND);
-				key2 = YASDAction.NONE;
+				key2 = 0;
 			}
 			add(key2Name);
 

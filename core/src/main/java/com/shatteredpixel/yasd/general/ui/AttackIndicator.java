@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.YASDAction;
+import com.watabou.input.GameAction;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -65,7 +66,7 @@ public class AttackIndicator extends Tag {
 	}
 
 	@Override
-	public int keyAction() {
+	public GameAction keyAction() {
 		return YASDAction.TAG_ATTACK;
 	}
 

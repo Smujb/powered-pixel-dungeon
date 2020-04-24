@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Chrome;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.effects.ShadowBox;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.watabou.input.KeyBindings;
@@ -39,9 +40,6 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.utils.Signal;
-
-import static com.shatteredpixel.yasd.general.YASDAction.BACK;
-import static com.shatteredpixel.yasd.general.YASDAction.MENU;
 
 public class Window extends Group implements Signal.Listener<KeyEvent> {
 
@@ -166,13 +164,11 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	@Override
 	public boolean onSignal( KeyEvent event ) {
 		if (event.pressed) {
-			switch (KeyBindings.getBinding( event )) {
-				case BACK:
-					onBackPressed();
-					return true;
-				case MENU:
-					onMenuPressed();
-					return true;
+			if (KeyBindings.getActionForKey( event ) == YASDAction.BACK){
+				onBackPressed();
+
+			} else if (KeyBindings.getActionForKey( event ) == YASDAction.MENU){
+				onMenuPressed();
 			}
 		}
 		//TODO currently always eats the key event as windows always take full focus

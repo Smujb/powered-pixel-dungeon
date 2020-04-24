@@ -34,120 +34,87 @@ import com.watabou.input.KeyBindings;
 public class YASDAction extends GameAction {
 
 	//--Existing actions from GameAction
-	public static final int NONE        = GameAction.NONE;
+	public static final GameAction NONE  = GameAction.NONE;
 
-	public static final int BACK        = GameAction.BACK;
-	public static final int MENU        = GameAction.MENU;
+	public static final GameAction BACK  = GameAction.BACK;
+	public static final GameAction MENU  = GameAction.MENU;
 	//--
 
-	public static final int HERO_INFO   = 3;
-	public static final int JOURNAL     = 4;
+	protected YASDAction( String name ){
+		super( name );
+	}
 
-	public static final int WAIT        = 5;
-	public static final int SEARCH      = 6;
+	public static final GameAction HERO_INFO   = new YASDAction("hero_info");
+	public static final GameAction JOURNAL     = new YASDAction("journal");
 
-	public static final int INVENTORY   = 7;
-	public static final int QUICKSLOT_1 = 8;
-	public static final int QUICKSLOT_2 = 9;
-	public static final int QUICKSLOT_3 = 10;
-	public static final int QUICKSLOT_4 = 11;
+	public static final GameAction WAIT        = new YASDAction("wait");
+	public static final GameAction SEARCH      = new YASDAction("search");
 
-	public static final int TAG_ATTACK  = 12;
-	public static final int TAG_DANGER  = 13;
-	public static final int TAG_ACTION  = 14;
-	public static final int TAG_LOOT    = 15;
-	public static final int TAG_RESUME  = 16;
+	public static final GameAction INVENTORY   = new YASDAction("inventory");
+	public static final GameAction QUICKSLOT_1 = new YASDAction("quickslot_1");
+	public static final GameAction QUICKSLOT_2 = new YASDAction("quickslot_2");
+	public static final GameAction QUICKSLOT_3 = new YASDAction("quickslot_3");
+	public static final GameAction QUICKSLOT_4 = new YASDAction("quickslot_4");
 
-	public static final int ZOOM_IN     = 17;
-	public static final int ZOOM_OUT    = 18;
+	public static final GameAction TAG_ATTACK  = new YASDAction("tag_attack");
+	public static final GameAction TAG_DANGER  = new YASDAction("tag_danger");
+	public static final GameAction TAG_ACTION  = new YASDAction("tag_action");
+	public static final GameAction TAG_LOOT    = new YASDAction("tag_loot");
+	public static final GameAction TAG_RESUME  = new YASDAction("tag_resume");
 
-	public static final int N           = 19;
-	public static final int E           = 20;
-	public static final int S           = 21;
-	public static final int W           = 22;
-	public static final int NE          = 23;
-	public static final int SE          = 24;
-	public static final int SW          = 25;
-	public static final int NW          = 26;
+	public static final GameAction ZOOM_IN     = new YASDAction("zoom_in");
+	public static final GameAction ZOOM_OUT    = new YASDAction("zoom_out");
 
-	public static final int TOTAL_ACTIONS = 27;
+	public static final GameAction N           = new YASDAction("n");
+	public static final GameAction E           = new YASDAction("e");
+	public static final GameAction S           = new YASDAction("s");
+	public static final GameAction W           = new YASDAction("w");
+	public static final GameAction NE          = new YASDAction("ne");
+	public static final GameAction SE          = new YASDAction("se");
+	public static final GameAction SW          = new YASDAction("sw");
+	public static final GameAction NW          = new YASDAction("nw");
 
 	public static void initDefaults() {
 
-		KeyBindings.addName(NONE,           "none");
+		KeyBindings.addKeyBinding( Input.Keys.BACK,        YASDAction.BACK );
+		KeyBindings.addKeyBinding( Input.Keys.MENU,        YASDAction.MENU );
 
-		KeyBindings.addName(BACK,           "back");
-		KeyBindings.addName(MENU,           "menu");
+		KeyBindings.addKeyBinding( Input.Keys.H,           YASDAction.HERO_INFO );
+		KeyBindings.addKeyBinding( Input.Keys.J,           YASDAction.JOURNAL );
 
-		KeyBindings.addName(HERO_INFO,      "hero_info");
-		KeyBindings.addName(JOURNAL,        "journal");
+		KeyBindings.addKeyBinding( Input.Keys.SPACE,       YASDAction.WAIT );
+		KeyBindings.addKeyBinding( Input.Keys.S,           YASDAction.SEARCH );
 
-		KeyBindings.addName(WAIT,           "wait");
-		KeyBindings.addName(SEARCH,         "search");
+		KeyBindings.addKeyBinding( Input.Keys.I,           YASDAction.INVENTORY );
+		KeyBindings.addKeyBinding( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
+		KeyBindings.addKeyBinding( Input.Keys.W,           YASDAction.QUICKSLOT_2 );
+		KeyBindings.addKeyBinding( Input.Keys.E,           YASDAction.QUICKSLOT_3 );
+		KeyBindings.addKeyBinding( Input.Keys.R,           YASDAction.QUICKSLOT_4 );
 
-		KeyBindings.addName(INVENTORY,      "inventory");
-		KeyBindings.addName(QUICKSLOT_1,    "quickslot_1");
-		KeyBindings.addName(QUICKSLOT_2,    "quickslot_2");
-		KeyBindings.addName(QUICKSLOT_3,    "quickslot_3");
-		KeyBindings.addName(QUICKSLOT_4,    "quickslot_4");
+		KeyBindings.addKeyBinding( Input.Keys.A,           YASDAction.TAG_ATTACK );
+		KeyBindings.addKeyBinding( Input.Keys.TAB,         YASDAction.TAG_DANGER );
+		KeyBindings.addKeyBinding( Input.Keys.D,           YASDAction.TAG_ACTION );
+		KeyBindings.addKeyBinding( Input.Keys.ENTER,       YASDAction.TAG_LOOT );
+		KeyBindings.addKeyBinding( Input.Keys.T,           YASDAction.TAG_RESUME );
 
-		KeyBindings.addName(TAG_ATTACK,     "tag_attack");
-		KeyBindings.addName(TAG_DANGER,     "tag_danger");
-		KeyBindings.addName(TAG_ACTION,     "tag_action");
-		KeyBindings.addName(TAG_LOOT,       "tag_loot");
-		KeyBindings.addName(TAG_RESUME,     "tag_resume");
+		KeyBindings.addKeyBinding( Input.Keys.PLUS,        YASDAction.ZOOM_IN );
+		KeyBindings.addKeyBinding( Input.Keys.EQUALS,      YASDAction.ZOOM_IN );
+		KeyBindings.addKeyBinding( Input.Keys.MINUS,       YASDAction.ZOOM_OUT );
 
-		KeyBindings.addName(ZOOM_IN,        "zoom_in");
-		KeyBindings.addName(ZOOM_OUT,       "zoom_out");
+		KeyBindings.addKeyBinding( Input.Keys.UP,          YASDAction.N );
+		KeyBindings.addKeyBinding( Input.Keys.RIGHT,       YASDAction.E );
+		KeyBindings.addKeyBinding( Input.Keys.DOWN,        YASDAction.S );
+		KeyBindings.addKeyBinding( Input.Keys.LEFT,        YASDAction.W );
 
-		KeyBindings.addName(N,              "n");
-		KeyBindings.addName(E,              "e");
-		KeyBindings.addName(S,              "s");
-		KeyBindings.addName(W,              "w");
-		KeyBindings.addName(NE,             "ne");
-		KeyBindings.addName(SE,             "se");
-		KeyBindings.addName(SW,             "sw");
-		KeyBindings.addName(NW,             "nw");
-
-		//default key bindings
-		KeyBindings.addBinding( Input.Keys.BACK, GameAction.BACK );
-		KeyBindings.addBinding( Input.Keys.MENU, GameAction.MENU );
-
-		KeyBindings.addBinding( Input.Keys.H, YASDAction.HERO_INFO );
-		KeyBindings.addBinding( Input.Keys.J, YASDAction.JOURNAL );
-
-		KeyBindings.addBinding( Input.Keys.SPACE,    YASDAction.WAIT );
-		KeyBindings.addBinding( Input.Keys.S,        YASDAction.SEARCH );
-
-		KeyBindings.addBinding( Input.Keys.I,  YASDAction.INVENTORY );
-		KeyBindings.addBinding( Input.Keys.Q,  YASDAction.QUICKSLOT_1 );
-		KeyBindings.addBinding( Input.Keys.W,  YASDAction.QUICKSLOT_2 );
-		KeyBindings.addBinding( Input.Keys.E,  YASDAction.QUICKSLOT_3 );
-		KeyBindings.addBinding( Input.Keys.R,  YASDAction.QUICKSLOT_4 );
-
-		KeyBindings.addBinding( Input.Keys.A,     YASDAction.TAG_ATTACK );
-		KeyBindings.addBinding( Input.Keys.TAB,   YASDAction.TAG_DANGER );
-		KeyBindings.addBinding( Input.Keys.D,     YASDAction.TAG_ACTION );
-		KeyBindings.addBinding( Input.Keys.ENTER, YASDAction.TAG_LOOT );
-		KeyBindings.addBinding( Input.Keys.T,     YASDAction.TAG_RESUME );
-
-		KeyBindings.addBinding( Input.Keys.PLUS,   YASDAction.ZOOM_IN );
-		KeyBindings.addBinding( Input.Keys.EQUALS, YASDAction.ZOOM_IN );
-		KeyBindings.addBinding( Input.Keys.MINUS,  YASDAction.ZOOM_OUT );
-
-		KeyBindings.addBinding( Input.Keys.UP,    YASDAction.N );
-		KeyBindings.addBinding( Input.Keys.RIGHT, YASDAction.E );
-		KeyBindings.addBinding( Input.Keys.DOWN,  YASDAction.S );
-		KeyBindings.addBinding( Input.Keys.LEFT,  YASDAction.W );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_5,  YASDAction.WAIT );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_8,  YASDAction.N );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_9,  YASDAction.NE );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_6,  YASDAction.E );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_3,  YASDAction.SE );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_2,  YASDAction.S );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_1,  YASDAction.SW );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_4,  YASDAction.W );
-		KeyBindings.addBinding( Input.Keys.NUMPAD_7,  YASDAction.NW );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_5,    YASDAction.WAIT );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_8,    YASDAction.N );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_9,    YASDAction.NE );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_6,    YASDAction.E );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_3,    YASDAction.SE );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_2,    YASDAction.S );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_1,    YASDAction.SW );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_4,    YASDAction.W );
+		KeyBindings.addKeyBinding( Input.Keys.NUMPAD_7,    YASDAction.NW );
 
 	}
 

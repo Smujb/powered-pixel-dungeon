@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
+import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.input.PointerEvent;
@@ -45,14 +46,6 @@ import com.watabou.noosa.ScrollArea;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Signal;
-
-import static com.shatteredpixel.yasd.general.YASDAction.E;
-import static com.shatteredpixel.yasd.general.YASDAction.S;
-import static com.shatteredpixel.yasd.general.YASDAction.SE;
-import static com.shatteredpixel.yasd.general.YASDAction.SW;
-import static com.shatteredpixel.yasd.general.YASDAction.W;
-import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_IN;
-import static com.shatteredpixel.yasd.general.YASDAction.ZOOM_OUT;
 
 public class CellSelector extends ScrollArea {
 
@@ -223,28 +216,28 @@ public class CellSelector extends ScrollArea {
 		
 	}
 
-	private int heldAction = YASDAction.NONE;
+	private GameAction heldAction = YASDAction.NONE;
 	private int heldTurns = 0;
 
 	private Signal.Listener<KeyEvent> keyListener = new Signal.Listener<KeyEvent>() {
 		@Override
 		public boolean onSignal(KeyEvent event) {
-			int action = KeyBindings.getBinding( event );
+			GameAction action = KeyBindings.getActionForKey( event );
 			if (!event.pressed){
-				if (heldAction != -1 && heldAction == action) {
+				if (heldAction != YASDAction.NONE && heldAction == action) {
 					resetKeyHold();
 					return true;
 				} else {
-					switch (action) {
-						case ZOOM_IN:
-							zoom(camera.zoom + 1);
-							return true;
-						case ZOOM_OUT:
-							zoom(camera.zoom - 1);
-							return true;
+					if (action == YASDAction.ZOOM_IN){
+						zoom( camera.zoom+1 );
+						return true;
+
+					} else if (action == YASDAction.ZOOM_OUT){
+						zoom( camera.zoom-1 );
+						return true;
 					}
 				}
-			} else if (moveFromKey(action)) {
+			} else if (moveFromAction(action)) {
 				heldAction = action;
 				return true;
 			}
@@ -253,55 +246,35 @@ public class CellSelector extends ScrollArea {
 		}
 	};
 
-	private boolean moveFromKey(int event){
-		boolean moved = true;
+	private boolean moveFromAction(GameAction action){
 		int cell = Dungeon.hero.pos;
-		//TODO implement game actions, instead of using keys directly
-		switch (event){
-			case YASDAction.N:
-				cell += -Dungeon.level.width();
-				break;
-			case YASDAction.NE:
-				cell += +1-Dungeon.level.width();
-				break;
-			case E:
-				cell += +1;
-				break;
-			case SE:
-				cell += +1+Dungeon.level.width();
-				break;
-			case S:
-				cell += +Dungeon.level.width();
-				break;
-			case SW:
-				cell += -1+Dungeon.level.width();
-				break;
-			case W:
-				cell += -1;
-				break;
-			case YASDAction.NW:
-				cell += -1-Dungeon.level.width();
-				break;
-			default:
-				moved = false;
-		}
+		if (action == YASDAction.N)  cell += -Dungeon.level.width();
+		if (action == YASDAction.NE) cell += +1-Dungeon.level.width();
+		if (action == YASDAction.E)  cell += +1;
+		if (action == YASDAction.SE) cell += +1+Dungeon.level.width();
+		if (action == YASDAction.S)  cell += +Dungeon.level.width();
+		if (action == YASDAction.SW) cell += -1+Dungeon.level.width();
+		if (action == YASDAction.W)  cell += -1;
+		if (action == YASDAction.NW) cell += -1-Dungeon.level.width();
 
-		if (moved){
+		if (cell != Dungeon.hero.pos){
 			//each step when keyboard moving takes 0.15s, 0.125s, 0.1s, 0.1s, ...
 			// this is to make it easier to move 1 or 2 steps without overshooting
 			CharSprite.setMoveInterval( CharSprite.DEFAULT_MOVE_INTERVAL +
 					Math.max(0, 0.05f - heldTurns *0.025f));
 			select(cell);
-		}
+			return true;
 
-		return moved;
+		} else {
+			return false;
+		}
 	}
 
 	public void processKeyHold(){
 		if (heldAction != YASDAction.NONE){
 			enabled = true;
 			heldTurns++;
-			moveFromKey(heldAction);
+			moveFromAction(heldAction);
 		}
 	}
 

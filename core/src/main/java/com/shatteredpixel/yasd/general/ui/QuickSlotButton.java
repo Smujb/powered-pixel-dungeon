@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.shatteredpixel.yasd.general.windows.WndBag.Listener;
 import com.shatteredpixel.yasd.general.YASDAction;
+import com.watabou.input.GameAction;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.PathFinder;
@@ -113,7 +114,7 @@ public class QuickSlotButton extends Button {
 				}
 			}
 			@Override
-			public int keyAction() {
+			public GameAction keyAction() {
 				return QuickSlotButton.this.keyAction();
 			}
 			@Override
@@ -161,7 +162,7 @@ public class QuickSlotButton extends Button {
 
 
 	@Override
-	public int keyAction() {
+	public GameAction keyAction() {
 		switch (slotNum){
 			case 0:
 				return YASDAction.QUICKSLOT_1;
