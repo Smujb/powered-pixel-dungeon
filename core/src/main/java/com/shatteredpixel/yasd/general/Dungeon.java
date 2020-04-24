@@ -856,7 +856,7 @@ public class Dungeon {
 		else
 			BArray.setFalse(passable);
 	}
-	//TODO: Pathfinding for large mobs isn't working properly
+
 	public static PathFinder.Path findPath(Char ch, int from, int to, boolean[] pass, boolean[] visible ) {
 
 		setupPassable();
