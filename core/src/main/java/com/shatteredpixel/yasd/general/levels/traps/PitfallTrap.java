@@ -34,12 +34,15 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.effects.CellEmitter;
+import com.shatteredpixel.yasd.general.effects.particles.PitfallParticle;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
 public class PitfallTrap extends Trap {
@@ -56,11 +59,15 @@ public class PitfallTrap extends Trap {
 			GLog.w(Messages.get(this, "no_pit"));
 			return;
 		}
-
-		//TODO visuals
 		DelayedPit p = Buff.affect(Dungeon.hero, DelayedPit.class, 1);
 		p.depth = Dungeon.depth;
 		p.pos = pos;
+
+		for (int i : PathFinder.NEIGHBOURS9){
+			if (!Dungeon.level.solid(pos+i) || Dungeon.level.passable(pos+i)){
+				CellEmitter.floor(pos+i).burst(PitfallParticle.FACTORY4, 8);
+			}
+		}
 
 		if (pos == Dungeon.hero.pos){
 			GLog.n(Messages.get(this, "triggered_hero"));
@@ -79,6 +86,12 @@ public class PitfallTrap extends Trap {
 			if (depth == Dungeon.depth) {
 				for (int i : PathFinder.NEIGHBOURS9) {
 					int cell = pos + i;
+
+					if (Dungeon.level.solid(cell) && !Dungeon.level.passable(cell)){
+						continue;
+					}
+
+					CellEmitter.floor(cell).burst(PitfallParticle.FACTORY8, 12);
 
 					Heap heap = Dungeon.level.heaps.get(cell);
 
@@ -106,6 +119,23 @@ public class PitfallTrap extends Trap {
 			detach();
 			return true;
 
+		}
+
+		private static final String POS = "pos";
+		private static final String DEPTH = "depth";
+
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(POS, pos);
+			bundle.put(DEPTH, depth);
+		}
+
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			pos = bundle.getInt(POS);
+			depth = bundle.getInt(DEPTH);
 		}
 	}
 }
