@@ -163,6 +163,8 @@ public class Lightning extends Group {
 			arc2.origin.set( 0, arc2.height()/2 );
 			arc2.color(gobalColour);
 			add( arc2 );
+
+			update();
 		}
 
 		public void alpha(float alpha) {
