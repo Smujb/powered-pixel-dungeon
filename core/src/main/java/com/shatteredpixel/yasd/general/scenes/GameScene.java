@@ -239,6 +239,11 @@ public class GameScene extends PixelScene {
 		
 		mobs = new Group();
 		add( mobs );
+
+		hero = new HeroSprite();
+		hero.place( Dungeon.hero.pos );
+		hero.updateArmor();
+		mobs.add( hero );
 		
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			addMobSprite( mob );
@@ -293,11 +298,6 @@ public class GameScene extends PixelScene {
 		add( new TargetHealthIndicator() );
 		
 		add( emoicons );
-		
-		hero = new HeroSprite();
-		hero.place( Dungeon.hero.pos );
-		hero.updateArmor();
-		mobs.add( hero );
 		
 		add( cellSelector = new CellSelector( tiles ) );
 
@@ -992,6 +992,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	private static boolean cancelCellSelector() {
+		cellSelector.resetKeyHold();
 		if (cellSelector.listener != null && cellSelector.listener != defaultCellListener) {
 			cellSelector.cancel();
 			return true;

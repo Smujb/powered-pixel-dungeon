@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Generator;
@@ -104,6 +105,16 @@ public class Mimic extends Mob {
 			alignment = Alignment.ENEMY;
 		}
 		super.restoreFromBundle(bundle);
+	}
+
+	@Override
+	public void add(Buff buff) {
+		super.add(buff);
+		if (buff.type == Buff.buffType.NEGATIVE && alignment == Alignment.NEUTRAL){
+			alignment = Alignment.ENEMY;
+			stopHiding();
+			if (sprite != null) sprite.idle();
+		}
 	}
 
 	@Override

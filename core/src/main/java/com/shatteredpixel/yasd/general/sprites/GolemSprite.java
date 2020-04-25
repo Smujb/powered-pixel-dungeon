@@ -91,6 +91,15 @@ public class GolemSprite extends MobSprite {
 		}
 	}
 
+	@Override
+	public void kill() {
+		super.kill();
+
+		if (teleParticles != null) {
+			teleParticles.on = false;
+		}
+	}
+
 	public void teleParticles(boolean value){
 		if (teleParticles != null) teleParticles.on = value;
 	}

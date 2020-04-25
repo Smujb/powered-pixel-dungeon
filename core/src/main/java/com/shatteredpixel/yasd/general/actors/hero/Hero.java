@@ -698,9 +698,11 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actBuy( HeroAction.Buy action ) {
+	private boolean actBuy(@NotNull HeroAction.Buy action ) {
 		int dst = action.dst;
-		if (pos == dst || Dungeon.level.adjacent( pos, dst )) {
+		//May change back, but I think making it consistent is a good move
+		//if (pos == dst || Dungeon.level.adjacent( pos, dst )) {
+		if (pos == dst) {
 
 			ready();
 			
