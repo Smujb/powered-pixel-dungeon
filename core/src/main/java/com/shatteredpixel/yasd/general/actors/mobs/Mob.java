@@ -72,8 +72,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -325,9 +323,6 @@ public abstract class Mob extends Char {
 			perception = super.noticeSkill(enemy);
 		} else {
 			perception = (normalPerception(level) * perceptionFactor);
-		}
-		if (enemySeen) {
-			perception *= 2;
 		}
 		return perception;
 	}

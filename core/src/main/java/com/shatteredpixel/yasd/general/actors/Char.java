@@ -116,7 +116,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -879,7 +878,7 @@ public abstract class Char extends Actor {
 				perception /= 2f;
 			}
 			if (alreadySeen) {
-				perception *= 2;
+				perception *= 4;
 			}
 			float stealth = defender.sneakSkill();
 			//Enforced here so we don't get division by zero error
