@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 //shops probably shouldn't extend special room, because of cases like this.
@@ -102,13 +103,13 @@ public class ImpShopRoom extends ShopRoom {
 	private static final String IMP = "imp_spawned";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(IMP, impSpawned);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		impSpawned = bundle.getBoolean(IMP);
 	}

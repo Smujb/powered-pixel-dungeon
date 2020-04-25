@@ -315,13 +315,13 @@ public class MagesStaff extends MeleeWeapon {
 	private static final String WAND = "wand";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(WAND, wand);
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {

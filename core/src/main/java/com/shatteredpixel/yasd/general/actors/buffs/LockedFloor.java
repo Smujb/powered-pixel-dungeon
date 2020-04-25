@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class LockedFloor extends Buff {
@@ -61,13 +62,13 @@ public class LockedFloor extends Buff {
 	private final String LEFT = "left";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( LEFT, left );
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		left = bundle.getFloat( LEFT );
 	}

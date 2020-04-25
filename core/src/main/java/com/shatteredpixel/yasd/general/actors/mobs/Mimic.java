@@ -84,7 +84,7 @@ public class Mimic extends Mob {
 	private static final String ITEMS	= "items";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		if (items != null) bundle.put( ITEMS, items );
 		bundle.put( LEVEL, level );
@@ -97,7 +97,7 @@ public class Mimic extends Mob {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		if (bundle.contains( ITEMS )) {
 			items = new  ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection(ITEMS)));
 		}

@@ -537,7 +537,7 @@ public abstract class Level implements Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
 		
@@ -646,7 +646,7 @@ public abstract class Level implements Bundlable {
 	}
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		bundle.put( VERSION, Game.versionCode );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );

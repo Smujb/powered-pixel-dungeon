@@ -307,14 +307,14 @@ public class Statue extends Mob implements Callback {
 	private static final String ANKHS = "ankhs";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		belongings.storeInBundle(bundle);
 		bundle.put(ANKHS, ankhs);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		belongings.restoreFromBundle(bundle);
 		ankhs = bundle.getInt(ANKHS);

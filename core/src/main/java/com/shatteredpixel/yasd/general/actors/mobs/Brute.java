@@ -69,13 +69,13 @@ public class Brute extends Mob {
 	private static final String HAS_RAGED = "has_raged";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(HAS_RAGED, hasRaged);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		hasRaged = bundle.getBoolean(HAS_RAGED);
 	}

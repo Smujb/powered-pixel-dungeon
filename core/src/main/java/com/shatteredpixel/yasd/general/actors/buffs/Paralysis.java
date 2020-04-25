@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -127,13 +128,13 @@ public class Paralysis extends FlavourBuff {
 		private static final String DAMAGE = "damage";
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			damage = bundle.getInt(DAMAGE);
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			bundle.put( DAMAGE, damage );
 		}

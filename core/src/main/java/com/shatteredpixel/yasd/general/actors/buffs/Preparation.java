@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.ActionIndicator;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -210,7 +211,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	private static final String TURNS = "turnsInvis";
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		turnsInvis = bundle.getInt(TURNS);
 		if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0){
@@ -219,7 +220,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TURNS, turnsInvis);
 	}

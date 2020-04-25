@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -136,13 +137,13 @@ public class CorpseDust extends Item {
 		private static String SPAWNPOWER = "spawnpower";
 
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( SPAWNPOWER, spawnPower );
 		}
 
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			spawnPower = bundle.getInt( SPAWNPOWER );
 		}

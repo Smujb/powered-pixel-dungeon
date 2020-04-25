@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
@@ -155,7 +156,7 @@ public class Swiftthistle extends Plant {
 		private static final String LEFT = "left";
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			
 			int[] values = new int[presses.size()];
@@ -167,7 +168,7 @@ public class Swiftthistle extends Plant {
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			
 			int[] values = bundle.getIntArray( PRESSES );

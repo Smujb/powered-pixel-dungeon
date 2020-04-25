@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
@@ -91,14 +92,14 @@ public class Camouflage extends Armor.Glyph {
 		private static final String LEFT	= "left";
 
 		@Override
-		public void storeInBundle( Bundle bundle ) {
+		public void storeInBundle(@NotNull Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( POS, pos );
 			bundle.put( LEFT, left );
 		}
 
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			pos = bundle.getInt( POS );
 			left = bundle.getInt( LEFT );

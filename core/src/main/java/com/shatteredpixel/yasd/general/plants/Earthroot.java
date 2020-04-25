@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.effects.particles.EarthParticle;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
@@ -150,14 +151,14 @@ public class Earthroot extends Plant {
 		private static final String LEVEL	= "level";
 		
 		@Override
-		public void storeInBundle( Bundle bundle ) {
+		public void storeInBundle(@NotNull Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( POS, pos );
 			bundle.put( LEVEL, level );
 		}
 		
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			pos = bundle.getInt( POS );
 			level = bundle.getInt( LEVEL );

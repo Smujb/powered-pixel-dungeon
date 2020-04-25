@@ -131,13 +131,13 @@ public class Bag extends Item implements Iterable<Item> {
 	private static final String ITEMS	= "inventory";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( ITEMS, items );
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		for (Bundlable item : bundle.getCollection( ITEMS )) {
 			if (item != null) {

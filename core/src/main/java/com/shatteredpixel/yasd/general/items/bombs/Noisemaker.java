@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
@@ -129,7 +130,7 @@ public class Noisemaker extends Bomb {
 		private static final String LEFT = "left";
 
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(CELL, cell);
 			bundle.put(FLOOR, floor);
@@ -137,7 +138,7 @@ public class Noisemaker extends Bomb {
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			cell = bundle.getInt(CELL);
 			floor = bundle.getInt(FLOOR);

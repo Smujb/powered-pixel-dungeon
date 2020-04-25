@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class Viscosity extends Glyph {
@@ -83,14 +84,14 @@ public class Viscosity extends Glyph {
 		private static final String DAMAGE	= "damage";
 		
 		@Override
-		public void storeInBundle( Bundle bundle ) {
+		public void storeInBundle(@NotNull Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( DAMAGE, damage );
 			
 		}
 		
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			damage = bundle.getInt( DAMAGE );
 		}

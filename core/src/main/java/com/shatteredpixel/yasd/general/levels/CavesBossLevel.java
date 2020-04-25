@@ -107,7 +107,7 @@ public class CavesBossLevel extends Level {
 	private static final String DROPPED	= "droppped";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DOOR, arenaDoor );
 		bundle.put( ENTERED, enteredArena );
@@ -115,7 +115,7 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		arenaDoor = bundle.getInt( DOOR );
 		enteredArena = bundle.getBoolean( ENTERED );

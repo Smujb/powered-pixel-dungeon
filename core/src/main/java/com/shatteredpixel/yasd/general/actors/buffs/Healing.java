@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
 
@@ -91,7 +92,7 @@ public class Healing extends Buff {
 	private static final String FLAT = "flat";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(LEFT, healingLeft);
 		bundle.put(PERCENT, percentHealPerTick);
@@ -99,7 +100,7 @@ public class Healing extends Buff {
 	}
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		healingLeft = bundle.getInt(LEFT);
 		percentHealPerTick = bundle.getFloat(PERCENT);

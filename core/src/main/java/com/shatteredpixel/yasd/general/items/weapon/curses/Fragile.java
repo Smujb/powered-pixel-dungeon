@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items.weapon.curses;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class Fragile extends Weapon.Enchantment {
@@ -58,12 +59,12 @@ public class Fragile extends Weapon.Enchantment {
 	private static final String HITS = "hits";
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		hits = bundle.getInt(HITS);
 	}
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		bundle.put(HITS, hits);
 	}
 

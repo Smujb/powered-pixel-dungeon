@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class AdrenalineSurge extends Buff {
@@ -80,14 +81,14 @@ public class AdrenalineSurge extends Buff {
 	private static final String INTERVAL	    = "interval";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( BOOST, boost );
 		bundle.put( INTERVAL, interval );
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		boost = bundle.getInt( BOOST );
 		//pre-0.7.1

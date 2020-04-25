@@ -209,13 +209,13 @@ public class HornOfPlenty extends Artifact {
 	private static final String STORED = "stored";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( STORED, storedFoodEnergy );
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		storedFoodEnergy = bundle.getInt(STORED);
 		

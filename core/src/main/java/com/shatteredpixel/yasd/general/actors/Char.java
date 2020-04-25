@@ -303,7 +303,7 @@ public abstract class Char extends Actor {
 	protected static final String TYPE = "type";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 
 		super.storeInBundle(bundle);
 
@@ -319,7 +319,7 @@ public abstract class Char extends Actor {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 
 		super.restoreFromBundle(bundle);
 

@@ -586,7 +586,7 @@ public class Item implements Bundlable {
 	private static final String DURABILITY      = "durability";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		bundle.put( QUANTITY, quantity );
 		bundle.put( LEVEL, level );
 		bundle.put( LEVEL_KNOWN, levelKnown );
@@ -599,7 +599,7 @@ public class Item implements Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		quantity	= bundle.getInt( QUANTITY );
 		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
 		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );

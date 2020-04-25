@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.SparseArray;
@@ -102,13 +103,13 @@ public abstract class Actor implements Bundlable {
 	private static final String ID      = "id";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		bundle.put( TIME, time );
 		bundle.put( ID, id );
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		time = bundle.getFloat( TIME );
 		id = bundle.getInt( ID );
 	}

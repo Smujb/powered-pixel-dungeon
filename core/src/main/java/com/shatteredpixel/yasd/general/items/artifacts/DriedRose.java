@@ -318,7 +318,7 @@ public class DriedRose extends Artifact {
 	private static final String ARMOR =         "getArmors";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 
 		bundle.put( TALKEDTO, talkedTo );
@@ -331,7 +331,7 @@ public class DriedRose extends Artifact {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 
 		talkedTo = bundle.getBoolean( TALKEDTO );
@@ -827,14 +827,14 @@ public class DriedRose extends Artifact {
 		private static final String MOVING_TO_DEFEND = "moving_to_defend";
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(DEFEND_POS, defendingPos);
 			bundle.put(MOVING_TO_DEFEND, movingToDefendPos);
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			if (bundle.contains(DEFEND_POS)) defendingPos = bundle.getInt(DEFEND_POS);
 			movingToDefendPos = bundle.getBoolean(MOVING_TO_DEFEND);

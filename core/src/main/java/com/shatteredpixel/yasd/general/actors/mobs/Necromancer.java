@@ -137,7 +137,7 @@ public class Necromancer extends Mob {
 	private static final String MY_SKELETON = "my_skeleton";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( SUMMONING, summoning );
 		bundle.put( FIRST_SUMMON, firstSummon );
@@ -150,7 +150,7 @@ public class Necromancer extends Mob {
 	}
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		summoning = bundle.getBoolean( SUMMONING );
 		if (bundle.contains(FIRST_SUMMON)) firstSummon = bundle.getBoolean(FIRST_SUMMON);

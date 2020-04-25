@@ -133,14 +133,14 @@ public class PrismaticImage extends NPC {
 	private static final String TIMER	= "timer";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( HEROID, heroID );
 		bundle.put( TIMER, deathTimer );
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		heroID = bundle.getInt( HEROID );
 		deathTimer = bundle.getInt( TIMER );

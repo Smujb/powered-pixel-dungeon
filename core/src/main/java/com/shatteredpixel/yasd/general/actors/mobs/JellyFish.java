@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.sprites.BlueJellyFishSprite;
 import com.shatteredpixel.yasd.general.sprites.GreenJellyFishSprite;
 import com.shatteredpixel.yasd.general.sprites.PurpleJellyFishSprite;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -132,12 +133,12 @@ public class JellyFish extends WaterMob {
 		}
 	}
 	@Override
-	public void storeInBundle(Bundle bundle){
+	public void storeInBundle(@NotNull Bundle bundle){
 		super.storeInBundle(bundle);
 		bundle.put(COLOUR, colour);
 	}
 	@Override
-	public void restoreFromBundle(Bundle bundle){
+	public void restoreFromBundle(@NotNull Bundle bundle){
 		super.restoreFromBundle(bundle);
 		colour = bundle.getInt(COLOUR);
 	}

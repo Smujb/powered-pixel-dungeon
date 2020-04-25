@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.items.quest.GooBlob;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
@@ -123,13 +124,13 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 		private static final String LEFT = "left";
 		
 		@Override
-		public void storeInBundle( Bundle bundle ) {
+		public void storeInBundle(@NotNull Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( LEFT, left );
 		}
 		
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			left = bundle.getInt( LEFT );
 			

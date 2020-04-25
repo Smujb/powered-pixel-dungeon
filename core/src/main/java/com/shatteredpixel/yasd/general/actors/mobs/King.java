@@ -86,13 +86,13 @@ public class King extends Mob {
 	private static final String PEDESTAL = "pedestal";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( PEDESTAL, nextPedestal );
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		nextPedestal = bundle.getBoolean( PEDESTAL );
 		BossHealthBar.assignBoss(this);

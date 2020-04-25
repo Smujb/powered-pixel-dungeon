@@ -295,7 +295,7 @@ public class Goo extends Mob {
 	private final String PUMPEDUP = "pumpedup";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 
 		super.storeInBundle( bundle );
 
@@ -303,7 +303,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 
 		super.restoreFromBundle( bundle );
 

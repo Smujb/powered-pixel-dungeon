@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.tiles;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.TextureFilm;
@@ -125,7 +126,7 @@ public abstract class CustomTilemap implements Bundlable {
 	private static final String TILE_H  = "tileH";
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		tileX = bundle.getInt(TILE_X);
 		tileY = bundle.getInt(TILE_Y);
 
@@ -134,7 +135,7 @@ public abstract class CustomTilemap implements Bundlable {
 	}
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		bundle.put(TILE_X, tileX);
 		bundle.put(TILE_Y, tileY);
 

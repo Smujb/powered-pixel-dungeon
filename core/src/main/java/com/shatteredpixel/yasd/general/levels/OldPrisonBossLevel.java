@@ -116,7 +116,7 @@ public class OldPrisonBossLevel extends Level {
 	private static final String STORED_ITEMS    = "storeditems";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( STATE, state );
 		bundle.put( TENGU, tengu );
@@ -124,7 +124,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		state = bundle.getEnum( STATE, State.class );
 

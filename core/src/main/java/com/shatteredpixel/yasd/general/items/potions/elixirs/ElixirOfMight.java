@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class ElixirOfMight extends Elixir {
@@ -132,13 +133,13 @@ public class ElixirOfMight extends Elixir {
 		private static String LEFT = "left";
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( LEFT, left );
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			left = bundle.getInt(LEFT);
 		}

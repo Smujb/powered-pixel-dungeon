@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
@@ -291,7 +292,7 @@ public enum Rankings {
 		}
 		
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
+		public void restoreFromBundle(@NotNull Bundle bundle ) {
 			
 			if (bundle.contains( CAUSE )) {
 				cause   = bundle.getClass( CAUSE );
@@ -316,7 +317,7 @@ public enum Rankings {
 		}
 		
 		@Override
-		public void storeInBundle( Bundle bundle ) {
+		public void storeInBundle(@NotNull Bundle bundle ) {
 			
 			if (cause != null) bundle.put( CAUSE, cause );
 

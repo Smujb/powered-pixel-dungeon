@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.MirrorImage;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -154,7 +155,7 @@ public class ScrollOfMirrorImage extends Scroll {
 		private static final String DELAY = "delay";
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( TOTAL, totImages );
 			bundle.put( PER_ROUND, imPerRound );
@@ -162,7 +163,7 @@ public class ScrollOfMirrorImage extends Scroll {
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			totImages = bundle.getInt( TOTAL );
 			imPerRound = bundle.getInt( PER_ROUND );

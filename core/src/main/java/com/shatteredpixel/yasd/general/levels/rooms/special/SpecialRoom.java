@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -71,7 +72,7 @@ public abstract class SpecialRoom extends Room {
 	private static final String ENTRANCE = "entrance";
 	
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		if (entrance() != null){
 			bundle.put(ENTRANCE, entrance());
@@ -79,7 +80,7 @@ public abstract class SpecialRoom extends Room {
 	}
 	
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains(ENTRANCE)){
 			entrance = (Door)bundle.get(ENTRANCE);

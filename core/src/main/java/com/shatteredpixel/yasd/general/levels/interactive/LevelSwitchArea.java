@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class LevelSwitchArea extends InteractiveArea {
@@ -66,7 +67,7 @@ public class LevelSwitchArea extends InteractiveArea {
 	private static final String MESSAGE = "message";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(MESSAGE, message);
 		bundle.put(KEY, key);
@@ -75,7 +76,7 @@ public class LevelSwitchArea extends InteractiveArea {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		pos = bundle.getInt(POS);
 		depth = bundle.getInt(DEPTH);

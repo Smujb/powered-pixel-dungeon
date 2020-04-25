@@ -179,13 +179,13 @@ public class TestBossLevel extends Level {
 	}
 	public static final String BOSS = "boss";
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(BOSS, bossSpawned);
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		bossSpawned = bundle.getBoolean(BOSS);
 	}

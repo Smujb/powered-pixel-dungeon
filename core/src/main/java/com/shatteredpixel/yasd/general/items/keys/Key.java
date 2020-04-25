@@ -75,7 +75,7 @@ public abstract class Key extends Item {
 	private static final String KEY = "key";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		//bundle.put( YPOS, depth );
 		//bundle.put( XPOS, xPos );
@@ -84,7 +84,7 @@ public abstract class Key extends Item {
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		//depth = bundle.getInt( YPOS );
 		//xPos = bundle.getInt( XPOS );

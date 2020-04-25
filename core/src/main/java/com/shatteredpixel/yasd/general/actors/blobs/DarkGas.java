@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -126,14 +127,14 @@ public class DarkGas extends Blob {
     }
 
     @Override
-    public void restoreFromBundle(Bundle bundle) {
+    public void restoreFromBundle(@NotNull Bundle bundle) {
         super.restoreFromBundle(bundle);
         strength = bundle.getInt( STRENGTH );
         ownerID = bundle.getInt( OWNER );
     }
 
     @Override
-    public void storeInBundle(Bundle bundle) {
+    public void storeInBundle(@NotNull Bundle bundle) {
         super.storeInBundle(bundle);
         bundle.put( STRENGTH, strength );
         bundle.put( OWNER, ownerID);

@@ -130,13 +130,13 @@ public class ReclaimTrap extends TargetedSpell {
 	private static final String STORED_TRAP = "stored_trap";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(STORED_TRAP, storedTrap);
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		storedTrap = bundle.getClass(STORED_TRAP);
 	}

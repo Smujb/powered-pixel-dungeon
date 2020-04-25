@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms;
 
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Graph;
@@ -370,7 +371,7 @@ public abstract class Room extends Rect implements Graph.Node, Bundlable {
 	}
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		bundle.put( "left", left );
 		bundle.put( "top", top );
 		bundle.put( "right", right );
@@ -378,7 +379,7 @@ public abstract class Room extends Rect implements Graph.Node, Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		left = bundle.getInt( "left" );
 		top = bundle.getInt( "top" );
 		right = bundle.getInt( "right" );
@@ -415,14 +416,14 @@ public abstract class Room extends Rect implements Graph.Node, Bundlable {
 		}
 		
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@NotNull Bundle bundle) {
 			bundle.put("x", x);
 			bundle.put("y", y);
 			bundle.put("type", type);
 		}
 		
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@NotNull Bundle bundle) {
 			x = bundle.getInt("x");
 			y = bundle.getInt("y");
 			type = bundle.getEnum("type", Type.class);

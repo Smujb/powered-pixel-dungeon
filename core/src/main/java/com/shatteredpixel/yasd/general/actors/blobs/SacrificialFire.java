@@ -47,6 +47,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -56,7 +57,7 @@ public class SacrificialFire extends Blob {
     protected int pos;
 
     @Override
-    public void restoreFromBundle( Bundle bundle ) {
+    public void restoreFromBundle(@NotNull Bundle bundle ) {
         super.restoreFromBundle( bundle );
         if (cur != null && cur.length > 0) {
             for (int i = 0; i < cur.length; i++) {

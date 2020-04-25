@@ -164,7 +164,7 @@ public class TestBoss extends Mob {
 	private static final String HINT = "hint";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		for (int i = 0; i < towerPositions.size(); i++) {
 			bundle.put(POSITIONS+i, towerPositions.get(i));
@@ -173,7 +173,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 		for (int i = 0; i < towerPositions.size(); i++) {

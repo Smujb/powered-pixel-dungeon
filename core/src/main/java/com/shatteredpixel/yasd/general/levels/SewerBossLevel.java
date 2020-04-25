@@ -47,6 +47,7 @@ import com.shatteredpixel.yasd.general.levels.rooms.sewerboss.SewerBossExitRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.StandardRoom;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -201,13 +202,13 @@ public class SewerBossLevel extends SewerLevel {
 	private static final String STAIRS	= "stairs";
 	
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( STAIRS, stairs );
 	}
 	
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		stairs = (Entrance) bundle.get( STAIRS );
 		roomExit = roomEntrance;

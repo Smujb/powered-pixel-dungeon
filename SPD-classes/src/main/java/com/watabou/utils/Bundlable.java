@@ -27,9 +27,11 @@
 
 package com.watabou.utils;
 
+import com.sun.istack.internal.NotNull;
+
 public interface Bundlable {
 
-	void restoreFromBundle( Bundle bundle );
-	void storeInBundle( Bundle bundle );
+	void restoreFromBundle( @NotNull Bundle bundle );
+	void storeInBundle( @NotNull Bundle bundle );
 	
 }

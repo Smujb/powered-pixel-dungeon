@@ -65,7 +65,7 @@ public abstract class InteractiveArea implements Bundlable {
 	private static final String HEIGHT = "height";
 
 	@Override
-	public void storeInBundle(Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		bundle.put(X, x);
 		bundle.put(Y, y);
 		bundle.put(WIDTH, width);
@@ -73,7 +73,7 @@ public abstract class InteractiveArea implements Bundlable {
 	}
 
 	@Override
-	public void restoreFromBundle(Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 		x = bundle.getInt(X);
 		y = bundle.getInt(Y);
 		width = bundle.getInt(WIDTH);

@@ -63,12 +63,12 @@ public class Notes {
 		private static final String KEY = "key";
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle ) {
+		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 			key = bundle.getString(KEY);
 		}
 
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle ) {
+		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 			bundle.put(KEY, key);
 		}
 	}
@@ -122,13 +122,13 @@ public class Notes {
 		private static final String LANDMARK	= "landmark";
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle) {
+		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			landmark = Landmark.valueOf(bundle.getString(LANDMARK));
 		}
 		
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle) {
+		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( LANDMARK, landmark.toString() );
 		}
@@ -175,13 +175,13 @@ public class Notes {
 		private static final String KEY	= "key";
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle) {
+		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			key = (Key) bundle.get(KEY);
 		}
 		
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle) {
+		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( KEY, key );
 		}

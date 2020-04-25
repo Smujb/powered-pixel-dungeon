@@ -175,7 +175,7 @@ public class BeaconOfReturning extends Spell {
 	private static final String POS		= "pos";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DEPTH, returnDepth );
 		if (returnDepth != -1) {
@@ -184,7 +184,7 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		returnDepth	= bundle.getInt( DEPTH );
 		returnPos	= bundle.getInt( POS );

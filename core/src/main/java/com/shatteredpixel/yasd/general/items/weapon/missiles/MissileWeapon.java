@@ -409,7 +409,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static final String DURABILITY = "durability";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(DURABILITY, durability);
 	}
@@ -417,7 +417,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static boolean bundleRestoring = false;
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
 		bundleRestoring = true;
 		super.restoreFromBundle(bundle);
 		bundleRestoring = false;

@@ -189,7 +189,7 @@ public class TimekeepersHourglass extends Artifact {
 	private static final String BUFF =      "buff";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( SANDBAGS, sandBags );
 
@@ -198,7 +198,7 @@ public class TimekeepersHourglass extends Artifact {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		sandBags = bundle.getInt( SANDBAGS );
 
@@ -368,7 +368,7 @@ public class TimekeepersHourglass extends Artifact {
 		private static final String TURNSTOCOST = "turnsToCost";
 
 		@Override
-		public void storeInBundle(Bundle bundle) {
+		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 			super.storeInBundle(bundle);
 
 			int[] values = new int[presses.size()];
@@ -380,7 +380,7 @@ public class TimekeepersHourglass extends Artifact {
 		}
 
 		@Override
-		public void restoreFromBundle(Bundle bundle) {
+		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
 			super.restoreFromBundle(bundle);
 
 			int[] values = bundle.getIntArray( PRESSES );

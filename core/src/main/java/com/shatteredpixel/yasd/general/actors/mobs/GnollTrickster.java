@@ -120,13 +120,13 @@ public class GnollTrickster extends Gnoll {
 	private static final String COMBO = "combo";
 
 	@Override
-	public void storeInBundle( Bundle bundle ) {
+	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put(COMBO, combo);
 	}
 
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		combo = bundle.getInt( COMBO );
 	}
