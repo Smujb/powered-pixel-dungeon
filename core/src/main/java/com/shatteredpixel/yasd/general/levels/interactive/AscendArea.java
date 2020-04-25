@@ -25,46 +25,13 @@
  *
  */
 
-package com.watabou.input;
+package com.shatteredpixel.yasd.general.levels.interactive;
 
-import java.util.ArrayList;
+import com.shatteredpixel.yasd.general.actors.hero.Hero;
 
-//This is similar to an enum, but we don't use that because subclasses should be able to add actions
-public class GameAction {
-
-	private static final ArrayList<GameAction> ALL_ACTIONS = new ArrayList<>();
-
-	private int code;
-	private String name;
-
-	protected GameAction( String name ){
-		code = ALL_ACTIONS.size();
-		this.name = name;
-
-		ALL_ACTIONS.add(this);
-	}
-
-	public int code(){
-		return code;
-	}
-
-	public String name(){
-		return name;
-	}
-
+public class AscendArea extends InteractiveArea{
 	@Override
-	public boolean equals(Object o) {
-		return o instanceof GameAction && ((GameAction) o).code == code;
-	}
-
-	public static final GameAction NONE = new GameAction( "none" );
-	public static final GameAction BACK = new GameAction( "back" );
-
-	public static ArrayList<GameAction> allActions(){
-		return new ArrayList<>(ALL_ACTIONS);
-	}
-
-	public static int totalActions(){
-		return ALL_ACTIONS.size();
+	public void interact(Hero hero) {
+		Entrance.ascend(hero);
 	}
 }

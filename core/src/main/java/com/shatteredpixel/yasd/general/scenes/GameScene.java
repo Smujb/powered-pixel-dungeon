@@ -422,7 +422,7 @@ public class GameScene extends PixelScene {
 		if (LevelHandler.mode() != LevelHandler.Mode.MOVE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (LevelHandler.mode() == LevelHandler.Mode.DESCEND || LevelHandler.mode() == LevelHandler.Mode.FALL)) {
-				GLog.h(Messages.get(this, "descend"), Dungeon.depth);
+				GLog.h(Messages.get(this, "ascend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.SND_DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -667,13 +667,6 @@ public class GameScene extends PixelScene {
 	protected void onBackPressed() {
 		if (!cancel()) {
 			add( new WndGame() );
-		}
-	}
-	
-	@Override
-	protected void onMenuPressed() {
-		if (Dungeon.hero.ready) {
-			selectItem( null, WndBag.Mode.ALL, null );
 		}
 	}
 

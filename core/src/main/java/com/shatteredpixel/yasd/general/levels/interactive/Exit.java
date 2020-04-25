@@ -36,6 +36,10 @@ import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 public class Exit extends InteractiveCell {
 	@Override
 	public void interact(Hero hero) {
+		descend(hero);
+	}
+
+	public static void descend(Hero hero) {
 		hero.curAction = null;
 
 		Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);

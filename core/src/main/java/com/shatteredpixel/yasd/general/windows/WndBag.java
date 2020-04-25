@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.items.EquipableItem;
@@ -64,6 +65,8 @@ import com.shatteredpixel.yasd.general.ui.ItemSlot;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.watabou.gltextures.TextureCache;
+import com.watabou.input.KeyBindings;
+import com.watabou.input.KeyEvent;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
@@ -195,8 +198,17 @@ public class WndBag extends WndTabbed {
 				new WndBag( bag, listener, mode, title ) :
 				lastBag( listener, mode, title );
 	}
-	
-	protected void placeTitle( Bag bag, int width ){
+
+	public boolean onSignal(KeyEvent event) {
+		if (event.pressed && KeyBindings.getActionForKey( event ) == YASDAction.INVENTORY) {
+			hide();
+			return true;
+		} else {
+			return super.onSignal(event);
+		}
+	}
+
+	protected void placeTitle(Bag bag, int width ){
 		ItemSprite gold = new ItemSprite(ItemSpriteSheet.GOLD, null);
 		gold.x = width - gold.width() - 1;
 		gold.y = (TITLE_HEIGHT - gold.height())/2f - 1;
@@ -260,14 +272,7 @@ public class WndBag extends WndTabbed {
 		
 		count++;
 	}
-	
-	@Override
-	public void onMenuPressed() {
-		if (listener == null) {
-			hide();
-		}
-	}
-	
+
 	@Override
 	public void onBackPressed() {
 		if (listener != null) {

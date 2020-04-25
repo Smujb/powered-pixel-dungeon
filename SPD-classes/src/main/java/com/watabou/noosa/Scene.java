@@ -44,8 +44,6 @@ public class Scene extends Group {
 					if (KeyBindings.getActionForKey( event ) == GameAction.BACK){
 						onBackPressed();
 
-					} else if (KeyBindings.getActionForKey( event ) == GameAction.MENU){
-						onMenuPressed();
 					}
 				}
 				return false;
@@ -83,10 +81,6 @@ public class Scene extends Group {
 	
 	protected void onBackPressed() {
 		Game.instance.finish();
-	}
-	
-	protected void onMenuPressed() {
-		
 	}
 
 }

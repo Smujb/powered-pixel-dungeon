@@ -46,6 +46,10 @@ import com.watabou.utils.Callback;
 public class Entrance extends InteractiveCell {
 	@Override
 	public void interact(Hero hero) {
+		ascend(hero);
+	}
+
+	public static void ascend(Hero hero) {
 		if (Dungeon.depth == 1) {
 
 			if (hero.belongings.getItem(Amulet.class) == null) {

@@ -167,8 +167,6 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 			if (KeyBindings.getActionForKey( event ) == YASDAction.BACK){
 				onBackPressed();
 
-			} else if (KeyBindings.getActionForKey( event ) == YASDAction.MENU){
-				onMenuPressed();
 			}
 		}
 		//TODO currently always eats the key event as windows always take full focus
@@ -179,7 +177,5 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	public void onBackPressed() {
 		hide();
 	}
-	
-	public void onMenuPressed() {
-	}
+
 }

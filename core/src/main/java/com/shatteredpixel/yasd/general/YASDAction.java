@@ -43,9 +43,7 @@ public class YASDAction extends GameAction {
 
 	//--Existing actions from GameAction
 	public static final GameAction NONE  = GameAction.NONE;
-
 	public static final GameAction BACK  = GameAction.BACK;
-	public static final GameAction MENU  = GameAction.MENU;
 	//--
 
 	protected YASDAction( String name ){
@@ -84,8 +82,8 @@ public class YASDAction extends GameAction {
 
 	private static final LinkedHashMap<Integer, GameAction> defaultBindings = new LinkedHashMap<>();
 	static {
-		defaultBindings.put( Input.Keys.BACK,        YASDAction.BACK );
-		defaultBindings.put( Input.Keys.MENU,        YASDAction.MENU );
+		defaultBindings.put( Input.Keys.ESCAPE,      YASDAction.BACK );
+		defaultBindings.put( Input.Keys.BACKSPACE,   YASDAction.BACK );
 
 		defaultBindings.put( Input.Keys.H,           YASDAction.HERO_INFO );
 		defaultBindings.put( Input.Keys.J,           YASDAction.JOURNAL );
@@ -129,6 +127,12 @@ public class YASDAction extends GameAction {
 	@Contract(" -> new")
 	public static LinkedHashMap<Integer, GameAction> getDefaults() {
 		return new LinkedHashMap<>(defaultBindings);
+	}
+
+	//hard bindings for android devices
+	static {
+		KeyBindings.addHardBinding( Input.Keys.BACK, YASDAction.BACK );
+		KeyBindings.addHardBinding( Input.Keys.MENU, YASDAction.INVENTORY );
 	}
 
 	//we only save/loads keys which differ from the default configuration.
