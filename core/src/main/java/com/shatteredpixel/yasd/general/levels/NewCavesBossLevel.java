@@ -46,6 +46,7 @@ import com.shatteredpixel.yasd.general.effects.particles.BlastParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.levels.interactive.DescendArea;
 import com.shatteredpixel.yasd.general.levels.painters.CavesPainter;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
@@ -133,9 +134,11 @@ public class NewCavesBossLevel extends Level {
 		Painter.fill(this, 15, 7, 3, 1, STATUE);
 		Painter.fill(this, 15, 9, 3, 1, STATUE);
 		Painter.fill(this, 16, 5, 1, 6, EMPTY_SP);
+		//Set the large exit.
+		interactiveAreas.add(new DescendArea().setPos(15, 0, 3, 3));
 		Painter.fill(this, 15, 0, 3, 3, EXIT);
 
-		setExit(16 + 2*width());
+		//setExit(16 + 2*width());
 
 		//These signs are visually overridden with custom tile visuals
 		Painter.fill(this, gate, SIGN);
