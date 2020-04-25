@@ -33,10 +33,9 @@ import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SpawnerSprite;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -70,7 +69,7 @@ public class DemonSpawner extends Mob {
 		return true;
 	}
 
-	private float spawnCooldown = 50;
+	private float spawnCooldown = 60;
 
 
 	@Override
@@ -97,7 +96,7 @@ public class DemonSpawner extends Mob {
 					Actor.addDelayed(new Pushing(spawn, pos, spawn.pos), -1);
 				}
 
-				spawnCooldown += 50;
+				spawnCooldown += 60;
 			}
 		}
 		return super.act();
@@ -112,5 +111,19 @@ public class DemonSpawner extends Mob {
 		}
 		spawnCooldown -= dmg;
 		super.damage(dmg, src);
+	}
+
+	public static final String SPAWN_COOLDOWN = "spawn_cooldown";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(SPAWN_COOLDOWN, spawnCooldown);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		spawnCooldown = bundle.getFloat(SPAWN_COOLDOWN);
 	}
 }
