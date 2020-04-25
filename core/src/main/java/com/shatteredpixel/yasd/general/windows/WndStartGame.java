@@ -130,6 +130,7 @@ public class WndStartGame extends Window {
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
 				Dungeon.difficulty = Difficulty.fromInt(YASDSettings.difficulty());//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				YASDSettings.lastClass(GamesInProgress.selectedClass);
 				if (YASDSettings.intro()) {
 					YASDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
@@ -226,21 +227,7 @@ public class WndStartGame extends Window {
 			
 			this.cl = cl;
 
-			switch (cl) {
-				case WARRIOR:
-					hero = new Image(Assets.WARRIOR, 0, 90, 12, 15);
-					break;
-				case MAGE:
-					hero = new Image(Assets.MAGE, 0, 90, 12, 15);
-					break;
-				case ROGUE:
-					hero = new Image(Assets.ROGUE, 0, 90, 12, 15);
-					break;
-				case HUNTRESS:
-					hero = new Image(Assets.HUNTRESS, 0, 90, 12, 15);
-					break;
-			}
-			add(hero);
+			add(hero = new Image(cl.spritesheet(), 0, 90, 12, 15));
 			
 		}
 		

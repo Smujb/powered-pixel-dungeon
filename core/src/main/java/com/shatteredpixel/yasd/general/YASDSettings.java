@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -190,9 +191,27 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	public static boolean intro() {
 		return getBoolean( KEY_INTRO, true );
 	}
-	
+
 	public static void lastClass( int value ) {
 		put( KEY_LAST_CLASS, value );
+	}
+
+	public static void lastClass( HeroClass value ) {
+		int cl = 0;
+		switch (value) {
+			case WARRIOR:
+				cl = 0;
+				break;
+			case MAGE:
+				cl = 1;
+				break;
+			case ROGUE:
+				cl = 2;
+				break;
+			case HUNTRESS:
+				cl = 3;
+		}
+		lastClass(cl);
 	}
 	
 	public static int lastClass() {
