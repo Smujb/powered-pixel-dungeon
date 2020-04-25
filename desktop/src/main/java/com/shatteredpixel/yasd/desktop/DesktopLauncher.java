@@ -66,6 +66,7 @@ public class DesktopLauncher {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
+                Game.reportException(throwable);
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 throwable.printStackTrace(pw);
@@ -74,14 +75,14 @@ public class DesktopLauncher {
 
                 //shorten/simplify exception message to make it easier to fit into a message box
                 exceptionMsg = exceptionMsg.replaceAll("\\(.*:([0-9]*)\\)", "($1)");
-                exceptionMsg = exceptionMsg.replace("com.shatteredpixel.shatteredpixeldungeon.", "");
+                exceptionMsg = exceptionMsg.replace("com.shatteredpixel.yasd.general.", "");
                 exceptionMsg = exceptionMsg.replace("com.watabou.", "");
                 exceptionMsg = exceptionMsg.replace("com.badlogic.gdx.", "");
                 exceptionMsg = exceptionMsg.replace("\t", "    ");
 
                 TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
                         title + " has run into an error it can't recover from and has crashed, sorry about that!\n\n" +
-                        /*"If you could, please email this error message to the developer [TBA]:\n\n" +*/
+                              //  "If you could, please email this error message to the developer (Evan@ShatteredPixel.com):\n\n" +
                                 exceptionMsg,
                         "ok", "error", false );
                 Gdx.app.exit();
@@ -103,32 +104,29 @@ public class DesktopLauncher {
             Updates.service = UpdateImpl.getUpdateService();
         }
 
-
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-
 
         config.setTitle( title );
 
         String basePath = "";
         if (SharedLibraryLoader.isWindows) {
             if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-                basePath = "Application Data/.shatteredpixel/Shattered Pixel Dungeon/";
+                basePath = "Application Data/.smujb/Yet Another Shattered Dungeon/";
             } else {
-                basePath = "AppData/Roaming/.shatteredpixel/Shattered Pixel Dungeon/";
+                basePath = "AppData/Roaming/.smujb/Yet Another Shattered Dungeon/";
             }
         } else if (SharedLibraryLoader.isMac) {
-            basePath = "Library/Application Support/Shattered Pixel Dungeon/";
+            basePath = "Library/Application Support/Yet Another Shattered Dungeon/";
         } else if (SharedLibraryLoader.isLinux) {
-            basePath = ".shatteredpixel/shattered-pixel-dungeon/";
+            basePath = ".smujb/yet-another-shattered-dungeon/";
         }
 
-
-		//copy over prefs from old file location from legacy desktop codebase
-		FileHandle oldPrefs = new Lwjgl3FileHandle(basePath + "pd-prefs", Files.FileType.External);
-		FileHandle newPrefs = new Lwjgl3FileHandle(basePath + YASDSettings.DEFAULT_PREFS_FILE, Files.FileType.External);
-		if (oldPrefs.exists() && !newPrefs.exists()){
-			oldPrefs.copyTo(newPrefs);
-		}
+        //copy over prefs from old file location from legacy desktop codebase
+        FileHandle oldPrefs = new Lwjgl3FileHandle(basePath + "pd-prefs", Files.FileType.External);
+        FileHandle newPrefs = new Lwjgl3FileHandle(basePath + YASDSettings.DEFAULT_PREFS_FILE, Files.FileType.External);
+        if (oldPrefs.exists() && !newPrefs.exists()){
+            oldPrefs.copyTo(newPrefs);
+        }
 
         config.setPreferencesConfig( basePath, Files.FileType.External );
         YASDSettings.set( new Lwjgl3Preferences( YASDSettings.DEFAULT_PREFS_FILE, basePath) );
@@ -142,7 +140,7 @@ public class DesktopLauncher {
         //we set fullscreen/maximized in the listener as doing it through the config seems to be buggy
         DesktopWindowListener listener = new DesktopWindowListener();
         config.setWindowListener( listener );
-        //TODO: use YASD icons
+
         config.setWindowIcon( "icon_16.png", "icon_32.png", "icon_64.png", "icon_128.png", "icon_256.png" );
 
         new Lwjgl3Application(new MainGame(new DesktopPlatformSupport()), config);
