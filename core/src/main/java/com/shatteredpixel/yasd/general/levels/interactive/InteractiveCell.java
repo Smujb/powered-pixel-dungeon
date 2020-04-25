@@ -45,7 +45,8 @@ public abstract class InteractiveCell extends InteractiveArea {
 		return super.setPos(x, y, 1, 1);
 	}
 
-	public int getPos(@NotNull Level level) {
+	@Override
+	public int centerCell(Level level) {
 		return level.getPos(x, y);
 	}
 }

@@ -162,7 +162,7 @@ public class CityBossLevel extends Level {
 		
 		int entrance = (TOP + HALL_HEIGHT + 3 + Random.Int( CHAMBER_HEIGHT - 2 )) * width() + LEFT + (/*1 +*/ Random.Int( HALL_WIDTH-2 ));
 		interactiveAreas.add(new Entrance().setPos(this, entrance));
-		map[getEntrance().getPos(this)] = ENTRANCE;
+		map[getEntrancePos()] = ENTRANCE;
 		
 		for (int i=0; i < length() - width(); i++) {
 			if (map[i] == EMPTY && Random.Int( 10 ) == 0) {
@@ -202,7 +202,7 @@ public class CityBossLevel extends Level {
 				pos =
 					Random.IntRange( LEFT + 1, LEFT + HALL_WIDTH - 2 ) +
 					Random.IntRange( TOP + HALL_HEIGHT + 2, TOP + HALL_HEIGHT  + CHAMBER_HEIGHT ) * width();
-			} while (pos == getEntrance().getPos(this));
+			} while (pos == getEntrancePos());
 			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 	}
@@ -211,7 +211,7 @@ public class CityBossLevel extends Level {
 	public int randomRespawnCell(Char target) {
 		int cell;
 		do {
-			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrancePos() + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell) || Actor.findChar(cell) != null);
 		return cell;
 	}

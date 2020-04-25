@@ -73,7 +73,7 @@ public class EntranceRoom extends StandardRoom {
 				//can't be on bottom row of tiles
 				pos = level.pointToCell(new Point( Random.IntRange( left + 1, right - 1 ),
 						Random.IntRange( top + 1, bottom - 2 )));
-			} while (pos == level.getEntrance().getPos(level) || level.findMob(level.getEntrance().getPos(level)) != null);
+			} while (pos == level.getEntrancePos() || level.findMob(level.getEntrancePos()) != null);
 			GuidePage p = new GuidePage();
 			p.page(Document.GUIDE_INTRO_PAGE);
 			level.drop( p, pos );

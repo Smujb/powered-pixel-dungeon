@@ -146,7 +146,7 @@ public class HallsBossLevel extends Level {
 			}
 		}
 		
-		map[getExit().getPos(this)] = LOCKED_EXIT;
+		map[getExitPos()] = LOCKED_EXIT;
 		
 		Painter.fill(this, ROOM_LEFT - 1, ROOM_TOP - 1,
 				ROOM_RIGHT - ROOM_LEFT + 3, ROOM_BOTTOM - ROOM_TOP + 3, WALL);
@@ -156,7 +156,7 @@ public class HallsBossLevel extends Level {
 		int entrance = Random.Int(ROOM_LEFT + 1, ROOM_RIGHT - 1) +
 				Random.Int(ROOM_TOP + 1, ROOM_BOTTOM - 1) * width();
 		interactiveAreas.add(new Entrance().setPos(this, entrance));
-		map[getEntrance().getPos(this)] = ENTRANCE;
+		map[getEntrancePos()] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate(width, height, 0.30f, 6, true);
 		for (int i = 0; i < length(); i++) {
@@ -189,14 +189,14 @@ public class HallsBossLevel extends Level {
 			int pos;
 			do {
 				pos = Random.IntRange( ROOM_LEFT, ROOM_RIGHT ) + Random.IntRange( ROOM_TOP + 1, ROOM_BOTTOM ) * width();
-			} while (pos == getEntrance().getPos(this));
+			} while (pos == getEntrancePos());
 			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 	}
 	
 	@Override
 	public int randomRespawnCell(Char ch) {
-		int pos = getEntrance() == null ? stairs.getPos(this) : getEntrance().getPos(this);
+		int pos = getEntrance() == null ? stairs.centerCell(this) : getEntrancePos();
 		int cell;
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
@@ -224,7 +224,7 @@ public class HallsBossLevel extends Level {
 				doMagic( i * width() + ROOM_LEFT - 1 );
 				doMagic( i * width() + ROOM_RIGHT + 1 );
 			}
-			doMagic( getEntrance().getPos(this) );
+			doMagic( getEntrancePos() );
 			GameScene.updateMap();
 
 			Dungeon.observe();
@@ -260,8 +260,8 @@ public class HallsBossLevel extends Level {
 
 			interactiveAreas.add(stairs);
 
-			set( getEntrance().getPos(this), ENTRANCE );
-			GameScene.updateMap( getEntrance().getPos(this) );
+			set( getEntrancePos(), ENTRANCE );
+			GameScene.updateMap( getEntrancePos() );
 		}
 		
 		return super.drop( item, cell );

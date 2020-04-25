@@ -57,8 +57,8 @@ public class SewerBossEntranceRoom extends EntranceRoom {
 		do {
 			//level.entrance = level.pointToCell(random(3));
 			level.interactiveAreas.add(new Entrance().setPos(level, level.pointToCell(random(3))));
-		} while (level.findMob(level.getEntrance().getPos(level)) != null);
-		Painter.set( level, level.getEntrance().getPos(level), Terrain.ENTRANCE );
+		} while (level.findMob(level.getEntrancePos()) != null);
+		Painter.set( level, level.getEntrancePos(), Terrain.ENTRANCE );
 		
 		for (Room.Door door : connected.values()) {
 			door.set( Room.Door.Type.REGULAR );

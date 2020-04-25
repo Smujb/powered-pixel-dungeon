@@ -70,6 +70,8 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.interactive.AscendArea;
+import com.shatteredpixel.yasd.general.levels.interactive.DescendArea;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
@@ -709,42 +711,54 @@ public abstract class Level implements Bundlable {
 		return null;
 	}
 
-	//Both are used for single-entrance/exit levels. Will only return first result.
+	//Both are used for single-entrance/exit levels. Will only return first result. Use as little as possible unless it is important the return value is Exit or Entrance.
 	public Entrance getEntrance() {
-		for (InteractiveArea area : interactiveAreas) {
-			if (area instanceof Entrance) {
-				return (Entrance) area;
-			}
-		}
-		return null;
-	}
-	public Exit getExit() {
-		for (InteractiveArea area : interactiveAreas) {
-			if (area instanceof Exit) {
-				return (Exit) area;
-			}
+		ArrayList<Entrance> entrances = InteractiveArea.getAreas(this, Entrance.class);
+		if (entrances.size() > 0) {
+			return entrances.get(0);
 		}
 		return null;
 	}
 
+	public Exit getExit() {
+		ArrayList<Exit> exits = InteractiveArea.getAreas(this, Exit.class);
+		if (exits.size() > 0) {
+			return exits.get(0);
+		}
+		return null;
+	}
+
+	//These functions should be used if looking for the exit cell (e.g. in randomRespawnCell or when deciding where to place the hero when spawining on a level).
+	// *Not* functionally identical to getExit().centerCell() or getEntrance.centerCell() - it takes into account descend areas and should be used when possible.
 	public int getEntrancePos() {
-		Entrance entrance = getEntrance();
+		InteractiveArea entrance = getEntrance();
 		if (entrance == null) {
-			return -1;
+			ArrayList<AscendArea> ascendAreas = InteractiveArea.getAreas(this, AscendArea.class);
+			if (ascendAreas.size() > 0) {
+				return ascendAreas.get(0).centerCell(this);
+			} else {
+				return -1;
+			}
 		} else {
-			return entrance.getPos(this);
+			return entrance.centerCell(this);
 		}
 	}
 
 	public int getExitPos() {
-		Exit exit = getExit();
+		InteractiveArea exit = getExit();
 		if (exit == null) {
-			return -1;
+			ArrayList<DescendArea> descendAreas = InteractiveArea.getAreas(this, DescendArea.class);
+			if (descendAreas.size() > 0) {
+				return descendAreas.get(0).centerCell(this);
+			} else {
+				return -1;
+			}
 		} else {
-			return exit.getPos(this);
+			return exit.centerCell(this);
 		}
 	}
 
+	//These functions get rid of an existing exit/entrance and create a new one. Again, most useful in levels with a single cell exit/entrance.
 	public void setEntrance(int pos) {
 		Entrance entrance;
 		do {
@@ -773,7 +787,8 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
-	public void clearExitEntrance() {
+	//Clears exits/entrances. This is used mainly in PrisonBossLevel
+	void clearExitEntrance() {
 		setEntrance(-1);
 		setExit(-1);
 	}

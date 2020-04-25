@@ -34,6 +34,8 @@ import com.watabou.utils.Bundle;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public abstract class InteractiveArea implements Bundlable {
 
 	protected int x;
@@ -57,6 +59,22 @@ public abstract class InteractiveArea implements Bundlable {
 		int posY = coords[1];
 		return posX >= x && posX < x + width
 				&& posY >= y && posY < y + height;
+	}
+
+	public int centerCell(Level level) {
+		float centerX = (x + width) / (float) width;
+		float centerY = (y + height) / (float) height;
+		return level.getPos(Math.round(centerX), Math.round(centerY));
+	}
+
+	public static <T extends InteractiveArea> ArrayList<T> getAreas(Level level, Class<T> areaClass) {
+		ArrayList<T> list = new ArrayList<>();
+		for (InteractiveArea area : level.interactiveAreas) {
+			if (areaClass.isInstance(area)) {
+				list.add((T) area);
+			}
+		}
+		return list;
 	}
 
 	private static final String X = "x";

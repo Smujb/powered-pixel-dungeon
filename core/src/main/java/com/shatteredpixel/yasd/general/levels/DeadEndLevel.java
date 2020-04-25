@@ -74,7 +74,7 @@ public class DeadEndLevel extends Level {
 		
 		//entrance = SIZE * width() + SIZE / 2 + 1;
 		interactiveAreas.add(new Entrance().setPos(this, SIZE * width() + SIZE / 2 + 1));
-		map[getEntrance().getPos(this)] = Terrain.ENTRANCE;
+		map[getEntrancePos()] = Terrain.ENTRANCE;
 
 		//exit = 0;
 		

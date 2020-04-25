@@ -214,7 +214,7 @@ public class NewPrisonBossLevel extends Level {
 		//Start
 		Painter.fill(this, entranceRoom, WALL);
 		Painter.fill(this, entranceRoom, 1, EMPTY);
-		Painter.set(this, getEntrance().getPos(this), ENTRANCE);
+		Painter.set(this, getEntrancePos(), ENTRANCE);
 		
 		Painter.fill(this, startHallway, WALL);
 		Painter.fill(this, startHallway, 1, EMPTY);

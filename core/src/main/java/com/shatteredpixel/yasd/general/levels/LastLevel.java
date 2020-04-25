@@ -105,7 +105,7 @@ public class LastLevel extends Level {
 
 		//entrance = (height-2) * width() + mid;
 		interactiveAreas.add(new Entrance().setPos(this, (height-2) * width() + mid));
-		map[getEntrance().getPos(this)] = ENTRANCE;
+		map[getEntrancePos()] = ENTRANCE;
 
 		pedestal = 12*(width()) + mid;
 		map[pedestal] = PEDESTAL;
@@ -163,7 +163,7 @@ public class LastLevel extends Level {
 	public int randomRespawnCell(Char ch) {
 		int cell;
 		do {
-			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrancePos() + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
 				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);

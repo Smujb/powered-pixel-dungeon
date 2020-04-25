@@ -145,7 +145,7 @@ public class SewerBossLevel extends SewerLevel {
 			int pos;
 			do {
 				pos = pointToCell(roomEntrance.random());
-			} while (pos == getEntrance().getPos(this) || solid(pos));
+			} while (pos == getEntrancePos() || solid(pos));
 			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 	}
@@ -167,7 +167,7 @@ public class SewerBossLevel extends SewerLevel {
 		if (getEntrance() != null) {
 
 			super.seal();
-			int pos = getEntrance().getPos(this);
+			int pos = getEntrancePos();
 			set( pos, Terrain.WATER );
 			GameScene.updateMap( pos );
 			GameScene.ripple( pos );
@@ -185,8 +185,8 @@ public class SewerBossLevel extends SewerLevel {
 			interactiveAreas.add(stairs);
 			stairs = null;
 			
-			set( getEntrance().getPos(this), Terrain.ENTRANCE );
-			GameScene.updateMap( getEntrance().getPos(this) );
+			set( getEntrancePos(), Terrain.ENTRANCE );
+			GameScene.updateMap( getEntrancePos() );
 
 		}
 	}

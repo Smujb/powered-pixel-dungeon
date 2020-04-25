@@ -157,7 +157,7 @@ public class CavesBossLevel extends Level {
 		int entrance = Random.Int( ROOM_LEFT + 1, ROOM_RIGHT - 1 ) +
 			Random.Int( ROOM_TOP + 1, ROOM_BOTTOM - 1 ) * width();
 		interactiveAreas.add(new Entrance().setPos(this, entrance));
-		map[getEntrance().getPos(this)] = ENTRANCE;
+		map[getEntrancePos()] = ENTRANCE;
 		
 		boolean[] patch = Patch.generate( width, height, 0.30f, 6, true );
 		for (int i=0; i < length(); i++) {
@@ -222,7 +222,7 @@ public class CavesBossLevel extends Level {
 			int pos;
 			do {
 				pos = Random.IntRange( ROOM_LEFT, ROOM_RIGHT ) + Random.IntRange( ROOM_TOP + 1, ROOM_BOTTOM ) * width();
-			} while (pos == getEntrance().getPos(this));
+			} while (pos == getEntrancePos());
 			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
 	}
@@ -231,7 +231,7 @@ public class CavesBossLevel extends Level {
 	public int randomRespawnCell(Char ch) {
 		int cell;
 		do {
-			cell = getEntrance().getPos(this) + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = getEntrancePos() + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
 				|| Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
