@@ -47,8 +47,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class UnderwaterLevel extends Level {
@@ -100,6 +98,7 @@ public class UnderwaterLevel extends Level {
 	protected boolean build() {
 		setSize(_width, _height);
 		map = Level.basicMap(length());
+		Random.pushGenerator(Dungeon.seedCurDepth());
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
 			if ((setSolid[i] || chasmLocations.contains(i)) && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
@@ -109,6 +108,7 @@ public class UnderwaterLevel extends Level {
 		for (int i = 0; i < NUM_BUBBLES; i++) {
 			bubbleLocations.add(randomRespawnCell());
 		}
+		Random.popGenerator();
 		return true;
 	}
 

@@ -1105,7 +1105,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int( length() );
 		} while (!passable(cell)
-				|| Char.canOccupy(ch, this, cell)
+				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

@@ -46,11 +46,10 @@ import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.noosa.Group;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.SECRET_DOOR;
 
 public class LastShopLevel extends RegularLevel {
 	
@@ -158,7 +157,7 @@ public class LastShopLevel extends RegularLevel {
 		do {
 			cell = pointToCell( roomEntrance.random() );
 		} while (!passable(cell)
-				|| Char.canOccupy(ch, this, cell)
+				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

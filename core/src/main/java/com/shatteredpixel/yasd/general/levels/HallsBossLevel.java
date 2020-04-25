@@ -50,8 +50,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
@@ -201,7 +199,7 @@ public class HallsBossLevel extends Level {
 		do {
 			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
-				|| Char.canOccupy(ch, this, cell)
+				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

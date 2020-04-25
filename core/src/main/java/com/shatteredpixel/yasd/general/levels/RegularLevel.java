@@ -359,22 +359,23 @@ public abstract class RegularLevel extends Level {
 			}
 			drop( item, cell ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
+		if (Dungeon.hero != null) {
+			DriedRose rose = Dungeon.hero.belongings.getItem(DriedRose.class);
+			if (rose != null && rose.isIdentified() && !rose.cursed) {
+				//aim to drop 1 petal every 2 floors
+				int petalsNeeded = (int) Math.ceil((float) ((Dungeon.depth / 2) - rose.droppedPetals) / 3);
 
-		DriedRose rose = Dungeon.hero.belongings.getItem( DriedRose.class );
-		if (rose != null && rose.isIdentified() && !rose.cursed){
-			//aim to drop 1 petal every 2 floors
-			int petalsNeeded = (int) Math.ceil((float)((Dungeon.depth / 2) - rose.droppedPetals) / 3);
-
-			for (int i=1; i <= petalsNeeded; i++) {
-				//the player may miss a single petal and still max their rose.
-				if (rose.droppedPetals < 11) {
-					item = new DriedRose.Petal();
-					int cell = randomDropCell();
-					drop( item, cell ).type = Heap.Type.HEAP;
-					if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
-						map[cell] = Terrain.GRASS;
+				for (int i = 1; i <= petalsNeeded; i++) {
+					//the player may miss a single petal and still max their rose.
+					if (rose.droppedPetals < 11) {
+						item = new DriedRose.Petal();
+						int cell = randomDropCell();
+						drop(item, cell).type = Heap.Type.HEAP;
+						if (map[cell] == Terrain.HIGH_GRASS || map[cell] == Terrain.FURROWED_GRASS) {
+							map[cell] = Terrain.GRASS;
+						}
+						rose.droppedPetals++;
 					}
-					rose.droppedPetals++;
 				}
 			}
 		}

@@ -40,8 +40,6 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Arrays;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.CHASM;
@@ -165,7 +163,7 @@ public class LastLevel extends Level {
 		do {
 			cell = getEntrancePos() + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
-				|| Char.canOccupy(ch, this, cell)
+				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}

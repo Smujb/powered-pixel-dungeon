@@ -56,9 +56,13 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Rect;
 
-import org.jetbrains.annotations.NotNull;
-
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.LOCKED_EXIT;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class CavesBossLevel extends Level {
 	
@@ -233,7 +237,7 @@ public class CavesBossLevel extends Level {
 		do {
 			cell = getEntrancePos() + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
-				|| Char.canOccupy(ch, this, cell)
+				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
 		return cell;
 	}
