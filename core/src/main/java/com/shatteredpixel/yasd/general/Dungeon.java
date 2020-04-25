@@ -47,7 +47,6 @@ import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.journal.Notes;
-import com.shatteredpixel.yasd.general.levels.CavesBossLevel;
 import com.shatteredpixel.yasd.general.levels.CavesLevel;
 import com.shatteredpixel.yasd.general.levels.CityBossLevel;
 import com.shatteredpixel.yasd.general.levels.CityLevel;
@@ -59,16 +58,17 @@ import com.shatteredpixel.yasd.general.levels.LastLevel;
 import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.LootLevel;
+import com.shatteredpixel.yasd.general.levels.NewCavesBossLevel;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.OldPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.levels.TestBossLevel;
-import com.shatteredpixel.yasd.general.levels.tiled.TilemapTest;
 import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
+import com.shatteredpixel.yasd.general.levels.tiled.TilemapTest;
 import com.shatteredpixel.yasd.general.levels.tiled.TilemapTest2;
 import com.shatteredpixel.yasd.general.mechanics.ShadowCaster;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -86,7 +86,6 @@ import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -278,7 +277,7 @@ public class Dungeon {
 		//Bosses
 		staticLevels.put("sewers - 5", SewerBossLevel.class);
 		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
-		staticLevels.put("caves - 5", CavesBossLevel.class);
+		staticLevels.put("caves - 5", NewCavesBossLevel.class);
 		staticLevels.put("city - 5", CityBossLevel.class);
 		staticLevels.put("halls - 5", HallsBossLevel.class);
 		//Ambitious Imp shop
@@ -292,6 +291,7 @@ public class Dungeon {
 		staticLevels.put("test", TilemapTest.class);
 		staticLevels.put("test 2", TilemapTest2.class);
 		staticLevels.put("old tengu", OldPrisonBossLevel.class);
+		staticLevels.put("old dm300", OldPrisonBossLevel.class);
 		staticLevels.put("loot", LootLevel.class);
 	}
 

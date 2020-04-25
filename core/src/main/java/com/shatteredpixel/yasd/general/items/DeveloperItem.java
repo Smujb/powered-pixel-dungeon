@@ -54,10 +54,11 @@ import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.shatteredpixel.yasd.general.windows.WndError;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.utils.PlatformSupport;
 import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -108,7 +109,7 @@ public class DeveloperItem extends Item {
 	private static final float GAP		= 2;
 	private static final String BASE_NAME = "com.shatteredpixel.yasd.general.items.";
 	private static int getWidth() {
-		return (int) (Game.width*0.8f);
+		return 150;
 	}
 
 	public static class WndGetItem extends Window {
@@ -121,7 +122,8 @@ public class DeveloperItem extends Item {
 		private final boolean[] cursed = new boolean[1];
 		private RenderedTextBlock message;
 
-		private static String name(Class item) {
+		@NotNull
+		private static String name(@NotNull Class item) {
 			return item.getName().replace(BASE_NAME, "");
 		}
 

@@ -136,7 +136,6 @@ import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -1170,8 +1169,10 @@ public abstract class Level implements Bundlable {
 		set( pos, EMBERS );
 	}
 
-	protected void cleanWalls() {
-		discoverable = new boolean[length()];
+	public void cleanWalls() {
+		if (discoverable == null || discoverable.length != length) {
+			discoverable = new boolean[length()];
+		}
 
 		for (int i=0; i < length(); i++) {
 			

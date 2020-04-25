@@ -271,8 +271,9 @@ public enum Terrain implements KindOfTerrain {
 	SIGN {
 		@Override
 		public void setup() {
-			passable = true;
-			flammable = true;
+			//passable = true;
+			//flammable = true;
+			solid = true;//Currently these are unused except for visual tile overrides where we want terrain to be solid with no other properties. Will likely change later.
 		}
 	},
 	WELL {
