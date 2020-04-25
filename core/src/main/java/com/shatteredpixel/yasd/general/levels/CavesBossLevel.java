@@ -107,7 +107,7 @@ public class CavesBossLevel extends Level {
 	private static final String DROPPED	= "droppped";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DOOR, arenaDoor );
 		bundle.put( ENTERED, enteredArena );
@@ -115,7 +115,7 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		arenaDoor = bundle.getInt( DOOR );
 		enteredArena = bundle.getBoolean( ENTERED );
@@ -239,7 +239,7 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public void occupyCell(@NotNull Char ch ) {
+	public void occupyCell( Char ch ) {
 		
 		super.occupyCell( ch );
 		
@@ -316,7 +316,7 @@ public class CavesBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile ) {
+	public String tileDesc( Terrain tile ) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CavesLevel.class, "entrance_desc");

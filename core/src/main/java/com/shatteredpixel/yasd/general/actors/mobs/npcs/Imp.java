@@ -84,7 +84,7 @@ public class Imp extends NPC {
 	}
 	
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 	}
 	
 	@Override

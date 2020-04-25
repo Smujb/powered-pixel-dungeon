@@ -223,7 +223,7 @@ public class Potion extends Item {
 	}
 	
 	@Override
-	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
+	public boolean collect( Bag container,  Char ch) {
 		if (super.collect( container, ch)){
 			setAction();
 			return true;
@@ -451,7 +451,7 @@ public class Potion extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(@NotNull Item item) {
+		public boolean isSimilar( Item item) {
 			return ExoticPotion.regToExo.containsKey(item.getClass())
 					|| ExoticPotion.regToExo.containsValue(item.getClass());
 		}

@@ -155,7 +155,7 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		if (!beamCharged) {//Now immune when beam is charged
 			super.damage(dmg, src);
 		}
@@ -169,7 +169,7 @@ public class Eye extends Mob {
 	private static final String BEAM_CHARGED    = "beamCharged";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( BEAM_TARGET, beamTarget);
 		bundle.put( BEAM_COOLDOWN, beamCooldown );
@@ -177,7 +177,7 @@ public class Eye extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains(BEAM_TARGET))
 			beamTarget = bundle.getInt(BEAM_TARGET);

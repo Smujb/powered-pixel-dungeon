@@ -40,7 +40,6 @@ import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
@@ -151,7 +150,7 @@ public class Sungrass extends Plant {
 		private static final String LEVEL = "level";
 
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle ) {
+		public void storeInBundle( Bundle bundle ) {
 			super.storeInBundle( bundle );
 			bundle.put( POS, pos );
 			bundle.put( PARTIAL, partialHeal);
@@ -159,7 +158,7 @@ public class Sungrass extends Plant {
 		}
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle ) {
+		public void restoreFromBundle( Bundle bundle ) {
 			super.restoreFromBundle( bundle );
 			pos = bundle.getInt( POS );
 			partialHeal = bundle.getFloat( PARTIAL );

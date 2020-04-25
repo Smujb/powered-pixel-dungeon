@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
@@ -60,13 +59,13 @@ public class PinCushion extends Buff {
 	private static final String ITEMS = "items";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		bundle.put( ITEMS , items );
 		super.storeInBundle(bundle);
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		items = new ArrayList<>((Collection<MissileWeapon>) ((Collection<?>) bundle.getCollection(ITEMS)));
 		super.restoreFromBundle( bundle );
 	}

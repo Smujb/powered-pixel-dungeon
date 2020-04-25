@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
@@ -102,14 +101,14 @@ public class Momentum extends Buff {
 	private static final String TURNS_SINCE =   "turnsSinceMove";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(STACKS, stacks);
 		bundle.put(TURNS_SINCE, turnsSinceMove);
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		stacks = bundle.getInt(STACKS);
 		turnsSinceMove = bundle.getInt(TURNS_SINCE);

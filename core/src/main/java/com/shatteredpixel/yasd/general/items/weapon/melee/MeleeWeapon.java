@@ -284,13 +284,13 @@ public class MeleeWeapon extends Weapon {
 	public static String TIER = "tier";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TIER, tier);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);

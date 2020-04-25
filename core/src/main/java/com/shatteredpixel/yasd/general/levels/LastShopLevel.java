@@ -176,7 +176,7 @@ public class LastShopLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CityLevel.class, "entrance_desc");

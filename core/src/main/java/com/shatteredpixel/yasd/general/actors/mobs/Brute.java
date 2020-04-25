@@ -69,13 +69,13 @@ public class Brute extends Mob {
 	private static final String HAS_RAGED = "has_raged";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(HAS_RAGED, hasRaged);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		hasRaged = bundle.getBoolean(HAS_RAGED);
 	}
@@ -108,7 +108,7 @@ public class Brute extends Mob {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause) {
+	public void die( DamageSrc cause) {
 		super.die(cause);
 
 		if (cause.getCause() == Chasm.class){

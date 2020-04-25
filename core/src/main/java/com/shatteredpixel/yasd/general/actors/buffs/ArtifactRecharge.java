@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
@@ -98,13 +97,13 @@ public class ArtifactRecharge extends Buff {
 	private static final String LEFT = "left";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( LEFT, left );
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		left = bundle.getInt(LEFT);
 	}

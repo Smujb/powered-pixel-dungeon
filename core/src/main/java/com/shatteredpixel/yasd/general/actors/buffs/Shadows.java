@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -48,14 +47,14 @@ public class Shadows extends Invisibility {
 	}
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( LEFT, left );
 		
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		left = bundle.getFloat( LEFT );
 	}

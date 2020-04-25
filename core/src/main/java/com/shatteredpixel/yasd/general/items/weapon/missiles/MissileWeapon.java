@@ -174,13 +174,13 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	@Override
-	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
+	public boolean collect( Bag container,  Char ch) {
 		if (container instanceof MagicalHolster) holster = true;
 		return super.collect(container, ch);
 	}
 	
 	@Override
-	public int throwPos(@NotNull Char user, int dst) {
+	public int throwPos( Char user, int dst) {
 		if (hasEnchant(Projecting.class, user)
 				&& !Dungeon.level.solid(dst) && Dungeon.level.distance(user.pos, dst) <= 4){
 			return dst;
@@ -409,7 +409,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static final String DURABILITY = "durability";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(DURABILITY, durability);
 	}
@@ -417,7 +417,7 @@ abstract public class MissileWeapon extends Weapon {
 	private static boolean bundleRestoring = false;
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		bundleRestoring = true;
 		super.restoreFromBundle(bundle);
 		bundleRestoring = false;

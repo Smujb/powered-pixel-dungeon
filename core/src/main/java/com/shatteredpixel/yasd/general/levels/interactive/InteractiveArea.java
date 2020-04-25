@@ -53,7 +53,7 @@ public abstract class InteractiveArea implements Bundlable {
 		return this;
 	}
 
-	public boolean posInside(@NotNull Level level, int pos) {
+	public boolean posInside( Level level, int pos) {
 		int[] coords = level.getXY(pos);
 		int posX = coords[0];
 		int posY = coords[1];
@@ -83,7 +83,7 @@ public abstract class InteractiveArea implements Bundlable {
 	private static final String HEIGHT = "height";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		bundle.put(X, x);
 		bundle.put(Y, y);
 		bundle.put(WIDTH, width);
@@ -91,7 +91,7 @@ public abstract class InteractiveArea implements Bundlable {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		x = bundle.getInt(X);
 		y = bundle.getInt(Y);
 		width = bundle.getInt(WIDTH);

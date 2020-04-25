@@ -150,13 +150,13 @@ public class SandalsOfNature extends Artifact {
 	private static final String SEEDS = "seeds";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put(SEEDS, seeds.toArray(new Class[seeds.size()]));
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		if (level() > 0) name = Messages.get(this, "name_" + level());
 		if (bundle.contains(SEEDS))

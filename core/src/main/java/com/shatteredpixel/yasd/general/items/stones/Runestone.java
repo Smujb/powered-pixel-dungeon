@@ -78,7 +78,7 @@ public abstract class Runestone extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(@NotNull Item item) {
+		public boolean isSimilar( Item item) {
 			return item instanceof Runestone;
 		}
 		

@@ -46,7 +46,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.sprites.WardSprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -440,7 +439,7 @@ public class WandOfWarding extends DamageWand {
 		private static final String TOTAL_ZAPS = "total_zaps";
 
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(TIER, tier);
 			bundle.put(WAND_LEVEL, wandLevel);
@@ -448,7 +447,7 @@ public class WandOfWarding extends DamageWand {
 		}
 
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			tier = bundle.getInt(TIER);
 			viewDistance = 2 + tier;

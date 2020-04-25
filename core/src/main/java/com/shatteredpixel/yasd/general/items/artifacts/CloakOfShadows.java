@@ -164,13 +164,13 @@ public class CloakOfShadows extends Artifact {
 	private static final String STEALTHED = "stealthed";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( STEALTHED, stealthed );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		stealthed = bundle.getBoolean( STEALTHED );
 	}
@@ -315,14 +315,14 @@ public class CloakOfShadows extends Artifact {
 		private static final String TURNSTOCOST = "turnsToCost";
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			
 			bundle.put( TURNSTOCOST , turnsToCost);
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			
 			turnsToCost = bundle.getInt( TURNSTOCOST );

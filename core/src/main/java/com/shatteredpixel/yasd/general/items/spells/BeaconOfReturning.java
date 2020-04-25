@@ -93,7 +93,7 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	@Override
-	public void doDrop(@NotNull Hero hero) {
+	public void doDrop( Hero hero) {
 		returnDepth = -1;
 		super.doDrop(hero);
 	}
@@ -175,7 +175,7 @@ public class BeaconOfReturning extends Spell {
 	private static final String POS		= "pos";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DEPTH, returnDepth );
 		if (returnDepth != -1) {
@@ -184,7 +184,7 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		returnDepth	= bundle.getInt( DEPTH );
 		returnPos	= bundle.getInt( POS );

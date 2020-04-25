@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.sprites.GolemSprite;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
@@ -77,7 +76,7 @@ public class Golem extends Mob {
 	private static final String ENEMY_COOLDOWN = "vent_cooldown";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TELEPORTING, teleporting);
 		bundle.put(SELF_COOLDOWN, selfTeleCooldown);
@@ -85,7 +84,7 @@ public class Golem extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		teleporting = bundle.getBoolean( TELEPORTING );
 		selfTeleCooldown = bundle.getInt( SELF_COOLDOWN );

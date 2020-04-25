@@ -112,7 +112,7 @@ public class Yog extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 
 		HashSet<Mob> fists = new HashSet<>();
 
@@ -158,7 +158,7 @@ public class Yog extends Mob {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 
 		for (Mob mob : (Iterable<Mob>)Dungeon.level.mobs.clone()) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist) {
@@ -203,7 +203,7 @@ public class Yog extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}
@@ -273,7 +273,7 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, @NotNull DamageSrc src) {
+		public void damage(int dmg,  DamageSrc src) {
 			super.damage(dmg, src);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);
@@ -324,7 +324,7 @@ public class Yog extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, @NotNull DamageSrc src) {
+		public void damage(int dmg,  DamageSrc src) {
 			super.damage(dmg, src);
 			LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 			if (lock != null) lock.addTime(dmg*0.5f);

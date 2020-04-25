@@ -40,7 +40,6 @@ import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.items.food.SmallRation;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.SwarmSprite;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -71,13 +70,13 @@ public class Swarm extends Mob {
 	private static final String GENERATION	= "generation";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( GENERATION, generation );
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		generation = bundle.getInt( GENERATION );
 		if (generation > 0) EXP = 0;

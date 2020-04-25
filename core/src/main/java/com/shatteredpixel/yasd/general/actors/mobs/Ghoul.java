@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.GhoulSprite;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -62,13 +61,13 @@ public class Ghoul extends Mob {
 	private static final String PARTNER_ID = "partner_id";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( PARTNER_ID, partnerID );
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		partnerID = bundle.getInt( PARTNER_ID );
 	}

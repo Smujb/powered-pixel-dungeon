@@ -123,7 +123,7 @@ public class YASDAction extends GameAction {
 		defaultBindings.put( Input.Keys.NUMPAD_7,    YASDAction.NW );
 	}
 
-	@NotNull
+
 	@Contract(" -> new")
 	public static LinkedHashMap<Integer, GameAction> getDefaults() {
 		return new LinkedHashMap<>(defaultBindings);

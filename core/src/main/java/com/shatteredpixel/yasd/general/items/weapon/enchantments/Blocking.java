@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -93,13 +92,13 @@ public class Blocking extends Weapon.Enchantment {
 		private static final String BLOCKING = "blocking";
 		
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(BLOCKING, blocking);
 		}
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			blocking = bundle.getInt(BLOCKING);
 		}

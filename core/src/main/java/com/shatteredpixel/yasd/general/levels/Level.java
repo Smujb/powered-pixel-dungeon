@@ -539,7 +539,7 @@ public abstract class Level implements Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
 		
@@ -648,7 +648,7 @@ public abstract class Level implements Bundlable {
 	}
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		bundle.put( VERSION, Game.versionCode );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );
@@ -1338,7 +1338,7 @@ public abstract class Level implements Bundlable {
 		return result;
 	}
 	
-	public void occupyCell(@NotNull Char ch ){
+	public void occupyCell( Char ch ){
 		if (!ch.isImmune(Web.class) && Blob.volumeAt(ch.pos, Web.class) > 0){
 			blobs.get(Web.class).clear(ch.pos);
 			Web.affectChar( ch );
@@ -1425,7 +1425,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 	
-	public void updateFieldOfView(@NotNull Char c, boolean[] fieldOfView ) {
+	public void updateFieldOfView( Char c, boolean[] fieldOfView ) {
 
 		int cx = c.pos % width();
 		int cy = c.pos / width();
@@ -1652,7 +1652,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 	
-	public String tileDesc(@NotNull Terrain tile ) {
+	public String tileDesc( Terrain tile ) {
 		
 		switch (tile) {
 			case CHASM:

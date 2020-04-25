@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PointF;
 
@@ -54,14 +53,14 @@ public class Bleeding extends Buff {
 	private static final String LEVEL	= "level";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( LEVEL, level );
 		
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		level = bundle.getFloat( LEVEL );
 	}

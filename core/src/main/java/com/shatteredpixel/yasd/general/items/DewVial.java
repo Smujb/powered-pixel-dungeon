@@ -65,13 +65,13 @@ public class DewVial extends Item {
 	private static final String VOLUME	= "volume";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( VOLUME, volume );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		volume	= bundle.getInt( VOLUME );
 	}

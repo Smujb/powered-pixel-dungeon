@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class Charm extends FlavourBuff {
@@ -44,13 +43,13 @@ public class Charm extends FlavourBuff {
 	}
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( OBJECT, object );
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		object = bundle.getInt( OBJECT );
 	}

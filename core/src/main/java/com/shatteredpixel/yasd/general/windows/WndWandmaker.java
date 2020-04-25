@@ -95,7 +95,7 @@ public class WndWandmaker extends Window {
 		resize(WIDTH, (int) btnWand2.bottom());
 	}
 	
-	private void selectReward(Wandmaker wandmaker, @NotNull Item item, @NotNull Wand reward ) {
+	private void selectReward(Wandmaker wandmaker,  Item item,  Wand reward ) {
 		
 		hide();
 		

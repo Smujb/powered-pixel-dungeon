@@ -38,7 +38,6 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class AcidPool extends Blob {
@@ -62,13 +61,13 @@ public class AcidPool extends Blob {
     private static final String TERRAIN = "terrain";
 
     @Override
-    public void storeInBundle(@NotNull Bundle bundle) {
+    public void storeInBundle( Bundle bundle) {
         bundle.put(DAMAGE,damageOnStep);
         super.storeInBundle(bundle);
     }
 
     @Override
-    public void restoreFromBundle(@NotNull Bundle bundle) {
+    public void restoreFromBundle( Bundle bundle) {
         damageOnStep = bundle.getInt(DAMAGE);
         super.restoreFromBundle(bundle);
     }

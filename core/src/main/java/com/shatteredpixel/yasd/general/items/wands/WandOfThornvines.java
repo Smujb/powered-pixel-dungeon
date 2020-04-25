@@ -44,7 +44,6 @@ import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.sprites.ThornVineSprite;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.ColorMath;
@@ -118,14 +117,14 @@ public class WandOfThornvines extends Wand {
         }
 
         @Override
-        public void storeInBundle(@NotNull Bundle bundle) {
+        public void storeInBundle( Bundle bundle) {
             bundle.put(LEVEL, level);
             bundle.put(CHARGES, charges);
             super.storeInBundle(bundle);
         }
 
         @Override
-        public void restoreFromBundle(@NotNull Bundle bundle) {
+        public void restoreFromBundle( Bundle bundle) {
             level = bundle.getInt(LEVEL);
             charges = bundle.getInt(CHARGES);
             super.restoreFromBundle(bundle);

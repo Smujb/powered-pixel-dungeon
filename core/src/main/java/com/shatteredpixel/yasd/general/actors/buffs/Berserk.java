@@ -37,7 +37,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -60,7 +59,7 @@ public class Berserk extends Buff {
 	private static final String POWER = "power";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(STATE, state);
 		bundle.put(POWER, power);
@@ -68,7 +67,7 @@ public class Berserk extends Buff {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		//pre-0.6.5 saves
 		if (bundle.contains("exhaustion")){

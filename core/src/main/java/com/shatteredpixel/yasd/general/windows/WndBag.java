@@ -341,7 +341,7 @@ public class WndBag extends WndTabbed {
 		}
 		
 		@Override
-		public boolean isEquipped(@NotNull Char hero ) {
+		public boolean isEquipped( Char hero ) {
 			return true;
 		}
 	}

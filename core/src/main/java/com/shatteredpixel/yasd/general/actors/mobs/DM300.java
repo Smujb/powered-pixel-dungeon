@@ -145,14 +145,14 @@ public class DM300 extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		super.damage(dmg, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null && !isImmune(src.getClass())) lock.addTime(dmg*1.5f);
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		super.die( cause );
 		
@@ -201,7 +201,7 @@ public class DM300 extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 	}

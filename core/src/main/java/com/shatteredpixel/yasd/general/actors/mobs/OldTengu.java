@@ -97,7 +97,7 @@ public class OldTengu extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		
 		OldPrisonBossLevel.State state = ((OldPrisonBossLevel)Dungeon.level).state();
 		
@@ -156,7 +156,7 @@ public class OldTengu extends Mob {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		if (Dungeon.hero.subClass == HeroSubClass.NONE) {
 			Dungeon.level.drop( new  TomeOfMastery(), pos ).sprite.drop();
@@ -269,7 +269,7 @@ public class OldTengu extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 		if (HP <= HT/2) BossHealthBar.bleed(true);

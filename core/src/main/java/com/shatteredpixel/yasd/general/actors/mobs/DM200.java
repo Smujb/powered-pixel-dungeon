@@ -37,7 +37,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.DM200Sprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -71,13 +70,13 @@ public class DM200 extends Mob {
 	private static final String VENT_COOLDOWN = "vent_cooldown";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(VENT_COOLDOWN, ventCooldown);
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		ventCooldown = bundle.getInt( VENT_COOLDOWN );
 	}

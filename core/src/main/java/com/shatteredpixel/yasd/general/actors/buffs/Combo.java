@@ -47,7 +47,6 @@ import com.shatteredpixel.yasd.general.ui.ActionIndicator;
 import com.shatteredpixel.yasd.general.ui.AttackIndicator;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
@@ -141,7 +140,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 	private static final String MISSES= "misses";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(COUNT, count);
 		bundle.put(TIME, comboTime);
@@ -149,7 +148,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		count = bundle.getInt( COUNT );
 		if (count >= 2) ActionIndicator.setAction(this);

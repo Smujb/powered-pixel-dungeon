@@ -86,13 +86,13 @@ public class King extends Mob {
 	private static final String PEDESTAL = "pedestal";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( PEDESTAL, nextPedestal );
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		nextPedestal = bundle.getBoolean( PEDESTAL );
 		BossHealthBar.assignBoss(this);
@@ -135,14 +135,14 @@ public class King extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		super.damage(dmg, src);
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) lock.addTime(dmg);
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 
 		GameScene.bossSlain();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.key ), pos ).sprite.drop();
@@ -299,7 +299,7 @@ public class King extends Mob {
 		}
 		
 		@Override
-		public void die(@NotNull DamageSrc cause ) {
+		public void die( DamageSrc cause ) {
 			super.die( cause );
 			
 			if (Dungeon.level.heroFOV[pos]) {

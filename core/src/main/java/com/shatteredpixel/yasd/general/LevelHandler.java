@@ -55,7 +55,7 @@ public class LevelHandler {
 	public static int depth;
 	public static String key;
 
-	@NotNull
+
 	public static String filename(String key, int slot) {
 		return GamesInProgress.slotFolder(slot) + "/" + key + ".dat";
 	}
@@ -81,7 +81,7 @@ public class LevelHandler {
 	}
 	private static Mode mode;
 	
-	@NotNull
+
 	@Contract(" -> new")
 	private static Thread getThread() {
 		return new Thread() {

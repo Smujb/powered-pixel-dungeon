@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public abstract class ShieldBuff extends Buff {
@@ -97,13 +96,13 @@ public abstract class ShieldBuff extends Buff {
 	private static final String SHIELDING = "shielding";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( SHIELDING, shielding);
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		shielding = bundle.getInt( SHIELDING );
 	}

@@ -85,7 +85,7 @@ public class LloydsBeacon extends Artifact {
 	private static final String POS		= "pos";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( DEPTH, returnDepth );
 		if (returnDepth != -1) {
@@ -94,7 +94,7 @@ public class LloydsBeacon extends Artifact {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		returnDepth	= bundle.getInt( DEPTH );
 		returnPos	= bundle.getInt( POS );

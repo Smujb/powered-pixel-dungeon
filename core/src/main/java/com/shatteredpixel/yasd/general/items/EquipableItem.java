@@ -82,7 +82,7 @@ public abstract class EquipableItem extends Item {
 	}
 
 	@Override
-	public void doDrop(@NotNull Hero hero) {
+	public void doDrop( Hero hero) {
 		if (!isEquipped(hero) || doUnequip(hero, false, false)) {
 			super.doDrop(hero);
 		}

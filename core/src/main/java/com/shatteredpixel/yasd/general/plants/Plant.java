@@ -86,12 +86,12 @@ public abstract class Plant implements Bundlable {
 	private static final String POS	= "pos";
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		pos = bundle.getInt( POS );
 	}
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		bundle.put( POS, pos );
 	}
 	
@@ -199,7 +199,7 @@ public abstract class Plant implements Bundlable {
 			}
 			
 			@Override
-			public boolean isSimilar(@NotNull Item item) {
+			public boolean isSimilar( Item item) {
 				return item instanceof Plant.Seed;
 			}
 			

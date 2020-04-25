@@ -111,7 +111,7 @@ public class GnollTrickster extends Gnoll {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		super.die( cause );
 
 		Ghost.Quest.process();
@@ -120,13 +120,13 @@ public class GnollTrickster extends Gnoll {
 	private static final String COMBO = "combo";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put(COMBO, combo);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		combo = bundle.getInt( COMBO );
 	}

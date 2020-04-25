@@ -116,7 +116,7 @@ public class OldPrisonBossLevel extends Level {
 	private static final String STORED_ITEMS    = "storeditems";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( STATE, state );
 		bundle.put( TENGU, tengu );
@@ -124,7 +124,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		state = bundle.getEnum( STATE, State.class );
 
@@ -207,7 +207,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell(@NotNull Char ch ) {
+	public void occupyCell( Char ch ) {
 		
 		super.occupyCell( ch );
 
@@ -247,7 +247,7 @@ public class OldPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");

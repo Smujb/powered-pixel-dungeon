@@ -73,7 +73,7 @@ public class Piranha extends WaterMob {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		super.die( cause );
 		
 		Statistics.piranhasKilled++;

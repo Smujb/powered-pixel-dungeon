@@ -79,7 +79,7 @@ public class Skeleton extends Mob {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		super.die( cause );
 		

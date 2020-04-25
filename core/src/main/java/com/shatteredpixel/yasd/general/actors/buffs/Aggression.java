@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 
@@ -45,12 +44,12 @@ public class Aggression extends FlavourBuff {
     }
 
     @Override
-    public void storeInBundle(@NotNull Bundle bundle) {
+    public void storeInBundle( Bundle bundle) {
         super.storeInBundle(bundle);
     }
 
     @Override
-    public void restoreFromBundle(@NotNull Bundle bundle) {
+    public void restoreFromBundle( Bundle bundle) {
         super.restoreFromBundle(bundle);
     }
 

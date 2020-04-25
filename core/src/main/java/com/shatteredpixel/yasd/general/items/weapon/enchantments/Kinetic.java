@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
@@ -115,13 +114,13 @@ public class Kinetic extends Weapon.Enchantment {
 		private static final String PRESERVED_DAMAGE = "preserve_damage";
 		
 		@Override
-		public void storeInBundle(@NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(PRESERVED_DAMAGE, preservedDamage);
 		}
 		
 		@Override
-		public void restoreFromBundle(@NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			if (bundle.contains(PRESERVED_DAMAGE)){
 				preservedDamage = bundle.getFloat(PRESERVED_DAMAGE);

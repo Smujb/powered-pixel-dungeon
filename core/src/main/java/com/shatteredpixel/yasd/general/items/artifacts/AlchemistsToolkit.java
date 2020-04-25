@@ -162,13 +162,13 @@ public class AlchemistsToolkit extends Artifact {
 	private static final String READY = "ready";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(READY, alchemyReady);
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		alchemyReady = bundle.getBoolean(READY);
 	}

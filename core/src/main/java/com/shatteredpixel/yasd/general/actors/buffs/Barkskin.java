@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class Barkskin extends Buff {
@@ -91,14 +90,14 @@ public class Barkskin extends Buff {
 	private static final String INTERVAL    = "interval";
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( INTERVAL, interval );
 		bundle.put( LEVEL, level );
 	}
 	
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		interval = bundle.getInt( INTERVAL );
 		level = bundle.getInt( LEVEL );

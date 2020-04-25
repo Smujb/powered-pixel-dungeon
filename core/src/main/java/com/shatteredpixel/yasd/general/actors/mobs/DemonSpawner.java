@@ -104,7 +104,7 @@ public class DemonSpawner extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		if (dmg >= 25){
 			//takes 25/26/27/28/29/30/31/32/33/34/35 dmg
 			// at   25/27/30/34/39/45/52/60/69/79/90 incoming dmg

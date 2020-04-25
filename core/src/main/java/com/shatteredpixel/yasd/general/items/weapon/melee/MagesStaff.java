@@ -187,7 +187,7 @@ public class MagesStaff extends MeleeWeapon {
 	}
 
 	@Override
-	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
+	public boolean collect( Bag container,  Char ch) {
 		if (super.collect(container, ch)) {
 			if (container.owner != null && wand != null) {
 				wand.charge(container.owner, STAFF_SCALE_FACTOR);
@@ -315,13 +315,13 @@ public class MagesStaff extends MeleeWeapon {
 	private static final String WAND = "wand";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(WAND, wand);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		wand = (Wand) bundle.get(WAND);
 		if (wand != null) {

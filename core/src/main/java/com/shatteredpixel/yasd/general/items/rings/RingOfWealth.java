@@ -70,14 +70,14 @@ public class RingOfWealth extends Ring {
 	private static final String DROPS_TO_RARE = "drops_to_rare";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TRIES_TO_DROP, triesToDrop);
 		bundle.put(DROPS_TO_RARE, dropsToRare);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		triesToDrop = bundle.getFloat(TRIES_TO_DROP);
 		dropsToRare = bundle.getInt(DROPS_TO_RARE);

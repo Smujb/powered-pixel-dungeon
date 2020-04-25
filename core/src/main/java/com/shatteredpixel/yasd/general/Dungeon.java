@@ -324,7 +324,7 @@ public class Dungeon {
 		return key;
 	}
 	
-	public static Level newLevel(@NotNull String key, boolean create
+	public static Level newLevel( String key, boolean create
 			/*Allows me to use newLevel without switching to that level.
 			Also increases performance when the level isn't actually going to be used.*/) {
 

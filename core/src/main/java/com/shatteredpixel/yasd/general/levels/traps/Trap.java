@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.sun.istack.internal.NotNull;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -118,7 +117,7 @@ public abstract class Trap implements Bundlable {
 	private static final String ACTIVE = "active";
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		pos = bundle.getInt( POS );
 		visible = bundle.getBoolean( VISIBLE );
 		if (bundle.contains(ACTIVE)){
@@ -127,7 +126,7 @@ public abstract class Trap implements Bundlable {
 	}
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		bundle.put( POS, pos );
 		bundle.put( VISIBLE, visible );
 		bundle.put( ACTIVE, active );

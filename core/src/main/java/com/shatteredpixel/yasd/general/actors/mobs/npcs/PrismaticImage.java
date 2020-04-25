@@ -118,7 +118,7 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause) {
+	public void die( DamageSrc cause) {
 		if (deathTimer == -1) {
 			if (cause.getCause() == Chasm.class){
 				super.die( cause );
@@ -133,14 +133,14 @@ public class PrismaticImage extends NPC {
 	private static final String TIMER	= "timer";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( HEROID, heroID );
 		bundle.put( TIMER, deathTimer );
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		heroID = bundle.getInt( HEROID );
 		deathTimer = bundle.getInt( TIMER );

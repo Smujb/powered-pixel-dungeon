@@ -191,13 +191,13 @@ public class UnstableSpellbook extends Artifact {
 		}
 
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( "scroll", scroll );
 		}
 
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			scroll = (Scroll)bundle.get("scroll");
 		}
@@ -258,13 +258,13 @@ public class UnstableSpellbook extends Artifact {
 	private static final String SCROLLS =   "scrolls";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( SCROLLS, scrolls.toArray(new Class[scrolls.size()]) );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		scrolls.clear();
 		Collections.addAll(scrolls, bundle.getClassArray(SCROLLS));

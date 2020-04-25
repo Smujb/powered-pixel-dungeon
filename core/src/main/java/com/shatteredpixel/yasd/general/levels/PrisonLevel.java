@@ -200,7 +200,7 @@ public class PrisonLevel extends RegularLevel {
 	}
 
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");

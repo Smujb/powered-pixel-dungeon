@@ -129,7 +129,7 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean isEquipped(@NotNull Char owner ) {
+	public boolean isEquipped( Char owner ) {
 		for (int i = 0; i < Constants.MISC_SLOTS; i++) {
 			if (owner.belongings.miscs[i] == this) {
 				return true;

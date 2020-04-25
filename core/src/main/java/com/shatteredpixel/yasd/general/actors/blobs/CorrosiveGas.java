@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class CorrosiveGas extends Blob {
@@ -82,13 +81,13 @@ public class CorrosiveGas extends Blob {
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		strength = bundle.getInt( STRENGTH );
 	}
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( STRENGTH, strength );
 	}

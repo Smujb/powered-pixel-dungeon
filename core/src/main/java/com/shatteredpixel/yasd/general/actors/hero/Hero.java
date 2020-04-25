@@ -345,7 +345,7 @@ public class Hero extends Char {
 	private static final String DISTRIBUTIONPOINTS  = "distribution-points";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 
 		super.storeInBundle( bundle );
 		
@@ -375,7 +375,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		
 		heroClass = HeroClass.restoreInBundle( bundle );
@@ -647,7 +647,7 @@ public class Hero extends Char {
 		}
 	}
 
-	private boolean actInteractCell(@NotNull HeroAction.InteractCell action ) {
+	private boolean actInteractCell( HeroAction.InteractCell action ) {
 		int dst = action.dst;
 		InteractiveArea area = action.area;
 		if (area.posInside(Dungeon.level, pos)) {
@@ -665,7 +665,7 @@ public class Hero extends Char {
 
 	}
 	
-	private boolean actInteract(@NotNull HeroAction.Interact action ) {
+	private boolean actInteract( HeroAction.Interact action ) {
 		
 		Char ch = action.ch;
 
@@ -689,7 +689,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actBuy(@NotNull HeroAction.Buy action ) {
+	private boolean actBuy( HeroAction.Buy action ) {
 		int dst = action.dst;
 		//May change back, but I think making it consistent is a good move
 		//if (pos == dst || Dungeon.level.adjacent( pos, dst )) {
@@ -889,7 +889,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	/*private boolean actDescend(@NotNull HeroAction.Descend action ) {
+	/*private boolean actDescend( HeroAction.Descend action ) {
 		int stairs = action.dst;
 		if (pos == stairs) {
 			
@@ -1069,7 +1069,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		if (!(src.getCause() instanceof Hunger || src.getCause() instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
 			resting = false;
@@ -1422,7 +1422,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause  ) {
+	public void die( DamageSrc cause  ) {
 		
 		curAction = null;
 

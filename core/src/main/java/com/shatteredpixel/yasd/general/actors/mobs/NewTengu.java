@@ -121,7 +121,7 @@ public class NewTengu extends Mob {
 	}*/
 	
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;
@@ -179,7 +179,7 @@ public class NewTengu extends Mob {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		if (Dungeon.hero.subClass == HeroSubClass.NONE) {
 			Dungeon.level.drop( new TomeOfMastery(), pos ).sprite.drop();
@@ -319,7 +319,7 @@ public class NewTengu extends Mob {
 	private static final String ABILITY_COOLDOWN = "ability_cooldown";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( LAST_ABILITY, lastAbility );
 		bundle.put( ABILITIES_USED, abilitiesUsed );
@@ -328,7 +328,7 @@ public class NewTengu extends Mob {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		lastAbility = bundle.getInt( LAST_ABILITY );
 		abilitiesUsed = bundle.getInt( ABILITIES_USED );
@@ -574,14 +574,14 @@ public class NewTengu extends Mob {
 		private static final String TIMER = "timer";
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( BOMB_POS, bombPos );
 			bundle.put( TIMER, timer );
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			bombPos = bundle.getInt( BOMB_POS );
 			timer = bundle.getInt( TIMER );
@@ -771,14 +771,14 @@ public class NewTengu extends Mob {
 		private static final String CUR_CELLS = "cur_cells";
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( DIRECTION, direction );
 			bundle.put( CUR_CELLS, curCells );
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			direction = bundle.getInt( DIRECTION );
 			curCells = bundle.getIntArray( CUR_CELLS );
@@ -952,14 +952,14 @@ public class NewTengu extends Mob {
 		private static final String SHOCKING_ORDINALS = "shocking_ordinals";
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void storeInBundle( Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( SHOCKER_POS, shockerPos );
 			bundle.put( SHOCKING_ORDINALS, shockingOrdinals );
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			shockerPos = bundle.getInt( SHOCKER_POS );
 			shockingOrdinals = bundle.getBoolean( SHOCKING_ORDINALS );

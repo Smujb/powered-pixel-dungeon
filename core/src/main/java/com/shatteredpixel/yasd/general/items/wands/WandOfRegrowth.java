@@ -284,13 +284,13 @@ public class WandOfRegrowth extends Wand {
 	private static final String TOTAL = "totChrgUsed";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( TOTAL, totChrgUsed );
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		totChrgUsed = bundle.getInt(TOTAL);
 	}

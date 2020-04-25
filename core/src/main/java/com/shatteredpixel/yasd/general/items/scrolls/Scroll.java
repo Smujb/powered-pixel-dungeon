@@ -175,7 +175,7 @@ public abstract class Scroll extends Item {
 	}
 	
 	@Override
-	public void execute( @NotNull Hero hero, String action ) {
+	public void execute(  Hero hero, String action ) {
 
 		super.execute( hero, action );
 
@@ -286,7 +286,7 @@ public abstract class Scroll extends Item {
 		}
 		
 		@Override
-		public boolean isSimilar(@NotNull Item item) {
+		public boolean isSimilar( Item item) {
 			return ExoticScroll.regToExo.containsKey(item.getClass())
 					|| ExoticScroll.regToExo.containsValue(item.getClass());
 		}

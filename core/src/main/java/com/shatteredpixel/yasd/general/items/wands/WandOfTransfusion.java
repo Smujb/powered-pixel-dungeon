@@ -190,13 +190,13 @@ public class WandOfTransfusion extends Wand {
 	private static final String FREECHARGE = "freecharge";
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		freeCharge = bundle.getBoolean( FREECHARGE );
 	}
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( FREECHARGE, freeCharge );
 	}

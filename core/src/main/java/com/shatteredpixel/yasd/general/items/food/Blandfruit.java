@@ -76,7 +76,7 @@ public class Blandfruit extends Food {
 	}
 
 	@Override
-	public boolean isSimilar(@NotNull Item item ) {
+	public boolean isSimilar( Item item ) {
 		if ( super.isSimilar(item) ){
 			Blandfruit other = (Blandfruit) item;
 			if (potionAttrib == null && other.potionAttrib == null) {
@@ -212,13 +212,13 @@ public class Blandfruit extends Food {
 	}
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle){
+	public void storeInBundle(  Bundle bundle){
 		super.storeInBundle(bundle);
 		bundle.put( POTIONATTRIB , potionAttrib);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains(POTIONATTRIB)) {
 			imbuePotion((Potion) bundle.get(POTIONATTRIB));

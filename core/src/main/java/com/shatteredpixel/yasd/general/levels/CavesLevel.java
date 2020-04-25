@@ -207,7 +207,7 @@ public class CavesLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile ) {
+	public String tileDesc( Terrain tile ) {
 		switch (tile) {
 			case ENTRANCE:
 				return Messages.get(CavesLevel.class, "entrance_desc");

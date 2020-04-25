@@ -88,7 +88,7 @@ public class MysteryMeat extends Food {
 		}
 		
 		@Override
-		public boolean isSimilar(@NotNull Item item) {
+		public boolean isSimilar( Item item) {
 			return item instanceof MysteryMeat || item instanceof StewedMeat
 					|| item instanceof ChargrilledMeat || item instanceof FrozenCarpaccio;
 		}

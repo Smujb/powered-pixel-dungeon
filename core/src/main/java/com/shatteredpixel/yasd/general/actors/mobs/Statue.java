@@ -229,7 +229,7 @@ public class Statue extends Mob implements Callback {
 	}
 	
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 
 		if (state == PASSIVE) {
 			state = HUNTING;
@@ -276,7 +276,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		dropGear();
 		super.die( cause );
 	}
@@ -307,14 +307,14 @@ public class Statue extends Mob implements Callback {
 	private static final String ANKHS = "ankhs";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		belongings.storeInBundle(bundle);
 		bundle.put(ANKHS, ankhs);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		belongings.restoreFromBundle(bundle);
 		ankhs = bundle.getInt(ANKHS);

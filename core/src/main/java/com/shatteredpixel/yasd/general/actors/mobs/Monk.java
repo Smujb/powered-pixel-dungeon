@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MonkSprite;
 import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -131,12 +130,12 @@ public class Monk extends Mob {
 	private static String FOCUS_COOLDOWN = "focus_cooldown";
 
 
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( FOCUS_COOLDOWN, focusCooldown );
 	}
 
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		focusCooldown = bundle.getInt( FOCUS_COOLDOWN );
 	}

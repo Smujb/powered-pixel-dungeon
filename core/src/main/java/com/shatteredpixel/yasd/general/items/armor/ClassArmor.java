@@ -29,12 +29,9 @@ package com.shatteredpixel.yasd.general.items.armor;
 
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -60,13 +57,13 @@ abstract public class ClassArmor extends Armor {
 	private static final String ARMOR_TIER	= "armortier";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( ARMOR_TIER, armorTier );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		
 		armorTier = bundle.getInt( ARMOR_TIER );

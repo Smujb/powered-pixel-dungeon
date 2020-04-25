@@ -128,7 +128,7 @@ public abstract class Mob extends Char {
 	private static final String LEVEL	= "level";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		
 		super.storeInBundle( bundle );
 
@@ -149,7 +149,7 @@ public abstract class Mob extends Char {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		
 		super.restoreFromBundle( bundle );
 
@@ -799,7 +799,7 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 
 		if (state == SLEEPING) {
 			state = WANDERING;
@@ -837,7 +837,7 @@ public abstract class Mob extends Char {
 	}
 	
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		if (hitWithRanged){
 			Statistics.thrownAssists++;

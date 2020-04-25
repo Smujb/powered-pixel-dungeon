@@ -148,7 +148,7 @@ public enum HeroClass {
 		return null;
 	}
 
-	private static void initWarrior(@NotNull Hero hero ) {
+	private static void initWarrior( Hero hero ) {
 		(hero.belongings.miscs[0] = new Basic()).identify();
 		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -166,7 +166,7 @@ public enum HeroClass {
 		hero.STR();
 	}
 
-	private static void initMage(@NotNull Hero hero ) {
+	private static void initMage( Hero hero ) {
 		MagesStaff staff;
 		
 		staff = new MagesStaff(new WandOfMagicMissile());
@@ -185,7 +185,7 @@ public enum HeroClass {
 		hero.setFocus(5);
 	}
 
-	private static void initRogue(@NotNull Hero hero ) {
+	private static void initRogue( Hero hero ) {
 		(hero.belongings.miscs[0] = new Sneak()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 		//TODO Add another unique item for Rogue
@@ -207,7 +207,7 @@ public enum HeroClass {
 		hero.setEvasion(5);
 	}
 
-	private static void initHuntress(@NotNull Hero hero ) {
+	private static void initHuntress( Hero hero ) {
 
 		(hero.belongings.miscs[0] = new Fist()).identify();
 		(hero.belongings.miscs[1] = new HuntressArmor()).identify();

@@ -55,7 +55,7 @@ public class Slime extends Mob {
 	}
 	
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		float threshold = HT/3f;
 		if (dmg >= threshold){
 			dmg = (int) ((threshold-1) + Math.sqrt((24/threshold)*(dmg - (threshold-1)) + 1) - 1)/2;

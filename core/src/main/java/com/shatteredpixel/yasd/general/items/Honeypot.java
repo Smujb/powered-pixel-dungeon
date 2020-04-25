@@ -175,7 +175,7 @@ public class Honeypot extends Item {
 		}
 
 		@Override
-		public void doDrop(@NotNull Hero hero) {
+		public void doDrop( Hero hero) {
 			super.doDrop(hero);
 			dropPot(hero, hero.pos);
 		}

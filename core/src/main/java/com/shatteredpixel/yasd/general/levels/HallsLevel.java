@@ -229,7 +229,7 @@ public class HallsLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");

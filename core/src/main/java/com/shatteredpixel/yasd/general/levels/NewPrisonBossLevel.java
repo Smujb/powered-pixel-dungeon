@@ -137,7 +137,7 @@ public class NewPrisonBossLevel extends Level {
 	private static final String TRIGGERED       = "triggered";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( STATE, state );
 		bundle.put( TENGU, tengu );
@@ -146,7 +146,7 @@ public class NewPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		state = bundle.getEnum( STATE, State.class );
 		
@@ -572,7 +572,7 @@ public class NewPrisonBossLevel extends Level {
 	private boolean[] triggered = new boolean[]{false, false, false, false};
 	
 	@Override
-	public void occupyCell(@NotNull Char ch) {
+	public void occupyCell( Char ch) {
 		super.occupyCell(ch);
 		
 		if (ch == Dungeon.hero){
@@ -748,7 +748,7 @@ public class NewPrisonBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(PrisonLevel.class, "empty_deco_desc");
@@ -897,7 +897,7 @@ public class NewPrisonBossLevel extends Level {
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			tileX = 11;
 			tileY = 10;
@@ -954,7 +954,7 @@ public class NewPrisonBossLevel extends Level {
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+		public void restoreFromBundle( Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			tileX = 11;
 			tileY = 10;

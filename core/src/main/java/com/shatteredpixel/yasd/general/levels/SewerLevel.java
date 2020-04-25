@@ -202,7 +202,7 @@ public class SewerLevel extends RegularLevel {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(SewerLevel.class, "empty_deco_desc");

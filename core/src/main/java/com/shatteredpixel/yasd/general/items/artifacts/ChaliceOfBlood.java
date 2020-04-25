@@ -140,7 +140,7 @@ public class ChaliceOfBlood extends Artifact {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (level() >= 7) image = ItemSpriteSheet.ARTIFACT_CHALICE3;
 		else if (level() >= 3) image = ItemSpriteSheet.ARTIFACT_CHALICE2;

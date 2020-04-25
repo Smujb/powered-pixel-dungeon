@@ -92,7 +92,7 @@ public class TestBossLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell(@NotNull Char ch) {
+	public void occupyCell( Char ch) {
 		super.occupyCell(ch);
 		int cell = ch.pos;
 		if (ch == Dungeon.hero && insideRoom(cell) && !bossSpawned) {
@@ -144,7 +144,7 @@ public class TestBossLevel extends Level {
 	}
 
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case EMPTY_DECO:
 				return Messages.get(SewerLevel.class, "empty_deco_desc");
@@ -179,13 +179,13 @@ public class TestBossLevel extends Level {
 	}
 	public static final String BOSS = "boss";
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(BOSS, bossSpawned);
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		bossSpawned = bundle.getBoolean(BOSS);
 	}

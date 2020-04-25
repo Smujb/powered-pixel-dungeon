@@ -236,7 +236,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		if (!BossHealthBar.isAssigned()){
 			BossHealthBar.assignBoss( this );
 		}
@@ -253,7 +253,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		
 		super.die( cause );
 		
@@ -295,7 +295,7 @@ public class Goo extends Mob {
 	private final String PUMPEDUP = "pumpedup";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 
 		super.storeInBundle( bundle );
 
@@ -303,7 +303,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 
 		super.restoreFromBundle( bundle );
 

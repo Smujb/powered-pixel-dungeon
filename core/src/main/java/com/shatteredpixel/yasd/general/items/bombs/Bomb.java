@@ -88,7 +88,7 @@ public class Bomb extends Item {
 	private static final String AC_LIGHTTHROW = "LIGHTTHROW";
 
 	@Override
-	public boolean isSimilar(@NotNull Item item) {
+	public boolean isSimilar( Item item) {
 		return super.isSimilar(item) && this.fuse == ((Bomb) item).fuse;
 	}
 	
@@ -250,13 +250,13 @@ public class Bomb extends Item {
 	private static final String FUSE = "fuse";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put( FUSE, fuse );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		if (bundle.contains( FUSE ))
 			Actor.add( fuse = ((Fuse)bundle.get(FUSE)).ignite(this) );

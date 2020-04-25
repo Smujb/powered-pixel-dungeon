@@ -135,7 +135,7 @@ public class Armor extends KindofMisc {
 	private static final String TIER = "tier";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( USES_LEFT_TO_ID, usesLeftToID );
 		bundle.put( AVAILABLE_USES, availableUsesToID );
@@ -147,7 +147,7 @@ public class Armor extends KindofMisc {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		usesLeftToID = bundle.getInt( USES_LEFT_TO_ID );
 		availableUsesToID = bundle.getInt( AVAILABLE_USES );
@@ -635,11 +635,11 @@ public class Armor extends KindofMisc {
 		}
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+		public void restoreFromBundle( Bundle bundle ) {
 		}
 
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+		public void storeInBundle( Bundle bundle ) {
 		}
 		
 		public abstract ItemSprite.Glowing glowing();

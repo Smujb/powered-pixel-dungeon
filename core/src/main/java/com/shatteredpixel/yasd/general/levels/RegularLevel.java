@@ -63,7 +63,6 @@ import com.shatteredpixel.yasd.general.levels.traps.ExplosiveTrap;
 import com.shatteredpixel.yasd.general.levels.traps.FrostTrap;
 import com.shatteredpixel.yasd.general.levels.traps.Trap;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -488,14 +487,14 @@ public abstract class RegularLevel extends Level {
 	}
 	
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( "rooms", rooms );
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		
 		rooms = new ArrayList<>( (Collection<Room>) ((Collection<?>) bundle.getCollection( "rooms" )) );

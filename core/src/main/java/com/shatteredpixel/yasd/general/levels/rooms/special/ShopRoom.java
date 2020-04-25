@@ -57,14 +57,6 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.FishingSpear;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.Javelin;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.Kunai;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingClub;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingHammer;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingSpear;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.Tomahawk;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.Trident;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -205,28 +197,20 @@ public class ShopRoom extends SpecialRoom {
 		ArrayList<Item> itemsToSpawn = new ArrayList<>();
 		
 		switch (Dungeon.depth) {
-		case 6:
-			itemsToSpawn.add( Random.Int( 2 ) == 0 ?
-					new FishingSpear().quantity(2) :
-					new ThrowingClub().quantity(2));
+		case 5:
+			itemsToSpawn.add( Generator.random(Generator.misTiers[1]).quantity(2).identify() );
 			break;
 			
 		case 11:
-			itemsToSpawn.add( Random.Int( 2 ) == 0 ?
-					new ThrowingSpear().quantity(2) :
-					new Kunai().quantity(2));
+			itemsToSpawn.add( Generator.random(Generator.misTiers[2]).quantity(2).identify() );
 			break;
 			
-		case 16:
-			itemsToSpawn.add( Random.Int( 2 ) == 0 ?
-					new Javelin().quantity(2) :
-					new Tomahawk().quantity(2));
+		case 17:
+			itemsToSpawn.add( Generator.random(Generator.misTiers[3]).quantity(2).identify() );
 			break;
 			
-		case 21:
-			itemsToSpawn.add( Random.Int(2) == 0 ?
-					new Trident().quantity(2) :
-					new ThrowingHammer().quantity(2));
+		case 23:
+			itemsToSpawn.add( Generator.random(Generator.misTiers[4]).quantity(2).identify() );
 			itemsToSpawn.add( new Torch() );
 			itemsToSpawn.add( new Torch() );
 			itemsToSpawn.add( new Torch() );

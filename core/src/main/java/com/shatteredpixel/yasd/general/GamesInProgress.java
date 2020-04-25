@@ -80,7 +80,7 @@ public class GamesInProgress {
 		return Messages.format(YPOS, y);
 	}*/
 	
-	@NotNull
+
 	public static String gameFile(int slot ){
 		return slotFolder(slot) + "/" + GAME_FILE;
 	}

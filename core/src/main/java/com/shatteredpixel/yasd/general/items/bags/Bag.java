@@ -73,7 +73,7 @@ public class Bag extends Item implements Iterable<Item> {
 	}
 	
 	@Override
-	public boolean collect(@NotNull Bag container, @NotNull Char ch) {
+	public boolean collect( Bag container,  Char ch) {
 
 		for (Item item : container.items.toArray( new Item[0] )) {
 			if (grab( item )) {
@@ -131,13 +131,13 @@ public class Bag extends Item implements Iterable<Item> {
 	private static final String ITEMS	= "inventory";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( ITEMS, items );
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		for (Bundlable item : bundle.getCollection( ITEMS )) {
 			if (item != null) {

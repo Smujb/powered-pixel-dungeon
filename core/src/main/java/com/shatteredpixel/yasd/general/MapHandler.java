@@ -73,7 +73,7 @@ public class MapHandler {
 		areas = map.getLayers().get(AREAS_LAYER).getObjects();
 	}
 
-	public static boolean build(@NotNull Level level, String mapName) {
+	public static boolean build( Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		int width = tiles.getWidth();
 		int height = tiles.getHeight();
@@ -122,7 +122,7 @@ public class MapHandler {
 	private static final String KEY_LEVEL = "level";
 	private static final String NAME_MOB = "com.shatteredpixel.yasd.general.actors.mobs.";
 
-	public static void createMobs(@NotNull Level level, String mapName) {
+	public static void createMobs( Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		for (int i = 0; i < mobs.getCount(); i++) {
 			if (mobs.get(i) instanceof RectangleMapObject) {
@@ -169,7 +169,7 @@ public class MapHandler {
 	private static final String KEY_TYPE = "heapType";
 	private static final String NAME_ITEM = "com.shatteredpixel.yasd.general.items.";
 
-	public static void createItems(@NotNull Level level, String mapName) {
+	public static void createItems( Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		Dungeon.key = level.key;//Ensures keys load correctly.
 		for (int i = 0; i < items.getCount(); i++) {
@@ -218,7 +218,7 @@ public class MapHandler {
 	private static final String KEY_KEY = "key";
 	private static final String KEY_MESSAGE = "message";
 
-	public static void createAreas(@NotNull Level level, String mapName) {
+	public static void createAreas( Level level, String mapName) {
 		loadMap(new TmxMapLoader().load(mapName));
 		for (int i = 0; i < areas.getCount(); i++) {
 			if (areas.get(i) instanceof RectangleMapObject) {

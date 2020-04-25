@@ -111,7 +111,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		if (src.getCause() instanceof Tower) {
 			super.damage(dmg, src);
 			if (hint) {
@@ -164,7 +164,7 @@ public class TestBoss extends Mob {
 	private static final String HINT = "hint";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		for (int i = 0; i < towerPositions.size(); i++) {
 			bundle.put(POSITIONS+i, towerPositions.get(i));
@@ -173,7 +173,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		BossHealthBar.assignBoss(this);
 		for (int i = 0; i < towerPositions.size(); i++) {
@@ -210,7 +210,7 @@ public class TestBoss extends Mob {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 
 		super.die( cause );
 
@@ -278,7 +278,7 @@ public class TestBoss extends Mob {
 
 
 		@Override
-		public void damage(int dmg, @NotNull DamageSrc src) {
+		public void damage(int dmg,  DamageSrc src) {
 		}
 
 		@Override
@@ -321,7 +321,7 @@ public class TestBoss extends Mob {
 		}
 
 		@Override
-		public void die(@NotNull DamageSrc cause) {
+		public void die( DamageSrc cause) {
 			super.die(cause);
 			sprite.emitter().burst(SparkParticle.FACTORY, 10);
 		}

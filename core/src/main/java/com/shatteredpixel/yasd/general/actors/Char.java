@@ -303,7 +303,7 @@ public abstract class Char extends Actor {
 	protected static final String TYPE = "type";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 
 		super.storeInBundle(bundle);
 
@@ -319,7 +319,7 @@ public abstract class Char extends Actor {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 
 		super.restoreFromBundle(bundle);
 
@@ -647,17 +647,17 @@ public abstract class Char extends Actor {
 	}
 
 
-	@NotNull
+
 	@Contract(" -> new")
 	private DamageSrc defaultSrc() {
 		return new DamageSrc(this.elementalType(), this);
 	}
 
-	public final void damage(int dmg, @NotNull Char ch) {
+	public final void damage(int dmg,  Char ch) {
 		damage(dmg, ch.defaultSrc());
 	}
 
-	public final void damage(int dmg, @NotNull Buff buff) {
+	public final void damage(int dmg,  Buff buff) {
 		damage(dmg, buff.defaultSrc());
 	}
 
@@ -665,7 +665,7 @@ public abstract class Char extends Actor {
 		damage(dmg, new DamageSrc(element, null));
 	}
 
-	public void damage(int dmg, @NotNull DamageSrc src) {
+	public void damage(int dmg,  DamageSrc src) {
 		dmg = Math.max(0, dmg);
 
 		if (!src.ignores()) {
@@ -741,7 +741,7 @@ public abstract class Char extends Actor {
 		Actor.remove( this );
 	}
 
-	public void die(@NotNull DamageSrc src ) {
+	public void die( DamageSrc src ) {
 		destroy();
 		if (src.getCause() != Chasm.class) sprite.die();
 	}
@@ -801,7 +801,7 @@ public abstract class Char extends Actor {
 		return null;
 	}
 
-	public synchronized boolean isCharmedBy(@NotNull Char ch ) {
+	public synchronized boolean isCharmedBy( Char ch ) {
 		int chID = ch.id();
 		for (Buff b : buffs) {
 			if (b instanceof Charm && ((Charm)b).object == chID) {
@@ -868,11 +868,11 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public final boolean notice(@NotNull Char defender, boolean alreadySeen) {
+	public final boolean notice( Char defender, boolean alreadySeen) {
 		return Random.Float() < noticeChance(defender, alreadySeen);
 	}
 
-	public float noticeChance(@NotNull Char defender, boolean alreadySeen) {
+	public float noticeChance( Char defender, boolean alreadySeen) {
 		if (Dungeon.level.distance(pos, defender.pos) < viewDistance) {
 			float perception = (noticeSkill(defender)) / ((Dungeon.level.distance(pos, defender.pos)+1)/2f);
 			if (!fieldOfView(defender.pos)) {
@@ -1078,13 +1078,13 @@ public abstract class Char extends Actor {
 			this.immunities = immunities;
 		}
 
-		@NotNull
+
 		@Contract(" -> new")
 		public HashSet<Class> resistances(){
 			return new HashSet<>(resistances);
 		}
 
-		@NotNull
+
 		@Contract(" -> new")
 		public HashSet<Class> immunities(){
 			return new HashSet<>(immunities);

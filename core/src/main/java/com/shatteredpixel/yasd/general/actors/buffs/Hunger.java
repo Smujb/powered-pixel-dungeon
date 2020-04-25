@@ -36,7 +36,6 @@ import com.shatteredpixel.yasd.general.items.artifacts.HornOfPlenty;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.sun.istack.internal.NotNull;
 import com.watabou.utils.Bundle;
 
 public class Hunger extends Buff implements Hero.Doom {
@@ -56,14 +55,14 @@ public class Hunger extends Buff implements Hero.Doom {
 	private static final String PARTIALDAMAGE 	= "partialDamage";
 
 	@Override
-	public void storeInBundle(@NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( LEVEL, level );
 		bundle.put( PARTIALDAMAGE, partialDamage );
 	}
 
 	@Override
-	public void restoreFromBundle(@NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		level = bundle.getFloat( LEVEL );
 		partialDamage = bundle.getFloat(PARTIALDAMAGE);

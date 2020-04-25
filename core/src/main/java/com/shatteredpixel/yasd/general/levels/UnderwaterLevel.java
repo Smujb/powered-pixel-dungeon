@@ -180,7 +180,7 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
-	public void occupyCell(@NotNull Char ch) {
+	public void occupyCell( Char ch) {
 		super.occupyCell(ch);
 		if (bubbleLocations.contains(ch.pos)) {
 			ch.sprite.flash();
@@ -220,7 +220,7 @@ public class UnderwaterLevel extends Level {
 	private static final String LIGHT_TILE_AMT = "light_tiles_num";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TILE_TEX, tilesTex);
 		bundle.put(WATER_TEX, waterTex);
@@ -238,7 +238,7 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle) {
+	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		tilesTex = bundle.getString(TILE_TEX);
 		waterTex = bundle.getString(WATER_TEX);

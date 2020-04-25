@@ -229,7 +229,7 @@ public class Artifact extends KindofMisc {
 	private static final String PARTIALCHARGE = "partialcharge";
 
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle(bundle);
 		bundle.put( EXP , exp );
 		bundle.put( CHARGE , charge );
@@ -237,7 +237,7 @@ public class Artifact extends KindofMisc {
 	}
 
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle(bundle);
 		exp = bundle.getInt( EXP );
 		if (chargeCap > 0)  charge = Math.min( chargeCap, bundle.getInt( CHARGE ));

@@ -74,7 +74,7 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void damage(int dmg, @NotNull DamageSrc src){
+	public void damage(int dmg,  DamageSrc src){
 		//crab blocks all attacks originating from its current enemy if it sees them.
 		//All direct damage is negated, no exceptions. environmental effects go through as normal.
 		if ((enemySeen && state != SLEEPING && paralysed == 0)
@@ -88,7 +88,7 @@ public class GreatCrab extends Crab {
 	}
 
 	@Override
-	public void die(@NotNull DamageSrc cause ) {
+	public void die( DamageSrc cause ) {
 		super.die( cause );
 
 		Ghost.Quest.process();

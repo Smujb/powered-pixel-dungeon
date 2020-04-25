@@ -54,7 +54,7 @@ public abstract class Key extends Item {
 	//public int zPos;
 	
 	@Override
-	public boolean isSimilar(@NotNull Item item ) {
+	public boolean isSimilar( Item item ) {
 		return super.isSimilar(item) && ((Key) item).levelKey.equals(levelKey);
 	}
 
@@ -75,7 +75,7 @@ public abstract class Key extends Item {
 	private static final String KEY = "key";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		super.storeInBundle( bundle );
 		//bundle.put( YPOS, depth );
 		//bundle.put( XPOS, xPos );
@@ -84,7 +84,7 @@ public abstract class Key extends Item {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		//depth = bundle.getInt( YPOS );
 		//xPos = bundle.getInt( XPOS );

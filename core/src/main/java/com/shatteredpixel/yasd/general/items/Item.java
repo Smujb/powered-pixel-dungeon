@@ -201,7 +201,7 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public void doDrop(@NotNull Hero hero ) {
+	public void doDrop( Hero hero ) {
 		hero.spendAndNext(TIME_TO_DROP);
 		int pos = hero.pos;
 		Dungeon.level.drop(detachAll(hero.belongings.backpack), pos).sprite.drop(pos);
@@ -263,7 +263,7 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	public boolean collect(@NotNull Bag container, @NotNull Char ch ) {
+	public boolean collect( Bag container,  Char ch ) {
 		
 		ArrayList<Item> items = container.items;
 
@@ -367,7 +367,7 @@ public class Item implements Bundlable {
 		}
 	}
 	
-	public final Item detachAll(@NotNull Bag container ) {
+	public final Item detachAll( Bag container ) {
 		Dungeon.quickslot.clearItem( this );
 		updateQuickslot();
 
@@ -387,7 +387,7 @@ public class Item implements Bundlable {
 		return this;
 	}
 	
-	public boolean isSimilar(@NotNull Item item ) {
+	public boolean isSimilar( Item item ) {
 		return level == item.level && getClass() == item.getClass();
 	}
 
@@ -469,7 +469,7 @@ public class Item implements Bundlable {
 	}
 
 
-	public boolean isEquipped(@NotNull Char owner ) {
+	public boolean isEquipped( Char owner ) {
 		return owner.belongings.miscs[0] == this || owner.belongings.miscs[1] == this || owner.belongings.miscs[2] == this || owner.belongings.miscs[3] == this || owner.belongings.miscs[4] == this;
 	}
 
@@ -491,7 +491,7 @@ public class Item implements Bundlable {
 		//do nothing by default
 	}
 	
-	public static void evoke(@NotNull Hero hero ) {
+	public static void evoke( Hero hero ) {
 		hero.sprite.emitter().burst( Speck.factory( Speck.EVOKE ), 5 );
 	}
 	
@@ -586,7 +586,7 @@ public class Item implements Bundlable {
 	private static final String DURABILITY      = "durability";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void storeInBundle(  Bundle bundle ) {
 		bundle.put( QUANTITY, quantity );
 		bundle.put( LEVEL, level );
 		bundle.put( LEVEL_KNOWN, levelKnown );
@@ -599,7 +599,7 @@ public class Item implements Bundlable {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+	public void restoreFromBundle(  Bundle bundle ) {
 		quantity	= bundle.getInt( QUANTITY );
 		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
 		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
@@ -618,7 +618,7 @@ public class Item implements Bundlable {
 		}
 	}
 
-	public int throwPos(@NotNull Char user, int dst){
+	public int throwPos( Char user, int dst){
 		return new Ballistica( user.pos, dst, Ballistica.PROJECTILE ).collisionPos;
 	}
 	

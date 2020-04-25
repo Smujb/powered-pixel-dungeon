@@ -188,7 +188,7 @@ public class LastLevel extends Level {
 	}
 
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");

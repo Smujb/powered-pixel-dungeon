@@ -34,7 +34,6 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,19 +55,19 @@ public class Notes {
 		public abstract boolean equals(Object obj);
 		
 		@Override
-		public int compareTo(@NotNull Record another ) {
+		public int compareTo( Record another ) {
 			return (key == null || another.key == null) || another.key.equals(key) ? 0 : 1;
 		}
 		
 		private static final String KEY = "key";
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+		public void restoreFromBundle(  Bundle bundle ) {
 			key = bundle.getString(KEY);
 		}
 
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle ) {
+		public void storeInBundle(  Bundle bundle ) {
 			bundle.put(KEY, key);
 		}
 	}
@@ -122,13 +121,13 @@ public class Notes {
 		private static final String LANDMARK	= "landmark";
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+		public void restoreFromBundle(  Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			landmark = Landmark.valueOf(bundle.getString(LANDMARK));
 		}
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+		public void storeInBundle(  Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( LANDMARK, landmark.toString() );
 		}
@@ -175,13 +174,13 @@ public class Notes {
 		private static final String KEY	= "key";
 		
 		@Override
-		public void restoreFromBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+		public void restoreFromBundle(  Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			key = (Key) bundle.get(KEY);
 		}
 		
 		@Override
-		public void storeInBundle(@com.sun.istack.internal.NotNull @NotNull Bundle bundle) {
+		public void storeInBundle(  Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put( KEY, key );
 		}

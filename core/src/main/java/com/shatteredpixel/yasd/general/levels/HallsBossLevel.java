@@ -107,7 +107,7 @@ public class HallsBossLevel extends Level {
 	private static final String DROPPED	= "droppped";
 	
 	@Override
-	public void storeInBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( STAIRS, stairs );
 		bundle.put( ENTERED, enteredArena );
@@ -115,7 +115,7 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public void restoreFromBundle(@com.sun.istack.internal.NotNull Bundle bundle ) {
+	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		stairs = (Entrance) bundle.get( STAIRS );
 		enteredArena = bundle.getBoolean( ENTERED );
@@ -207,7 +207,7 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public void occupyCell(@NotNull Char ch ) {
+	public void occupyCell( Char ch ) {
 		
 		super.occupyCell( ch );
 		
@@ -285,7 +285,7 @@ public class HallsBossLevel extends Level {
 	}
 	
 	@Override
-	public String tileDesc(@NotNull Terrain tile) {
+	public String tileDesc( Terrain tile) {
 		switch (tile) {
 			case WATER:
 				return Messages.get(HallsLevel.class, "water_desc");
