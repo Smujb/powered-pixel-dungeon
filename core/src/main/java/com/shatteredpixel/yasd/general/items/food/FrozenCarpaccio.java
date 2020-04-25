@@ -28,18 +28,12 @@
 package com.shatteredpixel.yasd.general.items.food;
 
 import com.shatteredpixel.yasd.general.actors.buffs.Barkskin;
-import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
-import com.shatteredpixel.yasd.general.actors.buffs.Drowsy;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
-import com.shatteredpixel.yasd.general.actors.buffs.Poison;
-import com.shatteredpixel.yasd.general.actors.buffs.Slow;
-import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
-import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -72,15 +66,9 @@ public class FrozenCarpaccio extends Food {
 				GLog.i( Messages.get(FrozenCarpaccio.class, "hard") );
 				Buff.affect( hero, Barkskin.class ).set( hero.HT / 4, 1 );
 				break;
-			case 2:
+			case 2: default:
 				GLog.i( Messages.get(FrozenCarpaccio.class, "refresh") );
-				Buff.detach( hero, Poison.class );
-				Buff.detach( hero, Cripple.class );
-				Buff.detach( hero, Weakness.class );
-				Buff.detach( hero, Bleeding.class );
-				Buff.detach( hero, Drowsy.class );
-				Buff.detach( hero, Slow.class );
-				Buff.detach( hero, Vertigo.class);
+				PotionOfHealing.cure(hero);
 				break;
 			case 3:
 				GLog.i( Messages.get(FrozenCarpaccio.class, "better") );

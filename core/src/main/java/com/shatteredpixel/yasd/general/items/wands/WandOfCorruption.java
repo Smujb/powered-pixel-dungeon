@@ -47,6 +47,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Doom;
 import com.shatteredpixel.yasd.general.actors.buffs.Drowsy;
 import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
+import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicalSleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
@@ -57,6 +58,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Slow;
 import com.shatteredpixel.yasd.general.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -86,6 +88,7 @@ public class WandOfCorruption extends Wand {
 	private static final HashMap<Class<? extends Buff>, Float> MINOR_DEBUFFS = new HashMap<>();
 	static{
 		MINOR_DEBUFFS.put(Weakness.class,       2f);
+		MINOR_DEBUFFS.put(Vulnerable.class,     2f);
 		MINOR_DEBUFFS.put(Cripple.class,        1f);
 		MINOR_DEBUFFS.put(Blindness.class,      1f);
 		MINOR_DEBUFFS.put(Terror.class,         1f);
@@ -105,6 +108,7 @@ public class WandOfCorruption extends Wand {
 	static{
 		MAJOR_DEBUFFS.put(Amok.class,           3f);
 		MAJOR_DEBUFFS.put(Slow.class,           2f);
+		MAJOR_DEBUFFS.put(Hex.class,            2f);
 		MAJOR_DEBUFFS.put(Paralysis.class,      1f);
 		
 		MAJOR_DEBUFFS.put(Charm.class,          0f);
