@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 //TODO currently just regular DK but with no summoning ability
 public class DwarfKing extends King {
 
+	@Override
 	protected boolean canTryToSummon() {
 		return false;
 	}

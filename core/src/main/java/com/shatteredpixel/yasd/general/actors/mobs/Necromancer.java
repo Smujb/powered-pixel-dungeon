@@ -51,8 +51,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Necromancer extends Mob {
 	
 	{
@@ -355,6 +353,8 @@ public class Necromancer extends Mob {
 			//no loot or exp
 			maxLvl = -5;
 
+			damageFactor = 1.5f;
+
 			lootChance = 0f;
 			
 			//Less HP than Shattered, more damage
@@ -362,8 +362,8 @@ public class Necromancer extends Mob {
 		}
 
 		@Override
-		public int damageRoll() {//Better kill the Necromancer fast :P
-			return (int) (super.damageRoll()*1.5f);
+		public float spawningWeight() {
+			return 0;
 		}
 
 		private void teleportSpend(){

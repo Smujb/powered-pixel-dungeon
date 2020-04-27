@@ -177,9 +177,20 @@ public abstract class Mob extends Char {
 		level = bundle.getInt( LEVEL );
 	}
 
+	Mob() {
+		level = Dungeon.getScaleFactor();
+	}
+
 	@Override
 	public void updateHT(boolean boostHP) {
 		HP = HT = (int) (normalHP(level) * healthFactor);
+		HP = HT *= Dungeon.difficulty.mobHealthFactor();
+		//Bosses (obviously) have higher HP
+		if (properties().contains(Property.BOSS)) {
+			HP = HT *= 5;
+		} else if (properties().contains(Property.MINIBOSS)) {
+			HP = HT *= 2;
+		}
 	}
 
 	private int normalHP(int level) {
@@ -241,14 +252,7 @@ public abstract class Mob extends Char {
 		}
 		mob.level = level;
 		mob.updateHT(true);
-		mob.HP = mob.HT *= Dungeon.difficulty.mobHealthFactor();
 		mob.onCreate();
-		//Bosses (obviously) have higher HP
-		if (mob.properties().contains(Property.BOSS)) {
-			mob.HP = mob.HT *= 5;
-		} else if (mob.properties().contains(Property.MINIBOSS)) {
-			mob.HP = mob.HT *= 2;
-		}
 		if (mob.numTypes > 1) {
 			mob.type = Random.Int(mob.numTypes);
 		} else {

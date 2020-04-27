@@ -76,8 +76,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashSet;
 
 public class NewTengu extends Mob {
@@ -104,24 +102,22 @@ public class NewTengu extends Mob {
 		spend(-cooldown());
 		super.onAdd();
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 6, 16 );
-	}
-	
+
+	//Tengu is immune to debuffs and damage when removed from the level
 	@Override
-	public int attackSkill( Char target ) {
-		return 20;
+	public void add(Buff buff) {
+		if (!Dungeon.level.mobs.contains(this)){
+			return;
+		}
+		super.add(buff);
 	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 5);
-	}*/
 	
 	@Override
 	public void damage(int dmg,  DamageSrc src) {
+		if (!Dungeon.level.mobs.contains(this)){
+			return;
+		}
+
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
 		
 		int hpBracket = 20;

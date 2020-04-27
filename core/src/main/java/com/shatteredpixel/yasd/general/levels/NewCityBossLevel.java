@@ -94,6 +94,11 @@ public class NewCityBossLevel extends Level {
 		return Assets.WATER_CITY;
 	}
 
+	@Override
+	public String loadImg() {
+		return Assets.LOADING_CITY;
+	}
+
 	private static final String IMP_SHOP = "imp_shop";
 
 	@Override
@@ -253,7 +258,7 @@ public class NewCityBossLevel extends Level {
 			}
 		}
 
-		DwarfKing boss = new DwarfKing();
+		DwarfKing boss = Mob.create(DwarfKing.class, this);
 		boss.state = boss.WANDERING;
 		boss.pos = pointToCell(arena.center());
 		GameScene.add( boss );

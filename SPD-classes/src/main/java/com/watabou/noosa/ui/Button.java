@@ -84,7 +84,7 @@ public class Button extends Component {
 	private Signal.Listener<KeyEvent> keyListener;
 
 	public GameAction keyAction(){
-		return GameAction.NONE;
+		return null;
 	}
 	
 	@Override

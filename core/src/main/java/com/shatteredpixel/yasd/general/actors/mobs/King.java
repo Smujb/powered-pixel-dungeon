@@ -110,7 +110,7 @@ public class King extends Mob {
 				Dungeon.level.adjacent( pos, enemy.pos );
 	}
 	
-	private boolean canTryToSummon() {
+	protected boolean canTryToSummon() {
 		if (paralysed <= 0 && Undead.count < maxArmySize()) {
 			Char ch = Actor.findChar( ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) );
 			return ch == this || ch == null;
