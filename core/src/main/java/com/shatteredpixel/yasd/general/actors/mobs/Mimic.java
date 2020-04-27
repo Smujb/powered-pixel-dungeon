@@ -50,8 +50,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -203,7 +201,8 @@ public class Mimic extends Mob {
 
 	public void stopHiding(){
 		state = HUNTING;
-		if (Dungeon.level.heroFOV[pos] && Actor.chars().contains(this)) {
+
+		if (Actor.chars().contains(this) && Dungeon.level.heroFOV[pos]) {
 			enemy = Dungeon.hero;
 			target = Dungeon.hero.pos;
 			enemySeen = true;
