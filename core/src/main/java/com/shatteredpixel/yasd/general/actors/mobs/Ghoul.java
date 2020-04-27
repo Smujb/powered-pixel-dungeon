@@ -305,7 +305,7 @@ public class Ghoul extends Mob {
 			super.detach();
 			Ghoul newHost = searchForHost(ghoul);
 			if (newHost != null){
-				newHost.add(this);
+				attachTo(newHost);
 			} else {
 				ghoul.die(new DamageSrc(Element.NATURAL, this));
 			}
