@@ -50,8 +50,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.BOOKSHELF;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
@@ -64,7 +62,7 @@ import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE_SP;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
-public class CityBossLevel extends Level {
+public class OldCityBossLevel extends Level {
 	
 	{
 		color1 = 0x4b6636;

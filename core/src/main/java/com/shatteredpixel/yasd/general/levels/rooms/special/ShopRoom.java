@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Shopkeeper;
@@ -61,6 +62,7 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.TippedDart;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 
@@ -73,14 +75,17 @@ public class ShopRoom extends SpecialRoom {
 	
 	@Override
 	public int minWidth() {
-		if (itemsToSpawn == null) itemsToSpawn = generateItems(Dungeon.getScaleFactor());
-		return Math.max(7, (int)(Math.sqrt(itemsToSpawn.size())+3));
+		return Math.max(7, (int)(Math.sqrt(itemCount())+3));
 	}
 	
 	@Override
 	public int minHeight() {
+		return Math.max(7, (int)(Math.sqrt(itemCount())+3));
+	}
+
+	public int itemCount() {
 		if (itemsToSpawn == null) itemsToSpawn = generateItems(Dungeon.getScaleFactor());
-		return Math.max(7, (int)(Math.sqrt(itemsToSpawn.size())+3));
+		return itemsToSpawn.size();
 	}
 	
 	public void paint( Level level ) {
@@ -104,8 +109,11 @@ public class ShopRoom extends SpecialRoom {
 
 		Mob shopkeeper = Mob.create(Shopkeeper.class, level);
 		shopkeeper.pos = pos;
-		level.mobs.add( shopkeeper );
-
+		if (MainGame.scene() instanceof GameScene) {
+			GameScene.add(shopkeeper);
+		} else {
+			level.mobs.add(shopkeeper);
+		}
 	}
 
 	protected void placeItems( Level level ){
@@ -197,24 +205,25 @@ public class ShopRoom extends SpecialRoom {
 		ArrayList<Item> itemsToSpawn = new ArrayList<>();
 		
 		switch (Dungeon.depth) {
-		case 5:
-			itemsToSpawn.add( Generator.random(Generator.misTiers[1]).quantity(2).identify() );
-			break;
-			
-		case 11:
-			itemsToSpawn.add( Generator.random(Generator.misTiers[2]).quantity(2).identify() );
-			break;
-			
-		case 17:
-			itemsToSpawn.add( Generator.random(Generator.misTiers[3]).quantity(2).identify() );
-			break;
-			
-		case 23:
-			itemsToSpawn.add( Generator.random(Generator.misTiers[4]).quantity(2).identify() );
-			itemsToSpawn.add( new Torch() );
-			itemsToSpawn.add( new Torch() );
-			itemsToSpawn.add( new Torch() );
-			break;
+			case 5:
+				itemsToSpawn.add(Generator.random(Generator.misTiers[1]).quantity(2).identify());
+				break;
+
+			case 11:
+				itemsToSpawn.add(Generator.random(Generator.misTiers[2]).quantity(2).identify());
+				break;
+
+			case 17:
+				itemsToSpawn.add(Generator.random(Generator.misTiers[3]).quantity(2).identify());
+				break;
+
+			case 23:
+			case 24:
+				itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
+				itemsToSpawn.add(new Torch());
+				itemsToSpawn.add(new Torch());
+				itemsToSpawn.add(new Torch());
+				break;
 		}
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
 			Armor armor = generateArmor(level);
@@ -280,13 +289,13 @@ public class ShopRoom extends SpecialRoom {
 			//creates the given float percent of the remaining bags to be dropped.
 			//this way players who get the hourglass late can still max it, usually.
 			switch (Dungeon.depth) {
-				case 6:
+				case 5:
 					bags = (int)Math.ceil(( 5-hourglass.sandBags) * 0.20f ); break;
 				case 11:
 					bags = (int)Math.ceil(( 5-hourglass.sandBags) * 0.25f ); break;
-				case 16:
+				case 18:
 					bags = (int)Math.ceil(( 5-hourglass.sandBags) * 0.50f ); break;
-				case 21:
+				case 23: case 24:
 					bags = (int)Math.ceil(( 5-hourglass.sandBags) * 0.80f ); break;
 			}
 

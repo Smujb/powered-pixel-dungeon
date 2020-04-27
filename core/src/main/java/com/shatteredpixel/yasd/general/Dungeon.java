@@ -48,14 +48,13 @@ import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.levels.CavesLevel;
-import com.shatteredpixel.yasd.general.levels.CityBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldCityBossLevel;
 import com.shatteredpixel.yasd.general.levels.CityLevel;
 import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.FirstLevel;
 import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.LastLevel;
-import com.shatteredpixel.yasd.general.levels.LastShopLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.LootLevel;
 import com.shatteredpixel.yasd.general.levels.NewCavesBossLevel;
@@ -278,10 +277,9 @@ public class Dungeon {
 		staticLevels.put("sewers - 5", SewerBossLevel.class);
 		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
 		staticLevels.put("caves - 5", NewCavesBossLevel.class);
-		staticLevels.put("city - 5", CityBossLevel.class);
+		//TODO NewCityBossLevel
+		staticLevels.put("city - 5", OldCityBossLevel.class);
 		staticLevels.put("halls - 5", HallsBossLevel.class);
-		//Ambitious Imp shop
-		staticLevels.put("halls - 0", LastShopLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
 		staticLevels.put("sewers - 0", FirstLevel.class);
 		//Amulet depth

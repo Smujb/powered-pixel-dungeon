@@ -50,7 +50,7 @@ import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
-import com.shatteredpixel.yasd.general.levels.CityBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldCityBossLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.KingSprite;
@@ -61,8 +61,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 public class King extends Mob {
 	
@@ -101,20 +99,20 @@ public class King extends Mob {
 	@Override
 	protected boolean getCloser( int target ) {
 		return canTryToSummon() ?
-			super.getCloser( ((CityBossLevel)Dungeon.level).pedestal( nextPedestal ) ) :
+			super.getCloser( ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) ) :
 			super.getCloser( target );
 	}
 	
 	@Override
     public boolean canAttack(Char enemy) {
 		return canTryToSummon() ?
-				pos == ((CityBossLevel)Dungeon.level).pedestal( nextPedestal ) :
+				pos == ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) :
 				Dungeon.level.adjacent( pos, enemy.pos );
 	}
 	
 	private boolean canTryToSummon() {
 		if (paralysed <= 0 && Undead.count < maxArmySize()) {
-			Char ch = Actor.findChar( ((CityBossLevel)Dungeon.level).pedestal( nextPedestal ) );
+			Char ch = Actor.findChar( ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) );
 			return ch == this || ch == null;
 		} else {
 			return false;
@@ -123,11 +121,11 @@ public class King extends Mob {
 	
 	@Override
 	protected boolean act() {
-		if (canTryToSummon() && pos == ((CityBossLevel)Dungeon.level).pedestal( nextPedestal )) {
+		if (canTryToSummon() && pos == ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal )) {
 			summon();
 			return true;
 		} else {
-			if (enemy != null && Actor.findChar( ((CityBossLevel)Dungeon.level).pedestal( nextPedestal ) ) == enemy) {
+			if (enemy != null && canTryToSummon() && Actor.findChar( ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) ) == enemy) {
 				nextPedestal = !nextPedestal;
 			}
 			return super.act();
@@ -147,7 +145,7 @@ public class King extends Mob {
 		GameScene.bossSlain();
 		Dungeon.level.drop( new SkeletonKey( Dungeon.key ), pos ).sprite.drop();
 
-		Dungeon.level.drop(new Torch(), ((CityBossLevel)Dungeon.level).pedestal( nextPedestal )).sprite.drop(pos);
+		Dungeon.level.drop(new Torch(), ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal )).sprite.drop(pos);
 		
 		super.die( cause );
 		
@@ -171,7 +169,7 @@ public class King extends Mob {
 		}
 	}
 
-	private int maxArmySize() {
+	protected int maxArmySize() {
 		return 1 + MAX_ARMY_SIZE * (HT - HP) / HT;
 	}
 	

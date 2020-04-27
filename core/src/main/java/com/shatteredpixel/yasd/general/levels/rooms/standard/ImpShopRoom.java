@@ -68,9 +68,7 @@ public class ImpShopRoom extends ShopRoom {
 		}
 
 		if (Imp.Quest.isCompleted()){
-			impSpawned = true;
-			placeItems(level);
-			placeShopkeeper(level);
+			spawnShop(level);
 		} else {
 			impSpawned = false;
 		}
@@ -94,9 +92,10 @@ public class ImpShopRoom extends ShopRoom {
 		return connected.isEmpty() ? new Door(left, top+2) : super.entrance();
 	}
 
-	private void spawnShop(Level level){
+	public void spawnShop(Level level){
 		impSpawned = true;
-		super.paint(level);
+		placeItems(level);
+		placeShopkeeper(level);
 	}
 
 	private static final String IMP = "imp_spawned";
@@ -118,9 +117,7 @@ public class ImpShopRoom extends ShopRoom {
 		super.onLevelLoad(level);
 
 		if (Imp.Quest.isCompleted() && !impSpawned){
-			impSpawned = true;
-			placeItems(level);
-			placeShopkeeper(level);
+			spawnShop(level);
 		}
 	}
 }
