@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -525,6 +526,11 @@ public class NewDM300 extends Mob {
 		}
 		return desc;
 	}
+
+	{
+		immunities.add(Sleep.class);
+	}
+
 
 	public static class FallingRocks extends Blob {
 

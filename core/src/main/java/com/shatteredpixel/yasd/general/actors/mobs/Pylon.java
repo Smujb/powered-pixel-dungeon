@@ -43,6 +43,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
+import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.levels.NewCavesBossLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -77,6 +78,16 @@ public class Pylon extends Mob {
 	@Override
 	protected boolean act() {
 		spend(TICK);
+
+		Heap heap = Dungeon.level.heaps.get( pos );
+		if (heap != null) {
+			int n;
+			do {
+				n = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
+			} while (!Dungeon.level.passable(n) && !Dungeon.level.avoid(n));
+			Dungeon.level.drop( heap.pickUp(), n ).sprite.drop( pos );
+		}
+
 
 		if (alignment == Alignment.NEUTRAL){
 			return true;
