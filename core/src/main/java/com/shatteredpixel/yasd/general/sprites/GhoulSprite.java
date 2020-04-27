@@ -33,6 +33,8 @@ import com.watabou.noosa.TextureFilm;
 //TODO currently just a recolored monk sprite
 public class GhoulSprite extends MobSprite {
 
+	private Animation crumple;
+
 	public GhoulSprite() {
 		super();
 
@@ -49,10 +51,20 @@ public class GhoulSprite extends MobSprite {
 		attack = new Animation( 12, false );
 		attack.frames( frames, 3, 4, 3, 4 );
 
+		crumple = new Animation( 15, false);
+		crumple.frames( frames, 1, 7, 8 );
+
 		die = new Animation( 15, false );
-		die.frames( frames, 1, 7, 8, 8, 9, 10 );
+		die.frames( frames, 7, 8, 8, 9, 10 );
 
 		play( idle );
 	}
 
+	public void crumple(){
+		if (emo != null){
+			emo.killAndErase();
+			emo = null;
+		}
+		play(crumple);
+	}
 }

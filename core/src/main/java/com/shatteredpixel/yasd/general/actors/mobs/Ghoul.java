@@ -28,11 +28,17 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.effects.Pushing;
+import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.GhoulSprite;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -58,18 +64,23 @@ public class Ghoul extends Mob {
 	}
 
 	private int partnerID = -1;
+	private int timesDowned = 0;
+
 	private static final String PARTNER_ID = "partner_id";
+	private static final String TIMES_DOWNED = "times_downed";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		super.storeInBundle( bundle );
 		bundle.put( PARTNER_ID, partnerID );
+		bundle.put( TIMES_DOWNED, timesDowned );
 	}
 
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 		super.restoreFromBundle( bundle );
 		partnerID = bundle.getInt( PARTNER_ID );
+		timesDowned = bundle.getInt( TIMES_DOWNED );
 	}
 
 	@Override
@@ -111,6 +122,38 @@ public class Ghoul extends Mob {
 
 		}
 		return super.act();
+	}
+
+	@Override
+	public void die(DamageSrc cause) {
+		if (cause.getCause() != Chasm.class && cause.getCause() != GhoulLifeLink.class){
+			Ghoul nearby = GhoulLifeLink.searchForHost(this);
+			if (nearby != null){
+				Actor.remove(this);
+				Dungeon.level.mobs.remove( this );
+				timesDowned++;
+				Buff.append(nearby, GhoulLifeLink.class).set(timesDowned*5, this);
+				((GhoulSprite)sprite).crumple();
+			} else {
+				super.die(cause);
+			}
+		} else {
+			super.die(cause);
+		}
+	}
+
+	@Override
+	protected synchronized void onRemove() {
+		for (Buff buff : buffs()) {
+			//corruption is preserved
+			if (!(buff instanceof Corruption)) buff.detach();
+		}
+	}
+
+	@Override
+	protected void onAdd() {
+		spend(-cooldown());
+		super.onAdd();
 	}
 
 	private class Sleeping extends Mob.Sleeping {
@@ -195,6 +238,106 @@ public class Ghoul extends Mob {
 					return true;
 				}
 			}
+		}
+	}
+
+	public static class GhoulLifeLink extends Buff{
+
+		private Ghoul ghoul;
+		private int turnsToRevive;
+
+		@Override
+		public boolean act() {
+			ghoul.sprite.visible = Dungeon.level.heroFOV[ghoul.pos];
+
+			if (!target.fieldOfView[ghoul.pos] && Dungeon.level.distance(ghoul.pos, target.pos) >= 4){
+				detach();
+				return true;
+			}
+
+			turnsToRevive--;
+			if (turnsToRevive <= 0){
+				ghoul.HP = Math.round(ghoul.HT/10f);
+				if (Actor.findChar( ghoul.pos ) != null) {
+					ArrayList<Integer> candidates = new ArrayList<>();
+					for (int n : PathFinder.NEIGHBOURS8) {
+						int cell = ghoul.pos + n;
+						if ((Dungeon.level.passable(cell) || Dungeon.level.avoid(cell)) && Actor.findChar( cell ) == null) {
+							candidates.add( cell );
+						}
+					}
+					if (candidates.size() > 0) {
+						int newPos = Random.element( candidates );
+						Actor.addDelayed( new Pushing( ghoul, ghoul.pos, newPos ), -1 );
+						ghoul.pos = newPos;
+
+					} else {
+						spend(TICK);
+						return true;
+					}
+				}
+				Actor.add(ghoul);
+				Dungeon.level.mobs.add(ghoul);
+				Dungeon.level.occupyCell( ghoul );
+				super.detach();
+				return true;
+			}
+
+			spend(TICK);
+			return true;
+		}
+
+		public void set(int turns, Ghoul ghoul){
+			this.ghoul = ghoul;
+			turnsToRevive = turns;
+		}
+
+		@Override
+		public void fx(boolean on) {
+			if (on && ghoul != null && ghoul.sprite == null){
+				GameScene.addSprite(ghoul);
+				((GhoulSprite)ghoul.sprite).crumple();
+			}
+		}
+
+		@Override
+		public void detach() {
+			super.detach();
+			Ghoul newHost = searchForHost(ghoul);
+			if (newHost != null){
+				newHost.add(this);
+			} else {
+				ghoul.die(new DamageSrc(Element.NATURAL, this));
+			}
+		}
+
+		private static final String GHOUL = "ghoul";
+		private static final String LEFT  = "left";
+
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(GHOUL, ghoul);
+			bundle.put(LEFT, turnsToRevive);
+		}
+
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			ghoul = (Ghoul) bundle.get(GHOUL);
+			turnsToRevive = bundle.getInt(LEFT);
+		}
+
+		public static Ghoul searchForHost(Ghoul dieing){
+
+			for (Char ch : Actor.chars()){
+				if (ch != dieing && ch instanceof Ghoul && ch.alignment == dieing.alignment){
+					if (ch.fieldOfView[dieing.pos] || Dungeon.level.distance(ch.pos, dieing.pos) < 4){
+						return (Ghoul) ch;
+					}
+				}
+			}
+			return null;
 		}
 	}
 }
