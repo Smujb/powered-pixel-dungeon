@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.standard;
 
-import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.ImpShopkeeper;
@@ -35,7 +34,6 @@ import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.Bundle;
 
 //shops probably shouldn't extend special room, because of cases like this.
@@ -84,11 +82,7 @@ public class ImpShopRoom extends ShopRoom {
 
 		Mob shopkeeper = new ImpShopkeeper();
 		shopkeeper.pos = pos;
-		if (MainGame.scene() instanceof GameScene) {
-			GameScene.add(shopkeeper);
-		} else {
-			level.mobs.add(shopkeeper);
-		}
+		level.addMob(shopkeeper);
 
 	}
 

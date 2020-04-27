@@ -700,6 +700,14 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
+	public void addMob(Mob mob) {
+		if (MainGame.scene() instanceof GameScene) {
+			GameScene.add(mob);
+		} else {
+			mobs.add(mob);
+		}
+	}
+
 
 	public InteractiveArea findArea(int pos) {
 		for (InteractiveArea area : interactiveAreas) {
