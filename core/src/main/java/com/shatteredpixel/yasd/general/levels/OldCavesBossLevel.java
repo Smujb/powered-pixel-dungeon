@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.mobs.DM300;
+import com.shatteredpixel.yasd.general.actors.mobs.OldDM300;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -64,7 +64,7 @@ import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
-public class CavesBossLevel extends Level {
+public class OldCavesBossLevel extends Level {
 	
 	{
 		color1 = 0x534f3e;
@@ -261,7 +261,7 @@ public class CavesBossLevel extends Level {
 				}
 			}
 			
-			DM300 boss = Mob.create( DM300.class );
+			OldDM300 boss = Mob.create( OldDM300.class );
 			boss.state = boss.WANDERING;
 			do {
 				boss.pos = Random.Int( length() );

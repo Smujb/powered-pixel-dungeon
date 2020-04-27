@@ -35,7 +35,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Bat;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
-import com.shatteredpixel.yasd.general.levels.CavesBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldCavesBossLevel;
 import com.shatteredpixel.yasd.general.levels.CavesLevel;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -47,8 +47,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -101,7 +99,7 @@ public class Pickaxe extends Weapon {
 		
 		if (action.equals(AC_MINE)) {
 			
-			if (!(Dungeon.level instanceof CavesLevel || Dungeon.level instanceof CavesBossLevel)) {
+			if (!(Dungeon.level instanceof CavesLevel || Dungeon.level instanceof OldCavesBossLevel)) {
 				GLog.w( Messages.get(this, "no_vein") );
 				return;
 			}

@@ -59,9 +59,7 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
-public class DM300 extends Mob {
+public class OldDM300 extends Mob {
 	
 	{
 		spriteClass = DM300Sprite.class;

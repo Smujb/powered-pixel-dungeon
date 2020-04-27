@@ -35,7 +35,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
-import com.shatteredpixel.yasd.general.actors.mobs.DM300;
+import com.shatteredpixel.yasd.general.actors.mobs.OldDM300;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.NewDM300;
 import com.shatteredpixel.yasd.general.actors.mobs.Pylon;
@@ -349,7 +349,7 @@ public class NewCavesBossLevel extends Level {
 	public String tileDesc( Terrain tile ) {
 		switch (tile) {
 			case WATER:
-				return super.tileDesc( tile ) + "\n\n" + Messages.get(CavesBossLevel.class, "water_desc");
+				return super.tileDesc( tile ) + "\n\n" + Messages.get(NewCavesBossLevel.class, "water_desc");
 			case ENTRANCE:
 				return Messages.get(CavesLevel.class, "entrance_desc");
 			case EXIT:
@@ -694,9 +694,9 @@ public class NewCavesBossLevel extends Level {
 		public String name(int tileX, int tileY) {
 			int i = tileX + tileW*(tileY + this.tileY);
 			if (Dungeon.level.map[i] == INACTIVE_TRAP){
-				return Messages.get(CavesBossLevel.class, "wires_name");
+				return Messages.get(NewCavesBossLevel.class, "wires_name");
 			} else if (gate.inside(Dungeon.level.cellToPoint(i))){
-				return Messages.get(CavesBossLevel.class, "gate_name");
+				return Messages.get(NewCavesBossLevel.class, "gate_name");
 			}
 
 			return super.name(tileX, tileY);
@@ -706,12 +706,12 @@ public class NewCavesBossLevel extends Level {
 		public String desc(int tileX, int tileY) {
 			int i = tileX + tileW*(tileY + this.tileY);
 			if (Dungeon.level.map[i] == INACTIVE_TRAP){
-				return Messages.get(CavesBossLevel.class, "wires_desc");
+				return Messages.get(NewCavesBossLevel.class, "wires_desc");
 			} else if (gate.inside(Dungeon.level.cellToPoint(i))){
 				if (Dungeon.level.solid(i)){
-					return Messages.get(CavesBossLevel.class, "gate_desc");
+					return Messages.get(NewCavesBossLevel.class, "gate_desc");
 				} else {
-					return Messages.get(CavesBossLevel.class, "gate_desc_broken");
+					return Messages.get(NewCavesBossLevel.class, "gate_desc_broken");
 				}
 			}
 			return super.desc(tileX, tileY);
@@ -777,7 +777,7 @@ public class NewCavesBossLevel extends Level {
 						if (c instanceof Pylon && c.alignment != Char.Alignment.NEUTRAL){
 							energySourceSprite = c.sprite;
 							break;
-						} else if (c instanceof DM300){
+						} else if (c instanceof OldDM300){
 							energySourceSprite = c.sprite;
 						}
 					}
@@ -799,9 +799,8 @@ public class NewCavesBossLevel extends Level {
 
 		@Override
 		public String tileDesc() {
-			return Messages.get(CavesBossLevel.class, "energy_desc");
+			return Messages.get(NewCavesBossLevel.class, "energy_desc");
 		}
-
 		@Override
 		public void use( BlobEmitter emitter ) {
 			super.use( emitter );
