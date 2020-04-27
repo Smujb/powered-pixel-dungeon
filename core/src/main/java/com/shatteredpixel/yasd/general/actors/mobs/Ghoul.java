@@ -332,6 +332,10 @@ public class Ghoul extends Mob {
 
 			for (Char ch : Actor.chars()){
 				if (ch != dieing && ch instanceof Ghoul && ch.alignment == dieing.alignment){
+					if (ch.fieldOfView == null){
+						ch.fieldOfView = new boolean[Dungeon.level.length()];
+						Dungeon.level.updateFieldOfView( ch, ch.fieldOfView );
+					}
 					if (ch.fieldOfView[dieing.pos] || Dungeon.level.distance(ch.pos, dieing.pos) < 4){
 						return (Ghoul) ch;
 					}
