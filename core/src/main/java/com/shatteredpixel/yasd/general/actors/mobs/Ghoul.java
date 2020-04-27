@@ -83,6 +83,11 @@ public class Ghoul extends Mob {
 		timesDowned = bundle.getInt( TIMES_DOWNED );
 	}
 
+	public void setSolo(){
+		partnerID = -2;
+	}
+
+
 	@Override
 	public float spawningWeight() {
 		return 0.5f;
