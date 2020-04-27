@@ -69,6 +69,7 @@ public class TerrainFeaturesTilemap extends DungeonTilemap {
 		if (plants.get(pos) != null){
 			return plants.get(pos).image + 7*16;
 		}
+		//TODO Fix grass visuals
 		/*int stage = (Dungeon.depth -1)/Constants.CHAPTER_LENGTH;
 		if (Dungeon.depth == 21) stage--;
 		if (tile == Terrain.HIGH_GRASS){

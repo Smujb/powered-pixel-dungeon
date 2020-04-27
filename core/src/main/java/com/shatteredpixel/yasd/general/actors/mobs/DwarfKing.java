@@ -28,14 +28,17 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.sprites.KingSprite;
 
 //TODO currently just regular DK but with no summoning ability
-public class DwarfKing extends King {
+public class DwarfKing extends Mob {
 
-	@Override
-	protected boolean canTryToSummon() {
-		return false;
+	{
+		spriteClass = KingSprite.class;
+
+		properties.add(Property.BOSS);
 	}
+
 
 	@Override
 	public void die(DamageSrc cause) {
