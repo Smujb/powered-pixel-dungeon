@@ -71,6 +71,8 @@ public class King extends Mob {
 
 		damageFactor = 1.3f;
 
+		healthFactor = 3f;
+
 		EXP = 40;
 		
 		Undead.count = 0;
