@@ -36,9 +36,17 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Charm;
+import com.shatteredpixel.yasd.general.actors.buffs.Chill;
+import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
+import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
+import com.shatteredpixel.yasd.general.actors.buffs.Slow;
+import com.shatteredpixel.yasd.general.actors.buffs.Terror;
+import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -508,7 +516,7 @@ public class NewDM300 extends Mob {
 				}
 				Dungeon.level.cleanWalls();
 				Dungeon.observe();
-				spend(2f);
+				spend(2.5f);
 
 				for (int i : PathFinder.NEIGHBOURS8){
 					if (Actor.findChar(pos+i) == null &&
@@ -540,6 +548,15 @@ public class NewDM300 extends Mob {
 
 	{
 		immunities.add(Sleep.class);
+
+		resistances.add(Terror.class);
+		resistances.add(Charm.class);
+		resistances.add(Vertigo.class);
+		resistances.add(Cripple.class);
+		resistances.add(Chill.class);
+		resistances.add(Frost.class);
+		resistances.add(Roots.class);
+		resistances.add(Slow.class);
 	}
 
 

@@ -60,8 +60,8 @@ public class Pylon extends Mob {
 	{
 		spriteClass = PylonSprite.class;
 
-		HP = HT = 50;
 
+		damageFactor = 0.3f;
 		maxLvl = -2;
 
 		properties.add(Property.BOSS);
@@ -116,7 +116,7 @@ public class Pylon extends Mob {
 	private void shockChar( Char ch ){
 		if (ch != null && !(ch instanceof NewDM300)){
 			ch.sprite.flash();
-			ch.damage(Random.NormalIntRange(15, 25), new DamageSrc(Element.ELECTRIC, Electricity.class));
+			ch.damage(damageRoll(), new DamageSrc(Element.ELECTRIC, Electricity.class));
 
 			if (ch == Dungeon.hero && !ch.isAlive()){
 				Dungeon.fail(NewDM300.class);
