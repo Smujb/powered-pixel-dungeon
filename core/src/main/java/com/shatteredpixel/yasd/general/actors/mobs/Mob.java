@@ -177,7 +177,7 @@ public abstract class Mob extends Char {
 		level = bundle.getInt( LEVEL );
 	}
 
-	Mob() {
+	public Mob() {
 		level = Dungeon.getScaleFactor();
 	}
 

@@ -27,22 +27,19 @@
 
 package com.shatteredpixel.yasd.general.messages;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IllegalFormatException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /*
-	Simple wrapper class for java resource bundles.
+	Simple wrapper class for libGDX I18NBundles.
 
 	The core idea here is that each string resource's key is a combination of the class definition and a local value.
 	An object or static method would usually call this with an object/class reference (usually its own) and a local key.
@@ -50,14 +47,7 @@ import java.util.ResourceBundle;
  */
 public class Messages {
 
-	/*
-		use hashmap for two reasons. Firstly because android 2.2 doesn't support resourcebundle.containskey(),
-		secondly so I can read in and combine multiple properties files,
-		resulting in a more clean structure for organizing all the strings, instead of one big file.
-
-		..Yes R.string would do this for me, but that's not multiplatform
-	 */
-	private static HashMap<String, String> strings;
+	private static ArrayList<I18NBundle> bundles;
 	private static Languages lang;
 
 	public static Languages lang(){
@@ -69,17 +59,17 @@ public class Messages {
 	/**
 	 * Setup Methods
 	 */
-
+	//TODO probably want to move these to assets now
 	private static String[] prop_files = new String[]{
-			"com.shatteredpixel.yasd.general.messages.actors.actors",
-			"com.shatteredpixel.yasd.general.messages.items.items",
-			"com.shatteredpixel.yasd.general.messages.journal.journal",
-			"com.shatteredpixel.yasd.general.messages.levels.levels",
-			"com.shatteredpixel.yasd.general.messages.plants.plants",
-			"com.shatteredpixel.yasd.general.messages.scenes.scenes",
-			"com.shatteredpixel.yasd.general.messages.ui.ui",
-			"com.shatteredpixel.yasd.general.messages.windows.windows",
-			"com.shatteredpixel.yasd.general.messages.misc.misc"
+			"com/shatteredpixel/yasd/general/messages/actors/actors",
+			"com/shatteredpixel/yasd/general/messages/items/items",
+			"com/shatteredpixel/yasd/general/messages/journal/journal",
+			"com/shatteredpixel/yasd/general/messages/levels/levels",
+			"com/shatteredpixel/yasd/general/messages/plants/plants",
+			"com/shatteredpixel/yasd/general/messages/scenes/scenes",
+			"com/shatteredpixel/yasd/general/messages/ui/ui",
+			"com/shatteredpixel/yasd/general/messages/windows/windows",
+			"com/shatteredpixel/yasd/general/messages/misc/misc"
 	};
 
 	static{
@@ -87,31 +77,15 @@ public class Messages {
 	}
 
 	public static void setup( Languages lang ){
-		strings = new HashMap<>();
+		//seeing as missing keys are part of our process, this is faster than throwing an exception
+		I18NBundle.setExceptionOnMissingKey(false);
+
+		bundles = new ArrayList<>();
 		Messages.lang = lang;
 		Locale locale = new Locale(lang.code());
 
 		for (String file : prop_files) {
-			ResourceBundle bundle = ResourceBundle.getBundle( file, locale);
-			Enumeration<String> keys = bundle.getKeys();
-			while (keys.hasMoreElements()) {
-				String key = keys.nextElement();
-				String value = bundle.getString(key);
-
-
-				//TODO do all desktop platforms read as ISO, or only windows?
-				// should also move this to platform support, probably.
-				if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-					try {
-						value = new String(value.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-					} catch (Exception e) {
-						MainGame.reportException(e);
-					}
-				}
-
-
-				strings.put(key, value);
-			}
+			bundles.add(I18NBundle.createBundle(Gdx.files.classpath(file), locale));
 		}
 	}
 
@@ -142,10 +116,11 @@ public class Messages {
 		} else
 			key = k;
 
-		if (strings.containsKey(key.toLowerCase(Locale.ENGLISH))){
-			if (args.length > 0) return format(strings.get(key.toLowerCase(Locale.ENGLISH)), args);
-			else return strings.get(key.toLowerCase(Locale.ENGLISH));
-		} else {
+		String value = getFromBundle(key.toLowerCase(Locale.ENGLISH));
+		if (value != null){
+			if (args.length > 0) return format(value, args);
+			else return value;
+		}  else {
 			//Use baseName so the missing string is clear what exactly needs replacing. Otherwise, it just says java.lang.Object.[key]
 			if (baseName == null) {
 				baseName = key;
@@ -161,6 +136,17 @@ public class Messages {
 		}
 	}
 
+	private static String getFromBundle(String key){
+		String result;
+		for (I18NBundle b : bundles){
+			result = b.get(key);
+			//if it isn't the return string for no key found, return it
+			if (result.length() != key.length()+6 || !result.contains(key)){
+				return result;
+			}
+		}
+		return null;
+	}
 
 
 	/**
