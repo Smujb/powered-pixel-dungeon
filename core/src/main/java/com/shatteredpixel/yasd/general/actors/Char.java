@@ -60,6 +60,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Haste;
 import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
+import com.shatteredpixel.yasd.general.actors.buffs.LifeLink;
 import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicalSleep;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
@@ -682,6 +683,25 @@ public abstract class Char extends Actor {
 			die(src);
 			return;
 		}
+
+		if (src.getCause() != LifeLink.class && buff(LifeLink.class) != null){
+			HashSet<LifeLink> links = buffs(LifeLink.class);
+			for (LifeLink link : links.toArray(new LifeLink[0])){
+				if (Actor.findById(link.object) == null){
+					links.remove(link);
+					link.detach();
+				}
+			}
+			dmg /= (links.size()+1);
+			for (LifeLink link : links){
+				Char ch = (Char)Actor.findById(link.object);
+				ch.damage(dmg, new DamageSrc(Element.NATURAL, LifeLink.class));
+				if (!ch.isAlive()){
+					link.detach();
+				}
+			}
+		}
+
 		Terror t = buff(Terror.class);
 		if (t != null){
 			t.recover();
