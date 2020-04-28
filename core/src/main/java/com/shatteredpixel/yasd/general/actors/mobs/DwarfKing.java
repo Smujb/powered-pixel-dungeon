@@ -115,6 +115,8 @@ public class DwarfKing extends Mob {
 		summonCooldown = bundle.getFloat(SUMMON_CD);
 		abilityCooldown = bundle.getFloat(ABILITY_CD);
 		lastAbility = bundle.getInt(LAST_ABILITY);
+
+		if (phase == 2) properties.add(Property.IMMOVABLE);
 	}
 
 	@Override
@@ -303,7 +305,7 @@ public class DwarfKing extends Mob {
 			bestPos = enemy.pos;
 			for (int i : PathFinder.NEIGHBOURS8){
 				if (Actor.findChar(enemy.pos+i) == null
-						&& !Dungeon.level.solid(enemy.pos+1)
+						&& !Dungeon.level.solid(enemy.pos+i)
 						&& Dungeon.level.trueDistance(enemy.pos+i, pos) < bestDist){
 					bestPos = enemy.pos+i;
 					bestDist = Dungeon.level.trueDistance(enemy.pos+i, pos);
@@ -355,10 +357,11 @@ public class DwarfKing extends Mob {
 			int dmgTaken = preHP - HP;
 			abilityCooldown -= dmgTaken/8f;
 			summonCooldown -= dmgTaken/8f;
-			if (HP <= 50) {
-				HP = 50;
+			if (HP <= HT/3) {
+				HP = HT/3;
 				sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
 				ScrollOfTeleportation.appear(this, NewCityBossLevel.throne);
+				properties.add(Property.IMMOVABLE);
 				phase = 2;
 				summonsMade = 0;
 				sprite.idle();
@@ -373,6 +376,7 @@ public class DwarfKing extends Mob {
 				}
 			}
 		} else if (phase == 2 && shielding() == 0) {
+			properties.remove(Property.IMMOVABLE);
 			phase = 3;
 			summonsMade = 3; //opens with a monk/warlock
 			sprite.centerEmitter().start( Speck.factory( Speck.SCREAM ), 0.4f, 2 );
@@ -403,14 +407,10 @@ public class DwarfKing extends Mob {
 
 		Badges.validateBossSlain();
 
-		super.die( cause );
 		Dungeon.level.unseal();
-		Badges.validateBossSlain();
 
-		for (Mob m : Dungeon.level.mobs.toArray(new Mob[0])){
-			if (m instanceof Ghoul || m instanceof Monk || m instanceof Warlock){
-				m.die(null);
-			}
+		for (Mob m : getSubjects()){
+			m.die(new DamageSrc(Element.NATURAL));
 		}
 
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
@@ -530,6 +530,15 @@ public class DwarfKing extends Mob {
 	}
 
 	public static class KingDamager extends Buff {
+
+		@Override
+		public boolean act() {
+			if (target.alignment != Alignment.ENEMY){
+				detach();
+			}
+			spend( TICK );
+			return true;
+		}
 
 		@Override
 		public void detach() {

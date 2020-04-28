@@ -131,11 +131,14 @@ public class Ghoul extends Mob {
 		return super.act();
 	}
 
+	private boolean beingLifeLinked = false;
+
 	@Override
 	public void die(DamageSrc cause) {
 		if (cause.getCause() != Chasm.class && cause.getCause() != GhoulLifeLink.class){
 			Ghoul nearby = GhoulLifeLink.searchForHost(this);
 			if (nearby != null){
+				beingLifeLinked = true;
 				Actor.remove(this);
 				Dungeon.level.mobs.remove( this );
 				timesDowned++;
@@ -143,26 +146,25 @@ public class Ghoul extends Mob {
 				((GhoulSprite)sprite).crumple();
 				HP = Math.round(HT/10f);
 				GLog.i(Messages.get(this, "collapse"));
+				beingLifeLinked = false;
 				return;
 			}
 		}
-
-		Buff b = buff(Corruption.class);
-		if (b != null) b.detach();
-		b = buff(DwarfKing.KingDamager.class);
-		if (b != null) b.detach();
 
 		super.die(cause);
 	}
 
 	@Override
 	protected synchronized void onRemove() {
-		for (Buff buff : buffs()) {
-			//corruption is preserved
-			//corruption and king damager are preserved when removed
-			//instead they are detached when the ghoul actually dies
-			if (!(buff instanceof Corruption) && !(buff instanceof DwarfKing.KingDamager))
-				buff.detach();
+		if (beingLifeLinked) {
+			for (Buff buff : buffs()) {
+				//corruption and king damager are preserved when removed via life link
+				if (!(buff instanceof Corruption) && !(buff instanceof DwarfKing.KingDamager)) {
+					buff.detach();
+				}
+			}
+		} else {
+			super.onRemove();
 		}
 	}
 
