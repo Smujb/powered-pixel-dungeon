@@ -91,7 +91,7 @@ public enum Element {
 	CONFUSION( false ),//Confuses
 
 	//Air
-	AIR( false ),//TODO
+	AIR( false ),//Gives "Hex"
 	SHOCK( true ),//More dmg in water
 	LIGHT( true ),//More dmg vs undead/demonic
 	SPIRIT( true ),//Weakens
