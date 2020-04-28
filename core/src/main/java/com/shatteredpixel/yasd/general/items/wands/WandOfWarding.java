@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -129,6 +130,7 @@ public class WandOfWarding extends DamageWand {
 			GameScene.add(ward, 1f);
 			Dungeon.level.occupyCell(ward);
 			ward.sprite.emitter().burst(MagicMissile.WardParticle.UP, ward.tier);
+			Dungeon.level.pressCell(bolt.collisionPos);
 			ward.alignment = curUser.alignment;
 		} else {
 			GLog.w( Messages.get(this, "bad_location"));
@@ -216,7 +218,7 @@ public class WandOfWarding extends DamageWand {
 			return Messages.get(this, "stats_desc", 3);
 	}
 
-	public static class Ward extends Mob {
+	public static class Ward extends NPC {
 
 		public int tier = 1;
 		private int wandLevel = 1;
@@ -228,13 +230,20 @@ public class WandOfWarding extends DamageWand {
 
 			alignment = curUser.alignment;
 
-			properties.add(Property.IMMOVABLE);
+			properties.add(Char.Property.IMMOVABLE);
 
 			viewDistance = 3;
 			range = viewDistance;
 			state = WANDERING;
 
 		}
+
+		@Override
+		protected boolean act() {
+			throwItem();
+			return super.act();
+		}
+
 
 		{
 			immunities.add( Corruption.class );

@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.LifeLink;
+import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.Pushing;
@@ -258,6 +259,8 @@ public class DwarfKing extends Mob {
 	}
 
 	private boolean teleportSubject(){
+		if (enemy == null) return false;
+
 		Mob furthest = null;
 
 		for (Mob m : getSubjects()){
@@ -343,6 +346,11 @@ public class DwarfKing extends Mob {
 		}
 		int preHP = HP;
 		super.damage(dmg, src);
+
+
+		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
+		if (lock != null && !isImmune(src.getClass())) lock.addTime(dmg/3);
+
 		if (phase == 1) {
 			int dmgTaken = preHP - HP;
 			abilityCooldown -= dmgTaken/8f;
@@ -384,7 +392,12 @@ public class DwarfKing extends Mob {
 	@Override
 	public void die(DamageSrc cause) {
 		GameScene.bossSlain();
-		Dungeon.level.drop( new Torch(), pos ).sprite.drop();
+		if (!Dungeon.level.solid(pos)) {
+			Dungeon.level.drop(new Torch(), pos).sprite.drop();
+		} else {
+			//if the king is on his throne, drop the toolkit below
+			Dungeon.level.drop( new Torch(), pos + Dungeon.level.width() ).sprite.drop( pos );
+		}
 
 		super.die( cause );
 

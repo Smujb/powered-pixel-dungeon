@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.ui;
 
+import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 
@@ -45,8 +46,8 @@ public class TargetHealthIndicator extends HealthBar {
 	@Override
 	public void update() {
 		super.update();
-		
-		if (target != null && target.isAlive() && target.sprite.visible) {
+
+		if (target != null && target.isAlive() && target.sprite.visible && Actor.chars().contains(target)) {
 			CharSprite sprite = target.sprite;
 			width = sprite.width();
 			x = sprite.x;
