@@ -201,12 +201,16 @@ public abstract class Level implements Bundlable {
 	int maxScaleFactor = -1;
 	//By default, scales with hero level and has max and min defined within the individual levels. -1 max gives no limit.
 	public int getScaleFactor() {
-		if (maxScaleFactor == -1) {
-			return Math.max(minScaleFactor, Dungeon.hero.levelToScaleFactor());
-		} else if (Dungeon.hero != null) {
-			return (int) GameMath.gate(minScaleFactor, Dungeon.hero.levelToScaleFactor(), maxScaleFactor);
+		int level;
+		if (Dungeon.hero != null) {
+			level = Dungeon.hero.levelToScaleFactor();
 		} else {
-			return 1;
+			level = 1;
+		}
+		if (maxScaleFactor == -1) {
+			return Math.max(minScaleFactor, level);
+		} else {
+			return (int) GameMath.gate(minScaleFactor, level, maxScaleFactor);
 		}
 	}
 
