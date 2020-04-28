@@ -54,7 +54,6 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -273,9 +272,9 @@ public class DwarfKing extends Mob {
 						pos = Random.element(candidates);
 					}
 				}
-
-				if (Actor.findChar(pos) == null) {
-					Mob m = Reflection.newInstance(summon);
+				Char ch = Actor.findChar(pos);
+				if (ch == null) {
+					Mob m = Mob.create(summon);
 					if (m instanceof Ghoul) {
 						((Ghoul) m).setSolo();
 					}
@@ -284,7 +283,6 @@ public class DwarfKing extends Mob {
 					GameScene.add(m);
 					m.state = m.HUNTING;
 				} else {
-					Char ch = Actor.findChar(pos);
 					ch.damage(Random.NormalIntRange(20, 40), new DamageSrc(Element.DARK, summon));
 				}
 
