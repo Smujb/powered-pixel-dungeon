@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Doom;
 import com.shatteredpixel.yasd.general.actors.buffs.LifeLink;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
 import com.shatteredpixel.yasd.general.effects.Beam;
@@ -43,6 +44,8 @@ import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.general.items.Heap;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Torch;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
@@ -128,6 +131,11 @@ public class DwarfKing extends Mob {
 				summonCooldown += Random.NormalIntRange(MIN_COOLDOWN, MAX_COOLDOWN);
 			} else if (summonCooldown > 0) {
 				summonCooldown--;
+			}
+
+			if (paralysed > 0){
+				spend(TICK);
+				return true;
 			}
 
 			if (abilityCooldown <= 0) {
@@ -396,14 +404,20 @@ public class DwarfKing extends Mob {
 	@Override
 	public void die(DamageSrc cause) {
 		GameScene.bossSlain();
-		if (!Dungeon.level.solid(pos)) {
-			Dungeon.level.drop(new Torch(), pos).sprite.drop();
-		} else {
-			//if the king is on his throne, drop the toolkit below
-			Dungeon.level.drop( new Torch(), pos + Dungeon.level.width() ).sprite.drop( pos );
-		}
 
 		super.die( cause );
+
+		if (Dungeon.level.solid(pos)) {
+			Heap h = Dungeon.level.heaps.get(pos);
+			for (Item i : h.items) {
+				Dungeon.level.drop(i, pos + Dungeon.level.width());
+			}
+			h.destroy();
+			Dungeon.level.drop(new Torch(), pos + Dungeon.level.width()).sprite.drop(pos);
+		} else {
+			//if the king is on his throne, drop the toolkit below
+			Dungeon.level.drop(new Torch(), pos).sprite.drop();
+		}
 
 		Badges.validateBossSlain();
 
@@ -419,6 +433,15 @@ public class DwarfKing extends Mob {
 		}
 
 		yell( Messages.get(this, "defeated") );
+	}
+
+	@Override
+	public boolean isImmune(Class effect) {
+		//immune to damage amplification from doomed in 2nd phase or later, but it can still be applied
+		if (phase > 1 && effect == Doom.class && buff(Doom.class) != null ){
+			return true;
+		}
+		return super.isImmune(effect);
 	}
 
 	public static class Summoning extends Buff {
