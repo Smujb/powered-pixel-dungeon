@@ -43,6 +43,7 @@ import com.watabou.noosa.PointerArea;
 import com.watabou.noosa.SkinnedBlock;
 import com.watabou.utils.Callback;
 
+//FIXME very messy, going to have to rework at some point. Still better than ILS at least...
 public class TextScene extends PixelScene {
 
 	private enum Phase {
@@ -177,8 +178,6 @@ public class TextScene extends PixelScene {
 							};
 							add(hotArea);
 						}
-					} else {
-						phase = Phase.STATIC;
 					}
 				}
 				break;
