@@ -409,10 +409,12 @@ public class DwarfKing extends Mob {
 
 		if (Dungeon.level.solid(pos)) {
 			Heap h = Dungeon.level.heaps.get(pos);
-			for (Item i : h.items) {
-				Dungeon.level.drop(i, pos + Dungeon.level.width());
+			if (h != null) {
+				for (Item i : h.items) {
+					Dungeon.level.drop(i, pos + Dungeon.level.width());
+				}
+				h.destroy();
 			}
-			h.destroy();
 			Dungeon.level.drop(new Torch(), pos + Dungeon.level.width()).sprite.drop(pos);
 		} else {
 			//if the king is on his throne, drop the toolkit below
