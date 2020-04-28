@@ -203,8 +203,10 @@ public abstract class Level implements Bundlable {
 	public int getScaleFactor() {
 		if (maxScaleFactor == -1) {
 			return Math.max(minScaleFactor, Dungeon.hero.levelToScaleFactor());
-		} else {
+		} else if (Dungeon.hero != null) {
 			return (int) GameMath.gate(minScaleFactor, Dungeon.hero.levelToScaleFactor(), maxScaleFactor);
+		} else {
+			return 1;
 		}
 	}
 
