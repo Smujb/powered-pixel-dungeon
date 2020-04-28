@@ -278,7 +278,7 @@ public class NewDM300 extends Mob {
 
 		Camera.main.shake( supercharged ? 3 : 1, 0.25f );
 
-		if (Dungeon.level.map[step] == Terrain.INACTIVE_TRAP && state == HUNTING) {
+		if (Dungeon.level.map[step] == Terrain.INTERACTION && state == HUNTING) {
 
 			//don't gain energy from cells that are energized
 			if (NewCavesBossLevel.PylonEnergy.volumeAt(pos, NewCavesBossLevel.PylonEnergy.class) > 0){

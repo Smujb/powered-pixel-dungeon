@@ -244,7 +244,7 @@ public enum Terrain implements KindOfTerrain {
 			return DOOR;
 		}
 	},
-	INACTIVE_TRAP {
+	INTERACTION {
 		@Override
 		public void setup() {
 			passable = true;

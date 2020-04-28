@@ -146,7 +146,7 @@ public class DungeonTileSheet {
 		chasmStitcheable.put( Terrain.WELL,         CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.STATUE,       CHASM_FLOOR );
 		//chasmStitcheable.put( Terrain.SECRET_TRAP,  CHASM_FLOOR );
-		//chasmStitcheable.put( Terrain.INACTIVE_TRAP,CHASM_FLOOR );
+		//chasmStitcheable.put( Terrain.INTERACTION,CHASM_FLOOR );
 		//chasmStitcheable.put( Terrain.TRAP,         CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.BOOKSHELF,    CHASM_FLOOR );
 		chasmStitcheable.put( Terrain.BARRICADE,    CHASM_FLOOR );
@@ -387,7 +387,7 @@ public class DungeonTileSheet {
 
 		//directVisuals.put(Terrain.SECRET_TRAP,      directVisuals.get(Terrain.EMPTY));
 		//directVisuals.put(Terrain.TRAP,             directVisuals.get(Terrain.EMPTY));
-		//directVisuals.put(Terrain.INACTIVE_TRAP,    directVisuals.get(Terrain.EMPTY));
+		//directVisuals.put(Terrain.INTERACTION,    directVisuals.get(Terrain.EMPTY));
 
 		directVisuals.put(Terrain.EMPTY_DECO,       FLOOR_DECO);
 		directVisuals.put(Terrain.LOCKED_EXIT,      LOCKED_EXIT);

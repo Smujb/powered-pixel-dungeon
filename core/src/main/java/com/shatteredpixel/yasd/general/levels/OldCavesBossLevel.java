@@ -172,7 +172,7 @@ public class OldCavesBossLevel extends Level {
 
 		for (int i=0; i < length(); i++) {
 			if (map[i] == EMPTY && Random.Int( 6 ) == 0) {
-				//map[i] = INACTIVE_TRAP;
+				//map[i] = INTERACTION;
 				Trap t = new ToxicTrap().reveal();
 				t.active = false;
 				setTrap(t, i);

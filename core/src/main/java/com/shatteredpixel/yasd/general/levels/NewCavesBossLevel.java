@@ -75,7 +75,7 @@ import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EXIT;
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.INACTIVE_TRAP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.INTERACTION;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.NONE;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.SIGN;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE;
@@ -146,14 +146,13 @@ public class NewCavesBossLevel extends Level {
 		//set up main boss arena
 		Painter.fillEllipse(this, mainArena, EMPTY);
 
-		boolean[] patch = Patch.generate( width, height-14, 0.20f, 2, true );
+		boolean[] patch = Patch.generate( width, height-14, 0.15f, 2, true );
 		for (int i= 14*width(); i < length(); i++) {
 			if (map[i] == EMPTY) {
 				if (patch[i - 14*width()]){
 					map[i] = WATER;
-				} else if (Random.Int(6) == 0){
-					map[i] = INACTIVE_TRAP;
-					map[i] = INACTIVE_TRAP;
+				} else if (Random.Int(8) == 0){
+					map[i] = INTERACTION;
 				}
 			}
 		}
@@ -305,7 +304,7 @@ public class NewCavesBossLevel extends Level {
 		}
 
 		for( int i = (mainArena.top-1)*width; i <length; i++){
-			if (map[i] == INACTIVE_TRAP || map[i] == WATER || map[i] == SIGN){
+			if (map[i] == INTERACTION || map[i] == WATER || map[i] == SIGN){
 				GameScene.add(Blob.seed(i, 1, PylonEnergy.class));
 			}
 		}
@@ -398,13 +397,13 @@ public class NewCavesBossLevel extends Level {
 
 	private static Terrain[] entrance2 = {
 			n, n, n, n, n, n, n, n,
-			n, n, n, n, n, n, W, W,
-			n, n, n, n, n, n, e, e,
-			n, n, n, n, e, W, W, W,
-			n, n, n, e, e, e, e, e,
+			n, n, n, n, n, n, n, n,
+			n, n, n, n, n, e, e, e,
 			n, n, n, W, e, W, W, e,
-			n, W, e, W, e, W, e, e,
-			n, W, e, W, e, e, e, e
+			n, n, n, e, e, e, e, e,
+			n, n, e, W, e, W, W, e,
+			n, n, e, W, e, W, e, e,
+			n, n, e, e, e, e, e, e
 	};
 
 	private static Terrain[] entrance3 = {
@@ -489,13 +488,13 @@ public class NewCavesBossLevel extends Level {
 
 	private static Terrain[] corner3 = {
 			W, W, W, W, W, W, W, W, W, W,
-			W, s, s, s, W, e, e, e, W, W,
-			W, s, s, s, e, e, W, e, W, W,
+			W, s, s, s, W, W, W, W, W, W,
+			W, s, s, s, e, e, e, e, W, W,
 			W, s, s, s, W, W, W, e, W, W,
 			W, W, e, W, W, W, W, e, W, n,
-			W, e, e, W, W, W, W, e, e, n,
-			W, e, W, W, W, W, n, n, n, n,
-			W, e, e, e, e, e, n, n, n, n,
+			W, W, e, W, W, W, W, e, e, n,
+			W, W, e, W, W, W, n, n, n, n,
+			W, W, e, e, e, e, n, n, n, n,
 			W, W, W, W, W, e, n, n, n, n,
 			W, W, W, W, n, n, n, n, n, n,
 	};
@@ -670,7 +669,7 @@ public class NewCavesBossLevel extends Level {
 								data[i] = 54 + (j % w + 8 * (j / w)) - (k % w + 8 * (k / w));
 							}
 						}
-					} else if (Dungeon.level.map[j] == INACTIVE_TRAP){
+					} else if (Dungeon.level.map[j] == INTERACTION){
 						data[i] = 37;
 					} else if (gate.inside(Dungeon.level.cellToPoint(j))){
 						int idx = Dungeon.level.solid(j) ? 40 : 32;
@@ -693,7 +692,7 @@ public class NewCavesBossLevel extends Level {
 		@Override
 		public String name(int tileX, int tileY) {
 			int i = tileX + tileW*(tileY + this.tileY);
-			if (Dungeon.level.map[i] == INACTIVE_TRAP){
+			if (Dungeon.level.map[i] == INTERACTION){
 				return Messages.get(NewCavesBossLevel.class, "wires_name");
 			} else if (gate.inside(Dungeon.level.cellToPoint(i))){
 				return Messages.get(NewCavesBossLevel.class, "gate_name");
@@ -705,7 +704,7 @@ public class NewCavesBossLevel extends Level {
 		@Override
 		public String desc(int tileX, int tileY) {
 			int i = tileX + tileW*(tileY + this.tileY);
-			if (Dungeon.level.map[i] == INACTIVE_TRAP){
+			if (Dungeon.level.map[i] == INTERACTION){
 				return Messages.get(NewCavesBossLevel.class, "wires_desc");
 			} else if (gate.inside(Dungeon.level.cellToPoint(i))){
 				if (Dungeon.level.solid(i)){
@@ -790,7 +789,7 @@ public class NewCavesBossLevel extends Level {
 				s.resetStatic(x, y);
 				s.speed.set((energySourceSprite.x + energySourceSprite.width/2f) - x,
 						(energySourceSprite.y + energySourceSprite.height/2f) - y);
-				s.speed.normalize().scale(DungeonTilemap.SIZE/2);
+				s.speed.normalize().scale(DungeonTilemap.SIZE);
 				s.acc.set(s.speed);
 			}
 

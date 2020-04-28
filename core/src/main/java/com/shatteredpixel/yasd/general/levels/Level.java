@@ -1325,7 +1325,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void disarmTrap( int pos ) {
-		//set(pos, INACTIVE_TRAP);
+		//set(pos, INTERACTION);
 		GameScene.updateMap(pos);
 	}
 
@@ -1650,7 +1650,7 @@ public abstract class Level implements Bundlable {
 			case STATUE:
 			case STATUE_SP:
 				return Messages.get(Level.class, "statue_name");
-			//case INACTIVE_TRAP:
+			//case INTERACTION:
 		//		return Messages.get(Level.class, "inactive_trap_name");
 			case BOOKSHELF:
 				return Messages.get(Level.class, "bookshelf_name");
@@ -1691,7 +1691,7 @@ public abstract class Level implements Bundlable {
 				return Messages.get(Level.class, "barricade_desc");
 			case SIGN:
 				return Messages.get(Level.class, "sign_desc");
-			//case INACTIVE_TRAP:
+			//case INTERACTION:
 			//	return Messages.get(Level.class, "inactive_trap_desc");
 			case STATUE:
 			case STATUE_SP:
