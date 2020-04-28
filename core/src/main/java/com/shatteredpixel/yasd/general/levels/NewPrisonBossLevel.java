@@ -547,7 +547,7 @@ public class NewPrisonBossLevel extends Level {
 					mobs.add(m);
 				}
 				
-				tengu.die(new Char.DamageSrc(Element.NATURAL, Dungeon.hero));
+				tengu.die(new Char.DamageSrc(Element.META, Dungeon.hero));
 				
 				clearEntities(tenguCell);
 				cleanMapState();

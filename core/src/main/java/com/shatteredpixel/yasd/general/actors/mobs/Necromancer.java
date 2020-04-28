@@ -118,7 +118,7 @@ public class Necromancer extends Mob {
 		}
 		
 		if (mySkeleton != null && mySkeleton.isAlive()){
-			mySkeleton.die(new DamageSrc(Element.NATURAL, null));
+			mySkeleton.die(new DamageSrc(Element.META, null));
 		}
 		
 		if (summoningEmitter != null){

@@ -58,8 +58,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class TestBoss extends Mob {
@@ -288,7 +286,7 @@ public class TestBoss extends Mob {
 					zap(i);
 				}
 			}
-			die(new DamageSrc(Element.NATURAL, null));
+			die(new DamageSrc(Element.META, null));
 			return true;
 		}
 

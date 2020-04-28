@@ -61,8 +61,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
@@ -454,7 +452,7 @@ public class OldPrisonBossLevel extends Level {
 					mobs.add(m);
 				}
 
-				tengu.die(new Char.DamageSrc(Element.NATURAL, Dungeon.hero));
+				tengu.die(new Char.DamageSrc(Element.META, Dungeon.hero));
 				
 				clearEntities((Room) new EmptyRoom().set(2, 25, 8, 31)); //arena is safe
 

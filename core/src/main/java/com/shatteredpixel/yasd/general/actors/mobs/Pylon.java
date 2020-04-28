@@ -116,7 +116,7 @@ public class Pylon extends Mob {
 	private void shockChar( Char ch ){
 		if (ch != null && !(ch instanceof NewDM300)){
 			ch.sprite.flash();
-			ch.damage(damageRoll(), new DamageSrc(Element.ELECTRIC, Electricity.class));
+			ch.damage(damageRoll(), new DamageSrc(Element.SHOCK, Electricity.class));
 
 			if (ch == Dungeon.hero && !ch.isAlive()){
 				Dungeon.fail(NewDM300.class);

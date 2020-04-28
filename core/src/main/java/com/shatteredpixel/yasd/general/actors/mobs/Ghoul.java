@@ -321,7 +321,7 @@ public class Ghoul extends Mob {
 				attachTo(newHost);
 				spend(-cooldown());
 			} else {
-				ghoul.die(new DamageSrc(Element.NATURAL, this));
+				ghoul.die(new DamageSrc(Element.META, this));
 			}
 		}
 

@@ -54,8 +54,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class WandOfTransfusion extends Wand {
 
 	{
@@ -118,7 +116,7 @@ public class WandOfTransfusion extends Wand {
 				
 				//harms the undead
 				} else {
-					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), new Char.DamageSrc(Element.HOLY, this).ignoreDefense());
+					ch.damage(Random.NormalIntRange(3 + intLevel/2, 6+intLevel), new Char.DamageSrc(Element.LIGHT, this).ignoreDefense());
 					ch.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10 + intLevel);
 					Sample.INSTANCE.play(Assets.SND_BURNING);
 				}
@@ -135,7 +133,7 @@ public class WandOfTransfusion extends Wand {
 	//this wand costs health too
 	private void damageHero(int damage){
 		
-		curUser.damage(damage, new Char.DamageSrc(Element.DARK, this).ignoreDefense());
+		curUser.damage(damage, new Char.DamageSrc(Element.SPIRIT, this).ignoreDefense());
 
 		if (!curUser.isAlive()){
 			Dungeon.fail( getClass() );

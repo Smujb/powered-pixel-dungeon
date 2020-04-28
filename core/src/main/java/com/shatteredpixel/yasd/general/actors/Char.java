@@ -386,7 +386,7 @@ public abstract class Char extends Actor {
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
-				enemy.die(new DamageSrc(Element.NATURAL));
+				enemy.die(new DamageSrc(Element.META));
 				return true;
 			}
 			//Actually damage them. Ignore defense as DR roll is automatically processed earlier.
@@ -695,7 +695,7 @@ public abstract class Char extends Actor {
 			dmg /= (links.size()+1);
 			for (LifeLink link : links){
 				Char ch = (Char)Actor.findById(link.object);
-				ch.damage(dmg, new DamageSrc(Element.NATURAL, link));
+				ch.damage(dmg, new DamageSrc(Element.META, link));
 				if (!ch.isAlive()){
 					link.detach();
 				}

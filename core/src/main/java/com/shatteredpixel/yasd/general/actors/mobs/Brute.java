@@ -45,8 +45,6 @@ import com.shatteredpixel.yasd.general.sprites.ShieldedSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Brute extends Mob {
 	
 	{
@@ -133,7 +131,7 @@ public class Brute extends Mob {
 			absorbDamage( 4 );
 
 			if (shielding() <= 0){
-				target.die(new DamageSrc(Element.NATURAL));
+				target.die(new DamageSrc(Element.META));
 			}
 
 			spend( TICK );
@@ -202,7 +200,7 @@ public class Brute extends Mob {
 				absorbDamage( 1 );
 
 				if (shielding() <= 0){
-					target.die(new DamageSrc(Element.NATURAL));
+					target.die(new DamageSrc(Element.META));
 				}
 
 				spend( 3*TICK );

@@ -52,7 +52,7 @@ public class Buff extends Actor {
 	//whether or not the buff announces its name
 	public boolean announced = false;
 
-	public Element element = Element.NONE;
+	public Element element = Element.MAGICAL;
 
 	public Char.DamageSrc defaultSrc() {
 		return new Char.DamageSrc(element, this).ignoreDefense();

@@ -120,7 +120,7 @@ public class WndSadGhost extends Window {
 		}
 		
 		ghost.yell( Messages.get(this, "farewell") );
-		ghost.die( new Char.DamageSrc(Element.NATURAL, null));
+		ghost.die( new Char.DamageSrc(Element.META, null));
 		
 		Ghost.Quest.complete();
 	}

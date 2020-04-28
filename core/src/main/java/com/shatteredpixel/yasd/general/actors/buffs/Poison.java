@@ -43,7 +43,7 @@ import com.watabou.utils.Bundle;
 
 public class Poison extends Buff implements Hero.Doom {
 	{
-		element = Element.VENOM;
+		element = Element.TOXIC;
 	}
 	
 	protected float left;

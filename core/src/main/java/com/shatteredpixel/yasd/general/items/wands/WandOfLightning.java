@@ -56,7 +56,7 @@ public class WandOfLightning extends DamageWand {
 	{
 		image = ItemSpriteSheet.WAND_LIGHTNING;
 
-		element = Element.ELECTRIC;
+		element = Element.SHOCK;
 	}
 	
 	private ArrayList<Char> affected = new ArrayList<>();

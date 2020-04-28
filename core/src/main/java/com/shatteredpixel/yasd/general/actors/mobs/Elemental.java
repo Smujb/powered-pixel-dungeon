@@ -205,7 +205,7 @@ public abstract class Elemental extends Mob {
 
 		@Override
 		public Element elementalType() {
-			return Element.ELECTRIC;
+			return Element.SHOCK;
 		}
 	}
 

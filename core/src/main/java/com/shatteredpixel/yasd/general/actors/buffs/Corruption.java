@@ -39,7 +39,7 @@ public class Corruption extends Buff {
 		type = buffType.NEGATIVE;
 		announced = true;
 
-		element = Element.DARK;
+		element = Element.SPIRIT;
 	}
 
 	private float buildToDamage = 0f;

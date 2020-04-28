@@ -66,7 +66,7 @@ public class Scorpio extends Mob {
 
 	@Override
 	public Element elementalType() {
-		return Element.RANGED;
+		return Element.PHYSICAL;
 	}
 
 	@Override

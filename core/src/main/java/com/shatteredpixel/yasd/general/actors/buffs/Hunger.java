@@ -40,7 +40,7 @@ import com.watabou.utils.Bundle;
 
 public class Hunger extends Buff implements Hero.Doom {
 	{
-		element = Element.NATURAL;
+		element = Element.META;
 	}
 
 	private static final float STEP	= 10f;

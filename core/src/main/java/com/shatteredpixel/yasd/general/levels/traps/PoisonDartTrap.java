@@ -96,7 +96,7 @@ public class PoisonDartTrap extends Trap {
 								@Override
 								public void call() {
 									int dmg = Random.NormalIntRange(4, 8) - finalTarget.drRoll(Element.PHYSICAL);
-									finalTarget.damage( dmg, new Char.DamageSrc(Element.VENOM, this) );
+									finalTarget.damage( dmg, new Char.DamageSrc(Element.TOXIC, this) );
 									if (finalTarget == Dungeon.hero && !finalTarget.isAlive()){
 										Dungeon.fail( trap.getClass() );
 									}
@@ -112,7 +112,7 @@ public class PoisonDartTrap extends Trap {
 					}
 				});
 			} else {
-				finalTarget.damage(Random.NormalIntRange(1, 4), new Char.DamageSrc(Element.VENOM, this));
+				finalTarget.damage(Random.NormalIntRange(1, 4), new Char.DamageSrc(Element.TOXIC, this));
 				Buff.affect( finalTarget, Poison.class ).set( poisonAmount() );
 			}
 		}

@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
-import com.shatteredpixel.yasd.general.actors.buffs.Combo;
 import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
@@ -69,34 +68,42 @@ public enum Element {
 	The purpose of this file is to make it easier to add types of damage to the game.
 	It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing.
 	 */
-	//TODO refactor into 12 elements - 4 physical, 8 magical + Natural which is a kind of meta element
+	//Base elements. Magical, Physical
 	PHYSICAL( false ),
-	RANGED( false ),
-	SHARP( false ),
-	EARTH( false ),
-	SABOTAGE( false ),
-	NONE( true ),
 	MAGICAL( true ),
-	DESTRUCTION( true ),
-	NATURAL( true ),
-	FIRE( true),
-	WATER( true ),
-	COLD( true ),
-	GRASS( true ),
-	AIR( true ),
-	ACID( true ),
-	ELECTRIC( true ),
-	CONFUSION( true ),
-	VENOM( true ),
-	HOLY( true ),
-	DRAIN( true ),
-	LIGHT( true ),
-	DARK( true );
+
+	//Earth
+	EARTH( false ),//TODO
+	GRASS( true ),//Slows
+	STONE( false ),//Paralyzes
+	SHARP( false ),//Bleeds
+
+	//Fire
+	FIRE( true),//Sets on fire
+	DESTRUCTION( true ),//Causes "Vunerable"
+	ACID( true ),//Gives Ooze
+	DRAIN( true ),//Drains life
+
+	//Water
+	WATER( true ),//Wets
+	COLD( true ),//Chills
+	TOXIC( true ),//Poisons
+	CONFUSION( false ),//Confuses
+
+	//Air
+	AIR( false ),//TODO
+	SHOCK( true ),//More dmg in water
+	LIGHT( true ),//More dmg vs undead/demonic
+	SPIRIT( true ),//Weakens
+
+
+	//Used for enforcing death in unusual circumstances where other elements wouldn't fit.
+	META( true );
 
 
 	public int attackProc(int damage, Char attacker, Char defender) {
 		switch (this) {
-			case HOLY:
+			case LIGHT:
 				if (defender.properties().contains(Char.Property.UNDEAD) || defender.properties().contains(Char.Property.DEMONIC)) {
 					damage *= 1.5;
 				}
@@ -105,9 +112,6 @@ public enum Element {
 				}
 				break;
 			case PHYSICAL:
-				break;
-			case RANGED:
-				Buff.affect(attacker, Combo.class).hit(defender);
 				break;
 			case SHARP:
 				if (Random.Int( 2 ) == 0) {
@@ -122,6 +126,11 @@ public enum Element {
 				break;
 			case WATER:
 				Buff.affect( defender, Wet.class, Wet.DURATION );
+				break;
+			case STONE:
+				if (Random.Int(3) == 0) {
+					Buff.affect(defender, Paralysis.class, 3f);
+				}
 				break;
 			case COLD:
 				if (defender.buff(Frost.class) != null){
@@ -153,7 +162,7 @@ public enum Element {
 					Buff.affect(defender, Ooze.class).set(20f);
 				}
 				break;
-			case DARK:
+			case SPIRIT:
 				Buff.affect(defender, Weakness.class, 5);
 				break;
 			case DRAIN:
@@ -169,7 +178,7 @@ public enum Element {
 					defender.sprite.burst(0xFFFFFFFF, 5);
 				}
 				break;
-			case ELECTRIC:
+			case SHOCK:
 				if ((Dungeon.level.liquid(defender.pos) && !defender.isFlying()) || defender.buff(Wet.class) != null) {
 					damage *= 1.5f;
 				}
@@ -177,8 +186,8 @@ public enum Element {
 			case CONFUSION:
 				Buff.affect(defender, Vertigo.class, Vertigo.DURATION);
 				break;
-			case VENOM:
-				Buff.affect(defender, Poison.class).set(2 + Dungeon.getScaleFactor() / 3);
+			case TOXIC:
+				Buff.affect(defender, Poison.class).set(2 + Dungeon.getScaleFactor() / 3f);
 				break;
 		}
 
@@ -224,16 +233,13 @@ public enum Element {
 			default:
 				attack.call();
 				break;
-			case SABOTAGE:
-				MagicMissile.boltFromChar( ch.sprite.parent,
-						MagicMissile.BONE,
-						ch.sprite,
-						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(Speck.factory(Speck.BONE), AMT);
+			case PHYSICAL:
+				if (Dungeon.level.adjacent(ch.pos, cell)) {
+					attack.call();
+				} else {
+					((MissileSprite) ch.sprite.parent.recycle(MissileSprite.class)).
+							reset(ch.pos, cell, new ThrowingKnife(), attack);
 				}
-				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
 			case MAGICAL:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -244,14 +250,6 @@ public enum Element {
 				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
 			case SHARP:
-			case RANGED:
-				if (Dungeon.level.adjacent(ch.pos, cell)) {
-					attack.call();
-				} else {
-					((MissileSprite) ch.sprite.parent.recycle(MissileSprite.class)).
-							reset(ch.pos, cell, new ThrowingKnife(), attack);
-				}
-				break;
 			case DESTRUCTION:
 				ch.sprite.parent.add(
 						new Beam.DeathRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
@@ -309,7 +307,7 @@ public enum Element {
 						cell,
 						attack);
 				break;
-			case VENOM:
+			case TOXIC:
 				MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.TOXIC_VENT,
 						ch.sprite,
@@ -319,7 +317,7 @@ public enum Element {
 					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_PURPLE), AMT);
 				}
 				break;
-			case AIR: case HOLY:
+			case AIR: case LIGHT:
 				ch.sprite.parent.add(
 						new Beam.LightRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
 				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
@@ -340,7 +338,7 @@ public enum Element {
 					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_GREEN), AMT);
 				}
 				break;
-			case ELECTRIC:
+			case SHOCK:
 				ch.sprite.parent.add(
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));//No callback as damaging after lightning anim finishes looks messy
 				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
@@ -356,7 +354,7 @@ public enum Element {
 				}
 				attack.call();
 				break;
-			case DARK:
+			case SPIRIT:
 				MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.SHADOW,
 						ch.sprite,

@@ -52,7 +52,7 @@ public class Snake extends Mob {
 			case 0: default:
 				return Element.PHYSICAL;
 			case 1:
-				return Element.VENOM;
+				return Element.TOXIC;
 		}
 	}
 }

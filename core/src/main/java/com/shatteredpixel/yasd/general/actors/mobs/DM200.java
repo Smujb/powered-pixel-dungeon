@@ -62,7 +62,7 @@ public class DM200 extends Mob {
 
 	@Override
 	public Element elementalType() {
-		return beside(enemy) ? Element.PHYSICAL : Element.VENOM;
+		return beside(enemy) ? Element.PHYSICAL : Element.TOXIC;
 	}
 
 	private int ventCooldown = 0;

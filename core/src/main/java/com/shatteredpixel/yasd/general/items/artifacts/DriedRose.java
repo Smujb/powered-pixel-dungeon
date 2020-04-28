@@ -77,8 +77,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class DriedRose extends Artifact {
@@ -556,7 +554,7 @@ public class DriedRose extends Artifact {
 		protected boolean act() {
 			updateRose();
 			if (rose == null || !rose.isEquipped(Dungeon.hero)){
-				damage(1, new Char.DamageSrc(Element.NONE).ignoreDefense());
+				damage(1, new Char.DamageSrc(Element.META).ignoreDefense());
 
 			}
 			

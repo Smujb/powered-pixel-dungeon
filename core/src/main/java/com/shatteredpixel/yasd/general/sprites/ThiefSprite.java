@@ -28,10 +28,7 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.watabou.noosa.TextureFilm;
-import com.watabou.utils.Callback;
 
 public class ThiefSprite extends MobSprite {
 	
@@ -56,28 +53,6 @@ public class ThiefSprite extends MobSprite {
 		zap = attack.clone();
 		
 		idle();
-	}
-
-	@Override
-	public void attack( int cell ) {
-		if (!Dungeon.level.adjacent(cell, ch.pos)) {
-
-			((MissileSprite)parent.recycle( MissileSprite.class )).
-					reset( ch.pos, cell, new ThrowingKnife(), new Callback() {
-						@Override
-						public void call() {
-							ch.onAttackComplete();
-						}
-					} );
-
-			play( zap );
-			turnTo( ch.pos , cell );
-
-		} else {
-
-			super.attack( cell );
-
-		}
 	}
 
 	@Override

@@ -98,7 +98,7 @@ public class GrimTrap extends Trap {
 							new Callback() {
 								@Override
 								public void call() {
-									finalTarget.damage(finalDmg, new Char.DamageSrc(Element.DARK, this).ignoreDefense() );
+									finalTarget.damage(finalDmg, new Char.DamageSrc(Element.SPIRIT, this).ignoreDefense() );
 									if (finalTarget == Dungeon.hero) {
 										Sample.INSTANCE.play(Assets.SND_CURSED);
 										if (!finalTarget.isAlive()) {

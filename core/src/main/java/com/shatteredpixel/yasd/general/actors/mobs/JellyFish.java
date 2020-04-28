@@ -61,7 +61,7 @@ public class JellyFish extends WaterMob {
 
 	@Override
 	public Element elementalType() {
-		return Element.ELECTRIC;
+		return Element.SHOCK;
 	}
 
 	public JellyFish(){

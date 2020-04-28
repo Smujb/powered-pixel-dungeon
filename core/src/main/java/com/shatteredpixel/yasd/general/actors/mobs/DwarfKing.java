@@ -426,7 +426,7 @@ public class DwarfKing extends Mob {
 		Dungeon.level.unseal();
 
 		for (Mob m : getSubjects()){
-			m.die(new DamageSrc(Element.NATURAL));
+			m.die(new DamageSrc(Element.META));
 		}
 
 		LloydsBeacon beacon = Dungeon.hero.belongings.getItem(LloydsBeacon.class);
@@ -502,7 +502,7 @@ public class DwarfKing extends Mob {
 						Buff.affect(m, KingDamager.class);
 					}
 				} else {
-					ch.damage(m.damageRoll(), new DamageSrc(Element.DARK, m));
+					ch.damage(m.damageRoll(), new DamageSrc(Element.SPIRIT, m));
 					if (((DwarfKing)target).phase == 2){
 						target.damage(target.HT/12, new KingDamager());
 					}
