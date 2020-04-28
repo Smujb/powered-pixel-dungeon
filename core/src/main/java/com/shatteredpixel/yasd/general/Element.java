@@ -80,8 +80,8 @@ public enum Element {
 
 	//Fire
 	FIRE( true),//Sets on fire
-	DESTRUCTION( true ),//Causes "Vunerable"
-	ACID( true ),//Gives Ooze
+	DESTRUCTION( true ),//Causes "Vulnerable"
+	ACID( true ),//Causes Ooze
 	DRAIN( true ),//Drains life
 
 	//Water
@@ -91,7 +91,7 @@ public enum Element {
 	CONFUSION( false ),//Confuses
 
 	//Air
-	AIR( false ),//Gives "Hex"
+	AIR( false ),//Causes "Hex"
 	SHOCK( true ),//More dmg in water
 	LIGHT( true ),//More dmg vs undead/demonic
 	SPIRIT( true ),//Weakens
