@@ -69,6 +69,7 @@ public enum Element {
 	The purpose of this file is to make it easier to add types of damage to the game.
 	It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing.
 	 */
+	//TODO refactor into 12 elements - 4 physical, 8 magical + Natural which is a kind of meta element
 	PHYSICAL( false ),
 	RANGED( false ),
 	SHARP( false ),

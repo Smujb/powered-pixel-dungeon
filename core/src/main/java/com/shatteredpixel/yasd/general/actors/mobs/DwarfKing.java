@@ -273,17 +273,18 @@ public class DwarfKing extends Mob {
 					}
 				}
 				Char ch = Actor.findChar(pos);
+				Mob m = Mob.create(summon);
 				if (ch == null) {
-					Mob m = Mob.create(summon);
+
 					if (m instanceof Ghoul) {
 						((Ghoul) m).setSolo();
-					}
+				}
 					m.pos = pos;
 					m.maxLvl = -2;
 					GameScene.add(m);
 					m.state = m.HUNTING;
 				} else {
-					ch.damage(Random.NormalIntRange(20, 40), new DamageSrc(Element.DARK, summon));
+					ch.damage(m.damageRoll(), new DamageSrc(Element.DARK, m));
 				}
 
 				detach();

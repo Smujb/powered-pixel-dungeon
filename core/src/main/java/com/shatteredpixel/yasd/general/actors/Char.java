@@ -684,7 +684,7 @@ public abstract class Char extends Actor {
 			return;
 		}
 
-		if (src.getCause() != LifeLink.class && buff(LifeLink.class) != null){
+		if (!(src.getCause() instanceof LifeLink) && buff(LifeLink.class) != null){
 			HashSet<LifeLink> links = buffs(LifeLink.class);
 			for (LifeLink link : links.toArray(new LifeLink[0])){
 				if (Actor.findById(link.object) == null){
@@ -695,7 +695,7 @@ public abstract class Char extends Actor {
 			dmg /= (links.size()+1);
 			for (LifeLink link : links){
 				Char ch = (Char)Actor.findById(link.object);
-				ch.damage(dmg, new DamageSrc(Element.NATURAL, LifeLink.class));
+				ch.damage(dmg, new DamageSrc(Element.NATURAL, link));
 				if (!ch.isAlive()){
 					link.detach();
 				}
