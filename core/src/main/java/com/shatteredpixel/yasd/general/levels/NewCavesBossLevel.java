@@ -90,6 +90,11 @@ public class NewCavesBossLevel extends Level {
 	}
 
 	@Override
+	public int getScaleFactor() {
+		return new CavesLevel().getScaleFactor();
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_CAVES;
 	}

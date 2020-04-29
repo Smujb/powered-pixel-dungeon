@@ -51,14 +51,17 @@ import com.shatteredpixel.yasd.general.levels.CavesLevel;
 import com.shatteredpixel.yasd.general.levels.CityLevel;
 import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.FirstLevel;
-import com.shatteredpixel.yasd.general.levels.OldHallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.HallsLevel;
 import com.shatteredpixel.yasd.general.levels.LastLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.LootLevel;
 import com.shatteredpixel.yasd.general.levels.NewCavesBossLevel;
 import com.shatteredpixel.yasd.general.levels.NewCityBossLevel;
+import com.shatteredpixel.yasd.general.levels.NewHallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.NewPrisonBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldCavesBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldCityBossLevel;
+import com.shatteredpixel.yasd.general.levels.OldHallsBossLevel;
 import com.shatteredpixel.yasd.general.levels.OldPrisonBossLevel;
 import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
@@ -278,7 +281,7 @@ public class Dungeon {
 		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
 		staticLevels.put("caves - 5", NewCavesBossLevel.class);
 		staticLevels.put("city - 5", NewCityBossLevel.class);
-		staticLevels.put("halls - 5", OldHallsBossLevel.class);
+		staticLevels.put("halls - 5", NewHallsBossLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
 		staticLevels.put("sewers - 0", FirstLevel.class);
 		//Amulet depth
@@ -288,7 +291,9 @@ public class Dungeon {
 		staticLevels.put("test", TilemapTest.class);
 		staticLevels.put("test 2", TilemapTest2.class);
 		staticLevels.put("old tengu", OldPrisonBossLevel.class);
-		staticLevels.put("old dm300", OldPrisonBossLevel.class);
+		staticLevels.put("old dm300", OldCavesBossLevel.class);
+		staticLevels.put("old dwarf king", OldCityBossLevel.class);
+		staticLevels.put("old yog", OldHallsBossLevel.class);
 		staticLevels.put("loot", LootLevel.class);
 	}
 

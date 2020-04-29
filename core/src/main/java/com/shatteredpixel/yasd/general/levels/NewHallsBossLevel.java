@@ -86,6 +86,11 @@ public class NewHallsBossLevel extends Level {
 	}
 
 	@Override
+	public String loadImg() {
+		return Assets.LOADING_HALLS;
+	}
+
+	@Override
 	protected boolean build() {
 
 		setSize(WIDTH, HEIGHT);

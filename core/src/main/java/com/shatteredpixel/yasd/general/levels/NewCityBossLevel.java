@@ -118,6 +118,11 @@ public class NewCityBossLevel extends Level {
 		return Assets.LOADING_CITY;
 	}
 
+	@Override
+	public int getScaleFactor() {
+		return new CityLevel().getScaleFactor();
+	}
+
 	private static final String IMP_SHOP = "imp_shop";
 
 	@Override
