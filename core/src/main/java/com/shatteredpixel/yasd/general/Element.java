@@ -233,6 +233,7 @@ public enum Element {
 			default:
 				attack.call();
 				break;
+			case SHARP:
 			case PHYSICAL:
 				if (Dungeon.level.adjacent(ch.pos, cell)) {
 					attack.call();
@@ -249,7 +250,6 @@ public enum Element {
 						attack);
 				Sample.INSTANCE.play( Assets.SND_ZAP );
 				break;
-			case SHARP:
 			case DESTRUCTION:
 				ch.sprite.parent.add(
 						new Beam.DeathRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));

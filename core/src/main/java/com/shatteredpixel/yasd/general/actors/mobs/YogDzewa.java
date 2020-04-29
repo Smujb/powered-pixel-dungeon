@@ -56,7 +56,6 @@ import com.shatteredpixel.yasd.general.ui.BossHealthBar;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 public class YogDzewa extends Mob {
 
@@ -101,7 +100,7 @@ public class YogDzewa extends Mob {
 			GLog.n(Messages.get(this, "darkness"));
 			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
 
-			YogFist fist = (YogFist) Reflection.newInstance(toSummon[phase]);
+			YogFist fist = (YogFist) Mob.create(toSummon[phase], level);
 			fist.pos = Dungeon.level.getExitPos();
 
 			//TODO change based on what fist is summoned?
