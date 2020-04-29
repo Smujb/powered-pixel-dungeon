@@ -62,6 +62,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class King extends Mob {
 	
 	private static final int MAX_ARMY_SIZE = 5;
@@ -106,7 +108,7 @@ public class King extends Mob {
 	}
 	
 	@Override
-    public boolean canAttack(Char enemy) {
+    public boolean canAttack(@NotNull Char enemy) {
 		return canTryToSummon() ?
 				pos == ((OldCityBossLevel)Dungeon.level).pedestal( nextPedestal ) :
 				Dungeon.level.adjacent( pos, enemy.pos );

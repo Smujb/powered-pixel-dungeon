@@ -77,6 +77,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class DriedRose extends Artifact {
@@ -608,7 +610,7 @@ public class DriedRose extends Artifact {
 		}
 		
 		@Override
-        public boolean canAttack(Char enemy) {
+        public boolean canAttack(@NotNull Char enemy) {
 			return super.canAttack(enemy) || (rose != null && rose.weapon != null && rose.weapon.canReach(this, enemy.pos));
 		}
 		

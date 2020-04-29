@@ -97,7 +97,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	@Override
-	public boolean canAttack(Char enemy) {
+	public boolean canAttack(@NotNull Char enemy) {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {
 			return super.canAttack( enemy );
 		} else if ((wand = wandToAttack(enemy)) != null) {

@@ -72,6 +72,8 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -537,11 +539,11 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public boolean canAttack(Char enemy) {
+	public boolean canAttack(@NotNull Char enemy) {
 		if (Dungeon.level.adjacent(this.pos, enemy.pos) && !hasMeleeAttack) {
 			return false;
 		}
-		return (Dungeon.level.distance( pos, enemy.pos ) <= range | range < 0) & new Ballistica(this.pos, enemy.pos, shotType).collisionPos == enemy.pos;
+		return (Dungeon.level.distance( pos, enemy.pos ) <= range | range < 0) & Ballistica.canHit(this, enemy, shotType);
 	}
 	
 	protected boolean getCloser( int target ) {

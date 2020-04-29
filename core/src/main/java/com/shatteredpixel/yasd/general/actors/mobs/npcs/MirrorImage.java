@@ -45,6 +45,8 @@ import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MirrorImage extends NPC {
 	
 	{
@@ -145,7 +147,7 @@ public class MirrorImage extends NPC {
 	}
 	
 	@Override
-    public boolean canAttack(Char enemy) {
+    public boolean canAttack(@NotNull Char enemy) {
 		return super.canAttack(enemy) || (user.belongings.getWeapons() != null && user.belongings.getWeapons().get(0).canReach(this, enemy.pos));
 	}
 	

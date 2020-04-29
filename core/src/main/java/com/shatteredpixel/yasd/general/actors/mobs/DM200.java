@@ -115,6 +115,10 @@ public class DM200 extends Mob {
 		return true;
 	}
 
+	private boolean canZap() {
+		return ventCooldown <= 0 && Ballistica.canHit(DM200.this, enemy, shotType);
+	}
+
 	private class Hunting extends Mob.Hunting{
 
 		@Override
@@ -127,7 +131,7 @@ public class DM200 extends Mob {
 
 				int oldPos = pos;
 
-				if (ventCooldown <= 0 && Random.Int(100/distance(enemy)) == 0){
+				if (canZap() && Random.Int(100/distance(enemy)) == 0){
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 						sprite.attack( enemy.pos );
 						return false;
@@ -140,7 +144,7 @@ public class DM200 extends Mob {
 					spend( 1 / speed() );
 					return moveSprite( oldPos,  pos );
 
-				} else if (ventCooldown <= 0) {
+				} else if (canZap()) {
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 						sprite.attack( enemy.pos );
 						return false;

@@ -30,6 +30,9 @@ package com.shatteredpixel.yasd.general.mechanics;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +70,10 @@ public class Ballistica {
 			collisionPos = from;
 			dist = 0;
 		}
+	}
+
+	public static boolean canHit(@NotNull Char source, @NotNull Char target, int params) {
+		return new Ballistica(source.pos, target.pos, params).collisionPos == target.pos;
 	}
 
 	private void build( int from, int to, boolean stopTarget, boolean stopChars, boolean stopTerrain ) {

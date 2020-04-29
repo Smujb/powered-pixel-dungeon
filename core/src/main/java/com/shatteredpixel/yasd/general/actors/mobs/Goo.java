@@ -147,7 +147,7 @@ public class Goo extends Mob {
 	}
 
 	@Override
-    public boolean canAttack(Char enemy) {
+    public boolean canAttack(@NotNull Char enemy) {
 		return (pumpedUp > 0) ? distance( enemy ) <= 2 : super.canAttack(enemy);
 	}
 

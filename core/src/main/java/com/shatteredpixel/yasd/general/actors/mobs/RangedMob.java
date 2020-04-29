@@ -32,6 +32,8 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.watabou.utils.Callback;
 
+import org.jetbrains.annotations.NotNull;
+
 public abstract class RangedMob extends Mob implements Callback {
 
     public boolean canHit(Char enemy) {
@@ -44,7 +46,7 @@ public abstract class RangedMob extends Mob implements Callback {
 
 
     @Override
-    public boolean canAttack(Char enemy) {
+    public boolean canAttack(@NotNull Char enemy) {
         if (fleesAtMelee() & Dungeon.level.adjacent(enemy.pos, pos)) {
             return false;
         } else {

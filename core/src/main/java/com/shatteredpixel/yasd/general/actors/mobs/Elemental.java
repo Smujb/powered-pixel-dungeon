@@ -45,6 +45,8 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public abstract class Elemental extends Mob {
@@ -82,7 +84,7 @@ public abstract class Elemental extends Mob {
 	}
 
 	@Override
-	public boolean canAttack(Char enemy) {
+	public boolean canAttack(@NotNull Char enemy) {
 		if (rangedCooldown <= 0) {
 			boolean canAttack = new Ballistica(pos, enemy.pos, Ballistica.MAGIC_BOLT).collisionPos == enemy.pos;
 			if (canAttack) {

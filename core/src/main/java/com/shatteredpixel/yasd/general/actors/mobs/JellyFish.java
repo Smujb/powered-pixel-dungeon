@@ -38,6 +38,8 @@ import com.shatteredpixel.yasd.general.sprites.PurpleJellyFishSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class JellyFish extends WaterMob {
 
 	private static final String COLOUR = "colour";
@@ -143,7 +145,7 @@ public class JellyFish extends WaterMob {
 	}
 
 	@Override
-	public boolean canAttack(Char enemy){
+	public boolean canAttack(@NotNull Char enemy){
 		return Dungeon.level.distance(pos, enemy.pos) <= (Dungeon.level.liquid()[enemy.pos] ? 4 : 2);
 	}
 }
