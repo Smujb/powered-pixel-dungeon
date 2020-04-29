@@ -62,7 +62,7 @@ public class Ghoul extends Mob {
 		properties.add(Property.UNDEAD);
 	}
 
-	private int partnerID = -1;
+	protected int partnerID = -1;
 	private int timesDowned = 0;
 
 	private static final String PARTNER_ID = "partner_id";
@@ -81,11 +81,6 @@ public class Ghoul extends Mob {
 		partnerID = bundle.getInt( PARTNER_ID );
 		timesDowned = bundle.getInt( TIMES_DOWNED );
 	}
-
-	public void setSolo(){
-		partnerID = -2;
-	}
-
 
 	@Override
 	public float spawningWeight() {

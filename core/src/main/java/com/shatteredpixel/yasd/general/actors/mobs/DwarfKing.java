@@ -173,7 +173,7 @@ public class DwarfKing extends Mob {
 					Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 					yell(Messages.get(this, "wave_1"));
 				}
-				summonSubject(3, Ghoul.class);
+				summonSubject(3, DKGhoul.class);
 				spend(3 * TICK);
 				summonsMade++;
 				return true;
@@ -184,9 +184,9 @@ public class DwarfKing extends Mob {
 					yell(Messages.get(this, "wave_2"));
 				}
 				if (summonsMade == 7) {
-					summonSubject(3, Random.Int(2) == 0 ? Monk.class : Warlock.class);
+					summonSubject(3, Random.Int(2) == 0 ? DKMonk.class : DKWarlock.class);
 				} else {
-					summonSubject(3, Ghoul.class);
+					summonSubject(3, DKGhoul.class);
 				}
 				summonsMade++;
 				spend(TICK);
@@ -195,10 +195,10 @@ public class DwarfKing extends Mob {
 				sprite.centerEmitter().start(Speck.factory(Speck.SCREAM), 0.4f, 2);
 				Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 				yell(Messages.get(this, "wave_3"));
-				summonSubject(3, Warlock.class);
-				summonSubject(3, Monk.class);
-				summonSubject(3, Ghoul.class);
-				summonSubject(3, Ghoul.class);
+				summonSubject(3, DKWarlock.class);
+				summonSubject(3, DKMonk.class);
+				summonSubject(3, DKGhoul.class);
+				summonSubject(3, DKGhoul.class);
 				summonsMade = 12;
 				spend(TICK);
 				return true;
@@ -216,9 +216,9 @@ public class DwarfKing extends Mob {
 	private boolean summonSubject( int delay ){
 		//4th summon is always a monk or warlock, otherwise ghoul
 		if (summonsMade % 4 == 3){
-			return summonSubject( delay, Random.Int(2) == 0 ? Monk.class : Warlock.class );
+			return summonSubject( delay, Random.Int(2) == 0 ? DKMonk.class : DKWarlock.class );
 		} else {
-			return summonSubject( delay, Ghoul.class );
+			return summonSubject( delay, DKGhoul.class );
 		}
 	}
 
@@ -446,6 +446,30 @@ public class DwarfKing extends Mob {
 		return super.isImmune(effect);
 	}
 
+	public static class DKGhoul extends Ghoul {
+		{
+			state = HUNTING;
+		}
+
+		@Override
+		protected boolean act() {
+			partnerID = -2; //no partners
+			return super.act();
+		}
+	}
+
+	public static class DKMonk extends Monk {
+		{
+			state = HUNTING;
+		}
+	}
+
+	public static class DKWarlock extends Warlock {
+		{
+			state = HUNTING;
+		}
+	}
+
 	public static class Summoning extends Buff {
 
 		private int delay;
@@ -464,10 +488,10 @@ public class DwarfKing extends Mob {
 
 			if (delay <= 0){
 
-				if (summon == Warlock.class){
+				if (summon == DKWarlock.class){
 					particles.burst(ShadowParticle.CURSE, 10);
 					Sample.INSTANCE.play(Assets.SND_CURSED);
-				} else if (summon == Monk.class){
+				} else if (summon == DKMonk.class){
 					particles.burst(ElmoParticle.FACTORY, 10);
 					Sample.INSTANCE.play(Assets.SND_BURNING);
 				} else {
@@ -490,10 +514,6 @@ public class DwarfKing extends Mob {
 				Char ch = Actor.findChar(pos);
 				Mob m = Mob.create(summon);
 				if (ch == null) {
-
-					if (m instanceof Ghoul) {
-						((Ghoul) m).setSolo();
-				}
 					m.pos = pos;
 					m.maxLvl = -2;
 					GameScene.add(m);
@@ -520,9 +540,9 @@ public class DwarfKing extends Mob {
 			if (on && particles == null) {
 				particles = CellEmitter.get(pos);
 
-				if (summon == Warlock.class){
+				if (summon == DKWarlock.class){
 					particles.pour(ShadowParticle.UP, 0.1f);
-				} else if (summon == Monk.class){
+				} else if (summon == DKMonk.class){
 					particles.pour(ElmoParticle.FACTORY, 0.1f);
 				} else {
 					particles.pour(Speck.factory(Speck.RATTLE), 0.1f);
