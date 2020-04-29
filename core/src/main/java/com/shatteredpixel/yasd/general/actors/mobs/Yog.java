@@ -221,7 +221,7 @@ public class Yog extends Mob {
 			
 			state = WANDERING;
 
-			properties.add(Property.BOSS);
+			properties.add(Property.MINIBOSS);
 			properties.add(Property.DEMONIC);
 			properties.add(Property.ACIDIC);
 		}
@@ -273,7 +273,7 @@ public class Yog extends Mob {
 			
 			state = WANDERING;
 
-			properties.add(Property.BOSS);
+			properties.add(Property.MINIBOSS);
 			properties.add(Property.DEMONIC);
 			properties.add(Property.FIERY);
 		}

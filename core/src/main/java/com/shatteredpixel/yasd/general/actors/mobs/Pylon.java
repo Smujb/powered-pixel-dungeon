@@ -64,7 +64,7 @@ public class Pylon extends Mob {
 		damageFactor = 0.3f;
 		maxLvl = -2;
 
-		properties.add(Property.BOSS);
+		properties.add(Property.MINIBOSS);
 		properties.add(Property.INORGANIC);
 		properties.add(Property.ELECTRIC);
 		properties.add(Property.IMMOVABLE);
