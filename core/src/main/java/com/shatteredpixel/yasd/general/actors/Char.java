@@ -669,7 +669,7 @@ public abstract class Char extends Actor {
 		dmg = Math.max(0, dmg);
 
 		if (!src.ignores()) {
-			dmg = src.getElement().affectDamage(this, dmg);
+			dmg = Math.max(dmg - drRoll(src.getElement()), 0);
 		}
 		if (this.buff(Drowsy.class) != null && dmg > 0) {
 			Buff.detach(this, Drowsy.class);

@@ -52,7 +52,6 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
-import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -69,7 +68,7 @@ public enum Element {
 	The purpose of this file is to make it easier to add types of damage to the game.
 	It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing.
 	 */
-	//Base elements. Magical, Physical
+	//Base elements. Magical, Physical. Should be used as little as possible and may one day be removed entirely. Should have no proc effect.
 	PHYSICAL( false ),
 	MAGICAL( true ),
 
@@ -111,8 +110,6 @@ public enum Element {
 				if (defender == Dungeon.hero) {
 					GameScene.flash(0xFFFFFF);
 				}
-				break;
-			case PHYSICAL:
 				break;
 			case SHARP:
 				if (Random.Int( 2 ) == 0) {
@@ -214,21 +211,10 @@ public enum Element {
 		return damage;
 	}
 
-	public int affectDamage(Char ch, int damage) {
+	/*public int affectDamage(Char ch, int damage) {
 		damage = Math.max(damage - ch.drRoll(this), 0);
-		switch (this) {
-			case ACID:
-				if (ch.hasBelongings()) {
-					int index = Random.Int(5);
-					Item item = ch.belongings.miscs[index];
-					if (item != null && item.canDegrade()) {
-						item.use(damage * 5);
-					}
-				}
-				break;
-		}
 		return damage;
-	}
+	}*/
 
 	public void FX(Char ch, int cell, Callback attack) {
 		final Char target = Actor.findChar(cell);
