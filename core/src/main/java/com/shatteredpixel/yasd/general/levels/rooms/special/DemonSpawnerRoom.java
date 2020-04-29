@@ -27,15 +27,18 @@
 
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
+import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.mobs.DemonSpawner;
-import com.shatteredpixel.yasd.general.actors.mobs.RipperDemon;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
+import com.watabou.noosa.Tilemap;
 import com.watabou.utils.Point;
-import com.watabou.utils.Random;
 
 public class DemonSpawnerRoom extends SpecialRoom {
 	@Override
@@ -55,20 +58,9 @@ public class DemonSpawnerRoom extends SpecialRoom {
 		spawner.pos = cx + cy * level.width();
 		level.mobs.add( spawner );
 
-		//2/3 chance for 1, 1/3 chance for 2
-		int rippers = Random.chances( new float[]{0, 2, 1});
-
-		for (int i = 0; i < rippers; i++){
-			int pos;
-			do {
-				pos = level.pointToCell(random(1));
-			} while (level.solid(pos) || level.findMob(pos) != null);
-
-			RipperDemon ripper = new RipperDemon();
-			ripper.pos = pos;
-			ripper.state = ripper.HUNTING;
-			level.mobs.add( ripper );
-		}
+		CustomFloor vis = new CustomFloor();
+		vis.setRect(left+1, top+1, width()-2, height()-2);
+		level.customTiles.add(vis);
 
 	}
 
@@ -77,5 +69,41 @@ public class DemonSpawnerRoom extends SpecialRoom {
 		//cannot connect to entrance, otherwise works normally
 		if (room instanceof EntranceRoom) return false;
 		else                              return super.connect(room);
+	}
+
+	@Override
+	public boolean canPlaceTrap(Point p) {
+		return false;
+	}
+
+	@Override
+	public boolean canPlaceWater(Point p) {
+		return false;
+	}
+
+	private static class CustomFloor extends CustomTilemap {
+
+		{
+			texture = Assets.HALLS_SP;
+		}
+
+		@Override
+		public Tilemap create() {
+			Tilemap v = super.create();
+			int cell = tileX + tileY * Dungeon.level.width();
+			KindOfTerrain[] map = Dungeon.level.map;
+			int[] data = new int[tileW*tileH];
+			for (int i = 0; i < data.length; i++){
+				if (i % tileW == 0){
+					cell = tileX + (tileY + i / tileW) * Dungeon.level.width();
+				}
+				if (map[cell] == Terrain.EMPTY_DECO)    data[i] = 27;
+				else                                    data[i] = 19;
+				cell++;
+			}
+			v.map( data, tileW );
+			return v;
+		}
+
 	}
 }

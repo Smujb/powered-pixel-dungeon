@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.artifacts.ChaliceOfBlood;
-import com.shatteredpixel.yasd.general.levels.HallsBossLevel;
 
 public class Regeneration extends Buff {
 	

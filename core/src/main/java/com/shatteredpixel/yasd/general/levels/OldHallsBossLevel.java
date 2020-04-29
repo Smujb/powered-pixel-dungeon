@@ -59,7 +59,7 @@ import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
-public class HallsBossLevel extends Level {
+public class OldHallsBossLevel extends Level {
 	
 	{
 		color1 = 0x801500;
