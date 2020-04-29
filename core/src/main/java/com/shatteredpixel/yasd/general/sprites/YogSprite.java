@@ -37,7 +37,7 @@ public class YogSprite extends MobSprite {
 	public YogSprite() {
 		super();
 
-		perspectiveRaise = 0.2f;
+		perspectiveRaise = 5 / 16f;
 
 		texture( Assets.YOG );
 		

@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.effects.TargetedCell;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -48,6 +49,7 @@ public class RipperDemon extends Mob {
 
 	{
 		spriteClass = RipperSprite.class;
+		viewDistance = Light.DISTANCE;
 
 		healthFactor = 0.5f;
 		damageFactor = 2f;
@@ -58,6 +60,8 @@ public class RipperDemon extends Mob {
 		HUNTING = new Hunting();
 
 		baseSpeed = 1f;
+		properties.add(Property.DEMONIC);
+		properties.add(Property.UNDEAD);
 	}
 
 	@Override
@@ -131,7 +135,7 @@ public class RipperDemon extends Mob {
 						Char ch = Actor.findChar(leapPos);
 						if (ch != null){
 							if (alignment != ch.alignment){
-								Buff.affect(ch, Bleeding.class).set(Math.max(damageRoll(), damageRoll()));
+								Buff.affect(ch, Bleeding.class).set(0.75f*Math.max(damageRoll(), damageRoll()));
 								ch.sprite.flash();
 								Sample.INSTANCE.play(Assets.SND_HIT);
 							}
@@ -196,11 +200,11 @@ public class RipperDemon extends Mob {
 						//get ready to leap
 						leapPos = targetPos;
 						spend(TICK);
-						if (Dungeon.level.heroFOV[leapPos]) {
-							sprite.parent.addToBack(new TargetedCell(leapPos, 0xFF0000));
-						}
 						if (Dungeon.level.heroFOV[pos]){
 							GLog.w(Messages.get(RipperDemon.this, "leap"));
+							sprite.parent.addToBack(new TargetedCell(leapPos, 0xFF0000));
+							Dungeon.hero.interrupt();
+
 						}
 						return true;
 					}

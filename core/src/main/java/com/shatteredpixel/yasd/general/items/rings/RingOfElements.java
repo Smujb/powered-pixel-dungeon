@@ -28,29 +28,7 @@
 package com.shatteredpixel.yasd.general.items.rings;
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
-import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
-import com.shatteredpixel.yasd.general.actors.buffs.Burning;
-import com.shatteredpixel.yasd.general.actors.buffs.Charm;
-import com.shatteredpixel.yasd.general.actors.buffs.Chill;
-import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
-import com.shatteredpixel.yasd.general.actors.buffs.Frost;
-import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
-import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
-import com.shatteredpixel.yasd.general.actors.buffs.Poison;
-import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFrost;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLightning;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
-import com.shatteredpixel.yasd.general.items.wands.WandOfPrismaticLight;
-import com.shatteredpixel.yasd.general.items.wands.WandOfTransfusion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
-import com.shatteredpixel.yasd.general.levels.traps.DisintegrationTrap;
-import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
+import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.messages.Messages;
 
 import java.text.DecimalFormat;
@@ -73,37 +51,7 @@ public class RingOfElements extends Ring {
 
 	public static final HashSet<Class> RESISTS = new HashSet<>();
 	static {
-		RESISTS.add( Burning.class );
-		RESISTS.add( Charm.class );
-		RESISTS.add( Chill.class );
-		RESISTS.add( Frost.class );
-		RESISTS.add( Ooze.class );
-		RESISTS.add( Paralysis.class );
-		RESISTS.add( Poison.class );
-		RESISTS.add( Corrosion.class );
-		RESISTS.add( Weakness.class );
-		
-		RESISTS.add( DisintegrationTrap.class );
-		RESISTS.add( GrimTrap.class );
-
-		RESISTS.add( WandOfBlastWave.class );
-		RESISTS.add( WandOfDisintegration.class );
-		RESISTS.add( WandOfFireblast.class );
-		RESISTS.add( WandOfFrost.class );
-		RESISTS.add( WandOfLightning.class );
-		RESISTS.add( WandOfLivingEarth.class );
-		RESISTS.add( WandOfMagicMissile.class );
-		RESISTS.add( WandOfPrismaticLight.class );
-		RESISTS.add( WandOfTransfusion.class );
-		RESISTS.add( WandOfWarding.Ward.class );
-		
-		RESISTS.add( ToxicGas.class );
-		RESISTS.add( Electricity.class );
-		
-		/*RESISTS.add( DM100.LightningBolt.class );
-		RESISTS.add( Warlock.DarkBolt.class );
-		RESISTS.add( Eye.DeathGaze.class );
-		RESISTS.add( Yog.BurningFist.DarkBolt.class );*/
+		RESISTS.addAll(AntiMagic.RESISTS);
 	}
 	
 	public static float resist( Char target, Class effect ){
