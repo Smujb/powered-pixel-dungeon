@@ -216,7 +216,7 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalDamageRoll(int level) {
-		int max = 2 + level;
+		int max = 4 + level;
 		int min = level/3;
 		return Random.NormalIntRange(min, max);
 	}
