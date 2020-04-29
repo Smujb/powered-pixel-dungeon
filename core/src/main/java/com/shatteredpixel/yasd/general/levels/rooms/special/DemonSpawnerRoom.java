@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.mobs.DemonSpawner;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -81,6 +82,11 @@ public class DemonSpawnerRoom extends SpecialRoom {
 		return false;
 	}
 
+	@Override
+	public boolean canPlaceGrass(Point p) {
+		return false;
+	}
+
 	private static class CustomFloor extends CustomTilemap {
 
 		{
@@ -97,8 +103,17 @@ public class DemonSpawnerRoom extends SpecialRoom {
 				if (i % tileW == 0){
 					cell = tileX + (tileY + i / tileW) * Dungeon.level.width();
 				}
-				if (map[cell] == Terrain.EMPTY_DECO)    data[i] = 27;
-				else                                    data[i] = 19;
+				if (Dungeon.level.findMob(cell) instanceof DemonSpawner){
+					data[i] = 5 + 4*8;
+				} else if (map[cell] == Terrain.EMPTY_DECO) {
+					if (Statistics.amuletObtained){
+						data[i] = 31;
+					} else {
+						data[i] = 27;
+					}
+				} else {
+					data[i] = 19;
+				}
 				cell++;
 			}
 			v.map( data, tileW );
