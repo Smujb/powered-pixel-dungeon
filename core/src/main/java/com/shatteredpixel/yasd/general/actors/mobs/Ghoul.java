@@ -43,7 +43,6 @@ import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
-//TODO some aspects of existing enemy AI make these really wonky. Need to address that.
 public class Ghoul extends Mob {
 
 	{
