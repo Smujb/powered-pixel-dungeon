@@ -59,7 +59,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -223,7 +222,7 @@ public class YogDzewa extends Mob {
 			while (summonCooldown <= 0){
 
 				Class<?extends Mob> cls = regularSummons.remove(0);
-				Mob summon = Reflection.newInstance(cls);
+				Mob summon = Mob.create(cls);
 				regularSummons.add(cls);
 
 				int spawnPos = -1;
