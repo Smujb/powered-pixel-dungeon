@@ -29,8 +29,12 @@ package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.effects.particles.CorrosionParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
-import com.shatteredpixel.yasd.general.levels.SewerLevel;
+import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
+import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
@@ -138,12 +142,31 @@ public abstract class FistSprite extends MobSprite {
 
 		@Override
 		public int blood() {
-			return 0xFFFFBB33;
+			return 0xFFFFDD34;
 		}
 
 	}
 
-	///
+	public static class Soiled extends FistSprite {
+
+		@Override
+		protected int texOffset() {
+			return 10;
+		}
+
+		@Override
+		protected Emitter createEmitter() {
+			Emitter emitter = emitter();
+			emitter.pour( LeafParticle.GENERAL, 0.06f );
+			return emitter;
+		}
+
+		@Override
+		public int blood() {
+			return 0xFF7F5424;
+		}
+
+	}
 
 	public static class Rotting extends FistSprite {
 
@@ -155,13 +178,76 @@ public abstract class FistSprite extends MobSprite {
 		@Override
 		protected Emitter createEmitter() {
 			Emitter emitter = emitter();
-			emitter.pour( SewerLevel.WaterParticle.FACTORY, 0.06f );
+			emitter.pour(Speck.factory(Speck.TOXIC), 0.25f );
 			return emitter;
 		}
 
 		@Override
 		public int blood() {
-			return 0xFFFFBB33;
+			return 0xFFB8BBA1;
+		}
+
+	}
+
+	public static class Rusted extends FistSprite {
+
+		@Override
+		protected int texOffset() {
+			return 30;
+		}
+
+		@Override
+		protected Emitter createEmitter() {
+			Emitter emitter = emitter();
+			emitter.pour(CorrosionParticle.MISSILE, 0.06f );
+			return emitter;
+		}
+
+		@Override
+		public int blood() {
+			return 0xFF7F7F7F;
+		}
+
+	}
+
+	public static class Bright extends FistSprite {
+
+		@Override
+		protected int texOffset() {
+			return 40;
+		}
+
+		@Override
+		protected Emitter createEmitter() {
+			Emitter emitter = emitter();
+			emitter.pour(SparkParticle.STATIC, 0.06f );
+			return emitter;
+		}
+
+		@Override
+		public int blood() {
+			return 0xFFFFFFFF;
+		}
+
+	}
+
+	public static class Dark extends FistSprite {
+
+		@Override
+		protected int texOffset() {
+			return 50;
+		}
+
+		@Override
+		protected Emitter createEmitter() {
+			Emitter emitter = emitter();
+			emitter.pour(ShadowParticle.MISSILE, 0.06f );
+			return emitter;
+		}
+
+		@Override
+		public int blood() {
+			return 0xFF4A2F53;
 		}
 
 	}

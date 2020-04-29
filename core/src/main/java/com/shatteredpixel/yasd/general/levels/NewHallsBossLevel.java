@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.mobs.Yog;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.YogDzewa;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
@@ -49,7 +49,13 @@ import com.watabou.noosa.Tilemap;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_DECO;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY_SP;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EXIT;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class NewHallsBossLevel extends Level {
@@ -170,7 +176,7 @@ public class NewHallsBossLevel extends Level {
 		if (item != null) {
 			int pos;
 			do {
-				pos = Random.IntRange( ROOM_LEFT, ROOM_RIGHT ) + Random.IntRange( ROOM_TOP + 1, ROOM_BOTTOM ) * width();
+				pos = randomRespawnCell();
 			} while (pos == getEntrancePos());
 			drop( item, pos ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
@@ -207,7 +213,7 @@ public class NewHallsBossLevel extends Level {
 
 		Dungeon.observe();
 
-		Yog boss = new YogDzewa();
+		YogDzewa boss = Mob.create(YogDzewa.class, this);
 		boss.pos = getExitPos() + width*3;
 		GameScene.add( boss );
 		//boss.spawnFists();
@@ -224,7 +230,6 @@ public class NewHallsBossLevel extends Level {
 		CellEmitter.get(getExitPos()-1).burst(ShadowParticle.UP, 25);
 		CellEmitter.get(getExitPos()).burst(ShadowParticle.UP, 100);
 		CellEmitter.get(getExitPos()+1).burst(ShadowParticle.UP, 25);
-		GameScene.flash(0);
 		for( CustomTilemap t : customTiles){
 			if (t instanceof CenterPieceVisuals){
 				((CenterPieceVisuals) t).updateState();

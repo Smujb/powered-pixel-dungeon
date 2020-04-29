@@ -54,6 +54,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Bestiary;
 import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
+import com.shatteredpixel.yasd.general.actors.mobs.YogFist;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.particles.FlowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.WindParticle;
@@ -1450,7 +1451,8 @@ public abstract class Level implements Bundlable {
 		if (sighted) {
 			boolean[] blocking;
 
-			if (c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN) {
+			if ((c instanceof Hero && ((Hero) c).subClass == HeroSubClass.WARDEN)
+					|| c instanceof YogFist.Soiled) {
 				blocking = Dungeon.level.losBlocking();
 				for (int i = 0; i < blocking.length; i++) {
 					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)) {
