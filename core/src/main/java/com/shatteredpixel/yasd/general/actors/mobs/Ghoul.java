@@ -35,10 +35,8 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
-import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.GhoulSprite;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -144,8 +142,6 @@ public class Ghoul extends Mob {
 				timesDowned++;
 				Buff.append(nearby, GhoulLifeLink.class).set(timesDowned*5, this);
 				((GhoulSprite)sprite).crumple();
-				HP = Math.round(HT/10f);
-				GLog.i(Messages.get(this, "collapse"));
 				beingLifeLinked = false;
 				return;
 			}
@@ -269,6 +265,7 @@ public class Ghoul extends Mob {
 
 			turnsToRevive--;
 			if (turnsToRevive <= 0){
+				ghoul.HP = Math.round(ghoul.HT/10f);
 				if (Actor.findChar( ghoul.pos ) != null) {
 					ArrayList<Integer> candidates = new ArrayList<>();
 					for (int n : PathFinder.NEIGHBOURS8) {

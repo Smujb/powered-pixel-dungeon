@@ -27,9 +27,12 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.SnakeSprite;
+import com.shatteredpixel.yasd.general.utils.GLog;
 
 public class Snake extends Mob {
 	
@@ -54,5 +57,17 @@ public class Snake extends Mob {
 			case 1:
 				return Element.TOXIC;
 		}
+	}
+
+	private static int dodges = 0;
+
+	@Override
+	public String defenseVerb() {
+		dodges++;
+		if (dodges >= 5 && !Badges.isUnlocked(Badges.Badge.BOSS_SLAIN_1)){
+			GLog.w(Messages.get(this, "hint"));
+			dodges = 0;
+		}
+		return super.defenseVerb();
 	}
 }
