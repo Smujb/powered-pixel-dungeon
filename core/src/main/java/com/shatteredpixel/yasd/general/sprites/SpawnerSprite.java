@@ -35,7 +35,6 @@ import com.watabou.utils.PointF;
 
 public class SpawnerSprite extends MobSprite {
 
-	//TODO need to improve the base
 	public SpawnerSprite() {
 		super();
 
@@ -48,8 +47,7 @@ public class SpawnerSprite extends MobSprite {
 
 		TextureFilm frames = new TextureFilm( texture, 16, 16 );
 
-		idle = new Animation( 4, true );
-		idle = new Animation( 6, true );
+		idle = new Animation( 8, true );
 		idle.frames( frames, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 );
 
 		run = idle.clone();
