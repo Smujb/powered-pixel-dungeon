@@ -53,17 +53,14 @@ import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.sprites.BurningFistSprite;
+import com.shatteredpixel.yasd.general.sprites.FistSprite;
 import com.shatteredpixel.yasd.general.sprites.LarvaSprite;
-import com.shatteredpixel.yasd.general.sprites.RottingFistSprite;
 import com.shatteredpixel.yasd.general.sprites.YogSprite;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -213,7 +210,7 @@ public class Yog extends Mob {
 		private static final int REGENERATION = 4;
 		
 		{
-			spriteClass = RottingFistSprite.class;
+			spriteClass = FistSprite.Rotting.class;
 
 
 			healthFactor = 0.5f;
@@ -233,33 +230,6 @@ public class Yog extends Mob {
 		public Element elementalType() {
 			return Element.ACID;
 		}
-
-		/*@Override
-		public int attackSkill( Char target ) {
-			return 36;
-		}
-		
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange( 20, 50 );
-		}
-		
-		@Override
-		public int drRoll(Element element) {
-			return Random.NormalIntRange(0, 15);
-		}
-
-		@Override
-		public int attackProc( Char enemy, int damage ) {
-			damage = super.attackProc( enemy, damage );
-			
-			if (Random.Int( 3 ) == 0) {
-				Buff.affect( enemy, Ooze.class ).set( 20f );
-				enemy.sprite.burst( 0xFF000000, 5 );
-			}
-			
-			return damage;
-		}*/
 		
 		@Override
 		public boolean act() {
@@ -292,7 +262,7 @@ public class Yog extends Mob {
 	public static class BurningFist extends Mob {
 		
 		{
-			spriteClass = BurningFistSprite.class;
+			spriteClass = FistSprite.Burning.class;
 
 			healthFactor = 1/3f;
 			damageFactor = 1.5f;
