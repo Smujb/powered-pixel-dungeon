@@ -246,7 +246,7 @@ public class NewCavesBossLevel extends Level {
 		boss.state = boss.WANDERING;
 		do {
 			boss.pos = pointToCell(Random.element(mainArena.getPoints()));
-		} while (!openSpace(boss.pos) || map[boss.pos] == EMPTY_SP || heroFOV[boss.pos]);
+		} while (!openSpace(boss.pos) || map[boss.pos] == Terrain.EMPTY_SP);
 		GameScene.add( boss );
 
 		set( getEntrancePos(), WALL );

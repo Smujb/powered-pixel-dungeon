@@ -61,8 +61,6 @@ import com.shatteredpixel.yasd.general.items.spells.PhaseShift;
 import com.shatteredpixel.yasd.general.items.spells.ReclaimTrap;
 import com.shatteredpixel.yasd.general.items.spells.Recycle;
 import com.shatteredpixel.yasd.general.items.spells.WildEnergy;
-import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.Dart;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -243,9 +241,7 @@ public abstract class Recipe {
 	}
 	
 	public static boolean usableInRecipe(Item item){
-		return !item.cursed
-				&& (!(item instanceof EquipableItem) || item instanceof Dart || item instanceof AlchemistsToolkit)
-				&& !(item instanceof Wand);
+		return !item.cursed && (!(item instanceof EquipableItem) || item instanceof AlchemistsToolkit);
 	}
 }
 
