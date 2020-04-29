@@ -227,7 +227,7 @@ public enum Element {
 	}
 
 	public void FX(Char ch, int cell, Callback attack) {
-		Char target;
+		final Char target = Actor.findChar(cell);
 		int AMT = 5;
 		switch (this) {
 			default:
@@ -256,35 +256,50 @@ public enum Element {
 				attack.call();
 				break;
 			case FIRE:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.FIRE,
 						ch.sprite,
 						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(FlameParticle.STORM, AMT);
-				}
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.emitter().burst(FlameParticle.STORM, AMT);
+								}
+							}
+						});
 				break;
 			case WATER:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.WATER_CONE,
 						ch.sprite,
 						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(SewerLevel.WaterParticle.FACTORY, AMT);
-				}
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.emitter().burst(SewerLevel.WaterParticle.FACTORY, AMT);
+								}
+							}
+						});
 				break;
 			case COLD:
 				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.FROST,
 						ch.sprite,
 						cell,
-						attack);
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.burst( 0xFF99CCFF, AMT);
+								}
+							}
+						});
 				Sample.INSTANCE.play(Assets.SND_ZAP);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.burst( 0xFF99CCFF, AMT);
-				}
 				break;
 			case EARTH:
 				MagicMissile.boltFromChar( ch.sprite.parent,
@@ -308,19 +323,24 @@ public enum Element {
 						attack);
 				break;
 			case TOXIC:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.TOXIC_VENT,
 						ch.sprite,
 						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_PURPLE), AMT);
-				}
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_PURPLE), AMT);
+								}
+							}
+						});
 				break;
 			case AIR: case LIGHT:
 				ch.sprite.parent.add(
 						new Beam.LightRay(ch.sprite.center(), DungeonTilemap.raisedTileCenterToWorld(cell)));
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+				if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
 					new Flare(8, 16).color(0xFFFF66, true).show(target.sprite, 2f);
 					if (target.properties().contains(Char.Property.UNDEAD) || target.properties().contains(Char.Property.DEMONIC)) {
 						target.sprite.emitter().burst(ShadowParticle.UP, AMT);
@@ -329,19 +349,24 @@ public enum Element {
 				attack.call();
 				break;
 			case ACID:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.ACID,
 						ch.sprite,
 						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_GREEN), AMT);
-				}
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.emitter().burst(Speck.factory(Speck.BUBBLE_GREEN), AMT);
+								}
+							}
+						});
 				break;
 			case SHOCK:
 				ch.sprite.parent.add(
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null));//No callback as damaging after lightning anim finishes looks messy
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+				if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
 					target.sprite.emitter().burst(SparkParticle.FACTORY, AMT);
 				}
 				attack.call();
@@ -349,20 +374,25 @@ public enum Element {
 			case DRAIN:
 				ch.sprite.parent.add(
 						new Lightning(ch.pos, DungeonTilemap.raisedTileCenterToWorld(cell), null, 0xFF0000));
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
+				if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
 					new Flare(8, 16).color(0xFF0000, true).show(target.sprite, 2f);
 				}
 				attack.call();
 				break;
 			case SPIRIT:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.SHADOW,
 						ch.sprite,
 						cell,
-						attack);
-				if (Dungeon.hero.fieldOfView[cell] && (target = Actor.findChar(cell)) != null) {
-					target.sprite.emitter().burst(ShadowParticle.CURSE, AMT);
-				}
+						new Callback() {
+							@Override
+							public void call() {
+								attack.call();
+								if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+									target.sprite.emitter().burst(ShadowParticle.CURSE, AMT);
+								}
+							}
+						});
 				break;
 		}
 	}
