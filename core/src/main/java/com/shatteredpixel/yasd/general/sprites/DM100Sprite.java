@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.watabou.noosa.TextureFilm;
 
-//TODO sprite still needs work
+//TODO sprite still needs some color tweaking?
 public class DM100Sprite extends MobSprite {
 	
 	public DM100Sprite() {
@@ -39,7 +39,7 @@ public class DM100Sprite extends MobSprite {
 
 		texture( Assets.DM100 );
 
-		TextureFilm frames = new TextureFilm( texture, 14, 14 );
+		TextureFilm frames = new TextureFilm( texture, 16, 14 );
 
 		idle = new Animation( 1, true );
 		idle.frames( frames, 0, 1 );
