@@ -123,6 +123,7 @@ public class HallsLevel extends RegularLevel {
 	@Override
 	public void create(String key) {
 		addItemToSpawn( new Torch() );
+		addItemToSpawn( new Torch() );
 		super.create(key);
 	}
 	

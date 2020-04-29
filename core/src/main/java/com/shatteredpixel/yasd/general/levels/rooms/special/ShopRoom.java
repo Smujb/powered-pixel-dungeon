@@ -220,8 +220,9 @@ public class ShopRoom extends SpecialRoom {
 			case 23:
 			case 24:
 				itemsToSpawn.add(Generator.random(Generator.misTiers[4]).quantity(2).identify());
-				itemsToSpawn.add( new Torch().quantity(2) );
-				itemsToSpawn.add( new Torch().quantity(2) );
+				itemsToSpawn.add( new Torch() );
+				itemsToSpawn.add( new Torch() );
+				itemsToSpawn.add( new Torch() );
 				break;
 		}
 		for (int a = 0; a < Random.IntRange(1,2); a++) {
