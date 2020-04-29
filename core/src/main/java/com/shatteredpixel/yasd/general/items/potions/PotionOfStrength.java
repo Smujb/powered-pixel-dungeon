@@ -39,7 +39,7 @@ public class PotionOfStrength extends Potion {
 	public void apply( Hero hero ) {
 		setKnown();
 
-
+		hero.DistributionPoints += 5;
 	}
 
 	@Override
