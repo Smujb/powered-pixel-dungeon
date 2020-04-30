@@ -67,8 +67,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -140,6 +138,13 @@ abstract public class Weapon extends KindOfWeapon {
 	public void curse() {
 		super.curse();
 		enchant(Enchantment.randomCurse());
+	}
+
+	@Override
+	public void uncurse() {
+		if (hasCurseEnchant()) {
+			enchant(null);
+		}
 	}
 
 	@Override

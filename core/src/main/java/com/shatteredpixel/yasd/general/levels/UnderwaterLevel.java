@@ -99,6 +99,7 @@ public class UnderwaterLevel extends Level {
 	protected boolean build() {
 		setSize(_width, _height);
 		map = Level.basicMap(length());
+		buildFlagMaps();
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
 			if ((setSolid[i] || chasmLocations.contains(i)) && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
@@ -130,7 +131,7 @@ public class UnderwaterLevel extends Level {
 	protected void createMobs() {
 		for (int i = 0; i < nMobs(); i++) {
 			Mob mob = createMob();
-			mob.pos = randomRespawnCell();
+			mob.pos = randomRespawnCell(mob);
 			mobs.add(mob);
 		}
 	}
@@ -156,6 +157,8 @@ public class UnderwaterLevel extends Level {
 					break;
 
 			}
+			item.uncurse();
+			item.cursedKnown = true;
 			drop(item, randomRespawnCell()).type = Heap.Type.SKELETON;
 		}
 	}

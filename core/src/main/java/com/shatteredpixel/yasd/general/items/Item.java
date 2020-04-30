@@ -179,6 +179,10 @@ public class Item implements Bundlable {
 	public void curse() {
 		cursed = true;
 	}
+
+	public void uncurse() {
+		cursed = false;
+	}
 	
 	public ArrayList<String> actions( Hero hero ) {
 		ArrayList<String> actions = new ArrayList<>();

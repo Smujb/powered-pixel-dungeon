@@ -71,8 +71,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -390,6 +388,13 @@ public class Armor extends KindofMisc {
 	public void curse() {
 		super.curse();
 		inscribe(Glyph.randomCurse());
+	}
+
+	@Override
+	public void uncurse() {
+		if (hasCurseGlyph()) {
+			inscribe(null);
+		}
 	}
 
 	@Override
