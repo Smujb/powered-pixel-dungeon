@@ -39,6 +39,7 @@ public class GLog {
 	public static final String NEGATIVE		= "-- ";
 	public static final String WARNING		= "** ";
 	public static final String HIGHLIGHT	= "@@ ";
+	public static final String NEW_LINE	    = "\n";
 	
 	public static Signal<String> update = new Signal<>();
 	
@@ -51,7 +52,11 @@ public class GLog {
 		DeviceCompat.log( TAG, text );
 		update.dispatch( text );
 	}
-	
+
+	public static void newLine(){
+		update.dispatch( NEW_LINE );
+	}
+
 	public static void p( String text, Object... args ) {
 		i( POSITIVE + text, args );
 	}
