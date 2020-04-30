@@ -59,7 +59,6 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.KingSprite;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -335,7 +334,7 @@ public class DwarfKing extends Mob {
 			yell(Messages.get(this, "notice"));
 			for (Char ch : Actor.chars()){
 				if (ch instanceof DriedRose.GhostHero){
-					GLog.n("\n");
+
 					((DriedRose.GhostHero) ch).sayBoss();
 				}
 			}
