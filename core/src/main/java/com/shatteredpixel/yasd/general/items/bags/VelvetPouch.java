@@ -28,6 +28,8 @@
 package com.shatteredpixel.yasd.general.items.bags;
 
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.quest.GooBlob;
+import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.items.stones.Runestone;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -42,7 +44,8 @@ public class VelvetPouch extends Bag {
 	
 	@Override
 	public boolean grab( Item item ) {
-		return item instanceof Plant.Seed || item instanceof Runestone;
+		return item instanceof Plant.Seed || item instanceof Runestone
+				|| item instanceof GooBlob || item instanceof MetalShard;
 	}
 	
 	@Override

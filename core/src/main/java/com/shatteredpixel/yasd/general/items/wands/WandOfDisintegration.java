@@ -31,6 +31,8 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.blobs.Blob;
+import com.shatteredpixel.yasd.general.actors.blobs.Web;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.PurpleParticle;
@@ -70,11 +72,11 @@ public class WandOfDisintegration extends DamageWand {
 		
 		boolean terrainAffected = false;
 		
-		float level = actualLevel();
-		
 		int maxDistance = Math.min(distance(), beam.dist);
 		
 		ArrayList<Char> chars = new ArrayList<>();
+
+		Blob web = Dungeon.level.blobs.get(Web.class);
 
 		int terrainPassed = 2, terrainBonus = 0;
 		for (int c : beam.subPath(1, maxDistance)) {
@@ -90,6 +92,11 @@ public class WandOfDisintegration extends DamageWand {
 				chars.add( ch );
 			}
 
+			if (Dungeon.level.solid(c)) {
+				terrainPassed++;
+				if (web != null) web.clear(c);
+			}
+
 			if (Dungeon.level.flammable(c)) {
 
 				Dungeon.level.destroy( c );
@@ -97,9 +104,6 @@ public class WandOfDisintegration extends DamageWand {
 				terrainAffected = true;
 				
 			}
-
-			if (Dungeon.level.solid(c))
-				terrainPassed++;
 			
 			CellEmitter.center( c ).burst( PurpleParticle.BURST, Random.IntRange( 1, 2 ) );
 		}

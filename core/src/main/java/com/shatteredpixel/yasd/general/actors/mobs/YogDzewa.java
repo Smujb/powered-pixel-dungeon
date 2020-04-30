@@ -28,15 +28,14 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
-import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
-import com.shatteredpixel.yasd.general.actors.buffs.Roots;
 import com.shatteredpixel.yasd.general.actors.buffs.Sleep;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
@@ -57,6 +56,7 @@ import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -91,10 +91,12 @@ public class YogDzewa extends Mob {
 
 	private ArrayList<Class> fistSummons = new ArrayList<>();
 	{
+		Random.pushGenerator(Dungeon.seedCurDepth());
 		fistSummons.add(Random.Int(2) == 0 ? YogFist.Burning.class : YogFist.Soiled.class);
 		fistSummons.add(Random.Int(2) == 0 ? YogFist.Rotting.class : YogFist.Rusted.class);
 		fistSummons.add(Random.Int(2) == 0 ? YogFist.Bright.class : YogFist.Dark.class);
 		Random.shuffle(fistSummons);
+		Random.popGenerator();
 	}
 
 	private static final int SUMMON_DECK_SIZE = 4;
@@ -135,19 +137,22 @@ public class YogDzewa extends Mob {
 
 			boolean terrainAffected = false;
 			HashSet<Char> affected = new HashSet<>();
-			for (int i : targetedCells) {
-				Ballistica b = new Ballistica(pos, i, Ballistica.WONT_STOP);
-				//shoot beams
-				sprite.parent.add(new Beam.DeathRay(sprite.center(), DungeonTilemap.raisedTileCenterToWorld(b.collisionPos)));
-				for (int p : b.path) {
-					Char ch = Actor.findChar(p);
-					if (ch != null && ch.alignment != alignment) {
-						affected.add(ch);
-					}
-					if (Dungeon.level.flammable(p)) {
-						Dungeon.level.destroy(p);
-						GameScene.updateMap(p);
-						terrainAffected = true;
+			//delay fire on a rooted hero
+			if (!Dungeon.hero.rooted) {
+				for (int i : targetedCells) {
+					Ballistica b = new Ballistica(pos, i, Ballistica.WONT_STOP);
+					//shoot beams
+					sprite.parent.add(new Beam.DeathRay(sprite.center(), DungeonTilemap.raisedTileCenterToWorld(b.collisionPos)));
+					for (int p : b.path) {
+						Char ch = Actor.findChar(p);
+						if (ch != null && ch.alignment != alignment) {
+							affected.add(ch);
+						}
+						if (Dungeon.level.flammable(p)) {
+							Dungeon.level.destroy(p);
+							GameScene.updateMap(p);
+							terrainAffected = true;
+						}
 					}
 				}
 			}
@@ -155,7 +160,7 @@ public class YogDzewa extends Mob {
 				Dungeon.observe();
 			}
 			for (Char ch : affected) {
-				ch.damage(damageRoll(), this);
+				ch.damage(damageRoll(), new DamageSrc(Element.DESTRUCTION, this));
 
 				if (Dungeon.level.heroFOV[pos]) {
 					ch.sprite.flash();
@@ -165,8 +170,8 @@ public class YogDzewa extends Mob {
 					Dungeon.fail(getClass());
 					GLog.n(Messages.get(Char.class, "kill", name()));
 				}
+				targetedCells.clear();
 			}
-			targetedCells.clear();
 
 			if (abilityCooldown <= 0) {
 
@@ -205,18 +210,15 @@ public class YogDzewa extends Mob {
 					}
 				}
 
-				//wait extra time to let a crippled/rooted hero evade
-				if (Dungeon.hero.buff(Cripple.class) != null) {
-					spend(TICK);
-				} else if (Dungeon.hero.buff(Roots.class) != null) {
-					spend(Dungeon.hero.buff(Roots.class).cooldown());
-				}
+				//don't want to overly punish players with slow move or attack speed
+				spend(GameMath.gate(TICK, Dungeon.hero.cooldown(), 3*TICK));
 
 				Dungeon.hero.interrupt();
 
 				abilityCooldown += Random.NormalFloat(MIN_ABILITY_CD, MAX_ABILITY_CD);
 				abilityCooldown -= phase;
-
+			} else {
+				spend(TICK);
 			}
 
 			while (summonCooldown <= 0) {
