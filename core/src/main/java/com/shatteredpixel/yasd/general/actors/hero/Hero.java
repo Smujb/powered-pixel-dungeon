@@ -777,6 +777,16 @@ public class Hero extends Char {
 					
 					curAction = null;
 				} else {
+					if (item instanceof Dewdrop
+							|| item instanceof TimekeepersHourglass.sandBag
+							|| item instanceof DriedRose.Petal
+							|| item instanceof Key) {
+						//Do Nothing
+					} else {
+						GLog.newLine();
+						GLog.n(Messages.get(this, "you_cant_have", item.name()));
+					}
+
 					heap.sprite.drop();
 					ready();
 				}
