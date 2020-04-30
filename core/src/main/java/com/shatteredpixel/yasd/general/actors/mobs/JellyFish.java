@@ -91,53 +91,17 @@ public class JellyFish extends WaterMob {
 		defenseSkill = 5 + depth * 4;
 	}
 
-	protected boolean act() {
-		if(!Dungeon.level.liquid()[pos]){
-			die(new DamageSrc(Element.EARTH, null));
-			sprite.killAndErase();
-			return true;
-		} else {
-			return super.act();
-		}
-	}
-
 	@Override
 	public boolean reset(){
 		return true;
 	}
-	@Override
-	protected boolean getCloser(int target){
-		if(rooted){
-			return false;
-		}
-		int step = Dungeon.findStep(this, pos, target,
-				Dungeon.level.liquid(),
-				fieldOfView);
-		if(step != -1){
-			move(step);
-			return true;
-		} else {
-			return false;
-		}
-	}
 
-	@Override
-	protected boolean getFurther(int target){
-		int step = Dungeon.flee(this, pos, target,
-				Dungeon.level.liquid(),
-				fieldOfView);
-		if(step != -1){
-			move(step);
-			return true;
-		}else{
-			return false;
-		}
-	}
 	@Override
 	public void storeInBundle( Bundle bundle){
 		super.storeInBundle(bundle);
 		bundle.put(COLOUR, colour);
 	}
+
 	@Override
 	public void restoreFromBundle( Bundle bundle){
 		super.restoreFromBundle(bundle);
