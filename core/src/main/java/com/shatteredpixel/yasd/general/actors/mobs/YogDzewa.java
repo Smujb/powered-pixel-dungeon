@@ -289,6 +289,8 @@ public class YogDzewa extends Mob {
 
 		int dmgTaken = preHP - HP;
 
+		if (phase == 0 || findFist() != null) return;
+
 		abilityCooldown -= dmgTaken/10f;
 		summonCooldown -= dmgTaken/10f;
 

@@ -185,6 +185,7 @@ public class DM200 extends Mob {
 			GameScene.add(Blob.seed(pos, 0, CorrosiveGas.class));
 			if (state == HUNTING && enemy != null && enemySeen
 					&& threatened && !Dungeon.level.adjacent(pos, enemy.pos)){
+				enemySeen = enemy.isAlive() && fieldOfView[enemy.pos] && enemy.invisible <= 0;
 				if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
 					sprite.attack( enemy.pos );
 					return false;
