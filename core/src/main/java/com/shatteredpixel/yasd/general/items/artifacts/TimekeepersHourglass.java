@@ -249,7 +249,7 @@ public class TimekeepersHourglass extends Artifact {
 		}
 
 		@Override
-		public boolean attachTo(Char target) {
+		public boolean attachTo(@NotNull Char target) {
 
 			if (super.attachTo(target)) {
 
@@ -339,7 +339,7 @@ public class TimekeepersHourglass extends Artifact {
 		}
 
 		@Override
-		public boolean attachTo(Char target) {
+		public boolean attachTo(@NotNull Char target) {
 			if (super.attachTo(target)){
 				if (Dungeon.level != null)
 					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))

@@ -31,6 +31,8 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Roots extends FlavourBuff {
 
 	{
@@ -39,7 +41,7 @@ public class Roots extends FlavourBuff {
 	}
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (!target.flying && super.attachTo( target )) {
 			target.rooted = true;
 			return true;

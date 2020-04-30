@@ -33,6 +33,8 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Corruption extends Buff {
 
 	{
@@ -45,7 +47,7 @@ public class Corruption extends Buff {
 	private float buildToDamage = 0f;
 	
 	@Override
-	public boolean attachTo(Char target) {
+	public boolean attachTo(@NotNull Char target) {
 		if (super.attachTo(target)){
 			target.alignment = Char.Alignment.ALLY;
 			return true;

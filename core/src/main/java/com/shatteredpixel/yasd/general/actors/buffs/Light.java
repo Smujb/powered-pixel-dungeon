@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Light extends FlavourBuff {
 	
 	{
@@ -44,7 +46,7 @@ public class Light extends FlavourBuff {
 	public static final int DISTANCE	= 8;
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			if (Dungeon.level != null) {
 				target.viewDistance = Math.max( Dungeon.level.viewDistance, DISTANCE );

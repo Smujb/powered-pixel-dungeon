@@ -35,6 +35,8 @@ import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Paralysis extends FlavourBuff {
 
 	public static final float DURATION	= 10f;
@@ -45,7 +47,7 @@ public class Paralysis extends FlavourBuff {
 	}
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			target.paralysed++;
 			return true;

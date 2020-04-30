@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Levitation extends FlavourBuff {
 	
 	{
@@ -43,7 +45,7 @@ public class Levitation extends FlavourBuff {
 	public static final float DURATION	= 20f;
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			target.flying = true;
 			Roots.detach( target, Roots.class );

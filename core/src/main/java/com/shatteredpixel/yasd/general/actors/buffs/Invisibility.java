@@ -39,6 +39,8 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Invisibility extends FlavourBuff {
 
 	public static final float DURATION	= 20f;
@@ -49,7 +51,7 @@ public class Invisibility extends FlavourBuff {
 	}
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			target.invisible++;
 			if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){

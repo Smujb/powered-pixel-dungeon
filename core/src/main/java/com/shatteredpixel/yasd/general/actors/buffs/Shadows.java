@@ -36,6 +36,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Shadows extends Invisibility {
 	
 	protected float left;
@@ -60,7 +62,7 @@ public class Shadows extends Invisibility {
 	}
 	
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			Sample.INSTANCE.play( Assets.SND_MELD );
 			if (Dungeon.level != null)

@@ -543,7 +543,7 @@ public abstract class Wand extends KindofMisc {
 		float scalingFactor = NORMAL_SCALE_FACTOR;
 		
 		@Override
-		public boolean attachTo( Char target ) {
+		public boolean attachTo(@NotNull Char target ) {
 			super.attachTo( target );
 			
 			return true;

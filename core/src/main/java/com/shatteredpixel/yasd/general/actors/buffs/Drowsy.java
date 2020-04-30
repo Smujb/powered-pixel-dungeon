@@ -32,6 +32,8 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Drowsy extends Buff {
 
 	{
@@ -44,7 +46,7 @@ public class Drowsy extends Buff {
 		return BuffIndicator.DROWSY;
 	}
 
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (!target.isImmune(Sleep.class) && super.attachTo(target)) {
 			if (cooldown() == 0)
 				spend(Random.Int(3, 6));

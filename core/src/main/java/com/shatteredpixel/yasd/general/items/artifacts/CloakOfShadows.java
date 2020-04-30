@@ -229,7 +229,7 @@ public class CloakOfShadows extends Artifact {
 		}
 
 		@Override
-		public boolean attachTo( Char target ) {
+		public boolean attachTo(@NotNull Char target ) {
 			if (super.attachTo( target )) {
 				target.invisible++;
 				if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){

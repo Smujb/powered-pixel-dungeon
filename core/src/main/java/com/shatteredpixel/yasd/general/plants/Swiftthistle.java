@@ -42,6 +42,8 @@ import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class Swiftthistle extends Plant {
@@ -128,7 +130,7 @@ public class Swiftthistle extends Plant {
 		}
 		
 		@Override
-		public boolean attachTo(Char target) {
+		public boolean attachTo(@NotNull Char target) {
 			if (super.attachTo(target)){
 				if (Dungeon.level != null)
 					for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0]))

@@ -34,12 +34,14 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.shatteredpixel.yasd.general.utils.GLog;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MagicalSleep extends Buff {
 
 	private static final float STEP = 1f;
 
 	@Override
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 		if (!target.isImmune(Sleep.class) && super.attachTo( target )) {
 			
 			target.paralysed++;

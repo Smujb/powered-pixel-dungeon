@@ -41,6 +41,8 @@ import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 
 	public int object = 0;
@@ -48,7 +50,7 @@ public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 	private static final String OBJECT    = "object";
 	
 	@Override
-	public boolean attachTo(Char target) {
+	public boolean attachTo(@NotNull Char target) {
 		ActionIndicator.setAction(this);
 		return super.attachTo(target);
 	}

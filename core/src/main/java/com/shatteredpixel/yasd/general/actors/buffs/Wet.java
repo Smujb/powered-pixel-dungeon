@@ -32,6 +32,8 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DecimalFormat;
 
 public class Wet extends FlavourBuff {
@@ -43,7 +45,7 @@ public class Wet extends FlavourBuff {
     public static final float DURATION = 5f;
 
     @Override
-    public boolean attachTo(Char target) {
+    public boolean attachTo(@NotNull Char target) {
         if (target.buff(Frost.class) != null) return false;
         Buff chill = target.buff(Chill.class);
         if (chill != null) {//If enemy is chilled, freeze them instead.

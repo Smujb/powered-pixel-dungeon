@@ -41,6 +41,8 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Poison extends Buff implements Hero.Doom {
 	{
 		element = Element.TOXIC;
@@ -108,7 +110,7 @@ public class Poison extends Buff implements Hero.Doom {
 	}
 
 	@Override
-	public boolean attachTo(Char target) {
+	public boolean attachTo(@NotNull Char target) {
 		if (super.attachTo(target) && target.sprite != null){
 			CellEmitter.center(target.pos).burst(Speck.factory(Speck.BUBBLE_PURPLE), 5 );
 			return true;

@@ -40,6 +40,8 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class ScrollOfMirrorImage extends Scroll {
@@ -124,7 +126,7 @@ public class ScrollOfMirrorImage extends Scroll {
 		private float delay;
 		
 		@Override
-		public boolean attachTo(Char target) {
+		public boolean attachTo(@NotNull Char target) {
 			if (super.attachTo(target)){
 				spend(delay);
 				return true;

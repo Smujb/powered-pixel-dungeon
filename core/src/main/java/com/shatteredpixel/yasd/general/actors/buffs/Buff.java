@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DecimalFormat;
 import java.util.HashSet;
 
@@ -70,7 +72,7 @@ public class Buff extends Actor {
 		return new HashSet<>(immunities);
 	}
 	
-	public boolean attachTo( Char target ) {
+	public boolean attachTo(@NotNull Char target ) {
 
 		if (target.isImmune( getClass() )) {
 			return false;

@@ -42,6 +42,8 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Earthroot extends Plant {
 	
 	{
@@ -88,7 +90,7 @@ public class Earthroot extends Plant {
 		}
 		
 		@Override
-		public boolean attachTo( Char target ) {
+		public boolean attachTo(@NotNull Char target ) {
 			pos = target.pos;
 			return super.attachTo( target );
 		}
