@@ -366,7 +366,17 @@ public abstract class Char extends Actor {
 
 		boolean visibleFight = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
 
-		if (hit(this, enemy) | guaranteed) {
+		if (enemy.isInvulnerable(getClass())) {
+
+			if (visibleFight) {
+				enemy.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "invulnerable") );
+
+				Sample.INSTANCE.play(Assets.SND_MISS);
+			}
+
+			return false;
+
+		} else if (hit(this, enemy) || guaranteed) {
 
 			int dmg;
 			Preparation prep = buff(Preparation.class);
