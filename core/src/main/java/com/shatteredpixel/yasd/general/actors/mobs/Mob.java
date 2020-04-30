@@ -414,19 +414,24 @@ public abstract class Mob extends Char {
 			if ( buff(Amok.class) != null) {
 				//try to find an enemy mob to attack first.
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY && mob != this)
-							enemies.add(mob);
+					if (mob.alignment == Alignment.ENEMY && mob != this
+							&& mob.invisible <= 0) {
+						enemies.add(mob);
+					}
 				
 				if (enemies.isEmpty()) {
 					//try to find ally mobs to attack second.
 					for (Mob mob : Dungeon.level.mobs)
-						if (mob.alignment == Alignment.ALLY && mob != this)
+						if (mob.alignment == Alignment.ALLY && mob != this
+								&& mob.invisible <= 0) {
 							enemies.add(mob);
+						}
 					
 					if (enemies.isEmpty()) {
 						//try to find the hero third
-						enemies.add(Dungeon.hero);
-
+						if (Dungeon.hero.invisible <= 0) {
+							enemies.add(Dungeon.hero);
+						}
 					}
 				}
 				
@@ -434,7 +439,8 @@ public abstract class Mob extends Char {
 			} else if ( alignment == Alignment.ALLY ) {
 				//look for hostile mobs to attack
 				for (Mob mob : Dungeon.level.mobs)
-					if (mob.alignment == Alignment.ENEMY)
+					if (mob.alignment == Alignment.ENEMY
+							&& mob.invisible <= 0 && !mob.isInvulnerable(getClass()))
 						//intelligent allies do not target mobs which are passive, wandering, or asleep
 						if (!intelligentAlly ||
 								(mob.state != mob.SLEEPING && mob.state != mob.PASSIVE && mob.state != mob.WANDERING)) {
@@ -445,11 +451,13 @@ public abstract class Mob extends Char {
 			} else if (alignment == Alignment.ENEMY) {
 				//look for ally mobs to attack
 				for (Mob mob : Dungeon.level.mobs) {
-					if (mob.alignment == Alignment.ALLY) {
+					if (mob.alignment == Alignment.ALLY && mob.invisible <= 0 && !mob.isInvulnerable(getClass())) {
 						enemies.add(mob);
 					}
 				}
-				enemies.add(Dungeon.hero);
+				if (Dungeon.hero.invisible <= 0 && !Dungeon.hero.isInvulnerable(getClass())) {
+					enemies.add(Dungeon.hero);
+				}
 			}
 			
 			Charm charm = buff( Charm.class );
@@ -457,15 +465,6 @@ public abstract class Mob extends Char {
 				Char source = (Char)Actor.findById( charm.object );
 				if (source != null && enemies.contains(source) && enemies.size() > 1){
 					enemies.remove(source);
-				}
-			}
-
-			//if we are not amoked, remove any enemies which are invulnerable to us.
-			if (buff(Amok.class) == null) {
-				for (Char enemy : enemies.toArray(new Char[0])) {
-					if (enemy.isInvulnerable(getClass())){
-						enemies.remove(enemy);
-					}
 				}
 			}
 			
@@ -1178,6 +1177,7 @@ public abstract class Mob extends Char {
 		}
 	}
 
+	//FIXME this works fairly well but is coded poorly. Should refactor
 	protected class Fleeing implements AiState {
 
 		public static final String TAG	= "FLEEING";
