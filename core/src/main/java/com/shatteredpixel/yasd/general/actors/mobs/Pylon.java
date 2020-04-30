@@ -147,7 +147,7 @@ public class Pylon extends Mob {
 	}
 
 	@Override
-	public boolean interact() {
+	public boolean interact(Char ch) {
 		return true;
 	}
 

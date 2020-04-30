@@ -79,7 +79,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Surprise;
@@ -254,31 +253,40 @@ public abstract class Char extends Actor {
 		return false;
 	}
 
-	public boolean canInteract(Hero h) {
-		return Dungeon.level.adjacent( pos, h.pos ) && h.buff(Vertigo.class) == null;
+	public boolean canInteract(Char ch) {
+		return Dungeon.level.adjacent( pos, ch.pos ) && ch.buff(Vertigo.class) == null;
 	}
 
 	//swaps places by default
-	public boolean interact() {
+	public boolean interact(Char ch) {
 
-		if (!Dungeon.level.passable(pos) && !Dungeon.hero.flying) {
+		//can't spawn places if one char has restricted movement
+		if (rooted || ch.rooted || buff(Vertigo.class) != null || ch.buff(Vertigo.class) != null){
 			return true;
 		}
 
-		if (properties.contains(Property.LARGE) && !Dungeon.level.openSpace(Dungeon.hero.pos)){
+		//don't allow char to swap onto hazard unless they're flying
+		//you can swap onto a hazard though, as you're not the one instigating the swap
+		if (!Dungeon.level.passable(pos) && !ch.flying){
+			return true;
+		}
+
+		//can't swap into a space without room
+		if (!canOccupy(Dungeon.level, ch.pos)
+				|| !ch.canOccupy(Dungeon.level, pos)) {
 			return true;
 		}
 
 		int curPos = pos;
 
-		moveSprite(pos, Dungeon.hero.pos);
-		move(Dungeon.hero.pos);
+		moveSprite(pos, ch.pos);
+		move(ch.pos);
 
-		Dungeon.hero.sprite.move(Dungeon.hero.pos, curPos);
-		Dungeon.hero.move(curPos);
+		ch.sprite.move(ch.pos, curPos);
+		ch.move(curPos);
 
-		Dungeon.hero.spend(1 / Dungeon.hero.speed());
-		Dungeon.hero.busy();
+		ch.spend(1 / ch.speed());
+		ch.busy();
 
 		return true;
 	}

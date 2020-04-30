@@ -56,8 +56,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class Blacksmith extends NPC {
@@ -75,9 +73,13 @@ public class Blacksmith extends NPC {
 	}
 	
 	@Override
-	public boolean interact() {
-		
-		sprite.turnTo( pos, Dungeon.hero.pos );
+	public boolean interact(Char ch) {
+
+		sprite.turnTo( pos, ch.pos );
+
+		if (ch != Dungeon.hero){
+			return true;
+		}
 		
 		if (!Quest.given) {
 			
@@ -162,7 +164,7 @@ public class Blacksmith extends NPC {
 			
 		}
 
-		return false;
+		return true;
 	}
 	
 	private void tell( String text ) {

@@ -35,8 +35,6 @@ import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.SheepSprite;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Sheep extends NPC {
 
 	private static final String[] LINE_KEYS = {"Baa!", "Baa?", "Baa.", "Baa..."};
@@ -78,9 +76,9 @@ public class Sheep extends NPC {
 	}
 
 	@Override
-	public boolean interact() {
+	public boolean interact(Char c) {
 		sprite.showStatus( CharSprite.NEUTRAL, Messages.get(this, Random.element( LINE_KEYS )) );
-		Dungeon.hero.spendAndNext(1f);
-		return false;
+		if (c == Dungeon.hero) c.spendAndNext(1f);
+		return true;
 	}
 }

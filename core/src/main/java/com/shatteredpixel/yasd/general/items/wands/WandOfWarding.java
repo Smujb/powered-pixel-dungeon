@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -409,12 +408,15 @@ public class WandOfWarding extends DamageWand {
 		}
 		
 		@Override
-		public boolean canInteract(Hero h) {
+		public boolean canInteract(Char ch) {
 			return (this.alignment == Alignment.ALLY);
 		}
 
 		@Override
-		public boolean interact() {
+		public boolean interact( Char c ) {
+			if (c != Dungeon.hero){
+				return true;
+			}
 			if (alignment == curUser.alignment) {
 				Game.runOnRenderThread(new Callback() {
 					@Override
@@ -434,7 +436,7 @@ public class WandOfWarding extends DamageWand {
 				});
 				return true;
 			} else {
-				return super.interact();
+				return super.interact(c);
 			}
 		}
 

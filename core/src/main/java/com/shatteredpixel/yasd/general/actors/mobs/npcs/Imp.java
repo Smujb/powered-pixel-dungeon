@@ -49,8 +49,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Imp extends NPC {
 
 	{
@@ -97,9 +95,14 @@ public class Imp extends NPC {
 	}
 	
 	@Override
-	public boolean interact() {
+	public boolean interact(Char c) {
 		
-		sprite.turnTo( pos, Dungeon.hero.pos );
+		sprite.turnTo( pos, c.pos );
+
+		if (c != Dungeon.hero){
+			return true;
+		}
+
 		if (Quest.given) {
 			
 			DwarfToken tokens = Dungeon.hero.belongings.getItem( DwarfToken.class );
@@ -124,7 +127,7 @@ public class Imp extends NPC {
 			Notes.add( Notes.Landmark.IMP );
 		}
 
-		return false;
+		return true;
 	}
 	
 	private void tell( String text ) {

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.mobs.ShopGuardian;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -42,8 +43,6 @@ import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.shatteredpixel.yasd.general.windows.WndTradeItem;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
-
-import org.jetbrains.annotations.NotNull;
 
 public class Shopkeeper extends NPC {
 
@@ -114,13 +113,16 @@ public class Shopkeeper extends NPC {
 	};
 
 	@Override
-	public boolean interact() {
+	public boolean interact(Char c) {
+		if (c != Dungeon.hero) {
+			return true;
+		}
 		Game.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
 				sell();
 			}
 		});
-		return false;
+		return true;
 	}
 }

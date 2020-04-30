@@ -33,8 +33,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.RatKingSprite;
 
-import org.jetbrains.annotations.NotNull;
-
 public class RatKing extends NPC {
 
 	{
@@ -104,8 +102,12 @@ public class RatKing extends NPC {
 	//***
 	
 	@Override
-	public boolean interact() {
-		sprite.turnTo( pos, Dungeon.hero.pos );
+	public boolean interact(Char c) {
+		sprite.turnTo( pos, c.pos );
+
+		if (c != Dungeon.hero){
+			return super.interact(c);
+		}
 		if (state == SLEEPING) {
 			notice();
 			yell( Messages.get(this, "not_sleeping") );

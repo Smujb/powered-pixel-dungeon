@@ -55,8 +55,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Ghost extends NPC {
 
 	{
@@ -107,12 +105,15 @@ public class Ghost extends NPC {
 	public boolean reset() {
 		return true;
 	}
-	
-	@Override
-	public boolean interact() {
-		sprite.turnTo( pos, Dungeon.hero.pos );
+
+	public boolean interact(Char c) {
+		sprite.turnTo( pos, c.pos );
 		
 		Sample.INSTANCE.play( Assets.SND_GHOST );
+
+		if (c != Dungeon.hero){
+			return super.interact(c);
+		}
 		
 		if (Quest.given) {
 			if (Quest.weapon != null) {
@@ -190,7 +191,7 @@ public class Ghost extends NPC {
 
 		}
 
-		return false;
+		return true;
 	}
 
 	public static class Quest {

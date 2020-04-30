@@ -162,9 +162,9 @@ public class Mimic extends Mob {
 	}
 
 	@Override
-	public boolean interact() {
-		if (alignment != Alignment.NEUTRAL){
-			return super.interact();
+	public boolean interact(Char c) {
+		if (alignment != Alignment.NEUTRAL || c != Dungeon.hero){
+			return super.interact(c);
 		}
 		stopHiding();
 		Dungeon.hero.busy();

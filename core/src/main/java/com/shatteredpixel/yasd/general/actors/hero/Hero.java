@@ -123,8 +123,6 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -673,7 +671,7 @@ public class Hero extends Char {
 			
 			ready();
 			sprite.turnTo( pos, ch.pos );
-			return ch.interact();
+			return ch.interact(this);
 			
 		} else {
 			
