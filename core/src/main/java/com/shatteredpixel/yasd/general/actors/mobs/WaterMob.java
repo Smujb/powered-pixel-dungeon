@@ -72,9 +72,7 @@ public abstract class WaterMob extends Mob {
 			return false;
 		}
 
-		int step = Dungeon.findStep( this, pos, target,
-				Dungeon.level.liquid(),
-				fieldOfView );
+		int step = Dungeon.findStep( this, target, Dungeon.level.liquid(), fieldOfView, true );
 		if (step != -1) {
 			move( step );
 			return true;
@@ -85,9 +83,7 @@ public abstract class WaterMob extends Mob {
 
 	@Override
 	protected boolean getFurther( int target ) {
-		int step = Dungeon.flee( this, pos, target,
-				Dungeon.level.liquid(),
-				fieldOfView );
+		int step = Dungeon.flee( this, target, Dungeon.level.liquid(), fieldOfView, true );
 		if (step != -1) {
 			move( step );
 			return true;
