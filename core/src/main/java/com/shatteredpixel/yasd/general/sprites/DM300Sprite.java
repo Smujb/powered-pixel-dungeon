@@ -95,7 +95,10 @@ public class DM300Sprite extends MobSprite {
 		Sample.INSTANCE.play( Assets.SND_ROCKS );
 		Camera.main.shake( 3, 0.7f );
 	}
-	
+
+
+	private boolean exploded = false;
+
 	@Override
 	public void onComplete( Animation anim ) {
 		
@@ -108,8 +111,9 @@ public class DM300Sprite extends MobSprite {
 		if (anim == slam){
 			((NewDM300)ch).onSlamComplete();
 		}
-		
-		if (anim == die) {
+
+		if (anim == die && !exploded) {
+			exploded = true;
 			Sample.INSTANCE.play(Assets.SND_BLAST);
 			emitter().burst( BlastParticle.FACTORY, 25 );
 		}

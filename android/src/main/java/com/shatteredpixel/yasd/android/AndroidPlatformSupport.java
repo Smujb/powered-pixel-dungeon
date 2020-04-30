@@ -72,7 +72,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 	
 	public void updateDisplaySize(){
 		if (YASDSettings.landscape() != null) {
-			AndroidGame.instance.setRequestedOrientation( YASDSettings.landscape() ?
+			AndroidGame.instance.setRequestedOrientation( PixelScene.landscape() ?
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE :
 					ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT );
 		}
@@ -84,7 +84,13 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		Game.dispHeight = AndroidGame.view.getMeasuredHeight();
 
 
-		if ((Game.dispWidth >= Game.dispHeight) != PixelScene.landscape()){
+		boolean fullscreen = Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+				|| !AndroidGame.instance.isInMultiWindowMode();
+
+		Boolean landscape = YASDSettings.landscape();
+
+		if (fullscreen && landscape != null
+				&& (Game.dispWidth >= Game.dispHeight) != landscape) {
 			int tmp = Game.dispWidth;
 			Game.dispWidth = Game.dispHeight;
 			Game.dispHeight = tmp;
@@ -99,7 +105,7 @@ public class AndroidPlatformSupport extends PlatformSupport {
 		if (Game.dispWidth < renderWidth*2 || Game.dispHeight < renderHeight*2)
 			YASDSettings.put( YASDSettings.KEY_POWER_SAVER, true );
 		
-		if (YASDSettings.powerSaver()){
+		if (YASDSettings.powerSaver() && fullscreen){
 			
 			int maxZoom = (int)Math.min(Game.dispWidth/renderWidth, Game.dispHeight/renderHeight);
 			
