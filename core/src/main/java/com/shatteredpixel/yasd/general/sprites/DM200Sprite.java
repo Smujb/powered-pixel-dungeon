@@ -28,17 +28,17 @@
 package com.shatteredpixel.yasd.general.sprites;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.effects.Speck;
 import com.watabou.noosa.TextureFilm;
 
-//TODO currently just uses DM-300's sprite scaled to 80%
 public class DM200Sprite extends MobSprite {
 
 	public DM200Sprite () {
 		super();
 
-		texture( Assets.DM300 );
+		texture( Assets.DM200 );
 
-		TextureFilm frames = new TextureFilm( texture, 22, 20 );
+		TextureFilm frames = new TextureFilm( texture, 21, 18 );
 
 		idle = new Animation( 10, true );
 		idle.frames( frames, 0, 1 );
@@ -47,15 +47,27 @@ public class DM200Sprite extends MobSprite {
 		run.frames( frames, 2, 3 );
 
 		attack = new Animation( 15, false );
-		attack.frames( frames, 4, 5, 6, 0 );
+		attack.frames( frames, 4, 5, 6 );
 
-		zap = attack.clone();
+		zap = new Animation( 15, false );
+		zap.frames( frames, 7, 8, 8, 7 );
 
-		die = new Animation( 20, false );
-		die.frames( frames, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 8 );
+		die = new Animation( 8, false );
+		die.frames( frames, 9, 10, 11 );
 
 		play( idle );
-		scale.set( 0.8f );
+	}
+
+	@Override
+	public void place(int cell) {
+		if (parent != null) parent.bringToFront(this);
+		super.place(cell);
+	}
+
+	@Override
+	public void die() {
+		emitter().burst( Speck.factory( Speck.WOOL ), 8 );
+		super.die();
 	}
 
 	public static class DM201Sprite extends MobSprite {
@@ -63,32 +75,40 @@ public class DM200Sprite extends MobSprite {
 		public DM201Sprite () {
 			super();
 
-			texture( Assets.DM300 );
+			texture( Assets.DM200 );
 
-			TextureFilm frames = new TextureFilm( texture, 22, 16 );
+			TextureFilm frames = new TextureFilm( texture, 21, 18 );
+
+			int c = 12;
 
 			idle = new Animation( 2, true );
-			idle.frames( frames, 0, 1 );
+			idle.frames( frames, c+0, c+1 );
 
 			run = idle.clone();
 
 			attack = new Animation( 15, false );
-			attack.frames( frames, 4, 5, 6, 0 );
+			attack.frames( frames, c+4, c+5, c+6 );
 
-			zap = attack.clone();
+			zap = new Animation( 15, false );
+			zap.frames( frames, c+7, c+8, c+8, c+7 );
 
 			die = new Animation( 20, false );
-			die.frames( frames, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 8 );
+			die = new Animation( 8, false );
+			die.frames( frames, c+9, c+10, c+11 );
 
 			play( idle );
-			scale.set( 0.8f );
+		}
+
+		public void place(int cell) {
+			if (parent != null) parent.bringToFront(this);
+			super.place(cell);
 		}
 
 		@Override
-		public void resetColor() {
-			super.resetColor();
+		public void die() {
+			emitter().burst(Speck.factory(Speck.WOOL), 8);
+			super.die();
 		}
-
 	}
 
 }
