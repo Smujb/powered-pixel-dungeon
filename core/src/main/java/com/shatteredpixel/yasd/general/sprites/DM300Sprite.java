@@ -41,34 +41,53 @@ import com.watabou.utils.Callback;
 
 public class DM300Sprite extends MobSprite {
 
+	private Animation charge;
 	private Animation slam;
 
 	private Emitter superchargeSparks;
-	
+
 	public DM300Sprite() {
 		super();
-		
+
 		texture( Assets.DM300 );
-		
-		TextureFilm frames = new TextureFilm( texture, 22, 20 );
-		
-		idle = new Animation( 10, true );
-		idle.frames( frames, 0, 1 );
-		
-		run = new Animation( 10, true );
-		run.frames( frames, 2, 3 );
-		
+
+		setAnimations(false);
+	}
+
+	private void setAnimations( boolean enraged ){
+		int c = enraged ? 10 : 0;
+
+		TextureFilm frames = new TextureFilm( texture, 25, 22 );
+
+		idle = new Animation( enraged ? 15 : 10, true );
+		idle.frames( frames, c+0, c+1 );
+
+		run = new Animation( enraged ? 15 : 10, true );
+		run.frames( frames, c+0, c+2 );
+
 		attack = new Animation( 15, false );
-		attack.frames( frames, 4, 5, 6 );
+		attack.frames( frames, c+3, c+4, c+5 );
 
-		slam = attack.clone();
+		//unaffected by enrage state
 
-		zap = attack.clone();
-		
-		die = new Animation( 20, false );
-		die.frames( frames, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 8 );
-		
-		play( idle );
+		if (charge == null) {
+			charge = new Animation(4, true);
+			charge.frames(frames, 0, 10);
+
+			slam = attack.clone();
+
+			zap = new Animation(15, false);
+			zap.frames(frames, 6, 7, 7, 6);
+
+			die = new Animation(20, false);
+			die.frames(frames, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10);
+		}
+
+		if (curAnim != charge) play(idle);
+	}
+
+	public void charge(){
+		play( charge );
 	}
 
 	public void zap( int cell ) {
@@ -115,9 +134,17 @@ public class DM300Sprite extends MobSprite {
 		if (anim == die && !exploded) {
 			exploded = true;
 			Sample.INSTANCE.play(Assets.SND_BLAST);
-			emitter().burst( BlastParticle.FACTORY, 25 );
+			emitter().burst( BlastParticle.FACTORY, 100 );
+			killAndErase();
 		}
 	}
+
+	@Override
+	public void place(int cell) {
+		if (parent != null) parent.bringToFront(this);
+		super.place(cell);
+	}
+
 
 	@Override
 	public void link(Char ch) {
@@ -129,7 +156,7 @@ public class DM300Sprite extends MobSprite {
 		superchargeSparks.on = false;
 
 		if (ch instanceof NewDM300 && ((NewDM300) ch).isSupercharged()){
-			tint(1, 0, 0, 0.33f);
+			setAnimations(true);
 			superchargeSparks.on = true;
 		}
 	}
@@ -140,8 +167,10 @@ public class DM300Sprite extends MobSprite {
 
 		if (superchargeSparks != null){
 			superchargeSparks.visible = visible;
-			if (ch instanceof NewDM300){
+			if (ch instanceof NewDM300
+					&& ((NewDM300) ch).isSupercharged() != superchargeSparks.on){
 				superchargeSparks.on = ((NewDM300) ch).isSupercharged();
+				setAnimations(((NewDM300) ch).isSupercharged());
 			}
 		}
 	}
@@ -159,14 +188,6 @@ public class DM300Sprite extends MobSprite {
 		super.kill();
 		if (superchargeSparks != null){
 			superchargeSparks.killAndErase();
-		}
-	}
-
-	@Override
-	public void resetColor() {
-		super.resetColor();
-		if (ch instanceof NewDM300 && ((NewDM300) ch).isSupercharged()){
-			tint(1, 0, 0, 0.33f);
 		}
 	}
 	
