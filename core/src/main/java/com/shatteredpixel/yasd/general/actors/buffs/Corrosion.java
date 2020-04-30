@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.buffs;
 
+import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -50,6 +51,10 @@ public class Corrosion extends Buff implements Hero.Doom {
 	{
 		type = buffType.NEGATIVE;
 		announced = true;
+	}
+
+	public static int defaultStrength(int scale) {
+		return 1 + scale / Constants.CHAPTER_LENGTH;
 	}
 
 	@Override

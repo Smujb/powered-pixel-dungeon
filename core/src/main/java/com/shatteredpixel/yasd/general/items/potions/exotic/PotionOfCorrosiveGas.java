@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
+import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.noosa.audio.Sample;
 
@@ -50,6 +51,6 @@ public class PotionOfCorrosiveGas extends ExoticPotion {
 			Sample.INSTANCE.play( Assets.SND_SHATTER );
 		}
 		
-		GameScene.add( Blob.seed( cell, 200, CorrosiveGas.class ).setStrength( 1 + Dungeon.getScaleFactor() / 6));
+		GameScene.add( Blob.seed( cell, 200, CorrosiveGas.class ).setStrength(Corrosion.defaultStrength(Dungeon.getScaleFactor())));
 	}
 }

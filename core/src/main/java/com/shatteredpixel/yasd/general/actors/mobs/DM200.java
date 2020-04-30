@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
+import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -170,16 +171,11 @@ public class DM200 extends Mob {
 		{
 			spriteClass = DM200Sprite.DM201Sprite.class;
 
-			HP = HT = 120;
+			healthFactor = 2f;
 
 			properties.add(Property.IMMOVABLE);
 
 			HUNTING = new Mob.Hunting();
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange( 15, 25 );
 		}
 
 		private boolean threatened = false;
@@ -215,10 +211,10 @@ public class DM200 extends Mob {
 			spend(TICK);
 
 			GLog.w(Messages.get(this, "vent"));
-			GameScene.add(Blob.seed(enemy.pos, 15, CorrosiveGas.class).setStrength(8));
+			GameScene.add(Blob.seed(enemy.pos, 15, CorrosiveGas.class).setStrength(Corrosion.defaultStrength(Dungeon.getScaleFactor())));
 			for (int i : PathFinder.NEIGHBOURS8){
 				if (!Dungeon.level.solid(enemy.pos+i)) {
-					GameScene.add(Blob.seed(enemy.pos + i, 5, CorrosiveGas.class).setStrength(8));
+					GameScene.add(Blob.seed(enemy.pos + i, 5, CorrosiveGas.class).setStrength(Corrosion.defaultStrength(Dungeon.getScaleFactor())));
 				}
 			}
 			return true;
