@@ -1525,7 +1525,7 @@ public class Hero extends Char {
 		super.move( step );
 		
 		if (!flying) {
-			if (Dungeon.level.liquid()[pos]) {
+			if (Dungeon.level.liquid(pos)) {
 				Sample.INSTANCE.play( Assets.SND_WATER, 1, 1, Random.Float( 0.8f, 1.25f ) );
 			} else {
 				Sample.INSTANCE.play( Assets.SND_STEP );
@@ -1661,7 +1661,7 @@ public class Hero extends Char {
 
 						float chance;
 						//searches aided by foresight always succeed, even if trap isn't searchable
-						if (foresight){
+						if (foresight) {
 							chance = 1f;
 
 							//otherwise if the trap isn't searchable, searching always fails

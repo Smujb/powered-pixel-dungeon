@@ -137,6 +137,7 @@ import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -266,6 +267,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].flammable();
 	}
 
+	@NotNull
 	public final boolean[] flammable() {
 		boolean[] flammable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -281,6 +283,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].secret();
 	}
 
+	@NotNull
 	public final boolean[] secret() {
 		boolean[] secret = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
