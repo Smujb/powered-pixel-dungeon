@@ -159,6 +159,7 @@ public class RipperDemon extends Mob {
 						}
 
 						leapPos = -1;
+						sprite.idle();
 						Dungeon.level.occupyCell(RipperDemon.this);
 						next();
 					}
@@ -210,6 +211,7 @@ public class RipperDemon extends Mob {
 							GLog.w(Messages.get(RipperDemon.this, "leap"));
 							sprite.parent.addToBack(new TargetedCell(leapPos, 0xFF0000));
 							Dungeon.hero.interrupt();
+							((RipperSprite)sprite).leapPrep( leapPos );
 
 						}
 						return true;
