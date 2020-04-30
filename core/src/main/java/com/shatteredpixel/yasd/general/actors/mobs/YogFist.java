@@ -66,6 +66,8 @@ public abstract class YogFist extends Mob {
 
 		state = HUNTING;
 
+		healthFactor = 2f;
+
 		viewDistance = Light.DISTANCE;
 
 		properties.add(Property.MINIBOSS);
@@ -73,7 +75,6 @@ public abstract class YogFist extends Mob {
 	}
 
 	private float rangedCooldown;
-	protected boolean canRangedInMelee = true;
 
 	protected void incrementRangedCooldown(){
 		rangedCooldown += Random.NormalFloat(8, 12);
@@ -378,7 +379,9 @@ public abstract class YogFist extends Mob {
 
 			properties.add(Property.ELECTRIC);
 
-			canRangedInMelee = false;
+			hasMeleeAttack = false;
+
+			damageFactor = 1.5f;
 		}
 
 		@Override
@@ -432,7 +435,6 @@ public abstract class YogFist extends Mob {
 				GameScene.flash(0xFFFFFF);
 			} else if (!isAlive()){
 				Buff.prolong( enemy, Blindness.class, 50f );
-				GameScene.flash(0xFFFFFF);
 			}
 		}
 
@@ -443,7 +445,9 @@ public abstract class YogFist extends Mob {
 		{
 			spriteClass = FistSprite.Dark.class;
 
-			canRangedInMelee = false;
+			hasMeleeAttack = false;
+
+			damageFactor = 1.3f;
 		}
 
 		@Override

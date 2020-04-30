@@ -76,6 +76,14 @@ public class NewHallsBossLevel extends Level {
 	private static final int ROOM_BOTTOM	= ROOM_TOP + 8;
 
 	@Override
+	public boolean passable(int pos) {
+		if (pos == getEntrancePos() || pos == getExitPos()) {
+			return !locked;
+		}
+		return super.passable(pos);
+	}
+
+	@Override
 	public String tilesTex() {
 		return Assets.TILES_HALLS;
 	}

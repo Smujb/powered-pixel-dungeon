@@ -178,7 +178,7 @@ public class YogDzewa extends Mob {
 
 			if (abilityCooldown <= 0) {
 
-				int beams = 1 + (HT - HP) / 400;
+				int beams = 1 + (HT - HP) / (HT/4);
 				HashSet<Integer> affectedCells = new HashSet<>();
 				for (int i = 0; i < beams; i++) {
 
@@ -468,8 +468,8 @@ public class YogDzewa extends Mob {
 		{
 			spriteClass = LarvaSprite.class;
 
-			healthFactor = 0.33f;
-			damageFactor = 1.1f;
+			healthFactor = 0.15f;
+			damageFactor = 1.5f;
 			viewDistance = Light.DISTANCE;
 
 			EXP = 5;
