@@ -31,13 +31,16 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
+import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
+import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.DM200Sprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class DM200 extends Mob {
@@ -100,7 +103,7 @@ public class DM200 extends Mob {
 		return Dungeon.level.adjacent(enemy.pos, pos);
 	}
 
-	private boolean zap(Char enemy){
+	protected boolean zap(Char enemy){
 		spend( TICK );
 		ventCooldown = 30;
 
@@ -160,6 +163,90 @@ public class DM200 extends Mob {
 
 			}
 		}
+	}
+
+	public static class DM201 extends DM200 {
+
+		{
+			spriteClass = DM200Sprite.DM201Sprite.class;
+
+			HP = HT = 120;
+
+			properties.add(Property.IMMOVABLE);
+
+			HUNTING = new Mob.Hunting();
+		}
+
+		@Override
+		public int damageRoll() {
+			return Random.NormalIntRange( 15, 25 );
+		}
+
+		private boolean threatened = false;
+
+		@Override
+		protected boolean act() {
+			GameScene.add(Blob.seed(pos, 0, CorrosiveGas.class));
+			if (state == HUNTING && enemy != null && enemySeen
+					&& threatened && !Dungeon.level.adjacent(pos, enemy.pos)){
+				if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
+					sprite.attack( enemy.pos );
+					return false;
+				} else {
+					zap(enemy);
+					return true;
+				}
+			}
+			return super.act();
+		}
+
+		@Override
+		public void damage(int dmg, DamageSrc src) {
+			if ((src.getCause() instanceof Char && !Dungeon.level.adjacent(pos, ((Char)src.getCause()).pos))
+					|| enemy == null || !Dungeon.level.adjacent(pos, enemy.pos)){
+				threatened = true;
+			}
+			super.damage(dmg, src);
+		}
+
+		@Override
+		protected boolean zap(Char enemy){
+			threatened = false;
+			spend(TICK);
+
+			GLog.w(Messages.get(this, "vent"));
+			GameScene.add(Blob.seed(enemy.pos, 15, CorrosiveGas.class).setStrength(8));
+			for (int i : PathFinder.NEIGHBOURS8){
+				if (!Dungeon.level.solid(enemy.pos+i)) {
+					GameScene.add(Blob.seed(enemy.pos + i, 5, CorrosiveGas.class).setStrength(8));
+				}
+			}
+			return true;
+		}
+
+		@Override
+		protected boolean getCloser(int target) {
+			return true;
+		}
+
+		@Override
+		protected boolean getFurther(int target) {
+			return true;
+		}
+
+		@Override
+		public void rollToDropLoot() {
+			if (Dungeon.hero.lvl > maxLvl + 2) return;
+
+			super.rollToDropLoot();
+
+			int ofs;
+			do {
+				ofs = PathFinder.NEIGHBOURS8[Random.Int(8)];
+			} while (!Dungeon.level.passable(pos + ofs));
+			Dungeon.level.drop( new MetalShard(), pos + ofs ).sprite.drop( pos );
+		}
+
 	}
 
 }

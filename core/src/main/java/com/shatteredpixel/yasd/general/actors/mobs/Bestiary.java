@@ -40,6 +40,8 @@ public class Bestiary {
 				cl = Slime.CausticSlime.class;
 			} else if (cl == Thief.class) {
 				cl = Thief.Bandit.class;
+			} else if (cl == DM200.class) {
+				cl = DM200.DM201.class;
 			} else if (cl == Brute.class) {
 				cl = Brute.ArmoredBrute.class;
 			} else if (cl == Monk.class) {

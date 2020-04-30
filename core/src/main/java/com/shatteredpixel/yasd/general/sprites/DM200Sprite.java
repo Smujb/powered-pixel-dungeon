@@ -58,4 +58,37 @@ public class DM200Sprite extends MobSprite {
 		scale.set( 0.8f );
 	}
 
+	public static class DM201Sprite extends MobSprite {
+
+		public DM201Sprite () {
+			super();
+
+			texture( Assets.DM300 );
+
+			TextureFilm frames = new TextureFilm( texture, 22, 16 );
+
+			idle = new Animation( 2, true );
+			idle.frames( frames, 0, 1 );
+
+			run = idle.clone();
+
+			attack = new Animation( 15, false );
+			attack.frames( frames, 4, 5, 6, 0 );
+
+			zap = attack.clone();
+
+			die = new Animation( 20, false );
+			die.frames( frames, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 0, 7, 8 );
+
+			play( idle );
+			scale.set( 0.8f );
+		}
+
+		@Override
+		public void resetColor() {
+			super.resetColor();
+		}
+
+	}
+
 }
