@@ -150,7 +150,7 @@ public class Eye extends Mob {
 	public boolean attack(Char enemy, boolean guaranteed) {
 		boolean attack = super.attack(enemy, guaranteed);
 		beamCharged = false;
-		beamCooldown = Random.Int(3, 6);
+		beamCooldown = Random.IntRange(4, 6);
 		return attack;
 	}
 
