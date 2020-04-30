@@ -102,7 +102,7 @@ public abstract class YogFist extends Mob {
 		return super.attack(enemy, guaranteed);
 	}
 
-	boolean immuneWarned = false;
+	boolean invulnWarned = false;
 
 	protected boolean isNearYog(){
 		int yogPos = Dungeon.level.getExitPos() + 3*Dungeon.level.width();
@@ -110,14 +110,17 @@ public abstract class YogFist extends Mob {
 	}
 
 	@Override
+	public boolean isInvulnerable(Class effect) {
+		return isNearYog();
+	}
+
+	@Override
 	public void damage(int dmg, DamageSrc src) {
-		if (isNearYog()){
-			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
-			if (!immuneWarned){
-				immuneWarned = true;
-				GLog.w(Messages.get(this, "immune_hint"));
+		if (isInvulnerable(src.getClass())){
+			if (!invulnWarned){
+				invulnWarned = true;
+				GLog.w(Messages.get(this, "invuln_warn"));
 			}
-			return;
 		}
 		super.damage(dmg, src);
 	}
@@ -306,15 +309,7 @@ public abstract class YogFist extends Mob {
 
 		@Override
 		public void damage(int dmg, DamageSrc src) {
-			if (isNearYog()){
-				sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
-				if (!immuneWarned){
-					immuneWarned = true;
-					GLog.w(Messages.get(this, "immune_hint"));
-				}
-				return;
-			}
-			if (!(src.getCause() instanceof Bleeding)){
+			if (!isInvulnerable(src.getCause().getClass()) && !(src.getCause() instanceof Bleeding)){
 				Bleeding b = buff(Bleeding.class);
 				if (b == null){
 					b = new Bleeding();
@@ -367,15 +362,7 @@ public abstract class YogFist extends Mob {
 
 		@Override
 		public void damage(int dmg, DamageSrc src) {
-			if (isNearYog()){
-				sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
-				if (!immuneWarned){
-					immuneWarned = true;
-					GLog.w(Messages.get(this, "immune_hint"));
-				}
-				return;
-			}
-			if (!(src.getCause() instanceof Viscosity.DeferedDamage)) {
+			if (!isInvulnerable(src.getCause().getClass()) && !(src.getCause() instanceof Viscosity.DeferedDamage)){
 				Buff.affect(this, Viscosity.DeferedDamage.class).prolong(dmg);
 				sprite.showStatus(CharSprite.WARNING, Messages.get(Viscosity.class, "deferred", dmg));
 			} else {

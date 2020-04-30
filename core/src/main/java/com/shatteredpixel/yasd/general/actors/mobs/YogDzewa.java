@@ -73,7 +73,8 @@ public class YogDzewa extends Mob {
 
 		EXP = 50;
 
-		state = PASSIVE;
+		//so that allies can attack it. States are never actually used.
+		state = HUNTING;
 
 		properties.add(Property.BOSS);
 		properties.add(Property.IMMOVABLE);
@@ -117,8 +118,10 @@ public class YogDzewa extends Mob {
 
 	@Override
 	protected boolean act() {
-		if (phase == 0 && Dungeon.hero.viewDistance >= Dungeon.level.distance(pos, Dungeon.hero.pos)){
-			Dungeon.observe();
+		if (phase == 0){
+			if (Dungeon.hero.viewDistance >= Dungeon.level.distance(pos, Dungeon.hero.pos)) {
+				Dungeon.observe();
+			}
 			if (Dungeon.level.heroFOV[pos]) {
 				notice();
 			}
@@ -272,13 +275,13 @@ public class YogDzewa extends Mob {
 	public boolean isAlive() {
 		return super.isAlive() || phase != 5;
 	}
+
+	public boolean isInvulnerable(Class effect) {
+		return phase == 0 || findFist() != null;
+	}
+
 	@Override
 	public void damage( int dmg, DamageSrc src ) {
-
-		if (phase == 0 || findFist() != null){
-			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
-			return;
-		}
 
 		int preHP = HP;
 		super.damage( dmg, src );
@@ -324,7 +327,7 @@ public class YogDzewa extends Mob {
 		}
 
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
-		if (lock != null) lock.addTime(dmg);
+		if (lock != null) lock.addTime(dmgTaken);
 
 	}
 

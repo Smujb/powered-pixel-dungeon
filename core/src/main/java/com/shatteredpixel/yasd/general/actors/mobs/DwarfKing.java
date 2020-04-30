@@ -343,10 +343,14 @@ public class DwarfKing extends Mob {
 	}
 
 	@Override
+	public boolean isInvulnerable(Class effect) {
+		return phase == 2 && effect != KingDamager.class;
+	}
+
+	@Override
 	public void damage(int dmg, DamageSrc src) {
-		if (phase == 2 && !(src.getCause() instanceof KingDamager)){
-			sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "immune") );
-			return;
+		if (isInvulnerable(src.getClass())){
+			super.damage(dmg, src);
 		} else if (phase == 3 && !(src.getCause() instanceof Viscosity.DeferedDamage)){
 			Viscosity.DeferedDamage deferred = Buff.affect( this, Viscosity.DeferedDamage.class );
 			deferred.prolong( dmg );
@@ -367,7 +371,7 @@ public class DwarfKing extends Mob {
 			summonCooldown -= dmgTaken/8f;
 			if (HP <= HT/3) {
 				HP = HT/3;
-				sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "immune"));
+				sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "invulnerable"));
 				ScrollOfTeleportation.appear(this, NewCityBossLevel.throne);
 				properties.add(Property.IMMOVABLE);
 				phase = 2;

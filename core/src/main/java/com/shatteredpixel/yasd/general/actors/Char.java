@@ -676,6 +676,11 @@ public abstract class Char extends Actor {
 	public void damage(int dmg,  DamageSrc src) {
 		dmg = Math.max(0, dmg);
 
+		if(isInvulnerable(src.getClass())){
+			sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "invulnerable"));
+			return;
+		}
+
 		if (!src.ignores()) {
 			dmg = Math.max(dmg - drRoll(src.getElement()), 0);
 		}
@@ -1061,6 +1066,12 @@ public abstract class Char extends Actor {
 		} else {
 			return false;
 		}
+	}
+
+	//similar to isImmune, but only factors in damage.
+	//Is used in AI decision-making
+	public boolean isInvulnerable( Class effect ){
+		return false;
 	}
 
 	protected HashSet<Property> properties = new HashSet<>();

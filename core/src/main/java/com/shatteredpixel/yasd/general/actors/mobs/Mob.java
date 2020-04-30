@@ -393,18 +393,19 @@ public abstract class Mob extends Char {
 		//find a new  enemy if..
 		boolean newEnemy = false;
 		//we have no enemy, or the current one is dead/missing
-		if ( enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING)
+		if ( enemy == null || !enemy.isAlive() || !Actor.chars().contains(enemy) || state == WANDERING) {
 			newEnemy = true;
-		//We are an ally, and current enemy is another ally.
-		else if (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY)
+			//We are an ally, and current enemy is another ally.
+		} else if (alignment == Alignment.ALLY && enemy.alignment == Alignment.ALLY) {
 			newEnemy = true;
-		//We are amoked and current enemy is the hero
-		else if (buff( Amok.class ) != null && enemy == Dungeon.hero)
+			//We are amoked and current enemy is the hero
+		} else if (buff( Amok.class ) != null && enemy == Dungeon.hero) {
 			newEnemy = true;
-		//We are charmed and current enemy is what charmed us
-		else if (buff(Charm.class) != null && buff(Charm.class).object == enemy.id())
+			//We are charmed and current enemy is what charmed us
+		} else if (buff(Charm.class) != null && buff(Charm.class).object == enemy.id()) {
 			newEnemy = true;
 
+		}
 		if ( newEnemy ) {
 
 			HashSet<Char> enemies = new  HashSet<>();
@@ -456,6 +457,15 @@ public abstract class Mob extends Char {
 				Char source = (Char)Actor.findById( charm.object );
 				if (source != null && enemies.contains(source) && enemies.size() > 1){
 					enemies.remove(source);
+				}
+			}
+
+			//if we are not amoked, remove any enemies which are invulnerable to us.
+			if (buff(Amok.class) == null) {
+				for (Char enemy : enemies.toArray(new Char[0])) {
+					if (enemy.isInvulnerable(getClass())){
+						enemies.remove(enemy);
+					}
 				}
 			}
 			
