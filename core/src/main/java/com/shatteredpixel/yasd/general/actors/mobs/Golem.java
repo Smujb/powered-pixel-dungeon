@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -127,6 +128,10 @@ public class Golem extends Mob {
 									&& Dungeon.level.trueDistance(pos+i, enemy.pos) > Dungeon.level.trueDistance(bestPos, enemy.pos)){
 								bestPos = pos+i;
 							}
+						}
+
+						if (enemy.buff(MagicImmune.class) != null){
+							bestPos = enemy.pos;
 						}
 
 						if (bestPos != enemy.pos){

@@ -88,14 +88,18 @@ public abstract class YogFist extends Mob {
 	@Override
 	public boolean canAttack(@NotNull Char enemy) {
 		if (rangedCooldown <= 0){
-			boolean hit = Ballistica.canHit(this, enemy, this.shotType);
-			if (hit) {
-				incrementRangedCooldown();
-			}
-			return hit;
+			return Ballistica.canHit(this, enemy, this.shotType);
 		} else {
 			return super.canAttack(enemy);
 		}
+	}
+
+	@Override
+	public boolean attack(Char enemy, boolean guaranteed) {
+		if (!Dungeon.level.adjacent(pos, enemy.pos)) {
+			incrementRangedCooldown();
+		}
+		return super.attack(enemy, guaranteed);
 	}
 
 	boolean immuneWarned = false;
@@ -426,6 +430,9 @@ public abstract class YogFist extends Mob {
 		public void damage(int dmg, DamageSrc src) {
 			int beforeHP = HP;
 			super.damage(dmg, src);
+			if (enemy == null) {
+				enemy = Dungeon.hero;
+			}
 			if (beforeHP > HT/2 && HP < HT/2){
 				HP = HT/2;
 				Buff.prolong( enemy, Blindness.class, 50f );

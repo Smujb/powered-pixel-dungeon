@@ -62,17 +62,21 @@ public class UpdateNotification extends StyledButton {
 
 	@Override
 	protected void onClick() {
-		update = Updates.updateData();
-		MainGame.scene().addToFront( new WndUpdate() );
+		if (Updates.updateAvailable()){
+			MainGame.scene().addToFront( new WndUpdate( Updates.updateData() ) );
+		}
 	}
 
 	public static class WndUpdate extends WndOptions {
 
-		public WndUpdate(){
+		private AvailableUpdateData update;
+
+		public WndUpdate( AvailableUpdateData update ){
 			super(
 					update.versionName == null ? Messages.get(WndUpdate.class,"title") : Messages.get(WndUpdate.class,"versioned_title", update.versionName),
 					update.desc == null ? Messages.get(WndUpdate.class,"desc") : update.desc,
 					Messages.get(WndUpdate.class,"button"));
+			this.update = update;
 		}
 
 		@Override

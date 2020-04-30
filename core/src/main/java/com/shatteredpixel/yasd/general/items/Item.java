@@ -60,7 +60,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.Reflection;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -270,7 +269,9 @@ public class Item implements Bundlable {
 		if (necessaryBag != null && !necessaryBag.isInstance(container)) {
 			for (Item item:items) {
 				if (item instanceof Bag && ((Bag)item).grab( this ) && necessaryBag.isInstance(item)) {
-					return collect( (Bag)item, ch);
+					if (collect( (Bag)item, ch)){
+						return true;
+					}
 				}
 			}
 			return false;
@@ -310,8 +311,7 @@ public class Item implements Bundlable {
 			return true;
 			
 		} else {
-			
-			GLog.n( Messages.get(Item.class, "pack_full", name()) );
+			GLog.n( Messages.get(Item.class, "pack_full", container.name()) );
 			return false;
 			
 		}

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
@@ -42,6 +43,16 @@ public abstract class WaterMob extends Mob {
 
 		properties.add(Property.BLOB_IMMUNE);
 		properties.add(Property.WATERY);
+	}
+
+	@Override
+	protected boolean act() {
+		if (!Dungeon.level.liquid(pos)) {
+			die( new DamageSrc(Element.META, null) );
+			return true;
+		} else {
+			return super.act();
+		}
 	}
 
 	@Override
