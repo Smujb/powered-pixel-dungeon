@@ -42,7 +42,7 @@ public class Web extends Blob {
 		//acts before the hero, to ensure terrain is adjusted correctly
 		actPriority = HERO_PRIO+1;
 	}
-	
+
 	@Override
 	protected void evolve() {
 
@@ -67,10 +67,10 @@ public class Web extends Blob {
 	@Override
 	public void use( BlobEmitter emitter ) {
 		super.use( emitter );
-		
+
 		emitter.pour( WebParticle.FACTORY, 0.4f );
 	}
-	
+
 	@Override
 	public String tileDesc() {
 		return Messages.get(this, "desc");

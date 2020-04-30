@@ -243,6 +243,7 @@ public class YogDzewa extends Mob {
 					summon.pos = spawnPos;
 					GameScene.add(summon);
 					Actor.addDelayed(new Pushing(summon, pos, summon.pos), -1);
+					summon.beckon(Dungeon.hero.pos);
 
 					summonCooldown += Random.NormalFloat(MIN_SUMMON_CD, MAX_SUMMON_CD);
 					summonCooldown -= phase;
@@ -462,18 +463,12 @@ public class YogDzewa extends Mob {
 			EXP = 5;
 			maxLvl = -2;
 
-			state = HUNTING;
-
 			properties.add(Property.DEMONIC);
 		}
 
 	}
 
 	//used so death to yog's ripper demons have their own rankings description and are more aggro
-	public static class YogRipper extends RipperDemon {
-		{
-			state = HUNTING;
-		}
-	}
+	public static class YogRipper extends RipperDemon {}
 
 }
