@@ -215,7 +215,7 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalDamageRoll(int level) {
-		int max = 4 + level;
+		int max = 3 + level;
 		int min = level/3;
 		return Random.NormalIntRange(min, max);
 	}
@@ -286,11 +286,13 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.drRoll(element);
 		} else {
+			int dr = 0;
 			if (element.isMagical()) {
-				return (int) (normalDRRoll(level) * drFactor);
+				dr = (int) (normalDRRoll(level) * drFactor);
 			} else {
-				return (int) (normalDRRoll(level) * elementaldrFactor);
+				dr = (int) (normalDRRoll(level) * elementaldrFactor);
 			}
+			return affectDRRoll(element, dr);
 		}
 	}
 
@@ -299,7 +301,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.attackSkill(target);
 		} else {
-			return (int) (normalAttackSkill(level) * accuracyFactor);
+			return affectAttackSkill(target, (int) (normalAttackSkill(level) * accuracyFactor));
 		}
 	}
 
@@ -308,7 +310,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.defenseSkill(enemy);
 		} else {
-			return (int) (normalDefenseSkill(level) * evasionFactor);
+			return affectDefenseSkill(enemy, (int) (normalDefenseSkill(level) * evasionFactor));
 		}
 	}
 
@@ -317,7 +319,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			return super.sneakSkill();
 		} else {
-			return (int) (normalStealth(level) * stealthFactor);
+			return (affectSneakSkill(normalStealth(level) * stealthFactor));
 		}
 	}
 
@@ -327,7 +329,7 @@ public abstract class Mob extends Char {
 		if (hasBelongings()) {
 			perception = super.noticeSkill(enemy);
 		} else {
-			perception = (normalPerception(level) * perceptionFactor);
+			perception = affectNoticeSkill(enemy, normalPerception(level) * perceptionFactor);
 		}
 		return perception;
 	}

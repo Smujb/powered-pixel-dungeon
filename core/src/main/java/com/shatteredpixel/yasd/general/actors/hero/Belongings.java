@@ -371,7 +371,7 @@ public class Belongings implements Iterable<Item> {
 	}
 
 
-	public float EvasionFactor(float evasion) {
+	public float affectEvasion(float evasion) {
 		ArrayList<Armor> Armors = getArmors();
 		//evasion *= _Unused.evasionMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
@@ -396,7 +396,7 @@ public class Belongings implements Iterable<Item> {
 		return evasion;
 	}
 
-	public float SpeedFactor(float speed) {
+	public float affectSpeed(float speed) {
 		ArrayList<Armor> Armors = getArmors();
 		speed *= RingOfHaste.speedMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
@@ -429,7 +429,7 @@ public class Belongings implements Iterable<Item> {
 		return speed;
 	}
 
-	public float StealthFactor(float stealth) {
+	public float affectStealth(float stealth) {
 		ArrayList<Armor> Armors = getArmors();
 		for (int i=0; i < Armors.size(); i++) {
 			Armor CurArmour = Armors.get(i);
@@ -450,6 +450,10 @@ public class Belongings implements Iterable<Item> {
 			stealth *= CurArmour.STE;
 		}
 		return stealth;
+	}
+
+	public float affectPerception(float perception) {
+		return perception;
 	}
 
 	public boolean isImmune(Class effect) {

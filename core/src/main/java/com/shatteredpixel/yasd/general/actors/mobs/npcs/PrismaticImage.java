@@ -50,8 +50,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class PrismaticImage extends NPC {
@@ -198,7 +196,7 @@ public class PrismaticImage extends NPC {
 	@Override
 	public float speed() {
 		float speed = super.speed();
-		speed *= hero.belongings.SpeedFactor(speed);
+		speed *= hero.belongings.affectSpeed(speed);
 		return speed;
 	}
 	

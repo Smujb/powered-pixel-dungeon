@@ -490,31 +490,17 @@ public abstract class Char extends Actor {
 		if (hasBelongings()) {
 			accuracy = belongings.accuracyFactor(accuracy, target);
 		}
-		Drunk drunk = buff(Drunk.class);
-		if (drunk != null) {
-			accuracy *= drunk.accuracyFactor();
-		}
-		return (int) (accuracy);
+		return affectAttackSkill(target, (int) accuracy);
 	}
-
 
 	public int defenseSkill(Char enemy) {
 		float evasion = defenseSkill;
-		if (buff(Wet.class) != null) {
-			evasion *= buff(Wet.class).evasionFactor();
-		}
 		if (hasBelongings()) {
-			evasion = belongings.EvasionFactor(evasion);
+			evasion = belongings.affectEvasion(evasion);
 		}
-		if (paralysed > 0) {
-			evasion /= 2;
-		}
-		Drunk drunk = buff(Drunk.class);
-		if (drunk != null) {
-			evasion *= drunk.evasionFactor();
-		}
-		return Math.round(evasion);
+		return affectDefenseSkill(enemy, Math.round(evasion));
 	}
+
 	public String defenseVerb() {
 		return Messages.get(this, "def_verb");
 	}
@@ -525,24 +511,12 @@ public abstract class Char extends Actor {
 			if (hasBelongings()) {
 				dr += belongings.magicalDR();
 			}
-			if (buff(ArcaneArmor.class) != null){
-				dr += Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
-			}
 		} else {
 			if (hasBelongings()) {
 				dr += belongings.drRoll();
 			}
-			Barkskin bark = buff(Barkskin.class);
-			if (bark != null) dr += Random.NormalIntRange(0, bark.level());
-
-			Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
-			if (block != null) dr += block.blockingRoll();
 		}
-		Vulnerable vulnerable = buff(Vulnerable.class);
-		if (vulnerable != null) {
-			dr *= vulnerable.defenseFactor();
-		}
-		return dr;
+		return affectDRRoll(element, dr);
 	}
 
 	public int damageRoll() {
@@ -557,7 +531,10 @@ public abstract class Char extends Actor {
 	}
 
 
-	//Used for central stuff that affects damage dealt
+	//FIXME possibly migrate this to a seperate class and use static vars?
+	//Used for central stuff that should apply to char and mob alike
+	//##############################################################
+	//
 	protected final int affectDamageRoll(int damage) {
 		Weakness weakness = buff(Weakness.class);
 		if (weakness != null) {
@@ -565,6 +542,64 @@ public abstract class Char extends Actor {
 		}
 		return damage;
 	}
+
+	protected final int affectAttackSkill(Char target, int attackSkill) {
+		Drunk drunk = buff(Drunk.class);
+		if (drunk != null) {
+			attackSkill *= drunk.accuracyFactor();
+		}
+		return attackSkill;
+	}
+
+	protected final int affectDefenseSkill(Char enemy, int evasion) {
+		if (buff(Wet.class) != null) {
+			evasion *= buff(Wet.class).evasionFactor();
+		}
+		if (paralysed > 0) {
+			evasion /= 2;
+		}
+		Drunk drunk = buff(Drunk.class);
+		if (drunk != null) {
+			evasion *= drunk.evasionFactor();
+		}
+		return evasion;
+	}
+
+	protected final float affectNoticeSkill(Char enemy, float noticeSkill) {
+		if (this.buff(MindVision.class) != null) {
+			noticeSkill *= 2;
+		}
+		return noticeSkill;
+	}
+
+	protected final float affectSneakSkill(float sneakSkill) {
+		if (this.buff(Invisibility.class) != null) {
+			sneakSkill *= 2;
+		}
+		return sneakSkill;
+	}
+
+	protected final int affectDRRoll(Element element, int dr) {
+		if (element.isMagical()) {
+			if (buff(ArcaneArmor.class) != null){
+				dr += Random.NormalIntRange(0, buff(ArcaneArmor.class).level());
+			}
+		} else {
+			Barkskin bark = buff(Barkskin.class);
+			if (bark != null) dr += Random.NormalIntRange(0, bark.level());
+
+			Blocking.BlockBuff block = buff(Blocking.BlockBuff.class);
+			if (block != null) dr += block.blockingRoll();
+		}
+		Vulnerable vulnerable = buff(Vulnerable.class);
+		if (vulnerable != null) {
+			dr *= vulnerable.defenseFactor();
+		}
+		return dr;
+	}
+	//End of central code.
+	//##############################################################
+	//
 
 	public int attackProc( Char enemy, int damage ) {
 		if (hasBelongings()) {
@@ -613,7 +648,7 @@ public abstract class Char extends Actor {
 		if ( buff( Adrenaline.class ) != null) speed *= 2f;
 		if ( buff( Haste.class ) != null) speed *= 3f;
 		if (hasBelongings()) {
-			speed = belongings.SpeedFactor(speed);
+			speed = belongings.affectSpeed(speed);
 		}
 		Momentum momentum = buff(Momentum.class);
 		if (momentum != null) {
@@ -927,23 +962,18 @@ public abstract class Char extends Actor {
 
 	public float noticeSkill(Char enemy) {
 		float perception = this.noticeSkill;
-
-		if (this.buff(MindVision.class) != null) {
-			perception *= 2;
+		if (hasBelongings()) {
+			perception = belongings.affectPerception(perception);
 		}
-		return perception;
+		return affectNoticeSkill(enemy, perception);
 	}
 
 	public float sneakSkill() {
 		float stealth = this.sneakSkill;
 		if (hasBelongings()) {
-			stealth = belongings.StealthFactor(stealth);
+			stealth = belongings.affectStealth(stealth);
 		}
-
-		if (this.buff(Invisibility.class) != null) {
-			stealth *= 2;
-		}
-		return stealth;
+		return affectSneakSkill(stealth);
 	}
 
 	public void move( int step ) {
