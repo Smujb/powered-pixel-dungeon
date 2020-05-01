@@ -39,7 +39,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Roots;
-import com.shatteredpixel.yasd.general.actors.buffs.Slow;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
@@ -73,7 +72,7 @@ public enum Element {
 	MAGICAL( true ),
 
 	//Earth
-	EARTH( false ),//Slows
+	EARTH( false ),//TODO
 	GRASS( true ),//Roots
 	STONE( false ),//Paralyzes
 	SHARP( false ),//Bleeds
@@ -150,7 +149,8 @@ public enum Element {
 				}
 				break;
 			case EARTH:
-				Buff.affect(defender, Slow.class, Paralysis.DURATION);
+				//Buff.affect(defender, Slow.class, Paralysis.DURATION);
+				//Slow is pretty boring and painful - I'll think of something else.
 				break;
 			case GRASS:
 				Buff.affect(defender, Roots.class, Paralysis.DURATION);
