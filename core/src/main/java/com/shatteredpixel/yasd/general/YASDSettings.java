@@ -338,8 +338,9 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 
 	public static Point windowResolution(){
 		return new Point(
-				getInt( KEY_WINDOW_WIDTH, 960, 960, Integer.MAX_VALUE ),
-				getInt( KEY_WINDOW_HEIGHT, 640, 640, Integer.MAX_VALUE )
+
+				getInt( KEY_WINDOW_WIDTH, 960, 480, Integer.MAX_VALUE ),
+				getInt( KEY_WINDOW_HEIGHT, 640, 320, Integer.MAX_VALUE )
 		);
 	}
 
