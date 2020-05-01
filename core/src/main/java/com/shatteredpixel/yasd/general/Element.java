@@ -66,8 +66,10 @@ public enum Element {
 	/*
 	The purpose of this file is to make it easier to add types of damage to the game.
 	It also gives a central place to group damage sources together - for example the buff Burning, the blob Fire, and the enchantment Blazing.
+
+	Each chapter should have a few basic mobs which simply have the Element Physical or Magical, and several unique ones. This is to make battles
+	feel interesting while also having easier mobs.
 	 */
-	//Base elements. Magical, Physical. Should be used as little as possible and may one day be removed entirely. Should have no proc effect.
 	PHYSICAL( false ),
 	MAGICAL( true ),
 

@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Light;
 import com.shatteredpixel.yasd.general.items.Dewdrop;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.EyeSprite;
 import com.watabou.utils.Bundle;
@@ -186,7 +185,7 @@ public class Eye extends Mob {
 	}
 
 	{
-		resistances.add( WandOfDisintegration.class );
+		resistances.put( Element.DESTRUCTION, 0.5f );
 	}
 
 	private class Hunting extends Mob.Hunting{

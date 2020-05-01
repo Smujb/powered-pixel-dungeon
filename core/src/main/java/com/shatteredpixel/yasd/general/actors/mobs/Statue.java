@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
@@ -42,7 +43,6 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon.Enchantment;
-import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -322,7 +322,7 @@ public class Statue extends Mob implements Callback {
 	}
 
 	{
-		resistances.add(Grim.class);
+		resistances.put(Element.SPIRIT, 0.5f);
 	}
 
 	@Override

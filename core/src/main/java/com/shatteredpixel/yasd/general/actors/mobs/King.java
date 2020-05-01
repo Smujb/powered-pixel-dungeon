@@ -33,10 +33,8 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
@@ -48,7 +46,6 @@ import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.levels.OldCityBossLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -56,7 +53,6 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.KingSprite;
 import com.shatteredpixel.yasd.general.sprites.UndeadSprite;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
@@ -237,9 +233,10 @@ public class King extends Mob {
 	}
 	
 	{
-		resistances.add( WandOfDisintegration.class );
-		resistances.add( ToxicGas.class );
-		resistances.add( Burning.class );
+		resistances.put( Element.DESTRUCTION, 2/3f );
+		resistances.put( Element.TOXIC, 0.5f );
+		resistances.put( Element.FIRE, 0.5f );
+		resistances.put( Element.SHOCK, 0.5f );
 		immunities.add( Paralysis.class );
 		immunities.add( Vertigo.class );
 		immunities.add( Blindness.class );

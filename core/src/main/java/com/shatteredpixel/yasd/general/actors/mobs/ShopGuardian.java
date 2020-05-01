@@ -28,15 +28,13 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
-import com.shatteredpixel.yasd.general.actors.buffs.Blindness;
-import com.shatteredpixel.yasd.general.actors.buffs.Frost;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
-import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
@@ -53,9 +51,7 @@ public class ShopGuardian extends Statue {
         immunities.add(Paralysis.class);
         immunities.add(Bleeding.class);
         immunities.add(Poison.class);
-        resistances.add(Frost.class);
-        resistances.add(Vertigo.class);
-        resistances.add(Blindness.class);
+        resistances.put(Element.COLD, 0.5f);
     }
 
     public ShopGuardian() {

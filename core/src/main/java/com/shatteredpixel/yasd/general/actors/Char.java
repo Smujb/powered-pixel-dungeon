@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
-import com.shatteredpixel.yasd.general.actors.blobs.Electricity;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Adrenaline;
 import com.shatteredpixel.yasd.general.actors.buffs.AdrenalineSurge;
@@ -46,7 +45,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Chill;
-import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
 import com.shatteredpixel.yasd.general.actors.buffs.Corruption;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
 import com.shatteredpixel.yasd.general.actors.buffs.Doom;
@@ -79,27 +77,19 @@ import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
-import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Surprise;
 import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
-import com.shatteredpixel.yasd.general.items.armor.glyphs.Potential;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFlow;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFrost;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLightning;
 import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
-import com.shatteredpixel.yasd.general.items.weapon.enchantments.Shocking;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
-import com.shatteredpixel.yasd.general.items.weapon.missiles.darts.ShockingDart;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
@@ -119,6 +109,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public abstract class Char extends Actor {
@@ -746,9 +737,9 @@ public abstract class Char extends Actor {
 		Class<?> srcClass = src.getClass();
 		if (isImmune( srcClass )) {
 			dmg = 0;
-		} else {
-			dmg = Math.round( dmg * resist( srcClass ));
 		}
+		dmg = Math.round( dmg * resist( src.getElement() ));
+
 
 		if (buff( Paralysis.class ) != null) {
 			buff( Paralysis.class ).processDamage(dmg);
@@ -1035,26 +1026,33 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
-	protected final HashSet<Class> resistances = new HashSet<>();
+	protected final HashMap<Element, Float> resistances = new HashMap<>();
 
 	//returns percent effectiveness after resistances
 	//TODO currently resistances reduce effectiveness by a static 50%, and do not stack.
-	public float resist( Class effect ){
-		HashSet<Class> resists = new HashSet<>(resistances);
+	public float resist( Element effect ){
+		HashMap<Element, Float> resists = new HashMap<>(resistances);
 		for (Property p : properties()){
-			resists.addAll(p.resistances());
+			for (Element e : p.resistances()) {
+				resists.put(e, 0.5f);
+			}
 		}
+
 		for (Buff b : buffs()){
-			resists.addAll(b.resistances());
+			for (Element e : b.resistances()) {
+				resists.put(e, 0.5f);
+			}
 		}
 
 		float result = 1f;
-		for (Class c : resists){
-			if (c.isAssignableFrom(effect)){
-				result *= 0.5f;
-			}
+		if (resists.containsKey(effect)) {
+			result *= resists.get(effect);
 		}
-		return result * RingOfElements.resist(this, effect);
+
+		if (effect.isMagical()) {
+			result *= RingOfElements.resist(this);
+		}
+		return result;
 	}
 
 	protected final HashSet<Class> immunities = new HashSet<>();
@@ -1093,44 +1091,51 @@ public abstract class Char extends Actor {
 	}
 
 	public enum Property{
-		BOSS ( new HashSet<Class>( Arrays.asList(Grim.class, GrimTrap.class, ScrollOfRetribution.class, ScrollOfPsionicBlast.class)),
-				new HashSet<Class>( Arrays.asList(Corruption.class, Aggression.class) )),
-		MINIBOSS ( new HashSet<Class>(),
+		BOSS ( new HashSet<Element>(),
+				new HashSet<Class>( Arrays.asList(Corruption.class, Aggression.class, Grim.class, GrimTrap.class, ScrollOfRetribution.class, ScrollOfPsionicBlast.class) )),
+
+		MINIBOSS ( new HashSet<Element>(),
 				new HashSet<Class>( Arrays.asList(Corruption.class) )),
 		UNDEAD,
 		DEMONIC,
-		INORGANIC ( new HashSet<Class>(),
+		INORGANIC ( new HashSet<Element>(),
 				new HashSet<Class>( Arrays.asList(Bleeding.class, ToxicGas.class, Poison.class, LimitedAir.class) )),
-		BLOB_IMMUNE ( new HashSet<Class>(),
+
+		BLOB_IMMUNE ( new HashSet<Element>(),
 				new HashSet<Class>( Arrays.asList(Blob.class) )),
-		FIERY ( new HashSet<Class>( Arrays.asList(WandOfFireblast.class, Elemental.Fire.class)),
+
+		FIERY ( new HashSet<Element>( Arrays.asList(Element.FIRE)),
 				new HashSet<Class>( Arrays.asList(Burning.class, Blazing.class))),
-		ACIDIC ( new HashSet<Class>( Arrays.asList(Corrosion.class)),
+
+		ACIDIC ( new HashSet<Element>( Arrays.asList(Element.ACID)),
 				new HashSet<Class>( Arrays.asList(Ooze.class))),
-		ICY ( new HashSet<Class>( Arrays.asList(WandOfFrost.class, Elemental.Frost.class)),
+
+		ICY ( new HashSet<Element>( Arrays.asList(Element.COLD)),
 				new HashSet<Class>( Arrays.asList(Frost.class, Chill.class))),
-		ELECTRIC ( new HashSet<Class>( Arrays.asList(WandOfLightning.class, Shocking.class, Potential.class, Electricity.class, ShockingDart.class, Elemental.Shock.class )),
+
+		ELECTRIC ( new HashSet<Element>( Arrays.asList(Element.SHOCK, Element.LIGHT)),
 				new HashSet<Class>()),
+
 		LARGE,
-		WATERY(new HashSet<>(Arrays.asList(WandOfFlow.class)), new HashSet<>(Arrays.asList(Wet.class, LimitedAir.class))),
+		WATERY(new HashSet<Element>(Arrays.asList(Element.WATER)), new HashSet<>(Arrays.asList(Wet.class, LimitedAir.class))),
 		IMMOVABLE,
 		IGNORES_INVISIBLE;
 
-		private HashSet<Class> resistances;
+		private HashSet<Element> resistances;
 		private HashSet<Class> immunities;
 
 		Property(){
-			this(new HashSet<Class>(), new HashSet<Class>());
+			this(new HashSet<Element>(), new HashSet<Class>());
 		}
 
-		Property(HashSet<Class> resistances, HashSet<Class> immunities){
+		Property(HashSet<Element> resistances, HashSet<Class> immunities){
 			this.resistances = resistances;
 			this.immunities = immunities;
 		}
 
 
 		@Contract(" -> new")
-		public HashSet<Class> resistances(){
+		public HashSet<Element> resistances(){
 			return new HashSet<>(resistances);
 		}
 

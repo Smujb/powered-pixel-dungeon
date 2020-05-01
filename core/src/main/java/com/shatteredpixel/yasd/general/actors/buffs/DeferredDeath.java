@@ -83,9 +83,7 @@ public class DeferredDeath extends FlavourBuff {
     public void detach() {
         super.detach();
         GameScene.add(Blob.seed(target.pos, 100, Miasma.class));
-        if (target.resist(Grim.class) != 1f) {
-            target.damage(target.HP, this);
-        } else {
+        if (!target.isImmune(Grim.class)) {
             target.die(defaultSrc());
         }
         CellEmitter.get(target.pos).burst(ShadowParticle.UP, 20);

@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Web;
@@ -209,7 +210,7 @@ public class Spinner extends Mob {
 	}
 
 	{
-		resistances.add(Poison.class);
+		resistances.put(Element.TOXIC, 0.5f);
 	}
 	
 	{

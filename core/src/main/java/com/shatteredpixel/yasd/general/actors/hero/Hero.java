@@ -325,7 +325,7 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public float resist(Class effect) {
+	public float resist(Element effect) {
 		return super.resist(effect);
 	}
 

@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.PinCushion;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
-import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -70,8 +69,7 @@ public class Wraith extends Mob {
 		properties.add(Property.UNDEAD);
 		properties.add(Property.BLOB_IMMUNE);
 		//Resistant to physical weapons.
-		resistances.add(KindOfWeapon.class);
-		resistances.add(Char.class);
+		resistances.put(Element.PHYSICAL, 0.5f);
 	}
 
 	@Override

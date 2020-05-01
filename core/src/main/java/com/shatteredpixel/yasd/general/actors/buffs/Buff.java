@@ -60,9 +60,9 @@ public class Buff extends Actor {
 		return new Char.DamageSrc(element, this).ignoreDefense();
 	}
 	
-	protected HashSet<Class> resistances = new HashSet<>();
+	protected HashSet<Element> resistances = new HashSet<>();
 	
-	public HashSet<Class> resistances() {
+	public HashSet<Element> resistances() {
 		return new HashSet<>(resistances);
 	}
 	
@@ -139,7 +139,7 @@ public class Buff extends Actor {
 
 	public static<T extends FlavourBuff> T append( Char target, Class<T> buffClass, float duration ) {
 		T buff = append( target, buffClass );
-		buff.spend( duration * target.resist(buffClass) );
+		buff.spend( duration * target.resist(buff.element) );
 		return buff;
 	}
 
@@ -155,14 +155,14 @@ public class Buff extends Actor {
 	
 	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
 		T buff = affect( target, buffClass );
-		buff.spend( duration * target.resist(buffClass) );
+		buff.spend( duration * target.resist(buff.element) );
 		return buff;
 	}
 
 	//postpones an already active buff, or creates & attaches a new buff and delays that.
 	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
 		T buff = affect( target, buffClass );
-		buff.postpone( duration * target.resist(buffClass) );
+		buff.postpone( duration * target.resist(buff.element) );
 		return buff;
 	}
 	
