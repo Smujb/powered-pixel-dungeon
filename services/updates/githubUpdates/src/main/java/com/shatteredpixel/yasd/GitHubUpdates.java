@@ -49,7 +49,7 @@ public class GitHubUpdates extends UpdateService {
 		}
 
 		Net.HttpRequest httpGet = new Net.HttpRequest(Net.HttpMethods.GET);
-		httpGet.setUrl("https://api.github.com/repos/Smujb/yet-another-shattered-dungeon/releases");
+		httpGet.setUrl("https://api.github.com/repos/smujb/yet-another-shattered-dungeon/releases");
 		httpGet.setHeader("Accept", "application/vnd.github.v3+json");
 
 		Gdx.net.sendHttpRequest(httpGet, new Net.HttpResponseListener() {
@@ -59,7 +59,7 @@ public class GitHubUpdates extends UpdateService {
 					Bundle latestRelease = null;
 					int latestVersionCode = Game.versionCode;
 
-					boolean includePrereleases = Game.version.toLowerCase().contains("beta");
+					boolean includePrereleases = Game.version.toLowerCase().contains("beta") || DeviceCompat.isDebug();
 
 					for (Bundle b : Bundle.read( httpResponse.getResultAsStream() ).getBundleArray()){
 						Matcher m = versionCodePattern.matcher(b.getString("body"));
