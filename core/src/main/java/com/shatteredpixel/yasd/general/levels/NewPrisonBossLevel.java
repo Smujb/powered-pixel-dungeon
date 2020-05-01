@@ -165,19 +165,6 @@ public class NewPrisonBossLevel extends Level {
 		}
 		
 		triggered = bundle.getBooleanArray(TRIGGERED);
-		
-		//compatibility with pre-0.7.5a saves
-		if (state == State.WON){
-			int cell = pointToCell(endStart);
-			int i = 0;
-			while (cell < length()){
-				System.arraycopy(endMap, i, map, cell, 14);
-				i += 14;
-				cell += width();
-			}
-			interactiveAreas.add(new Exit().setPos(this, pointToCell(levelExit)));
-			//exit = ;
-		}
 	}
 	
 	@Override

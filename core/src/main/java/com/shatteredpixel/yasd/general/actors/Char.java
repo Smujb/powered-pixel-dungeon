@@ -960,7 +960,9 @@ public abstract class Char extends Actor {
 		if (Dungeon.level.adjacent( step, pos ) && (buff( Vertigo.class ) != null || (drunk != null && drunk.stumbleChance()))) {
 			sprite.interruptMotion();
 			int newPos = pos + PathFinder.NEIGHBOURS8[Random.Int( 8 )];
-			if (!(Dungeon.level.passable(newPos) || Dungeon.level.avoid(newPos)) || Actor.findChar( newPos ) != null || !this.canOccupy(Dungeon.level, newPos))
+			if (!(Dungeon.level.passable(newPos) || Dungeon.level.avoid(newPos))
+					|| !canOccupy(Dungeon.level, newPos)
+					|| Actor.findChar( newPos ) != null)
 				return;
 			else {
 				sprite.move(pos, newPos);

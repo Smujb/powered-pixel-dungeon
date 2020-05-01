@@ -84,7 +84,8 @@ public class Brute extends Mob {
 			super.damageRoll();
 	}
 
-	public boolean isAlive() {
+
+	public synchronized boolean isAlive() {
 		if (HP > 0){
 			return  true;
 		} else {
