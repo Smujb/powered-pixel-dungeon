@@ -66,8 +66,6 @@ public abstract class YogFist extends Mob {
 
 		state = HUNTING;
 
-		healthFactor = 2f;
-
 		viewDistance = Light.DISTANCE;
 
 		properties.add(Property.MINIBOSS);
@@ -302,7 +300,7 @@ public abstract class YogFist extends Mob {
 
 			if (Dungeon.level.liquid(pos) && HP < HT) {
 				sprite.emitter().burst( Speck.factory(Speck.HEALING), 3 );
-				HP += HT/50;
+				HP += HT/100;
 			}
 
 			return super.act();
@@ -312,11 +310,14 @@ public abstract class YogFist extends Mob {
 		public void damage(int dmg, DamageSrc src) {
 			if (!isInvulnerable(src.getCause().getClass()) && !(src.getCause() instanceof Bleeding)){
 				Bleeding b = buff(Bleeding.class);
+				int curlvl = 0;
 				if (b == null){
 					b = new Bleeding();
+				} else {
+					curlvl = (int) b.level();
 				}
 				b.announced = false;
-				b.set(dmg/3f);
+				b.set((dmg/2f) + curlvl);
 				b.attachTo(this);
 				sprite.showStatus(CharSprite.WARNING, b.toString() + " " + (int)b.level());
 			} else{
@@ -382,6 +383,8 @@ public abstract class YogFist extends Mob {
 			hasMeleeAttack = false;
 
 			damageFactor = 1.5f;
+
+			healthFactor = 0.5f;
 		}
 
 		@Override
@@ -448,6 +451,8 @@ public abstract class YogFist extends Mob {
 			hasMeleeAttack = false;
 
 			damageFactor = 1.3f;
+
+			healthFactor = 0.5f;
 		}
 
 		@Override
