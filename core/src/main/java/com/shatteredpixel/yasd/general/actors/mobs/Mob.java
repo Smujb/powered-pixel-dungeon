@@ -1169,6 +1169,7 @@ public abstract class Mob extends Char {
 
 			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
 
+				target = enemy.pos;
 				return doAttack( enemy );
 
 			} else {
