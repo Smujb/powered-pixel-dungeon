@@ -38,7 +38,7 @@ public class DM100 extends Mob {
 		spriteClass = DM100Sprite.class;
 
 		healthFactor = 0.7f;
-		damageFactor = 1.3f;
+		damageFactor = 1.2f;
 
 		numTypes = 4;
 
@@ -62,13 +62,13 @@ public class DM100 extends Mob {
 				element = Element.SPIRIT;
 				break;
 			case 1:
-				element = Element.DESTRUCTION;
+				element = Element.SHOCK;
 				break;
 			case 2:
-				element = Element.EARTH;
+				element = Element.AIR;
 				break;
 			case 3:
-				element = Element.COLD;
+				element = Element.LIGHT;
 				break;
 		}
 		return element;
