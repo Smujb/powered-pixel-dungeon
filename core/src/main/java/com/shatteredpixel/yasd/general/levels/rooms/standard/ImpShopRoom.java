@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Point;
 
 //shops probably shouldn't extend special room, because of cases like this.
 public class ImpShopRoom extends ShopRoom {
@@ -80,10 +81,21 @@ public class ImpShopRoom extends ShopRoom {
 
 		int pos = level.pointToCell(center());
 
+		for (Point p : getPoints()){
+			if (level.map[level.pointToCell(p)] == Terrain.PEDESTAL){
+				pos = level.pointToCell(p);
+				break;
+			}
+		}
+
 		Mob shopkeeper = new ImpShopkeeper();
 		shopkeeper.pos = pos;
 		level.addMob(shopkeeper);
 
+	}
+
+	public boolean shopSpawned(){
+		return impSpawned;
 	}
 
 	//fix for connections not being bundled normally
