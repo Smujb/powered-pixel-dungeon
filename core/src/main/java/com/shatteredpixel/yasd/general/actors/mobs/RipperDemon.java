@@ -45,6 +45,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 
 public class RipperDemon extends Mob {
 
@@ -82,22 +83,23 @@ public class RipperDemon extends Mob {
 
 	private static final String LAST_ENEMY_POS = "last_enemy_pos";
 	private static final String LEAP_POS = "leap_pos";
+	private static final String LEAP_CD = "leap_cd";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(LAST_ENEMY_POS, lastEnemyPos);
 		bundle.put(LEAP_POS, leapPos);
+		bundle.put(LEAP_CD, leapCooldown);
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		//pre beta-5.0
-		if (bundle.contains(LAST_ENEMY_POS)) {
-			lastEnemyPos = bundle.getInt(LAST_ENEMY_POS);
-			leapPos = bundle.getInt(LEAP_POS);
-		}
+		lastEnemyPos = bundle.getInt(LAST_ENEMY_POS);
+		leapPos = bundle.getInt(LEAP_POS);
+		leapCooldown = bundle.getFloat(LEAP_CD);
 	}
 
 	private int lastEnemyPos = -1;
@@ -106,6 +108,7 @@ public class RipperDemon extends Mob {
 	protected boolean act() {
 		AiState lastState = state;
 		boolean result = super.act();
+		if (paralysed <= 0) leapCooldown --;
 
 		//if state changed from wandering to hunting, we haven't acted yet, don't update.
 		if (!(lastState == WANDERING && state == HUNTING)) {
@@ -120,6 +123,7 @@ public class RipperDemon extends Mob {
 	}
 
 	private int leapPos = -1;
+	private float leapCooldown = 0;
 
 	public class Hunting extends Mob.Hunting {
 
@@ -136,7 +140,7 @@ public class RipperDemon extends Mob {
 						Char ch = Actor.findChar(leapPos);
 						if (ch != null){
 							if (alignment != ch.alignment){
-								Buff.affect(ch, Bleeding.class).set(0.75f*Math.max(damageRoll(), damageRoll()));
+								Buff.affect(ch, Bleeding.class).set(0.75f*damageRoll());
 								ch.sprite.flash();
 								Sample.INSTANCE.play(Assets.SND_HIT);
 							}
@@ -159,6 +163,7 @@ public class RipperDemon extends Mob {
 						}
 
 						leapPos = -1;
+						leapCooldown = Random.NormalIntRange(2, 4);
 						sprite.idle();
 						Dungeon.level.occupyCell(RipperDemon.this);
 						next();
@@ -182,7 +187,7 @@ public class RipperDemon extends Mob {
 					return true;
 				}
 
-				if (enemyInFOV && Dungeon.level.distance(pos, enemy.pos) >= 3) {
+				if (leapCooldown <= 0 && enemyInFOV && Dungeon.level.distance(pos, enemy.pos) >= 3) {
 
 					int targetPos = enemy.pos;
 					if (lastEnemyPos != enemy.pos){
