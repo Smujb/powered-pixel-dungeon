@@ -34,10 +34,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.Speck;
-import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.GameScene;
 
 public class StormCloud extends Blob {
 	
@@ -51,19 +48,8 @@ public class StormCloud extends Blob {
 			for (int j = area.top; j < area.bottom; j++){
 				cell = i + j*Dungeon.level.width();
 				if (cur[cell] > 0) {
-					KindOfTerrain terr = Dungeon.level.map[cell];
-					if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
-							terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
-							terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS
-							|| terr == Terrain.EMPTY_DECO) {
-						Dungeon.level.set(cell, Terrain.WATER);
-						GameScene.updateMap(cell);
-					} else if (Dungeon.level.traps.containsKey(cell)) {
-						Dungeon.level.set(cell, Terrain.WATER);
-						Dungeon.level.traps.remove(cell);
-						GameScene.updateMap(cell);
-					}
-					if (cur[cell] > 0 && (ch = Actor.findChar( cell )) != null) {
+					Dungeon.level.setCellToWater(true, cell);
+					if ((ch = Actor.findChar( cell )) != null) {
 						if (!ch.isImmune(this.getClass())) {
 
 							Buff.prolong(ch, Wet.class, 3f);
