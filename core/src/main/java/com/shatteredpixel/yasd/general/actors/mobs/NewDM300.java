@@ -75,7 +75,6 @@ import com.watabou.utils.RectF;
 public class NewDM300 extends Mob {
 
 	{
-		//TODO improved sprite
 		spriteClass = DM300Sprite.class;
 
 		damageFactor = 0.7f;

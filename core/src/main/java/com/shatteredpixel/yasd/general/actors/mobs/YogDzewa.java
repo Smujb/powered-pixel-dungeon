@@ -470,6 +470,7 @@ public class YogDzewa extends Mob {
 
 			healthFactor = 0.15f;
 			damageFactor = 1.5f;
+			evasionFactor = 0.7f;
 			viewDistance = Light.DISTANCE;
 
 			EXP = 5;
