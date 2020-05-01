@@ -1061,10 +1061,10 @@ public class Hero extends Char {
 		shake = ((float) dmg / (float) effectiveHP) * 4f;
 
 		if (shake > 0) {
-			Camera.main.shake(GameMath.gate(0.5f, shake*2, 8), 0.1f);
-			float divisor = 3 + 12*((HP + shielding()) / (float)(HT + shielding()));
-			GameScene.flash( (int)(0xFF/divisor) << 16 );
+			Camera.main.shake(GameMath.gate(0.5f, shake*2, 10), 0.2f);
 			if (shake > 0.5f) {
+				float divisor = 3 + 12*((HP + shielding()) / (float)(HT + shielding()));
+				GameScene.flash( (int)(0xFF/divisor) << 16 );
 				if (YASDSettings.vibrate()) {
 					MainGame.vibrate(Math.min(250, (int) (shake * 50)));
 				}
