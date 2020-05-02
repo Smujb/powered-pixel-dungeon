@@ -38,8 +38,6 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.FetidRatSprite;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class FetidRat extends Rat {
 
 	{
@@ -77,11 +75,11 @@ public class FetidRat extends Rat {
 	}
 
 	@Override
-	public int defenseProc(Char enemy, int damage, Element element) {
+	public int defenseProc(Char enemy, int damage) {
 
 		GameScene.add(Blob.seed(pos, 20, StenchGas.class));
 
-		return super.defenseProc(enemy, damage, element);
+		return super.defenseProc(enemy, damage);
 	}
 
 	@Override

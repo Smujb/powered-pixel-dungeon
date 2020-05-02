@@ -58,7 +58,6 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 		return new float[]{1};
 	}
 
-
 	@Override
 	protected float[] connectionRoomChances() {
 		return new float[]{

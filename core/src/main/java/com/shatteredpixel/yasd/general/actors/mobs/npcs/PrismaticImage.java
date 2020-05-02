@@ -184,8 +184,8 @@ public class PrismaticImage extends NPC {
 	}
 	
 	@Override
-	public int defenseProc(Char enemy, int damage, Element element) {
-		damage = super.defenseProc(enemy, damage, element);
+	public int defenseProc(Char enemy, int damage) {
+		damage = super.defenseProc(enemy, damage);
 		ArrayList<Armor> Armors = hero.belongings.getArmors();//Proc all armours 1 by 1
 		for (int i=0; i < Armors.size(); i++) {
 			damage = Armors.get(i).proc(enemy,this, damage);

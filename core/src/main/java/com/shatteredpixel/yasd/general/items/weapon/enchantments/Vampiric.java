@@ -28,9 +28,7 @@
 package com.shatteredpixel.yasd.general.items.weapon.enchantments;
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite.Glowing;
 import com.watabou.utils.Random;
@@ -53,9 +51,10 @@ public class Vampiric extends Weapon.Enchantment {
 		int healAmt = Math.min( Math.round(healPercent*damage), attacker.HT - attacker.HP );
 
 		if (healAmt > 0 && attacker.isAlive()) {
-			attacker.HP += healAmt;
-			attacker.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
-			attacker.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healAmt ) );
+			//attacker.HP += healAmt;
+			//attacker.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
+			//attacker.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healAmt ) );
+			attacker.heal(healAmt);
 		}
 
 		return damage;

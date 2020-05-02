@@ -160,7 +160,7 @@ public class WandOfThornvines extends Wand {
         }
 
         @Override
-        public int defenseProc(Char enemy, int damage, Element element) {
+        public int defenseProc(Char enemy, int damage) {
             if (Random.Int(  3 ) >= 2) {
 
                 Buff.affect(enemy, Bleeding.class).set(damage/3f);
@@ -169,7 +169,7 @@ public class WandOfThornvines extends Wand {
 
             }
             Buff.prolong( enemy, Cripple.class, 3f );
-            return super.defenseProc(enemy, damage, element);
+            return super.defenseProc(enemy, damage);
         }
 
         @Override

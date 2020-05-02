@@ -78,6 +78,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.Surprise;
 import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
@@ -391,7 +392,7 @@ public abstract class Char extends Actor {
 				dmg = 0;
 			}
 			dmg = attackProc(enemy, dmg);
-			dmg = enemy.defenseProc(this, dmg, this.elementalType());
+			dmg = enemy.defenseProc(this, dmg);
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
@@ -618,7 +619,7 @@ public abstract class Char extends Actor {
 		return damage;
 	}
 
-	public int defenseProc(Char enemy, int damage, Element element) {
+	public int defenseProc(Char enemy, int damage) {
 		if (hasBelongings()) {
 			if (enemy.elementalType().isMagical()) {
 				damage = belongings.magicalDefenseProc(enemy, damage);
@@ -801,6 +802,15 @@ public abstract class Char extends Actor {
 
 		if (!isAlive()) {
 			die( src );
+		}
+	}
+
+	public void heal(int amount) {
+		amount = Math.min(missingHP(), amount);
+		if (amount > 0) {
+			sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 1);
+			sprite.showStatus(CharSprite.POSITIVE, Integer.toString(amount));
+			HP += amount;
 		}
 	}
 

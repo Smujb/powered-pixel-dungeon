@@ -67,6 +67,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
@@ -99,6 +100,7 @@ public abstract class Mob extends Char {
 
 	public int range = 1;
 	public boolean hasMeleeAttack = true;
+	public boolean hasSupport = false;
 	public int shotType = Ballistica.PROJECTILE;
 
 	public AiState SLEEPING     = new  Sleeping();
@@ -368,6 +370,19 @@ public abstract class Mob extends Char {
 
 	//FIXME this is sort of a band-aid correction for allies needing more intelligent behaviour
 	protected boolean intelligentAlly = false;
+
+	private Char chooseAlly() {
+		ArrayList<Char> targets = new ArrayList<>();
+		for (Char ch : Actor.chars()) {
+			if (ch.alignment == this.alignment && (fieldOfView[ch.pos] || notice(ch, true))) {
+				targets.add(ch);
+			}
+		}
+		if (targets.size() > 0) {
+			return Random.element(targets);
+		}
+		return null;
+	}
 	
 	protected Char chooseEnemy() {
 
@@ -788,7 +803,7 @@ public abstract class Mob extends Char {
 	protected boolean hitWithRanged = false;
 	
 	@Override
-	public int defenseProc(Char enemy, int damage, Element element) {
+	public int defenseProc(Char enemy, int damage) {
 		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
 		}
@@ -813,7 +828,7 @@ public abstract class Mob extends Char {
 			Dungeon.hero.sprite.emitter().burst( Speck.factory(Speck.HEALING), 1 );
 		}
 
-		return super.defenseProc(enemy, damage, element);
+		return super.defenseProc(enemy, damage);
 	}
 
 	public boolean surprisedBy( Char enemy ){
@@ -896,6 +911,35 @@ public abstract class Mob extends Char {
 		}
 		
 		super.die( cause );
+	}
+
+	protected boolean doSupport(Char ch) {
+		if (sprite != null && (sprite.visible || ch.sprite.visible)) {
+			sprite.operate(ch.pos, new Callback() {
+				@Override
+				public void call() {
+					support(ch);
+					next();
+				}
+			});
+			spend( attackDelay() );
+			return true;
+		} else {
+			support( ch );
+			spend( attackDelay() );
+			return true;
+		}
+	}
+
+	/*public boolean canSupport(Char ch) {
+		return Dungeon.level.adjacent(pos, ch.pos);
+	}*/
+
+	//By default heals char for it's damage roll
+	public boolean support(Char ch) {
+		int heal = damageRoll();
+		ch.heal(heal);
+		return true;
 	}
 
 	public float corruptionResistance() {
@@ -1136,6 +1180,7 @@ public abstract class Mob extends Char {
 
 				notice();
 				alerted = true;
+
 				state = HUNTING;
 				target = enemy.pos;
 

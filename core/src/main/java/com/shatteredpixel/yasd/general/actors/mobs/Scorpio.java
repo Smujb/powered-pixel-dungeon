@@ -70,8 +70,8 @@ public class Scorpio extends Mob {
 	}
 
 	@Override
-	public int defenseProc(Char enemy, int damage, Element element) {
-		damage = super.defenseProc(enemy, damage, element);
+	public int defenseProc(Char enemy, int damage) {
+		damage = super.defenseProc(enemy, damage);
 		if (Random.Int( 2 ) == 0) {
 			Buff.prolong( enemy, Cripple.class, Cripple.DURATION );
 		}

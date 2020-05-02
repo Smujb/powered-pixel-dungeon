@@ -101,7 +101,6 @@ public enum Element {
 	//Used for enforcing death in unusual circumstances where other elements wouldn't fit.
 	META( true );
 
-
 	public int attackProc(int damage, Char attacker, Char defender) {
 		switch (this) {
 			case LIGHT:

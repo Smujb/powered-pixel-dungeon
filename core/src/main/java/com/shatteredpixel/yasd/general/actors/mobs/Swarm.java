@@ -28,7 +28,6 @@
 package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -101,9 +100,9 @@ public class Swarm extends Mob {
 
 
 	@Override
-	public int defenseProc(Char enemy, int damage, Element element) {
+	public int defenseProc(Char enemy, int damage) {
 
-		if (HP >= damage + 2 && !element.isMagical()) {
+		if (HP >= damage + 2 && !enemy.elementalType().isMagical()) {
 			ArrayList<Integer> candidates = new  ArrayList<>();
 			boolean[] solid = Dungeon.level.solid();
 			
@@ -130,7 +129,7 @@ public class Swarm extends Mob {
 			}
 		}
 		
-		return super.defenseProc(enemy, damage, element);
+		return super.defenseProc(enemy, damage);
 	}
 	
 	/*@Override

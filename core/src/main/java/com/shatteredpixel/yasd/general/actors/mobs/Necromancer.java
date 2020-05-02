@@ -161,8 +161,22 @@ public class Necromancer extends Mob {
 	}
 
 	@Override
-	public void onAttackComplete() {
-		onZapComplete();
+	public boolean support(Char ch) {
+		if (ch == null || ch.sprite == null || !ch.isAlive()){
+			return false;
+		}
+
+		//heal skeleton first
+		if (sprite.visible || ch.sprite.visible) {
+			sprite.parent.add(new Beam.HealthRay(sprite.center(), ch.sprite.center()));
+		}
+		if (ch.HP < ch.HT){
+			ch.heal(5);
+
+		} else {
+			Buff.prolong(ch, Adrenaline.class, 3f);
+		}
+		return true;
 	}
 
 	public void onZapComplete(){
@@ -277,7 +291,8 @@ public class Necromancer extends Mob {
 					summoningEmitter = CellEmitter.get(summoningPos);
 					summoningEmitter.pour(Speck.factory(Speck.RATTLE), 0.2f);
 					
-					sprite.zap( summoningPos );
+					//sprite.zap( summoningPos );
+					((NecromancerSprite)sprite).charge();
 					
 					spend( firstSummon ? TICK*2 : 3*TICK );
 				} else {
@@ -312,28 +327,36 @@ public class Necromancer extends Mob {
 							ScrollOfTeleportation.appear(mySkeleton, telePos);
 							mySkeleton.teleportSpend();
 							
-							if (sprite != null && sprite.visible){
+							/*if (sprite != null && sprite.visible){
 								sprite.zap(telePos);
 								return false;
 							} else {
 								onZapComplete();
-							}
+							}*/
 						}
 					}
 					
 					return true;
 					
 				} else {
-					
 					//zap skeleton
-					if (mySkeleton.HP < mySkeleton.HT || mySkeleton.buff(Adrenaline.class) == null) {
+					doSupport(mySkeleton);
+					/*if (mySkeleton.HP < mySkeleton.HT || mySkeleton.buff(Adrenaline.class) == null) {
+						doSupport(mySkeleton);
 						if (sprite != null && sprite.visible){
-							sprite.zap(mySkeleton.pos);
+							//sprite.zap(mySkeleton.pos);
+							sprite.attack(mySkeleton.pos, new Callback() {
+								@Override
+								public void call() {
+									doSupport(mySkeleton);
+									next();
+								}
+							});
 							return false;
 						} else {
-							onZapComplete();
+							doSupport(mySkeleton);
 						}
-					}
+					}*/
 					
 				}
 				
