@@ -55,7 +55,6 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.audio.Sample;
@@ -173,9 +172,7 @@ public enum Element {
 				if (healed > 0) {
 
 					if (!(defender.properties().contains(Char.Property.UNDEAD) || defender.properties().contains(Char.Property.INORGANIC))) {
-						attacker.HP += Math.min(attacker.missingHP(), healed);//Heal the attacker
-						attacker.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 1 );
-						attacker.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healed ) );
+						attacker.heal(healed, false);
 					}
 					defender.sprite.burst(0xFFFFFFFF, 5);
 				}

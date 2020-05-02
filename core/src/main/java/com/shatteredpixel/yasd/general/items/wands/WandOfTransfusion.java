@@ -44,7 +44,6 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -87,18 +86,23 @@ public class WandOfTransfusion extends Wand {
 				int selfDmg = Math.round(curUser.HT*0.10f);
 				
 				float healing = selfDmg + 3*actualLevel();
-				float shielding = (ch.HP + healing) - ch.HT;
+
+				ch.heal((int) healing, true);
+
+				/*float shielding = (ch.HP + healing) - ch.HT;
 				if (shielding > 0){
 					healing -= shielding;
 					Buff.affect(ch, Barrier.class).setShield((int)shielding);
 				} else {
 					shielding = 0;
 				}
-				
+
+
+
 				ch.HP += healing;
 				
 				ch.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2 + (int)actualLevel() / 2);
-				ch.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", (int) (healing + shielding));
+				ch.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", (int) (healing + shielding));*/
 				
 				if (!freeCharge) {
 					damageHero(selfDmg);

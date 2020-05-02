@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.items.quest.GooBlob;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -84,9 +83,10 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 				} else {
 					healAmt = (float)Math.floor(healAmt);
 				}
-				target.HP += healAmt;
-				left -= healAmt;
-				target.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+				target.heal((int) healAmt, false);
+				//target.HP += healAmt;
+				//left -= healAmt;
+				//target.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 			}
 			
 			if (left <= 0){

@@ -938,7 +938,7 @@ public abstract class Mob extends Char {
 	//By default heals char for it's damage roll
 	public boolean support(Char ch) {
 		int heal = damageRoll();
-		ch.heal(heal);
+		ch.heal(heal, false);
 		return true;
 	}
 

@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.AdrenalineSurge;
 import com.shatteredpixel.yasd.general.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.general.actors.buffs.ArcaneArmor;
 import com.shatteredpixel.yasd.general.actors.buffs.Barkskin;
+import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Bless;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -805,12 +806,22 @@ public abstract class Char extends Actor {
 		}
 	}
 
-	public void heal(int amount) {
-		amount = Math.min(missingHP(), amount);
-		if (amount > 0) {
+	public void heal(int amount, boolean shield) {
+		int healAmt = Math.min(missingHP(), amount);
+		int shieldAmt = amount - healAmt;
+		int total;
+		if (shield) {
+			total = shieldAmt + healAmt;
+		} else {
+			total = healAmt;
+		}
+		if (total > 0) {
 			sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 1);
-			sprite.showStatus(CharSprite.POSITIVE, Integer.toString(amount));
+			sprite.showStatus(CharSprite.POSITIVE, "+%dHP", total);
 			HP += amount;
+			if (shield && shieldAmt > 0) {
+				Buff.affect(this, Barrier.class).setShield(shieldAmt);
+			}
 		}
 	}
 

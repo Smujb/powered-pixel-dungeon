@@ -31,10 +31,8 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.Armor.Glyph;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite.Glowing;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -60,10 +58,10 @@ public class Metabolism extends Glyph {
 					
 					hunger.reduceHunger( healing * -10 );
 					BuffIndicator.refreshHero();
-					
-					defender.HP += healing;
-					defender.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-					defender.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healing ) );
+					defender.heal(healing, false);
+					//defender.HP += healing;
+					//defender.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+					//defender.sprite.showStatus( CharSprite.POSITIVE, Integer.toString( healing ) );
 				}
 			}
 

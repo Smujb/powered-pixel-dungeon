@@ -57,7 +57,6 @@ import com.shatteredpixel.yasd.general.sprites.FistSprite;
 import com.shatteredpixel.yasd.general.sprites.LarvaSprite;
 import com.shatteredpixel.yasd.general.sprites.YogSprite;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -234,7 +233,7 @@ public class Yog extends Mob {
 		@Override
 		public boolean act() {
 			
-			if (Dungeon.level.liquid()[pos] && HP < HT) {
+			if (Dungeon.level.liquid(pos) && HP < HT) {
 				sprite.emitter().burst( ShadowParticle.UP, 2 );
 				HP += REGENERATION;
 			}
