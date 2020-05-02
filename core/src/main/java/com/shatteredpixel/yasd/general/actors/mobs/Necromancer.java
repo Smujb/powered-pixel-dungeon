@@ -171,7 +171,7 @@ public class Necromancer extends Mob {
 			sprite.parent.add(new Beam.HealthRay(sprite.center(), ch.sprite.center()));
 		}
 		if (ch.HP < ch.HT){
-			ch.heal(5, false);
+			ch.heal(ch.HT/3, false);
 
 		} else {
 			Buff.prolong(ch, Adrenaline.class, 3f);
