@@ -106,7 +106,8 @@ public class OldDM300 extends Mob {
 		Trap trap = Dungeon.level.trap(step);
 		if (trap != null && !trap.active && HP < HT) {
 			
-			HP += Random.Int( 1, HT - HP );
+			//HP += Random.Int( 1, HT - HP );
+			heal(Random.Int( 1, HT - HP ), true);
 			sprite.emitter().burst( ElmoParticle.FACTORY, 5 );
 			
 			if (Dungeon.level.heroFOV[step] && Dungeon.hero.isAlive()) {

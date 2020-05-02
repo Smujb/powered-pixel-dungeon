@@ -806,7 +806,15 @@ public abstract class Char extends Actor {
 		}
 	}
 
+	public void heal(int amount) {
+		heal(amount, false, false);
+	}
+
 	public void heal(int amount, boolean shield) {
+		heal(amount, shield, true);
+	}
+
+	public void heal(int amount, boolean shield, boolean display) {
 		int healAmt = Math.min(missingHP(), amount);
 		int shieldAmt = amount - healAmt;
 		int total;
@@ -817,7 +825,9 @@ public abstract class Char extends Actor {
 		}
 		if (total > 0) {
 			sprite.emitter().start(Speck.factory(Speck.HEALING), 0.4f, 1);
-			sprite.showStatus(CharSprite.POSITIVE, "+%dHP", total);
+			if (display) {
+				sprite.showStatus(CharSprite.POSITIVE, "+%dHP", total);
+			}
 			HP += amount;
 			if (shield && shieldAmt > 0) {
 				Buff.affect(this, Barrier.class).setShield(shieldAmt);

@@ -89,7 +89,7 @@ public class DarkGas extends Blob {
                                     healing = Math.min(owner.missingHP(),healing);
                                     shield -= healing;
                                     owner.sprite.emitter().burst( Speck.factory(Speck.HEALING), 4 );
-                                    owner.HP += healing;
+                                    owner.heal(healing);
                                 }
                                 shield = Math.min(shield,strength*2);//Caps at current strength * 2
                                 if (shield > 1f) {//If it won't even last a turn, adding it is useless

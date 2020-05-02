@@ -58,34 +58,6 @@ public class Bat extends Mob {
 	public Element elementalType() {
 		return Element.DRAIN;
 	}
-
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 5, 18 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return 24;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 4);
-	}
-	
-	@Override
-	public int attackProc( Char enemy, int damage ) {
-		damage = super.attackProc( enemy, damage );
-		int reg = Math.min( damage, HT - HP );
-		
-		if (reg > 0) {
-			HP += reg;
-			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-		}
-		
-		return damage;
-	}*/
 	
 	@Override
 	public void rollToDropLoot() {

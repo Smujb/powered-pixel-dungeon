@@ -300,7 +300,7 @@ public abstract class YogFist extends Mob {
 
 			if (Dungeon.level.liquid(pos) && HP < HT) {
 				sprite.emitter().burst( Speck.factory(Speck.HEALING), 3 );
-				HP += HT/100;
+				heal(HT/100);
 			}
 
 			return super.act();

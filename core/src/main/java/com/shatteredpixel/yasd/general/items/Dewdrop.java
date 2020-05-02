@@ -29,9 +29,7 @@ package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
@@ -61,9 +59,9 @@ public class Dewdrop extends Item {
 			
 			int effect = Math.min( hero.HT - hero.HP, heal );
 			if (effect > 0) {
-				hero.HP += effect;
-				hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
-				hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "value", effect) );
+				hero.heal(effect,false, false);
+				//hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+				//hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "value", effect) );
 			} else {
 				GLog.i( Messages.get(this, "already_full") );
 				return false;

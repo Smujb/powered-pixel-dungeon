@@ -235,7 +235,7 @@ public class Yog extends Mob {
 			
 			if (Dungeon.level.liquid(pos) && HP < HT) {
 				sprite.emitter().burst( ShadowParticle.UP, 2 );
-				HP += REGENERATION;
+				heal(REGENERATION);
 			}
 			
 			return super.act();

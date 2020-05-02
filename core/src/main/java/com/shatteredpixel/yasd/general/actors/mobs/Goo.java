@@ -121,9 +121,9 @@ public class Goo extends Mob {
 				((GooSprite)sprite).spray(false);
 			}
 			if (Dungeon.underwater()) {
-				HP += 3;
+				heal(3);
 			} else {
-				HP++;
+				heal(1);
 			}
 		}
 		

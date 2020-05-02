@@ -379,12 +379,17 @@ public class Necromancer extends Mob {
 			//no loot or exp
 			maxLvl = -5;
 
-			damageFactor = 1.5f;
+			damageFactor = 1.2f;
 
 			lootChance = 0f;
 			
 			//Less HP than Shattered, more damage
-			healthFactor = 0.5f;
+			healthFactor = 0.7f;
+		}
+
+		@Override
+		public Element elementalType() {
+			return Element.PHYSICAL;
 		}
 
 		@Override

@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Healing;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.particles.ShaftParticle;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -98,10 +97,10 @@ public class Sungrass extends Plant {
 			partialHeal += (40 + target.HT)/150f;
 			
 			if (partialHeal > 1){
-				target.HP += (int)partialHeal;
+				target.heal( (int)partialHeal);
 				level -= (int)partialHeal;
 				partialHeal -= (int)partialHeal;
-				target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
+				//target.sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 				
 				if (target.HP >= target.HT) {
 					target.HP = target.HT;
