@@ -109,12 +109,7 @@ public class MirrorImage extends NPC {
 	
 	@Override
 	public int damageRoll() {
-		int damage;
-		if (user.belongings.getWeapons() != null){
-			damage = user.belongings.getWeapons().get(0).damageRoll(this);
-		} else {
-			damage = user.damageRoll(); //handles ring of force
-		}
+		int damage = user.damageRoll();
 		return (damage+1)/2; //half user damage, rounded up
 	}
 	
