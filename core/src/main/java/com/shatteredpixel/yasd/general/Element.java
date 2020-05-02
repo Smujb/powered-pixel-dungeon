@@ -53,12 +53,14 @@ import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Callback;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public enum Element {
@@ -73,7 +75,7 @@ public enum Element {
 	MAGICAL( true ),
 
 	//Earth
-	EARTH( false ),//TODO
+	EARTH( false ),//Damages higher depending on surrounding grass
 	GRASS( true ),//Roots
 	STONE( false ),//Paralyzes
 	SHARP( false ),//Bleeds
@@ -125,7 +127,7 @@ public enum Element {
 				Buff.affect( defender, Wet.class, Wet.DURATION );
 				break;
 			case STONE:
-				if (Random.Int(3) == 0) {
+				if (Random.Int(3) == 0 && defender.buff(Paralysis.class) == null) {
 					Buff.affect(defender, Paralysis.class, 3f);
 				}
 				break;
@@ -149,8 +151,14 @@ public enum Element {
 				}
 				break;
 			case EARTH:
-				//Buff.affect(defender, Slow.class, Paralysis.DURATION);
-				//Slow is pretty boring and painful - I'll think of something else.
+				int grassCells = 0;
+				for (int i : PathFinder.NEIGHBOURS9) {
+					if (Dungeon.level.map[attacker.pos+i] == Terrain.FURROWED_GRASS
+							|| Dungeon.level.map[attacker.pos+i] == Terrain.HIGH_GRASS){
+						grassCells++;
+					}
+				}
+				if (grassCells > 0) damage = damage * (20/(20-grassCells));
 				break;
 			case GRASS:
 				Buff.affect(defender, Roots.class, Paralysis.DURATION);
