@@ -754,6 +754,7 @@ public abstract class Level implements Bundlable {
 
 	//These functions should be used if looking for the exit cell (e.g. in randomRespawnCell or when deciding where to place the hero when spawining on a level).
 	// *Not* functionally identical to getExit().centerCell() or getEntrance.centerCell() - it takes into account descend areas and should be used when possible.
+	//getEntrancePos() nad getExitPos() are **not** final because some levels don't have an exit or entrance yet need somewhere to put the player.
 	public int getEntrancePos() {
 		InteractiveArea entrance = getEntrance();
 		if (entrance == null) {
