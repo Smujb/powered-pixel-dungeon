@@ -45,7 +45,6 @@ public abstract class KindofMisc extends EquipableItem {
 		final KindofMisc[] miscs = hero.belongings.miscs;
 		if (!hero.belongings.canEquip(this)) {
 
-
 			String[] miscNames = new String[miscs.length];
 			for (int i = 0; i < miscs.length; i++) {
 				miscNames[i] = miscs[i].toString();
