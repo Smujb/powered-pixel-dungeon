@@ -94,7 +94,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 			return Math.round(dmg * (1f + baseDmgBonus + (missingHPBonus * defenderHPPercent)));
 		}
 		
-		public static AttackLevel getLvl(int turnsInvis){
+		public static AttackLevel getLvl(float turnsInvis){
 			List<AttackLevel> values = Arrays.asList(values());
 			Collections.reverse(values);
 			for ( AttackLevel lvl : values ){
@@ -106,7 +106,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		}
 	}
 	
-	private int turnsPrep = 0;
+	private float turnsPrep = 0;
 
 	public static boolean canAttatch(Char ch) {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
@@ -138,7 +138,9 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 				return true;
 			}
 		}
-		turnsPrep--;
+		if (turnsPrep > 0) {
+			turnsPrep -= 0.5;
+		}
 		spend(TICK);
 		return true;
 	}
