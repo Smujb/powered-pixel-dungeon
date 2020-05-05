@@ -123,6 +123,9 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -202,9 +205,10 @@ public class Hero extends Char {
 		super.updateHT(boostHP);
 	}
 
-	public void moraleCheck() {
+	private void moraleCheck() {
 		if (morale > MAX_MORALE*0.67) {
 			return;
+
 		} else if (morale > MAX_MORALE*0.33) {
 			int choice = Random.Int(5) + 1;
 			String messageTitle = "low_morale_" + choice;
@@ -689,7 +693,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actBuy( HeroAction.Buy action ) {
+	private boolean actBuy(@NotNull HeroAction.Buy action ) {
 		int dst = action.dst;
 		//May change back, but I think making it consistent is a good move
 		//if (pos == dst || Dungeon.level.adjacent( pos, dst )) {
@@ -719,7 +723,7 @@ public class Hero extends Char {
 		}
 	}
 
-	private boolean actAlchemy( HeroAction.Alchemy action ) {
+	private boolean actAlchemy(@NotNull HeroAction.Alchemy action ) {
 		int dst = action.dst;
 		if (Dungeon.level.distance(dst, pos) <= 1) {
 
@@ -750,7 +754,7 @@ public class Hero extends Char {
 		}
 	}
 
-	private boolean actPickUp( HeroAction.PickUp action ) {
+	private boolean actPickUp(@NotNull HeroAction.PickUp action ) {
 		int dst = action.dst;
 		if (pos == dst) {
 			
@@ -808,7 +812,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actOpenChest( HeroAction.OpenChest action ) {
+	private boolean actOpenChest(@NotNull HeroAction.OpenChest action ) {
 		int dst = action.dst;
 		if (Dungeon.level.adjacent( pos, dst ) || pos == dst) {
 			
@@ -854,7 +858,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	private boolean actUnlock( HeroAction.Unlock action ) {
+	private boolean actUnlock(@NotNull HeroAction.Unlock action ) {
 		int doorCell = action.dst;
 		if (Dungeon.level.adjacent( pos, doorCell )) {
 			
@@ -899,77 +903,7 @@ public class Hero extends Char {
 		}
 	}
 	
-	/*private boolean actDescend( HeroAction.Descend action ) {
-		int stairs = action.dst;
-		if (pos == stairs) {
-			
-			curAction = null;
-
-			Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
-			if (buff != null) buff.detach();
-			buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
-			if (buff != null) buff.detach();
-			
-			LevelHandler.ascend();
-
-			return false;
-
-		} else if (getCloser( stairs )) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-	
-	private boolean actAscend( HeroAction.Ascend action ) {
-		int stairs = action.dst;
-		if (pos == stairs) {
-			
-			if (Dungeon.depth == 1) {
-				
-				if (belongings.getItem( Amulet.class ) == null) {
-					Game.runOnRenderThread(new Callback() {
-						@Override
-						public void call() {
-							GameScene.show( new WndMessage( Messages.get(Hero.this, "leave") ) );
-						}
-					});
-					ready();
-				} else {
-					Badges.silentValidateHappyEnd();
-					Dungeon.win( Amulet.class );
-					Dungeon.deleteGame( GamesInProgress.curSlot, true );
-					Game.switchScene( SurfaceScene.class );
-				}
-				
-			} else {
-				
-				curAction = null;
-
-				Buff buff = buff(TimekeepersHourglass.timeFreeze.class);
-				if (buff != null) buff.detach();
-				buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
-				if (buff != null) buff.detach();
-
-				LevelHandler.ascend();
-			}
-
-			return false;
-
-		} else if (getCloser( stairs )) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}*/
-	
-	private boolean actAttack( HeroAction.Attack action ) {
+	private boolean actAttack(@NotNull HeroAction.Attack action ) {
 
 		enemy = action.target;
 
@@ -1036,7 +970,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public int defenseProc(Char enemy, int damage) {
+	public int defenseProc(@NotNull Char enemy, int damage) {
 
 		if (enemy.elementalType().isMagical()) {
 			damage *= RingOfElements.resist(enemy);
@@ -1080,7 +1014,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public void damage(int dmg,  DamageSrc src) {
+	public void damage(int dmg, @NotNull DamageSrc src) {
 		if (!(src.getCause() instanceof Hunger || src.getCause() instanceof Viscosity.DeferedDamage) && damageInterrupt) {
 			interrupt();
 			resting = false;
@@ -1394,7 +1328,8 @@ public class Hero extends Char {
 		return maxExp( lvl );
 	}
 	
-	public static int maxExp( int lvl ){
+	@Contract(pure = true)
+	public static int maxExp(int lvl ){
 		return 5 + lvl * 5;
 	}
 	
