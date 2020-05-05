@@ -50,6 +50,14 @@ public class Reflection {
 			return null;
 		}
 	}
+
+	public static <T> T forceNewInstance( Class<T> cls ){
+		try {
+			return ClassReflection.newInstance(cls);
+		} catch (ReflectionException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public static <T> T newInstanceUnhandled( Class<T> cls ) throws Exception {
 		return ClassReflection.newInstance(cls);

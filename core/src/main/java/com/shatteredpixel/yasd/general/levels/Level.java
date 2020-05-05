@@ -1005,7 +1005,7 @@ public abstract class Level implements Bundlable {
 		}
 		int type = Random.chances(standardRoomChances());
 		Class<? extends StandardRoom> room = (Class<? extends StandardRoom>) standardRoomClasses()[type];
-		return Reflection.newInstance(room);
+		return Reflection.forceNewInstance(room);
 	}
 
 	public ArrayList<Integer> getPassableCellsList() {
