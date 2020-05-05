@@ -30,11 +30,8 @@ package com.shatteredpixel.yasd.general.items.artifacts;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
-import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -232,9 +229,9 @@ public class CloakOfShadows extends Artifact {
 		public boolean attachTo(@NotNull Char target ) {
 			if (super.attachTo( target )) {
 				target.invisible++;
-				if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){
+				/*if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){
 					Buff.affect(target, Preparation.class);
-				}
+				}*/
 				return true;
 			} else {
 				return false;

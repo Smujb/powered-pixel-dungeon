@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.HeroAction;
+import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Rat;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.NPC;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -61,11 +62,11 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	public enum AttackLevel{
-		LVL_1( 1,  0.5f, 0.0f, 1, 0),
-		LVL_2( 3,  0.7f, 0.0f, 1, 1),
-		LVL_3( 6,  1f  , 0.0f, 2, 3),
-		LVL_4( 11, 1.2f, 0.6f, 2, 5),
-		LVL_5( 16, 1.5f, 1.0f, 3, 7);
+		LVL_1( 1,  0.2f, 0.0f, 1, 0),
+		LVL_2( 3,  0.4f, 0.0f, 1, 1),
+		LVL_3( 6,  0.6f  , 0.0f, 2, 3),
+		LVL_4( 11, 0.8f, 0.6f, 2, 5),
+		LVL_5( 16, 2f, 1.0f, 3, 7);
 		
 		final int turnsReq;
 		final float baseDmgBonus, missingHPBonus;
@@ -105,20 +106,40 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		}
 	}
 	
-	private int turnsInvis = 0;
+	private int turnsPrep = 0;
+
+	public static boolean canAttatch(Char ch) {
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+			if (mob.getEnemy() == ch && mob.enemySeen) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	@Override
 	public boolean act() {
-		if (target.invisible > 0){
-			turnsInvis++;
-			if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0 && target == Dungeon.hero){
+		/*if (target.invisible > 0){
+			turnsPrep++;
+			if (AttackLevel.getLvl(turnsPrep).blinkDistance > 0 && target == Dungeon.hero){
 				ActionIndicator.setAction(this);
 			}
 			BuffIndicator.refreshHero();
 			spend(TICK);
 		} else {
 			detach();
+		}*/
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
+			if (mob.getEnemy() == target && mob.enemySeen) {
+				detach();
+			} else if (target.fieldOfView[mob.pos] || target.notice(mob, false)) {
+				turnsPrep++;
+				spend(TICK);
+				return true;
+			}
 		}
+		turnsPrep--;
+		spend(TICK);
 		return true;
 	}
 	
@@ -129,7 +150,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	}
 	
 	public int damageRoll(Char attacker, Char defender ){
-		AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
+		AttackLevel lvl = AttackLevel.getLvl(turnsPrep);
 		if (lvl.canInstakill(defender)){
 			int dmg = lvl.damageRoll(attacker, defender);
 			defender.damage( Math.max(defender.HT, dmg), new Char.DamageSrc(Element.PHYSICAL, this).ignoreDefense());
@@ -147,7 +168,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	@Override
 	public void tintIcon(Image icon) {
-		switch (AttackLevel.getLvl(turnsInvis)){
+		switch (AttackLevel.getLvl(turnsPrep)){
 			case LVL_1:
 				icon.hardlight(1f, 1f, 1f);
 				break;
@@ -175,7 +196,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	public String desc() {
 		String desc = Messages.get(this, "desc");
 		
-		AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
+		AttackLevel lvl = AttackLevel.getLvl(turnsPrep);
 		
 		if (lvl.canInstakill(new Rat())){
 			desc += "\n\n" + Messages.get(this, "desc_dmg_instakill",
@@ -197,7 +218,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 			desc += "\n\n" + Messages.get(this, "desc_blink", lvl.blinkDistance);
 		}
 		
-		desc += "\n\n" + Messages.get(this, "desc_invis_time", turnsInvis);
+		desc += "\n\n" + Messages.get(this, "desc_invis_time", turnsPrep);
 		
 		if (lvl.ordinal() != AttackLevel.values().length-1){
 			AttackLevel next = AttackLevel.values()[lvl.ordinal()+1];
@@ -212,8 +233,8 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	@Override
 	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		turnsInvis = bundle.getInt(TURNS);
-		if (AttackLevel.getLvl(turnsInvis).blinkDistance > 0){
+		turnsPrep = bundle.getInt(TURNS);
+		if (AttackLevel.getLvl(turnsPrep).blinkDistance > 0){
 			ActionIndicator.setAction(this);
 		}
 	}
@@ -221,7 +242,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	@Override
 	public void storeInBundle( Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put(TURNS, turnsInvis);
+		bundle.put(TURNS, turnsPrep);
 	}
 	
 	@Override
@@ -253,7 +274,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 					return;
 				}
 				
-				AttackLevel lvl = AttackLevel.getLvl(turnsInvis);
+				AttackLevel lvl = AttackLevel.getLvl(turnsPrep);
 				
 				boolean[] passable = Dungeon.level.passable();
 				//need to consider enemy cell as passable in case they are on a trap or chasm
@@ -297,7 +318,7 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 		
 		@Override
 		public String prompt() {
-			return Messages.get(Preparation.class, "prompt", AttackLevel.getLvl(turnsInvis).blinkDistance);
+			return Messages.get(Preparation.class, "prompt", AttackLevel.getLvl(turnsPrep).blinkDistance);
 		}
 	};
 }

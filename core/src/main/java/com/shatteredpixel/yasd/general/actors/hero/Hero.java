@@ -58,6 +58,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.LimitedAir;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
+import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
 import com.shatteredpixel.yasd.general.actors.buffs.Regeneration;
 import com.shatteredpixel.yasd.general.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
@@ -519,6 +520,10 @@ public class Hero extends Char {
 	public boolean act() {
 		//Manually call this as it's called in Char.act which is overridden.
 		LimitedAir.updateBuff(this);
+
+		if (subClass == HeroSubClass.ASSASSIN && Preparation.canAttatch(this) && buff(Preparation.class) == null) {
+			Buff.affect(this, Preparation.class);
+		}
 
 		//calls to dungeon.observe will also update hero's local FOV.
 		fieldOfView = Dungeon.level.heroFOV;

@@ -29,8 +29,6 @@ package com.shatteredpixel.yasd.general.actors.buffs;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.items.artifacts.CloakOfShadows;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -54,9 +52,9 @@ public class Invisibility extends FlavourBuff {
 	public boolean attachTo(@NotNull Char target ) {
 		if (super.attachTo( target )) {
 			target.invisible++;
-			if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){
+			/*if (target instanceof Hero && ((Hero) target).subClass == HeroSubClass.ASSASSIN){
 				Buff.affect(target, Preparation.class);
-			}
+			}*/
 			return true;
 		} else {
 			return false;

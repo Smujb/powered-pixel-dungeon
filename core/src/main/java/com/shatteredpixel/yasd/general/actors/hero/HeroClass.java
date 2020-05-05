@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.DeveloperItem;
-import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
@@ -46,7 +45,6 @@ import com.shatteredpixel.yasd.general.items.bags.ScrollHolder;
 import com.shatteredpixel.yasd.general.items.bags.VelvetPouch;
 import com.shatteredpixel.yasd.general.items.food.Food;
 import com.shatteredpixel.yasd.general.items.food.SmallRation;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfInvisibility;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
@@ -56,7 +54,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
@@ -133,17 +130,6 @@ public enum HeroClass {
 
 	public static void initTest(Hero hero) {
 		new DeveloperItem().collect(hero.belongings.backpack, hero);
-		Generator.randomArmor().identify().collect();
-		Generator.randomArmor().identify().collect();
-		Generator.randomWeapon().identify().collect();
-		Generator.randomWeapon().identify().collect();
-		Generator.random(Generator.Category.RING).identify().collect();
-		Generator.random(Generator.Category.RING).identify().collect();
-		Generator.random(Generator.Category.WAND).identify().collect();
-		Generator.random(Generator.Category.WAND).identify().collect();
-		new ScrollOfUpgrade().quantity(100).identify().collect();
-		new PotionOfExperience().quantity(100).identify().collect();
-		new MagicalInfusion().quantity(100).collect();
 	}
 
 	@Contract(pure = true)
