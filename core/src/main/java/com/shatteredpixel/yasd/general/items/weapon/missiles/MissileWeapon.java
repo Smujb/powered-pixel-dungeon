@@ -48,8 +48,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 abstract public class MissileWeapon extends Weapon {
@@ -129,7 +127,11 @@ abstract public class MissileWeapon extends Weapon {
 	public int STRReq(int lvl){
 		lvl = Math.max(0, lvl);
 		//strength req decreases at +1,+3,+6,+10,etc.
-		return (6 + tier * 3) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
+		int strPerTier = 3;
+		if (Dungeon.hero.heroClass == HeroClass.HUNTRESS) {
+			strPerTier = 2;
+		}
+		return (6 + tier * strPerTier) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
 	}
 	
 	@Override
