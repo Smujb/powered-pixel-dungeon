@@ -1690,10 +1690,13 @@ public class Hero extends Char {
 							//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
 						} else if (Dungeon.level.traps.containsKey(p)) {
 							chance = 0.4f - (Dungeon.depth / 250f);
+							//GLog.p("trap");
 
 							//unintentional door detection scales from 20% at floor 0 to 0% at floor 20
 						} else {
 							chance = 0.2f - (Dungeon.depth / 100f);
+							//GLog.p("door/wall");
+
 						}
 						
 						if (Random.Float() < chance) {
