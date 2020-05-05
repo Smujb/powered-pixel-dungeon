@@ -266,7 +266,7 @@ public class WndStartGame extends Window {
 		}
 	}
 	
-	private class HeroPane extends Component {
+	private static class HeroPane extends Component {
 		
 		private HeroClass cl;
 		

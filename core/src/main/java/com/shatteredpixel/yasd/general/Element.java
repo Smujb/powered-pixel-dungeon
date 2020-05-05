@@ -209,11 +209,11 @@ public enum Element {
 	}
 
 	public int defenseProc(int damage, Char attacker, Char defender) {
-		switch (this) {
-			case ACID:
-				Buff.affect(attacker, Ooze.class).set(20f);
-				break;
-		}
+		//switch (this) {
+		//	case ACID:
+		//		Buff.affect(attacker, Ooze.class).set(20f);
+		//		break;
+		//}
 		return damage;
 	}
 
