@@ -226,6 +226,7 @@ public abstract class Level implements Bundlable {
 		return locations;
 	}
 
+	@NotNull
 	@Contract(pure = true)
 	public static Terrain[] basicMap(int size) {
 		Terrain[] map = new Terrain[size];
@@ -240,6 +241,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].passable() & !avoid(pos);
 	}
 
+	@NotNull
 	public final boolean[] passable() {
 		boolean[] passable = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -255,6 +257,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].losBlocking();
 	}
 
+	@NotNull
 	public final boolean[] losBlocking() {
 		boolean[] losBlocking = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -299,6 +302,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].solid();
 	}
 
+	@NotNull
 	public final boolean[] solid() {
 		boolean[] solid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -316,6 +320,7 @@ public abstract class Level implements Bundlable {
 		}
 	}
 
+	@NotNull
 	public final boolean[] avoid() {
 		boolean[] avoid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -328,6 +333,7 @@ public abstract class Level implements Bundlable {
 		return map[pos].liquid();
 	}
 
+	@NotNull
 	public final boolean[] liquid() {
 		boolean[] liquid = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -340,6 +346,7 @@ public abstract class Level implements Bundlable {
 		return map[cell].pit();
 	}
 
+	@NotNull
 	public final boolean[] pit() {
 		boolean[] pit = new boolean[map.length];
 		for (int i = 0; i < map.length; i++) {
@@ -711,7 +718,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void addMob(Mob mob) {
-		if (MainGame.scene() instanceof GameScene) {
+		if (MainGame.scene() instanceof GameScene && Dungeon.level == this) {
 			GameScene.add(mob);
 		} else {
 			mobs.add(mob);
