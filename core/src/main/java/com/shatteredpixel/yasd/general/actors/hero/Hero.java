@@ -196,7 +196,9 @@ public class Hero extends Char {
 
 	@Override
 	public void updateHT(boolean boostHP) {
+		int preHT = HT;
 		HT = 20 + 5*(lvl-1) + HTBoost;
+		heal(HT-preHT);
 		super.updateHT(boostHP);
 	}
 
