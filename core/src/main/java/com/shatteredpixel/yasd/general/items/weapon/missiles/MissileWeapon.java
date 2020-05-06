@@ -131,7 +131,7 @@ abstract public class MissileWeapon extends Weapon {
 		if (Dungeon.hero.heroClass == HeroClass.HUNTRESS) {
 			strPerTier = 2;
 		}
-		return (6 + tier * strPerTier) - (int)(Math.sqrt(8 * lvl + 1) - 1)/2;
+		return (6 + tier * strPerTier) - lvl;
 	}
 	
 	@Override
