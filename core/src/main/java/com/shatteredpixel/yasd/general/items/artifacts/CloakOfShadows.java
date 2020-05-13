@@ -143,7 +143,7 @@ public class CloakOfShadows extends Artifact {
 	@Override
 	public void charge(Hero target) {
 		if (charge < chargeCap) {
-			partialCharge += 0.25f;
+			partialCharge += 0.1f;
 			if (partialCharge >= 1){
 				partialCharge--;
 				charge++;
@@ -185,7 +185,7 @@ public class CloakOfShadows extends Artifact {
 				if (!stealthed && (lock == null || lock.regenOn())) {
 					float missing = (chargeCap - charge);
 					if (level() > 7) missing += 5*(level() - 7)/3f;
-					float turnsToCharge = (45 - missing);
+					float turnsToCharge = (120 - missing);
 					partialCharge += (1f / turnsToCharge);
 				}
 
