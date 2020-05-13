@@ -93,8 +93,26 @@ public class Statue extends Mob implements Callback {
 		upgradeItems();
 		
 		HP = HT = 15 + Dungeon.getScaleFactor() * 5;
-		defenseSkill = sneakSkill = 4 + Dungeon.getScaleFactor();
-		attackSkill  = noticeSkill = 10 + Dungeon.getScaleFactor();
+	}
+
+	@Override
+	public float sneakSkill(Char enemy) {
+		return defenseSkill(enemy);
+	}
+
+	@Override
+	public float noticeSkill(Char enemy) {
+		return attackSkill(enemy);
+	}
+
+	@Override
+	public int defenseSkill(Char enemy) {
+		return 4 + Dungeon.getScaleFactor();
+	}
+
+	@Override
+	public int attackSkill(Char target) {
+		return 10 + Dungeon.getScaleFactor();
 	}
 
 	@Override
