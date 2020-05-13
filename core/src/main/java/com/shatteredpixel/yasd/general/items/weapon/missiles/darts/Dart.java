@@ -52,7 +52,7 @@ public class Dart extends MissileWeapon {
 		tier = 1;
 
 		//infinite, even with penalties
-		baseUses = 1000;
+		baseUses = INFINITE_USES;
 	}
 	public int CurrentCrossbow = 0;
 
