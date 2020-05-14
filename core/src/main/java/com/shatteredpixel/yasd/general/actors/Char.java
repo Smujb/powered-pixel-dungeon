@@ -403,6 +403,10 @@ public abstract class Char extends Actor {
 			//Actually damage them. Ignore defense as DR roll is automatically processed earlier.
 			enemy.damage( dmg, defaultSrc().ignoreDefense() );
 
+			if (Dungeon.hero.fieldOfView[enemy.pos] || Dungeon.hero.fieldOfView[pos]) {
+				Sample.INSTANCE.play(Assets.SND_HIT, 1, 1, Random.Float(0.8f, 1.25f));
+			}
+
 			if (buff(FireImbue.class) != null)
 				buff(FireImbue.class).proc(enemy);
 			if (buff(EarthImbue.class) != null)
