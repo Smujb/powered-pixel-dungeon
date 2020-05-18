@@ -675,8 +675,8 @@ public class Item implements Bundlable {
 		return TIME_TO_THROW;
 	}
 	
-	protected static Char curUser = null;
-	//protected static Item curItem = null;
+	protected Char curUser = null;
+
 	protected CellSelector.Listener thrower = new CellSelector.Listener(this) {
 		@Override
 		public void onSelect( Integer target ) {

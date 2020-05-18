@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Cursed Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -88,7 +88,7 @@ public class WandOfThornvines extends Wand {
 
 
         if (findThornVine() == null) {
-            new ThornVine().spawnAt(bolt.collisionPos, actualLevel(), curCharges, curUser);
+            new ThornVine().spawnAt(bolt.collisionPos, this, curUser);
         }
     }
 
@@ -156,7 +156,7 @@ public class WandOfThornvines extends Wand {
         }
 
         private int setHP() {
-            return (int) ((20 + this.level*5));
+            return (int) ((8 + this.level*2));
         }
 
         @Override
@@ -197,9 +197,9 @@ public class WandOfThornvines extends Wand {
             return true;
         }
 
-        public ThornVine spawnAt(int pos, float level, int charges, Char owner ) {
+        public ThornVine spawnAt(int pos, WandOfThornvines wand, Char owner ) {
             if (Dungeon.level.passable(pos)) {
-                ThornVine TV = new ThornVine(level, charges, owner);
+                ThornVine TV = new ThornVine(wand.level(), wand.curCharges, owner);
                 if (Actor.findChar(pos) == null) {
                     TV.pos = pos;
                 } else {
@@ -208,13 +208,13 @@ public class WandOfThornvines extends Wand {
                     for (int n : PathFinder.NEIGHBOURS9) {
                         int c = pos + n;
                         if (passable[c] && Actor.findChar( c ) == null
-                                && (closest == -1 || (Dungeon.level.trueDistance(c, curUser.pos) < (Dungeon.level.trueDistance(closest, curUser.pos))))) {
+                                && (closest == -1 || (Dungeon.level.trueDistance(c, wand.curUser.pos) < (Dungeon.level.trueDistance(closest, wand.curUser.pos))))) {
                             closest = c;
                         }
                     }
 
                     if (closest == -1){
-                        curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + (int)level/2);
+                        wand.curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + (int)level/2);
                         return null; //do not spawn Thorn Vine
                     } else {
                         TV.pos = closest;
@@ -222,7 +222,7 @@ public class WandOfThornvines extends Wand {
                 }
 
                 TV.HP = TV.HT = setHP();
-                TV.HP *= (charges/((float) new WandOfThornvines().initialCharges()+level));
+                TV.HP *= (charges/((float) wand.maxCharges));
                 GameScene.add(TV);
                 TV.state = TV.HUNTING;
 
