@@ -188,6 +188,13 @@ public class Statue extends Mob implements Callback {
 	private Wand wand = null;
 
 	private void wandZap(Char enemy) {
+		Callback onFinish = new Callback() {
+			@Override
+			public void call() {
+				//spend(Wand.TIME_TO_ZAP);
+				//next();
+			}
+		};
 		if (enemy != null) {
 			if (wand == null) {
 				wand = wandToAttack(enemy);
@@ -200,15 +207,13 @@ public class Statue extends Mob implements Callback {
 					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
 					return;
 				} else {
-					wand.zap(closest);
+					wand.zap(closest, onFinish);
 				}
 			} else {
-				wand.zap(enemy.pos);
+				wand.zap(enemy.pos, onFinish);
 			}
 
 		}
-		spend(1f);
-		next();
 	}
 
 	@Override

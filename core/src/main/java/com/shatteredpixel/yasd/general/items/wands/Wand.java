@@ -69,7 +69,7 @@ public abstract class Wand extends KindofMisc {
 	private static final String AC_ZAP = "ZAP";
 	public static final String AC_ZAP_OVERRIDE = "ZAP_OVERRIDE";
 
-	private static final float TIME_TO_ZAP = 1f;
+	public static final float TIME_TO_ZAP = 1f;
 
 	public int maxCharges = initialCharges();
 	public int curCharges = maxCharges;
@@ -164,13 +164,20 @@ public abstract class Wand extends KindofMisc {
 
 	}
 
-	public void zap(int pos) {
+	public final void zap(int pos) {
+		zap(pos, null);
+	}
+
+	public void zap(int pos, Callback onFinish) {
 		final Ballistica attack = new Ballistica( curUser.pos,pos, this.collisionProperties);
-		this.fx(attack, new Callback() {
+		fx(attack, new Callback() {
 			public void call() {
 				onZap(attack);
 				wandUsed();
 				curUser.next();
+				if (onFinish != null) {
+					onFinish.call();
+				}
 			}
 		});
 	}
@@ -364,11 +371,11 @@ public abstract class Wand extends KindofMisc {
 		particle.radiateXY(0.5f);
 	}
 
-	protected void wandUsed() {
+	private void wandUsed() {
 		if (!isIdentified() && availableUsesToID >= 1) {
 			availableUsesToID--;
 			usesLeftToID--;
-			if (usesLeftToID <= 0) {
+			if (usesLeftToID <= 0 && curUser instanceof Hero) {
 				identify();
 				GLog.p( Messages.get(Wand.class, "identify") );
 				Badges.validateItemLevelAquired( this );

@@ -223,30 +223,33 @@ public class Item implements Bundlable {
 	public void execute( Hero hero, String action ) {
 		
 		curUser = hero;
-		//curItem = this;
-		
-		if (action.equals( AC_DROP )) {
-			
-			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
-				doDrop(hero);
-			}
-			
-		} else if (action.equals( AC_THROW )) {
-			
-			if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
-				doThrow(hero);
-			}
-			
-		} else if (action.equals(AC_INFO)) {
-			if (!testing) {
-				GameScene.show(new WndItem(null, this, true));
-			} else {
-				LevelHandler.descend();
-			}
+
+		switch (action) {
+			case AC_DROP:
+
+				if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
+					doDrop(hero);
+				}
+
+				break;
+			case AC_THROW:
+
+				if (hero.belongings.backpack.contains(this) || isEquipped(hero)) {
+					doThrow(hero);
+				}
+
+				break;
+			case AC_INFO:
+				if (!testing) {
+					GameScene.show(new WndItem(null, this, true));
+				} else {
+					LevelHandler.descend();
+				}
+				break;
 		}
 	}
 	
-	public void execute( Hero hero ) {
+	public final void execute( Hero hero ) {
 		execute( hero, defaultAction );
 	}
 	
@@ -650,8 +653,9 @@ public class Item implements Bundlable {
 							new Callback() {
 						@Override
 						public void call() {
-							curUser = user;
-							Item.this.detach(user.belongings.backpack).onThrow(cell);
+							Item.this.detach(user.belongings.backpack);
+							Item.this.curUser = user;
+							Item.this.onThrow(cell);
 							user.spendAndNext(delay);
 						}
 					});
@@ -663,8 +667,9 @@ public class Item implements Bundlable {
 							new Callback() {
 						@Override
 						public void call() {
-							curUser = user;
-							Item.this.detach(user.belongings.backpack).onThrow(cell);
+							Item.this.detach(user.belongings.backpack);
+							Item.this.curUser = user;
+							Item.this.onThrow(cell);
 							user.spendAndNext(delay);
 						}
 					});
