@@ -151,8 +151,10 @@ public class Item implements Bundlable {
 		}
 		curDurability -= amount;
 		if (curDurability <= 0) {
-			GLog.n(Messages.get(this,"broken"),this.name());
-			Sample.INSTANCE.play(Assets.SND_DEGRADE);
+			if (curUser instanceof Hero) {
+				GLog.n(Messages.get(this, "broken"), this.name());
+				Sample.INSTANCE.play(Assets.SND_DEGRADE);
+			}
 			fullyRepair();
 			if (level > 0) {
 				degrade();
@@ -166,7 +168,7 @@ public class Item implements Bundlable {
 				}*/
 			}
 
-		} else if (curDurability <= MAXIMUM_DURABILITY*0.2f & !saidAlmostBreak) {
+		} else if (curDurability <= MAXIMUM_DURABILITY*0.2f & !saidAlmostBreak && curUser instanceof Hero) {
 			GLog.w(Messages.get(this,"almost_break",this.name()));
 			saidAlmostBreak = true;
 		}
