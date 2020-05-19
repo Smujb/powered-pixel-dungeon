@@ -1236,7 +1236,7 @@ public abstract class Level implements Bundlable {
 			Painter.set(this, cell, terrain);
 		}
 
-		if (terrain != EMPTY){
+		if (terrain == WATER){
 			traps.remove( cell );
 		}
 
