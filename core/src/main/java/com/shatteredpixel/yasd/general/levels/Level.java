@@ -1239,12 +1239,6 @@ public abstract class Level implements Bundlable {
 		if (terrain == WATER){
 			traps.remove( cell );
 		}
-
-		/*for (int i=0; i < length(); i++) {
-			openSpace[i] = !solid(i) &&
-					(!solid(i - 1) || !solid(i + 1)) &&
-					(!solid(i - width()) || !solid(i + width()));
-		}*/
 	}
 	
 	public Heap drop( Item item, int cell ) {
