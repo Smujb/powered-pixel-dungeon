@@ -40,7 +40,7 @@ public class DungeonTerrainTilemap extends DungeonTilemap {
 	public DungeonTerrainTilemap(){
 		super(Dungeon.level.tilesTex());
 
-		map( Dungeon.level.map, Dungeon.level.width() );
+		map( Dungeon.level.getMap(), Dungeon.level.width() );
 
 		instance = this;
 	}

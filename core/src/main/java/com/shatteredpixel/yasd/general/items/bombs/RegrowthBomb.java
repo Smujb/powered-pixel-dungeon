@@ -81,12 +81,12 @@ public class RegrowthBomb extends Bomb {
 						Buff.affect( ch, Healing.class ).setHeal((int)(0.8f*ch.HT + 14), 0.25f, 0);
 						PotionOfHealing.cure(ch);
 					}
-				} else if ( Dungeon.level.map[i] == Terrain.EMPTY ||
-							Dungeon.level.map[i] == Terrain.EMBERS ||
-							Dungeon.level.map[i] == Terrain.EMPTY_DECO ||
-							Dungeon.level.map[i] == Terrain.GRASS ||
-							Dungeon.level.map[i] == Terrain.HIGH_GRASS ||
-							Dungeon.level.map[i] == Terrain.FURROWED_GRASS){
+				} else if ( Dungeon.level.getTerrain(i) == Terrain.EMPTY ||
+							Dungeon.level.getTerrain(i) == Terrain.EMBERS ||
+							Dungeon.level.getTerrain(i) == Terrain.EMPTY_DECO ||
+							Dungeon.level.getTerrain(i) == Terrain.GRASS ||
+							Dungeon.level.getTerrain(i) == Terrain.HIGH_GRASS ||
+							Dungeon.level.getTerrain(i) == Terrain.FURROWED_GRASS){
 					
 					plantCandidates.add(i);
 				}

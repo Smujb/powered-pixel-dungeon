@@ -148,7 +148,7 @@ public class OldPrisonBossLevel extends Level {
 		
 		setSize(32, 32);
 		
-		map = MAP_START.clone();
+		setMap(MAP_START);
 
 		buildFlagMaps();
 		cleanWalls();
@@ -260,25 +260,25 @@ public class OldPrisonBossLevel extends Level {
 		traps.clear();
 
 		for (int i = 0; i < length(); i++){
-			if (map[i] == EMPTY_SP) {
+			if (getTerrain(i) == EMPTY_SP) {
 				Trap t = new GrippingTrap().reveal();
 				t.active = false;
 				setTrap(t, i);
-				map[i] = EMPTY;
+				set(i, EMPTY);
 			}
 		}
 	}
 
 	private void changeMap(Terrain[] map){
-		this.map = map.clone();
+		this.setMap(map);
 		buildFlagMaps();
 		cleanWalls();
 
 		clearExitEntrance();
 		for (int i = 0; i < length(); i ++)
-			if (map[i] == ENTRANCE)
+			if (getTerrain(i) == ENTRANCE)
 				setEntrance(i);
-			else if (map[i] == EXIT)
+			else if (getTerrain(i) == EXIT)
 				setExit(i);
 
 		BArray.setFalse(visited);

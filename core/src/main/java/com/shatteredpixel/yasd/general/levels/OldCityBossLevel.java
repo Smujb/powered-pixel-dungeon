@@ -133,42 +133,44 @@ public class OldCityBossLevel extends Level {
 		
 		int y = TOP + 1;
 		while (y < TOP + HALL_HEIGHT) {
-			map[y * width() + CENTER - 2] = STATUE_SP;
-			map[y * width() + CENTER + 2] = STATUE_SP;
+			setMultiple(STATUE_SP, y * width() + CENTER - 2, y * width() + CENTER + 2);
+			//map[y * width() + CENTER - 2] = STATUE_SP;
+			//map[y * width() + CENTER + 2] = STATUE_SP;
 			y += 2;
 		}
 		
 		int left = pedestal( true );
 		int right = pedestal( false );
-		map[left] = map[right] = PEDESTAL;
+		setMultiple(PEDESTAL, left, right);
+		//map[left] = map[right] = PEDESTAL;
 		for (int i=left+1; i < right; i++) {
-			map[i] = EMPTY_SP;
+			set(i, EMPTY_SP);
 		}
 		
 		int exit = (TOP - 1) * width() + CENTER;
 		interactiveAreas.add(new Exit().setPos(this, exit));
-		map[getExitPos()] = LOCKED_EXIT;
+		set(getExitPos(), LOCKED_EXIT);
 		
 		arenaDoor = (TOP + HALL_HEIGHT) * width() + CENTER;
-		map[arenaDoor] = Terrain.DOOR;
+		set(arenaDoor, Terrain.DOOR);
 		
 		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, CHAMBER_HEIGHT, EMPTY );
 		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, HALL_WIDTH, 1, BOOKSHELF);
-		map[arenaDoor + width()] = EMPTY;
+		set(arenaDoor + width(), EMPTY);
 		Painter.fill( this, LEFT, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
 		Painter.fill( this, LEFT + HALL_WIDTH - 1, TOP + HALL_HEIGHT + 1, 1, CHAMBER_HEIGHT, BOOKSHELF );
 		
 		int entrance = (TOP + HALL_HEIGHT + 3 + Random.Int( CHAMBER_HEIGHT - 2 )) * width() + LEFT + (/*1 +*/ Random.Int( HALL_WIDTH-2 ));
 		interactiveAreas.add(new Entrance().setPos(this, entrance));
-		map[getEntrancePos()] = ENTRANCE;
+		set(getEntrancePos(),  ENTRANCE);
 		
 		for (int i=0; i < length() - width(); i++) {
-			if (map[i] == EMPTY && Random.Int( 10 ) == 0) {
-				map[i] = EMPTY_DECO;
-			} else if (map[i] == WALL
-					&& DungeonTileSheet.floorTile(map[i + width()])
+			if (getTerrain(i) == EMPTY && Random.Int( 10 ) == 0) {
+				set(i, EMPTY_DECO);
+			} else if (getTerrain(i) == WALL
+					&& DungeonTileSheet.floorTile(getTerrain(i + width()))
 					&& Random.Int( 21 - Dungeon.depth) == 0) {
-				map[i] = WALL_DECO;
+				set(i, WALL_DECO);
 			}
 		}
 		

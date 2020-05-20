@@ -44,9 +44,11 @@ import com.watabou.noosa.Group;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.DOOR;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EMPTY;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.ENTRANCE;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
+import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
 public class TestBossLevel extends Level {
 
@@ -75,7 +77,7 @@ public class TestBossLevel extends Level {
 
 		setSize(48, 48);
 
-		map = LAYOUT.clone();
+		setMap(LAYOUT);// = LAYOUT.clone();
 
 		buildFlagMaps();
 		cleanWalls();

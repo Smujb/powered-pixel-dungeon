@@ -356,7 +356,7 @@ public class NewPrisonBossLevel extends Level {
 		int cell = pointToCell(endStart);
 		int i = 0;
 		while (cell < length()){
-			System.arraycopy(endMap, i, map, cell, 14);
+			System.arraycopy(endMap, i, getMap(), cell, 14);
 			i += 14;
 			cell += width();
 		}
@@ -577,7 +577,7 @@ public class NewPrisonBossLevel extends Level {
 							boolean validMaze;
 							
 							do {
-								maze = Maze.generate(mazeCells[i], map, width(), WALL);
+								maze = Maze.generate(mazeCells[i], getMap(), width(), WALL);
 								
 								//prevents a maze that is just a straight line from the door
 								validMaze = false;

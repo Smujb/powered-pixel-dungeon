@@ -63,8 +63,6 @@ import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -162,7 +160,7 @@ public class Bomb extends Item {
 						CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
 					}
 					
-					if (Dungeon.level.map[c].explodable()) {
+					if (Dungeon.level.getTerrain(c).explodable()) {
 						Dungeon.level.destroy(c);
 						GameScene.updateMap(c);
 						terrainAffected = true;

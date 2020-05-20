@@ -98,12 +98,12 @@ public class UnderwaterLevel extends Level {
 	@Override
 	protected boolean build() {
 		setSize(_width, _height);
-		map = Level.basicMap(length());
+		setMap(Level.basicMap(length()));
 		buildFlagMaps();
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
-			if ((setSolid[i] || chasmLocations.contains(i)) && map[i] == Terrain.EMPTY && !lightLocations.contains(i)) {
-				map[i] = Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL;
+			if ((setSolid[i] || chasmLocations.contains(i)) && getTerrain(i) == Terrain.EMPTY && !lightLocations.contains(i)) {
+				set(i, Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL);
 			}
 		}
 		for (int i = 0; i < NUM_BUBBLES; i++) {

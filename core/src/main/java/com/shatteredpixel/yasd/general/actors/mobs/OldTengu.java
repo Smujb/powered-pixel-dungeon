@@ -50,7 +50,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.TenguSprite;
 import com.shatteredpixel.yasd.general.ui.BossHealthBar;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -214,7 +213,7 @@ public class OldTengu extends Mob {
 					trapPos = Random.Int( level.length() );
 				} while (tries-- > 0 && !level.traps.containsKey(pos));
 				
-				if (level.map[trapPos] == Terrain.EMPTY && (level.trap(trapPos) == null || !level.trap(trapPos).active)) {
+				if (level.getTerrain(trapPos) == Terrain.EMPTY && (level.trap(trapPos) == null || !level.trap(trapPos).active)) {
 					level.setTrap( new  GrippingTrap().reveal(), trapPos );
 					ScrollOfMagicMapping.discover( trapPos );
 				}

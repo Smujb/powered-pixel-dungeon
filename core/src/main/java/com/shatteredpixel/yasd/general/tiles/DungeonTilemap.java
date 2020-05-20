@@ -37,8 +37,6 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.PointF;
 
-import org.jetbrains.annotations.NotNull;
-
 public abstract class DungeonTilemap extends Tilemap {
 
 	public static final int SIZE = 16;

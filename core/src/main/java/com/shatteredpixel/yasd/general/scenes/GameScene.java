@@ -202,7 +202,7 @@ public class GameScene extends PixelScene {
 		ripples = new Group();
 		terrain.add( ripples );
 
-		DungeonTileSheet.setupVariance(Dungeon.level.map.length, Dungeon.seedCurDepth());
+		DungeonTileSheet.setupVariance(Dungeon.level.getMap().length, Dungeon.seedCurDepth());
 		
 		tiles = new DungeonTerrainTilemap();
 		terrain.add( tiles );
@@ -891,11 +891,11 @@ public class GameScene extends PixelScene {
 
 	public static void resetMap() {
 		if (scene != null) {
-			scene.tiles.map(Dungeon.level.map, Dungeon.level.width() );
-			scene.visualGrid.map(Dungeon.level.map, Dungeon.level.width() );
-			scene.terrainFeatures.map(Dungeon.level.map, Dungeon.level.width() );
-			scene.raisedTerrain.map(Dungeon.level.map, Dungeon.level.width() );
-			scene.walls.map(Dungeon.level.map, Dungeon.level.width() );
+			scene.tiles.map(Dungeon.level.getMap(), Dungeon.level.width() );
+			scene.visualGrid.map(Dungeon.level.getMap(), Dungeon.level.width() );
+			scene.terrainFeatures.map(Dungeon.level.getMap(), Dungeon.level.width() );
+			scene.raisedTerrain.map(Dungeon.level.getMap(), Dungeon.level.width() );
+			scene.walls.map(Dungeon.level.getMap(), Dungeon.level.width() );
 		}
 		updateFog();
 	}
@@ -903,6 +903,7 @@ public class GameScene extends PixelScene {
 	//updates the whole map
 	public static void updateMap() {
 		if (scene != null) {
+			Dungeon.level.onModify();
 			scene.tiles.updateMap();
 			scene.visualGrid.updateMap();
 			scene.terrainFeatures.updateMap();
@@ -914,6 +915,7 @@ public class GameScene extends PixelScene {
 	
 	public static void updateMap( int cell ) {
 		if (scene != null) {
+			Dungeon.level.onModify();
 			scene.tiles.updateMapCell( cell );
 			scene.visualGrid.updateMapCell( cell );
 			scene.terrainFeatures.updateMapCell( cell );

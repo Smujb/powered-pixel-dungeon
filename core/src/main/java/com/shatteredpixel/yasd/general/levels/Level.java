@@ -76,7 +76,6 @@ import com.shatteredpixel.yasd.general.levels.interactive.DescendArea;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.interactive.InteractiveArea;
-import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.BridgeRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.ConnectionRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.connection.CrackedWallConnectionRoom;
@@ -189,7 +188,18 @@ public abstract class Level implements Bundlable {
 
 	public int version;
 
-	public KindOfTerrain[] map;
+	//Stores current version. Incremented whenever the map is modified; used to invalidate out-of-date caches.
+	private int levelVersion = 0;
+
+	public int getLevelVersion() {
+		return levelVersion;
+	}
+
+	public void onModify() {
+		levelVersion++;
+	}
+
+	private KindOfTerrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
 	public boolean[] discoverable;
@@ -219,7 +229,7 @@ public abstract class Level implements Bundlable {
 	public ArrayList<Integer> getTileLocations(Terrain terrain) {
 		ArrayList<Integer> locations = new ArrayList<>();
 		for (int i = 0; i < map.length; i++) {
-			if (map[i] == terrain) {
+			if (getTerrain(i) == terrain) {
 				locations.add(i);
 			}
 		}
@@ -231,84 +241,139 @@ public abstract class Level implements Bundlable {
 	public static Terrain[] basicMap(int size) {
 		Terrain[] map = new Terrain[size];
 		for (int i = 0; i < size; i++) {
-			map[i] = EMPTY;
+			 map[i] = EMPTY;
 		}
 		return map;
 	}
 
-	//NOTE: to avoid lag I recommend using passable(pos), losBlocking(pos), etc instead of passable()[pos], losBlocking()[pos], etc when possible.
+	public boolean edge(int pos) {
+		int lastRow = length() - width();
+		if (pos < width || pos > lastRow && pos < length()) {
+			return true;
+		} else if ( pos % width == 0 || pos % width == width - 1) {
+			return true;
+		}
+		return false;
+	}
+
+	//TODO use these variables to form a cache and increase performance.
+	//Cache map flags to use later and improve performance.
+	private FlagCache passable = new FlagCache();
+	private FlagCache losBlocking = new FlagCache();
+	private FlagCache flammable = new FlagCache();
+	private FlagCache secret = new FlagCache();
+	private FlagCache solid = new FlagCache();
+	private FlagCache avoid = new FlagCache();
+	private FlagCache liquid = new FlagCache();
+	private FlagCache pit = new FlagCache();
+	private FlagCache openSpace = new FlagCache();
+
+	private static class FlagCache {
+
+		public boolean[] data = null;
+		public int version = -1;
+
+		protected boolean isValid(Level level) {
+			if (data == null) {
+				return false;
+			} else if (version != level.levelVersion) {
+				return false;
+			} else if (data.length != level.getMap().length) {
+				return false;
+			}
+			return true;
+		}
+	}
+
 	public boolean passable(int pos) {
-		return map[pos].passable() & !avoid(pos);
+		if (edge(pos)) {
+			return false;
+		}
+		return getTerrain(pos).passable() & !avoid(pos);
 	}
 
 	@NotNull
 	public final boolean[] passable() {
-		boolean[] passable = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			passable[i] = passable(i);
+		if (!passable.isValid(this)) {
+			passable.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				passable.data[i] = passable(i);
+			}
 		}
-		return passable;
+		return passable.data;
 	}
 
 	public boolean losBlocking(int pos) {
 		if (Blob.volumeAt(this, pos, DarkGas.class) > 0 || Blob.volumeAt(this, pos, SmokeScreen.class) > 0) {
 			return true;
+		} else if (edge(pos)) {
+			return true;
 		}
-		return map[pos].losBlocking();
+		return getTerrain(pos).losBlocking();
 	}
 
 	@NotNull
 	public final boolean[] losBlocking() {
-		boolean[] losBlocking = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			losBlocking[i] = losBlocking(i);
+		if (!losBlocking.isValid(this)) {
+			losBlocking.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				losBlocking.data[i] = losBlocking(i);
+			}
 		}
-		return losBlocking;
+		return losBlocking.data;
 	}
 
 	public boolean flammable(int pos) {
-		return map[pos].flammable();
+		return getTerrain(pos).flammable();
 	}
 
 	@NotNull
 	public final boolean[] flammable() {
-		boolean[] flammable = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			flammable[i] = flammable(i);
+		if (!flammable.isValid(this)) {
+			flammable.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				flammable.data[i] = flammable(i);
+			}
 		}
-		return flammable;
+		return flammable.data;
 	}
 
 	public boolean secret(int pos) {
 		if (traps.containsKey(pos) && !traps.get(pos).visible) {
 			return true;
 		}
-		return map[pos].secret();
+		return getTerrain(pos).secret();
 	}
 
 	@NotNull
 	public final boolean[] secret() {
-		boolean[] secret = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			secret[i] = secret(i);
+		if (!secret.isValid(this)) {
+			secret.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				secret.data[i] = secret(i);
+			}
 		}
-		return secret;
+		return secret.data;
 	}
 
 	public boolean solid(int pos) {
 		if (Blob.volumeAt(this, pos, Web.class) > 0) {
 			return true;
+		} else if (edge(pos)) {
+			return true;
 		}
-		return map[pos].solid();
+		return getTerrain(pos).solid();
 	}
 
 	@NotNull
 	public final boolean[] solid() {
-		boolean[] solid = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			solid[i] = solid(i);
+		if (!solid.isValid(this)) {
+			solid.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				solid.data[i] = solid(i);
+			}
 		}
-		return solid;
+		return solid.data;
 	}
 
 	public boolean avoid(int pos) {
@@ -316,43 +381,49 @@ public abstract class Level implements Bundlable {
 		if (trap != null && trap.active && trap.visible) {
 			return true;
 		} else {
-			return map[pos].avoid();
+			return getTerrain(pos).avoid();
 		}
 	}
 
 	@NotNull
 	public final boolean[] avoid() {
-		boolean[] avoid = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			avoid[i] = avoid(i);
+		if (!avoid.isValid(this)) {
+			avoid.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				avoid.data[i] = avoid(i);
+			}
 		}
-		return avoid;
+		return avoid.data;
 	}
 
 	public boolean liquid(int pos) {
-		return map[pos].liquid();
+		return getTerrain(pos).liquid();
 	}
 
 	@NotNull
 	public final boolean[] liquid() {
-		boolean[] liquid = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			liquid[i] = liquid(i);
+		if (!liquid.isValid(this)) {
+			liquid.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				liquid.data[i] = liquid(i);
+			}
 		}
-		return liquid;
+		return liquid.data;
 	}
 
 	public boolean pit(int cell) {
-		return map[cell].pit();
+		return getTerrain(cell).pit();
 	}
 
 	@NotNull
 	public final boolean[] pit() {
-		boolean[] pit = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			pit[i] = pit(i);
+		if (!pit.isValid(this)) {
+			pit.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				pit.data[i] = pit(i);
+			}
 		}
-		return pit;
+		return pit.data;
 	}
 
 	public boolean openSpace(int cell) {
@@ -372,11 +443,13 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean[] openSpace() {
-		boolean[] space = new boolean[map.length];
-		for (int i = 0; i < map.length; i++) {
-			space[i] = openSpace(i);
+		if (!openSpace.isValid(this)) {
+			openSpace.data = new boolean[map.length];
+			for (int i = 0; i < map.length; i++) {
+				openSpace.data[i] = openSpace(i);
+			}
 		}
-		return space;
+		return openSpace.data;
 	}
 	
 	public Feeling feeling = Feeling.NONE;
@@ -692,7 +765,7 @@ public abstract class Level implements Bundlable {
 
 	private void storeMap(Bundle bundle) {
 		for (int i = 0; i < map.length; i++) {
-			KindOfTerrain terrain = map[i];
+			KindOfTerrain terrain = getTerrain(i);
 			if (terrain instanceof Terrain) {
 				bundle.put(MAP + i, ((Terrain) terrain).name());
 			} else if (terrain instanceof CustomTerrain){
@@ -794,7 +867,7 @@ public abstract class Level implements Bundlable {
 		} while (entrance != null);
 		if (pos > 0 && pos < map.length) {
 			interactiveAreas.add(new Entrance().setPos(this, pos));
-			map[pos] = Terrain.ENTRANCE;
+			set(pos, Terrain.ENTRANCE);
 		}
 	}
 
@@ -808,7 +881,7 @@ public abstract class Level implements Bundlable {
 		} while (exit != null);
 		if (pos > 0 && pos < map.length) {
 			interactiveAreas.add(new Exit().setPos(this, pos));
-			map[pos] = Terrain.EXIT;
+			set(pos, Terrain.EXIT);
 		}
 	}
 
@@ -844,7 +917,7 @@ public abstract class Level implements Bundlable {
 		int below = pos + PathFinder.CIRCLE4[2];
 		int left = pos + PathFinder.CIRCLE4[3];
 		try {
-			if (map[pos] == WATER &&
+			if (getTerrain(pos) == WATER &&
 					DungeonTileSheet.deepWaterStitchable(map[above]) &
 							DungeonTileSheet.deepWaterStitchable(map[below]) &
 							DungeonTileSheet.deepWaterStitchable(map[left]) &
@@ -853,7 +926,7 @@ public abstract class Level implements Bundlable {
 
 			}
 		} catch (IndexOutOfBoundsException ignored) {}
-		return map[pos];
+		return getTerrain(pos);
 	}
 
 	public int width() {
@@ -1054,7 +1127,7 @@ public abstract class Level implements Bundlable {
 				if (i >= width() && liquid()[i-width()]) {
 					visuals.add( new FlowParticle.Flow( i - width() ) );
 				}
-			} else if ( map[i] == EMBERS ) {
+			} else if ( getTerrain(i) == EMBERS ) {
 				visuals.add( new CityLevel.Smoke( i ) );
 			}
 		}
@@ -1176,11 +1249,11 @@ public abstract class Level implements Bundlable {
 		
 		int lastRow = length() - width();
 		for (int i=0; i < width(); i++) {
-			map[i] = WALL;
+			set(i, WALL);
 			map[lastRow + i] = WALL;
 		}
 		for (int i=width(); i < lastRow; i += width()) {
-			map[i] = WALL;
+			set(i, WALL);
 			map[i + width()-1] = WALL;
 		}
 
@@ -1217,7 +1290,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean deepWater(int pos) {
-		return map[pos] == DEEP_WATER;
+		return getTerrain(pos) == DEEP_WATER;
 	}
 
 	public int getPos(int x, int y) {
@@ -1231,14 +1304,35 @@ public abstract class Level implements Bundlable {
 		return coords;
 	}
 
+	public KindOfTerrain[] getMap() {
+		return map;
+	}
+
+	public KindOfTerrain getTerrain(int cell) {
+		return map[cell];
+	}
+
+	protected void setMap(KindOfTerrain[] map) {
+		this.map = map.clone();
+	}
+
+	public final void setMultiple(KindOfTerrain terrain, int... cells) {
+		for (int cell : cells) {
+			set(cell, terrain);
+		}
+	}
+
 	public void set( int cell, KindOfTerrain terrain ){
 		if (cell < map.length) {
-			Painter.set(this, cell, terrain);
+			//Painter.set(this, cell, terrain);
+			map[cell] = terrain;
 		}
 
 		if (terrain == WATER){
 			traps.remove( cell );
 		}
+
+		onModify();
 	}
 	
 	public Heap drop( Item item, int cell ) {
@@ -1261,7 +1355,7 @@ public abstract class Level implements Bundlable {
 			heap.seen = Dungeon.level == this && heroFOV[cell];
 			heap.pos = cell;
 			heap.drop(item);
-			if (map[cell] == CHASM || (Dungeon.level != null && pit()[cell])) {
+			if (getTerrain(cell) == CHASM || (Dungeon.level != null && pit()[cell])) {
 				Dungeon.dropToChasm( item );
 				GameScene.discard( heap );
 			} else {
@@ -1299,11 +1393,11 @@ public abstract class Level implements Bundlable {
 			plant.wither();
 		}
 
-		if (map[pos] == HIGH_GRASS ||
-				map[pos] == FURROWED_GRASS ||
-				map[pos] == EMPTY ||
-				map[pos] == EMBERS ||
-				map[pos] == EMPTY_DECO) {
+		if (getTerrain(pos) == HIGH_GRASS ||
+				getTerrain(pos) == FURROWED_GRASS ||
+				getTerrain(pos) == EMPTY ||
+				getTerrain(pos) == EMBERS ||
+				getTerrain(pos) == EMPTY_DECO) {
 			set(pos, GRASS);
 			GameScene.updateMap(pos);
 		}
@@ -1342,7 +1436,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void discover( int cell ) {
-		set( cell, map[cell].discover() );
+		set( cell, getTerrain(cell).discover() );
 		Trap trap = traps.get( cell );
 		if (trap != null)
 			trap.reveal();
@@ -1365,7 +1459,7 @@ public abstract class Level implements Bundlable {
 			}
 		}
 
-		KindOfTerrain terr = map[cell];
+		KindOfTerrain terr = getTerrain(cell);
 		if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
 				terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
 				terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS
@@ -1468,7 +1562,7 @@ public abstract class Level implements Bundlable {
 			}
 		}
 
-		map[cell].press(cell, hard);//See Terrain.press()
+		getTerrain(cell).press(cell, hard);//See Terrain.press()
 		
 		Plant plant = plants.get( cell );
 		if (plant != null) {
@@ -1494,7 +1588,7 @@ public abstract class Level implements Bundlable {
 					|| c instanceof YogFist.Soiled) {
 				blocking = Dungeon.level.losBlocking();
 				for (int i = 0; i < blocking.length; i++) {
-					if (blocking[i] && (Dungeon.level.map[i] == HIGH_GRASS || Dungeon.level.map[i] == FURROWED_GRASS)) {
+					if (blocking[i] && (Dungeon.level.getTerrain(i) == HIGH_GRASS || Dungeon.level.getTerrain(i) == FURROWED_GRASS)) {
 						blocking[i] = false;
 					}
 				}
