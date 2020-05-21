@@ -1497,7 +1497,7 @@ public abstract class Level implements Bundlable {
 			return true;
 		} else if (includeTraps && traps.containsKey(cell)){
 			set(cell, Terrain.WATER);
-			Dungeon.level.traps.remove(cell);
+			traps.remove(cell);
 			GameScene.updateMap(cell);
 			return true;
 		}
