@@ -189,14 +189,14 @@ public abstract class Level implements Bundlable {
 	public int version;
 
 	//Stores current version. Incremented whenever the map is modified; used to invalidate out-of-date caches.
-	private int levelVersion = 0;
+	private int mapVersion = 0;
 
-	public int getLevelVersion() {
-		return levelVersion;
+	public int getMapVersion() {
+		return mapVersion;
 	}
 
 	public void onModify() {
-		levelVersion++;
+		mapVersion++;
 	}
 
 	private KindOfTerrain[] map;
@@ -268,20 +268,36 @@ public abstract class Level implements Bundlable {
 	private FlagCache pit = new FlagCache();
 	private FlagCache openSpace = new FlagCache();
 
+	private FlagCache[] caches = new FlagCache[] {passable, losBlocking, flammable, secret, solid, avoid, liquid, pit, openSpace};
+
 	private static class FlagCache {
 
 		public boolean[] data = null;
 		public int version = -1;
 
-		protected boolean isValid(Level level) {
+		boolean isValid(Level level) {
 			if (data == null) {
 				return false;
-			} else if (version != level.levelVersion) {
+			} else if (version != level.mapVersion) {
 				return false;
 			} else if (data.length != level.getMap().length) {
 				return false;
 			}
 			return true;
+		}
+
+		void validate(Level level) {
+			version = level.mapVersion;
+		}
+
+		void invalidate() {
+			version = -1;
+		}
+	}
+
+	public void invalidateCaches() {
+		for (FlagCache cache : caches) {
+			cache.invalidate();
 		}
 	}
 
@@ -299,6 +315,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				passable.data[i] = passable(i);
 			}
+			passable.validate(this);
 		}
 		return passable.data;
 	}
@@ -319,6 +336,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				losBlocking.data[i] = losBlocking(i);
 			}
+			losBlocking.validate(this);
 		}
 		return losBlocking.data;
 	}
@@ -334,6 +352,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				flammable.data[i] = flammable(i);
 			}
+			flammable.validate(this);
 		}
 		return flammable.data;
 	}
@@ -352,6 +371,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				secret.data[i] = secret(i);
 			}
+			secret.validate(this);
 		}
 		return secret.data;
 	}
@@ -372,6 +392,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				solid.data[i] = solid(i);
 			}
+			solid.validate(this);
 		}
 		return solid.data;
 	}
@@ -392,6 +413,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				avoid.data[i] = avoid(i);
 			}
+			avoid.validate(this);
 		}
 		return avoid.data;
 	}
@@ -407,6 +429,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				liquid.data[i] = liquid(i);
 			}
+			liquid.validate(this);
 		}
 		return liquid.data;
 	}
@@ -422,6 +445,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				pit.data[i] = pit(i);
 			}
+			pit.validate(this);
 		}
 		return pit.data;
 	}
@@ -448,6 +472,7 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				openSpace.data[i] = openSpace(i);
 			}
+			openSpace.validate(this);
 		}
 		return openSpace.data;
 	}
@@ -491,6 +516,7 @@ public abstract class Level implements Bundlable {
 	private static final String FEELING		= "feeling";
 	private static final String INTERACTIVE = "interactive-area";
 	private static final String LAST_MOB    = "last-mob";
+	private static final String MAP_VERSION    = "map-version";
 
 	public void create(String key) {
 
@@ -625,12 +651,14 @@ public abstract class Level implements Bundlable {
 			}
 		}
 		createMobs();
+		invalidateCaches();
 	}
 	
 	@Override
 	public void restoreFromBundle( Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
+		mapVersion = bundle.getInt( MAP_VERSION );
 		
 		//saves from before 0.6.5c are not supported
 		if (version < MainGame.v0_6_5c){
@@ -739,6 +767,7 @@ public abstract class Level implements Bundlable {
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		bundle.put( VERSION, Game.versionCode );
+		bundle.put( MAP_VERSION, mapVersion );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );
 		bundle.put( LAST_MOB, lastMob );
