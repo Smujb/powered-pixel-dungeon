@@ -256,7 +256,6 @@ public abstract class Level implements Bundlable {
 		return false;
 	}
 
-	//TODO use these variables to form a cache and increase performance.
 	//Cache map flags to use later and improve performance.
 	private FlagCache passable = new FlagCache();
 	private FlagCache losBlocking = new FlagCache();
@@ -1285,12 +1284,6 @@ public abstract class Level implements Bundlable {
 			set(i, WALL);
 			map[i + width()-1] = WALL;
 		}
-
-		/*for (int i=0; i < length(); i++) {
-			openSpace[i] = !solid(i) &&
-					(!solid(i - 1) || !solid(i + 1)) &&
-					(!solid(i - width()) || !solid(i + width()));
-		}*/
 	}
 
 	public void destroy( int pos ) {
@@ -1339,6 +1332,15 @@ public abstract class Level implements Bundlable {
 
 	public KindOfTerrain getTerrain(int cell) {
 		return map[cell];
+	}
+
+	public boolean terrainIsOneOf(int cell, KindOfTerrain... terrains) {
+		for (KindOfTerrain terrain : terrains) {
+			if (terrain == getTerrain(cell)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected void setMap(KindOfTerrain[] map) {
@@ -1489,10 +1491,7 @@ public abstract class Level implements Bundlable {
 		}
 
 		KindOfTerrain terr = getTerrain(cell);
-		if (terr == Terrain.EMPTY || terr == Terrain.GRASS ||
-				terr == Terrain.EMBERS || terr == Terrain.EMPTY_SP ||
-				terr == Terrain.HIGH_GRASS || terr == Terrain.FURROWED_GRASS
-				|| terr == Terrain.EMPTY_DECO){
+		if (terrainIsOneOf(cell, EMPTY, GRASS, EMBERS, EMPTY_SP, HIGH_GRASS, FURROWED_GRASS, EMPTY_DECO)){
 			set(cell, Terrain.WATER);
 			GameScene.updateMap(cell);
 			return true;
