@@ -188,13 +188,6 @@ public class Statue extends Mob implements Callback {
 	private Wand wand = null;
 
 	private void wandZap(Char enemy) {
-		Callback onFinish = new Callback() {
-			@Override
-			public void call() {
-				//spend(Wand.TIME_TO_ZAP);
-				//next();
-			}
-		};
 		if (enemy != null) {
 			if (wand == null) {
 				wand = wandToAttack(enemy);
@@ -207,10 +200,10 @@ public class Statue extends Mob implements Callback {
 					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
 					return;
 				} else {
-					wand.zap(closest, onFinish);
+					wand.zap(closest);
 				}
 			} else {
-				wand.zap(enemy.pos, onFinish);
+				wand.zap(enemy.pos);
 			}
 
 		}
@@ -228,16 +221,16 @@ public class Statue extends Mob implements Callback {
 
 	private Wand wandToAttack(Char enemy) {
 		if (enemy != null ) {
-			ArrayList<KindofMisc> Wands = belongings.getEquippedItemsOFType(Wand.class);
-			ArrayList<Wand> UsableWands = new ArrayList<>();
-			for (int i = 0; i < Wands.size(); i++) {
-				Wand Wand = ((Wand) Wands.get(i));
-				if (Wand.curCharges > 0) {
-					UsableWands.add(Wand);
+			ArrayList<KindofMisc> wands = belongings.getEquippedItemsOFType(Wand.class);
+			ArrayList<Wand> usableWands = new ArrayList<>();
+			for (int i = 0; i < wands.size(); i++) {
+				Wand wand = ((Wand) wands.get(i));
+				if (wand.tryToZap(this, enemy.pos)) {
+					usableWands.add(wand);
 				}
 			}
-			if (UsableWands.size() > 0) {
-				return Random.element(UsableWands);
+			if (usableWands.size() > 0) {
+				return Random.element(usableWands);
 			}
 		}
 		return null;
