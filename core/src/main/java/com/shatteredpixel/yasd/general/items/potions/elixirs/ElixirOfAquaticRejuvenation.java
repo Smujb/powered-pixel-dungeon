@@ -75,7 +75,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 		@Override
 		public boolean act() {
 			
-			if (Dungeon.level.liquid()[target.pos] && target.HP < target.HT){
+			if (Dungeon.level.liquid(target.pos) && target.HP < target.HT){
 				float healAmt = GameMath.gate( 1, target.HT/50f, left );
 				healAmt = Math.min(healAmt, target.HT - target.HP);
 				if (Random.Float() < (healAmt % 1)){
@@ -84,9 +84,7 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 					healAmt = (float)Math.floor(healAmt);
 				}
 				target.heal((int) healAmt, false);
-				//target.HP += healAmt;
-				//left -= healAmt;
-				//target.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+				left -= healAmt;
 			}
 			
 			if (left <= 0){
