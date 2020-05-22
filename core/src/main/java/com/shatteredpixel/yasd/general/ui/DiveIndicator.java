@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.watabou.noosa.Image;
+import com.watabou.utils.Callback;
 
 public class DiveIndicator extends Tag {
 
@@ -111,7 +112,13 @@ public class DiveIndicator extends Tag {
 	protected void onClick() {
 		Hero hero = Dungeon.hero;
 		if (Dungeon.level.deepWater(hero.pos)) {
-			LevelHandler.dive(hero.pos);
+			hero.spendAndNext(2f);
+			hero.sprite.operate(hero.pos, new Callback() {
+				@Override
+				public void call() {
+					LevelHandler.dive(hero.pos);
+				}
+			});
 		}
 	}
 }
