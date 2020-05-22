@@ -287,6 +287,9 @@ public class Item implements Bundlable {
 		}
 
 		curUser = ch;
+		if (items.contains( this )) {
+			return true;
+		}
 		
 		for (Item item:items) {
 			if (item instanceof Bag && ((Bag)item).grab( this )) {
@@ -302,10 +305,6 @@ public class Item implements Bundlable {
 					return true;
 				}
 			}
-		}
-
-		if (items.contains( this )) {
-			return true;
 		}
 		
 		if (items.size() < container.size) {
@@ -348,6 +347,7 @@ public class Item implements Bundlable {
 			split.restoreFromBundle(copy);
 			split.quantity(amount);
 			quantity -= amount;
+			split.curUser = this.curUser;
 			
 			return split;
 		}
@@ -360,7 +360,7 @@ public class Item implements Bundlable {
 		}
 		
 		if (quantity <= 0) {
-			return null;
+			return this;
 			
 		} else if (quantity == 1) {
 
@@ -370,8 +370,7 @@ public class Item implements Bundlable {
 			return detachAll( container );
 			
 		} else {
-			
-			
+
 			Item detached = split(1);
 			updateQuickslot();
 			if (detached != null) detached.onDetach( );
