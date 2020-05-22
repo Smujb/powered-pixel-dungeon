@@ -264,7 +264,7 @@ public class Item implements Bundlable {
 	
 	//takes two items and merges them (if possible)
 	public Item merge( Item other ){
-		if (isSimilar( other )){
+		if (isSimilar( other )) {
 			quantity += other.quantity;
 			other.quantity = 0;
 		}
@@ -287,9 +287,6 @@ public class Item implements Bundlable {
 		}
 
 		curUser = ch;
-		if (items.contains( this )) {
-			return true;
-		}
 		
 		for (Item item:items) {
 			if (item instanceof Bag && ((Bag)item).grab( this )) {
@@ -305,6 +302,10 @@ public class Item implements Bundlable {
 					return true;
 				}
 			}
+		}
+
+		if (items.contains( this )) {
+			return true;
 		}
 		
 		if (items.size() < container.size) {
@@ -354,6 +355,9 @@ public class Item implements Bundlable {
 
 	@Nullable
 	public final Item detach(Bag container ) {
+		if (container.owner != null) {
+			curUser = container.owner;
+		}
 		
 		if (quantity <= 0) {
 			return null;
@@ -655,9 +659,8 @@ public class Item implements Bundlable {
 							new Callback() {
 						@Override
 						public void call() {
-							Item.this.detach(user.belongings.backpack);
-							Item.this.curUser = user;
-							Item.this.onThrow(cell);
+							curUser = user;
+							Item.this.detach(user.belongings.backpack).onThrow(cell);
 							user.spendAndNext(delay);
 						}
 					});
@@ -669,9 +672,8 @@ public class Item implements Bundlable {
 							new Callback() {
 						@Override
 						public void call() {
-							Item.this.detach(user.belongings.backpack);
-							Item.this.curUser = user;
-							Item.this.onThrow(cell);
+							curUser = user;
+							Item.this.detach(user.belongings.backpack).onThrow(cell);
 							user.spendAndNext(delay);
 						}
 					});
