@@ -161,6 +161,10 @@ public class MeleeWeapon extends Weapon {
 
 	//Generates stats for the weapon.
 	public MeleeWeapon initStats() {
+		//TODO generate based on properties.
+		name = Messages.get(this, "name");
+		desc = Messages.get(this, "desc");
+		image = ItemSpriteSheet.SWORD;
 		if (Random.Int(5) == 0) {
 			DLY = randomStat();
 		}
