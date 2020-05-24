@@ -42,7 +42,6 @@ public class Sharp extends MeleeWeapon {
 		tier = 1;
 		DLY = 1f;
 
-		damageMultiplier = 0.80f;
 	}
 
 	@Override

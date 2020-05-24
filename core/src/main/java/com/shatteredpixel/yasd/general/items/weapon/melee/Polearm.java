@@ -37,8 +37,6 @@ public class Polearm extends MeleeWeapon {
 		DLY = 1.5f;   //0.67x speed
 		RCH = 2;    //extra reach
 
-		damageMultiplier = 1.5f;
-
 		properties.add(Property.DUAL_HANDED);
 	}
 

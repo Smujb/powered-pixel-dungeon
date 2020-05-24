@@ -38,8 +38,6 @@ public class Dual extends MeleeWeapon {
 		tier = 1;
 		DLY = 0.33f; //3x speed
 
-		damageMultiplier = 0.5f;
-
 		properties.add(Property.DUAL_HANDED);
 	}
 

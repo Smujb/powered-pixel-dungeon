@@ -38,7 +38,6 @@ public class Projectile extends MeleeWeapon {
 		//check Dart.class for additional properties
 		
 		tier = 1;
-		damageMultiplier = 0.75f;
 	}
 
 	@Override

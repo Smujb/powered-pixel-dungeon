@@ -58,8 +58,6 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class MagesStaff extends MeleeWeapon {
@@ -82,7 +80,6 @@ public class MagesStaff extends MeleeWeapon {
 		unique = true;
 		bones = false;
 
-		damageMultiplier = 0.8f;
 	}
 
 	public MagesStaff() {

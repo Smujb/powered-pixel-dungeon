@@ -36,7 +36,6 @@ public class Axe extends MeleeWeapon {
 
 		tier = 1;
 		ACC = 1.33f; //33% boost to accuracy
-		damageMultiplier = 0.80f;
 	}
 
 	@Override

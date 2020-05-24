@@ -38,7 +38,6 @@ public class Long extends MeleeWeapon {
 		tier = 3;
 		RCH = 3;    //lots of extra reach
 
-		damageMultiplier = 0.6f;
 	}
 
 	@Override

@@ -41,7 +41,6 @@ public class Fist extends MeleeWeapon {
 		
 		bones = false;
 
-		damageMultiplier = 0.5f;
 	}
 
 	@Override

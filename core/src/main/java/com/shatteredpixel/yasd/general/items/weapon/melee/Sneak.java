@@ -36,7 +36,6 @@ public class Sneak extends MeleeWeapon {
 		image = ItemSpriteSheet.ASSASSINS_BLADE;
 
 		tier = 1;
-		damageMultiplier = 0.80f;
 
 		properties.add(Property.SURPRISE_ATTK_BENEFIT);
 	}

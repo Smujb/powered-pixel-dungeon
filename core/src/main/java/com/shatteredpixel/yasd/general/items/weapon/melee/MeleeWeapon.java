@@ -49,7 +49,6 @@ public class MeleeWeapon extends Weapon {
 	
 	public int tier = 1;
 
-	public float damageMultiplier = 1f;
 	public float defenseMultiplier = 0f;
 
 	protected float degradeFactor = 1f;

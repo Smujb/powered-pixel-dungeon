@@ -38,7 +38,6 @@ public class Blunt extends MeleeWeapon {//War Hammer will get reworked.
 		tier = 1;
 		//accuracyFactor = 1.33f; //33% boost to accuracy
 
-		damageMultiplier = 0.80f;
 	}
 
 	@Override

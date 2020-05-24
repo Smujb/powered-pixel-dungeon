@@ -37,8 +37,6 @@ public class Flail extends MeleeWeapon {
 		tier = 4;
 		ACC = 0.8f; //0.8x accuracy
 
-		damageMultiplier = 1.5f;
-
 		properties.add(Property.CANT_SURPRISE_ATTK);
 		//canSurpriseAttack = false;
 	}

@@ -38,7 +38,6 @@ public class Staff extends MeleeWeapon {
 
 		tier = 1;
 
-		damageMultiplier = 0.7f;
 	}
 
 	@Override
