@@ -40,7 +40,7 @@ public class Dual extends MeleeWeapon {
 
 		damageMultiplier = 0.5f;
 
-		dualWieldpenalty = true;
+		properties.add(Property.DUAL_HANDED);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
 import com.shatteredpixel.yasd.general.items.armor.HuntressArmor;
 import com.shatteredpixel.yasd.general.items.armor.MageArmor;
 import com.shatteredpixel.yasd.general.items.armor.RogueArmor;
+import com.shatteredpixel.yasd.general.items.bags.MagicalHolster;
 import com.shatteredpixel.yasd.general.items.bags.PotionBandolier;
 import com.shatteredpixel.yasd.general.items.bags.ScrollHolder;
 import com.shatteredpixel.yasd.general.items.bags.VelvetPouch;
@@ -54,12 +55,14 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
+import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Sneak;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingStone;
@@ -129,7 +132,24 @@ public enum HeroClass {
 	}
 
 	public static void initTest(Hero hero) {
+		if (hero.belongings.getItem(VelvetPouch.class) == null) {
+			new VelvetPouch().collect();
+		}
+		if (hero.belongings.getItem(ScrollHolder.class) == null) {
+			new ScrollHolder().collect();
+		}
+		if (hero.belongings.getItem(PotionBandolier.class) == null) {
+			new PotionBandolier().collect();
+		}
+		if (hero.belongings.getItem(MagicalHolster.class) == null) {
+			new MagicalHolster().collect();
+		}
 		new DeveloperItem().collect(hero.belongings.backpack, hero);
+		for (int i = 0; i < Belongings.BACKPACK_SIZE; i++) {
+			new MeleeWeapon().initStats().collect();
+			new ScrollOfUpgrade().collect();
+			new MagicalInfusion().collect();
+		}
 	}
 
 	@Contract(pure = true)

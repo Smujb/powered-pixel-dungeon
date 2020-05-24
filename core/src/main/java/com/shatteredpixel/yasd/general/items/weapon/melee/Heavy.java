@@ -39,7 +39,7 @@ public class Heavy extends MeleeWeapon {
 
 		damageMultiplier = 1.3f;
 
-		dualWieldpenalty = true;
+		properties.add(Property.DUAL_HANDED);
 	}
 
 	@Override

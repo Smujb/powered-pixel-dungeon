@@ -33,22 +33,26 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
 
 public class MeleeWeapon extends Weapon {
+	{
+		image = ItemSpriteSheet.SWORD;
+	}
 	
-	public int tier;
+	public int tier = 1;
 
 	public float damageMultiplier = 1f;
 	public float defenseMultiplier = 0f;
 
-	public boolean dualWieldpenalty = false;
-	public boolean sneakBenefit = false;
+	protected float degradeFactor = 1f;
 
 	@Override
 	public boolean canDegrade() {
@@ -64,7 +68,7 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public int max(float lvl) {
 		return (int) ((5*(tier+1) +    //base
-				lvl*(tier*2))*damageMultiplier);   //level scaling
+				lvl*(tier*2))*getDamageMultiplier(curUser));   //level scaling
 	}
 
 	public int STRReq(int lvl){
@@ -89,7 +93,7 @@ public class MeleeWeapon extends Weapon {
 				damage += Random.IntRange( 0, exStr );
 			}
 		}
-		if (sneakBenefit) {
+		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
 			Char enemy = null;
 			float bonus = 0;
 			if (curUser instanceof Hero) {
@@ -110,25 +114,61 @@ public class MeleeWeapon extends Weapon {
 		return damage;
 	}
 
-	public float getDamageMultiplier(Char owner) {
+	private float getDamageMultiplier(Char owner) {
 		float multiplier = 1f;
 		multiplier *= DLY;
+		multiplier *= degradeFactor;
 		multiplier *= 1/ACC;
-		multiplier *= 2/RCH+1;
-		multiplier *= 1f-(defenseMultiplier/2);
-		if (dualWieldpenalty) {
+		multiplier *= 1/ (1 + defenseMultiplier);
+		multiplier *= 2/(RCH+1f);
+		if (properties.contains(Property.DUAL_HANDED)) {
 			multiplier *= 1.2f;
 		}
 		if (breaksArmor(owner)) {
 			multiplier *= 0.8f;
 		}
-		if (!canSurpriseAttack) {
+		if (properties.contains(Property.CANT_SURPRISE_ATTK)) {
 			multiplier *= 1.3;
 		}
-		if (sneakBenefit) {
+		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
 			multiplier *= 0.6f;
 		}
 		return multiplier;
+	}
+
+	private static float randomStat() {
+		int num = Random.Int(5, 20);
+		return num/10f;
+	}
+
+	//Generates stats for the weapon.
+	public MeleeWeapon initStats() {
+		if (Random.Int(5) == 0) {
+			DLY = randomStat();
+		}
+		if (Random.Int(5) == 0) {
+			ACC = randomStat();
+		}
+		if (Random.Int(5) == 0) {
+			degradeFactor = randomStat();
+		}
+		if (Random.Int(5) == 0) {
+			defenseMultiplier = randomStat();
+		}
+		if (Random.Int(5) == 0) {
+			RCH = Random.Int(1, 3);
+		}
+		final KindOfWeapon.Property[] propValues = Property.values();
+		do {
+			properties = new ArrayList<>();
+			for (Property property : propValues) {
+				if (Random.Int(5) == 0) {
+					properties.add(property);
+				}
+			}
+			//Illegal combination. I don't think I have to explain why...
+		} while (properties.contains(Property.CANT_SURPRISE_ATTK) && properties.contains(Property.SURPRISE_ATTK_BENEFIT));
+		return this;
 	}
 
 	public int defaultSTRReq() {
@@ -146,7 +186,7 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public void use(float amount, boolean override) {
-		super.use(amount*DLY, override);
+		super.use(amount*DLY*degradeFactor, override);
 	}
 
 	@Override
@@ -170,7 +210,7 @@ public class MeleeWeapon extends Weapon {
 
 		//String statsInfo = statsInfo();
 		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
-		if (DLY != 1f | ACC != 1f | RCH != 1 | dualWieldpenalty | breaksArmor(Dungeon.hero) | !canSurpriseAttack | defenseFactor(Dungeon.hero) > 0 | sneakBenefit) {
+		if (DLY != 1f | ACC != 1f | RCH != 1 | degradeFactor != 1 | !properties.isEmpty() | defenseFactor(Dungeon.hero) > 0) {
 
 			info += "\n";
 
@@ -178,6 +218,12 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "delay_increase", Math.round((DLY-1f)*100));
 			} else if (DLY < 1f) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "delay_decrease", Math.round((1f-DLY)*100));
+			}
+
+			if (degradeFactor > 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "degrade_increase", Math.round((degradeFactor-1f)*100));
+			} else if (degradeFactor < 1f) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "degrade_decrease", Math.round((1f-degradeFactor)*100));
 			}
 
 			if (ACC > 1f) {
@@ -190,7 +236,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "reach_increase", RCH - 1);
 			}
 
-			if (dualWieldpenalty) {
+			if (properties.contains(Property.DUAL_HANDED)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "dual_wield_penalty");
 			}
 
@@ -198,7 +244,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "breaks_armour");
 			}
 
-			if (!canSurpriseAttack) {
+			if (!properties.contains(Property.CANT_SURPRISE_ATTK)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "cant_surprise_attk");
 			}
 
@@ -206,7 +252,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", 0,  defenseFactor(Dungeon.hero));
 			}
 
-			if (sneakBenefit) {
+			if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "sneak_benefit");
 			}
 		}

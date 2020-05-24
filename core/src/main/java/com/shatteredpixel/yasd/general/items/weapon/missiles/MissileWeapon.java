@@ -79,7 +79,7 @@ abstract public class MissileWeapon extends Weapon {
 
 	@Override
 	public boolean breaksArmor(Char owner) {
-		return owner instanceof  Hero && ((Hero)owner).subClass == HeroSubClass.SNIPER;
+		return super.breaksArmor(owner) || owner instanceof  Hero && ((Hero)owner).subClass == HeroSubClass.SNIPER;
 	}
 
 	@Override

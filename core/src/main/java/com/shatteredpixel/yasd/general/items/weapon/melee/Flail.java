@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
-import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Flail extends MeleeWeapon {
@@ -40,11 +39,7 @@ public class Flail extends MeleeWeapon {
 
 		damageMultiplier = 1.5f;
 
-		canSurpriseAttack = false;
-	}
-
-	@Override
-	public boolean breaksArmor(Char owner) {
-		return true;
+		properties.add(Property.CANT_SURPRISE_ATTK);
+		//canSurpriseAttack = false;
 	}
 }

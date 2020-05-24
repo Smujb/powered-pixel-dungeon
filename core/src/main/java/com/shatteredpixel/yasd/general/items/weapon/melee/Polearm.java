@@ -39,7 +39,7 @@ public class Polearm extends MeleeWeapon {
 
 		damageMultiplier = 1.5f;
 
-		dualWieldpenalty = true;
+		properties.add(Property.DUAL_HANDED);
 	}
 
 	@Override

@@ -37,7 +37,8 @@ public class Sneak extends MeleeWeapon {
 
 		tier = 1;
 		damageMultiplier = 0.80f;
-		sneakBenefit = true;
+
+		properties.add(Property.SURPRISE_ATTK_BENEFIT);
 	}
 
 	@Override

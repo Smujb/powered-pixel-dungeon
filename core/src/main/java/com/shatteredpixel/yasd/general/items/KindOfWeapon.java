@@ -34,14 +34,21 @@ import com.shatteredpixel.yasd.general.utils.BArray;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-abstract public class KindOfWeapon extends KindofMisc {
-	
-	protected static final float TIME_TO_EQUIP = 1f;
+import java.util.ArrayList;
 
-	public boolean canSurpriseAttack = true;
+abstract public class KindOfWeapon extends KindofMisc {
+
+	public enum Property {
+		DUAL_HANDED,
+		BLUNT,
+		CANT_SURPRISE_ATTK,
+		SURPRISE_ATTK_BENEFIT
+	}
+
+	public ArrayList<Property> properties = new ArrayList<>();
 
 	public boolean breaksArmor(Char owner) {
-		return false;
+		return properties.contains(Property.BLUNT);
 	}
 
 	public int min(){

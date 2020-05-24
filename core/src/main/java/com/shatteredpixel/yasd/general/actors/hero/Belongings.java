@@ -156,8 +156,8 @@ public class Belongings implements Iterable<Item> {
 		int IndividualRequirement;
 		for (int i=0; i < weapons.size(); i++) {
 			if (weapons.get(i) instanceof MeleeWeapon) {
-				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).dualWieldpenalty) {//If the weapon has a dual wield penalty and it is being used with another weapon, increase total requirement.
-					TotalRequirement += 2;
+				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).properties.contains(KindOfWeapon.Property.DUAL_HANDED)) {//If the weapon has a dual wield penalty and it is being used with another weapon, increase total requirement.
+					TotalRequirement += ((MeleeWeapon) weapons.get(i)).tier;
 				}
 				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
 				IndividualRequirement -= 8;
@@ -340,7 +340,7 @@ public class Belongings implements Iterable<Item> {
 		KindOfWeapon curWep = getCurrentWeapon();
 		if (!(curWep instanceof Weapon)) return true;
 		if (owner.STR() < ((Weapon) curWep).STRReq()) return false;
-		return curWep.canSurpriseAttack;
+		return !curWep.properties.contains(KindOfWeapon.Property.CANT_SURPRISE_ATTK);
 	}
 
 	public int affectDamage(int damage, Object src) {
