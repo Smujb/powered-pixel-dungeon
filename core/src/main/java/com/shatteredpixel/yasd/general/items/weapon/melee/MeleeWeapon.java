@@ -67,8 +67,12 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public int max(float lvl) {
+		return max((int) lvl, tier, getDamageMultiplier(curUser));
+	}
+
+	public static int max(int lvl, int tier, float damageMultiplier) {
 		return (int) ((5*(tier+1) +    //base
-				lvl*(tier*2))*getDamageMultiplier(curUser));   //level scaling
+				lvl*(tier*2))*damageMultiplier);   //level scaling
 	}
 
 	public int STRReq(int lvl){
@@ -79,7 +83,7 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public int defenseFactor(Char owner) {
-		return (int) ((max()/2)*defenseMultiplier);
+		return (int) ((max(level(), tier, 1f)/2f)*defenseMultiplier);
 	}
 
 	@Override
@@ -210,7 +214,7 @@ public class MeleeWeapon extends Weapon {
 
 		//String statsInfo = statsInfo();
 		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
-		if (DLY != 1f | ACC != 1f | RCH != 1 | degradeFactor != 1 | !properties.isEmpty() | defenseFactor(Dungeon.hero) > 0) {
+		if (DLY != 1f | ACC != 1f | RCH != 1 | degradeFactor != 1 | !properties.isEmpty() | defenseFactor(curUser) > 0 || breaksArmor(curUser)) {
 
 			info += "\n";
 
