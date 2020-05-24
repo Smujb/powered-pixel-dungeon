@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -47,7 +48,9 @@ public class MeleeWeapon extends Weapon {
 	{
 		image = ItemSpriteSheet.SWORD;
 	}
-	
+
+	private String desc = null;
+
 	public int tier = 1;
 
 	public float defenseMultiplier = 0f;
@@ -84,6 +87,11 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public int defenseFactor(Char owner) {
 		return (int) ((max(level(), tier, 1f)/2f)*defenseMultiplier);
+	}
+
+	@Override
+	public String desc() {
+		return desc == null ? "" : desc;
 	}
 
 	@Override
@@ -143,6 +151,12 @@ public class MeleeWeapon extends Weapon {
 	private static float randomStat() {
 		int num = Random.Int(5, 20);
 		return num/10f;
+	}
+
+	@Override
+	public Item random() {
+		Item item = super.random();
+		return ((MeleeWeapon)item).initStats();
 	}
 
 	//Generates stats for the weapon.
@@ -359,6 +373,9 @@ public class MeleeWeapon extends Weapon {
 	private static final String REACH = "reach";
 	private static final String PROPERTIES = "props";
 	private static final String PROPERTIES_AMT = "num-props";
+	private static final String IMG = "image";
+	private static final String NAME = "name";
+	private static final String DESC = "desc";
 
 	@Override
 	public void storeInBundle(  Bundle bundle) {
@@ -370,6 +387,9 @@ public class MeleeWeapon extends Weapon {
 		bundle.put(DEFENSEFACTOR, defenseMultiplier);
 		bundle.put(REACH, RCH);
 		bundle.put(PROPERTIES_AMT, properties.size());
+		bundle.put(NAME, name);
+		bundle.put(IMG, image);
+		bundle.put(DESC, desc);
 		for (int i = 0; i < properties.size(); i++) {
 			bundle.put(PROPERTIES+i, properties.get(i));
 		}
@@ -391,6 +411,12 @@ public class MeleeWeapon extends Weapon {
 			defenseMultiplier = bundle.getFloat(DEFENSEFACTOR);
 			RCH = bundle.getInt(REACH);
 			properties = (ArrayList<Property>) Arrays.asList(bundle.getEnumArray(PROPERTIES, Property.class));
+			desc = bundle.getString(DESC);
+			name = bundle.getString(NAME);
+			image = bundle.getInt(IMG);
+		} else {
+			desc = super.desc();
+			name = Messages.get(this, "name");
 		}
 	}
 }

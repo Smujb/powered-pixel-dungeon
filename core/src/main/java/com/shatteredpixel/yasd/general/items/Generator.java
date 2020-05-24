@@ -545,6 +545,7 @@ public class Generator {
 					break;
 			}
 		}
+		w.initStats();
 		return w;
 	}
 	
