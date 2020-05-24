@@ -41,6 +41,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MeleeWeapon extends Weapon {
 	{
@@ -162,15 +163,17 @@ public class MeleeWeapon extends Weapon {
 			RCH = Random.Int(1, 3);
 		}
 		final KindOfWeapon.Property[] propValues = Property.values();
-		do {
-			properties = new ArrayList<>();
-			for (Property property : propValues) {
-				if (Random.Int(5) == 0) {
-					properties.add(property);
-				}
+		properties = new ArrayList<>();
+		for (Property property : propValues) {
+			if (Random.Int(5) == 0) {
+				properties.add(property);
 			}
-			//Illegal combination. I don't think I have to explain why...
-		} while (properties.contains(Property.CANT_SURPRISE_ATTK) && properties.contains(Property.SURPRISE_ATTK_BENEFIT));
+		}
+		//Can't have both... That'd be kinda stupid.
+		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT) && properties.contains(Property.CANT_SURPRISE_ATTK)) {
+			properties.remove(Property.SURPRISE_ATTK_BENEFIT);
+			properties.remove(Property.CANT_SURPRISE_ATTK);
+		}
 		return this;
 	}
 
@@ -330,19 +333,64 @@ public class MeleeWeapon extends Weapon {
 
 	}
 
-	public static String TIER = "tier";
+	/*multiplier *= DLY;
+		multiplier *= degradeFactor;
+		multiplier *= 1/ACC;
+		multiplier *= 1/ (1 + defenseMultiplier);
+		multiplier *= 2/(RCH+1f);
+		if (properties.contains(Property.DUAL_HANDED)) {
+			multiplier *= 1.2f;
+		}
+		if (breaksArmor(owner)) {
+			multiplier *= 0.8f;
+		}
+		if (properties.contains(Property.CANT_SURPRISE_ATTK)) {
+			multiplier *= 1.3;
+		}
+		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
+			multiplier *= 0.6f;
+		}*/
+
+	private static final String TIER = "tier";
+	private static final String DELAY = "delay";
+	private static final String DEGRADE = "degrade-factor";
+	private static final String ACCURACY = "accuracy";
+	private static final String DEFENSEFACTOR = "defense-factor";
+	private static final String REACH = "reach";
+	private static final String PROPERTIES = "props";
+	private static final String PROPERTIES_AMT = "num-props";
 
 	@Override
 	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TIER, tier);
+		bundle.put(DELAY, DLY);
+		bundle.put(DEGRADE, degradeFactor);
+		bundle.put(ACCURACY, ACC);
+		bundle.put(DEFENSEFACTOR, defenseMultiplier);
+		bundle.put(REACH, RCH);
+		bundle.put(PROPERTIES_AMT, properties.size());
+		for (int i = 0; i < properties.size(); i++) {
+			bundle.put(PROPERTIES+i, properties.get(i));
+		}
+
+		int numLightTiles = bundle.getInt(PROPERTIES_AMT);
+		for (int i = 0; i < numLightTiles; i++) {
+			properties.add(bundle.getEnum(PROPERTIES+i, Property.class));
+		}
 	}
 
 	@Override
 	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
-			tier = bundle.getInt(TIER);
+		tier = bundle.getInt(TIER);
+		if (Dungeon.version > MainGame.v0_3_6) {
+			DLY = bundle.getFloat(DELAY);
+			degradeFactor = bundle.getFloat(DEGRADE);
+			ACC = bundle.getFloat(ACCURACY);
+			defenseMultiplier = bundle.getFloat(DEFENSEFACTOR);
+			RCH = bundle.getInt(REACH);
+			properties = (ArrayList<Property>) Arrays.asList(bundle.getEnumArray(PROPERTIES, Property.class));
 		}
 	}
 }
