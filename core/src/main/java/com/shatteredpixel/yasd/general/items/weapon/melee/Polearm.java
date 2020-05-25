@@ -62,17 +62,6 @@ public class Polearm extends MeleeWeapon {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier >= 4) {
-			return Enchantment.getName(Glaive.class, enchantment, cursedKnown);
-		} else if (tier > 1) {
-			return Enchantment.getName(Spear.class, enchantment, cursedKnown);
-		} else {
-			return Enchantment.getName(PrimitiveSpear.class, enchantment, cursedKnown);
-		}
-	}
-
 	//Placeholders for tiers.
 	private static class Glaive extends MeleeWeapon {}
 

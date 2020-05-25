@@ -62,17 +62,6 @@ public class Sneak extends MeleeWeapon {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier < 2) {
-			return Enchantment.getName(Dagger.class, enchantment, cursedKnown);
-		} else if (tier < 3) {
-			return Enchantment.getName(Dirk.class, enchantment, cursedKnown);
-		} else {
-			return Enchantment.getName(AssassinsBlade.class, enchantment, cursedKnown);
-		}
-	}
-
 	private static class Dirk extends MeleeWeapon {}
 	private static class Dagger extends MeleeWeapon {}
 	private static class AssassinsBlade extends MeleeWeapon {}

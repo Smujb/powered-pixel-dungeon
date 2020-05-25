@@ -59,15 +59,6 @@ public class Dual extends MeleeWeapon {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier >= 4) {
-			return Enchantment.getName(Katana.class, enchantment, cursedKnown);
-		} else {
-			return Enchantment.getName(Sai.class, enchantment, cursedKnown);
-		}
-	}
-
 	private static class Sai extends MeleeWeapon {}
 	private static class Katana extends MeleeWeapon {}
 }

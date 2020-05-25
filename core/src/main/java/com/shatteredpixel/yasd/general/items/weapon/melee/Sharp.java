@@ -50,11 +50,6 @@ public class Sharp extends MeleeWeapon {
 	}
 
 	@Override
-	public String name() {
-		return Enchantment.getName(Scimitar.class, enchantment, cursedKnown);
-	}
-
-	@Override
 	public int proc(Char attacker, Char defender, int damage) {
 		if (Random.Int(3) == 0) {
 			Buff.affect( defender, Bleeding.class ).set( damage/3 );

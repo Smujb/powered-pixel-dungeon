@@ -34,21 +34,24 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class MeleeWeapon extends Weapon {
 	{
 		image = ItemSpriteSheet.SWORD;
 	}
 
-	private String desc = null;
+	protected String desc = null;
 
 	public int tier = 1;
 
@@ -131,7 +134,7 @@ public class MeleeWeapon extends Weapon {
 		multiplier *= degradeFactor;
 		multiplier *= 1/ACC;
 		multiplier *= 1/ (1 + defenseMultiplier);
-		multiplier *= 2/(RCH+1f);
+		multiplier *= 3/(RCH+2f);
 		if (properties.contains(Property.DUAL_HANDED)) {
 			multiplier *= 1.2f;
 		}
@@ -158,12 +161,17 @@ public class MeleeWeapon extends Weapon {
 		return ((MeleeWeapon)item).initStats();
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public String name() {
+		return name;
+	}
+
 	//Generates stats for the weapon.
 	public MeleeWeapon initStats() {
-		//TODO generate based on properties.
-		name = Messages.get(this, "name");
-		desc = Messages.get(this, "desc");
-		image = ItemSpriteSheet.SWORD;
 		if (Random.Int(5) == 0) {
 			DLY = randomStat();
 		}
@@ -179,9 +187,8 @@ public class MeleeWeapon extends Weapon {
 		if (Random.Int(5) == 0) {
 			RCH = Random.Int(1, 3);
 		}
-		final KindOfWeapon.Property[] propValues = Property.values();
 		properties = new ArrayList<>();
-		for (Property property : propValues) {
+		for (Property property : Property.values()) {
 			if (Random.Int(5) == 0) {
 				properties.add(property);
 			}
@@ -191,6 +198,26 @@ public class MeleeWeapon extends Weapon {
 			properties.remove(Property.SURPRISE_ATTK_BENEFIT);
 			properties.remove(Property.CANT_SURPRISE_ATTK);
 		}
+
+		return matchProfile();
+	}
+
+	@Contract(" -> this")
+	private MeleeWeapon matchProfile() {
+		//Weapons that are only very slightly different from the basic weapon get it's image and description.
+		float bestImportance = 1.1f;
+		Profile bestProfile = Profile.NONE;
+		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
+		ArrayList<Profile> profiles = new ArrayList<>(Arrays.asList(Profile.values()));
+		Collections.shuffle(profiles);
+		for (Profile profile : profiles) {
+			float importance = profile.match(this);
+			if (importance > bestImportance) {
+				bestImportance = importance;
+				bestProfile = profile;
+			}
+		}
+		bestProfile.copy(this);
 		return this;
 	}
 
@@ -231,8 +258,6 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 
-		//String statsInfo = statsInfo();
-		//if (!statsInfo.equals("")) info += "\n\n" + statsInfo;
 		if (DLY != 1f | ACC != 1f | RCH != 1 | degradeFactor != 1 | !properties.isEmpty() | defenseFactor(curUser) > 0 || breaksArmor(curUser)) {
 
 			info += "\n";
@@ -306,10 +331,6 @@ public class MeleeWeapon extends Weapon {
 		return info;
 	}
 	
-	/*public String statsInfo(){
-		return Messages.get(this, "stats_desc");
-	}*/
-	
 	@Override
 	public int price() {
 		int price = 20 * tier;
@@ -349,24 +370,6 @@ public class MeleeWeapon extends Weapon {
 	private void updateTier() {
 
 	}
-
-	/*multiplier *= DLY;
-		multiplier *= degradeFactor;
-		multiplier *= 1/ACC;
-		multiplier *= 1/ (1 + defenseMultiplier);
-		multiplier *= 2/(RCH+1f);
-		if (properties.contains(Property.DUAL_HANDED)) {
-			multiplier *= 1.2f;
-		}
-		if (breaksArmor(owner)) {
-			multiplier *= 0.8f;
-		}
-		if (properties.contains(Property.CANT_SURPRISE_ATTK)) {
-			multiplier *= 1.3;
-		}
-		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
-			multiplier *= 0.6f;
-		}*/
 
 	private static final String TIER = "tier";
 	private static final String DELAY = "delay";

@@ -44,11 +44,6 @@ public class Magical extends MeleeWeapon {
 	}
 
 	@Override
-	public String name() {
-		return Enchantment.getName(RunicBlade.class, enchantment, cursedKnown);
-	}
-
-	@Override
 	public int max(float lvl) {
 		return 5*(tier) +
 				Math.round(lvl*(tier*3));

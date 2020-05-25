@@ -56,15 +56,6 @@ public class Axe extends MeleeWeapon {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier < 4) {
-			return Enchantment.getName(HandAxe.class, enchantment, cursedKnown);
-		} else  {
-			return Enchantment.getName(BattleAxe.class, enchantment, cursedKnown);
-		}
-	}
-
 	private static class BattleAxe extends MeleeWeapon {}
 	private static class HandAxe extends MeleeWeapon {}
 }

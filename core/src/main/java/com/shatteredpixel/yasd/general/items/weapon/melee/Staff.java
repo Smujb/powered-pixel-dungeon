@@ -59,15 +59,6 @@ public class Staff extends MeleeWeapon {
 	}
 
 	@Override
-	public String name() {
-		if (tier < 4) {
-			return Enchantment.getName(Quarterstaff.class, enchantment, cursedKnown);
-		} else  {
-			return Enchantment.getName(Rod.class, enchantment, cursedKnown);
-		}
-	}
-
-	@Override
 	public int defenseFactor( Char owner ) {
 		return 2*tier;	//2*tier extra defence
 	}

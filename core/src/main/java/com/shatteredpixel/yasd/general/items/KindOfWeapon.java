@@ -42,7 +42,18 @@ abstract public class KindOfWeapon extends KindofMisc {
 		DUAL_HANDED,
 		BLUNT,
 		CANT_SURPRISE_ATTK,
-		SURPRISE_ATTK_BENEFIT
+		SURPRISE_ATTK_BENEFIT;
+
+		public float importance() {
+			switch (this) {
+				default:
+					return 1.3f;
+				case BLUNT:
+					return 1.4f;
+				case SURPRISE_ATTK_BENEFIT:
+					return 1.8f;
+			}
+		}
 	}
 
 	public ArrayList<Property> properties = new ArrayList<>();
