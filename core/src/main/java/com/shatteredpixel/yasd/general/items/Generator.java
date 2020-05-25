@@ -524,11 +524,11 @@ public class Generator {
 	}
 	
 	public static MeleeWeapon randomWeapon(int floorSet) {
-		MeleeWeapon w;
+		MeleeWeapon w = new MeleeWeapon().initStats();
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
-		w = (MeleeWeapon) Reflection.newInstance(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
+		//w = (MeleeWeapon) Reflection.newInstance(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
 		w.random();
 		w.setTier(tier);
 		if (w.tier == 1) {

@@ -33,7 +33,9 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.DeveloperItem;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -59,11 +61,8 @@ import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Basic;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Sneak;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -146,7 +145,7 @@ public enum HeroClass {
 		}
 		new DeveloperItem().collect(hero.belongings.backpack, hero);
 		for (int i = 0; i < Belongings.BACKPACK_SIZE; i++) {
-			new MeleeWeapon().initStats().collect();
+			Generator.randomWeapon().identify().collect();
 			new ScrollOfUpgrade().collect();
 			new MagicalInfusion().collect();
 		}
@@ -168,7 +167,8 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		(hero.belongings.miscs[0] = new Basic()).identify();
+		MeleeWeapon weapon = new MeleeWeapon();
+		(hero.belongings.miscs[0] = weapon).identify();
 		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
@@ -205,7 +205,9 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
-		(hero.belongings.miscs[0] = new Sneak()).identify();
+		MeleeWeapon weapon = new MeleeWeapon();
+		weapon.properties.add(KindOfWeapon.Property.SURPRISE_ATTK_BENEFIT);
+		(hero.belongings.miscs[0] = weapon).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 		//TODO Add another unique item for Rogue
 		//CloakOfShadows cloak = new CloakOfShadows();
@@ -227,8 +229,9 @@ public enum HeroClass {
 	}
 
 	private static void initHuntress( Hero hero ) {
-
-		(hero.belongings.miscs[0] = new Fist()).identify();
+		MeleeWeapon weapon = new MeleeWeapon();
+		weapon.DLY = 0.5f;
+		(hero.belongings.miscs[0] = weapon).identify();
 		(hero.belongings.miscs[1] = new HuntressArmor()).identify();
 		SpiritBow bow = new SpiritBow();
 		bow.identify().collect();

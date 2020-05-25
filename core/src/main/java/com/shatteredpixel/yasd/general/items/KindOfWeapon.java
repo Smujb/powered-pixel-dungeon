@@ -41,8 +41,22 @@ abstract public class KindOfWeapon extends KindofMisc {
 	public enum Property {
 		DUAL_HANDED,
 		BLUNT,
-		CANT_SURPRISE_ATTK,
-		SURPRISE_ATTK_BENEFIT;
+		CANT_SURPRISE_ATTK {
+			@Override
+			public boolean canApply(KindOfWeapon weapon) {
+				return !weapon.properties.contains(SURPRISE_ATTK_BENEFIT);
+			}
+		},
+		SURPRISE_ATTK_BENEFIT {
+			@Override
+			public boolean canApply(KindOfWeapon weapon) {
+				return !weapon.properties.contains(CANT_SURPRISE_ATTK);
+			}
+		};
+
+		public boolean canApply(KindOfWeapon weapon) {
+			return true;
+		}
 
 		public float importance() {
 			switch (this) {

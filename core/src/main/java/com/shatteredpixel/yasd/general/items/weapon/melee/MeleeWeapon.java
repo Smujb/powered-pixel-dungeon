@@ -189,14 +189,9 @@ public class MeleeWeapon extends Weapon {
 		}
 		properties = new ArrayList<>();
 		for (Property property : Property.values()) {
-			if (Random.Int(5) == 0) {
+			if (Random.Int(5) == 0 && property.canApply(this)) {
 				properties.add(property);
 			}
-		}
-		//Can't have both... That'd be kinda stupid.
-		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT) && properties.contains(Property.CANT_SURPRISE_ATTK)) {
-			properties.remove(Property.SURPRISE_ATTK_BENEFIT);
-			properties.remove(Property.CANT_SURPRISE_ATTK);
 		}
 
 		return matchProfile();
