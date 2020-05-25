@@ -168,7 +168,7 @@ public enum HeroClass {
 
 	private static void initWarrior( Hero hero ) {
 		MeleeWeapon weapon = new MeleeWeapon();
-		(hero.belongings.miscs[0] = weapon).identify();
+		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
 		stones.quantity(3).collect();
@@ -207,7 +207,7 @@ public enum HeroClass {
 	private static void initRogue( Hero hero ) {
 		MeleeWeapon weapon = new MeleeWeapon();
 		weapon.properties.add(KindOfWeapon.Property.SURPRISE_ATTK_BENEFIT);
-		(hero.belongings.miscs[0] = weapon).identify();
+		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
 		//TODO Add another unique item for Rogue
 		//CloakOfShadows cloak = new CloakOfShadows();
@@ -231,7 +231,7 @@ public enum HeroClass {
 	private static void initHuntress( Hero hero ) {
 		MeleeWeapon weapon = new MeleeWeapon();
 		weapon.DLY = 0.5f;
-		(hero.belongings.miscs[0] = weapon).identify();
+		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new HuntressArmor()).identify();
 		SpiritBow bow = new SpiritBow();
 		bow.identify().collect();

@@ -198,7 +198,7 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	@Contract(" -> this")
-	private MeleeWeapon matchProfile() {
+	public MeleeWeapon matchProfile() {
 		//Weapons that are only very slightly different from the basic weapon get it's image and description.
 		float bestImportance = 1.1f;
 		Profile bestProfile = Profile.NONE;
