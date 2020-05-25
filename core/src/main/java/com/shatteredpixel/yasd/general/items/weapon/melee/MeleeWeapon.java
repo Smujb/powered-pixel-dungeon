@@ -165,13 +165,18 @@ public class MeleeWeapon extends Weapon {
 		this.name = name;
 	}
 
-	@Override
-	public String name() {
-		return name;
+	private void resetStats() {
+		DLY = 1f;
+		ACC = 1f;
+		degradeFactor = 1f;
+		defenseMultiplier = 0f;
+		RCH = 1;
+		properties = new ArrayList<>();
 	}
 
 	//Generates stats for the weapon.
 	public MeleeWeapon initStats() {
+		resetStats();
 		if (Random.Int(5) == 0) {
 			DLY = randomStat();
 		}
@@ -187,7 +192,6 @@ public class MeleeWeapon extends Weapon {
 		if (Random.Int(5) == 0) {
 			RCH = Random.Int(1, 3);
 		}
-		properties = new ArrayList<>();
 		for (Property property : Property.values()) {
 			if (Random.Int(5) == 0 && property.canApply(this)) {
 				properties.add(property);
@@ -200,19 +204,19 @@ public class MeleeWeapon extends Weapon {
 	@Contract(" -> this")
 	public MeleeWeapon matchProfile() {
 		//Weapons that are only very slightly different from the basic weapon get it's image and description.
-		float bestImportance = 1.1f;
-		Profile bestProfile = Profile.NONE;
+		float closestMatch = 1.1f;
+		Profile closestMatchProfile = Profile.NONE;
 		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
 		ArrayList<Profile> profiles = new ArrayList<>(Arrays.asList(Profile.values()));
 		Collections.shuffle(profiles);
 		for (Profile profile : profiles) {
 			float importance = profile.match(this);
-			if (importance > bestImportance) {
-				bestImportance = importance;
-				bestProfile = profile;
+			if (importance > closestMatch) {
+				closestMatch = importance;
+				closestMatchProfile = profile;
 			}
 		}
-		bestProfile.copy(this);
+		closestMatchProfile.copy(this);
 		return this;
 	}
 

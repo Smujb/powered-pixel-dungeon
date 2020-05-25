@@ -340,7 +340,7 @@ abstract public class Weapon extends KindOfWeapon {
 
 		//Why is this static when it takes an enchant as an argument? Well, it prevents me doing a null-check every time I want to use it (as enchantment can be null and often is)
 		public static String getName(Weapon weapon, Enchantment ench, boolean showEnchant) {
-			String name = weapon.name();
+			String name = weapon.name;
 			if (ench != null && showEnchant) {
 				name = ench.name(name);
 			}

@@ -186,9 +186,9 @@ import java.util.LinkedHashMap;
 public class Generator {
 
 	public enum Category {
-		WEAPON	( 6,    MeleeWeapon.class),
+		WEAPON	( 8,    MeleeWeapon.class),
 		
-		ARMOR	( 6,    Armor.class ),
+		ARMOR	( 8,    Armor.class ),
 		
 		MISSILE ( 3,    MissileWeapon.class ),
 		MIS_T1  ( 0,    MissileWeapon.class ),
@@ -197,21 +197,21 @@ public class Generator {
 		MIS_T4  ( 0,    MissileWeapon.class ),
 		MIS_T5  ( 0,    MissileWeapon.class ),
 		
-		WAND	( 3,    Wand.class ),
-		RING	( 1,    Ring.class ),
-		ARTIFACT( 1,    Artifact.class),
+		WAND	( 6,    Wand.class ),
+		RING	( 2,    Ring.class ),
+		ARTIFACT( 3,    Artifact.class),
 		
 		FOOD	( 0,    Food.class ),
 
 		ALCOHOL ( 0,    Alcohol.class),
 
 		POTION	( 20,   Potion.class ),
-		SEED	( 0,    Plant.Seed.class ), //dropped by grass
+		SEED	( 2,    Plant.Seed.class ), //dropped by grass
 		
 		SCROLL	( 20,   Scroll.class ),
 		STONE   ( 2,    Runestone.class),
 		
-		GOLD	( 18,   Gold.class );
+		GOLD	( 20,   Gold.class );
 		
 		public Class<?>[] classes;
 		public float[] probs;
@@ -524,7 +524,7 @@ public class Generator {
 	}
 	
 	public static MeleeWeapon randomWeapon(int floorSet) {
-		MeleeWeapon w = new MeleeWeapon().initStats();
+		MeleeWeapon w = new MeleeWeapon();
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
