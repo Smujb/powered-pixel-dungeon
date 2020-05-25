@@ -42,7 +42,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class MeleeWeapon extends Weapon {
 	{
@@ -397,11 +396,6 @@ public class MeleeWeapon extends Weapon {
 		for (int i = 0; i < properties.size(); i++) {
 			bundle.put(PROPERTIES+i, properties.get(i));
 		}
-
-		int numLightTiles = bundle.getInt(PROPERTIES_AMT);
-		for (int i = 0; i < numLightTiles; i++) {
-			properties.add(bundle.getEnum(PROPERTIES+i, Property.class));
-		}
 	}
 
 	@Override
@@ -414,13 +408,17 @@ public class MeleeWeapon extends Weapon {
 			ACC = bundle.getFloat(ACCURACY);
 			defenseMultiplier = bundle.getFloat(DEFENSEFACTOR);
 			RCH = bundle.getInt(REACH);
-			properties = (ArrayList<Property>) Arrays.asList(bundle.getEnumArray(PROPERTIES, Property.class));
 			desc = bundle.getString(DESC);
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
+			int numProps = bundle.getInt(PROPERTIES_AMT);
+			for (int i = 0; i < numProps; i++) {
+				properties.add(bundle.getEnum(PROPERTIES+i, Property.class));
+			}
 		} else {
 			desc = super.desc();
 			name = Messages.get(this, "name");
+			properties = new ArrayList<>();
 		}
 	}
 }
