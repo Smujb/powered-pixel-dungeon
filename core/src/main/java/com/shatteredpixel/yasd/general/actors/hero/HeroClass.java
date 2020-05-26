@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.DeveloperItem;
-import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
@@ -59,6 +58,7 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRage;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
+import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
@@ -145,7 +145,8 @@ public enum HeroClass {
 		}
 		new DeveloperItem().collect(hero.belongings.backpack, hero);
 		for (int i = 0; i < Belongings.BACKPACK_SIZE; i++) {
-			Generator.randomArmor().identify().collect();
+			//Generator.randomArmor().identify().collect();
+			new NormalWand().collect();
 			new ScrollOfUpgrade().collect();
 			new MagicalInfusion().collect();
 		}

@@ -378,9 +378,11 @@ public class ItemSpriteSheet {
 	private static final int WANDS_YAPD              =                      xy(1, 13);  //16 slots
 	public static final int WAND_MAGIC_MISSILE_YAPD  = WANDS_YAPD+0;
 	public static final int WAND_DISINTEGRATION_YAPD = WANDS_YAPD+1;
+	public static final int WAND_AIR				 = WANDS_YAPD+2;
 	public static final int WAND_ACID                = WANDS_YAPD+4;
 	public static final int WAND_PLASMA              = WANDS_YAPD+5;
 	public static final int WAND_STENCH     		 = WANDS_YAPD+6;
+	public static final int WAND_CONFUSION     		 = WANDS_YAPD+7;
 	public static final int WAND_DAMNATION           = WANDS_YAPD+9;
 	public static final int WAND_THORNVINES          = WANDS_YAPD+10;
 	public static final int WAND_LIFE_DRAIN          = WANDS_YAPD+11;
