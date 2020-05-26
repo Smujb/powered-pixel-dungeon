@@ -27,13 +27,15 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.Profile;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum Profile {
+public enum WeaponProfile implements Profile {
 	NONE {
 		{
 			image = ItemSpriteSheet.SWORD;
@@ -100,7 +102,9 @@ public enum Profile {
 		}
 	};
 
-	public MeleeWeapon copy(@NotNull MeleeWeapon weapon) {
+	@Override
+	public Item copy(@NotNull Item item) {
+		MeleeWeapon weapon = ((MeleeWeapon)item);
 		weapon.image = image;
 		weapon.desc = weaponDesc();
 		weapon.setName(weaponName());
@@ -110,14 +114,16 @@ public enum Profile {
 	public int image;
 
 	public String weaponName() {
-		return Messages.get(Profile.class, name() +  "_name");
+		return Messages.get(WeaponProfile.class, name() +  "_name");
 	}
 
 	public String weaponDesc() {
-		return Messages.get(Profile.class, name() +  "_desc");
+		return Messages.get(WeaponProfile.class, name() +  "_desc");
 	}
 
-	public float match(MeleeWeapon weapon) {
+	@Override
+	public float match(Item item) {
+		MeleeWeapon weapon = ((MeleeWeapon)item);
 		switch (this) {
 			default:
 				return 1f;

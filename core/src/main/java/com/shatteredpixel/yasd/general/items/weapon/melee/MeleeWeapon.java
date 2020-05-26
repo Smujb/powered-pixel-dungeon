@@ -204,11 +204,11 @@ public class MeleeWeapon extends Weapon {
 	public MeleeWeapon matchProfile() {
 		//Weapons that are only very slightly different from the basic weapon get it's image and description.
 		float closestMatch = 1.1f;
-		Profile closestMatchProfile = Profile.NONE;
+		WeaponProfile closestMatchProfile = WeaponProfile.NONE;
 		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
-		ArrayList<Profile> profiles = new ArrayList<>(Arrays.asList(Profile.values()));
+		ArrayList<WeaponProfile> profiles = new ArrayList<>(Arrays.asList(WeaponProfile.values()));
 		Collections.shuffle(profiles);
-		for (Profile profile : profiles) {
+		for (WeaponProfile profile : profiles) {
 			float importance = profile.match(this);
 			if (importance > closestMatch) {
 				closestMatch = importance;

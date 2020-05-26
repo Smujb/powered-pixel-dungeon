@@ -71,8 +71,11 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Armor extends KindofMisc {
 
@@ -215,6 +218,25 @@ public class Armor extends KindofMisc {
 		float magicalDR = 2f - regularDR;
 		magicalDRFactor = magicalDR * factor;
 		DRfactor = regularDR * factor;
+		return matchProfile();
+	}
+
+	@Contract(" -> this")
+	public Armor matchProfile() {
+		//Weapons that are only very slightly different from the basic weapon get it's image and description.
+		float closestMatch = 1.1f;
+		ArmorProfile closestMatchProfile = ArmorProfile.NONE;
+		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
+		ArrayList<ArmorProfile> profiles = new ArrayList<>(Arrays.asList(ArmorProfile.values()));
+		Collections.shuffle(profiles);
+		for (ArmorProfile profile : profiles) {
+			float importance = profile.match(this);
+			if (importance > closestMatch) {
+				closestMatch = importance;
+				closestMatchProfile = profile;
+			}
+		}
+		closestMatchProfile.copy(this);
 		return this;
 	}
 
