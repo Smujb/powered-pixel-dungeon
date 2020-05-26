@@ -63,17 +63,6 @@ public class ChainArmor extends Armor {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier < 3) {
-			return Glyph.getName(Studded.class, glyph, cursedKnown);
-		} else if (tier < 5) {
-			return Glyph.getName(RingMail.class, glyph, cursedKnown);
-		} else {
-			return Glyph.getName(Mail.class, glyph, cursedKnown);
-		}
-	}
-
 	private static class Studded extends Armor {}
 	private static class RingMail extends Armor {}
 	private static class Mail extends Armor {}

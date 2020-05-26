@@ -27,8 +27,10 @@
 
 package com.shatteredpixel.yasd.general.items;
 
-public interface Profile {
-	float match(Item item);
+import org.jetbrains.annotations.NotNull;
 
-	Item copy(Item item);
+public interface Profile {
+	float match(@NotNull Item item);
+
+	Item copy(@NotNull Item item);
 }

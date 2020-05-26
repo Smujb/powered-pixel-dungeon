@@ -114,6 +114,8 @@ public class Armor extends KindofMisc {
 		return Constants.DEGRADATION;
 	}
 
+	protected String desc = null;
+
 	public Augment augment = Augment.NONE;
 	
 	public Glyph glyph;
@@ -139,6 +141,9 @@ public class Armor extends KindofMisc {
 	private static final String SPEED = "speed";
 	private static final String DR = "dr";
 	private static final String MAGICAL_DR = "magic-dr";
+	private static final String IMG = "image";
+	private static final String NAME = "name";
+	private static final String DESC = "desc";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -155,6 +160,9 @@ public class Armor extends KindofMisc {
 		bundle.put( SPEED, speedFactor );
 		bundle.put( DR, DRfactor );
 		bundle.put( MAGICAL_DR, magicalDRFactor );
+		bundle.put(NAME, name);
+		bundle.put(IMG, image);
+		bundle.put(DESC, desc);
 	}
 
 	@Override
@@ -183,6 +191,12 @@ public class Armor extends KindofMisc {
 			speedFactor = bundle.getFloat(SPEED);
 			DRfactor = bundle.getFloat(DR);
 			magicalDRFactor = bundle.getFloat(MAGICAL_DR);
+			desc = bundle.getString(DESC);
+			name = bundle.getString(NAME);
+			image = bundle.getInt(IMG);
+		} else {
+			desc = super.desc();
+			name = Messages.get(this, "name");
 		}
 	}
 
@@ -197,6 +211,11 @@ public class Armor extends KindofMisc {
 		DRfactor = 1f;
 		speedFactor = 1f;
 		magicalDRFactor = 1f;
+	}
+
+	@Override
+	public String desc() {
+		return desc;
 	}
 
 	public Armor initStats() {
@@ -214,7 +233,7 @@ public class Armor extends KindofMisc {
 		factor *= 1/EVA;
 		factor *= 1/STE;
 		factor *= 1/speedFactor;
-		float regularDR = Random.Float() + Random.Float();
+		float regularDR = Random.Float() * 2f;
 		float magicalDR = 2f - regularDR;
 		magicalDRFactor = magicalDR * factor;
 		DRfactor = regularDR * factor;
@@ -449,7 +468,7 @@ public class Armor extends KindofMisc {
 	
 	@Override
 	public String name() {
-		return Glyph.getName(this.getClass(), glyph, cursedKnown);
+		return Glyph.getName(this, glyph, cursedKnown);
 	}
 
 	@Override
@@ -580,6 +599,10 @@ public class Armor extends KindofMisc {
 		return this;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int defaultSTRReq() {
 		return Math.max(STRReq(level()),10);
 	}
@@ -650,13 +673,13 @@ public class Armor extends KindofMisc {
 	
 	@Override
 	public ItemSprite.Glowing glowing() {
-		return glyph != null && (cursedKnown || !glyph.curse()) ? glyph.glowing() : null;
+		return glyph != null && cursedKnown ? glyph.glowing() : null;
 	}
 	
 	public static abstract class Glyph implements Bundlable {
 
-		public static String getName(Class<? extends Armor> armClass, Glyph gly, boolean showGlyph) {
-			String name = Messages.get(armClass, "name");
+		public static String getName(Armor armor, Glyph gly, boolean showGlyph) {
+			String name = armor.name;
 			if (gly != null && showGlyph) {
 				name = gly.name(name);
 			}

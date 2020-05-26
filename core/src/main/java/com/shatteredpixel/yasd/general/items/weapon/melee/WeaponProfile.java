@@ -122,7 +122,7 @@ public enum WeaponProfile implements Profile {
 	}
 
 	@Override
-	public float match(Item item) {
+	public float match(@NotNull Item item) {
 		MeleeWeapon weapon = ((MeleeWeapon)item);
 		switch (this) {
 			default:

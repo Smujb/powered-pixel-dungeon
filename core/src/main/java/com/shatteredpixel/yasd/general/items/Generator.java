@@ -179,6 +179,8 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -490,16 +492,19 @@ public class Generator {
 		return Reflection.newInstance(cl).random();
 	}
 
+	@NotNull
 	public static Armor randomArmor(){
 		return randomArmor(Dungeon.getScaleFactor() / Constants.CHAPTER_LENGTH);
 	}
 	
+	@NotNull
 	public static Armor randomArmor(int floorSet) {
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
 
-		Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(Category.ARMOR.probs)]);
+		//Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(Category.ARMOR.probs)]);
+		Armor a = new Armor();
 		a.random();
 		a.setTier(tier);
 		if (a.tier == 1) {

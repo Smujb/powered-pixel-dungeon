@@ -29,20 +29,70 @@ package com.shatteredpixel.yasd.general.items.armor;
 
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Profile;
+import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+
+import org.jetbrains.annotations.NotNull;
 
 public enum ArmorProfile implements Profile {
-	NONE,
-	STEALTH_INCREASE,
-	STEALTH_DECREASE,
-	SPEED_INCREASE,
-	SPEED_DECREASE,
-	EVASION_INCREASE,
-	EVASION_DECREASE,
-	PHYSICAL,
-	MAGICAL;
+	NONE {
+		{
+			image = ItemSpriteSheet.ARMOR_DISC;
+		}
+	},
+	STEALTH_INCREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_HIDE;
+		}
+	},
+	STEALTH_DECREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_BANDED;
+		}
+	},
+	SPEED_INCREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_LEATHER;
+		}
+	},
+	SPEED_DECREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_WARRIOR;
+		}
+	},
+	EVASION_INCREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_DISC;
+		}
+	},
+	EVASION_DECREASE {
+		{
+			image = ItemSpriteSheet.ARMOR_MAIL;
+		}
+	},
+	PHYSICAL {
+		{
+			image = ItemSpriteSheet.ARMOR_PLATE;
+		}
+	},
+	MAGICAL {
+		{
+			image = ItemSpriteSheet.ARMOR_HOLDER;
+		}
+	};
+
+	public int image;
+
+	public String armorName() {
+		return Messages.get(ArmorProfile.class, name() +  "_name");
+	}
+
+	public String armorDesc() {
+		return Messages.get(ArmorProfile.class, name() +  "_desc");
+	}
 
 	@Override
-	public float match(Item item) {
+	public float match(@NotNull Item item) {
 		Armor armor = ((Armor)item);
 		switch (this) {
 			default:
@@ -67,7 +117,11 @@ public enum ArmorProfile implements Profile {
 	}
 
 	@Override
-	public Item copy(Item item) {
-		return item;
+	public Item copy(@NotNull Item item) {
+		Armor armor = ((Armor)item);
+		armor.image = image;
+		armor.desc = armorDesc();
+		armor.setName(armorName());
+		return armor;
 	}
 }

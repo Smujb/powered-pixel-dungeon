@@ -59,15 +59,6 @@ public class HeavyArmor extends Armor {
 		}
 	}
 
-	@Override
-	public String name() {
-		if (tier < 4) {
-			return Glyph.getName(Plate.class, glyph, cursedKnown);
-		} else  {
-			return Glyph.getName(Lead.class, glyph, cursedKnown);
-		}
-	}
-
 	private static class Plate extends Armor {}
 	private static class Lead extends Armor {}
 
