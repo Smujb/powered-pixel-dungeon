@@ -192,7 +192,7 @@ public class Statue extends Mob implements Callback {
 			if (wand == null) {
 				wand = wandToAttack(enemy);
 			}
-			wand.activate(this);
+			wand.setUser(this);
 			if (wand instanceof WandOfWarding) {//Wand of Warding cannot zap directly
 				int closest = findClosest(enemy, this.pos);
 
@@ -205,7 +205,7 @@ public class Statue extends Mob implements Callback {
 			} else {
 				wand.zap(enemy.pos);
 			}
-
+		spendAndNext(Wand.TIME_TO_ZAP);
 		}
 	}
 
@@ -258,15 +258,6 @@ public class Statue extends Mob implements Callback {
 		}
 		super.damage( dmg, src);
 	}
-
-	/*protected void zap(Char enemy) {
-		if (enemy != null ) {
-			Wand WandToZap = wandToAttack(enemy);
-			if (WandToZap != null) {
-				WandToZap.zap(enemy.pos);
-			}
-		}
-	}*/
 
 	protected boolean doAttack( Char enemy ) {
 		if (Dungeon.level.adjacent( pos, enemy.pos )) {

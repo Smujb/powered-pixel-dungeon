@@ -189,19 +189,25 @@ public abstract class Wand extends KindofMisc {
 	public boolean tryToZap(Char owner, int target ){
 
 		if (owner.buff(MagicImmune.class) != null){
-			GLog.w( Messages.get(this, "no_magic") );
+			if (curUser instanceof Hero) {
+				GLog.w(Messages.get(this, "no_magic"));
+			}
 			return false;
 		}
 
 		if (Dungeon.underwater()) {
-			GLog.w( Messages.get(this, "underwater") );
+			if (curUser instanceof Hero) {
+				GLog.w(Messages.get(this, "underwater"));
+			}
 			return false;
 		}
 
 		if ( curCharges >= (cursed ? 1 : chargesPerCast())){
 			return true;
 		} else {
-			GLog.w(Messages.get(this, "fizzles"));
+			if (curUser instanceof Hero) {
+				GLog.w(Messages.get(this, "fizzles"));
+			}
 			return false;
 		}
 	}
@@ -383,13 +389,17 @@ public abstract class Wand extends KindofMisc {
 		}
 		
 		curCharges -= cursed ? 1 : chargesPerCast();
-		
-		if (curUser instanceof Hero && ((Hero)curUser).heroClass == HeroClass.MAGE) levelKnown = true;
+
+		if (curUser instanceof Hero) {
+			//Spend should be handled in mob code for mobs. They have to spend the turn before zapping, not after.
+			curUser.spend( TIME_TO_ZAP );
+			if (((Hero) curUser).heroClass == HeroClass.MAGE) {
+				levelKnown = true;
+			}
+		}
 		updateQuickslot();
 
 		use(defaultDegradeAmount()*1.5f);
-
-		curUser.spendAndNext( TIME_TO_ZAP );
 	}
 	
 	@Override

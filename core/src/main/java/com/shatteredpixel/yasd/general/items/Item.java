@@ -685,6 +685,10 @@ public class Item implements Bundlable {
 	
 	protected Char curUser = null;
 
+	public void setUser(Char ch) {
+		curUser = ch;
+	}
+
 	protected CellSelector.Listener thrower = new CellSelector.Listener(this) {
 		@Override
 		public void onSelect( Integer target ) {
