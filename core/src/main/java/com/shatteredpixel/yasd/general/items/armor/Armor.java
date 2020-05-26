@@ -124,6 +124,7 @@ public class Armor extends KindofMisc {
 	private BrokenSeal seal;
 	
 	public int tier = 1;
+	public int appearance = 1;
 	
 	private static final int USES_TO_ID = 10;
 	private int usesLeftToID = USES_TO_ID;
@@ -144,6 +145,7 @@ public class Armor extends KindofMisc {
 	private static final String IMG = "image";
 	private static final String NAME = "name";
 	private static final String DESC = "desc";
+	private static final String APPEARANCE = "appearance";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -163,6 +165,7 @@ public class Armor extends KindofMisc {
 		bundle.put(NAME, name);
 		bundle.put(IMG, image);
 		bundle.put(DESC, desc);
+		bundle.put(APPEARANCE, appearance);
 	}
 
 	@Override
@@ -194,6 +197,7 @@ public class Armor extends KindofMisc {
 			desc = bundle.getString(DESC);
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
+			appearance = bundle.getInt(APPEARANCE);
 		} else {
 			desc = super.desc();
 			name = Messages.get(this, "name");
@@ -308,7 +312,7 @@ public class Armor extends KindofMisc {
 
 
 	public int appearance() {
-		return 1;
+		return appearance;
 	}
 
 	public BrokenSeal checkSeal(){

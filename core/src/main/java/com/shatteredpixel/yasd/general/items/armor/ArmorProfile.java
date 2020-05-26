@@ -38,50 +38,60 @@ public enum ArmorProfile implements Profile {
 	NONE {
 		{
 			image = ItemSpriteSheet.ARMOR_DISC;
+			appearance = 4;
 		}
 	},
 	STEALTH_INCREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_HIDE;
+			appearance = 2;
 		}
 	},
 	STEALTH_DECREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_BANDED;
+			appearance = 5;
 		}
 	},
 	SPEED_INCREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_LEATHER;
+			appearance = 2;
 		}
 	},
 	SPEED_DECREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_WARRIOR;
+			appearance = 5;
 		}
 	},
 	EVASION_INCREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_DISC;
+			appearance = 4;
 		}
 	},
 	EVASION_DECREASE {
 		{
 			image = ItemSpriteSheet.ARMOR_MAIL;
+			appearance = 3;
 		}
 	},
 	PHYSICAL {
 		{
 			image = ItemSpriteSheet.ARMOR_PLATE;
+			appearance = 5;
 		}
 	},
 	MAGICAL {
 		{
 			image = ItemSpriteSheet.ARMOR_HOLDER;
+			appearance = 3;
 		}
 	};
 
 	public int image;
+	public int appearance;
 
 	public String armorName() {
 		return Messages.get(ArmorProfile.class, name() +  "_name");
@@ -122,6 +132,7 @@ public enum ArmorProfile implements Profile {
 		armor.image = image;
 		armor.desc = armorDesc();
 		armor.setName(armorName());
+		armor.appearance = appearance;
 		return armor;
 	}
 }
