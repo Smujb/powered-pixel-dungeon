@@ -169,6 +169,9 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	public void zap(int pos, Callback onFinish) {
+		if (!(curUser instanceof Hero)) {
+			curUser.spend(TIME_TO_ZAP);
+		}
 		final Ballistica attack = new Ballistica( curUser.pos,pos, this.collisionProperties);
 		fx(attack, new Callback() {
 			public void call() {

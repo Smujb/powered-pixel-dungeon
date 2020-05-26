@@ -166,6 +166,41 @@ public class Armor extends KindofMisc {
 		}
 	}
 
+	private static float randomStat() {
+		int num = Random.Int(5, 20);
+		return num/10f;
+	}
+
+	private void resetStats() {
+		EVA = 1f;
+		STE = 1f;
+		DRfactor = 1f;
+		speedFactor = 1f;
+		magicalDRFactor = 1f;
+	}
+
+	public Armor initStats() {
+		resetStats();
+		float factor = 1f;
+		if (Random.Int(3) == 0) {
+			EVA = randomStat();
+		}
+		if (Random.Int(3) == 0) {
+			STE = randomStat();
+		}
+		if (Random.Int(3) == 0) {
+			speedFactor = randomStat();
+		}
+		factor *= 1/EVA;
+		factor *= 1/STE;
+		factor *= 1/speedFactor;
+		float regularDR = Random.Float() + Random.Float();
+		float magicalDR = 2f - regularDR;
+		magicalDRFactor = magicalDR * factor;
+		DRfactor = regularDR * factor;
+		return this;
+	}
+
 	@Override
 	public void reset() {
 		super.reset();
@@ -191,9 +226,6 @@ public class Armor extends KindofMisc {
 			BrokenSeal.WarriorShield sealBuff = hero.buff(BrokenSeal.WarriorShield.class);
 			if (sealBuff != null) sealBuff.setArmor(null);
 
-			/*if (seal.level() > 0){
-				degrade();
-			}*/
 			GLog.i( Messages.get(Armor.class, "detach_seal") );
 			hero.sprite.operate(hero.pos);
 			if (!seal.collect()){
@@ -211,11 +243,6 @@ public class Armor extends KindofMisc {
 
 	public void affixSeal(BrokenSeal seal){
 		this.seal = seal;
-		/*if (seal.level() > 0){
-			//doesn't interact upgrading logic such as affecting curses/glyphs
-			level(Math.min(level()+1,3));
-			Badges.validateItemLevelAquired(this);
-		}*/
 		if (isEquipped(Dungeon.hero)){
 			Buff.affect(Dungeon.hero, BrokenSeal.WarriorShield.class).setArmor(this);
 		}
@@ -327,8 +354,10 @@ public class Armor extends KindofMisc {
 		
 		cursed = false;
 
-		if (seal != null && seal.level() == 0)
+		if (seal != null && seal.level() == 0) {
 			seal.upgrade();
+			return this;
+		}
 
 		return super.upgrade();
 	}
@@ -506,6 +535,8 @@ public class Armor extends KindofMisc {
 		} else if (effectRoll >= 0.85f){
 			inscribe();
 		}
+
+		initStats();
 
 		return this;
 	}

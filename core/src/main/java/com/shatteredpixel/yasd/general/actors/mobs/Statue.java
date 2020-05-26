@@ -205,7 +205,6 @@ public class Statue extends Mob implements Callback {
 			} else {
 				wand.zap(enemy.pos);
 			}
-		spendAndNext(Wand.TIME_TO_ZAP);
 		}
 	}
 

@@ -145,7 +145,7 @@ public enum HeroClass {
 		}
 		new DeveloperItem().collect(hero.belongings.backpack, hero);
 		for (int i = 0; i < Belongings.BACKPACK_SIZE; i++) {
-			Generator.randomWeapon().identify().collect();
+			Generator.randomArmor().identify().collect();
 			new ScrollOfUpgrade().collect();
 			new MagicalInfusion().collect();
 		}
