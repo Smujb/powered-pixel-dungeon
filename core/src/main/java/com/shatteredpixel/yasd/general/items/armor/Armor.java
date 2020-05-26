@@ -131,6 +131,11 @@ public class Armor extends KindofMisc {
 	private static final String SEAL            = "seal";
 	private static final String AUGMENT			= "augment";
 	private static final String TIER = "tier";
+	private static final String STEALTH = "stealth";
+	private static final String EVASION = "evasion";
+	private static final String SPEED = "speed";
+	private static final String DR = "dr";
+	private static final String MAGICAL_DR = "magic-dr";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -142,6 +147,11 @@ public class Armor extends KindofMisc {
 		bundle.put( SEAL, seal);
 		bundle.put( AUGMENT, augment);
 		bundle.put( TIER, tier );
+		bundle.put( STEALTH, STE );
+		bundle.put( EVASION, EVA );
+		bundle.put( SPEED, speedFactor );
+		bundle.put( DR, DRfactor );
+		bundle.put( MAGICAL_DR, magicalDRFactor );
 	}
 
 	@Override
@@ -163,6 +173,13 @@ public class Armor extends KindofMisc {
 
 		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);
+		}
+		if (Dungeon.version > MainGame.v0_3_6) {
+			STE = bundle.getFloat(STEALTH);
+			EVA = bundle.getFloat(EVASION);
+			speedFactor = bundle.getFloat(SPEED);
+			DRfactor = bundle.getFloat(DR);
+			magicalDRFactor = bundle.getFloat(MAGICAL_DR);
 		}
 	}
 
