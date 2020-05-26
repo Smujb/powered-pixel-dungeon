@@ -89,6 +89,18 @@ public class NormalWand extends DamageWand {
 		do {
 			element = Random.element(Element.values());
 		} while (element == Element.META);
+		collisionProperties = Ballistica.WONT_STOP;
+		if (Random.Int(3) != 0) {
+			collisionProperties = collisionProperties | Ballistica.STOP_CHARS;
+		}
+
+		if (Random.Int(3) != 0) {
+			collisionProperties = collisionProperties | Ballistica.STOP_TARGET;
+		}
+
+		if (Random.Int(3) != 0) {
+			collisionProperties = collisionProperties | Ballistica.STOP_TERRAIN;
+		}
 		return this;
 	}
 
