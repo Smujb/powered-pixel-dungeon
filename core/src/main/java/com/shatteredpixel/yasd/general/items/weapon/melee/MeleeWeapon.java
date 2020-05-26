@@ -143,8 +143,7 @@ public class MeleeWeapon extends Weapon {
 		}
 		if (properties.contains(Property.CANT_SURPRISE_ATTK)) {
 			multiplier *= 1.3;
-		}
-		if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
+		} else if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
 			multiplier *= 0.6f;
 		}
 		return multiplier;
@@ -291,7 +290,7 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "breaks_armour");
 			}
 
-			if (!properties.contains(Property.CANT_SURPRISE_ATTK)) {
+			if (properties.contains(Property.CANT_SURPRISE_ATTK)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "cant_surprise_attk");
 			}
 
