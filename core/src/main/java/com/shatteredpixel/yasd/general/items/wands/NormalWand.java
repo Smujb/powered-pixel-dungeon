@@ -176,7 +176,7 @@ public abstract class NormalWand extends DamageWand {
 		//only affect cells directly near caster if they are flammable
 		//TODO Air, Sharp and Drain
 		final int defaultAmt = 5 + chargesPerCast()*2;
-		if (!Dungeon.level.adjacent(userPos, cell)
+		if (!(cell == userPos ||Dungeon.level.adjacent(userPos, cell))
 				|| Dungeon.level.flammable(cell)) {
 			switch (element) {
 				case EARTH:
