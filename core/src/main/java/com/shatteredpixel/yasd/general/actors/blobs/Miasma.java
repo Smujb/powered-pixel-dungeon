@@ -32,12 +32,11 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
-import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
-import com.shatteredpixel.yasd.general.effects.Splash;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.GooSprite;
@@ -69,14 +68,14 @@ public class Miasma extends Blob {
                         switch (buff) {//Has random chaotic effects
                             default:
                                 Buff.prolong(ch, Vertigo.class, Vertigo.DURATION / 2f);
+                                break;
                             case 1:
-                                Buff.affect(ch, Ooze.class).set(20f);
-                                Splash.at(ch.pos, 0x000000, 5);
+                                Buff.prolong(ch, Vulnerable.class, Weakness.DURATION / 2f);
                                 break;
                             case 2:
                                 Buff.prolong(ch, Weakness.class, Weakness.DURATION / 2f);
                                 break;
-                            case 3:
+                            case 4:
                                 ch.damage((int) (ch.HT / 10f), new Char.DamageSrc(Element.CONFUSION, this).ignoreDefense());
                                 break;
                         }

@@ -83,14 +83,13 @@ public abstract class NormalWand extends DamageWand {
 				return ItemSpriteSheet.WAND_REGROWTH;
 			case STONE:
 				return ItemSpriteSheet.WAND_STENCH;
-			case SHARP:
-				return ItemSpriteSheet.SHURIKEN;
 			case FIRE:
 				return ItemSpriteSheet.WAND_FIREBOLT;
 			case DESTRUCTION:
 				return ItemSpriteSheet.WAND_DISINTEGRATION;
 			case ACID:
 				return ItemSpriteSheet.WAND_ACID;
+			case SHARP:
 			case DRAIN:
 				return ItemSpriteSheet.WAND_LIFE_DRAIN;
 			case WATER:
@@ -116,6 +115,11 @@ public abstract class NormalWand extends DamageWand {
 	@Override
 	public String name() {
 		return Messages.get(Wand.class, "name", Messages.get(NormalWand.class, element.name() + "_name", Messages.get(this, "name")));
+	}
+
+	@Override
+	public String desc() {
+		return Messages.get(NormalWand.class, element.name() + "_desc");
 	}
 
 	@NotNull
