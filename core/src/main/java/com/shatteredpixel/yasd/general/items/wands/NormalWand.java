@@ -49,6 +49,7 @@ import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
@@ -110,6 +111,11 @@ public abstract class NormalWand extends DamageWand {
 				return ItemSpriteSheet.WAND_DAMNATION;
 		}
 		return super.image();
+	}
+
+	@Override
+	public String name() {
+		return Messages.get(Wand.class, "name", Messages.get(NormalWand.class, element.name() + "_name", Messages.get(this, "name")));
 	}
 
 	@NotNull
