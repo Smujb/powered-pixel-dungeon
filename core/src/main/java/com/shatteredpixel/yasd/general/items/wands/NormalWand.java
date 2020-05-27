@@ -158,8 +158,13 @@ public abstract class NormalWand extends DamageWand {
 
 	protected float getDamageMultiplier() {
 		float multiplier = 1f;
-		if (element == Element.PHYSICAL || element == Element.MAGICAL) {
-			multiplier *= 1.2f;
+		switch (element) {
+			case PHYSICAL:
+				multiplier *= 1.4f;
+				break;
+			case MAGICAL:
+				multiplier *= 1.2f;
+				break;
 		}
 		if (maxCharges > 2) {
 			multiplier *= Math.pow(0.95, maxCharges-2);

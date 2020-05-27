@@ -117,7 +117,7 @@ public class AOEWand extends NormalWand {
 
 	@Override
 	public String statsDesc() {
-		return Messages.get(this, "stats_desc", chargesPerCast(), min(), max(), range);
+		return Messages.get(this, "stats_desc", range, chargesPerCast(), min(), max());
 	}
 
 	@Override

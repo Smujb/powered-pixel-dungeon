@@ -32,11 +32,17 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 public class BoltWand extends NormalWand {
+
+	@Override
+	public String statsDesc() {
+		return Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
+	}
 
 	@Override
 	protected NormalWand initStats() {
