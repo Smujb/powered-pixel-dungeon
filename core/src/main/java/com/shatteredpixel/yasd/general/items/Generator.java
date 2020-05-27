@@ -108,6 +108,7 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfFlock;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfShock;
+import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.wands.WandOfAcid;
 import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
@@ -473,18 +474,20 @@ public class Generator {
 	
 	public static Item random( Category cat ) {
 		switch (cat) {
-		case ARMOR:
-			return randomArmor();
-		case WEAPON:
-			return randomWeapon();
-		case MISSILE:
-			return randomMissile();
-		case ARTIFACT:
-			Item item = randomArtifact();
-			//if we're out of artifacts, return a ring instead.
-			return item != null ? item : random(Category.RING);
-		default:
-			return ((Item) Reflection.newInstance(cat.classes[Random.chances( cat.probs )])).random();
+			case WAND:
+				return randomWand();
+			case ARMOR:
+				return randomArmor();
+			case WEAPON:
+				return randomWeapon();
+			case MISSILE:
+				return randomMissile();
+			case ARTIFACT:
+				Item item = randomArtifact();
+				//if we're out of artifacts, return a ring instead.
+				return item != null ? item : random(Category.RING);
+			default:
+				return ((Item) Reflection.newInstance(cat.classes[Random.chances(cat.probs)])).random();
 		}
 	}
 	
@@ -522,6 +525,10 @@ public class Generator {
 			}
 		}
 		return a;
+	}
+
+	public static Wand randomWand() {
+		return NormalWand.createRandom();
 	}
 
 	public static MeleeWeapon randomWeapon(){

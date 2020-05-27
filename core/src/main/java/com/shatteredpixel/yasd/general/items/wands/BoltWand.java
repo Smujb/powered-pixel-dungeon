@@ -35,30 +35,82 @@ import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class BoltWand extends NormalWand {
 
+	private boolean stopChars = true;
+	private boolean stopTerrain = true;
+	private boolean stopTarget = false;
+
+	private static final String STOP_CHARS = "stop_chars";
+	private static final String STOP_TERRAIN = "stop_terrain";
+	private static final String STOP_TARGET = "stop_target";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(STOP_CHARS, stopChars);
+		bundle.put(STOP_TERRAIN, stopTerrain);
+		bundle.put(STOP_TARGET, stopTarget);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		stopChars = bundle.getBoolean(STOP_CHARS);
+		stopTerrain = bundle.getBoolean(STOP_TERRAIN);
+		stopTarget = bundle.getBoolean(STOP_TARGET);
+	}
+
 	@Override
 	public String statsDesc() {
-		return Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
+		String desc = "";
+		if (!stopChars | !stopTerrain | stopTarget) {
+			if (!stopChars) {
+				desc += Messages.get(this, STOP_CHARS) + "\n";
+			}
+			if (!stopTerrain) {
+				desc += Messages.get(this, STOP_TERRAIN) + "\n";
+			}
+			if (stopTarget) {
+				desc += Messages.get(this, STOP_TARGET) + "\n";
+			}
+			desc += "\n";
+		}
+		return desc + Messages.get(this, "stats_desc", chargesPerCast(), min(), max());
 	}
 
 	@Override
 	protected NormalWand initStats() {
 		collisionProperties = Ballistica.WONT_STOP;
 		if (Random.Int(3) != 0) {
-			collisionProperties = collisionProperties | Ballistica.STOP_CHARS;
+			stopChars = false;
 		}
 
 		if (Random.Int(3) != 0) {
-			collisionProperties = collisionProperties | Ballistica.STOP_TARGET;
+			stopTerrain = false;
 		}
 
 		if (Random.Int(3) != 0) {
+			stopTarget = true;
+		}
+		initProps();
+		return super.initStats();
+	}
+
+	private void initProps() {
+		collisionProperties = Ballistica.WONT_STOP;
+		if (stopTerrain) {
 			collisionProperties = collisionProperties | Ballistica.STOP_TERRAIN;
 		}
-		return super.initStats();
+		if (stopChars) {
+			collisionProperties = collisionProperties | Ballistica.STOP_CHARS;
+		}
+		if (stopTarget) {
+			collisionProperties = collisionProperties | Ballistica.STOP_TARGET;
+		}
 	}
 
 	@Override
