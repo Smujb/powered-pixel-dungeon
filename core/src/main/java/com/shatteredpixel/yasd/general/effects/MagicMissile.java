@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.effects.particles.PoisonParticle;
 import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SmokeParticle;
+import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
@@ -81,6 +82,7 @@ public class MagicMissile extends Emitter {
 	public static final int SHAMAN_PURPLE   = 16;
 	public static final int TOXIC_VENT      = 17;
 	public static final int ELMO            = 18;
+	public static final int SHOCK_BALL      = 19;
 
 	public static final int SPIRAL          = 100;
 	public static final int FOLIAGE_CONE    = 101;
@@ -185,6 +187,11 @@ public class MagicMissile extends Emitter {
 			case SHAMAN_PURPLE:
 				size( 2 );
 				pour( ShamanParticle.PURPLE, 0.01f );
+				break;
+
+			case SHOCK_BALL:
+				size( 2 );
+				pour(SparkParticle.FACTORY, 0.01f );
 				break;
 
 			case TOXIC_VENT:
