@@ -65,6 +65,18 @@ public class BoltWand extends NormalWand {
 	}
 
 	@Override
+	protected float getDamageMultiplier() {
+		float multiplier = super.getDamageMultiplier();
+		if (!stopChars) {
+			multiplier *= 0.9f;
+		}
+		if (!stopTerrain) {
+			multiplier *= 0.8f;
+		}
+		return multiplier;
+	}
+
+	@Override
 	public String statsDesc() {
 		String desc = "";
 		if (!stopChars | !stopTerrain | stopTarget) {
