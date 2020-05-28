@@ -48,26 +48,49 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.levels.traps.GrippingTrap;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
 public abstract class NormalWand extends DamageWand {
-	private static final int BASE_MAX_CHARGES = 2;
+	private static final int BASE_INITIAL_CHARGES = 3;
 	private static final int BASE_CHARGES_PER_CAST = 1;
 
+	private int initialCharges;
+	private int chargesPerCast;
 
-	private int maxCharges = BASE_MAX_CHARGES;
-	private int chargesPerCast = BASE_CHARGES_PER_CAST;
+	private static final String ELEMENT = "element";
+	private static final String INITIAL_CHARGES = "initial-charges";
+	private static final String CHARGES_PER_CAST = "charges-per-cast";
+
+	@Override
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(ELEMENT, element);
+		bundle.put(INITIAL_CHARGES, initialCharges);
+		bundle.put(CHARGES_PER_CAST, chargesPerCast);
+	}
+
+	@Override
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		element = bundle.getEnum(ELEMENT, Element.class);
+		initialCharges = bundle.getInt(INITIAL_CHARGES);
+		chargesPerCast = bundle.getInt(CHARGES_PER_CAST);
+	}
 
 	public NormalWand() {
 		initStats();
+		initialCharges = curCharges = maxCharges = BASE_INITIAL_CHARGES;
+		chargesPerCast = BASE_CHARGES_PER_CAST;
 	}
 
 	@Override
@@ -126,20 +149,25 @@ public abstract class NormalWand extends DamageWand {
 		return Messages.get(NormalWand.class, element.name() + "_desc");
 	}
 
+	@Override
+	protected int initialCharges() {
+		return initialCharges;
+	}
+
 	@NotNull
 	public static NormalWand createRandom() {
 		NormalWand wand;
-		switch (Random.Int(2)) {
-			case 0: default:
+		switch (Random.Int(6)) {
+			default:
 				wand = new BoltWand();
 				break;
-			case 1:
+			case 3: case 4:
 				wand = new AOEWand();
 				break;
 			//Not implemented atm
-			case 2:
-				wand = new AllyWand();
-				break;
+			//case 5:
+			//	wand = new AllyWand();
+			//	break;
 
 		}
 		return wand.initStats();
@@ -153,9 +181,9 @@ public abstract class NormalWand extends DamageWand {
 		if (Random.Int(3) == 0) {
 			chargesPerCast += Random.Int(3);
 		}
-		maxCharges = BASE_MAX_CHARGES;
+		initialCharges = BASE_INITIAL_CHARGES;
 		if (Random.Int(3) == 0) {
-			maxCharges += Random.Int(3);
+			initialCharges += Random.Int(3);
 		}
 		return this;
 	}
@@ -170,8 +198,8 @@ public abstract class NormalWand extends DamageWand {
 				multiplier *= 1.2f;
 				break;
 		}
-		if (maxCharges > 2) {
-			multiplier *= Math.pow(0.95, maxCharges-2);
+		if (initialCharges > 2) {
+			multiplier *= Math.pow(0.95, initialCharges -2);
 		}
 		return multiplier;
 	}
@@ -192,6 +220,7 @@ public abstract class NormalWand extends DamageWand {
 					GameScene.add(Blob.seed(cell, defaultAmt, ParalyticGas.class));
 					break;
 				case SHARP:
+					new GrippingTrap().set(cell).activate();
 					break;
 				case FIRE:
 					GameScene.add(Blob.seed(cell, defaultAmt/2, Fire.class));
@@ -239,6 +268,7 @@ public abstract class NormalWand extends DamageWand {
 					GameScene.add(Blob.seed(cell, defaultAmt, Miasma.class));
 					break;
 			}
+			GameScene.updateMap(cell);
 		}
 	}
 
@@ -255,12 +285,16 @@ public abstract class NormalWand extends DamageWand {
 	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
 		if (element == Element.PHYSICAL) {
-			MagicMissile.boltFromChar(curUser.sprite.parent,
+			MagicMissile m = MagicMissile.boltFromChar(curUser.sprite.parent,
 					MagicMissile.PLASMA_BOLT,
 					curUser.sprite,
 					bolt.collisionPos,
 					callback);
 			Sample.INSTANCE.play(Assets.SND_ZAP);
+			int dist = bolt.dist;
+			if (dist > 5){
+				m.setSpeed(dist*25);
+			}
 		} else {
 			super.fx(bolt, callback);
 		}

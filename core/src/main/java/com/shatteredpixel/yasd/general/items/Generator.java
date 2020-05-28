@@ -528,7 +528,7 @@ public class Generator {
 	}
 
 	public static Wand randomWand() {
-		return NormalWand.createRandom();
+		return (Wand) NormalWand.createRandom().random();
 	}
 
 	public static MeleeWeapon randomWeapon(){

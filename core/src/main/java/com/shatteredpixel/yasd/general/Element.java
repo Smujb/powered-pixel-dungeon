@@ -221,6 +221,7 @@ public enum Element {
 	public void FX(Char ch, int cell, Callback attack) {
 		final Char target = Actor.findChar(cell);
 		int AMT = 5;
+		MagicMissile m = null;
 		switch (this) {
 			default:
 				attack.call();
@@ -235,7 +236,7 @@ public enum Element {
 				}
 				break;
 			case MAGICAL:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				m = MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.MAGIC_MISSILE,
 						ch.sprite,
 						cell,
@@ -248,7 +249,7 @@ public enum Element {
 				attack.call();
 				break;
 			case FIRE:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m =MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.FIRE,
 						ch.sprite,
 						cell,
@@ -263,7 +264,7 @@ public enum Element {
 						});
 				break;
 			case WATER:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m = MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.WATER_CONE,
 						ch.sprite,
 						cell,
@@ -278,7 +279,7 @@ public enum Element {
 						});
 				break;
 			case COLD:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m = MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.FROST,
 						ch.sprite,
 						cell,
@@ -294,28 +295,28 @@ public enum Element {
 				Sample.INSTANCE.play(Assets.SND_ZAP);
 				break;
 			case EARTH:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				m = MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.EARTH,
 						ch.sprite,
 						cell,
 						attack);
 				break;
 			case GRASS:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				m = MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.FOLIAGE_CONE,
 						ch.sprite,
 						cell,
 						attack);
 				break;
 			case CONFUSION:
-				MagicMissile.boltFromChar( ch.sprite.parent,
+				m = MagicMissile.boltFromChar( ch.sprite.parent,
 						MagicMissile.RAINBOW,
 						ch.sprite,
 						cell,
 						attack);
 				break;
 			case TOXIC:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m = MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.TOXIC_VENT,
 						ch.sprite,
 						cell,
@@ -341,7 +342,7 @@ public enum Element {
 				attack.call();
 				break;
 			case ACID:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m = MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.ACID,
 						ch.sprite,
 						cell,
@@ -372,7 +373,7 @@ public enum Element {
 				attack.call();
 				break;
 			case SPIRIT:
-				MagicMissile.boltFromChar(ch.sprite.parent,
+				m = MagicMissile.boltFromChar(ch.sprite.parent,
 						MagicMissile.SHADOW,
 						ch.sprite,
 						cell,
@@ -386,6 +387,11 @@ public enum Element {
 							}
 						});
 				break;
+
+		}
+		int dist = Dungeon.level.distance(ch.pos, cell);
+		if (dist > 5 && m != null){
+			m.setSpeed(dist*25);
 		}
 	}
 
