@@ -165,9 +165,9 @@ public abstract class NormalWand extends DamageWand {
 				wand = new AOEWand();
 				break;
 			//Not implemented atm
-			//case 5:
-			//	wand = new AllyWand();
-			//	break;
+			case 5:
+				wand = new AllyWand();
+				break;
 
 		}
 		return wand.initStats();
@@ -284,10 +284,14 @@ public abstract class NormalWand extends DamageWand {
 
 	@Override
 	protected void fx(Ballistica bolt, Callback callback) {
+		fx(bolt, callback, curUser, element);
+	}
+
+	protected static void fx(Ballistica bolt, Callback callback, Char ch, Element element) {
 		if (element == Element.PHYSICAL) {
-			MagicMissile m = MagicMissile.boltFromChar(curUser.sprite.parent,
+			MagicMissile m = MagicMissile.boltFromChar(ch.sprite.parent,
 					MagicMissile.PLASMA_BOLT,
-					curUser.sprite,
+					ch.sprite,
 					bolt.collisionPos,
 					callback);
 			Sample.INSTANCE.play(Assets.SND_ZAP);
@@ -296,17 +300,26 @@ public abstract class NormalWand extends DamageWand {
 				m.setSpeed(dist*25);
 			}
 		} else {
-			super.fx(bolt, callback);
+			element.FX(ch, bolt.collisionPos, callback);
 		}
+	}
+
+	protected static float realMin(float lvl, int chargesPerCast) {
+		return (3 + lvl) * chargesPerCast;
+	}
+
+	protected static float realMax(float lvl, int chargesPerCast, float damageMultiplier) {
+		return (9 + 4 * lvl) * chargesPerCast * damageMultiplier;
 	}
 
 	@Override
 	public float min(float lvl) {
-		return (3 + lvl) * chargesPerCast();
+		return realMin(lvl, chargesPerCast());
 	}
 
 	@Override
 	public float max(float lvl) {
-		return (9 + 4 * lvl) * chargesPerCast() * getDamageMultiplier();
+		return realMax(lvl, chargesPerCast(), getDamageMultiplier());
 	}
+
 }

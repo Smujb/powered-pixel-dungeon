@@ -103,11 +103,12 @@ public abstract class Mob extends Char {
 	public boolean hasSupport = false;
 	public int shotType = Ballistica.PROJECTILE;
 
-	public AiState SLEEPING     = new  Sleeping();
-	public AiState HUNTING		= new  Hunting();
-	public AiState WANDERING	= new  Wandering();
-	public AiState FLEEING		= new  Fleeing();
-	public AiState PASSIVE		= new  Passive();
+	public AiState SLEEPING     = new Sleeping();
+	public AiState HUNTING		= new Hunting();
+	public AiState WANDERING	= new Wandering();
+	public AiState FLEEING		= new Fleeing();
+	public AiState PASSIVE		= new Passive();
+	public AiState FOLLOWING    = new Following();
 	public AiState state = SLEEPING;
 	
 	public Class<? extends CharSprite> spriteClass;
