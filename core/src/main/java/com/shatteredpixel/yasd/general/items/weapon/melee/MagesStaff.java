@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
+import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.wands.WandOfCorrosion;
 import com.shatteredpixel.yasd.general.items.wands.WandOfCorruption;
@@ -57,6 +58,8 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -97,14 +100,13 @@ public class MagesStaff extends MeleeWeapon {
 		return (int) (super.defaultDegradeAmount()/1.5f);
 	}
 
-	public MagesStaff(Wand wand){
+	public MagesStaff(@NotNull Wand wand){
 		this();
 		wand.identify();
 		wand.cursed = false;
 		this.wand = wand;
 		updateWand(false);
 		wand.curCharges = wand.maxCharges;
-		name = Messages.get(wand, "staff_name");
 	}
 
 	@Override
@@ -200,6 +202,19 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand != null) wand.stopCharging();
 	}
 
+	@Override
+	public String name() {
+		String name;
+		if (wand instanceof NormalWand) {
+			name = ((NormalWand)wand).name(true);
+		} else if (wand != null) {
+			name = Messages.get(wand, "staff_name");
+		} else {
+			name = Messages.get(this, "name");
+		}
+		return name;
+	}
+
 	public Item imbueWand(Wand wand, Char owner){
 
 		this.wand = null;
@@ -219,8 +234,6 @@ public class MagesStaff extends MeleeWeapon {
 		updateWand(false);
 		wand.curCharges = wand.maxCharges;
 		if (owner != null) wand.charge(owner);
-
-		name = Messages.get(wand, "staff_name");
 
 		//This is necessary to reset any particles.
 		//FIXME this is gross, should implement a better way to fully reset quickslot visuals
@@ -289,11 +302,9 @@ public class MagesStaff extends MeleeWeapon {
 		String info = super.info();
 
 		if (wand == null){
-			//FIXME this is removed because of journal stuff, and is generally unused.
-			//perhaps reword to fit in journal better
-			//info += "\n\n" + Messages.get(this, "no_wand");
+			info += "\n\n" + Messages.get(this, "no_wand");
 		} else {
-			info += "\n\n" + Messages.get(this, "has_wand", Messages.get(wand, "name")) + " " + wand.statsDesc();
+			info += "\n\n" + Messages.get(this, "has_wand", wand.name()) + "\n" + wand.statsDesc();
 		}
 
 		return info;

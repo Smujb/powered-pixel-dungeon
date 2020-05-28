@@ -114,7 +114,11 @@ public abstract class NormalWand extends DamageWand {
 
 	@Override
 	public String name() {
-		return Messages.get(Wand.class, "name", Messages.get(NormalWand.class, element.name() + "_name", Messages.get(this, "name")));
+		return name(false);
+	}
+	public String name(boolean staff) {
+		String base = staff ? Messages.get(MagesStaff.class, "name_wand") : Messages.get(Wand.class, "name");
+		return Messages.format(base, Messages.get(NormalWand.class, element.name() + "_name", Messages.get(this, "name")));
 	}
 
 	@Override

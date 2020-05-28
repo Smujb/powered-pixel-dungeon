@@ -31,6 +31,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.utils.GLog;
+import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,7 +133,11 @@ public class Messages {
 			if (c != null && c.getSuperclass() != null){
 				return get(c.getSuperclass(), k, baseName, args);
 			} else {
-				return "missed_string:"+baseName;
+				String name = "missed_string:"+baseName;
+				if (DeviceCompat.isDesktop() && DeviceCompat.isDebug()) {
+					GLog.n(name);
+				}
+				return name;
 			}
 		}
 	}
@@ -177,17 +183,17 @@ public class Messages {
 	public static String titleCase( String str ){
 		//English capitalizes every word except for a few exceptions
 		if (lang == Languages.ENGLISH){
-			String result = "";
+			StringBuilder result = new StringBuilder();
 			//split by any unicode space character
 			for (String word : str.split("(?<=\\p{Zs})")){
 				if (noCaps.contains(word.trim().toLowerCase(Locale.ENGLISH).replaceAll(":|[0-9]", ""))){
-					result += word;
+					result.append(word);
 				} else {
-					result += capitalize(word);
+					result.append(capitalize(word));
 				}
 			}
 			//first character is always capitalized.
-			return capitalize(result);
+			return capitalize(result.toString());
 		}
 
 		//Otherwise, use sentence case
