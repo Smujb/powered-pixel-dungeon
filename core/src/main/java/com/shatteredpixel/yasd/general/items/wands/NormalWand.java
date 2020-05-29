@@ -162,10 +162,12 @@ public abstract class NormalWand extends DamageWand {
 			default:
 				wand = new BoltWand();
 				break;
-			case 3: case 4:
+			case 2: case 3:
 				wand = new AOEWand();
 				break;
-			//Not implemented atm
+			case 4:
+				wand = new SupportWand();
+				break;
 			case 5:
 				wand = new AllyWand();
 				break;

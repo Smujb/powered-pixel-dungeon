@@ -43,7 +43,6 @@ import com.watabou.utils.Random;
 
 import org.jetbrains.annotations.NotNull;
 
-//TODO implement
 public class AllyWand extends NormalWand {
 
 	@Override
@@ -68,7 +67,7 @@ public class AllyWand extends NormalWand {
 			sent.sprite.centerEmitter().burst(element.particleType(), 8 + level() / 2);
 			sent.link(this);
 			processSoulMark(sent, chargesPerCast());
-			sent.heal(damageRoll());
+			sent.heal(damageRoll(), true);
 
 			//shooting the guardian at a location
 		} else if ( sent == null ){
@@ -130,6 +129,7 @@ public class AllyWand extends NormalWand {
 
 				sent.sprite.centerEmitter().burst(element.particleType(), 8 + level() / 2);
 				sent.link(this);
+				sent.heal(damageRoll()/2, true);
 				if (ch.alignment == Char.Alignment.ENEMY || ch.buff(Amok.class) != null) {
 					sent.aggro(ch);
 				}
@@ -146,7 +146,7 @@ public class AllyWand extends NormalWand {
 		private int wandLvl = 0;
 		private Element element = Element.MAGICAL;
 		private float dmgFactor = 1f;
-		private Emitter emitter;
+		private Emitter emitter = null;
 
 		{
 			spriteClass = StatueSprite.class;
@@ -163,9 +163,9 @@ public class AllyWand extends NormalWand {
 		}
 
 		public void link(@NotNull AllyWand wand) {
-			level = wandLvl = wand.level();
-			updateHT(true);
-			HP = HT/5;
+			level = wandLvl = Math.round(wand.actualLevel());
+			updateHT(false);
+			HP = Math.max(HP, HT/5);
 			element = wand.element;
 			alignment = wand.curUser.alignment;
 			dmgFactor = wand.getDamageMultiplier();
@@ -175,7 +175,7 @@ public class AllyWand extends NormalWand {
 		protected boolean act() {
 			if (emitter == null && sprite != null) {
 				emitter = sprite.emitter();
-				emitter.pour(element.particleType(), 0.25f);
+				emitter.pour(element.particleType(), 0.1f);
 			}
 
 			return super.act();

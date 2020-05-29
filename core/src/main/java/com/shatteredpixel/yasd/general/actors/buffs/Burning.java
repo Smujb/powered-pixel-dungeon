@@ -52,7 +52,7 @@ public class Burning extends Buff implements Hero.Doom {
 		element = Element.FIRE;
 	}
 	
-	private static final float DURATION = 8f;
+	public static final float DURATION = 8f;
 	
 	private float left;
 	

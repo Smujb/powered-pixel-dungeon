@@ -169,7 +169,9 @@ public enum Element {
 				if (grassCells > 0) damage = damage * (20/(20-grassCells));
 				break;
 			case GRASS:
-				Buff.affect(defender, Roots.class, Paralysis.DURATION);
+				if (Random.Int(2) == 0) {
+					Buff.affect(defender, Roots.class, Paralysis.DURATION);
+				}
 				break;
 			case AIR:
 				Buff.affect(defender, Hex.class, 5);
