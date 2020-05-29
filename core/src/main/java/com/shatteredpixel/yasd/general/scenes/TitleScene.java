@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.ui.Archs;
+import com.shatteredpixel.yasd.general.ui.DevSettingsButton;
 import com.shatteredpixel.yasd.general.ui.DiscordButton;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
@@ -218,6 +219,12 @@ public class TitleScene extends PixelScene {
 		LanguageButton btnLang = new LanguageButton();
 		btnLang.setRect(pos, 0, 16, 20);
 		add( btnLang );
+
+		pos += btnLang.width();
+
+		DevSettingsButton devSettingsButton = new DevSettingsButton();
+		devSettingsButton.setRect( pos, 0, 16, 20 );
+		add( devSettingsButton );
 
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos( w - btnExit.width(), 0 );

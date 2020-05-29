@@ -134,7 +134,7 @@ public class Messages {
 				return get(c.getSuperclass(), k, baseName, args);
 			} else {
 				String name = "missed_string:"+baseName;
-				if (DeviceCompat.isDesktop() && DeviceCompat.isDebug()) {
+				if (YASDSettings.debugReport() && DeviceCompat.isDebug()) {
 					GLog.n(name);
 				}
 				return name;

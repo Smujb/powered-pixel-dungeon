@@ -325,11 +325,32 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 		return getInt( KEY_DIFFICULTY, 2, 0, 4 );
 	}
 
+	//Developer options
+	private static final String MAP_CACHE  	  = "map_cache";
+	private static final String DEBUG_REPORT  = "debug_report";
+
+	public static void mapCache(boolean value) {
+		put( MAP_CACHE, value);
+	}
+
+	public static boolean mapCache() {
+		return getBoolean(MAP_CACHE,true);
+	}
+
+	public static void debugReport(boolean value) {
+		put( DEBUG_REPORT, value);
+	}
+
+	public static boolean debugReport() {
+		return getBoolean(DEBUG_REPORT,false);
+	}
+
+
 	//Window management (desktop only atm)
 
-	public static final String KEY_WINDOW_WIDTH     = "window_width";
-	public static final String KEY_WINDOW_HEIGHT    = "window_height";
-	public static final String KEY_WINDOW_MAXIMIZED = "window_maximized";
+	private static final String KEY_WINDOW_WIDTH     = "window_width";
+	private static final String KEY_WINDOW_HEIGHT    = "window_height";
+	private static final String KEY_WINDOW_MAXIMIZED = "window_maximized";
 
 	public static void windowResolution( Point p ){
 		put(KEY_WINDOW_WIDTH, p.x);

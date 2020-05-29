@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -275,14 +276,7 @@ public abstract class Level implements Bundlable {
 		public int version = -1;
 
 		boolean isValid(Level level) {
-			if (data == null) {
-				return false;
-			} else if (version != level.mapVersion) {
-				return false;
-			} else if (data.length != level.getMap().length) {
-				return false;
-			}
-			return true;
+			return YASDSettings.mapCache() && data != null && version == level.mapVersion && data.length == level.getMap().length;
 		}
 
 		void validate(Level level) {
