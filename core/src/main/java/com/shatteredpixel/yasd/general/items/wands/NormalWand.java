@@ -113,8 +113,9 @@ public abstract class NormalWand extends DamageWand {
 			case ACID:
 				return ItemSpriteSheet.WAND_ACID;
 			case SHARP:
-			case DRAIN:
 				return ItemSpriteSheet.WAND_LIFE_DRAIN;
+			case DRAIN:
+				return ItemSpriteSheet.WAND_TRANSFUSION;
 			case WATER:
 				return ItemSpriteSheet.WAND_FLOW;
 			case COLD:

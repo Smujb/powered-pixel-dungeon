@@ -48,8 +48,13 @@ import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Lightning;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.effects.Speck;
+import com.shatteredpixel.yasd.general.effects.particles.BloodParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
+import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
+import com.shatteredpixel.yasd.general.effects.particles.PurpleParticle;
+import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
+import com.shatteredpixel.yasd.general.effects.particles.SnowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
@@ -59,9 +64,12 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
+
+import org.jetbrains.annotations.Nullable;
 
 public enum Element {
 	/*
@@ -392,6 +400,45 @@ public enum Element {
 		int dist = Dungeon.level.distance(ch.pos, cell);
 		if (dist > 5 && m != null){
 			m.setSpeed(dist*25);
+		}
+	}
+	@Nullable
+	public Emitter.Factory particleType() {
+		switch (this) {
+			default:
+				return null;
+			case EARTH:
+				return MagicMissile.EarthParticle.ATTRACT;
+			case GRASS:
+				return LeafParticle.GENERAL;
+			case STONE:
+				return Speck.factory(Speck.RATTLE);
+			case SHARP:
+				return BloodParticle.BURST;
+			case FIRE:
+				return FlameParticle.STORM;
+			case DESTRUCTION:
+				return PurpleParticle.BURST;
+			case ACID:
+				return Speck.factory(Speck.BUBBLE_GREEN);
+			case DRAIN:
+				return Speck.factory(Speck.HEALING);
+			case WATER:
+				return SewerLevel.WaterParticle.FACTORY;
+			case COLD:
+				return SnowParticle.FACTORY;
+			case TOXIC:
+				return Speck.factory(Speck.BUBBLE_PURPLE);
+			case CONFUSION:
+				return Speck.factory(Speck.CONFUSION);
+			case AIR:
+				return RainbowParticle.BURST;
+			case SHOCK:
+				return SparkParticle.FACTORY;
+			case LIGHT:
+				return Speck.factory(Speck.LIGHT);
+			case SPIRIT:
+				return ShadowParticle.CURSE;
 		}
 	}
 

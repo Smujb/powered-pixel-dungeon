@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.effects.particles.ElmoParticle;
 import com.shatteredpixel.yasd.general.effects.particles.FlameParticle;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.effects.particles.PoisonParticle;
+import com.shatteredpixel.yasd.general.effects.particles.PurpleParticle;
 import com.shatteredpixel.yasd.general.effects.particles.RainbowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.ShadowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.SmokeParticle;
@@ -83,6 +84,7 @@ public class MagicMissile extends Emitter {
 	public static final int TOXIC_VENT      = 17;
 	public static final int ELMO            = 18;
 	public static final int SHOCK_BALL      = 19;
+	public static final int DISINT          = 20;
 
 	public static final int SPIRAL          = 100;
 	public static final int FOLIAGE_CONE    = 101;
@@ -174,6 +176,10 @@ public class MagicMissile extends Emitter {
 			case WARD:
 				size( 4 );
 				pour( WardParticle.FACTORY, 0.01f );
+				break;
+			case DISINT:
+				size( 4 );
+				pour( PurpleParticle.BURST, 0.01f );
 				break;
 
 			case SHAMAN_RED:

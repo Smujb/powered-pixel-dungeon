@@ -191,7 +191,7 @@ public class AOEWand extends NormalWand {
 				FX = MagicMissile.FIRE_CONE;
 				break;
 			case DESTRUCTION:
-				FX = MagicMissile.SHAMAN_BLUE;
+				FX = MagicMissile.DISINT;
 				break;
 			case ACID:
 				FX = MagicMissile.ACID;

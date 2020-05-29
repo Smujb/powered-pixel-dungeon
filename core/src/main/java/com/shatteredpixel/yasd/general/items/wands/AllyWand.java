@@ -33,10 +33,10 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Amok;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
+import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -47,12 +47,17 @@ import org.jetbrains.annotations.NotNull;
 public class AllyWand extends NormalWand {
 
 	@Override
+	protected float getDamageMultiplier() {
+		return super.getDamageMultiplier()/2f;
+	}
+
+	@Override
 	public void onZap(Ballistica bolt) {
 		Char ch = Actor.findChar(bolt.collisionPos);
 
 		Sentry sent = null;
 		for (Mob m : Dungeon.level.mobs){
-			if (m instanceof Sentry && m.alignment == curUser.alignment){
+			if (m instanceof Sentry && m.elementalType() == element && m.alignment == curUser.alignment){
 				sent = (Sentry) m;
 				break;
 			}
@@ -60,7 +65,7 @@ public class AllyWand extends NormalWand {
 
 		//shooting at the guardian
 		if (sent != null && sent == ch){
-			sent.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level() / 2);
+			sent.sprite.centerEmitter().burst(element.particleType(), 8 + level() / 2);
 			sent.link(this);
 			processSoulMark(sent, chargesPerCast());
 			sent.heal(damageRoll());
@@ -76,7 +81,7 @@ public class AllyWand extends NormalWand {
 			//adjacent cell which is closes to the user of the wand.
 			if (ch != null){
 
-				ch.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level()/2);
+				ch.sprite.centerEmitter().burst(element.particleType(), 5 + level()/2);
 
 				processSoulMark(ch, chargesPerCast());
 				hit(ch);
@@ -93,7 +98,7 @@ public class AllyWand extends NormalWand {
 				}
 
 				if (closest == -1){
-					curUser.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level()/2);
+					curUser.sprite.centerEmitter().burst(element.particleType(), 8 + level()/2);
 					return; //do not spawn guardian or detach buff
 				} else {
 					sent.pos = closest;
@@ -111,19 +116,19 @@ public class AllyWand extends NormalWand {
 				Dungeon.level.occupyCell(sent);
 			}
 
-			sent.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level()/2);
+			sent.sprite.centerEmitter().burst(element.particleType(), 8 + level()/2);
 
 			//shooting at a location/enemy with no guardian being shot
 		} else {
 
 			if (ch != null) {
 
-				ch.sprite.centerEmitter().burst(MagicMissile.EarthParticle.BURST, 5 + level() / 2);
+				ch.sprite.centerEmitter().burst(element.particleType(), 5 + level() / 2);
 
 				processSoulMark(ch, chargesPerCast());
 				hit(ch);
 
-				sent.sprite.centerEmitter().burst(MagicMissile.EarthParticle.ATTRACT, 8 + level() / 2);
+				sent.sprite.centerEmitter().burst(element.particleType(), 8 + level() / 2);
 				sent.link(this);
 				if (ch.alignment == Char.Alignment.ENEMY || ch.buff(Amok.class) != null) {
 					sent.aggro(ch);
@@ -141,6 +146,7 @@ public class AllyWand extends NormalWand {
 		private int wandLvl = 0;
 		private Element element = Element.MAGICAL;
 		private float dmgFactor = 1f;
+		private Emitter emitter;
 
 		{
 			spriteClass = StatueSprite.class;
@@ -150,6 +156,12 @@ public class AllyWand extends NormalWand {
 			WANDERING = new Following();
 		}
 
+		@Override
+		public int attackProc(Char enemy, int damage) {
+			sprite.emitter().burst(element.particleType(), level/3 + 1);
+			return super.attackProc(enemy, damage);
+		}
+
 		public void link(@NotNull AllyWand wand) {
 			level = wandLvl = wand.level();
 			updateHT(true);
@@ -157,6 +169,23 @@ public class AllyWand extends NormalWand {
 			element = wand.element;
 			alignment = wand.curUser.alignment;
 			dmgFactor = wand.getDamageMultiplier();
+		}
+
+		@Override
+		protected boolean act() {
+			if (emitter == null && sprite != null) {
+				emitter = sprite.emitter();
+				emitter.pour(element.particleType(), 0.25f);
+			}
+
+			return super.act();
+		}
+
+		@Override
+		public void die(DamageSrc cause) {
+			super.die(cause);
+			emitter.kill();
+			emitter = null;
 		}
 
 		@Override
@@ -183,6 +212,7 @@ public class AllyWand extends NormalWand {
 
 		@Override
 		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
 			wandLvl = bundle.getInt(WAND_LEVEL);
 			dmgFactor = bundle.getFloat(DMG_FACTOR);
 			element = bundle.getEnum(ELEMENT, Element.class);
