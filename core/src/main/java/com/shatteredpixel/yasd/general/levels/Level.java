@@ -189,17 +189,6 @@ public abstract class Level implements Bundlable {
 
 	public int version;
 
-	//Stores current version. Incremented whenever the map is modified; used to invalidate out-of-date caches.
-	private int mapVersion = 0;
-
-	public int getMapVersion() {
-		return mapVersion;
-	}
-
-	public void onModify() {
-		mapVersion++;
-	}
-
 	private KindOfTerrain[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
@@ -273,18 +262,13 @@ public abstract class Level implements Bundlable {
 	private static class FlagCache {
 
 		public boolean[] data = null;
-		public int version = -1;
 
 		boolean isValid(Level level) {
-			return YASDSettings.mapCache() && data != null && version == level.mapVersion && data.length == level.getMap().length;
-		}
-
-		void validate(Level level) {
-			version = level.mapVersion;
+			return YASDSettings.mapCache() && data != null && data.length == level.getMap().length;
 		}
 
 		void invalidate() {
-			version = -1;
+			data = null;
 		}
 	}
 
@@ -308,7 +292,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				passable.data[i] = passable(i);
 			}
-			passable.validate(this);
 		}
 		return passable.data;
 	}
@@ -329,7 +312,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				losBlocking.data[i] = losBlocking(i);
 			}
-			losBlocking.validate(this);
 		}
 		return losBlocking.data;
 	}
@@ -345,13 +327,12 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				flammable.data[i] = flammable(i);
 			}
-			flammable.validate(this);
 		}
 		return flammable.data;
 	}
 
 	public boolean secret(int pos) {
-		if (traps.containsKey(pos) && !traps.get(pos).visible) {
+		if (hasTrap(pos) && !trap(pos).visible) {
 			return true;
 		}
 		return getTerrain(pos).secret();
@@ -364,7 +345,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				secret.data[i] = secret(i);
 			}
-			secret.validate(this);
 		}
 		return secret.data;
 	}
@@ -385,7 +365,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				solid.data[i] = solid(i);
 			}
-			solid.validate(this);
 		}
 		return solid.data;
 	}
@@ -406,7 +385,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				avoid.data[i] = avoid(i);
 			}
-			avoid.validate(this);
 		}
 		return avoid.data;
 	}
@@ -422,7 +400,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				liquid.data[i] = liquid(i);
 			}
-			liquid.validate(this);
 		}
 		return liquid.data;
 	}
@@ -438,7 +415,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				pit.data[i] = pit(i);
 			}
-			pit.validate(this);
 		}
 		return pit.data;
 	}
@@ -465,7 +441,6 @@ public abstract class Level implements Bundlable {
 			for (int i = 0; i < map.length; i++) {
 				openSpace.data[i] = openSpace(i);
 			}
-			openSpace.validate(this);
 		}
 		return openSpace.data;
 	}
@@ -480,7 +455,7 @@ public abstract class Level implements Bundlable {
 	public HashMap<Class<? extends Blob>,Blob> blobs;
 	public SparseArray<Plant> plants;
 	public ArrayList<InteractiveArea> interactiveAreas;
-	public SparseArray<Trap> traps;
+	private SparseArray<Trap> traps;
 	public HashSet<CustomTilemap> customTiles;
 	public HashSet<CustomTilemap> customWalls;
 	
@@ -651,7 +626,6 @@ public abstract class Level implements Bundlable {
 	public void restoreFromBundle( Bundle bundle ) {
 
 		version = bundle.getInt( VERSION );
-		mapVersion = bundle.getInt( MAP_VERSION );
 		
 		//saves from before 0.6.5c are not supported
 		if (version < MainGame.v0_6_5c){
@@ -760,7 +734,6 @@ public abstract class Level implements Bundlable {
 	@Override
 	public void storeInBundle( Bundle bundle ) {
 		bundle.put( VERSION, Game.versionCode );
-		bundle.put( MAP_VERSION, mapVersion );
 		bundle.put( WIDTH, width );
 		bundle.put( HEIGHT, height );
 		bundle.put( LAST_MOB, lastMob );
@@ -1346,18 +1319,51 @@ public abstract class Level implements Bundlable {
 			set(cell, terrain);
 		}
 	}
+	/*private FlagCache passable = new FlagCache();
+	private FlagCache losBlocking = new FlagCache();
+	private FlagCache flammable = new FlagCache();
+	private FlagCache secret = new FlagCache();
+	private FlagCache solid = new FlagCache();
+	private FlagCache avoid = new FlagCache();
+	private FlagCache liquid = new FlagCache();
+	private FlagCache pit = new FlagCache();
+	private FlagCache openSpace = new FlagCache();
+	 */
 
 	public void set( int cell, KindOfTerrain terrain ){
+		KindOfTerrain old = map[cell];
 		if (cell < map.length) {
-			//Painter.set(this, cell, terrain);
 			map[cell] = terrain;
+			if (terrain == WATER){
+				removeTrap( cell );
+			}
+			if (old.passable() != terrain.passable()) {
+				passable.invalidate();
+			}
+			if (old.losBlocking() != terrain.losBlocking()) {
+				losBlocking.invalidate();
+			}
+			if (old.flammable() != terrain.flammable()) {
+				flammable.invalidate();
+			}
+			if (old.secret() != terrain.secret()) {
+				secret.invalidate();
+			}
+			if (old.solid() != terrain.solid()) {
+				solid.invalidate();
+			}
+			if (old.avoid() != terrain.avoid()) {
+				avoid.invalidate();
+			}
+			if (old.liquid() != terrain.liquid()) {
+				liquid.invalidate();
+			}
+			if (old.pit() != terrain.pit()) {
+				pit.invalidate();
+			}
+			//Since this requires checking more than just the current cell, always invalidate on changing the map.
+			openSpace.invalidate();
 		}
-
-		if (terrain == WATER){
-			traps.remove( cell );
-		}
-
-		onModify();
 	}
 	
 	public Heap drop( Item item, int cell ) {
@@ -1444,25 +1450,52 @@ public abstract class Level implements Bundlable {
 		return traps.get(cell);
 	}
 
+	public boolean hasTrap(int cell) {
+		return trap(cell) != null;
+	}
+
 	public Trap setTrap( Trap trap, int pos ){
-		Trap existingTrap = traps.get(pos);
+		Trap existingTrap = trap(pos);
 		if (existingTrap != null){
-			traps.remove( pos );
+			removeTrap( pos );
 		}
 		trap.set( pos );
 		traps.put( pos, trap );
 		GameScene.updateMap( pos );
+		onTrapModified();
 		return trap;
 	}
 
 	public void disarmTrap( int pos ) {
-		//set(pos, INTERACTION);
 		GameScene.updateMap(pos);
+		onTrapModified();
+	}
+
+	public void removeTrap(int pos) {
+		traps.remove(pos);
+		if (hasTrap(pos)) {
+			onTrapModified();
+		}
+	}
+
+	void clearTraps() {
+		traps.clear();
+		onTrapModified();
+	}
+
+	public SparseArray<Trap> getTraps() {
+		return traps;
+	}
+
+	private void onTrapModified() {
+		secret.invalidate();
+		avoid.invalidate();
+		passable.invalidate();
 	}
 
 	public void discover( int cell ) {
 		set( cell, getTerrain(cell).discover() );
-		Trap trap = traps.get( cell );
+		Trap trap = trap( cell );
 		if (trap != null)
 			trap.reveal();
 		GameScene.updateMap( cell );
@@ -1489,9 +1522,9 @@ public abstract class Level implements Bundlable {
 			set(cell, Terrain.WATER);
 			GameScene.updateMap(cell);
 			return true;
-		} else if (includeTraps && traps.containsKey(cell)){
+		} else if (includeTraps && hasTrap(cell)){
 			set(cell, Terrain.WATER);
-			traps.remove(cell);
+			removeTrap(cell);
 			GameScene.updateMap(cell);
 			return true;
 		}
@@ -1503,7 +1536,7 @@ public abstract class Level implements Bundlable {
 		int result;
 		do {
 			result = randomRespawnCell();
-		} while (traps.get(result) != null
+		} while (trap(result) != null
 				|| findMob(result) != null
 				|| heaps.get(result) != null);
 		return result;

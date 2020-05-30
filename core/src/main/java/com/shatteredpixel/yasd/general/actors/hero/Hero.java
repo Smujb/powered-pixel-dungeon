@@ -1111,8 +1111,8 @@ public class Hero extends Char {
 					step = target;
 				}
 				if (walkingToVisibleTrapInFog
-						&& Dungeon.level.traps.get(target) != null
-						&& Dungeon.level.traps.get(target).visible){
+						&& Dungeon.level.trap(target) != null
+						&& Dungeon.level.trap(target).visible){
 					return false;
 				}
 			}
@@ -1245,7 +1245,7 @@ public class Hero extends Char {
 		} else {
 
 			walkingToVisibleTrapInFog = !Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
-					&& Dungeon.level.traps.get(cell) != null && Dungeon.level.traps.get(cell).visible;
+					&& Dungeon.level.trap(cell) != null && Dungeon.level.trap(cell).visible;
 
 			curAction = new HeroAction.Move(cell);
 			lastAction = null;
@@ -1610,7 +1610,7 @@ public class Hero extends Char {
 					
 					if (Dungeon.level.secret(p)) {
 
-						Trap trap = Dungeon.level.traps.get(p);
+						Trap trap = Dungeon.level.trap(p);
 
 						float chance;
 						//searches aided by foresight always succeed, even if trap isn't searchable
@@ -1630,7 +1630,7 @@ public class Hero extends Char {
 							chance = 0f;
 
 							//unintentional trap detection scales from 40% at floor 0 to 30% at floor 25
-						} else if (Dungeon.level.traps.containsKey(p)) {
+						} else if (Dungeon.level.hasTrap(p)) {
 							chance = 0.4f - (Dungeon.depth / 250f);
 							//GLog.p("trap");
 

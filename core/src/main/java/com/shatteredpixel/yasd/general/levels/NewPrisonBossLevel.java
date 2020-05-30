@@ -407,7 +407,7 @@ public class NewPrisonBossLevel extends Level {
 			blob.fullyClear();
 		}
 		addVisuals(); //this also resets existing visuals
-		traps.clear();
+		clearTraps();
 		
 		GameScene.resetMap();
 		Dungeon.observe();
@@ -662,7 +662,7 @@ public class NewPrisonBossLevel extends Level {
 	
 	public void cleanTenguCell(){
 		
-		traps.clear();
+		clearTraps();
 		Painter.fill(this, tenguCell, 1, EMPTY);
 		buildFlagMaps();
 		
@@ -776,7 +776,7 @@ public class NewPrisonBossLevel extends Level {
 			for (int y = tileY; y < tileY + tileH; y++){
 				cell = tileX + y*Dungeon.level.width();
 				for (int x = tileX; x < tileX + tileW; x++){
-					t = Dungeon.level.traps.get(cell);
+					t = Dungeon.level.trap(cell);
 					if (t != null){
 						data[i] = t.color + t.shape*16;
 					} else {
@@ -795,8 +795,8 @@ public class NewPrisonBossLevel extends Level {
 		@Override
 		public String name(int tileX, int tileY) {
 			int cell = (this.tileX+tileX) + Dungeon.level.width()*(this.tileY+tileY);
-			if (Dungeon.level.traps.get(cell) != null){
-				return Messages.titleCase(Dungeon.level.traps.get(cell).name);
+			if (Dungeon.level.trap(cell) != null){
+				return Messages.titleCase(Dungeon.level.trap(cell).name);
 			}
 			return super.name(tileX, tileY);
 		}
@@ -804,8 +804,8 @@ public class NewPrisonBossLevel extends Level {
 		@Override
 		public String desc(int tileX, int tileY) {
 			int cell = (this.tileX+tileX) + Dungeon.level.width()*(this.tileY+tileY);
-			if (Dungeon.level.traps.get(cell) != null){
-				return Dungeon.level.traps.get(cell).desc();
+			if (Dungeon.level.trap(cell) != null){
+				return Dungeon.level.trap(cell).desc();
 			}
 			return super.desc(tileX, tileY);
 		}
