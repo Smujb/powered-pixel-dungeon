@@ -62,7 +62,7 @@ public class Vulnerable extends FlavourBuff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", new DecimalFormat("#.##").format((1f-defenseFactor())*100f), dispTurns());
+		return Messages.get(this, "desc", dispTurns(), new DecimalFormat("#.##").format((1f-defenseFactor())*100f));
 	}
 }
 

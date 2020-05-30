@@ -71,6 +71,6 @@ public class Weakness extends FlavourBuff {
 
 	@Override
 	public String desc() {
-		return Messages.get(this, "desc", new DecimalFormat("#.##").format((1f-damageFactor())*100f), dispTurns());
+		return Messages.get(this, "desc", dispTurns(), new DecimalFormat("#.##").format((1f-damageFactor())*100f));
 	}
 }
