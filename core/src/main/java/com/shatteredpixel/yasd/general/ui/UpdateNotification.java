@@ -37,8 +37,6 @@ import com.watabou.noosa.Game;
 
 public class UpdateNotification extends StyledButton {
 
-	private static AvailableUpdateData update;
-
 	public UpdateNotification(){
 		super( Chrome.Type.GREY_BUTTON_TR, Messages.get(UpdateNotification.class, "title") );
 		textColor( Window.SHPX_COLOR );
@@ -51,8 +49,8 @@ public class UpdateNotification extends StyledButton {
 		super.update();
 
 		if (Updates.updateAvailable()){
-			bg.alpha((float) (0.7f + Math.sin(Game.timeTotal*2)*0.3f));
-			text.alpha((float) (0.7f + Math.sin(Game.timeTotal*2)*0.3f));
+			bg.alpha((float) (0.5f + Math.sin(Game.timeTotal*2)*0.5f));
+			text.alpha((float) (0.5f + Math.sin(Game.timeTotal*2)*0.5f));
 			visible = true;
 		} else {
 			visible = false;
