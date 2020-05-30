@@ -831,7 +831,7 @@ public abstract class Char extends Actor {
 			if (display) {
 				sprite.showStatus(CharSprite.POSITIVE, "+%dHP", total);
 			}
-			HP += amount;
+			HP += healAmt;
 			if (shield && shieldAmt > 0) {
 				Buff.affect(this, Barrier.class).setShield(shieldAmt);
 			}

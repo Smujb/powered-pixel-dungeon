@@ -56,7 +56,7 @@ public class AllyWand extends NormalWand {
 
 		Sentry sent = null;
 		for (Mob m : Dungeon.level.mobs){
-			if (m instanceof Sentry && m.elementalType() == element && m.alignment == curUser.alignment){
+			if (m instanceof Sentry && ((Sentry) m).linkable(this)){
 				sent = (Sentry) m;
 				break;
 			}
@@ -170,6 +170,10 @@ public class AllyWand extends NormalWand {
 			alignment = wand.curUser.alignment;
 			dmgFactor = wand.getDamageMultiplier();
 			setupEmitter();
+		}
+
+		public boolean linkable(@NotNull AllyWand wand) {
+			return alignment == wand.curUser.alignment && element == wand.element;
 		}
 
 		private void setupEmitter() {
