@@ -345,7 +345,6 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 		return getBoolean(DEBUG_REPORT,false);
 	}
 
-
 	//Window management (desktop only atm)
 
 	private static final String KEY_WINDOW_WIDTH     = "window_width";

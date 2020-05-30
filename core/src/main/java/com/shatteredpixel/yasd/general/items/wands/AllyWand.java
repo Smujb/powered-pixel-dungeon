@@ -169,22 +169,29 @@ public class AllyWand extends NormalWand {
 			element = wand.element;
 			alignment = wand.curUser.alignment;
 			dmgFactor = wand.getDamageMultiplier();
+			setupEmitter();
+		}
+
+		private void setupEmitter() {
+			Emitter.Factory factory = element.particleType();
+			if (emitter == null && sprite != null && factory != null) {
+				emitter = sprite.emitter();
+				emitter.pour(factory, 0.1f);
+			}
 		}
 
 		@Override
 		protected boolean act() {
-			if (emitter == null && sprite != null) {
-				emitter = sprite.emitter();
-				emitter.pour(element.particleType(), 0.1f);
-			}
-
+			setupEmitter();
 			return super.act();
 		}
 
 		@Override
 		public void die(DamageSrc cause) {
 			super.die(cause);
-			emitter.kill();
+			if (emitter != null) {
+				emitter.kill();
+			}
 			emitter = null;
 		}
 

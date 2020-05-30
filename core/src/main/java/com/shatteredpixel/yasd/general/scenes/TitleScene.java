@@ -221,10 +221,11 @@ public class TitleScene extends PixelScene {
 		add( btnLang );
 
 		pos += btnLang.width();
-
-		DevSettingsButton devSettingsButton = new DevSettingsButton();
-		devSettingsButton.setRect( pos, 0, 16, 20 );
-		add( devSettingsButton );
+		if (DeviceCompat.isDebug()) {
+			DevSettingsButton devSettingsButton = new DevSettingsButton();
+			devSettingsButton.setRect(pos, 0, 16, 20);
+			add(devSettingsButton);
+		}
 
 		ExitButton btnExit = new ExitButton();
 		btnExit.setPos( w - btnExit.width(), 0 );
