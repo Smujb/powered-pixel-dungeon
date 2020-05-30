@@ -65,7 +65,8 @@ public class AOEWand extends NormalWand {
 		if (range > BASE_RANGE) {
 			multiplier *= Math.pow(0.95, range-BASE_RANGE);
 		}
-		return multiplier;
+		//10% less damage than an equal bolt wand.
+		return multiplier * 0.9f;
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class AOEWand extends NormalWand {
 
 	@Override
 	protected void fx( Ballistica bolt, Callback callback ) {
-		//need to perform spread logic here so we can determine what cells to put flames in.
+		//need to perform spread logic here so we can determine what cells to put vfx in.
 		affectedCells = new HashSet<>();
 		visualCells = new HashSet<>();
 

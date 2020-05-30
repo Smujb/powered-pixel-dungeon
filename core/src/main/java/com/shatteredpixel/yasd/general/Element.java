@@ -135,7 +135,7 @@ public enum Element {
 				Buff.affect( defender, Wet.class, Wet.DURATION );
 				break;
 			case STONE:
-				if (Random.Int(3) == 0 && defender.buff(Paralysis.class) == null) {
+				if (Random.Int(5) == 0 && defender.buff(Paralysis.class) == null) {
 					Buff.affect(defender, Paralysis.class, 3f);
 				}
 				break;
@@ -396,6 +396,25 @@ public enum Element {
 								}
 							}
 						});
+				break;
+			case STONE:
+				if (Dungeon.level.adjacent(ch.pos, cell)) {
+					attack.call();
+				} else {
+					m = MagicMissile.boltFromChar(ch.sprite.parent,
+							MagicMissile.BONE,
+							ch.sprite,
+							cell,
+							new Callback() {
+								@Override
+								public void call() {
+									attack.call();
+									if (Dungeon.hero.fieldOfView[cell] && (target) != null) {
+										target.sprite.emitter().burst(Speck.factory(Speck.DUST), AMT);
+									}
+								}
+							});
+				}
 				break;
 
 		}

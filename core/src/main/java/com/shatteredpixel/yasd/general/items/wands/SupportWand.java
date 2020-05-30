@@ -63,6 +63,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.plants.Earthroot;
 import com.shatteredpixel.yasd.general.plants.Sungrass;
+import com.watabou.utils.Random;
 
 public class SupportWand extends NormalWand {
 
@@ -138,7 +139,9 @@ public class SupportWand extends NormalWand {
 				break;
 			case STONE:
 				if (attack) {
-					Buff.affect(receiver, Paralysis.class, Paralysis.DURATION * 2);
+					if (Random.Int(2) == 0) {
+						Buff.affect(receiver, Paralysis.class, Paralysis.DURATION);
+					}
 				} else {
 					PotionOfHealing.cure(receiver);
 				}
@@ -195,7 +198,7 @@ public class SupportWand extends NormalWand {
 				break;
 			case TOXIC:
 				if (attack) {
-					Buff.affect(receiver, Poison.class).set(2 + Dungeon.getScaleFactor()/3f);
+					Buff.affect(receiver, Poison.class).set(4 + Dungeon.getScaleFactor()/2f);
 				} else {
 					Buff.affect(receiver, ToxicImbue.class).set(ToxicImbue.DURATION);
 				}
