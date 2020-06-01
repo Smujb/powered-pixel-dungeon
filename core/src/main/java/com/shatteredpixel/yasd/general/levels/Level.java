@@ -201,14 +201,10 @@ public abstract class Level implements Bundlable {
 
 	int minScaleFactor = 0;
 	int maxScaleFactor = -1;
-	//By default, scales with hero level and has max and min defined within the individual levels. -1 max gives no limit.
+	//By default, scales with depth and has max and min defined within the individual levels. -1 max gives no limit.
 	public int getScaleFactor() {
-		int level;
-		if (Dungeon.hero != null) {
-			level = Dungeon.hero.levelToScaleFactor();
-		} else {
-			level = 1;
-		}
+		//Change this to hero level if you are making a non-linear game.
+		int level = Dungeon.depth;
 		if (maxScaleFactor == -1) {
 			return Math.max(minScaleFactor, level);
 		} else {
@@ -1331,8 +1327,8 @@ public abstract class Level implements Bundlable {
 	 */
 
 	public void set( int cell, KindOfTerrain terrain ){
-		KindOfTerrain old = map[cell];
 		if (cell < map.length) {
+			KindOfTerrain old = map[cell];
 			map[cell] = terrain;
 			if (terrain == WATER){
 				removeTrap( cell );
