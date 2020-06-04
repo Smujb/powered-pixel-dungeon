@@ -40,9 +40,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PlatformSupport;
 
 public class MainGame extends Game {
-	
-	//variable constants for specific older versions of shattered, used for data conversion
-	//versions older than v0.6.5c are no longer supported, and data from them is ignored
+
 	public static final int v0_6_5c = 264;
 	public static final int v0_2_0  = 400;
 	public static final int v0_2_1  = 401;
@@ -77,6 +75,7 @@ public class MainGame extends Game {
 	public static final int v0_3_6  = 433;
 	public static final int v0_4_0  = 434;
 	public static final int v0_4_1  = 435;
+	public static final int v0_4_2  = 437;
 	
 	public MainGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
