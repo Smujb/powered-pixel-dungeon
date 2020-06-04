@@ -96,11 +96,13 @@ public class WndJournal extends WndTabbed {
 		add(notesTab);
 		notesTab.setRect(0, 0, width, height);
 		notesTab.updateList();
-		
-		catalogTab = new CatalogTab();
-		add(catalogTab);
-		catalogTab.setRect(0, 0, width, height);
-		catalogTab.updateList();
+
+		//TODO As it is, this would be useless as there are more weapons than the journal contains (a practically infinite number in fact).
+		//Going to add it back as a catalog of weapons found this run at some point.
+		//catalogTab = new CatalogTab();
+		//add(catalogTab);
+		//catalogTab.setRect(0, 0, width, height);
+		//catalogTab.updateList();
 		
 		Tab[] tabs = {
 				new IconTab( new ItemSprite(ItemSpriteSheet.GUIDE_PAGE, null) ) {
@@ -124,13 +126,13 @@ public class WndJournal extends WndTabbed {
 						if (value) last_index = 2;
 					}
 				},
-				new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
-					protected void select( boolean value ) {
-						super.select( value );
-						catalogTab.active = catalogTab.visible = value;
-						if (value) last_index = 3;
-					}
-				}
+				//new IconTab( new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER, null) ) {
+				//	protected void select( boolean value ) {
+				//		super.select( value );
+				//		catalogTab.active = catalogTab.visible = value;
+				//		if (value) last_index = 3;
+				//	}
+				//}
 		};
 		
 		for (Tab tab : tabs) {
@@ -157,8 +159,11 @@ public class WndJournal extends WndTabbed {
 			super();
 			
 			this.icon.copy(icon);
-			
-			label.text( "(" +  key + ") " + text );
+
+			if (key != null) {
+				text = "(" +  key + ") " + text;
+			}
+			label.text( text );
 			if (key == null || key.equals(Dungeon.keyForDepth())) {
 				label.hardlight(TITLE_COLOR);
 			}
@@ -687,7 +692,7 @@ public class WndJournal extends WndTabbed {
 			private boolean seen;
 			
 			public CatalogItem(Item item, boolean IDed, boolean seen ) {
-				super( new ItemSprite(item), Messages.titleCase(item.trueName()));
+				super( new ItemSprite(item), Messages.titleCase(item.name()));
 				
 				this.item = item;
 				this.seen = seen;
@@ -716,7 +721,7 @@ public class WndJournal extends WndTabbed {
 			public boolean onClick( float x, float y ) {
 				if (inside( x, y ) && seen) {
 					GameScene.show(new WndTitledMessage(new Image(icon),
-							Messages.titleCase(item.trueName()), item.info()));
+							Messages.titleCase(item.name()), item.info()));
 
 					return true;
 				} else {

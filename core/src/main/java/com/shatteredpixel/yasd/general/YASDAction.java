@@ -31,10 +31,10 @@ import com.badlogic.gdx.Input;
 import com.watabou.input.GameAction;
 import com.watabou.input.KeyBindings;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.FileUtils;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
@@ -80,53 +80,57 @@ public class YASDAction extends GameAction {
 	public static final GameAction SW          = new YASDAction("sw");
 	public static final GameAction NW          = new YASDAction("nw");
 
-	private static final LinkedHashMap<Integer, GameAction> defaultBindings = new LinkedHashMap<>();
+	private static final LinkedHashMap<Integer, GameAction> defaultBindingsDesktop = new LinkedHashMap<>();
+	private static final LinkedHashMap<Integer, GameAction> defaultBindingsAndroid = new LinkedHashMap<>();
 	static {
-		defaultBindings.put( Input.Keys.ESCAPE,      YASDAction.BACK );
-		defaultBindings.put( Input.Keys.BACKSPACE,   YASDAction.BACK );
+		defaultBindingsDesktop.put( Input.Keys.ESCAPE,      YASDAction.BACK );
+		defaultBindingsDesktop.put( Input.Keys.BACKSPACE,   YASDAction.BACK );
 
-		defaultBindings.put( Input.Keys.H,           YASDAction.HERO_INFO );
-		defaultBindings.put( Input.Keys.J,           YASDAction.JOURNAL );
+		defaultBindingsDesktop.put( Input.Keys.H,           YASDAction.HERO_INFO );
+		defaultBindingsDesktop.put( Input.Keys.J,           YASDAction.JOURNAL );
 
-		defaultBindings.put( Input.Keys.SPACE,       YASDAction.WAIT );
-		defaultBindings.put( Input.Keys.S,           YASDAction.SEARCH );
+		defaultBindingsDesktop.put( Input.Keys.SPACE,       YASDAction.WAIT );
+		defaultBindingsDesktop.put( Input.Keys.S,           YASDAction.SEARCH );
 
-		defaultBindings.put( Input.Keys.I,           YASDAction.INVENTORY );
-		defaultBindings.put( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
-		defaultBindings.put( Input.Keys.W,           YASDAction.QUICKSLOT_2 );
-		defaultBindings.put( Input.Keys.E,           YASDAction.QUICKSLOT_3 );
-		defaultBindings.put( Input.Keys.R,           YASDAction.QUICKSLOT_4 );
+		defaultBindingsDesktop.put( Input.Keys.I,           YASDAction.INVENTORY );
+		defaultBindingsDesktop.put( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
+		defaultBindingsDesktop.put( Input.Keys.W,           YASDAction.QUICKSLOT_2 );
+		defaultBindingsDesktop.put( Input.Keys.E,           YASDAction.QUICKSLOT_3 );
+		defaultBindingsDesktop.put( Input.Keys.R,           YASDAction.QUICKSLOT_4 );
 
-		defaultBindings.put( Input.Keys.A,           YASDAction.TAG_ATTACK );
-		defaultBindings.put( Input.Keys.TAB,         YASDAction.TAG_DANGER );
-		defaultBindings.put( Input.Keys.D,           YASDAction.TAG_ACTION );
-		defaultBindings.put( Input.Keys.ENTER,       YASDAction.TAG_LOOT );
-		defaultBindings.put( Input.Keys.T,           YASDAction.TAG_RESUME );
+		defaultBindingsDesktop.put( Input.Keys.A,           YASDAction.TAG_ATTACK );
+		defaultBindingsDesktop.put( Input.Keys.TAB,         YASDAction.TAG_DANGER );
+		defaultBindingsDesktop.put( Input.Keys.D,           YASDAction.TAG_ACTION );
+		defaultBindingsDesktop.put( Input.Keys.ENTER,       YASDAction.TAG_LOOT );
+		defaultBindingsDesktop.put( Input.Keys.T,           YASDAction.TAG_RESUME );
 
-		defaultBindings.put( Input.Keys.PLUS,        YASDAction.ZOOM_IN );
-		defaultBindings.put( Input.Keys.EQUALS,      YASDAction.ZOOM_IN );
-		defaultBindings.put( Input.Keys.MINUS,       YASDAction.ZOOM_OUT );
+		defaultBindingsDesktop.put( Input.Keys.PLUS,        YASDAction.ZOOM_IN );
+		defaultBindingsDesktop.put( Input.Keys.EQUALS,      YASDAction.ZOOM_IN );
+		defaultBindingsDesktop.put( Input.Keys.MINUS,       YASDAction.ZOOM_OUT );
 
-		defaultBindings.put( Input.Keys.UP,          YASDAction.N );
-		defaultBindings.put( Input.Keys.RIGHT,       YASDAction.E );
-		defaultBindings.put( Input.Keys.DOWN,        YASDAction.S );
-		defaultBindings.put( Input.Keys.LEFT,        YASDAction.W );
+		defaultBindingsDesktop.put( Input.Keys.UP,          YASDAction.N );
+		defaultBindingsDesktop.put( Input.Keys.RIGHT,       YASDAction.E );
+		defaultBindingsDesktop.put( Input.Keys.DOWN,        YASDAction.S );
+		defaultBindingsDesktop.put( Input.Keys.LEFT,        YASDAction.W );
 
-		defaultBindings.put( Input.Keys.NUMPAD_5,    YASDAction.WAIT );
-		defaultBindings.put( Input.Keys.NUMPAD_8,    YASDAction.N );
-		defaultBindings.put( Input.Keys.NUMPAD_9,    YASDAction.NE );
-		defaultBindings.put( Input.Keys.NUMPAD_6,    YASDAction.E );
-		defaultBindings.put( Input.Keys.NUMPAD_3,    YASDAction.SE );
-		defaultBindings.put( Input.Keys.NUMPAD_2,    YASDAction.S );
-		defaultBindings.put( Input.Keys.NUMPAD_1,    YASDAction.SW );
-		defaultBindings.put( Input.Keys.NUMPAD_4,    YASDAction.W );
-		defaultBindings.put( Input.Keys.NUMPAD_7,    YASDAction.NW );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_5,    YASDAction.WAIT );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_8,    YASDAction.N );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_9,    YASDAction.NE );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_6,    YASDAction.E );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_3,    YASDAction.SE );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_2,    YASDAction.S );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_1,    YASDAction.SW );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_4,    YASDAction.W );
+		defaultBindingsDesktop.put( Input.Keys.NUMPAD_7,    YASDAction.NW );
+
+		defaultBindingsAndroid.put( Input.Keys.VOLUME_UP, YASDAction.TAG_DANGER );
+		defaultBindingsAndroid.put( Input.Keys.VOLUME_DOWN, YASDAction.SEARCH );
 	}
 
 
 	@Contract(" -> new")
 	public static LinkedHashMap<Integer, GameAction> getDefaults() {
-		return new LinkedHashMap<>(defaultBindings);
+		return DeviceCompat.isDesktop() ? new LinkedHashMap<>(defaultBindingsDesktop) : new LinkedHashMap<>(defaultBindingsAndroid);
 	}
 
 	//hard bindings for android devices
@@ -208,8 +212,8 @@ public class YASDAction extends GameAction {
 			int firstDef = 0;
 			int secondDef = 0;
 
-			for (int i : defaultBindings.keySet()){
-				if (defaultBindings.get(i) == a){
+			for (int i : defaultBindingsDesktop.keySet()){
+				if (defaultBindingsDesktop.get(i) == a){
 					if(firstDef == 0){
 						firstDef = i;
 					} else {
