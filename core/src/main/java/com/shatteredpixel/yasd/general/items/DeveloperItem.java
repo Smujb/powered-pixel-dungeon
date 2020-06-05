@@ -39,6 +39,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
+import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.levels.Level;
@@ -390,6 +391,7 @@ public class DeveloperItem extends Item {
 
 	@Override
 	public void execute(Hero hero, String action) {
+		Scroll scroll;
 		super.execute(hero, action);
 		switch (action) {
 			case AC_DEBUG:
@@ -398,12 +400,16 @@ public class DeveloperItem extends Item {
 				GLog.p("Position in map (X, Y): " + coords[0] + ", " + coords[1] + ".");
 				break;
 			case AC_MAP:
-				new ScrollOfMagicMapping().doRead();
+				scroll = new ScrollOfMagicMapping();
+				scroll.setUser(curUser);
+				scroll.doRead();
 				Buff.affect(hero, Awareness.class, Awareness.DURATION*5);
 				Buff.affect(hero, MindVision.class, MindVision.DURATION);
 				break;
 			case AC_TP:
-				new ScrollOfTeleportation().empoweredRead();
+				scroll = new ScrollOfTeleportation();
+				scroll.setUser(curUser);
+				scroll.empoweredRead();
 				break;
 			case AC_CHOOSEDEPTH:
 				MainGame.scene().addToFront(new WndChooseDepth(Dungeon.level));

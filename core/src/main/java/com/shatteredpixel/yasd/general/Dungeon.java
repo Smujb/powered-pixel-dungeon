@@ -67,6 +67,7 @@ import com.shatteredpixel.yasd.general.levels.PrisonLevel;
 import com.shatteredpixel.yasd.general.levels.SewerBossLevel;
 import com.shatteredpixel.yasd.general.levels.SewerLevel;
 import com.shatteredpixel.yasd.general.levels.TestBossLevel;
+import com.shatteredpixel.yasd.general.levels.TestingLevel;
 import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
@@ -290,6 +291,7 @@ public class Dungeon {
 		staticLevels.put("test boss", TestBossLevel.class);
 		staticLevels.put("test", TilemapTest.class);
 		staticLevels.put("test 2", TilemapTest2.class);
+		staticLevels.put("test 3", TestingLevel.class);
 		staticLevels.put("old tengu", OldPrisonBossLevel.class);
 		staticLevels.put("old dm300", OldCavesBossLevel.class);
 		staticLevels.put("old dwarf king", OldCityBossLevel.class);
