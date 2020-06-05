@@ -123,8 +123,8 @@ public class YASDAction extends GameAction {
 		defaultBindingsDesktop.put( Input.Keys.NUMPAD_4,    YASDAction.W );
 		defaultBindingsDesktop.put( Input.Keys.NUMPAD_7,    YASDAction.NW );
 
-		defaultBindingsAndroid.put( Input.Keys.VOLUME_UP, YASDAction.TAG_DANGER );
-		defaultBindingsAndroid.put( Input.Keys.VOLUME_DOWN, YASDAction.SEARCH );
+		//defaultBindingsAndroid.put( Input.Keys.VOLUME_UP, YASDAction.TAG_DANGER );
+		//defaultBindingsAndroid.put( Input.Keys.VOLUME_DOWN, YASDAction.SEARCH );
 	}
 
 

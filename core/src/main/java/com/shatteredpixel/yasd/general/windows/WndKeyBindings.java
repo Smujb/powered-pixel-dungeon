@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
+import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -37,6 +38,7 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.ScrollPane;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.watabou.input.GameAction;
+import com.watabou.input.InputHandler;
 import com.watabou.input.KeyBindings;
 import com.watabou.input.KeyEvent;
 import com.watabou.noosa.ColorBlock;
@@ -142,6 +144,7 @@ public class WndKeyBindings extends Window {
 			@Override
 			protected void onClick() {
 				KeyBindings.setAllBindings(changedBindings);
+				InputHandler.updateEventCatching(Gdx.input);
 				YASDAction.saveBindings();
 				hide();
 			}
