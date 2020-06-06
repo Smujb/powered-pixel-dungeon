@@ -27,6 +27,8 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.shatteredpixel.yasd.general.actors.mobs.Brute;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
 import com.shatteredpixel.yasd.general.items.rings.RingOfPerception;
@@ -160,7 +162,11 @@ public class MainGame extends Game {
 				Brute.ArmoredBrute.class,
 				"com.shatteredpixel.yasd.general.actors.mobs.Brute.Shielded");
 	}
-	
+
+	public static boolean supportsGyroscope() {
+		return Gdx.input.isPeripheralAvailable(Input.Peripheral.Gyroscope);
+	}
+
 	@Override
 	public void create() {
 		super.create();

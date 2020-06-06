@@ -226,9 +226,7 @@ public abstract class Level implements Bundlable {
 	@Contract(pure = true)
 	public static Terrain[] basicMap(int size) {
 		Terrain[] map = new Terrain[size];
-		for (int i = 0; i < size; i++) {
-			 map[i] = EMPTY;
-		}
+		Arrays.fill(map, EMPTY);
 		return map;
 	}
 

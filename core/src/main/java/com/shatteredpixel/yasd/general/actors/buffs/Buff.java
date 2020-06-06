@@ -91,6 +91,7 @@ public class Buff extends Actor {
 	}
 	
 	public void detach() {
+		if (target == null) return;
 		if (target.sprite != null) fx( false );
 		target.remove( this );
 	}

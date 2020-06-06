@@ -180,8 +180,6 @@ public class Hero extends Char {
 	//This list is maintained so that some logic checks can be skipped
 	// for enemies we know we aren't seeing normally, resulting in better performance
 
-	public class Morale{}
-
 	public ArrayList<Mob> mindVisionEnemies = new ArrayList<>();
 	
 	public Hero() {
@@ -205,6 +203,8 @@ public class Hero extends Char {
 		heal(HT-preHT);
 		super.updateHT(boostHP);
 	}
+
+	private static class Morale{}
 
 	private void moraleCheck() {
 		if (morale > MAX_MORALE*0.67) {
@@ -231,20 +231,6 @@ public class Hero extends Char {
 		if (!Constants.MORALE) {
 			return;
 		}
-		/*float difficultyMultiplier;
-		switch (Dungeon.difficulty) {
-			case 1:// -33% Morale loss in Easy
-				difficultyMultiplier = 0.67f;
-				break;
-			case 2:
-			default://Normal Morale loss in Medium
-				difficultyMultiplier = 1f;
-				break;
-			case 3://+50% Morale loss in Hard
-				difficultyMultiplier = 1.5f;
-				break;
-
-		}*/
 		Amount *= Dungeon.difficulty.moraleFactor();
 		morale -= Amount;
 		morale = Math.max(morale, 0);

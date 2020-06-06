@@ -96,6 +96,8 @@ public class AndroidGame extends AndroidApplication {
 		} else {
 			//and rgb565 (default) on older ones for better performance
 		}
+
+		config.useGyroscope = true;
 		
 		config.useCompass = false;
 		config.useAccelerometer = false;
