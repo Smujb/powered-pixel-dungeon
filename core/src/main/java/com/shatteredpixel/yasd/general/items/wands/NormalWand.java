@@ -207,12 +207,21 @@ public abstract class NormalWand extends DamageWand {
 		return multiplier;
 	}
 
+	private static boolean override(Element element, int cell) {
+		if (element == Element.COLD || element == Element.WATER || element == Element.SHOCK) {
+			return Dungeon.level.liquid(cell);
+		} else if (element == Element.FIRE || element == Element.DESTRUCTION) {
+			return Dungeon.level.flammable(cell);
+		}
+		return false;
+	}
+
 	void affectCell(int userPos, int cell) {
 		//only affect cells directly near caster if they are flammable
 		//TODO Air, Sharp and Drain
 		final int defaultAmt = 5 + chargesPerCast()*2;
 		if (!(cell == userPos ||Dungeon.level.adjacent(userPos, cell))
-				|| Dungeon.level.flammable(cell)) {
+				|| override(element, cell)) {
 			switch (element) {
 				case EARTH:
 					break;
