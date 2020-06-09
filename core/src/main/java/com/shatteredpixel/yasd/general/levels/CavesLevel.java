@@ -59,8 +59,6 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;

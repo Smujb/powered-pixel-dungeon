@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -192,6 +193,10 @@ public class NewCavesBossLevel extends Level {
 				customArenaVisuals = (ArenaVisuals) c;
 			}
 		}
+
+		if (version <= MainGame.v0_4_2) {
+			interactiveAreas.add(new DescendArea().setPos(15, 0, 3, 3));
+		}
 	}
 
 	@Override
@@ -284,8 +289,9 @@ public class NewCavesBossLevel extends Level {
 	@Override
 	public void unseal() {
 		super.unseal();
-
-		blobs.get(PylonEnergy.class).fullyClear();
+		if (blobs.get(PylonEnergy.class) != null) {
+			blobs.get(PylonEnergy.class).fullyClear();
+		}
 
 		set( getEntrancePos(), ENTRANCE );
 		int i = 14 + 13*width();
@@ -343,7 +349,7 @@ public class NewCavesBossLevel extends Level {
 				pylonsRemaining++;
 			}
 		}
-		if (pylonsRemaining > 2) {
+		if (pylonsRemaining > 2 && blobs.get(PylonEnergy.class) != null) {
 			blobs.get(PylonEnergy.class).fullyClear();
 		}
 	}
