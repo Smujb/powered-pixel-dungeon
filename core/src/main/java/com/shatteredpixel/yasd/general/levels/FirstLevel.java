@@ -27,8 +27,8 @@
 
 package com.shatteredpixel.yasd.general.levels;
 
-import com.shatteredpixel.yasd.general.actors.mobs.Rat;
-import com.shatteredpixel.yasd.general.actors.mobs.Snake;
+import com.shatteredpixel.yasd.general.actors.mobs.DM100;
+import com.shatteredpixel.yasd.general.actors.mobs.Warlock;
 import com.shatteredpixel.yasd.general.levels.traps.WornDartTrap;
 
 public class FirstLevel extends SewerLevel {//First depth has different mobs
@@ -40,12 +40,17 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 
 	@Override
 	public Class<?>[] mobClasses() {
-			return new Class[]{Rat.class, Snake.class};
+			return new Class[]{DM100.class, Warlock.class};
 	}
 
 	@Override
 	public float[] mobChances() {
 		return new float[]{3, 1};
+	}
+
+	@Override
+	public int nMobs() {
+		return 8;
 	}
 
 	@Override
