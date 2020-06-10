@@ -79,8 +79,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -383,6 +381,9 @@ public class Potion extends Item {
 	
 	@Override
 	public String name() {
+		if (getName() != null) {
+			return getName();
+		}
 		return isKnown() ? super.name() : Messages.get(this, color);
 	}
 	

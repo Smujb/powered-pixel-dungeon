@@ -472,7 +472,7 @@ public class Armor extends KindofMisc {
 	
 	@Override
 	public String name() {
-		return Glyph.getName(this, glyph, cursedKnown);
+		return getName() == null ? Glyph.getName(this, glyph, cursedKnown) : getName();
 	}
 
 	@Override

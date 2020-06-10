@@ -108,7 +108,17 @@ public class Item implements Bundlable {
 	public boolean bones = false;
 
 	private final boolean testing = false;
-	
+
+	private String givenName = null;
+
+	public void rename(String name) {
+		givenName = name;
+	}
+
+	public String getName() {
+		return givenName;
+	}
+
 	private static Comparator<Item> itemComparator = new Comparator<Item>() {
 		@Override
 		public int compare( Item lhs, Item rhs ) {
@@ -523,7 +533,7 @@ public class Item implements Bundlable {
 	}
 	
 	public String name() {
-		return name;
+		return givenName == null ? name : givenName;
 	}
 	
 	@Contract(pure = true)
@@ -596,6 +606,7 @@ public class Item implements Bundlable {
 	private static final String CURSED_KNOWN	= "cursedKnown";
 	private static final String QUICKSLOT		= "quickslotpos";
 	private static final String DURABILITY      = "durability";
+	private static final String GIVEN_NAME      = "given-name";
 	
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -605,6 +616,7 @@ public class Item implements Bundlable {
 		bundle.put( CURSED, cursed );
 		bundle.put( CURSED_KNOWN, cursedKnown );
 		bundle.put( DURABILITY, curDurability );
+		bundle.put( GIVEN_NAME, givenName );
 		if (Dungeon.quickslot.contains(this)) {
 			bundle.put( QUICKSLOT, Dungeon.quickslot.getSlot(this) );
 		}
@@ -616,6 +628,10 @@ public class Item implements Bundlable {
 		levelKnown	= bundle.getBoolean( LEVEL_KNOWN );
 		cursedKnown	= bundle.getBoolean( CURSED_KNOWN );
 		curDurability = bundle.getFloat( DURABILITY );
+
+		if (bundle.contains(GIVEN_NAME)) {
+			givenName = bundle.getString(GIVEN_NAME);
+		}
 		
 		int level = bundle.getInt( LEVEL );
 		level(level);

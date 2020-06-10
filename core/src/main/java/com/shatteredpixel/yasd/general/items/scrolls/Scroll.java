@@ -58,8 +58,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -238,6 +236,9 @@ public abstract class Scroll extends Item {
 	
 	@Override
 	public String name() {
+		if (getName() != null) {
+			return getName();
+		}
 		return isKnown() ? name : Messages.get(this, rune);
 	}
 	

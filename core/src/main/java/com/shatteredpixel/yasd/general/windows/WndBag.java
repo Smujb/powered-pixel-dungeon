@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
@@ -62,7 +63,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.ItemSlot;
-import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.input.KeyBindings;
@@ -72,6 +72,7 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.PlatformSupport;
 
 public class WndBag extends WndTabbed {
 	
@@ -464,10 +465,16 @@ public class WndBag extends WndTabbed {
 		
 		@Override
 		protected boolean onLongClick() {
-			if (listener == null && item.defaultAction != null) {
+			if (listener == null) {
 				hide();
-				Dungeon.quickslot.setSlot( 0 , item );
-				QuickSlotButton.refresh();
+				MainGame.platform.promptTextInput(Messages.get(this, "rename_title"), item.name(), 20, false, Messages.get(this, "confirm"), Messages.get(this, "cancel"), new PlatformSupport.TextCallback() {
+					@Override
+					public void onSelect(boolean positive, String text) {
+						if (positive && text != null && !text.isEmpty()) {
+							item.rename(text);
+						}
+					}
+				});
 				return true;
 			} else {
 				return false;

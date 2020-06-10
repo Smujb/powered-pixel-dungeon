@@ -138,7 +138,7 @@ public abstract class NormalWand extends DamageWand {
 
 	@Override
 	public String name() {
-		return name(false);
+		return getName() == null ? name(false) : getName();
 	}
 	public String name(boolean staff) {
 		String base = staff ? Messages.get(MagesStaff.class, "name_wand") : Messages.get(Wand.class, "name");

@@ -204,13 +204,15 @@ public class MagesStaff extends MeleeWeapon {
 
 	@Override
 	public String name() {
-		String name;
-		if (wand instanceof NormalWand) {
-			name = ((NormalWand)wand).name(true);
-		} else if (wand != null) {
-			name = Messages.get(wand, "staff_name");
-		} else {
-			name = Messages.get(this, "name");
+		String name = getName();
+		if (name == null) {
+			if (wand instanceof NormalWand) {
+				name = ((NormalWand) wand).name(true);
+			} else if (wand != null) {
+				name = Messages.get(wand, "staff_name");
+			} else {
+				name = Messages.get(this, "name");
+			}
 		}
 		return name;
 	}
