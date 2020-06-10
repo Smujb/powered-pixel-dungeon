@@ -73,8 +73,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
-import org.jetbrains.annotations.NotNull;
-
 public class WndBag extends WndTabbed {
 	
 	//only one wnditem can appear at a time
@@ -110,8 +108,8 @@ public class WndBag extends WndTabbed {
 	protected static final int COLS_P    = 4;
 	protected static final int COLS_L    = 6;
 	
-	protected static final int SLOT_WIDTH	= 28;
-	protected static final int SLOT_HEIGHT	= 28;
+	protected static final int SLOT_WIDTH	= 24;
+	protected static final int SLOT_HEIGHT	= 24;
 	protected static final int SLOT_MARGIN	= 1;
 	
 	protected static final int TITLE_HEIGHT	= 14;
@@ -148,7 +146,7 @@ public class WndBag extends WndTabbed {
 
 
 		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
-		nRows = (int)Math.ceil((Belongings.BACKPACK_SIZE + 4) / (float)nCols);
+		nRows = (int)Math.ceil((Belongings.BACKPACK_SIZE + Constants.MISC_SLOTS) / (float)nCols);
 
 		int slotsWidth = SLOT_WIDTH * nCols + SLOT_MARGIN * (nCols - 1);
 		int slotsHeight = SLOT_HEIGHT * nRows + SLOT_MARGIN * (nRows - 1);

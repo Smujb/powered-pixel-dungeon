@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.bags;
 
+import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.quest.GooBlob;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
@@ -38,8 +39,8 @@ public class VelvetPouch extends Bag {
 
 	{
 		image = ItemSpriteSheet.POUCH;
-		
-		size = 20;
+
+		size = Belongings.BACKPACK_SIZE;
 	}
 	
 	@Override
