@@ -379,7 +379,7 @@ public class Necromancer extends Mob {
 			//no loot or exp
 			maxLvl = -5;
 
-			damageFactor = 1.2f;
+			damageFactor = 1.6f;
 
 			lootChance = 0f;
 			

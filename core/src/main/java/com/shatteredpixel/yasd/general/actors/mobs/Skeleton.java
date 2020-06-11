@@ -42,15 +42,14 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Skeleton extends Mob {
 	
 	{
 		spriteClass = SkeletonSprite.class;
 
-		healthFactor = 0.8f;
+		healthFactor = 0.7f;
 		evasionFactor = 2/3f;
+		damageFactor = 1.4f;
 		accuracyFactor = 1.25f;
 
 		numTypes = 2;
@@ -89,9 +88,8 @@ public class Skeleton extends Mob {
 		for (int i = 0; i < PathFinder.NEIGHBOURS8.length; i++) {
 			Char ch = findChar( pos + PathFinder.NEIGHBOURS8[i] );
 			if (ch != null && ch.isAlive()) {
-				int damage = Random.NormalIntRange(6, 12);
-				damage = Math.max( 0,  damage - ch.drRoll(Element.PHYSICAL) );
-				ch.damage( damage, new DamageSrc(Element.PHYSICAL, this));
+				int damage = damageRoll()/2;
+				ch.damage( damage, new DamageSrc(Element.PHYSICAL, this).ignoreDefense());
 				if (ch == Dungeon.hero && !ch.isAlive()) {
 					heroKilled = true;
 				}
