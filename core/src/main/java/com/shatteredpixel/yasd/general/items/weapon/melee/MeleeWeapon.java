@@ -57,7 +57,7 @@ public class MeleeWeapon extends Weapon {
 
 	public float defenseMultiplier = 0f;
 
-	protected float degradeFactor = 1f;
+	public float degradeFactor = 1f;
 
 	@Override
 	public boolean canDegrade() {
@@ -72,7 +72,11 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public int max(float lvl) {
-		return max((int) lvl, tier, getDamageMultiplier(curUser));
+		int max = max((int) lvl, tier, getDamageMultiplier(curUser));
+		if (max < min(lvl)) {
+			max = min(lvl);
+		}
+		return max;
 	}
 
 	public static int max(int lvl, int tier, float damageMultiplier) {
@@ -186,7 +190,7 @@ public class MeleeWeapon extends Weapon {
 			degradeFactor = randomStat();
 		}
 		if (Random.Int(5) == 0) {
-			defenseMultiplier = randomStat();
+			defenseMultiplier = Random.Float();
 		}
 		if (Random.Int(5) == 0) {
 			RCH = Random.Int(1, 3);
