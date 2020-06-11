@@ -111,15 +111,15 @@ public class Golem extends Mob {
 		return super.act();
 	}
 
-	public void teleportEnemy(Char enemy){
+	private void teleportEnemy(Char enemy){
+		spend(TICK);
 		MagicMissile.boltFromChar(sprite.parent,
-				MagicMissile.TOXIC_VENT,
+				MagicMissile.ELMO,
 				sprite,
 				enemy.pos,
 				new Callback() {
 					@Override
 					public void call() {
-						spend(TICK);
 
 						int bestPos = enemy.pos;
 						for (int i : PathFinder.NEIGHBOURS8){
@@ -143,6 +143,7 @@ public class Golem extends Mob {
 						}
 
 						enemyTeleCooldown = 20;
+						next();
 					}
 				});
 	}
@@ -185,7 +186,7 @@ public class Golem extends Mob {
 				if (enemyTeleCooldown <= 0 && Random.Int(100/distance(enemy)) == 0
 						&& !Char.hasProp(enemy, Property.IMMOVABLE)){
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-						sprite.zap( enemy.pos );
+						teleportEnemy(enemy);
 						return false;
 					} else {
 						teleportEnemy(enemy);
@@ -198,7 +199,7 @@ public class Golem extends Mob {
 
 				} else if (enemyTeleCooldown <= 0 && !Char.hasProp(enemy, Property.IMMOVABLE)) {
 					if (sprite != null && (sprite.visible || enemy.sprite.visible)) {
-						sprite.zap( enemy.pos );
+						teleportEnemy(enemy);
 						return false;
 					} else {
 						teleportEnemy(enemy);
