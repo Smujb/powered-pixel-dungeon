@@ -97,15 +97,15 @@ public class BoltWand extends NormalWand {
 	@Override
 	protected NormalWand initStats() {
 		collisionProperties = Ballistica.WONT_STOP;
-		if (Random.Int(3) != 0) {
+		if (Random.Int(3) == 0) {
 			stopChars = false;
 		}
 
-		if (Random.Int(3) != 0) {
+		if (Random.Int(3) == 0) {
 			stopTerrain = false;
 		}
 
-		if (Random.Int(3) != 0) {
+		if (Random.Int(3) == 0) {
 			stopTarget = true;
 		}
 		initProps();
