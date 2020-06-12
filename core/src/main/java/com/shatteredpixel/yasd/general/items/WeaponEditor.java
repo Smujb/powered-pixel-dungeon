@@ -110,7 +110,7 @@ public class WeaponEditor extends Item {
 	}
 
 	private static int amountOfScrap(MeleeWeapon weapon) {
-		int amount = 0;
+		int amount = 3;
 		amount += weapon.tier * (weapon.level() + 1);
 		amount *= weapon.degradedPercent();
 		if (weapon.cursed) {
@@ -118,7 +118,7 @@ public class WeaponEditor extends Item {
 		} else if (weapon.isIdentified()) {
 			amount *= 1.5f;
 		}
-		return amount;
+		return Math.max(1, amount);
 	}
 
 	private static boolean spendScrap(@NotNull Char ch, int amount) {
