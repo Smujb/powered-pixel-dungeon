@@ -43,6 +43,9 @@ import com.watabou.utils.Signal;
 
 public class Window extends Group implements Signal.Listener<KeyEvent> {
 
+	protected static final int WIDTH = 120;
+	protected static final int GAP = 2;
+	protected static final int BTN_HEIGHT = 20;
 	protected int width;
 	protected int height;
 
