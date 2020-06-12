@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.items.DeveloperItem;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.WeaponEditor;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
 import com.shatteredpixel.yasd.general.items.armor.ClothArmor;
@@ -209,15 +210,14 @@ public enum HeroClass {
 		weapon.properties.add(KindOfWeapon.Property.SURPRISE_ATTK_BENEFIT);
 		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
-		//TODO Add another unique item for Rogue
-		//CloakOfShadows cloak = new CloakOfShadows();
-		//(hero.belongings.miscs[2] = cloak).identify();
-		//hero.belongings.miscs[2].activate( hero );
+
+		WeaponEditor editor = new WeaponEditor();
+		editor.collect();
 
 		ThrowingKnife knives = new ThrowingKnife();
 		knives.quantity(3).collect();
 
-		//Dungeon.quickslot.setSlot(0, cloak);
+		Dungeon.quickslot.setSlot(0, editor);
 		Dungeon.quickslot.setSlot(1, knives);
 
 		new VelvetPouch().collect();

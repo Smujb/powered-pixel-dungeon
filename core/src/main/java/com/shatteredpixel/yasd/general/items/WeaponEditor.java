@@ -37,6 +37,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.general.ui.CheckBox;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
@@ -72,13 +73,26 @@ public class WeaponEditor extends Item {
 			GameScene.selectItem(new WndBag.Listener() {
 				@Override
 				public void onSelect(Item item) {
+					if (!(item instanceof MeleeWeapon)) {
+						return;
+					}
 					Game.scene().addToFront(new WndEditWeapon(((MeleeWeapon)item)));
+				}
+			}, WndBag.Mode.WEAPON, Messages.get(this, "select_weapon"));
+		} else if (action.equals(AC_DESTROY)) {
+			GameScene.selectItem(new WndBag.Listener() {
+				@Override
+				public void onSelect(Item item) {
+					if (!(item instanceof MeleeWeapon)) {
+						return;
+					}
+					convertToScrap(hero, ((MeleeWeapon)item));
 				}
 			}, WndBag.Mode.WEAPON, Messages.get(this, "select_weapon"));
 		}
 	}
 
-	public static int amountOfScrap(Char ch) {
+	private static int amountOfScrap(Char ch) {
 		Scrap scrap = ch.belongings.getItem(Scrap.class);
 		if (scrap != null) {
 			return scrap.quantity;
@@ -86,33 +100,43 @@ public class WeaponEditor extends Item {
 		return 0;
 	}
 
-	public static int amountOfScrap(MeleeWeapon weapon) {
+	private static int amountOfScrap(MeleeWeapon weapon) {
 		int amount = 0;
 		amount += weapon.tier * (weapon.level() + 1);
 		return amount;
 	}
 
-	public static boolean spendScrap(@NotNull Char ch, int amount) {
+	private static boolean spendScrap(@NotNull Char ch, int amount) {
 		Scrap scrap = ch.belongings.getItem(Scrap.class);
 		if (scrap != null && amount <= scrap.quantity) {
 			scrap.quantity(scrap.quantity-amount);
+			if (scrap.quantity < 0) {
+				scrap.detach(ch.belongings.backpack);
+			}
+			GLog.p(Messages.get(WeaponEditor.class, "spent_scrap"), amount);
 			return true;
 		} else {
-			GLog.n(Messages.get(WeaponEditor.class, "not_enough"));
+			if (scrap == null || scrap.quantity == 0) {
+				GLog.n(Messages.get(WeaponEditor.class, "no_scrap"));
+			} else {
+				GLog.n(Messages.get(WeaponEditor.class, "not_enough"), amountOfScrap(ch), amount);
+			}
 			return false;
 		}
 	}
 
-	public static void collectScrap(Char ch, int amount) {
+	private static void collectScrap(Char ch, int amount) {
 		new Scrap().quantity(amount).collect(ch.belongings.backpack, ch);
 	}
 
-	public static void convertToScrap(Char ch, MeleeWeapon weapon) {
+	private static void convertToScrap(Char ch, MeleeWeapon weapon) {
 		weapon.detach(ch.belongings.backpack);
-		collectScrap(ch, amountOfScrap(weapon));
+		int amount = amountOfScrap(weapon);
+		collectScrap(ch, amount);
+		GLog.p(Messages.get(WeaponEditor.class, "gained_scrap", weapon.name(), amount));
 	}
 
-	public static class Scrap extends Item {
+	private static class Scrap extends Item {
 		{
 			image = ItemSpriteSheet.THROWING_STONE;
 
@@ -149,17 +173,44 @@ public class WeaponEditor extends Item {
 			message.setPos(0, titlebar.bottom() + GAP);
 			add(message);
 
+			int bottom = (int) message.bottom();
+			for (KindOfWeapon.Property property : KindOfWeapon.Property.values()) {
+				CheckBox propBox = new CheckBox(property.name()) {
+					@Override
+					protected void onClick() {
+						super.onClick();
+						if (properties.contains(property)) {
+							properties.remove(property);
+						} else {
+							properties.add(property);
+						}
+						WndEditWeapon.this.update();
+					}
+				};
+				propBox.checked(properties.contains(property));
+				propBox.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+				add(propBox);
+				bottom = (int) propBox.bottom() + GAP;
+			}
+
 			RedButton btnChoose = new RedButton(Messages.get(this, "apply")) {
 				@Override
 				protected void onClick() {
-					copyTo(weapon);
-					spendScrap(Dungeon.hero, amountOfScrap(weapon));
-					weapon.collect();
-					hide();
+					if (spendScrap(Dungeon.hero, amountOfScrap(copyTo(new MeleeWeapon())))) {
+						copyTo(weapon);
+						if (!Dungeon.hero.belongings.contains(weapon)) {
+							weapon.collect();
+						}
+						hide();
+					}
 				}
 			};
-			btnChoose.setRect(0, message.bottom() + GAP, WIDTH, BTN_HEIGHT);
+			btnChoose.setRect(0, bottom, WIDTH, BTN_HEIGHT);
 			add( btnChoose );
+
+			bottom = (int) btnChoose.bottom();
+
+			resize(WIDTH, bottom);
 		}
 
 		private int calcCost() {
@@ -171,13 +222,15 @@ public class WeaponEditor extends Item {
 			message.text(Messages.get(this, "body", calcCost()));
 		}
 
-		private void copyTo(MeleeWeapon weapon) {
+		private MeleeWeapon copyTo(MeleeWeapon weapon) {
 			weapon.properties = properties;
 			weapon.degradeFactor = degradeFactor;
 			weapon.ACC = accuracyFactor;
 			weapon.RCH = reach;
 			weapon.DLY = attackDelay;
 			weapon.defenseMultiplier = defenseMultiplier;
+			weapon.matchProfile();
+			return weapon;
 		}
 	}
 }
