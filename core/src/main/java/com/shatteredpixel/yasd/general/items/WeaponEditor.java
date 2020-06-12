@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.CheckBox;
+import com.shatteredpixel.yasd.general.ui.OptionSlider;
 import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
@@ -53,6 +54,14 @@ import java.util.ArrayList;
 public class WeaponEditor extends Item {
 	{
 		image = ItemSpriteSheet.KIT;
+
+		unique = true;
+		cursed = false;
+	}
+
+	@Override
+	public boolean isIdentified() {
+		return true;
 	}
 
 	private static final String AC_APPLY = "apply";
@@ -103,6 +112,12 @@ public class WeaponEditor extends Item {
 	private static int amountOfScrap(MeleeWeapon weapon) {
 		int amount = 0;
 		amount += weapon.tier * (weapon.level() + 1);
+		amount *= weapon.degradedPercent();
+		if (weapon.cursed) {
+			amount /= 2;
+		} else if (weapon.isIdentified()) {
+			amount *= 1.5f;
+		}
 		return amount;
 	}
 
@@ -130,7 +145,17 @@ public class WeaponEditor extends Item {
 	}
 
 	private static void convertToScrap(Char ch, MeleeWeapon weapon) {
-		weapon.detach(ch.belongings.backpack);
+
+		if (ch.belongings.backpack.contains(weapon)) {
+			weapon.detach(ch.belongings.backpack);
+		} else {
+			for (int i = 0; i < ch.belongings.miscs.length; i++) {
+				if (ch.belongings.miscs[i] == weapon) {
+					ch.belongings.miscs[i] = null;
+					break;
+				}
+			}
+		}
 		int amount = amountOfScrap(weapon);
 		collectScrap(ch, amount);
 		GLog.p(Messages.get(WeaponEditor.class, "gained_scrap", weapon.name(), amount));
@@ -138,13 +163,20 @@ public class WeaponEditor extends Item {
 
 	private static class Scrap extends Item {
 		{
-			image = ItemSpriteSheet.THROWING_STONE;
+			image = ItemSpriteSheet.DUST;
 
 			stackable = true;
+
+			cursed = false;
+		}
+
+		@Override
+		public boolean isIdentified() {
+			return true;
 		}
 	}
 
-	public static class WndEditWeapon extends Window {
+	private static class WndEditWeapon extends Window {
 
 		RenderedTextBlock message;
 		private ArrayList<Weapon.Property> properties;
@@ -154,7 +186,7 @@ public class WeaponEditor extends Item {
 		private float attackDelay;
 		private float defenseMultiplier;
 
-		public WndEditWeapon(MeleeWeapon weapon) {
+		private WndEditWeapon(MeleeWeapon weapon) {
 			properties = weapon.properties;
 			degradeFactor = weapon.degradeFactor;
 			accuracyFactor = weapon.ACC;
@@ -173,9 +205,9 @@ public class WeaponEditor extends Item {
 			message.setPos(0, titlebar.bottom() + GAP);
 			add(message);
 
-			int bottom = (int) message.bottom();
+			int bottom = (int) message.bottom() + GAP;
 			for (KindOfWeapon.Property property : KindOfWeapon.Property.values()) {
-				CheckBox propBox = new CheckBox(property.name()) {
+				CheckBox propBox = new CheckBox(property.displayName()) {
 					@Override
 					protected void onClick() {
 						super.onClick();
@@ -188,15 +220,80 @@ public class WeaponEditor extends Item {
 					}
 				};
 				propBox.checked(properties.contains(property));
-				propBox.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+				propBox.setRect(0, bottom, WIDTH, BTN_HEIGHT*2/3f);
 				add(propBox);
 				bottom = (int) propBox.bottom() + GAP;
 			}
 
-			RedButton btnChoose = new RedButton(Messages.get(this, "apply")) {
+			OptionSlider degradeFactorSlider = new StatSlider(Messages.get(this, "degrade_factor")) {
+				@Override
+				protected void onChange() {
+					degradeFactor = getSelectedValue()/10f;
+					WndEditWeapon.this.update();
+				}
+			};
+			degradeFactorSlider.setSelectedValue((int) (degradeFactor*10));
+			degradeFactorSlider.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add(degradeFactorSlider);
+
+			bottom = (int) degradeFactorSlider.bottom();
+
+			OptionSlider accuracyFactorSlider = new StatSlider(Messages.get(this, "acc_factor")) {
+				@Override
+				protected void onChange() {
+					accuracyFactor = getSelectedValue()/10f;
+					WndEditWeapon.this.update();
+				}
+			};
+			accuracyFactorSlider.setSelectedValue((int) (accuracyFactor*10));
+			accuracyFactorSlider.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add(accuracyFactorSlider);
+
+			bottom = (int) accuracyFactorSlider.bottom();
+
+			OptionSlider attackDelaySlider = new StatSlider(Messages.get(this, "attack_delay")) {
+				@Override
+				protected void onChange() {
+					attackDelay = getSelectedValue()/10f;
+					WndEditWeapon.this.update();
+				}
+			};
+			attackDelaySlider.setSelectedValue((int) (attackDelay*10));
+			attackDelaySlider.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add(attackDelaySlider);
+
+			bottom = (int) attackDelaySlider.bottom();
+
+			OptionSlider reachSlider = new OptionSlider(Messages.get(this, "reach"), "1", "3", 1, 3) {
+				@Override
+				protected void onChange() {
+					reach = getSelectedValue();
+					WndEditWeapon.this.update();
+				}
+			};
+			reachSlider.setSelectedValue(reach);
+			reachSlider.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add(reachSlider);
+
+			bottom = (int) reachSlider.bottom();
+
+			OptionSlider defenseSlider = new OptionSlider(Messages.get(this, "defense"), "0", "100", 0, 10) {
+				@Override
+				protected void onChange() {
+					defenseMultiplier = getSelectedValue()*10f;
+					WndEditWeapon.this.update();
+				}
+			};
+			defenseSlider.setSelectedValue((int) (defenseMultiplier/10f));
+			defenseSlider.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add(defenseSlider);
+
+			bottom = (int) defenseSlider.bottom();
+
+			RedButton btnApply = new RedButton(Messages.get(this, "apply")) {
 				@Override
 				protected void onClick() {
-					if (spendScrap(Dungeon.hero, amountOfScrap(copyTo(new MeleeWeapon())))) {
+					if (spendScrap(Dungeon.hero, calcCost())) {
 						copyTo(weapon);
 						if (!Dungeon.hero.belongings.contains(weapon)) {
 							weapon.collect();
@@ -205,16 +302,16 @@ public class WeaponEditor extends Item {
 					}
 				}
 			};
-			btnChoose.setRect(0, bottom, WIDTH, BTN_HEIGHT);
-			add( btnChoose );
+			btnApply.setRect(0, bottom, WIDTH, BTN_HEIGHT);
+			add( btnApply );
 
-			bottom = (int) btnChoose.bottom();
+			bottom = (int) btnApply.bottom();
 
 			resize(WIDTH, bottom);
 		}
 
 		private int calcCost() {
-			return 0;
+			return amountOfScrap(copyTo(new MeleeWeapon())) * 2;
 		}
 
 		@Override
@@ -231,6 +328,13 @@ public class WeaponEditor extends Item {
 			weapon.defenseMultiplier = defenseMultiplier;
 			weapon.matchProfile();
 			return weapon;
+		}
+	}
+
+	private abstract static class StatSlider extends OptionSlider {
+
+		private StatSlider(String title) {
+			super(title, "50%", "200%", 5, 20);
 		}
 	}
 }

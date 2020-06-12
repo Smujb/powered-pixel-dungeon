@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -67,6 +68,10 @@ abstract public class KindOfWeapon extends KindofMisc {
 				case SURPRISE_ATTK_BENEFIT:
 					return 1.8f;
 			}
+		}
+
+		public String displayName() {
+			return Messages.get(KindOfWeapon.class, name());
 		}
 	}
 

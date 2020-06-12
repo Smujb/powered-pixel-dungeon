@@ -154,7 +154,7 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	private static float randomStat() {
-		int num = Random.Int(5, 20);
+		int num = Random.NormalIntRange(5, 20);
 		return num/10f;
 	}
 
@@ -190,10 +190,10 @@ public class MeleeWeapon extends Weapon {
 			degradeFactor = randomStat();
 		}
 		if (Random.Int(5) == 0) {
-			defenseMultiplier = Random.Float();
+			defenseMultiplier = Random.NormalFloat(0, 1);
 		}
 		if (Random.Int(5) == 0) {
-			RCH = Random.Int(1, 3);
+			RCH = Random.NormalIntRange(1, 3);
 		}
 		for (Property property : Property.values()) {
 			if (Random.Int(5) == 0 && property.canApply(this)) {
