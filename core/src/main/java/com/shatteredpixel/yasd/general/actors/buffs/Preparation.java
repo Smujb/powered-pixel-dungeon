@@ -119,20 +119,10 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	@Override
 	public boolean act() {
-		/*if (target.invisible > 0){
-			turnsPrep++;
-			if (AttackLevel.getLvl(turnsPrep).blinkDistance > 0 && target == Dungeon.hero){
-				ActionIndicator.setAction(this);
-			}
-			BuffIndicator.refreshHero();
-			spend(TICK);
-		} else {
-			detach();
-		}*/
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (mob.getEnemy() == target && mob.enemySeen) {
 				detach();
-			} else if (target.fieldOfView[mob.pos] || target.notice(mob, false)) {
+			} else if (target.fieldOfView[mob.pos] || target.notice(mob, 2)) {
 				turnsPrep++;
 				spend(TICK);
 				return true;

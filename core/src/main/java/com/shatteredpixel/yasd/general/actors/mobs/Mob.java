@@ -375,7 +375,7 @@ public abstract class Mob extends Char {
 	private Char chooseAlly() {
 		ArrayList<Char> targets = new ArrayList<>();
 		for (Char ch : Actor.chars()) {
-			if (ch.alignment == this.alignment && (fieldOfView[ch.pos] || notice(ch, true))) {
+			if (ch.alignment == this.alignment && (fieldOfView[ch.pos] || notice(ch, 4))) {
 				targets.add(ch);
 			}
 		}
@@ -859,6 +859,7 @@ public abstract class Mob extends Char {
 		}
 		if (state != HUNTING) {
 			alerted = true;
+			notice();
 		}
 
 		
@@ -931,10 +932,6 @@ public abstract class Mob extends Char {
 			return true;
 		}
 	}
-
-	/*public boolean canSupport(Char ch) {
-		return Dungeon.level.adjacent(pos, ch.pos);
-	}*/
 
 	//By default heals char for it's damage roll
 	public boolean support(Char ch) {
@@ -1054,10 +1051,6 @@ public abstract class Mob extends Char {
 
 	}
 	
-	public void notice() {
-		sprite.showAlert();
-	}
-	
 	public void yell( String str ) {
 		GLog.newLine();
 		GLog.n( "%s: \"%s\" ", Messages.titleCase(name()), str );
@@ -1070,6 +1063,53 @@ public abstract class Mob extends Char {
 
 	public interface AiState {
 		boolean act( boolean enemyInFOV, boolean justAlerted );
+
+		float noticeFactor();
+	}
+
+	private int suspicion = 1;
+	private static final int MAX_SUSPICION = 6;
+	private static final int SUSPICION_THRESHOLD = 3;
+
+	public void notice() {
+		sprite.showAlert();
+		enemySeen = true;
+		suspicion = SUSPICION_THRESHOLD + 1;
+	}
+
+	private void increaseSuspicion() {
+		suspicion++;
+		if (suspicion > MAX_SUSPICION) {
+			suspicion = MAX_SUSPICION;
+		}
+		if (suspicion > SUSPICION_THRESHOLD) {
+			sprite.showAlert();
+		}
+	}
+
+	private void decreaseSuspicion() {
+		suspicion--;
+		if (suspicion < 0) {
+			suspicion = 0;
+		}
+		if (suspicion < SUSPICION_THRESHOLD) {
+			sprite.showLost();
+		}
+	}
+
+	private void checkEnemy(Char enemy) {
+		if (enemy == null) {
+			return;
+		}
+		if (notice(enemy, state.noticeFactor())) {
+			increaseSuspicion();
+		} else {
+			decreaseSuspicion();
+		}
+	}
+
+	private boolean threshold() {
+		return suspicion > SUSPICION_THRESHOLD;
 	}
 
 	protected class Sleeping implements AiState {
@@ -1078,7 +1118,8 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && notice(enemy, false)/*Random.Float( distance( enemy ) + enemy.sneakSkill() + (enemy.isFlying() ? 2 : 0) ) < 1*/) {
+			checkEnemy(enemy);
+			if (enemyInFOV && threshold()) {
 
 				enemySeen = true;
 
@@ -1105,6 +1146,11 @@ public abstract class Mob extends Char {
 			}
 			return true;
 		}
+
+		@Override
+		public float noticeFactor() {
+			return 2;
+		}
 	}
 
 	protected class Wandering implements AiState {
@@ -1113,7 +1159,8 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if (enemyInFOV && (justAlerted || notice(enemy, false))) {
+			checkEnemy(enemy);
+			if (enemyInFOV && threshold()) {
 
 				return noticeEnemy();
 
@@ -1121,6 +1168,11 @@ public abstract class Mob extends Char {
 
 				return continueWandering();
 			}
+		}
+
+		@Override
+		public float noticeFactor() {
+			return 3;
 		}
 
 		protected boolean noticeEnemy(){
@@ -1175,7 +1227,8 @@ public abstract class Mob extends Char {
 
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
-			if ( enemyInFOV && notice( enemy, false ) ) {
+			checkEnemy(enemy);
+			if ( enemyInFOV && threshold() ) {
 
 				enemySeen = true;
 
@@ -1204,7 +1257,6 @@ public abstract class Mob extends Char {
 			}
 			return true;
 		}
-
 	}
 
 	protected class Hunting implements AiState {
@@ -1214,15 +1266,15 @@ public abstract class Mob extends Char {
 		@Override
 		public boolean act( boolean enemyInFOV, boolean justAlerted ) {
 			enemySeen = enemyInFOV;
-
-			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy )) {
+			checkEnemy(enemy);
+			if (enemyInFOV && !isCharmedBy( enemy ) && canAttack( enemy ) && threshold()) {
 
 				target = enemy.pos;
 				return doAttack( enemy );
 
 			} else {
 
-				if (enemyInFOV && notice(enemy, true)) {
+				if (enemyInFOV && threshold()) {
 					target = enemy.pos;
 				} else {
 					sprite.showLost();
@@ -1259,6 +1311,11 @@ public abstract class Mob extends Char {
 				}
 			}
 		}
+
+		@Override
+		public float noticeFactor() {
+			return 3;
+		}
 	}
 
 	//FIXME this works fairly well but is coded poorly. Should refactor
@@ -1293,6 +1350,11 @@ public abstract class Mob extends Char {
 			}
 		}
 
+		@Override
+		public float noticeFactor() {
+			return 3;
+		}
+
 		protected void nowhereToRun() {
 		}
 	}
@@ -1306,6 +1368,11 @@ public abstract class Mob extends Char {
 			enemySeen = false;
 			spend( TICK );
 			return true;
+		}
+
+		@Override
+		public float noticeFactor() {
+			return 0;
 		}
 	}
 	
@@ -1327,12 +1394,7 @@ public abstract class Mob extends Char {
 					&& Dungeon.level.distance(Dungeon.hero.pos, mob.pos) <= 3){
 				level.mobs.remove( mob );
 				heldMobs.add(mob);
-			} /*else if (mob.properties().contains(Property.BOSS)
-					|| (mob.properties().contains(Property.MINIBOSS)
-					&& level.distance(Dungeon.hero.pos, mob.pos) < 5)) {
-				level.mobs.remove( mob );
-				heldMobs.add(mob);
-			}*/
+			}
 		}
 	}
 	
