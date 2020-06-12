@@ -69,8 +69,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.Nullable;
-
 public enum Element {
 	/*
 	The purpose of this file is to make it easier to add types of damage to the game.
@@ -423,11 +421,11 @@ public enum Element {
 			m.setSpeed(dist*25);
 		}
 	}
-	@Nullable
+
 	public Emitter.Factory particleType() {
 		switch (this) {
 			default:
-				return null;
+				return MagicMissile.MagicParticle.ATTRACTING;
 			case EARTH:
 				return MagicMissile.EarthParticle.ATTRACT;
 			case GRASS:

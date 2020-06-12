@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -162,9 +163,6 @@ public abstract class Elemental extends Mob {
 
 			EXP = 7;
 
-			loot = new Embers();
-			lootChance = 1f;
-
 			properties.add(Property.MINIBOSS);
 		}
 
@@ -173,6 +171,11 @@ public abstract class Elemental extends Mob {
 			return true;
 		}
 
+		@Override
+		public void die(DamageSrc cause) {
+			Dungeon.level.drop(new Embers(), pos);
+			super.die(cause);
+		}
 	}
 
 	public static class Frost extends Elemental {
