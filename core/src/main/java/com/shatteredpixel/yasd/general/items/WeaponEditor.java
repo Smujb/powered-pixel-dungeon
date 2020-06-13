@@ -64,6 +64,11 @@ public class WeaponEditor extends Item {
 		return true;
 	}
 
+	@Override
+	public boolean isUpgradable() {
+		return false;
+	}
+
 	private static final String AC_APPLY = "apply";
 	private static final String AC_DESTROY = "destroy";
 
@@ -125,7 +130,7 @@ public class WeaponEditor extends Item {
 		Scrap scrap = ch.belongings.getItem(Scrap.class);
 		if (scrap != null && amount <= scrap.quantity) {
 			scrap.quantity(scrap.quantity-amount);
-			if (scrap.quantity < 0) {
+			if (scrap.quantity <= 0) {
 				scrap.detach(ch.belongings.backpack);
 			}
 			GLog.p(Messages.get(WeaponEditor.class, "spent_scrap"), amount);
@@ -173,6 +178,11 @@ public class WeaponEditor extends Item {
 		@Override
 		public boolean isIdentified() {
 			return true;
+		}
+
+		@Override
+		public boolean isUpgradable() {
+			return false;
 		}
 	}
 
