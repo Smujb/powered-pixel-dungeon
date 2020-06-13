@@ -290,7 +290,7 @@ public abstract class RegularLevel extends Level {
 	@Override
 	protected void createItems() {
 
-		int nItems = 2 + standardRooms();
+		int nItems = 2 + standardRooms()/2;
 		
 		for (int i=0; i < nItems; i++) {
 
