@@ -534,6 +534,7 @@ public abstract class Wand extends KindofMisc {
 									@Override
 									public void call() {
 										curWand.wandUsed();
+										curUser.next();
 									}
 								});
 					} else {

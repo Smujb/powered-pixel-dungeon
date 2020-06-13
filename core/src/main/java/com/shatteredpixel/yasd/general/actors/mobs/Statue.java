@@ -167,7 +167,6 @@ public class Statue extends Mob implements Callback {
 
 		item.level(0);
 		item.cursed = false;
-		item.identify();
 		return item;
 	}
 
