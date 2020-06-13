@@ -1067,18 +1067,22 @@ public abstract class Mob extends Char {
 		float noticeFactor();
 	}
 
-	private int suspicion = 1;
+	private float suspicion = 1;
 	private static final int MAX_SUSPICION = 6;
 	private static final int SUSPICION_THRESHOLD = 3;
 
 	public void notice() {
 		sprite.showAlert();
 		enemySeen = true;
-		suspicion = SUSPICION_THRESHOLD + 1;
+		for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
+			float increase = SUSPICION_THRESHOLD - Dungeon.level.distance(pos, mob.pos)/3f;
+			mob.increaseSuspicion(increase);
+		}
+		increaseSuspicion(SUSPICION_THRESHOLD);
 	}
 
-	private void increaseSuspicion() {
-		suspicion++;
+	private void increaseSuspicion(float amount) {
+		suspicion += amount;
 		if (suspicion > MAX_SUSPICION) {
 			suspicion = MAX_SUSPICION;
 		}
@@ -1087,8 +1091,8 @@ public abstract class Mob extends Char {
 		}
 	}
 
-	private void decreaseSuspicion() {
-		suspicion--;
+	private void decreaseSuspicion(float amount) {
+		suspicion -= amount;
 		if (suspicion < 0) {
 			suspicion = 0;
 		}
@@ -1102,9 +1106,9 @@ public abstract class Mob extends Char {
 			return;
 		}
 		if (notice(enemy, state.noticeFactor())) {
-			increaseSuspicion();
+			increaseSuspicion(1);
 		} else {
-			decreaseSuspicion();
+			decreaseSuspicion(0.5f);
 		}
 	}
 
@@ -1149,7 +1153,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public float noticeFactor() {
-			return 2;
+			return 3;
 		}
 	}
 
@@ -1172,7 +1176,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public float noticeFactor() {
-			return 3;
+			return 4;
 		}
 
 		protected boolean noticeEnemy(){
@@ -1314,7 +1318,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public float noticeFactor() {
-			return 3;
+			return 4;
 		}
 	}
 
