@@ -1292,6 +1292,9 @@ public abstract class Level implements Bundlable {
 	}
 
 	public KindOfTerrain getTerrain(int cell) {
+		if (cell < 0 || cell > length) {
+			return null;
+		}
 		return map[cell];
 	}
 
@@ -1775,6 +1778,10 @@ public abstract class Level implements Bundlable {
 		return !((tile < width || tile >= length - width) ||
 				//left and right column
 				(tile % width == 0 || tile % width == width-1));
+	}
+
+	public int[] neighbors9(int cell) {
+		return new int[]{cell-width-1, cell-width, cell-width+1, cell-1, cell, cell+1, cell+width-1, cell+width, cell+width+1};
 	}
 
 	public Point cellToPoint( int cell ){

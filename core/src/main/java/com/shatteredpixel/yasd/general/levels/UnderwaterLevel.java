@@ -44,6 +44,7 @@ import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Point;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
@@ -59,9 +60,11 @@ public class UnderwaterLevel extends Level {
 	public String tilesTex = Assets.TILES_HALLS;
 	public String waterTex = Assets.WATER_HALLS;
 
-	private static final int NUM_BUBBLES = 10;
+	private static final int NUM_BUBBLES = 5;
 
-	private static final int NUM_ITEMS = 10;
+	private static final int NUM_ITEMS = 3;
+
+	public static final float SIZE_FACTOR = 0.5f;
 
 	private int _width = -1;
 	private int _height = -1;
@@ -80,9 +83,26 @@ public class UnderwaterLevel extends Level {
 		maxScaleFactor = level.maxScaleFactor;
 		_width = level.width();
 		_height = level.height();
-		lightLocations = level.getTileLocations(Terrain.DEEP_WATER);
-		chasmLocations = level.getTileLocations(Terrain.CHASM);
+		lightLocations = scaleCellsList(level.getTileLocations(Terrain.DEEP_WATER), _width, SIZE_FACTOR);
+		chasmLocations = scaleCellsList(level.getTileLocations(Terrain.CHASM), _width, SIZE_FACTOR);
 		return this;
+	}
+
+	private static ArrayList<Integer> scaleCellsList(ArrayList<Integer> cells, int levelWidth, float factor) {
+		ArrayList<Integer> newList = new ArrayList<>();
+		for (int i : cells) {
+			newList.add(scaleCell(i, levelWidth, factor));
+		}
+		return newList;
+	}
+
+	//Use Points to make it easier to understand - efficiency doesn't matter too much as this is only executed during levelgen.
+	public static int scaleCell(int cell, int levelWidth, float factor) {
+		Point point = new Point(cell % levelWidth, cell / levelWidth);
+		point.x *= factor;
+		point.y *= factor;
+		int newWidth = (int) (levelWidth * factor);
+		return point.x + point.y * newWidth;
 	}
 
 	@Override
@@ -97,12 +117,13 @@ public class UnderwaterLevel extends Level {
 
 	@Override
 	protected boolean build() {
-		setSize(_width, _height);
+		setSize((int) (_width*SIZE_FACTOR), (int) (_height*SIZE_FACTOR));
 		setMap(Level.basicMap(length()));
 		buildFlagMaps();
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
 		for (int i = 0; i < length(); i ++) {
-			if ((setSolid[i] || chasmLocations.contains(i)) && getTerrain(i) == Terrain.EMPTY && !lightLocations.contains(i)) {
+			boolean set = (setSolid[i] || chasmLocations.contains(i)) && getTerrain(i) == Terrain.EMPTY && !lightLocations.contains(i);
+			if (set) {
 				set(i, Random.Int(10) == 0 ? Terrain.WALL_DECO : Terrain.WALL);
 			}
 		}
@@ -124,7 +145,7 @@ public class UnderwaterLevel extends Level {
 
 	@Override
 	public int nMobs() {
-		return 3;
+		return 2;
 	}
 
 	@Override

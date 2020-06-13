@@ -39,7 +39,7 @@ public class LimitedAir extends Buff {
 		element = Element.WATER;
 	}
 
-	public static final float DURATION = 30f;
+	public static final float DURATION = 18f;
 
 	private float duration = DURATION;
 

@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.levels.DeadEndLevel;
 import com.shatteredpixel.yasd.general.levels.Level;
+import com.shatteredpixel.yasd.general.levels.UnderwaterLevel;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -43,7 +44,6 @@ import com.watabou.utils.Callback;
 import com.watabou.utils.FileUtils;
 
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class LevelHandler {
 	}
 
 	public enum Mode {
-		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, MOVE, INIT
+		DESCEND, ASCEND, CONTINUE, RESURRECT, RETURN, FALL, RESET, MOVE, INIT, DIVE
 	}
 	private static Mode mode;
 	
@@ -172,8 +172,8 @@ public class LevelHandler {
 	}
 
 	public static void dive(int pos) {
-		Dungeon.underwater = !Dungeon.underwater;
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, Dungeon.depth, pos);
+		Dungeon.underwater = !Dungeon.underwater();
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.DIVE.name()), Mode.DIVE, Dungeon.depth, pos);
 	}
 
 	public static void doRestore() {
@@ -287,6 +287,25 @@ public class LevelHandler {
 		}
 		if (mode == Mode.FALL) {
 			Buff.affect( Dungeon.hero, Chasm.Falling.class );
+		}
+		if (mode == Mode.DIVE) {
+			if (Dungeon.underwater()) {
+				pos = UnderwaterLevel.scaleCell(pos, (int) (level.width()/UnderwaterLevel.SIZE_FACTOR), UnderwaterLevel.SIZE_FACTOR);
+			} else {
+				pos = UnderwaterLevel.scaleCell(pos, (int) (level.width()*UnderwaterLevel.SIZE_FACTOR), 1/UnderwaterLevel.SIZE_FACTOR);
+			}
+		}
+
+		if (level.solid(pos)) {
+			for (int i : level.neighbors9(pos)) {
+				if (level.insideMap(i) && !level.solid(i)) {
+					pos = i;
+					//If it's deep water, it's a perfect match.
+					if (level.deepWater(i)) {
+						break;
+					}
+				}
+			}
 		}
 		Dungeon.switchLevel(level, pos);
 	}
