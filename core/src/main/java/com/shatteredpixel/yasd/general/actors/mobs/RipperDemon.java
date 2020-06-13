@@ -55,6 +55,8 @@ public class RipperDemon extends Mob {
 
 		healthFactor = 0.5f;
 		damageFactor = 2f;
+		accuracyFactor = 2f;
+		attackDelay = 0.5f;
 
 		EXP = 9; //for corrupting
 		maxLvl = -2;
@@ -69,16 +71,6 @@ public class RipperDemon extends Mob {
 	@Override
 	public float spawningWeight() {
 		return 0;
-	}
-
-	@Override
-	public int attackSkill( Char target ) {
-		return 35;
-	}
-
-	@Override
-	public float attackDelay() {
-		return super.attackDelay()*0.5f;
 	}
 
 	private static final String LAST_ENEMY_POS = "last_enemy_pos";
