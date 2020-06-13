@@ -1075,7 +1075,8 @@ public abstract class Mob extends Char {
 		sprite.showAlert();
 		enemySeen = true;
 		for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
-			float increase = SUSPICION_THRESHOLD - Dungeon.level.distance(pos, mob.pos)/3f;
+			//Mobs get less suspicion increase drop-off distance on swarm intelligence.
+			float increase = SUSPICION_THRESHOLD - Dungeon.level.distance(pos, mob.pos)/(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 5f : 3f);
 			mob.increaseSuspicion(increase);
 		}
 		increaseSuspicion(SUSPICION_THRESHOLD);
@@ -1108,7 +1109,8 @@ public abstract class Mob extends Char {
 		if (notice(enemy, state.noticeFactor())) {
 			increaseSuspicion(1);
 		} else {
-			decreaseSuspicion(0.5f);
+			//Swarm Intelligence causes mobs to forget you slower.
+			decreaseSuspicion(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 0.5f : 1);
 		}
 	}
 
@@ -1130,14 +1132,6 @@ public abstract class Mob extends Char {
 				notice();
 				state = HUNTING;
 				target = enemy.pos;
-
-				if (Dungeon.isChallenged( Challenges.SWARM_INTELLIGENCE )) {
-					for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
-						if (Dungeon.level.distance(pos, mob.pos) <= 8 && mob.state != mob.HUNTING) {
-							mob.beckon( target );
-						}
-					}
-				}
 
 				spend( TIME_TO_WAKE_UP );
 

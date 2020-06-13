@@ -298,7 +298,7 @@ public class LevelHandler {
 
 		if (level.solid(pos)) {
 			for (int i : level.neighbors9(pos)) {
-				if (level.insideMap(i) && !level.solid(i)) {
+				if (level.insideMap(i) && !level.solid(i) && level.findMob(i) == null) {
 					pos = i;
 					//If it's deep water, it's a perfect match.
 					if (level.deepWater(i)) {
