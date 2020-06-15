@@ -146,7 +146,10 @@ public class WeaponEditor extends Item {
 	}
 
 	private static void collectScrap(Char ch, int amount) {
-		new Scrap().quantity(amount).collect(ch.belongings.backpack, ch);
+		Scrap scrap = (Scrap) new Scrap().quantity(amount);
+		if (!scrap.collect(ch.belongings.backpack, ch)) {
+			Dungeon.level.drop(scrap, ch.pos).sprite.drop();
+		}
 	}
 
 	private static void convertToScrap(Char ch, MeleeWeapon weapon) {
