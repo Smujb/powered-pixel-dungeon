@@ -189,6 +189,8 @@ public abstract class Elemental extends Mob {
 			properties.add(Property.ICY);
 
 			harmfulBuffs.add(Burning.class);
+
+			resistances.put(Element.FIRE, 1.5f);
 		}
 
 		@Override

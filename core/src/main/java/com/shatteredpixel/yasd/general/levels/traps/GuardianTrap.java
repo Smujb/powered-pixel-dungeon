@@ -80,6 +80,11 @@ public class GuardianTrap extends Trap {
 			lootChance = 0.5f;
 		}
 
+		public Guardian() {
+			super();
+			ankhs = 0;
+		}
+
 		@Override
 		public void dropGear() {}
 
