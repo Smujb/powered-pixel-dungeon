@@ -84,6 +84,7 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Point;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 import com.watabou.utils.SparseArray;
@@ -383,7 +384,7 @@ public class Dungeon {
 		Actor.clear();
 
 		level.reset();
-		switchLevel( level, level.getEntrancePos() );
+		switchLevel( level, level.cellToPoint(level.getEntrancePos()) );
 	}
 
 	public static long seedCurDepth(){
@@ -417,18 +418,21 @@ public class Dungeon {
 		return depth % Constants.CHAPTER_LENGTH == 0;
 	}
 	
-	public static void switchLevel( final Level level, int pos ) {
-		
-		if (pos == -2){
-			pos = level.getExitPos();
-		} else if (pos < 0 || pos >= level.length()){
-			pos = level.getEntrancePos();
+	public static void switchLevel( final Level level, Point pos ) {
+
+		int cell;
+		/*if (pos == -2){
+			cell = level.getExitPos();
+		} else*/ if (pos == null){
+			cell = level.getEntrancePos();
+		} else {
+			cell = level.pointToCell(pos);
 		}
 		
 		PathFinder.setMapSize(level.width(), level.height());
 		
 		Dungeon.level = level;
-		Mob.restoreMobs( level, pos );
+		Mob.restoreMobs( level, cell );
 		Actor.init();
 		
 		Actor respawner = level.respawner();
@@ -436,7 +440,19 @@ public class Dungeon {
 			Actor.addDelayed( respawner, level.respawnTime() );
 		}
 
-		hero.pos = pos;
+		if (level.solid(cell)) {
+			for (int i : level.neighbors9(cell)) {
+				if (level.insideMap(i) && !level.solid(i) && level.findMob(i) == null) {
+					cell = i;
+					//If it's deep water, it's a perfect match.
+					if (level.deepWater(i)) {
+						break;
+					}
+				}
+			}
+		}
+
+		hero.pos = cell;
 		
 		for(Mob m : level.mobs){
 			if (m.pos == hero.pos){

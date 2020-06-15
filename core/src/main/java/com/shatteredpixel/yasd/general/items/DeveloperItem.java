@@ -379,7 +379,7 @@ public class DeveloperItem extends Item {
 			RedButton btnGo = new RedButton( "GO" ) {
 				@Override
 				protected void onClick() {
-					LevelHandler.move(key[0], "", LevelHandler.Mode.MOVE, depth[0], -1);
+					LevelHandler.move(key[0], "", LevelHandler.Mode.MOVE, depth[0], null);
 				}
 			};
 			btnGo.setRect(getWidth()/2, depthSlider.bottom() + GAP, getWidth()/2, BTN_HEIGHT);

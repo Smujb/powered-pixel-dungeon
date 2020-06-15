@@ -83,26 +83,26 @@ public class UnderwaterLevel extends Level {
 		maxScaleFactor = level.maxScaleFactor;
 		_width = level.width();
 		_height = level.height();
-		lightLocations = scaleCellsList(level.getTileLocations(Terrain.DEEP_WATER), _width, SIZE_FACTOR);
-		chasmLocations = scaleCellsList(level.getTileLocations(Terrain.CHASM), _width, SIZE_FACTOR);
+		lightLocations = scaleCellsList(level.getTileLocations(Terrain.DEEP_WATER), level.width(), SIZE_FACTOR);
+		chasmLocations = scaleCellsList(level.getTileLocations(Terrain.CHASM), level.width(), SIZE_FACTOR);
 		return this;
 	}
 
-	private static ArrayList<Integer> scaleCellsList(ArrayList<Integer> cells, int levelWidth, float factor) {
+	private static ArrayList<Integer> scaleCellsList(ArrayList<Integer> cells, int oldWidth, float factor) {
 		ArrayList<Integer> newList = new ArrayList<>();
 		for (int i : cells) {
-			newList.add(scaleCell(i, levelWidth, factor));
+			newList.add(scaleCell(i, oldWidth, factor));
 		}
 		return newList;
 	}
 
 	//Use Points to make it easier to understand - efficiency doesn't matter too much as this is only executed during levelgen.
-	public static int scaleCell(int cell, int levelWidth, float factor) {
-		Point point = new Point(cell % levelWidth, cell / levelWidth);
+	public static int scaleCell(int cell, int oldWidth, float factor) {
+		Point point = new Point(cell % oldWidth, cell / oldWidth);
 		point.x *= factor;
 		point.y *= factor;
-		int newWidth = (int) (levelWidth * factor);
-		return point.x + point.y * newWidth;
+		float newWidth = oldWidth * factor;
+		return point.x + Math.round(point.y * newWidth);
 	}
 
 	@Override

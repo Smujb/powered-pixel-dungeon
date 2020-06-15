@@ -1110,7 +1110,7 @@ public abstract class Mob extends Char {
 			increaseSuspicion(1);
 		} else {
 			//Swarm Intelligence causes mobs to forget you slower.
-			decreaseSuspicion(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 0.5f : 1);
+			decreaseSuspicion(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 2/3f : 1.5f);
 		}
 	}
 

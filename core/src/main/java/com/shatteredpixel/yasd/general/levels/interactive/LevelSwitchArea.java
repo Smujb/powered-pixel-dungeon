@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.interactive;
 
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -57,7 +58,7 @@ public class LevelSwitchArea extends InteractiveArea {
 		if (buff != null) buff.detach();
 		buff = hero.buff(Swiftthistle.TimeBubble.class);
 		if (buff != null) buff.detach();
-		LevelHandler.move(key, message, LevelHandler.Mode.MOVE, depth, pos);
+		LevelHandler.move(key, message, LevelHandler.Mode.MOVE, depth, Dungeon.level.cellToPoint(pos));
 	}
 
 	private static final String POS = "pos";

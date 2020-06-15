@@ -42,6 +42,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.FileUtils;
+import com.watabou.utils.Point;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +51,7 @@ import java.io.IOException;
 
 public class LevelHandler {
 
-	private static int pos;
+	private static Point pos;
 	private static boolean fallIntoPit;
 	public static int depth;
 	public static String key;
@@ -142,36 +143,44 @@ public class LevelHandler {
 	}
 
 	public static void descend() {
-		move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND, Dungeon.depth + 1, -1);
+		move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND, Dungeon.depth + 1, null);
 	}
 
 	public static void ascend() {
-		move(Dungeon.keyForDepth(Dungeon.depth -1), Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND, Dungeon.depth - 1, -1);
+		move(Dungeon.keyForDepth(Dungeon.depth -1), Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND, Dungeon.depth - 1, null);
 	}
 
 	public static void fall(boolean fallIntoPit, boolean bossLevel) {
 		LevelHandler.fallIntoPit = fallIntoPit;
 		if (bossLevel) {//If falling from a boss level, the hero will fall back onto the same floor and it will reset.
 			Dungeon.level.reset();
-			move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth, -1);
+			move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth, null);
 		} else {
-			move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth + 1, -1);
+			move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.FALL.name()), Mode.FALL, Dungeon.depth + 1, null);
 		}
 	}
 
 	public static void reset() {
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET, Dungeon.depth, -1);
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESET.name()), Mode.RESET, Dungeon.depth, null);
 	}
 
 	public static void resurrect() {
-		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT, Dungeon.depth, -1);
+		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.RESURRECT.name()), Mode.RESURRECT, Dungeon.depth, null);
 	}
 
 	public static void returnTo(int depth, int pos) {
+		returnTo(depth, Dungeon.level.cellToPoint(pos));
+	}
+
+	public static void returnTo(int depth, Point pos) {
 		move(Dungeon.keyForDepth(depth), Messages.get(Mode.class, Mode.RETURN.name()), Mode.RETURN, depth, pos);
 	}
 
 	public static void dive(int pos) {
+		dive(Dungeon.level.cellToPoint(pos));
+	}
+
+	public static void dive(Point pos) {
 		Dungeon.underwater = !Dungeon.underwater();
 		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.DIVE.name()), Mode.DIVE, Dungeon.depth, pos);
 	}
@@ -189,7 +198,7 @@ public class LevelHandler {
 	public static void doInit() {
 		mode = Mode.DESCEND;
 		depth = 1;
-		pos = -1;
+		pos = null;
 		key = Dungeon.keyForDepth();
 		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
@@ -208,7 +217,7 @@ public class LevelHandler {
 		}, YASDSettings.fastInterlevelScene());
 	}
 
-	public static void move(String key, String msg, Mode mode, int depth, int pos) {
+	public static void move(String key, String msg, Mode mode, int depth, Point pos) {
 		LevelHandler.depth = depth;
 		LevelHandler.mode = mode;
 		LevelHandler.key = key;
@@ -257,7 +266,7 @@ public class LevelHandler {
 		if (mode != Mode.RESET) {
 			level = getLevel(key);
 		}
-		Dungeon.level = null;
+		//Dungeon.level = null;
 		Actor.clear();
 		if (level == null) {
 
@@ -275,14 +284,14 @@ public class LevelHandler {
 			}
 
 		}
-		int pos = LevelHandler.pos;
-		if (pos < 0) {
+		Point pos = LevelHandler.pos;
+		if (pos == null) {
 			if (mode == Mode.ASCEND) {
-				pos = level.getExitPos();
+				pos = level.cellToPoint(level.getExitPos());
 			} else if (mode == Mode.FALL) {
-				pos = level.fallCell(fallIntoPit);
+				pos = level.cellToPoint(level.fallCell(fallIntoPit));
 			} else {
-				pos = level.getEntrancePos();
+				pos = level.cellToPoint(level.getEntrancePos());
 			}
 		}
 		if (mode == Mode.FALL) {
@@ -290,13 +299,15 @@ public class LevelHandler {
 		}
 		if (mode == Mode.DIVE) {
 			if (Dungeon.underwater()) {
-				pos = UnderwaterLevel.scaleCell(pos, (int) (level.width()/UnderwaterLevel.SIZE_FACTOR), UnderwaterLevel.SIZE_FACTOR);
+				pos.scale(UnderwaterLevel.SIZE_FACTOR);
+				//pos = UnderwaterLevel.scaleCell(pos, Dungeon.level.width(), UnderwaterLevel.SIZE_FACTOR);
 			} else {
-				pos = UnderwaterLevel.scaleCell(pos, (int) (level.width()*UnderwaterLevel.SIZE_FACTOR), 1/UnderwaterLevel.SIZE_FACTOR);
+				pos.scale(1/UnderwaterLevel.SIZE_FACTOR);
+				//pos = UnderwaterLevel.scaleCell(pos, Dungeon.level.width(), 1/UnderwaterLevel.SIZE_FACTOR);
 			}
 		}
 
-		if (level.solid(pos)) {
+		/*if (level.solid(pos)) {
 			for (int i : level.neighbors9(pos)) {
 				if (level.insideMap(i) && !level.solid(i) && level.findMob(i) == null) {
 					pos = i;
@@ -306,7 +317,7 @@ public class LevelHandler {
 					}
 				}
 			}
-		}
+		}*/
 		Dungeon.switchLevel(level, pos);
 	}
 
@@ -321,10 +332,13 @@ public class LevelHandler {
 		Actor.clear();
 		if (Dungeon.key == null) {
 			Dungeon.depth = Statistics.deepestFloor;
-			Dungeon.switchLevel( getLevel(Dungeon.key = Dungeon.keyForDepth()), -1 );
+			Dungeon.switchLevel( getLevel(Dungeon.key = Dungeon.keyForDepth()), null );
 		} else {
 			level = getLevel( Dungeon.key, GamesInProgress.curSlot );
-			Dungeon.switchLevel( level, Dungeon.hero.pos );
+			if (level == null) {
+				throw new RuntimeException("Tried to load a level that doesn't exist or is corrupt");
+			}
+			Dungeon.switchLevel( level, level.cellToPoint(Dungeon.hero.pos) );
 		}
 	}
 }

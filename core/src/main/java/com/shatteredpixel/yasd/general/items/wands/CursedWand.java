@@ -327,7 +327,7 @@ public class CursedWand {
 					buff = Dungeon.hero.buff(Swiftthistle.TimeBubble.class);
 					if (buff != null) buff.detach();
 
-					LevelHandler.returnTo(depth, -1);
+					LevelHandler.returnTo(depth, null);
 
 				} else {
 					ScrollOfTeleportation.teleportUser(user);
