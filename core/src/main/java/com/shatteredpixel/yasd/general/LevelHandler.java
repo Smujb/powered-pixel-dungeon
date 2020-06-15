@@ -300,24 +300,11 @@ public class LevelHandler {
 		if (mode == Mode.DIVE) {
 			if (Dungeon.underwater()) {
 				pos.scale(UnderwaterLevel.SIZE_FACTOR);
-				//pos = UnderwaterLevel.scaleCell(pos, Dungeon.level.width(), UnderwaterLevel.SIZE_FACTOR);
 			} else {
 				pos.scale(1/UnderwaterLevel.SIZE_FACTOR);
-				//pos = UnderwaterLevel.scaleCell(pos, Dungeon.level.width(), 1/UnderwaterLevel.SIZE_FACTOR);
 			}
 		}
 
-		/*if (level.solid(pos)) {
-			for (int i : level.neighbors9(pos)) {
-				if (level.insideMap(i) && !level.solid(i) && level.findMob(i) == null) {
-					pos = i;
-					//If it's deep water, it's a perfect match.
-					if (level.deepWater(i)) {
-						break;
-					}
-				}
-			}
-		}*/
 		Dungeon.switchLevel(level, pos);
 	}
 
