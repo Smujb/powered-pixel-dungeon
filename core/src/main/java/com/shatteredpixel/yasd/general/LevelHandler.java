@@ -61,7 +61,7 @@ public class LevelHandler {
 		return GamesInProgress.slotFolder(slot) + "/" + key + ".dat";
 	}
 
-	private static Level getLevel(String key) {
+	static Level getLevel(String key) {
 		return getLevel(key, GamesInProgress.curSlot);
 	}
 

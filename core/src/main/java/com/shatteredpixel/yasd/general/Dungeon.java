@@ -410,12 +410,13 @@ public class Dungeon {
 	
 	@Contract(pure = true)
 	public static boolean bossLevel() {
-		return bossLevel(depth);
+		return level.bossLevel;
 	}
 	
 	@Contract(pure = true)
 	public static boolean bossLevel(int depth ) {
-		return depth % Constants.CHAPTER_LENGTH == 0;
+		Level level = LevelHandler.getLevel(keyForDepth(depth));
+		return level != null && level.bossLevel;
 	}
 	
 	public static void switchLevel( final Level level, Point pos ) {

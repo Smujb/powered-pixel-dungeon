@@ -66,6 +66,8 @@ public class OldHallsBossLevel extends Level {
 		color2 = 0xa68521;
 		
 		viewDistance = Math.min(4, viewDistance);
+
+		bossLevel = true;
 	}
 
 	@Override

@@ -182,6 +182,7 @@ public abstract class Level implements Bundlable {
 
 	public boolean hasExit = true;
 	public boolean hasEntrance = true;
+	public boolean bossLevel = false;
 
 	public String key;
 	

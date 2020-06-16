@@ -72,6 +72,7 @@ public class OldCavesBossLevel extends Level {
 
 		viewDistance = Math.min(6, viewDistance);
 
+		bossLevel = true;
 	}
 
 	@Override
