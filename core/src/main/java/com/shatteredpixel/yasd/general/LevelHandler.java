@@ -102,10 +102,6 @@ public class LevelHandler {
 						switchDepth(depth, mode, key );
 					}
 
-					if (Dungeon.bossLevel()) {
-						Sample.INSTANCE.load(Assets.SND_BOSS);
-					}
-
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
@@ -303,6 +299,10 @@ public class LevelHandler {
 			} else {
 				pos.scale(1/UnderwaterLevel.SIZE_FACTOR);
 			}
+		}
+
+		if (level.bossLevel) {
+			Sample.INSTANCE.load(Assets.SND_BOSS);
 		}
 
 		Dungeon.switchLevel(level, pos);
