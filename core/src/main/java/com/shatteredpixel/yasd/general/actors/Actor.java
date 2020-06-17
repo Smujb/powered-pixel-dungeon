@@ -35,6 +35,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.Callback;
 import com.watabou.utils.SparseArray;
 
 import java.util.HashSet;
@@ -61,8 +62,15 @@ public abstract class Actor implements Bundlable {
 	protected int actPriority = DEFAULT;
 
 	protected abstract boolean act();
-	
+
+	private Callback onAct = null;
+
 	protected void spend( float time ) {
+		spend(time, null);
+	}
+
+	protected void spend( float time, Callback callback ) {
+		onAct = callback;
 		this.time += time;
 		//if time is very close to a whole number, round to a whole number to fix errors
 		float ex = Math.abs(this.time % 1f);
@@ -261,6 +269,10 @@ public abstract class Actor implements Bundlable {
 					current = null;
 				} else {
 					doNext = acting.act();
+					if (acting.onAct != null) {
+						acting.onAct.call();
+						acting.onAct = null;
+					}
 					if (doNext && (Dungeon.hero == null || !Dungeon.hero.isAlive())) {
 						doNext = false;
 						current = null;
