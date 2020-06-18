@@ -69,7 +69,7 @@ public class YogDzewa extends Mob {
 	{
 		spriteClass = YogSprite.class;
 
-		healthFactor = 2f;
+		healthFactor = 1.5f;
 		damageFactor = 0.8f;
 
 		EXP = 50;

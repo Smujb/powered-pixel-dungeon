@@ -46,7 +46,8 @@ public class Monk extends Mob {
 
 
 		healthFactor = 0.8f;
-		damageFactor = 0.6f;
+		damageFactor = 0.7f;
+		attackDelay = 0.5f;
 
 		EXP = 11;
 		maxLvl = 21;
@@ -167,7 +168,7 @@ public class Monk extends Mob {
 
 		{
 			spriteClass = SeniorSprite.class;
-			damageFactor = 0.7f;
+			damageFactor = 0.8f;
 
 			loot = new Pasty();
 			lootChance = 0.2f;

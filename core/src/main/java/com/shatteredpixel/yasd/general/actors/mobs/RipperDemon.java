@@ -54,7 +54,7 @@ public class RipperDemon extends Mob {
 		viewDistance = Light.DISTANCE;
 
 		healthFactor = 0.5f;
-		damageFactor = 2f;
+		damageFactor = 1.6f;
 		accuracyFactor = 2f;
 		attackDelay = 0.5f;
 
@@ -132,7 +132,7 @@ public class RipperDemon extends Mob {
 						Char ch = Actor.findChar(leapPos);
 						if (ch != null){
 							if (alignment != ch.alignment){
-								Buff.affect(ch, Bleeding.class).set(0.75f*damageRoll());
+								Buff.affect(ch, Bleeding.class).set(damageRoll());
 								ch.sprite.flash();
 								Sample.INSTANCE.play(Assets.SND_HIT);
 							}

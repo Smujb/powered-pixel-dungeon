@@ -49,8 +49,6 @@ public class Golem extends Mob {
 
 		healthFactor = 2f;
 		damageFactor = 1.5f;
-
-		attackDelay = 1.5f;
 		
 		EXP = 12;
 		
