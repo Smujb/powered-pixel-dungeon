@@ -42,7 +42,7 @@ allprojects {
         appPackageName = 'com.smujamesb.yasd'
 
         appVersionCode = 444
-        appVersionName = '0.4.5a'
+        appVersionName = '0.4.5b'
         appJavaCompatibility = 1.8
 
         appAndroidCompileSDK = 29
