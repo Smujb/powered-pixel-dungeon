@@ -1072,7 +1072,6 @@ public abstract class Mob extends Char {
 	private static final int SUSPICION_THRESHOLD = 3;
 
 	public void notice() {
-		sprite.showAlert();
 		enemySeen = true;
 		for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
 			//Mobs get less suspicion increase drop-off distance on swarm intelligence.
@@ -1087,7 +1086,7 @@ public abstract class Mob extends Char {
 		if (suspicion > MAX_SUSPICION) {
 			suspicion = MAX_SUSPICION;
 		}
-		if (suspicion > SUSPICION_THRESHOLD) {
+		if (suspicion > SUSPICION_THRESHOLD && sprite != null) {
 			sprite.showAlert();
 		}
 	}
@@ -1097,7 +1096,7 @@ public abstract class Mob extends Char {
 		if (suspicion < 0) {
 			suspicion = 0;
 		}
-		if (suspicion < SUSPICION_THRESHOLD) {
+		if (suspicion < SUSPICION_THRESHOLD && sprite != null) {
 			sprite.showLost();
 		}
 	}
