@@ -84,6 +84,7 @@ public class Artifact extends KindofMisc {
 	}
 
 	public void activate( Char ch ) {
+		super.activate(ch);
 		passiveBuff = passiveBuff();
 		passiveBuff.attachTo(ch);
 	}

@@ -301,6 +301,7 @@ public class Armor extends KindofMisc {
 
 	@Override
 	public void activate(Char ch) {
+		super.activate(ch);
 		if (seal != null) Buff.affect(ch, BrokenSeal.WarriorShield.class).setArmor(this);
 	}
 

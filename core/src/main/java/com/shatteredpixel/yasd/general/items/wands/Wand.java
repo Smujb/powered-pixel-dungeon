@@ -152,9 +152,7 @@ public abstract class Wand extends KindofMisc {
 	@Override
 	public void activate(Char ch) {//When equipped, start charging
 		super.activate(ch);
-		if (ch instanceof Char) {
-			curUser = ch;
-		}
+		curUser = ch;
 
 		if (ch instanceof Hero && ((Hero) ch).belongings.getItem(MagicalHolster.class) != null) {
 			charge(ch, ((Hero) ch).belongings.getItem(MagicalHolster.class).HOLSTER_SCALE_FACTOR);
