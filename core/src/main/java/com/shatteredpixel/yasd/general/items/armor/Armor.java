@@ -353,9 +353,9 @@ public class Armor extends KindofMisc {
 	private float getFocusLvl() {
 		float lvl = 0;
 		if (curUser instanceof Hero) {
-			lvl = ((Hero)curUser).getFocus()/(float)Constants.CHAPTER_LENGTH;
+			lvl = ((Hero)curUser).getFocus();
 		} else if (curUser instanceof Mob) {
-			lvl = ((Mob)curUser).getLevel()/(float)Constants.CHAPTER_LENGTH;
+			lvl = ((Mob)curUser).getLevel();
 		}
 		return lvl;
 	}
@@ -365,7 +365,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int magicalDRMax(float lvl){
-		return Math.round(((tier*3) + (tier * lvl)) * magicalDRFactor);
+		return Math.round(((tier*3) + lvl) * magicalDRFactor);
 	}
 
 	public final int magicalDRMin(){
@@ -373,7 +373,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int magicalDRMin(float lvl){
-		return Math.round((tier + lvl) * magicalDRFactor);
+		return Math.round(tier + lvl/5 * magicalDRFactor);
 	}
 
 	public int magicalDRRoll() {
