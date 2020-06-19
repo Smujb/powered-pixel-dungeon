@@ -410,7 +410,7 @@ public class Dungeon {
 	
 	@Contract(pure = true)
 	public static boolean bossLevel() {
-		return level.bossLevel;
+		return level != null && level.bossLevel;
 	}
 
 	@Contract(pure = true)
