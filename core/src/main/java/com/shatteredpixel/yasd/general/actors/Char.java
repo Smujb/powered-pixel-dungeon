@@ -384,13 +384,9 @@ public abstract class Char extends Actor {
 					dmg = ((MissileWeapon) belongings.miscs[0]).damageRoll(this);
 				}
 			}
-			int dr = enemy.drRoll(this.elementalType());
+			DamageSrc src = defaultSrc();
 			if (hasBelongings() && belongings.getCurrentWeapon() != null && belongings.getCurrentWeapon().breaksArmor(this)) {
-				dr = 0;
-			}
-			dmg -= dr;
-			if (dmg < 0) {
-				dmg = 0;
+				src.ignoreDefense();
 			}
 			dmg = attackProc(enemy, dmg);
 			dmg = enemy.defenseProc(this, dmg);
@@ -399,8 +395,8 @@ public abstract class Char extends Actor {
 			if (!enemy.isAlive()) {
 				return true;
 			}
-			//Actually damage them. Ignore defense as DR roll is automatically processed earlier.
-			enemy.damage( dmg, defaultSrc().ignoreDefense() );
+			//Actually damage the enemy.
+			enemy.damage( dmg, src );
 
 			if (Dungeon.hero.fieldOfView(enemy.pos) || Dungeon.hero.fieldOfView(pos)) {
 				Sample.INSTANCE.play(Assets.SND_HIT, 1, 1, Random.Float(0.8f, 1.25f));
@@ -1250,7 +1246,7 @@ public abstract class Char extends Actor {
 			return this;
 		}
 
-		boolean ignores() {
+		public boolean ignores() {
 			return ignores;
 		}
 	}
