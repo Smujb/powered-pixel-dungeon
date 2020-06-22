@@ -61,8 +61,6 @@ import com.watabou.noosa.particles.PixelParticle;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class CityLevel extends RegularLevel {
@@ -100,6 +98,11 @@ public class CityLevel extends RegularLevel {
 	@Override
 	public String loadImg() {
 		return Assets.LOADING_CITY;
+	}
+
+	@Override
+	public String music() {
+		return Assets.CITY_THEME;
 	}
 
 	@Override

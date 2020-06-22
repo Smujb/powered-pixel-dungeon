@@ -179,7 +179,7 @@ public class GameScene extends PixelScene {
 			return;
 		}
 
-		Music.INSTANCE.play( Assets.TUNE, true );
+		Music.INSTANCE.play( Dungeon.level.music(), true );
 
 		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		

@@ -942,6 +942,10 @@ public abstract class Level implements Bundlable {
 	public String loadImg() {
 		return null;
 	}
+
+	public String music() {
+		return Assets.PRISONS_THEME;
+	}
 	
 	abstract protected boolean build();
 	
