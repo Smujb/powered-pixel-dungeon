@@ -132,6 +132,7 @@ public abstract class Mob extends Char {
 	private static final String SEEN	= "seen";
 	private static final String TARGET	= "target";
 	private static final String LEVEL	= "level";
+	private static final String SUS	= "suspicion";
 
 	@Override
 	public void storeInBundle( Bundle bundle ) {
@@ -152,6 +153,7 @@ public abstract class Mob extends Char {
 		bundle.put( SEEN, enemySeen );
 		bundle.put( TARGET, target );
 		bundle.put( LEVEL, level );
+		bundle.put(SUS, suspicion);
 	}
 	
 	@Override
@@ -183,6 +185,8 @@ public abstract class Mob extends Char {
 		target = bundle.getInt( TARGET );
 
 		level = bundle.getInt( LEVEL );
+
+		suspicion = bundle.getFloat(SUS);
 	}
 
 	public Mob() {
