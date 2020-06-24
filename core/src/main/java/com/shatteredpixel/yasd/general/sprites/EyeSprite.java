@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Cursed Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -37,43 +37,45 @@ import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.particles.Emitter;
 
-public class EyeSprite extends MobSprite {
+public abstract class EyeSprite extends MobSprite {
 
 	private int zapPos;
 
 	private Animation charging;
 	private Emitter chargeParticles;
-	
-	public EyeSprite() {
+
+	public EyeSprite(int offset) {
 		super();
-		
+
 		texture( Assets.EYE );
-		
+
 		TextureFilm frames = new TextureFilm( texture, 16, 18 );
-		
+
 		idle = new Animation( 8, true );
-		idle.frames( frames, 0, 1, 2 );
+		idle.frames( frames, 0+offset, 1+offset, 2+offset );
 
 		charging = new Animation( 12, true);
-		charging.frames( frames, 3, 4 );
-		
+		charging.frames( frames, 3+offset, 4+offset );
+
 		run = new Animation( 12, true );
-		run.frames( frames, 5, 6 );
-		
+		run.frames( frames, 5+offset, 6+offset );
+
 		attack = new Animation( 8, false );
-		attack.frames( frames, 4, 3 );
+		attack.frames( frames, 4+offset, 3+offset );
 		zap = attack.clone();
-		
+
 		die = new Animation( 8, false );
-		die.frames( frames, 7, 8, 9 );
-		
+		die.frames( frames, 7+offset, 8+offset, 9+offset );
+
 		play( idle );
 	}
 
 	@Override
 	public void killAndErase() {
 		super.killAndErase();
-		chargeParticles.killAndErase();
+		if (chargeParticles != null) {
+			chargeParticles.killAndErase();
+		}
 	}
 
 	@Override
@@ -85,7 +87,7 @@ public class EyeSprite extends MobSprite {
 		chargeParticles.pour(MagicMissile.MagicParticle.ATTRACTING, 0.05f);
 		chargeParticles.on = false;
 
-		if (((Eye)ch).beamCharged) play(charging);
+		if (((Eye)ch).beamCharged()) play(charging);
 	}
 
 	@Override
@@ -125,25 +127,39 @@ public class EyeSprite extends MobSprite {
 	}
 
 	@Override
-	public void attack(int cell) {
+	public void zap(int cell) {
 		zapPos = cell;
-		super.attack(cell);
+		play(zap);
 	}
 
 	@Override
 	public void onComplete( Animation anim ) {
 		super.onComplete( anim );
-		
-		if (anim == attack && ((Eye)ch).beamCharged) {
+
+		if (anim == zap) {
 			idle();
-			if (Actor.findChar(zapPos) != null){
+			if (Actor.findChar(zapPos) != null) {
 				parent.add(new Beam.DeathRay(center(), Actor.findChar(zapPos).sprite.center()));
-				ch.onAttackComplete();
+				ch.attack(Actor.findChar(zapPos));
 			} else {
 				parent.add(new Beam.DeathRay(center(), DungeonTilemap.raisedTileCenterToWorld(zapPos)));
 			}
+			ch.next();
+			((Eye)ch).beamUsed();
 		} else if (anim == die){
 			chargeParticles.killAndErase();
+		}
+	}
+
+	public static class Purple extends EyeSprite {
+		public Purple() {
+			super(0);
+		}
+	}
+
+	public static class Red extends EyeSprite {
+		public Red() {
+			super(32);
 		}
 	}
 }
