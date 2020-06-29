@@ -35,7 +35,6 @@ import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.Armor.Glyph;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite.Glowing;
-import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.utils.Random;
 
 public class Metabolism extends Glyph {
@@ -53,11 +52,10 @@ public class Metabolism extends Glyph {
 			if (healing > 0) {
 				
 				Hunger hunger = Buff.affect(defender, Hunger.class);
-				
-				if (hunger != null && !hunger.isStarving()) {
+
+				if (!hunger.isStarving()) {
 					
 					hunger.reduceHunger( healing * -10 );
-					BuffIndicator.refreshHero();
 					defender.heal(healing, false);
 				}
 			}

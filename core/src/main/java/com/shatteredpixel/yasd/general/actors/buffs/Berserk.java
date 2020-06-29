@@ -105,7 +105,6 @@ public class Berserk extends Buff {
 			} else {
 				state = State.RECOVERING;
 				levelRecovery = LEVEL_RECOVER_START;
-				BuffIndicator.refreshHero();
 				if (buff != null) buff.absorbDamage(buff.shielding());
 				power = 0f;
 			}
@@ -115,7 +114,6 @@ public class Berserk extends Buff {
 			if (power <= 0){
 				detach();
 			}
-			BuffIndicator.refreshHero();
 		}
 		if (state == State.BERSERK) {
 			target.sprite.add( CharSprite.State.BERSERK );
@@ -137,7 +135,6 @@ public class Berserk extends Buff {
 			WarriorShield shield = target.buff(WarriorShield.class);
 			if (shield != null){
 				state = State.BERSERK;
-				BuffIndicator.refreshHero();
 				shield.supercharge(shield.maxShield() * 10);
 
 				SpellSprite.show(target, SpellSprite.BERSERK);
@@ -153,13 +150,11 @@ public class Berserk extends Buff {
 	public void damage(int damage){
 		if (state == State.RECOVERING) return;
 		power = Math.min(1.1f, power + (damage/(float)target.HT)/3f );
-		BuffIndicator.refreshHero();
 	}
 
 	public void recover(float percent){
 		if (levelRecovery > 0){
 			levelRecovery -= percent;
-			BuffIndicator.refreshHero();
 			if (levelRecovery <= 0) {
 				state = State.NORMAL;
 				levelRecovery = 0;

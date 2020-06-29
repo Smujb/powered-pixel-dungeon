@@ -112,10 +112,6 @@ public class Hunger extends Buff implements Hero.Doom {
 				}
 				level = newLevel;
 
-				if (statusUpdated) {
-					BuffIndicator.refreshHero();
-				}
-
 			}
 			
 			spend( target.buff( Shadows.class ) == null ? STEP : STEP * 1.5f );
@@ -151,8 +147,6 @@ public class Hunger extends Buff implements Hero.Doom {
 			level = STARVING;
 			partialDamage += excess * (target.HT/1000f);
 		}
-
-		BuffIndicator.refreshHero();
 	}
 
 	public boolean isStarving() {

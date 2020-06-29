@@ -84,7 +84,6 @@ public class ElixirOfAquaticRejuvenation extends Elixir {
 				}
 				target.heal((int) healAmt, false);
 				left -= healAmt;
-				BuffIndicator.refreshHero();
 			}
 			
 			if (left <= 0){
