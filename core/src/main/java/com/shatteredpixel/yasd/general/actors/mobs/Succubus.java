@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
@@ -79,13 +78,14 @@ public class Succubus extends Mob {
 		damage = super.attackProc( enemy, damage );
 		
 		if (enemy.buff(Charm.class) != null ){
-			int shield = (HP - HT) + (5 + damage);
+			/*int shield = (HP - HT) + (5 + damage);
 			if (shield > 0){
 				HP = HT;
 				Buff.affect(this, Barrier.class).setShield(shield);
 			} else {
 				HP += 5 + damage;
-			}
+			}*/
+			heal(damage, true, true);
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 2 );
 			Sample.INSTANCE.play( Assets.SND_CHARMS );
 		} else if (Random.Int( 3 ) == 0) {
