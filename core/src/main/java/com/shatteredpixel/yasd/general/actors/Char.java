@@ -302,6 +302,7 @@ public abstract class Char extends Actor {
 	protected static final String TAG_SHLD = "SHLD";
 	protected static final String BUFFS = "buffs";
 	protected static final String TYPE = "type";
+	protected static final String ALIGNMENT = "alignment";
 
 	@Override
 	public void storeInBundle( Bundle bundle) {
@@ -313,6 +314,7 @@ public abstract class Char extends Actor {
 		bundle.put(TAG_HT, HT);
 		bundle.put(BUFFS, buffs);
 		bundle.put(TYPE, type);
+		bundle.put(ALIGNMENT, alignment);
 
 		if (hasBelongings()) {
 			belongings.storeInBundle(bundle);
@@ -328,6 +330,7 @@ public abstract class Char extends Actor {
 		HP = bundle.getInt(TAG_HP);
 		HT = bundle.getInt(TAG_HT);
 		type = bundle.getInt(TYPE);
+		alignment = bundle.getEnum(ALIGNMENT, Alignment.class);
 
 		for (Bundlable b : bundle.getCollection(BUFFS)) {
 			if (b != null) {
@@ -338,8 +341,6 @@ public abstract class Char extends Actor {
 		if (hasBelongings()) {
 			belongings.restoreFromBundle(bundle);
 		}
-
-		//pre-0.7.0
 	}
 
 	public String name(){
