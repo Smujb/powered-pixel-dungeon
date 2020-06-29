@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.watabou.noosa.Image;
 
 public class MindVision extends FlavourBuff {
 
@@ -50,8 +49,8 @@ public class MindVision extends FlavourBuff {
 	}
 	
 	@Override
-	public void tintIcon(Image icon) {
-		greyIcon(icon, 5f, cooldown());
+	public float iconFadePercent() {
+		return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 	}
 	
 	@Override

@@ -34,7 +34,6 @@ import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
-import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -99,8 +98,8 @@ public class FireImbue extends Buff {
 	}
 	
 	@Override
-	public void tintIcon(Image icon) {
-		FlavourBuff.greyIcon(icon, 5f, left);
+	public float iconFadePercent() {
+		return Math.max(0, (DURATION - left+1) / DURATION);
 	}
 
 	@Override
