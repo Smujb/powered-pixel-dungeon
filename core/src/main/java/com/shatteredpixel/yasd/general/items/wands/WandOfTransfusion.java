@@ -88,21 +88,6 @@ public class WandOfTransfusion extends Wand {
 				float healing = selfDmg + 3*actualLevel();
 
 				ch.heal((int) healing, true);
-
-				/*float shielding = (ch.HP + healing) - ch.HT;
-				if (shielding > 0){
-					healing -= shielding;
-					Buff.affect(ch, Barrier.class).setShield((int)shielding);
-				} else {
-					shielding = 0;
-				}
-
-
-
-				ch.HP += healing;
-				
-				ch.sprite.emitter().burst(Speck.factory(Speck.HEALING), 2 + (int)actualLevel() / 2);
-				ch.sprite.showStatus(CharSprite.POSITIVE, "+%dHP", (int) (healing + shielding));*/
 				
 				if (!freeCharge) {
 					damageHero(selfDmg);
@@ -115,7 +100,7 @@ public class WandOfTransfusion extends Wand {
 				int intLevel = (int) actualLevel();
 				//charms living enemies
 				if (!ch.properties().contains(Char.Property.UNDEAD)) {
-					Buff.affect(ch, Charm.class, 5).object = curUser.id();
+					Buff.affect(ch, Charm.class, Charm.DURATION/2f).object = curUser.id();
 					ch.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 3 + intLevel/2 );
 				
 				//harms the undead

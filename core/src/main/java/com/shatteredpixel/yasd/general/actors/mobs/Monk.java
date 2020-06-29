@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.MonkSprite;
 import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
+import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -151,6 +152,11 @@ public class Monk extends Mob {
 		@Override
 		public int icon() {
 			return BuffIndicator.MIND_VISION;
+		}
+
+		@Override
+		public void tintIcon(Image icon) {
+			icon.hardlight(0.25f, 1.5f, 1f);
 		}
 
 		@Override

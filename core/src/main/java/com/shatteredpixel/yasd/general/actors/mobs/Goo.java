@@ -75,8 +75,6 @@ public class Goo extends Mob {
 
 	@Override
 	public int damageRoll() {
-		//int min = 1;
-		//int max = (HP*2 <= HT) ? 12 : 8;
 		if (pumpedUp > 0) {
 			pumpedUp = 0;
 			PathFinder.buildDistanceMap( pos, BArray.not( Dungeon.level.solid(), null ), 2 );
@@ -85,11 +83,9 @@ public class Goo extends Mob {
 					CellEmitter.get(i).burst(ElmoParticle.FACTORY, 10);
 			}
 			Sample.INSTANCE.play( Assets.SND_BURNING );
-			//return Random.NormalIntRange( min*3, max*3 );
 			return super.damageRoll() * 3;
 		} else {
 			return super.damageRoll();
-			//return Random.NormalIntRange( min, max );
 		}
 	}
 
@@ -155,7 +151,7 @@ public class Goo extends Mob {
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		if (Random.Int( 3 ) == 0) {
-			Buff.affect( enemy, Ooze.class ).set( 20f );
+			Buff.affect( enemy, Ooze.class ).set( Ooze.DURATION );
 			enemy.sprite.burst( 0x000000, 5 );
 		}
 

@@ -50,7 +50,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Bless;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Combo;
 import com.shatteredpixel.yasd.general.actors.buffs.Drunk;
-import com.shatteredpixel.yasd.general.actors.buffs.FlavourBuff;
 import com.shatteredpixel.yasd.general.actors.buffs.Foresight;
 import com.shatteredpixel.yasd.general.actors.buffs.Hunger;
 import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
@@ -946,7 +945,7 @@ public class Hero extends Char {
 					@Override
 					protected boolean act() {
 						if (enemy.isAlive()) {
-							Buff.prolong(Hero.this, SnipersMark.class, 2f).object = enemy.id();
+							Buff.prolong(Hero.this, SnipersMark.class, SnipersMark.DURATION).object = enemy.id();
 						}
 						Actor.remove(this);
 						return true;

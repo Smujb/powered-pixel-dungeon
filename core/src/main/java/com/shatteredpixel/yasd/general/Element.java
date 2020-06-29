@@ -176,7 +176,7 @@ public enum Element {
 				break;
 			case ACID:
 				if (Random.Int(2) == 0) {
-					Buff.affect(defender, Ooze.class).set(20f);
+					Buff.affect(defender, Ooze.class).set( Ooze.DURATION );
 				}
 				break;
 			case SPIRIT:

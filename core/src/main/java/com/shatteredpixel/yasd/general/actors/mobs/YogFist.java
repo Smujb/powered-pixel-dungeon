@@ -293,7 +293,7 @@ public abstract class YogFist extends Mob {
 			damage = super.attackProc( enemy, damage );
 			if (Dungeon.level.adjacent(this.pos, enemy.pos)) {
 				if (Random.Int(2) == 0) {
-					Buff.affect(enemy, Ooze.class).set(20f);
+					Buff.affect( enemy, Ooze.class ).set( Ooze.DURATION );
 					enemy.sprite.burst(0xFF000000, 5);
 				}
 			} else {
@@ -359,28 +359,6 @@ public abstract class YogFist extends Mob {
 		protected void incrementRangedCooldown() {
 			//ranged attack has no cooldown
 		}
-
-		/*@Override
-		protected void zap() {
-			spend( 1f );
-
-			if (hit( this, enemy, true )) {
-
-				int dmg = damageRoll()/2;
-				enemy.damage( dmg, this );
-				Buff.prolong( enemy, Blindness.class, 5f );
-
-				if (!enemy.isAlive() && enemy == Dungeon.hero) {
-					Dungeon.fail( getClass() );
-					GLog.n( Messages.get(Char.class, "kill", name()) );
-				}
-
-			} else {
-
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
-			}
-
-		}*/
 
 		@Override
 		public void damage(int dmg, DamageSrc src) {

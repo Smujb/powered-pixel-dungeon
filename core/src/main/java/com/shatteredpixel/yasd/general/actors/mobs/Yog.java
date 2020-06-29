@@ -323,15 +323,5 @@ public class Yog extends Mob {
 
 			properties.add(Property.DEMONIC);
 		}
-		
-		/*@Override
-		public int attackSkill( Char target ) {
-			return 30;
-		}
-		
-		@Override
-		public int drRoll(Element element) {
-			return Random.NormalIntRange(0, 8);
-		}*/
 	}
 }

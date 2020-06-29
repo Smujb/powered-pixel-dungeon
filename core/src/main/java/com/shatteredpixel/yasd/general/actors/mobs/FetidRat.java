@@ -43,9 +43,6 @@ public class FetidRat extends Rat {
 	{
 		spriteClass = FetidRatSprite.class;
 
-		//HP = HT = 20;
-		//defenseSkill = 5;
-
 		EXP = 4;
 
 		state = WANDERING;
@@ -68,7 +65,7 @@ public class FetidRat extends Rat {
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		if (Random.Int(3) == 0) {
-			Buff.affect(enemy, Ooze.class).set( 20f );
+			Buff.affect(enemy, Ooze.class).set( Ooze.DURATION );
 		}
 
 		return damage;

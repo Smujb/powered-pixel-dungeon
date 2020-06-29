@@ -48,11 +48,22 @@ public class SnipersMark extends FlavourBuff implements ActionIndicator.Action {
 	public int object = 0;
 
 	private static final String OBJECT    = "object";
+
+	public static final float DURATION = 2f;
+
+	{
+		type = buffType.POSITIVE;
+	}
 	
 	@Override
 	public boolean attachTo(@NotNull Char target) {
 		ActionIndicator.setAction(this);
 		return super.attachTo(target);
+	}
+
+	@Override
+	public float iconFadePercent() {
+		return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 	}
 	
 	@Override

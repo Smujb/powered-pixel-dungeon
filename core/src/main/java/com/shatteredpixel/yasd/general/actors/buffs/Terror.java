@@ -33,6 +33,8 @@ import com.watabou.utils.Bundle;
 
 public class Terror extends FlavourBuff {
 
+	public static final float DURATION = 20f;
+
 	public int object = 0;
 
 	private static final String OBJECT    = "object";
@@ -57,6 +59,11 @@ public class Terror extends FlavourBuff {
 	@Override
 	public int icon() {
 		return BuffIndicator.TERROR;
+	}
+
+	@Override
+	public float iconFadePercent() {
+		return Math.max(0, (DURATION - visualcooldown()) / DURATION);
 	}
 
 	@Override
