@@ -50,8 +50,8 @@ public class AttackIndicator extends Tag {
 	private static AttackIndicator instance;
 	
 	private CharSprite sprite = null;
-	
-	private static Mob lastTarget;
+
+	private Mob lastTarget;
 	private ArrayList<Mob> candidates = new ArrayList<>();
 	
 	public AttackIndicator() {
@@ -81,7 +81,7 @@ public class AttackIndicator extends Tag {
 		super.layout();
 		
 		if (sprite != null) {
-			sprite.x = x + (width - sprite.width()) / 2;
+			sprite.x = x + (width - sprite.width()) / 2 + 1;
 			sprite.y = y + (height - sprite.height()) / 2;
 			PixelScene.align(sprite);
 		}
@@ -155,9 +155,7 @@ public class AttackIndicator extends Tag {
 		sprite.paused = true;
 		add( sprite );
 
-		sprite.x = x + (width - sprite.width()) / 2 + 1;
-		sprite.y = y + (height - sprite.height()) / 2;
-		PixelScene.align(sprite);
+		layout();
 	}
 	
 	private boolean enabled = true;
@@ -185,10 +183,12 @@ public class AttackIndicator extends Tag {
 	}
 	
 	public static void target( Char target ) {
-		lastTarget = (Mob)target;
-		instance.updateImage();
-		
-		TargetHealthIndicator.instance.target( target );
+		synchronized (instance) {
+			instance.lastTarget = (Mob) target;
+			instance.updateImage();
+
+			TargetHealthIndicator.instance.target(target);
+		}
 	}
 	
 	public static void updateState() {

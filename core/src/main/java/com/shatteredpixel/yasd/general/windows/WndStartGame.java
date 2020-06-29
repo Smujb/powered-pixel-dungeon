@@ -170,8 +170,10 @@ public class WndStartGame extends Window {
 					MainGame.scene().addToFront(new WndChallenges(YASDSettings.challenges(), true) {
 						public void onBackPressed() {
 							super.onBackPressed();
-							icon( Icons.get( YASDSettings.challenges() > 0 ?
-									Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF ) );
+							if (parent != null) {
+								icon(Icons.get(YASDSettings.challenges() > 0 ?
+										Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+							}
 						}
 					} );
 				}
