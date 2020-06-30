@@ -380,6 +380,8 @@ public class NewDM300 extends Mob {
 
 	}
 
+	private boolean invulnWarned = false;
+
 	@Override
 	public void damage(int dmg, DamageSrc src) {
 		super.damage(dmg, src);
@@ -401,6 +403,10 @@ public class NewDM300 extends Mob {
 
 	@Override
 	public boolean isInvulnerable(Class effect) {
+		if (supercharged && !invulnWarned){
+			invulnWarned = true;
+			GLog.w(Messages.get(this, "charging_hint"));
+		}
 		return supercharged;
 	}
 
@@ -414,8 +420,6 @@ public class NewDM300 extends Mob {
 		sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "invulnerable"));
 		((DM300Sprite)sprite).charge();
 		chargeAnnounced = false;
-
-		GLog.h(Messages.get(this, "charging_hint"));
 	}
 
 	public boolean isSupercharged(){
