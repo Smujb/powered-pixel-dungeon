@@ -83,6 +83,7 @@ public class DesktopLauncher {
                 TinyFileDialogs.tinyfd_messageBox(title + " Has Crashed!",
                         title + " has run into an error it can't recover from and has crashed, sorry about that!\n\n" +
                               //  "If you could, please email this error message to the developer (Evan@ShatteredPixel.com):\n\n" +
+                                "version: " + Game.version + "\n" +
                                 exceptionMsg,
                         "ok", "error", false );
                 if (Gdx.app != null) Gdx.app.exit();
