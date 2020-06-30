@@ -28,11 +28,12 @@
 package com.shatteredpixel.yasd.general.items.potions;
 
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class PotionOfStrength extends Potion {
 
 	{
-		initials = 10;
+		icon = ItemSpriteSheet.Icons.POTION_STRENGTH;
 	}
 	
 	@Override

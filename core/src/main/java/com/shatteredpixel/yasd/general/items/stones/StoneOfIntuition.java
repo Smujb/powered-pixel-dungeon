@@ -29,34 +29,11 @@ package com.shatteredpixel.yasd.general.items.stones;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.effects.Identification;
+import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfFrost;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfHaste;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfInvisibility;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfMindVision;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfParalyticGas;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfPurity;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfIdentify;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfLullaby;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMirrorImage;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRage;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRemoveCurse;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTerror;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTransmutation;
-import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -71,6 +48,7 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.IconTitle;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.noosa.Image;
+import com.watabou.utils.Reflection;
 
 import java.util.HashSet;
 
@@ -89,38 +67,7 @@ public class StoneOfIntuition extends InventoryStone {
 		
 	}
 	
-	//in order of their consumable icon
-	public static Class[] potions = new Class[]{
-			PotionOfExperience.class,
-			PotionOfFrost.class,
-			PotionOfHaste.class,
-			PotionOfHealing.class,
-			PotionOfInvisibility.class,
-			PotionOfLevitation.class,
-			PotionOfLiquidFlame.class,
-			PotionOfMindVision.class,
-			PotionOfParalyticGas.class,
-			PotionOfPurity.class,
-			PotionOfStrength.class,
-			PotionOfToxicGas.class
-	};
-	
-	public static Class[] scrolls = new Class[]{
-			ScrollOfIdentify.class,
-			ScrollOfLullaby.class,
-			ScrollOfMagicMapping.class,
-			ScrollOfMirrorImage.class,
-			ScrollOfRetribution.class,
-			ScrollOfRage.class,
-			ScrollOfRecharging.class,
-			ScrollOfRemoveCurse.class,
-			ScrollOfTeleportation.class,
-			ScrollOfTerror.class,
-			ScrollOfTransmutation.class,
-			ScrollOfUpgrade.class
-	};
-	
-	static Class curGuess = null;
+	private static Class curGuess = null;
 	
 	public class WndGuess extends Window {
 		
@@ -169,17 +116,14 @@ public class StoneOfIntuition extends InventoryStone {
 			int placed = 0;
 			
 			HashSet<Class<?extends Item>> unIDed = new HashSet<>();
-			final Class[] all;
-			
-			final int row;
+			final Class<?extends Item>[] all;
 			if (item.isIdentified()){
 				hide();
 				return;
 			} else if (item instanceof Potion){
 				unIDed.addAll(Potion.getUnknown());
-				all = potions.clone();
+				all = (Class<? extends Item>[]) Generator.Category.POTION.classes.clone();
 				if (item instanceof ExoticPotion){
-					row = 8;
 					for (int i = 0; i < all.length; i++){
 						all[i] = ExoticPotion.regToExo.get(all[i]);
 					}
@@ -188,24 +132,19 @@ public class StoneOfIntuition extends InventoryStone {
 						exoUID.add(ExoticPotion.regToExo.get(i));
 					}
 					unIDed = exoUID;
-				} else {
-					row = 0;
 				}
 			} else if (item instanceof Scroll){
 				unIDed.addAll(Scroll.getUnknown());
-				all = scrolls.clone();
-				if (item instanceof ExoticScroll){
-					row = 24;
-					for (int i = 0; i < all.length; i++){
+				all = (Class<? extends Item>[]) Generator.Category.SCROLL.classes.clone();
+				if (item instanceof ExoticScroll) {
+					for (int i = 0; i < all.length; i++) {
 						all[i] = ExoticScroll.regToExo.get(all[i]);
 					}
-					HashSet<Class<?extends Item>> exoUID = new HashSet<>();
-					for (Class<?extends Item> i : unIDed){
+					HashSet<Class<? extends Item>> exoUID = new HashSet<>();
+					for (Class<? extends Item> i : unIDed) {
 						exoUID.add(ExoticScroll.regToExo.get(i));
 					}
 					unIDed = exoUID;
-				} else {
-					row = 16;
 				}
 			} else {
 				hide();
@@ -237,7 +176,8 @@ public class StoneOfIntuition extends InventoryStone {
 						super.onClick();
 					}
 				};
-				Image im = new Image(Assets.Interfaces.CONS_ICONS, 7*i, row, 7, 8);
+				Image im = new Image(Assets.Sprites.ITEM_ICONS);
+				im.frame(ItemSpriteSheet.Icons.film.get(Reflection.newInstance(all[i]).icon));
 				im.scale.set(2f);
 				btn.icon(im);
 				btn.setRect(left + placed*BTN_SIZE, top, BTN_SIZE, BTN_SIZE);

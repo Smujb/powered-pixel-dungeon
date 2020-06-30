@@ -41,6 +41,7 @@ import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.noosa.audio.Sample;
@@ -48,7 +49,7 @@ import com.watabou.noosa.audio.Sample;
 public class ScrollOfRemoveCurse extends InventoryScroll {
 
 	{
-		initials = 7;
+		icon = ItemSpriteSheet.Icons.SCROLL_REMCURSE;
 		mode = WndBag.Mode.UNCURSABLE;
 	}
 	

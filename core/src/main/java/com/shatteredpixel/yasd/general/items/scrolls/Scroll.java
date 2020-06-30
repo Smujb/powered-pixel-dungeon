@@ -68,8 +68,6 @@ public abstract class Scroll extends Item {
 	
 	protected static final float TIME_TO_READ	= 1f;
 
-	protected Integer initials;
-
 	private static final Class<?>[] scrolls = {
 		ScrollOfIdentify.class,
 		ScrollOfMagicMapping.class,
@@ -247,10 +245,6 @@ public abstract class Scroll extends Item {
 		return isKnown() ?
 			desc() :
 			Messages.get(this, "unknown_desc");
-	}
-
-	public Integer initials(){
-		return isKnown() ? initials : null;
 	}
 	
 	@Override
