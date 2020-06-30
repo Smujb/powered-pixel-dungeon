@@ -760,21 +760,6 @@ public abstract class Mob extends Char {
 			return true;
 		}
 	}
-
-	/*protected boolean doMagicAttack(Char enemy) {
-
-		boolean visible = Dungeon.level.heroFOV[pos] || Dungeon.level.heroFOV[enemy.pos];
-		if (visible) {
-			sprite.zap(enemy.pos);
-		} else {
-			this.enemy = enemy;
-			magicalAttack(enemy);
-		}
-
-		spend( magicalAttackDelay() );
-
-		return !visible;
-	}*/
 	
 	@Override
 	public void onAttackComplete() {
@@ -796,18 +781,6 @@ public abstract class Mob extends Char {
 		if (enemy == Dungeon.hero && !Dungeon.hero.canSurpriseAttack()) seen = true;
 		return !seen;
 	}
-	
-	/*@Override
-	public int defenseSkill( Char enemy ) {
-
-		if ( !canBeSurpriseAttacked(enemy)
-				&& paralysed == 0
-				&& !(alignment == Alignment.ALLY && enemy == Dungeon.hero)) {
-			return this.defenseSkill;
-		} else {
-			return 0;
-		}
-	}*/
 	
 	protected boolean hitWithRanged = false;
 	

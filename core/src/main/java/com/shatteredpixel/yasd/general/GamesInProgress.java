@@ -34,8 +34,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.FileUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,23 +69,11 @@ public class GamesInProgress {
 	public static String slotFolder(int slot ){
 		return gameFolder() + Messages.format(SLOT_FOLDER, slot);
 	}
-
-	/*public static String xFolder(int x ){
-		return Messages.format(XPOS, x);
-	}
-
-	public static String yFolder(int y ){
-		return Messages.format(YPOS, y);
-	}*/
 	
 
 	public static String gameFile(int slot ){
 		return slotFolder(slot) + "/" + GAME_FILE;
 	}
-
-	/*public static String depthFile( int slot, int x, int y, int z ) {
-		return slotFolder(slot) + "/" + xFolder(x) + "/" + yFolder(y) + "/"  + Messages.format(ZPOS, z);
-	}*/
 	
 	public static int firstEmpty(){
 		for (int i = 1; i <= MAX_SLOTS; i++){
@@ -108,11 +94,7 @@ public class GamesInProgress {
 	
 	public static Info check( int slot ) {
 		
-		/*if (slotStates.containsKey( slot )) {
-			
-			return slotStates.get( slot );
-			
-		} else*/ if (!gameExists( slot )) {
+		if (!gameExists( slot )) {
 			
 			slotStates.put(slot, null);
 			return null;

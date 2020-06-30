@@ -60,21 +60,6 @@ public class Monk extends Mob {
 
 		properties.add(Property.UNDEAD);
 	}
-	
-	/*@Override
-	public int damageRoll() {
-		return Random.NormalIntRange( 14, 30 );
-	}
-	
-	@Override
-	public int attackSkill( Char target ) {
-		return defenseSkill;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 2);
-	}*/
 
 	@Override
 	public void rollToDropLoot() {

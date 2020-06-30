@@ -77,14 +77,7 @@ public class Succubus extends Mob {
 	public int attackProc( Char enemy, int damage ) {
 		damage = super.attackProc( enemy, damage );
 		
-		if (enemy.buff(Charm.class) != null ){
-			/*int shield = (HP - HT) + (5 + damage);
-			if (shield > 0){
-				HP = HT;
-				Buff.affect(this, Barrier.class).setShield(shield);
-			} else {
-				HP += 5 + damage;
-			}*/
+		if (enemy.buff(Charm.class) != null ) {
 			heal(damage, true, true);
 			sprite.emitter().burst( Speck.factory( Speck.HEALING ), 2 );
 			Sample.INSTANCE.play( Assets.SND_CHARMS );

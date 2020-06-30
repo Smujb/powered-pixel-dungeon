@@ -424,9 +424,7 @@ public class Dungeon {
 	public static void switchLevel( final Level level, Point pos ) {
 
 		int cell;
-		/*if (pos == -2){
-			cell = level.getExitPos();
-		} else*/ if (pos == null){
+		if (pos == null){
 			cell = level.getEntrancePos();
 		} else {
 			cell = level.pointToCell(pos);

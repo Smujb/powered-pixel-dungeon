@@ -221,11 +221,6 @@ public enum Element {
 		return damage;
 	}
 
-	/*public int affectDamage(Char ch, int damage) {
-		damage = Math.max(damage - ch.drRoll(this), 0);
-		return damage;
-	}*/
-
 	public void FX(Char ch, int cell, Callback attack) {
 		final Char target = Actor.findChar(cell);
 		int AMT = 5;
