@@ -62,8 +62,6 @@ import com.watabou.utils.ColorMath;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL_DECO;
 
 public class SewerLevel extends RegularLevel {
@@ -99,17 +97,17 @@ public class SewerLevel extends RegularLevel {
 	
 	@Override
 	public String tilesTex() {
-		return Assets.TILES_SEWERS;
+		return Assets.Environment.TILES_SEWERS;
 	}
 	
 	@Override
 	public String waterTex() {
-		return Assets.WATER_SEWERS;
+		return Assets.Environment.WATER_SEWERS;
 	}
 
 	@Override
 	public String loadImg() {
-		return Assets.LOADING_SEWERS;
+		return Assets.Interfaces.LOADING_SEWERS;
 	}
 
 	@Override

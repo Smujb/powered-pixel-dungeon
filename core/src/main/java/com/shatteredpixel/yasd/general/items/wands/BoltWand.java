@@ -142,7 +142,7 @@ public class BoltWand extends NormalWand {
 					String defense = ch.defenseVerb();
 					ch.sprite.showStatus(CharSprite.NEUTRAL, defense);
 
-					Sample.INSTANCE.play(Assets.SND_MISS);
+					Sample.INSTANCE.play(Assets.Sounds.MISS);
 				}
 
 			} else {

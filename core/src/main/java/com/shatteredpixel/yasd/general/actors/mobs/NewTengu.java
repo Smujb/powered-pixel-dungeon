@@ -238,7 +238,7 @@ public class NewTengu extends Mob {
 				move( newPos );
 				
 				if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
-				Sample.INSTANCE.play( Assets.SND_PUFF );
+				Sample.INSTANCE.play( Assets.Sounds.PUFF );
 				
 				float fill = 0.9f - 0.5f*((HP-80)/80f);
 				level.placeTrapsInTenguCell(fill);
@@ -264,7 +264,7 @@ public class NewTengu extends Mob {
 				if (arenaJumps < 4) arenaJumps++;
 				
 				if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
-				Sample.INSTANCE.play( Assets.SND_PUFF );
+				Sample.INSTANCE.play( Assets.Sounds.PUFF );
 				
 			}
 			
@@ -280,7 +280,7 @@ public class NewTengu extends Mob {
 			move( newPos );
 			
 			if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
-			Sample.INSTANCE.play( Assets.SND_PUFF );
+			Sample.INSTANCE.play( Assets.Sounds.PUFF );
 			
 		}
 		
@@ -625,7 +625,7 @@ public class NewTengu extends Mob {
 				}
 				
 				if (exploded){
-					Sample.INSTANCE.play(Assets.SND_BLAST);
+					Sample.INSTANCE.play(Assets.Sounds.BLAST);
 				}
 				
 			}
@@ -830,7 +830,7 @@ public class NewTengu extends Mob {
 				}
 				
 				if (burned){
-					Sample.INSTANCE.play(Assets.SND_BURNING);
+					Sample.INSTANCE.play(Assets.Sounds.BURNING);
 				}
 			}
 			
@@ -914,7 +914,7 @@ public class NewTengu extends Mob {
 				target.sprite.parent.add(new Lightning(shockerPos - 1 + Dungeon.level.width(), shockerPos + 1 - Dungeon.level.width(), null));
 				
 				if (Dungeon.level.distance(Dungeon.hero.pos, shockerPos) <= 1){
-					Sample.INSTANCE.play( Assets.SND_LIGHTNING );
+					Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 				}
 				
 				shockingOrdinals = false;
@@ -925,7 +925,7 @@ public class NewTengu extends Mob {
 				target.sprite.parent.add(new Lightning(shockerPos - 1, shockerPos + 1, null));
 				
 				if (Dungeon.level.distance(Dungeon.hero.pos, shockerPos) <= 1){
-					Sample.INSTANCE.play( Assets.SND_LIGHTNING );
+					Sample.INSTANCE.play( Assets.Sounds.LIGHTNING );
 				}
 				
 				shockingOrdinals = true;

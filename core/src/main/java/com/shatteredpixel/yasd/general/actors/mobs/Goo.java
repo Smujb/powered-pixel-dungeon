@@ -82,7 +82,7 @@ public class Goo extends Mob {
 				if (PathFinder.distance[i] < Integer.MAX_VALUE)
 					CellEmitter.get(i).burst(ElmoParticle.FACTORY, 10);
 			}
-			Sample.INSTANCE.play( Assets.SND_BURNING );
+			Sample.INSTANCE.play( Assets.Sounds.BURNING );
 			return super.damageRoll() * 3;
 		} else {
 			return super.damageRoll();

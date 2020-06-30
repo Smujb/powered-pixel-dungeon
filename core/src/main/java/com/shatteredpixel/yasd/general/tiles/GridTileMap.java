@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.tiles;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.levels.terrain.KindOfTerrain;
@@ -35,7 +36,7 @@ import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 public class GridTileMap extends DungeonTilemap {
 
 	public GridTileMap() {
-		super("visual_grid.png");
+		super(Assets.Environment.VISUAL_GRID);
 
 		map( Dungeon.level.getMap(), Dungeon.level.width() );
 	}

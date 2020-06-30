@@ -64,12 +64,12 @@ public class TestBossLevel extends Level {
 
 	@Override
 	public String tilesTex() {
-		return Assets.TILES_CITY;
+		return Assets.Environment.TILES_CITY;
 	}
 
 	@Override
 	public String waterTex() {
-		return Assets.WATER_CITY;
+		return Assets.Environment.WATER_CITY;
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import com.watabou.noosa.audio.Sample;
 public class PHRSprite extends MobSprite {
     PHRSprite() {
         super();
-        texture( Assets.RAT );
+        texture( Assets.Sprites.RAT );
 
         TextureFilm frames = new TextureFilm( texture, 16, 15 );
 
@@ -59,7 +59,7 @@ public class PHRSprite extends MobSprite {
         turnTo( ch.pos , cell );
         play( zap );
 
-        Sample.INSTANCE.play( Assets.SND_ZAP );
+        Sample.INSTANCE.play( Assets.Sounds.ZAP );
     }
 
     @Override

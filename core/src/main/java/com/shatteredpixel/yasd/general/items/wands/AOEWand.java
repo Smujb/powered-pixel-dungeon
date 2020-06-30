@@ -165,7 +165,7 @@ public class AOEWand extends NormalWand {
 			);
 		}
 		element.FX(curUser, bolt.path.get(dist/2), callback);
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+		Sample.INSTANCE.play( Assets.Sounds.ZAP );
 	}
 
 	private int getMagicMissileFX() {

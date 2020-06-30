@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.messages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -61,9 +62,17 @@ public class Messages {
 	/**
 	 * Setup Methods
 	 */
-	//TODO probably want to move these to assets now
 	private static String[] prop_files = new String[]{
-			"com/shatteredpixel/yasd/general/messages/actors/actors",
+			Assets.Messages.ACTORS,
+			Assets.Messages.ITEMS,
+			Assets.Messages.JOURNAL,
+			Assets.Messages.LEVELS,
+			Assets.Messages.PLANTS,
+			Assets.Messages.SCENES,
+			Assets.Messages.UI,
+			Assets.Messages.WINDOWS,
+			Assets.Messages.MISC
+			/*"com/shatteredpixel/yasd/general/messages/actors/actors",
 			"com/shatteredpixel/yasd/general/messages/items/items",
 			"com/shatteredpixel/yasd/general/messages/journal/journal",
 			"com/shatteredpixel/yasd/general/messages/levels/levels",
@@ -71,7 +80,7 @@ public class Messages {
 			"com/shatteredpixel/yasd/general/messages/scenes/scenes",
 			"com/shatteredpixel/yasd/general/messages/ui/ui",
 			"com/shatteredpixel/yasd/general/messages/windows/windows",
-			"com/shatteredpixel/yasd/general/messages/misc/misc"
+			"com/shatteredpixel/yasd/general/messages/misc/misc"*/
 	};
 
 	static{

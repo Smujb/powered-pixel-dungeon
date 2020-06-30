@@ -57,8 +57,8 @@ public class UnderwaterLevel extends Level {
 		hasEntrance = hasExit = false;
 	}
 
-	public String tilesTex = Assets.TILES_HALLS;
-	public String waterTex = Assets.WATER_HALLS;
+	public String tilesTex = Assets.Environment.TILES_HALLS;
+	public String waterTex = Assets.Environment.WATER_HALLS;
 
 	private static final int NUM_BUBBLES = 5;
 
@@ -187,7 +187,7 @@ public class UnderwaterLevel extends Level {
 	@Override
 	public String tilesTex() {
 		if (waterTex.isEmpty()) {
-			return Assets.TILES_HALLS;
+			return Assets.Environment.TILES_HALLS;
 		} else {
 			return tilesTex;
 		}
@@ -196,7 +196,7 @@ public class UnderwaterLevel extends Level {
 	@Override
 	public String waterTex() {
 		if (waterTex.isEmpty()) {
-			return Assets.WATER_HALLS;
+			return Assets.Environment.WATER_HALLS;
 		} else {
 			return waterTex;
 		}

@@ -94,7 +94,7 @@ public abstract class Trap implements Bundlable {
 	public void trigger() {
 		if (active) {
 			if (Dungeon.level.heroFOV[pos]) {
-				Sample.INSTANCE.play(Assets.SND_TRAP);
+				Sample.INSTANCE.play(Assets.Sounds.TRAP);
 			}
 			if (!this.visible & Dungeon.hero.pos == this.pos & this.canBeSearched) {//Did the Hero interact the trap, is it visible?
 				Dungeon.hero.loseMorale(0.5f);

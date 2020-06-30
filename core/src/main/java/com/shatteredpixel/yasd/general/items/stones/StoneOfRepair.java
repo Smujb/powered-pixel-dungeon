@@ -50,7 +50,7 @@ public class StoneOfRepair extends InventoryStone {
 		curUser.spend( TIME_TO_REPAIR );
 		curUser.busy();
 		curUser.sprite.operate( curUser.pos );
-		Sample.INSTANCE.play( Assets.SND_EVOKE );
+		Sample.INSTANCE.play( Assets.Sounds.EVOKE );
 	}
 
 	@Override

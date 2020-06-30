@@ -42,8 +42,6 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public class Honeypot extends Item {
@@ -102,7 +100,7 @@ public class Honeypot extends Item {
 	public Item shatter( Char owner, int pos ) {
 		
 		if (Dungeon.level.heroFOV[pos]) {
-			Sample.INSTANCE.play( Assets.SND_SHATTER );
+			Sample.INSTANCE.play( Assets.Sounds.SHATTER );
 			Splash.at( pos, 0xffd500, 5 );
 		}
 		
@@ -134,7 +132,7 @@ public class Honeypot extends Item {
 			bee.sprite.alpha( 0 );
 			bee.sprite.parent.add( new AlphaTweener( bee.sprite, 1, 0.15f ) );
 			
-			Sample.INSTANCE.play( Assets.SND_BEE );
+			Sample.INSTANCE.play( Assets.Sounds.BEE );
 			return new ShatteredPot();
 		} else {
 			return this;

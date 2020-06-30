@@ -79,7 +79,7 @@ public class Alcohol extends Item {
 
         Buff.affect(hero, Drunk.class, drunkTurns);
 
-        Sample.INSTANCE.play(Assets.SND_DRINK);
+        Sample.INSTANCE.play(Assets.Sounds.DRINK);
 
         hero.sprite.operate(hero.pos);
 

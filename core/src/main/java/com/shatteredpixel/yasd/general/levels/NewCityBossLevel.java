@@ -107,22 +107,22 @@ public class NewCityBossLevel extends Level {
 
 	@Override
 	public String tilesTex() {
-		return Assets.TILES_CITY;
+		return Assets.Environment.TILES_CITY;
 	}
 
 	@Override
 	public String waterTex() {
-		return Assets.WATER_CITY;
+		return Assets.Environment.WATER_CITY;
 	}
 
 	@Override
 	public String loadImg() {
-		return Assets.LOADING_CITY;
+		return Assets.Interfaces.LOADING_CITY;
 	}
 
 	@Override
 	public String music() {
-		return Assets.CITY_THEME;
+		return Assets.Music.CITY_THEME;
 	}
 
 	@Override
@@ -404,7 +404,7 @@ public class NewCityBossLevel extends Level {
 	public static class CustomGroundVisuals extends CustomTilemap {
 
 		{
-			texture = Assets.CITY_BOSS;
+			texture = Assets.Environment.Custom.CITY_BOSS;
 			tileW = 15;
 			tileH = 48;
 		}
@@ -588,7 +588,7 @@ public class NewCityBossLevel extends Level {
 
 	public static class CustomWallVisuals extends CustomTilemap {
 		{
-			texture = Assets.CITY_BOSS;
+			texture = Assets.Environment.Custom.CITY_BOSS;
 			tileW = 15;
 			tileH = 48;
 		}

@@ -287,7 +287,7 @@ public class WndStartGame extends Window {
 		protected void createChildren() {
 			super.createChildren();
 			
-			avatar = new Image(Assets.AVATARS);
+			avatar = new Image(Assets.Sprites.AVATARS);
 			avatar.scale.set(2f);
 			add(avatar);
 			

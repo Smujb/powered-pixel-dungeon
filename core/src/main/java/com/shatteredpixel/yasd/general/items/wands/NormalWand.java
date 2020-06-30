@@ -306,7 +306,7 @@ public abstract class NormalWand extends DamageWand {
 					ch.sprite,
 					bolt.collisionPos,
 					callback);
-			Sample.INSTANCE.play(Assets.SND_ZAP);
+			Sample.INSTANCE.play(Assets.Sounds.ZAP);
 			int dist = bolt.dist;
 			if (dist > 5){
 				m.setSpeed(dist*25);
