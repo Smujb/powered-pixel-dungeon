@@ -45,7 +45,6 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.HeavyBoomerang;
-import com.shatteredpixel.yasd.general.levels.features.Maze;
 import com.shatteredpixel.yasd.general.levels.interactive.Entrance;
 import com.shatteredpixel.yasd.general.levels.interactive.Exit;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
@@ -56,7 +55,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Plant;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.tiles.CustomTilemap;
-import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.shatteredpixel.yasd.general.ui.TargetHealthIndicator;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.watabou.noosa.Camera;
@@ -99,7 +97,8 @@ public class NewPrisonBossLevel extends Level {
 	public enum State {
 		START,
 		FIGHT_START,
-		TRAP_MAZES,
+		TRAP_MAZES, //pre-0.8.1 saves
+		FIGHT_PAUSE,
 		FIGHT_ARENA,
 		WON
 	}
@@ -151,7 +150,7 @@ public class NewPrisonBossLevel extends Level {
 		state = bundle.getEnum( STATE, State.class );
 		
 		//in some states tengu won't be in the world, in others he will be.
-		if (state == State.START || state == State.TRAP_MAZES) {
+		if (state == State.START || state == State.TRAP_MAZES || state == State.FIGHT_PAUSE) {
 			tengu = (NewTengu)bundle.get( TENGU );
 		} else {
 			for (Mob mob : mobs){
@@ -223,62 +222,22 @@ public class NewPrisonBossLevel extends Level {
 		
 		Painter.set(this, tenguCell.left+4, tenguCell.top, LOCKED_DOOR);
 		
-		drop(new IronKey(key), randomPrisonCellPos());
-		
 		for (Point p : startTorches){
 			Painter.set(this, p, WALL_DECO);
 		}
 	}
-	
-	private static final Rect mazeHallway = new Rect(9, 6, 12, 24);
-	private static final Rect[] mazeCells = new Rect[]{ new Rect(1, 9, 10, 16), new Rect(11, 9, 20, 16),
-	                                                    new Rect(3, 15, 10, 22), new Rect(11, 15, 18, 22)};
-	private static final Point[] mazeKeySpawns = new Point[]{new Point(mazeCells[0].left+1, mazeCells[0].top+3),
-	                                                         new Point(mazeCells[1].right-2, mazeCells[1].top+3),
-	                                                         new Point(mazeCells[2].left+1, mazeCells[2].top+3),
-	                                                         new Point(mazeCells[3].right-2, mazeCells[3].top+3)};
-	private static final Point[] mazeCellDoors = new Point[]{new Point(mazeCells[0].right-1, mazeCells[0].top+3),
-	                                                         new Point(mazeCells[1].left, mazeCells[1].top+3),
-	                                                         new Point(mazeCells[2].right-1, mazeCells[2].top+3),
-	                                                         new Point(mazeCells[3].left, mazeCells[3].top+3)};
-	private static final Point[] mazeTorches = new Point[]{  new Point(5, 9), new Point(15, 9),
-	                                                         new Point(6, 15), new Point(14, 15),
-	                                                         new Point(8, 23), new Point(12, 23)};
-	
-	private void setMapMazes(){
-		clearExitEntrance();
-		
-		Painter.fill(this, 0, 0, 32, 32, WALL);
-		
-		Painter.fill(this, mazeHallway, WALL);
-		Painter.fill(this, mazeHallway, 1, EMPTY);
-		
-		for (Rect r : mazeCells){
-			Painter.fill(this, r, WALL);
-			Painter.fill(this, r, 1, EMPTY);
-		}
-		
-		for (Point p : mazeCellDoors){
-			Painter.set(this, p, DOOR);
-		}
-		
-		Painter.fill(this, tenguCell, WALL);
-		Painter.fill(this, tenguCell, 1, EMPTY);
+
+	private void setMapPause(){
+		setMapStart();
 		
 		Painter.set(this, tenguCell.left+4, tenguCell.top, DOOR);
-		
-		Painter.set(this, mazeHallway.left+1, mazeHallway.top+2, LOCKED_DOOR);
-		Painter.set(this, mazeHallway.left+1, mazeHallway.top+4, LOCKED_DOOR);
-		Painter.set(this, mazeHallway.left+1, mazeHallway.top+8, LOCKED_DOOR);
-		Painter.set(this, mazeHallway.left+1, mazeHallway.top+10, LOCKED_DOOR);
-		
-		for (Point p : mazeKeySpawns){
-			drop(new IronKey(key), pointToCell(p));
-		}
-		
-		for (Point p : mazeTorches){
-			Painter.set(this, p, WALL_DECO);
-		}
+
+		Painter.fill(this, startCells[1].left, startCells[1].top+3, 1, 7, Terrain.EMPTY);
+		Painter.fill(this, startCells[1].left+2, startCells[1].top+2, 3, 10, Terrain.EMPTY);
+
+		Painter.fill(this, entranceRoom, Terrain.WALL);
+		Painter.set(this, startHallway.left+1, startHallway.top, Terrain.EMPTY);
+		Painter.set(this, startHallway.left+1, startHallway.top+1, Terrain.DOOR);
 	}
 	
 	private static final Rect arena = new Rect(3, 1, 18, 16);
@@ -304,7 +263,7 @@ public class NewPrisonBossLevel extends Level {
 	private static final Point endStart = new Point( startHallway.left+2, startHallway.top+2);
 	private static final Point levelExit = new Point( endStart.x+12, endStart.y+6);
 	private static final Terrain[] endMap = new Terrain[]{
-			W, W, W, W, W, W, W, W, W, W, W, W, W, W,
+			W, W, D, W, W, W, W, W, W, W, W, W, W, W,
 			W, e, e, e, W, W, W, W, W, W, W, W, W, W,
 			W, e, e, e, e, e, e, e, e, W, W, W, W, W,
 			e, e, e, e, e, e, e, e, e, e, e, e, W, W,
@@ -470,7 +429,7 @@ public class NewPrisonBossLevel extends Level {
 				
 				clearEntities( tenguCell ); //clear anything not in tengu's cell
 
-				setMapMazes();
+				setMapPause();
 				cleanMapState();
 				
 				Actor.remove(tengu);
@@ -481,10 +440,11 @@ public class NewPrisonBossLevel extends Level {
 				GameScene.flash(0xFFFFFF);
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);
 				
-				state = State.TRAP_MAZES;
+				state = State.FIGHT_PAUSE;
 				break;
-				
-			case TRAP_MAZES:
+
+			case TRAP_MAZES: //for pre-0.8.1 saves
+			case FIGHT_PAUSE:
 				
 				Dungeon.hero.interrupt();
 				
@@ -569,63 +529,9 @@ public class NewPrisonBossLevel extends Level {
 						progress();
 					}
 					break;
-				case TRAP_MAZES:
-					
-					for (int i = 0; i < mazeCellDoors.length; i++){
-						if (ch.pos == pointToCell(mazeCellDoors[i]) && !triggered[i]){
-							triggered[i] = true;
-							Maze.allowDiagonals = true;
-							boolean[][] maze;
-							boolean validMaze;
-							
-							do {
-								maze = Maze.generate(mazeCells[i], getMap(), width(), WALL);
-								
-								//prevents a maze that is just a straight line from the door
-								validMaze = false;
-								for (int x = 1; x < maze.length-1; x++){
-									if (maze[x][3]){
-										int cell = mazeCells[i].left+x + width()*(mazeCells[i].top+3);
-										if (heaps.get(cell) == null
-												&& Blob.volumeAt(cell, StormCloud.class) == 0
-												&& Blob.volumeAt(cell, Regrowth.class) <= 9){
-											validMaze = true;
-											break;
-										}
-									}
-								}
-								
-							} while (!validMaze);
-							
-							for (int x = 1; x < maze.length-1; x++) {
-								for (int y = 1; y < maze[0].length-1; y++) {
-									if (maze[x][y]){
-										int cell = mazeCells[i].left+x + width()*(mazeCells[i].top+y);
-										if (heaps.get(cell) == null){
-											setTrap(new TenguDartTrap().hide(), cell);
-											//Painter.set(this, cell, SECRET_TRAP);
-											CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
-										}
-									}
-								}
-							}
-							
-							FadingTraps f = new FadingTraps();
-							f.setCoveringArea(mazeCells[i]);
-							f.fadeDelay = 2f;
-							GameScene.add(f, false);
-							customTiles.add(f);
-							
-							Sample.INSTANCE.play(Assets.Sounds.TELEPORT);
-							int roomCenter = (mazeCells[i].left + mazeCells[i].right)/2 +
-									(mazeCells[i].top + mazeCells[i].bottom)/2 * width();
-							Camera.main.panTo(DungeonTilemap.tileCenterToWorld(roomCenter), 5f);
-							
-							Dungeon.hero.interrupt();
-						}
-					}
-					
-					if (cellToPoint(ch.pos).y <= mazeHallway.top+2){
+				case TRAP_MAZES: //pre-0.8.1
+				case FIGHT_PAUSE:
+					if (cellToPoint(ch.pos).y <= startHallway.top+1){
 						progress();
 					}
 					break;
@@ -648,6 +554,7 @@ public class NewPrisonBossLevel extends Level {
 		if (item != null) {
 			drop( item, randomRespawnCell() ).setHauntedIfCursed().type = Heap.Type.REMAINS;
 		}
+		drop(new IronKey(key), randomPrisonCellPos());
 	}
 	
 	private int randomPrisonCellPos(){
@@ -686,7 +593,10 @@ public class NewPrisonBossLevel extends Level {
 			trapsPatch = Patch.generate(7, 7, fill, 0, false);
 			
 			PathFinder.buildDistanceMap(tenguPos, BArray.not(trapsPatch, null));
-		} while (PathFinder.distance[heroPos] > 6);
+			//note that the effective range of fill is 40%-90%
+			//so distance to tengu starts at 3-4 tiles and scales up to 7-8 as fill increases
+		} while (PathFinder.distance[heroPos] > Math.ceil(1 + 7*fill)
+				|| PathFinder.distance[heroPos] < Math.ceil(7*fill));
 		
 		PathFinder.setMapSize(width(), height());
 		
@@ -696,7 +606,8 @@ public class NewPrisonBossLevel extends Level {
 				int y = i / 7;
 				int cell = x+tenguCell.left+1 + (y+tenguCell.top+1)*width();
 				if (Blob.volumeAt(cell, StormCloud.class) == 0
-						&& Blob.volumeAt(cell, Regrowth.class) <= 9) {
+						&& Blob.volumeAt(cell, Regrowth.class) <= 9
+						&& Actor.findChar(cell) != tengu) {
 					setTrap(new TenguDartTrap().hide(), cell);
 					CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
 				}
