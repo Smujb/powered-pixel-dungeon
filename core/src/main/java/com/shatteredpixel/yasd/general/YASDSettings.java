@@ -254,7 +254,7 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	}
 	
 	public static void musicVol( int value ){
-		Music.INSTANCE.volume(value/10f);
+		Music.INSTANCE.volume(value*value/100f);
 		put( KEY_MUSIC_VOL, value );
 	}
 	
@@ -281,7 +281,7 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	}
 	
 	public static void SFXVol( int value ) {
-		Sample.INSTANCE.volume(value/10f);
+		Sample.INSTANCE.volume(value*value/100f);
 		put( KEY_SFX_VOL, value );
 	}
 

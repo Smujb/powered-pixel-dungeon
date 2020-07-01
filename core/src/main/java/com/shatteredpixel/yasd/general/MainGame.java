@@ -177,9 +177,9 @@ public class MainGame extends Game {
 		YASDAction.loadBindings();
 		
 		Music.INSTANCE.enable( YASDSettings.music() );
-		Music.INSTANCE.volume( YASDSettings.musicVol()/10f );
+		Music.INSTANCE.volume( YASDSettings.musicVol()*YASDSettings.musicVol()/100f );
 		Sample.INSTANCE.enable( YASDSettings.soundFx() );
-		Sample.INSTANCE.volume( YASDSettings.SFXVol()/10f );
+		Sample.INSTANCE.volume( YASDSettings.SFXVol()*YASDSettings.SFXVol()/100f );
 
 		Sample.INSTANCE.load( Assets.Sounds.all );
 		

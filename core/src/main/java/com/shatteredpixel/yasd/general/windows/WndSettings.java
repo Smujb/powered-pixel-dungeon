@@ -28,8 +28,8 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -42,6 +42,8 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.Random;
+
 //TODO seeing as a fair bit of this is platform-dependant, might be better to have a per-platform wndsettings
 public class WndSettings extends WndTabbed {
 
@@ -383,6 +385,7 @@ public class WndSettings extends WndTabbed {
 			OptionSlider SFXVol = new OptionSlider(Messages.get(this, "sfx_vol"), "0", "10", 0, 10) {
 				@Override
 				protected void onChange() {
+					Sample.INSTANCE.play(Random.element(Assets.Sounds.all));
 					YASDSettings.SFXVol(getSelectedValue());
 				}
 			};
