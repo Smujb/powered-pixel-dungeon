@@ -578,6 +578,12 @@ public class NewPrisonBossLevel extends Level {
 	}
 	
 	public void placeTrapsInTenguCell(float fill){
+
+		for (CustomTilemap vis : customTiles){
+			if (vis instanceof FadingTraps){
+				((FadingTraps) vis).remove();
+			}
+		}
 		
 		Point tenguPoint = cellToPoint(tengu.pos);
 		Point heroPoint = cellToPoint(Dungeon.hero.pos);
@@ -594,10 +600,10 @@ public class NewPrisonBossLevel extends Level {
 			
 			PathFinder.buildDistanceMap(tenguPos, BArray.not(trapsPatch, null));
 			//note that the effective range of fill is 40%-90%
-			//so distance to tengu starts at 3-4 tiles and scales up to 7-8 as fill increases
-		} while (PathFinder.distance[heroPos] > Math.ceil(1 + 7*fill)
+			//so distance to tengu starts at 3-6 tiles and scales up to 7-8 as fill increases
+		} while (PathFinder.distance[heroPos] > Math.ceil(4 + 4*fill)
 				|| PathFinder.distance[heroPos] < Math.ceil(7*fill));
-		
+
 		PathFinder.setMapSize(width(), height());
 		
 		for (int i = 0; i < trapsPatch.length; i++){
@@ -607,7 +613,7 @@ public class NewPrisonBossLevel extends Level {
 				int cell = x+tenguCell.left+1 + (y+tenguCell.top+1)*width();
 				if (Blob.volumeAt(cell, StormCloud.class) == 0
 						&& Blob.volumeAt(cell, Regrowth.class) <= 9
-						&& Actor.findChar(cell) != tengu) {
+						&& Actor.findChar(cell) == null) {
 					setTrap(new TenguDartTrap().hide(), cell);
 					CellEmitter.get(cell).burst(Speck.factory(Speck.LIGHT), 2);
 				}
@@ -625,10 +631,9 @@ public class NewPrisonBossLevel extends Level {
 	
 	@Override
 	public int randomRespawnCell(Char ch) {
-		int pos = ENTRANCE_POS; //random cell adjacent to the entrance.
 		int cell;
 		do {
-			cell = pos + PathFinder.NEIGHBOURS8[Random.Int(8)];
+			cell = ENTRANCE_POS + PathFinder.NEIGHBOURS8[Random.Int(8)];
 		} while (!passable(cell)
 				|| !Char.canOccupy(ch, this, cell)
 				|| Actor.findChar(cell) != null);
@@ -668,7 +673,7 @@ public class NewPrisonBossLevel extends Level {
 		
 		private float fadeDuration = 1f;
 		private float initialAlpha = .4f;
-		private float fadeDelay = 0f;
+		private float fadeDelay = 1f;
 		
 		public void setCoveringArea(Rect area){
 			tileX = area.left;
@@ -755,7 +760,13 @@ public class NewPrisonBossLevel extends Level {
 				}
 			}, fadeDelay);
 		}
-		
+
+		private void remove(){
+			if (vis != null){
+				vis.killAndErase();
+			}
+			Dungeon.level.customTiles.remove(this);
+		}
 	}
 	
 	public static class exitVisual extends CustomTilemap {

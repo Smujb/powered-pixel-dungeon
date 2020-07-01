@@ -41,6 +41,7 @@ import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.SurfaceScene;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
+import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Callback;
 
@@ -51,6 +52,11 @@ public class Entrance extends InteractiveCell {
 	}
 
 	public static void ascend(Hero hero) {
+		if (hero.rooted) {
+			Camera.main.shake(1, 1f);
+			hero.ready();
+			return;
+		}
 		if (Dungeon.depth == 1) {
 
 			if (hero.belongings.getItem(Amulet.class) == null) {
