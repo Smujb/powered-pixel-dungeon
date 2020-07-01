@@ -70,7 +70,7 @@ public class LanguageButton extends Button {
 		flashing = false;
 		switch(Messages.lang().status()){
 			case INCOMPLETE:
-			case UNFINISHED:
+			case OUTDATED:
 				image.hardlight(1.5f, 0, 0);
 				flashing = true;
 				break;
