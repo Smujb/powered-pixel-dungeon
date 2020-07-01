@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.CorrosiveGas;
 import com.shatteredpixel.yasd.general.actors.blobs.ToxicGas;
 import com.shatteredpixel.yasd.general.actors.buffs.Corrosion;
+import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -56,7 +58,8 @@ public class DM200 extends Mob {
 		EXP = 9;
 		maxLvl = 17;
 
-		//TODO loot?
+		loot = Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR);
+		lootChance = 0.125f; //initially, see rollToDropLoot
 
 		properties.add(Property.INORGANIC);
 		properties.add(Property.LARGE);
@@ -83,6 +86,23 @@ public class DM200 extends Mob {
 	public void restoreFromBundle( Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		ventCooldown = bundle.getInt( VENT_COOLDOWN );
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		//each drop makes future drops 1/2 as likely
+		// so loot chance looks like: 1/8, 1/16, 1/32, 1/64, etc.
+		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.DM200_EQUIP.count);
+		super.rollToDropLoot();
+	}
+
+	protected Item createLoot() {
+		//uses probability tables for dwarf city
+		if (loot == Generator.Category.WEAPON){
+			return Generator.randomWeapon(4);
+		} else {
+			return Generator.randomArmor(4);
+		}
 	}
 
 	@Override
