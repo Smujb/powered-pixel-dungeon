@@ -37,8 +37,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Button;
 import com.watabou.utils.DeviceCompat;
 
-import static com.shatteredpixel.yasd.general.scenes.AboutScene.POPUP_YASD;
-
 public class DiscordButton extends Button {
 	
 	private Image image;
@@ -78,7 +76,7 @@ public class DiscordButton extends Button {
 				Messages.get(TitleScene.class, "discord_button")){
 			@Override
 			protected void onSelect(int index) {
-				DeviceCompat.openURI("https://" + POPUP_YASD);
+				DeviceCompat.openURI("https://discord.gg/wEaQyTj");
 			}
 		};
 		parent.add(wnd);
