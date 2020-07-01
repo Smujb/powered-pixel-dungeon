@@ -416,8 +416,13 @@ public class Item implements Bundlable {
 
 	protected void onDetach(){}
 
-	//returns the true level of the item, only affected by modifiers which are persistent (e.g. curse infusion)
+	//returns the level of the item
 	public int level(){
+		return trueLevel();
+	}
+
+	//Returns the true level of the item, cannot be overridden.
+	public final int trueLevel() {
 		return level;
 	}
 

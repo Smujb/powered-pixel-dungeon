@@ -227,14 +227,21 @@ public class ItemSlot extends Button {
 
 		}
 
-		int trueLvl = item.visiblyUpgraded();
+		int level = item.visiblyUpgraded();
+		int trueLvl = item.trueLevel();
 
-		if (trueLvl != 0) {
-			level.text( Messages.format( TXT_LEVEL, trueLvl ) );
-			level.measure();
-			level.hardlight(UPGRADED);
+		if (level != 0) {
+			this.level.text( Messages.format( TXT_LEVEL, level ) );
+			this.level.measure();
+			if (trueLvl > level) {
+				this.level.hardlight(DEGRADED);
+			} else if (level > trueLvl) {
+				this.level.hardlight(ENHANCED);
+			} else {
+				this.level.hardlight(UPGRADED);
+			}
 		} else {
-			level.text( null );
+			this.level.text( null );
 		}
 
 		layout();
