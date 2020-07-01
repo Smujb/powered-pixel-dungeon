@@ -38,7 +38,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.TextScene;
 import com.shatteredpixel.yasd.general.ui.GameLog;
-import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.FileUtils;
@@ -299,10 +298,6 @@ public class LevelHandler {
 			} else {
 				pos.scale(1/UnderwaterLevel.SIZE_FACTOR);
 			}
-		}
-
-		if (level.bossLevel) {
-			Sample.INSTANCE.load(Assets.Sounds.BOSS);
 		}
 
 		Dungeon.switchLevel(level, pos);

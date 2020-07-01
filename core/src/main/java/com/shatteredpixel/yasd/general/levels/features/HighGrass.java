@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.levels.features;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -44,6 +45,7 @@ import com.shatteredpixel.yasd.general.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -70,6 +72,9 @@ public class HighGrass {
 				} else {
 					Dungeon.level.set(pos, Terrain.GRASS);
 				}
+				if (ch instanceof Hero){
+					Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
+				}
 			}
 			
 		} else {
@@ -78,6 +83,10 @@ public class HighGrass {
 				freezeTrample = true;
 			} else {
 				Dungeon.level.set(pos, Terrain.GRASS);
+			}
+
+			if (ch instanceof Hero){
+				Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
 			}
 			
 			int naturalismLevel = 0;

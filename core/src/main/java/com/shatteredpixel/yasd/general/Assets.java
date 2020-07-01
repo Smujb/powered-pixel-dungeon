@@ -138,6 +138,9 @@ public class Assets {
 		public static final String MISS		= "sounds/snd_miss.mp3";
 		public static final String STEP		= "sounds/snd_step.mp3";
 		public static final String WATER	= "sounds/snd_water.mp3";
+		public static final String GRASS	= "sounds/grass.mp3";
+		public static final String TRAMPLE	= "sounds/trample.mp3";
+		public static final String STURDY	= "sounds/sturdy.mp3";
 		public static final String DESCEND	= "sounds/snd_descend.mp3";
 		public static final String EAT		= "sounds/snd_eat.mp3";
 		public static final String READ		= "sounds/snd_read.mp3";
@@ -173,6 +176,15 @@ public class Assets {
 		public static final String BEE      = "sounds/snd_bee.mp3";
 		public static final String DEGRADE  = "sounds/snd_degrade.mp3";
 		public static final String MIMIC    = "sounds/snd_mimic.mp3";
+
+		public static final String[] all = new String[]{
+				CLICK, BADGE, GOLD,
+				OPEN, UNLOCK, ITEM, DEWDROP, HIT, MISS, STEP, WATER, GRASS, TRAMPLE, STURDY,
+				DESCEND, EAT, READ, LULLABY, DRINK, SHATTER, ZAP, LIGHTNING, LEVELUP, DEATH,
+				CHALLENGE, CURSED, TRAP, EVOKE, TOMB, ALERT, MELD, BOSS, BLAST, PLANT, RAY, BEACON,
+				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
+				BEE, DEGRADE, MIMIC
+		};
 	}
 
 	public static class Sprites {
