@@ -502,9 +502,9 @@ public class Belongings implements Iterable<Item> {
 	
 	public static void preview( GamesInProgress.Info info, Bundle bundle ) {
 		if (bundle.contains( ARMOR )){
-			info.armorTier = ((Armor)bundle.get( ARMOR )).tier;
+			info.armorAppearance = ((Armor)bundle.get( ARMOR )).appearance;
 		} else {
-			info.armorTier = 0;
+			info.armorAppearance = 0;
 		}
 	}
 	
