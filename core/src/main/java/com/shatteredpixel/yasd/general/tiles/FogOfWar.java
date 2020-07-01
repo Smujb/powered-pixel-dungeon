@@ -27,10 +27,12 @@
 
 package com.shatteredpixel.yasd.general.tiles;
 
+import com.badlogic.gdx.graphics.Pixmap;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.YASDSettings;
-import com.watabou.gltextures.BufferTexture;
+import com.watabou.gltextures.SmartTexture;
 import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Texture;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
 import com.watabou.noosa.NoosaScriptNoLighting;
@@ -40,28 +42,28 @@ import java.util.ArrayList;
 
 public class FogOfWar extends Image {
 
-    //first index is visibility type, second is brightness level
-    private static final int[][] FOG_COLORS = new int[][]{{
-            //visible
+	//first index is visibility type, second is brightness level
+	private static final int FOG_COLORS[][] = new int[][]{{
+			//visible
 			0x00000000, //-1 brightness
 			0x00000000, //0  brightness
 			0x00000000, //1  brightness
-    }, {
-            //visited
+	}, {
+			//visited
 			0xCC000000,
-            0x99000000,
+			0x99000000,
 			0x55000000
-    }, {
-            //mapped
+	}, {
+			//mapped
 			0xCC442211,
-            0x99663319,
+			0x99663319,
 			0x55884422
-    }, {
-            //invisible
-            0xFF000000,
+	}, {
+			//invisible
+			0xFF000000,
 			0xFF000000,
 			0xFF000000
-    }};
+	}};
 
 	private static final int VISIBLE    =   0;
 	private static final int VISITED    =   1;
@@ -71,10 +73,10 @@ public class FogOfWar extends Image {
 	private int mapWidth;
 	private int mapHeight;
 	private int mapLength;
-	
+
 	private int pWidth;
 	private int pHeight;
-	
+
 	private int width2;
 	private int height2;
 
@@ -90,39 +92,43 @@ public class FogOfWar extends Image {
 	similar to the existing fog effect in vanilla (although probably with more precision)
 	the advantage here is that it may be possible to totally eliminate the tile blocking map
 	*/
-	
+
 	public FogOfWar( int mapWidth, int mapHeight ) {
-		
+
 		super();
 
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 		mapLength = mapHeight * mapWidth;
-		
+
 		pWidth = mapWidth * PIX_PER_TILE;
 		pHeight = mapHeight * PIX_PER_TILE;
-		
+
 		width2 = 1;
 		while (width2 < pWidth) {
 			width2 <<= 1;
 		}
-		
+
 		height2 = 1;
 		while (height2 < pHeight) {
 			height2 <<= 1;
 		}
-		
+
 		float size = DungeonTilemap.SIZE / PIX_PER_TILE;
 		width = width2 * size;
 		height = height2 * size;
-		
-		BufferTexture tx = new BufferTexture(width2, height2);
+
+		//TODO might be nice to compartmentalize the pixmap access and modification into texture/texturecache
+		Pixmap px = new Pixmap(width2, height2, Pixmap.Format.RGBA8888);
+		px.setBlending(Pixmap.Blending.None);
+		px.fill();
+		SmartTexture tx = new SmartTexture(px, Texture.LINEAR, Texture.CLAMP, false);
 		TextureCache.add(FogOfWar.class, tx);
 		texture( tx );
-		
+
 		scale.set(
-			DungeonTilemap.SIZE / PIX_PER_TILE,
-			DungeonTilemap.SIZE / PIX_PER_TILE);
+				DungeonTilemap.SIZE / PIX_PER_TILE,
+				DungeonTilemap.SIZE / PIX_PER_TILE);
 
 		toUpdate = new ArrayList<>();
 		toUpdate.add(new Rect(0, 0, mapWidth, mapHeight));
@@ -132,7 +138,7 @@ public class FogOfWar extends Image {
 		toUpdate.clear();
 		toUpdate.add(new Rect(0, 0, mapWidth, mapHeight));
 	}
-	
+
 	public synchronized void updateFog(Rect update){
 		for (Rect r : toUpdate.toArray(new Rect[0])){
 			if (!r.intersect(update).isEmpty()){
@@ -171,7 +177,7 @@ public class FogOfWar extends Image {
 	private boolean[] visited;
 	private boolean[] mapped;
 	private int brightness;
-	
+
 	private void updateTexture( boolean[] visible, boolean[] visited, boolean[] mapped ) {
 		this.visible = visible;
 		this.visited = visited;
@@ -179,7 +185,7 @@ public class FogOfWar extends Image {
 		this.brightness = YASDSettings.brightness() + 1;
 
 		moveToUpdating();
-		
+
 		boolean fullUpdate = false;
 		if (updating.size() == 1){
 			Rect update = updating.get(0);
@@ -188,17 +194,17 @@ public class FogOfWar extends Image {
 			}
 		}
 
-		BufferTexture fog = (BufferTexture) texture;
+		Pixmap fog = texture.bitmap;
 
 		int cell;
-		
+
 		for (Rect update : updating) {
 			for (int i = update.top; i <= update.bottom; i++) {
 				cell = mapWidth * i + update.left;
 				for (int j = update.left; j <= update.right; j++) {
-					
+
 					if (cell >= Dungeon.level.length()) continue; //do nothing
-					
+
 					if (!Dungeon.level.discoverable[cell]
 							|| (!visible[cell] && !visited[cell] && !mapped[cell])) {
 						//we skip filling cells here if it isn't a full update
@@ -208,85 +214,81 @@ public class FogOfWar extends Image {
 						cell++;
 						continue;
 					}
-					
+
 					//wall tiles
 					if (wall(cell)) {
-						
+
 						//always dark if nothing is beneath them
 						if (cell + mapWidth >= mapLength) {
 							fillCell(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
-							
-						//internal wall tiles, need to check both the left and right side,
-						// to account for only one half of them being seen
+
+							//internal wall tiles, need to check both the left and right side,
+							// to account for only one half of them being seen
 						} else if (wall(cell + mapWidth)) {
-							
+
 							//left side
 							if (cell % mapWidth != 0) {
-								
+
 								//picks the darkest fog between current tile, left, and below-left(if left is a wall).
 								if (wall(cell - 1)) {
-									
+
 									//if below-left is also a wall, then we should be dark no matter what.
 									if (wall(cell + mapWidth - 1)) {
 										fillLeft(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 									} else {
 										fillLeft(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), Math.max(getCellFog(cell + mapWidth - 1), getCellFog(cell - 1)))][brightness]);
 									}
-									
+
 								} else {
 									fillLeft(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell - 1))][brightness]);
 								}
-								
+
 							} else {
 								fillLeft(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 							}
-							
+
 							//right side
 							if ((cell + 1) % mapWidth != 0) {
-								
+
 								//picks the darkest fog between current tile, right, and below-right(if right is a wall).
 								if (wall(cell + 1)) {
-									
+
 									//if below-right is also a wall, then we should be dark no matter what.
 									if (wall(cell + mapWidth + 1)) {
 										fillRight(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 									} else {
 										fillRight(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), Math.max(getCellFog(cell + mapWidth + 1), getCellFog(cell + 1)))][brightness]);
 									}
-									
+
 								} else {
 									fillRight(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell + 1))][brightness]);
 								}
-								
+
 							} else {
 								fillRight(fog, j, i, FOG_COLORS[INVISIBLE][brightness]);
 							}
-							
-						//camera-facing wall tiles
-						//darkest between themselves and the tile below them
+
+							//camera-facing wall tiles
+							//darkest between themselves and the tile below them
 						} else {
 							fillCell(fog, j, i, FOG_COLORS[Math.max(getCellFog(cell), getCellFog(cell + mapWidth))][brightness]);
 						}
-						
-					//other tiles, just their direct value
+
+						//other tiles, just their direct value
 					} else {
 						fillCell(fog, j, i, FOG_COLORS[getCellFog(cell)][brightness]);
 					}
-					
+
 					cell++;
 				}
 			}
-			
-		}
-		
-		if (updating.size() == 1 && !fullUpdate){
-			fog.update(updating.get(0).top * PIX_PER_TILE, updating.get(0).bottom * PIX_PER_TILE);
-		} else {
-			fog.update();
+
 		}
 
+		texture.bitmap(fog);
+
 	}
-	
+
 	private boolean wall(int cell) {
 		return DungeonTileSheet.wallStitcheable(Dungeon.level.getTerrain(cell));
 	}
@@ -303,32 +305,20 @@ public class FogOfWar extends Image {
 			return INVISIBLE;
 		}
 	}
-	
-	private void fillLeft( BufferTexture fog, int x, int y, int color){
-		for (int i = 0; i < PIX_PER_TILE; i++){
-			fog.pixels.position(((y * PIX_PER_TILE)+i)*width2 + x * PIX_PER_TILE);
-			for (int j = 0; j < PIX_PER_TILE/2; j++) {
-				fog.pixels.put(color);
-			}
-		}
-	}
-	
-	private void fillRight( BufferTexture fog, int x, int y, int color){
-		for (int i = 0; i < PIX_PER_TILE; i++){
-			fog.pixels.position(((y * PIX_PER_TILE)+i)*width2 + x * PIX_PER_TILE + PIX_PER_TILE/2);
-			for (int j = PIX_PER_TILE/2; j < PIX_PER_TILE; j++) {
-				fog.pixels.put(color);
-			}
-		}
+
+	private void fillLeft( Pixmap fog, int x, int y, int color){
+		fog.setColor((color << 8) | (color >>> 24));
+		fog.fillRectangle(x * PIX_PER_TILE, y*PIX_PER_TILE, PIX_PER_TILE/2, PIX_PER_TILE);
 	}
 
-	private void fillCell( BufferTexture fog, int x, int y, int color){
-		for (int i = 0; i < PIX_PER_TILE; i++){
-			fog.pixels.position(((y * PIX_PER_TILE)+i)*width2 + x * PIX_PER_TILE);
-			for (int j = 0; j < PIX_PER_TILE; j++) {
-				fog.pixels.put(color);
-			}
-		}
+	private void fillRight( Pixmap fog, int x, int y, int color){
+		fog.setColor((color << 8) | (color >>> 24));
+		fog.fillRectangle(x * PIX_PER_TILE + PIX_PER_TILE/2, y*PIX_PER_TILE, PIX_PER_TILE/2, PIX_PER_TILE);
+	}
+
+	private void fillCell( Pixmap fog, int x, int y, int color){
+		fog.setColor((color << 8) | (color >>> 24));
+		fog.fillRectangle(x * PIX_PER_TILE, y*PIX_PER_TILE, PIX_PER_TILE, PIX_PER_TILE);
 	}
 
 	@Override
@@ -345,7 +335,7 @@ public class FogOfWar extends Image {
 
 		super.draw();
 	}
-	
+
 	@Override
 	public void destroy() {
 		super.destroy();
