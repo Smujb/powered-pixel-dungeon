@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -47,10 +46,10 @@ public class ItemSlot extends Button {
 	public static final int UPGRADED	= 0x44FF44;
 	public static final int FADED       = 0x999999;
 	public static final int WARNING		= 0xFF8800;
-	
+	public static final int ENHANCED	= 0x3399FF;
+
 	private static final float ENABLED	= 1.0f;
 	private static final float DISABLED	= 0.3f;
-
 
 	protected ItemSprite sprite;
 	protected Item       item;
@@ -58,7 +57,7 @@ public class ItemSlot extends Button {
 	protected BitmapText extra;
 	protected Image      itemIcon;
 	protected BitmapText level;
-	
+
 	private static final String TXT_STRENGTH	= ":%d";
 	private static final String TXT_TYPICAL_STR	= "%d?";
 
@@ -83,21 +82,21 @@ public class ItemSlot extends Button {
 	public static final Item REMAINS = new Item() {
 		public int image() { return ItemSpriteSheet.REMAINS; }
 	};
-	
+
 	public ItemSlot() {
 		super();
 		sprite.visible(false);
 		enable(false);
 	}
-	
+
 	public ItemSlot( Item item ) {
 		this();
 		item( item );
 	}
-		
+
 	@Override
 	protected void createChildren() {
-		
+
 		super.createChildren();
 
 		sprite = new ItemSprite();
@@ -112,7 +111,7 @@ public class ItemSlot extends Button {
 		level = new BitmapText( PixelScene.pixelFont);
 		add(level);
 	}
-	
+
 	@Override
 	protected void layout() {
 		super.layout();
@@ -120,7 +119,7 @@ public class ItemSlot extends Button {
 		sprite.x = x + (width - sprite.width) / 2f;
 		sprite.y = y + (height - sprite.height) / 2f;
 		PixelScene.align(sprite);
-		
+
 		if (status != null) {
 			status.measure();
 			if (status.width > width){
@@ -139,13 +138,20 @@ public class ItemSlot extends Button {
 			PixelScene.align(extra);
 		}
 
+		if (itemIcon != null){
+			itemIcon.x = x + width - (ItemSpriteSheet.Icons.SIZE + itemIcon.width())/2f;
+			itemIcon.y = y + (ItemSpriteSheet.Icons.SIZE - itemIcon.height)/2f;
+			PixelScene.align(itemIcon);
+		}
+
 		if (level != null) {
 			level.x = x + (width - level.width());
 			level.y = y + (height - level.baseLine() - 1);
 			PixelScene.align(level);
 		}
+
 	}
-	
+
 	public void item( Item item ) {
 		if (this.item == item) {
 			if (item != null) {
@@ -164,9 +170,9 @@ public class ItemSlot extends Button {
 			sprite.visible(false);
 
 			updateText();
-			
+
 		} else {
-			
+
 			enable(true);
 			sprite.visible(true);
 
@@ -175,33 +181,34 @@ public class ItemSlot extends Button {
 		}
 	}
 
-	private void updateText() {
+	private void updateText(){
 
-		if (itemIcon != null) {
+		if (itemIcon != null){
 			remove(itemIcon);
 			itemIcon = null;
 		}
 
-		if (item == null) {
+		if (item == null){
 			status.visible = extra.visible = level.visible = false;
 			return;
 		} else {
 			status.visible = extra.visible = level.visible = true;
 		}
 
-		status.text(item.status());
+		status.text( item.status() );
 
-		if (item.icon != -1 && (item.isIdentified() || (item instanceof Ring && ((Ring) item).isKnown()))){
-			extra.text(null);
+		if (item.icon != -1 && item.isIdentified()){
+			extra.text( null );
 
 			itemIcon = new Image(Assets.Sprites.ITEM_ICONS);
 			itemIcon.frame(ItemSpriteSheet.Icons.film.get(item.icon));
 			add(itemIcon);
+
 		} else if (item instanceof Weapon || item instanceof Armor) {
 
-			if (item.levelKnown) {
-				int str = item instanceof Weapon ? ((Weapon) item).STRReq() : ((Armor) item).STRReq();
-				extra.text(Messages.format(TXT_STRENGTH, str));
+			if (item.levelKnown){
+				int str = item instanceof Weapon ? ((Weapon)item).STRReq() : ((Armor)item).STRReq();
+				extra.text( Messages.format( TXT_STRENGTH, str ) );
 				if (str > Dungeon.hero.STR()) {
 					extra.hardlight( DEGRADED );
 				} else {
@@ -213,29 +220,30 @@ public class ItemSlot extends Button {
 				extra.hardlight( WARNING );
 			}
 			extra.measure();
+
 		} else {
-			extra.text(null);
+
+			extra.text( null );
+
 		}
 
 		int trueLvl = item.visiblyUpgraded();
-		//int buffedLvl = item.buffedVisiblyUpgraded();
-
 
 		if (trueLvl != 0) {
 			level.text( Messages.format( TXT_LEVEL, trueLvl ) );
 			level.measure();
 			level.hardlight(UPGRADED);
 		} else {
-			level.text(null);
+			level.text( null );
 		}
 
 		layout();
 	}
-	
+
 	public void enable( boolean value ) {
-		
+
 		active = value;
-		
+
 		float alpha = value ? ENABLED : DISABLED;
 		sprite.alpha( alpha );
 		status.alpha( alpha );
@@ -245,10 +253,12 @@ public class ItemSlot extends Button {
 	}
 
 	public void showExtraInfo( boolean show ){
+
 		if (show){
 			add(extra);
 		} else {
 			remove(extra);
 		}
+
 	}
 }
