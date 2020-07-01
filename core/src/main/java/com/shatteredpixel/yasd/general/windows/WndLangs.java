@@ -28,8 +28,8 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.messages.Languages;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Game;
+import com.watabou.utils.DeviceCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,6 +93,7 @@ public class WndLangs extends Window {
 			} else {
 				switch (langs.get(i).status()) {
 					case INCOMPLETE:
+					case UNFINISHED:
 						btn.textColor(0x888888);
 						break;
 					case UNREVIEWED:
@@ -107,8 +109,9 @@ public class WndLangs extends Window {
 				y += BTN_HEIGHT;
 				if (PixelScene.landscape()) y++;
 			}
-
-			add(btn);
+			if (langs.get(i).status() != Languages.Status.UNFINISHED || DeviceCompat.isDebug()) {
+				add(btn);
+			}
 		}
 		y = Math.max(MIN_HEIGHT, y);
 		resize(PixelScene.landscape() ? WIDTH_L : WIDTH_P, y);
