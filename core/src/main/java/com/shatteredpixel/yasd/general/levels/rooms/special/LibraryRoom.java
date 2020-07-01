@@ -50,8 +50,8 @@ public class LibraryRoom extends LockedRoom {
 		
 		Painter.fill( level, left + 1, top+1, width() - 2, 1 , Terrain.BOOKSHELF );
 		Painter.drawInside(level, this, entrance, 1, Terrain.EMPTY_SP );
-		
-		int n = Random.IntRange( 2, 3 );
+
+		int n = Random.NormalIntRange( 1, 3 );
 		for (int i=0; i < n; i++) {
 			int pos;
 			do {
@@ -64,9 +64,6 @@ public class LibraryRoom extends LockedRoom {
 				item = prize( level );
 			level.drop( item, pos );
 		}
-		
-		//entrance.set( Door.Type.LOCKED );
-		//level.addItemToSpawn( new IronKey(Dungeon.xPos, Dungeon.depth, Dungeon.zPos) );
 	}
 	
 	private static Item prize( Level level ) {

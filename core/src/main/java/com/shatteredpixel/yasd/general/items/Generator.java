@@ -192,7 +192,7 @@ public class Generator {
 
 		ARMOR(8, Armor.class),
 
-		MISSILE(3, MissileWeapon.class),
+		MISSILE ( 4,    MissileWeapon.class ),
 		MIS_T1(0, MissileWeapon.class),
 		MIS_T2(0, MissileWeapon.class),
 		MIS_T3(0, MissileWeapon.class),
@@ -207,13 +207,13 @@ public class Generator {
 
 		ALCOHOL(0, Alcohol.class),
 
-		POTION(20, Potion.class),
-		SEED(2, Plant.Seed.class), //dropped by grass
+		POTION	( 16,   Potion.class ),
+		SEED	( 2,    Plant.Seed.class ),
 
-		SCROLL(20, Scroll.class),
+		SCROLL	( 16,   Scroll.class ),
 		STONE(2, Runestone.class),
 
-		GOLD(20, Gold.class);
+		GOLD	( 20,   Gold.class );
 
 		public Class<?>[] classes;
 
@@ -284,8 +284,7 @@ public class Generator {
 					Earthroot.Seed.class,
 					Dreamfoil.Seed.class,
 					Starflower.Seed.class};
-			//TODO adjust these
-			SEED.defaultProbs = new float[]{0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1};
+			SEED.defaultProbs = new float[]{ 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1 };
 			SEED.probs = SEED.defaultProbs.clone();
 
 			SCROLL.classes = new Class<?>[]{
@@ -317,10 +316,9 @@ public class Generator {
 					StoneOfRepair.class,
 					StoneOfBlast.class,
 					StoneOfAffection.class,
-					StoneOfAugmentation.class  //1 is also sold in each shop
+					StoneOfAugmentation.class  //1 is sold in each shop
 			};
-			//TODO adjust these
-			STONE.defaultProbs = new float[]{0, 10, 10, 10, 10, 10, 10, 10, 0, 10, 10, 0};
+			STONE.defaultProbs = new float[]{ 0, 5, 5, 5, 5, 5, 5, 5, 0, 5, 5, 0 };
 			STONE.probs = STONE.defaultProbs.clone();
 
 			WAND.classes = new Class<?>[]{
