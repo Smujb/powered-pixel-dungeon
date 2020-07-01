@@ -42,16 +42,19 @@ import com.shatteredpixel.yasd.general.items.spells.ArcaneCatalyst;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class RingOfWealth extends Ring {
+
+	{
+		icon = ItemSpriteSheet.Icons.RING_WEALTH;
+	}
 	
 	private float triesToDrop = Float.MIN_VALUE;
 	private int dropsToRare = Integer.MIN_VALUE;

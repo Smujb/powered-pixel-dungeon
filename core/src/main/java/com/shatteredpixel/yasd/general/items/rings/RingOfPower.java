@@ -32,8 +32,13 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class RingOfPower extends Ring {
+
+	{
+		icon = ItemSpriteSheet.Icons.RING_POWER;
+	}
 
 	@Override
 	public boolean doEquip(Hero hero) {

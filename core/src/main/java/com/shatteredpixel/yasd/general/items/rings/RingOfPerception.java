@@ -29,8 +29,13 @@ package com.shatteredpixel.yasd.general.items.rings;
 
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class RingOfPerception extends Ring {
+
+	{
+		icon = ItemSpriteSheet.Icons.RING_PERCEPTION;
+	}
 
 	@Override
 	protected RingBuff buff( ) {
