@@ -936,8 +936,8 @@ public abstract class Mob extends Char {
 			//child swarms don't give exp, so we force this here.
 			enemyResist = 1 + new Swarm().EXP;
 		}
-		//100% health: 3x resist   75%: 2.1x resist   50%: 1.5x resist   25%: 1.1x resist
-		enemyResist *= 1 + 2*Math.pow(this.HP/(float)this.HT, 2);
+		//100% health: 5x resist   75%: 3.25x resist   50%: 2x resist   25%: 1.25x resist
+		enemyResist *= 1 + 4*Math.pow(enemy.HP/(float)enemy.HT, 2);
 		return enemyResist;
 	}
 	
