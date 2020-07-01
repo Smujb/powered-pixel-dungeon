@@ -385,8 +385,17 @@ public class WndSettings extends WndTabbed {
 			OptionSlider SFXVol = new OptionSlider(Messages.get(this, "sfx_vol"), "0", "10", 0, 10) {
 				@Override
 				protected void onChange() {
-					Sample.INSTANCE.play(Random.element(Assets.Sounds.all));
 					YASDSettings.SFXVol(getSelectedValue());
+					if (Random.Int(100) == 0){
+						Sample.INSTANCE.play(Assets.Sounds.MIMIC);
+					} else {
+						Sample.INSTANCE.play(Random.oneOf(Assets.Sounds.GOLD,
+								Assets.Sounds.HIT,
+								Assets.Sounds.ITEM,
+								Assets.Sounds.SHATTER,
+								Assets.Sounds.EVOKE,
+								Assets.Sounds.TELEPORT));
+					}
 				}
 			};
 			SFXVol.setSelectedValue(YASDSettings.SFXVol());
