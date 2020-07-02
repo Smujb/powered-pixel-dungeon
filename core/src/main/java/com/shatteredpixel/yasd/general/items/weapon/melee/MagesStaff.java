@@ -40,11 +40,6 @@ import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
 import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorrosion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorruption;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -173,17 +168,6 @@ public class MagesStaff extends MeleeWeapon {
 	public void use(float amount, boolean override) {
 		super.use(amount, override);
 		wand.use(amount, true);
-	}
-
-	@Override
-	public int reachFactor(Char owner) {
-		int reach = super.reachFactor(owner);
-		if (owner instanceof Hero
-				&& wand instanceof WandOfDisintegration
-				&& ((Hero)owner).subClass == HeroSubClass.BATTLEMAGE){
-			reach++;
-		}
-		return reach;
 	}
 
 	@Override
@@ -425,7 +409,7 @@ public class MagesStaff extends MeleeWeapon {
 			c.reset(x, y);
 		}
 
-		@Override
+		/*@Override
 		//some particles need light mode, others don't
 		public boolean lightMode() {
 			return !((wand instanceof WandOfDisintegration)
@@ -433,7 +417,7 @@ public class MagesStaff extends MeleeWeapon {
 					|| (wand instanceof WandOfCorrosion)
 					|| (wand instanceof WandOfRegrowth)
 					|| (wand instanceof WandOfLivingEarth));
-		}
+		}*/
 	};
 
 	//determines particle effects to use based on wand the staff owns.

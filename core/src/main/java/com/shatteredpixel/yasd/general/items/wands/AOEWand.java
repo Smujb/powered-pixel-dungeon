@@ -104,7 +104,7 @@ public class AOEWand extends NormalWand {
 		cone = new ConeAOE( bolt.sourcePos, bolt.path.get(dist),
 				maxDist,
 				30 + 20*chargesPerCast(),
-				collisionProperties | Ballistica.STOP_TARGET);
+				collisionProperties);
 
 		//cast to cells at the tip, rather than all cells, better performance.
 		for (Ballistica ray : cone.rays){

@@ -41,7 +41,7 @@ import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
+import com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -244,7 +244,7 @@ public class TestBoss extends Mob {
 			//trim it to just be the part that goes past them
 			trajectory = new  Ballistica(trajectory.collisionPos, trajectory.path.get(trajectory.path.size() - 1), Ballistica.PROJECTILE);
 			//knock them back along that ballistica
-			WandOfBlastWave.throwChar(enemy, trajectory, 2);
+			Elastic.throwChar(enemy, trajectory, 2);
 			damage *= 2;
 		}
 		return super.attackProc(enemy, damage);

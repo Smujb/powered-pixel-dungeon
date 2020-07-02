@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
+import com.shatteredpixel.yasd.general.effects.BlastWave;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -73,7 +73,7 @@ public class ForceCube extends MissileWeapon {
 		
 		rangedHit( null, cell );
 		
-		WandOfBlastWave.BlastWave.blast(cell);
+		BlastWave.blast(cell);
 		Sample.INSTANCE.play( Assets.Sounds.BLAST );
 	}
 }

@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.items.armor.glyphs;
 
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
+import com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.watabou.utils.Random;
@@ -46,7 +46,7 @@ public class Repulsion extends Armor.Glyph {
 		if (Random.Int( level + 5 ) >= 4){
 			int oppositeHero = attacker.pos + (attacker.pos - defender.pos);
 			Ballistica trajectory = new Ballistica(attacker.pos, oppositeHero, Ballistica.MAGIC_BOLT);
-			WandOfBlastWave.throwChar(attacker, trajectory, 2);
+			Elastic.throwChar(attacker, trajectory, 2);
 		}
 		
 		return damage;

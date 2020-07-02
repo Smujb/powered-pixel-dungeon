@@ -110,26 +110,6 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfShock;
 import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.wands.WandOfAcid;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorrosion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorruption;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDamnation;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDarkness;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFlow;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFrost;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLifeDrain;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLightning;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
-import com.shatteredpixel.yasd.general.items.wands.WandOfPlasmaBolt;
-import com.shatteredpixel.yasd.general.items.wands.WandOfPrismaticLight;
-import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfThornvines;
-import com.shatteredpixel.yasd.general.items.wands.WandOfTransfusion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Axe;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Basic;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Blunt;
@@ -320,29 +300,6 @@ public class Generator {
 			};
 			STONE.defaultProbs = new float[]{ 0, 5, 5, 5, 5, 5, 5, 5, 0, 5, 5, 0 };
 			STONE.probs = STONE.defaultProbs.clone();
-
-			WAND.classes = new Class<?>[]{
-					WandOfMagicMissile.class,
-					WandOfLightning.class,
-					WandOfDisintegration.class,
-					WandOfFireblast.class,
-					WandOfCorrosion.class,
-					WandOfBlastWave.class,
-					WandOfLivingEarth.class,
-					WandOfFrost.class,
-					WandOfPrismaticLight.class,
-					WandOfWarding.class,
-					WandOfTransfusion.class,
-					WandOfCorruption.class,
-					WandOfRegrowth.class,
-					WandOfLifeDrain.class,
-					WandOfAcid.class,
-					WandOfDamnation.class,
-					WandOfThornvines.class,
-					WandOfPlasmaBolt.class,
-					WandOfFlow.class,
-					WandOfDarkness.class};
-			WAND.probs = new float[]{4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 3, 3, 4, 3, 3};
 
 			//see generator.randomWeapon
 			WEAPON.classes = new Class<?>[]{

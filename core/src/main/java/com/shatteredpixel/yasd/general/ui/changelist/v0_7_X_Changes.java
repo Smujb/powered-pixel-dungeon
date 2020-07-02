@@ -41,7 +41,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTerror;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorruption;
 import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.general.items.wands.WandOfTransfusion;
@@ -126,7 +125,7 @@ public class v0_7_X_Changes {
 				"_-_ Slime damage down to 2-5 from 3-5\n" +
 				"_-_ Necromancer Skeleton HP on summon up to 20/25 from 15/25"));
 		
-		changes.addButton( new ChangeButton(new WandOfCorruption(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION), "Wand of Corruption",
 				"The nerfs to the wand of corruption in 0.7.5 had basically no effect on its winrate when upgraded, so I'm taking a different approach and buffing its base power but reducing its upgraded power. I'm also putting more emphasis on debuffs helping corruption chances:\n\n" +
 				"_-_ Corruption resistance reduction from minor debuffs up to 25% from 12.5% (was 20% prior to 0.7.5)\n" +
 				"_-_ Corruption resistance reduction from major debuffs up to 50% from 25% (was 33% prior to 0.7.5)\n" +
@@ -248,7 +247,7 @@ public class v0_7_X_Changes {
 				"_-_ Base wand damage up to 4-6 from 3-6\n" +
 				"_-_ Wand damage scaling down to 0-2 from 1-2"));
 		
-		changes.addButton( new ChangeButton(new WandOfCorruption(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION), "Wand of Corruption",
 				"Corruption is performing extremely well when invested in, so I'm adjusting debuff influence on corruption chance to make it more difficult to corrupt enemies.\n\n" +
 				"_-_ Corruption resistance reduction from minor debuffs reduced to 12.5% from 20%\n" +
 				"_-_ Corruption resistance reduction from major debuffs reduced to 25% from 33%"));

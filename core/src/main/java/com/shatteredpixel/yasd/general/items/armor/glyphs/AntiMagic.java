@@ -31,16 +31,6 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Charm;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
-import com.shatteredpixel.yasd.general.items.wands.WandOfDisintegration;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFireblast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfFrost;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLightning;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
-import com.shatteredpixel.yasd.general.items.wands.WandOfPrismaticLight;
-import com.shatteredpixel.yasd.general.items.wands.WandOfTransfusion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.traps.DisintegrationTrap;
 import com.shatteredpixel.yasd.general.levels.traps.GrimTrap;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
@@ -59,17 +49,6 @@ public class AntiMagic extends Armor.Glyph {
 		
 		RESISTS.add( DisintegrationTrap.class );
 		RESISTS.add( GrimTrap.class );
-
-		RESISTS.add( WandOfBlastWave.class );
-		RESISTS.add( WandOfDisintegration.class );
-		RESISTS.add( WandOfFireblast.class );
-		RESISTS.add( WandOfFrost.class );
-		RESISTS.add( WandOfLightning.class );
-		RESISTS.add( WandOfLivingEarth.class );
-		RESISTS.add( WandOfMagicMissile.class );
-		RESISTS.add( WandOfPrismaticLight.class );
-		RESISTS.add( WandOfTransfusion.class );
-		RESISTS.add( WandOfWarding.Ward.class );
 	}
 	
 	@Override

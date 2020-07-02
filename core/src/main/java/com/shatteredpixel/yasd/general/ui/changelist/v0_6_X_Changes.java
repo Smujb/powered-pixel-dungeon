@@ -50,8 +50,6 @@ import com.shatteredpixel.yasd.general.items.rings.RingOfSharpshooting;
 import com.shatteredpixel.yasd.general.items.rings.RingOfWealth;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfAugmentation;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorrosion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfCorruption;
 import com.shatteredpixel.yasd.general.items.weapon.curses.Wayward;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Flail;
@@ -404,7 +402,7 @@ public class v0_6_X_Changes {
 				"_-_ Psionic blast now deals 100% of current HP, instead of 100% of max HP.\n" +
 				"_-_ Damage from fire now scales with max HP, and is slightly lower below 40 max HP."));
 		
-		changes.addButton( new ChangeButton( new WandOfCorrosion(),
+		changes.addButton( new ChangeButton( new ItemSprite(ItemSpriteSheet.WAND_CORROSION), "Wand of Blast Wave",
 				"Wand of venom is now wand of corrosion. This is primarily a visual rework, with only some changes to functionality:\n\n" +
 				"_-_ Wand now shoots bolts of caustic gas, instead of venom gas\n" +
 				"_-_ Venom debuff is now corrosion debuff, functionality unchanged\n\n" +
@@ -565,7 +563,7 @@ public class v0_6_X_Changes {
 		changes.hardlight( CharSprite.WARNING );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(new WandOfCorruption(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION), "Wand of Corruption",
 				"The Wand of Corruption has been reworked!\n\n" +
 				"_-_ Corruption resistance is now based on enemy exp values, not max HP. Low HP and debuffs still reduce enemy corruption resistance.\n\n" +
 				"_-_ Wand now only spends 1 charge per shot, and inflicts debuffs on enemies if it fails to corrupt. Debuffs become stronger the closer the wand got to corrupting.\n\n" +

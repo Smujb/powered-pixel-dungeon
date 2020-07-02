@@ -21,7 +21,7 @@ import com.shatteredpixel.yasd.general.effects.particles.SparkParticle;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
 import com.shatteredpixel.yasd.general.items.artifacts.LloydsBeacon;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
-import com.shatteredpixel.yasd.general.items.wands.WandOfBlastWave;
+import com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.yasd.general.levels.NewCavesBossLevel;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
@@ -327,7 +327,7 @@ public class NewDM300 extends Mob {
 		if (Dungeon.level.adjacent(pos, target.pos)){
 			int oppositeAdjacent = target.pos + (target.pos - pos);
 			Ballistica trajectory = new Ballistica(target.pos, oppositeAdjacent, Ballistica.MAGIC_BOLT);
-			WandOfBlastWave.throwChar(target, trajectory, 2, false);
+			Elastic.throwChar(target, trajectory, 2, false);
 			if (target == Dungeon.hero){
 				Dungeon.hero.interrupt();
 			}
