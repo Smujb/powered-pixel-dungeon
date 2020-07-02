@@ -67,7 +67,7 @@ public class Dart extends MissileWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_TIP)){
-			GameScene.selectItem(itemSelector, WndBag.Mode.SEED, Messages.get(this, "prompt"));
+			GameScene.selectItem(itemSelector, WndBag.Mode.SANDALS, Messages.get(this, "prompt"));
 		}
 		
 		super.execute(hero, action);

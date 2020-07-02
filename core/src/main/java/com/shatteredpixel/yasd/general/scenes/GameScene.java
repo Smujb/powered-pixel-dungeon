@@ -1024,7 +1024,7 @@ public class GameScene extends PixelScene {
 		cancelCellSelector();
 		
 		WndBag wnd =
-				mode == Mode.SEED ?
+				mode == Mode.SANDALS ?
 					WndBag.getBag( VelvetPouch.class, listener, mode, title ) :
 				mode == Mode.SCROLL ?
 					WndBag.getBag( ScrollHolder.class, listener, mode, title ) :
