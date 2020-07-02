@@ -64,7 +64,7 @@ public class SandalsOfNature extends Artifact {
 	public static final String AC_FEED = "FEED";
 	public static final String AC_ROOT = "ROOT";
 
-	protected WndBag.Mode mode = WndBag.Mode.SEED;
+	protected WndBag.Mode mode = WndBag.Mode.SANDALS;
 
 	public ArrayList<Class> seeds = new ArrayList<>();
 
@@ -84,7 +84,9 @@ public class SandalsOfNature extends Artifact {
 
 		if (action.equals(AC_FEED)){
 
+			selectingFootwear = this;
 			GameScene.selectItem(itemSelector, mode, Messages.get(this, "prompt"));
+			selectingFootwear = null;
 
 		} else if (action.equals(AC_ROOT) && level() > 0){
 
@@ -144,6 +146,14 @@ public class SandalsOfNature extends Artifact {
 		return super.upgrade();
 	}
 
+	private static SandalsOfNature selectingFootwear = null;
+
+	public static boolean canUseSeed(Item item){
+		if (item instanceof Plant.Seed){
+			return selectingFootwear == null || !selectingFootwear.seeds.contains(item.getClass());
+		}
+		return false;
+	}
 
 	private static final String SEEDS = "seeds";
 

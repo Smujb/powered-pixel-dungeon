@@ -40,6 +40,7 @@ import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.Recipe;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
+import com.shatteredpixel.yasd.general.items.artifacts.SandalsOfNature;
 import com.shatteredpixel.yasd.general.items.bags.Bag;
 import com.shatteredpixel.yasd.general.items.bags.MagicalHolster;
 import com.shatteredpixel.yasd.general.items.bags.PotionBandolier;
@@ -57,7 +58,6 @@ import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.plants.Plant.Seed;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -92,7 +92,7 @@ public class WndBag extends WndTabbed {
 		ARMOR,
 		ENCHANTABLE,
 		WAND,
-		SEED,
+		SANDALS,
 		FOOD,
 		POTION,
 		SCROLL,
@@ -415,7 +415,7 @@ public class WndBag extends WndTabbed {
 									mode == Mode.ARMOR && (item instanceof Armor) ||
 									mode == Mode.ENCHANTABLE && (item instanceof MeleeWeapon || item instanceof SpiritBow || item instanceof Armor) ||
 									mode == Mode.WAND && (item instanceof Wand) ||
-									mode == Mode.SEED && (item instanceof Seed) ||
+									mode == Mode.SANDALS && SandalsOfNature.canUseSeed(item) ||
 									mode == Mode.FOOD && (item instanceof Food) ||
 									mode == Mode.POTION && (item instanceof Potion) ||
 									mode == Mode.SCROLL && (item instanceof Scroll) ||
