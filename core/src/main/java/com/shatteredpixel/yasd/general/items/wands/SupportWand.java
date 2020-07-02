@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.items.wands;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.buffs.Aggression;
 import com.shatteredpixel.yasd.general.actors.buffs.Barrier;
 import com.shatteredpixel.yasd.general.actors.buffs.Bleeding;
 import com.shatteredpixel.yasd.general.actors.buffs.Bless;
@@ -48,6 +47,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Healing;
 import com.shatteredpixel.yasd.general.actors.buffs.Hex;
 import com.shatteredpixel.yasd.general.actors.buffs.Levitation;
 import com.shatteredpixel.yasd.general.actors.buffs.Light;
+import com.shatteredpixel.yasd.general.actors.buffs.MagicCharge;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Roots;
@@ -118,7 +118,12 @@ public class SupportWand extends NormalWand {
 				break;
 			case MAGICAL:
 				if (attack) {
-					Buff.affect(receiver, Aggression.class, Aggression.DURATION);
+					for (Wand.Charger wandCharger : curUser.buffs(Wand.Charger.class)){
+						if (wandCharger.wand().level() < level() || curUser.buff(MagicCharge.class) != null){
+							Buff.prolong(curUser, MagicCharge.class, MagicCharge.DURATION).setLevel(level());
+							break;
+						}
+					}
 				} else {
 					Buff.affect(receiver, Sungrass.Health.class).boost(receiver.HT);
 				}

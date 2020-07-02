@@ -230,10 +230,10 @@ public class ItemSlot extends Button {
 		int level = item.visiblyUpgraded();
 		int trueLvl = item.trueLevel();
 
-		if (level != 0) {
+		if (trueLvl != 0 || level != 0) {
 			this.level.text( Messages.format( TXT_LEVEL, level ) );
 			this.level.measure();
-			if (trueLvl > level) {
+			if (trueLvl > level || level < 0) {
 				this.level.hardlight(DEGRADED);
 			} else if (level > trueLvl) {
 				this.level.hardlight(ENHANCED);
