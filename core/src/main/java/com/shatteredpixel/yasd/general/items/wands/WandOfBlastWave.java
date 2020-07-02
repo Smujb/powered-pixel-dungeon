@@ -38,6 +38,8 @@ import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.effects.Pushing;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Elastic;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
+import com.shatteredpixel.yasd.general.levels.features.Door;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -162,10 +164,14 @@ public class WandOfBlastWave extends DamageWand {
 					ch.sprite.place(ch.pos);
 					return;
 				}
+				int oldPos = ch.pos;
 				ch.pos = newPos;
 				if (finalCollided && ch.isAlive()) {
 					ch.damage(Random.NormalIntRange((finalDist + 1) / 2, finalDist), new Char.DamageSrc(Element.PHYSICAL, null));
 					Paralysis.prolong(ch, Paralysis.class, Random.NormalIntRange((finalDist + 1) / 2, finalDist));
+				}
+				if (Dungeon.level.getTerrain(oldPos) == Terrain.OPEN_DOOR){
+					Door.leave(oldPos);
 				}
 				Dungeon.level.occupyCell(ch);
 				if (ch == Dungeon.hero){

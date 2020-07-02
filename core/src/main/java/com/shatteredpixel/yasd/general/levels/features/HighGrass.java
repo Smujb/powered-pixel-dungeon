@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
+import com.shatteredpixel.yasd.general.actors.buffs.Invisibility;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -132,7 +133,8 @@ public class HighGrass {
 					}
 				}
 				if (hasCamoflage) {
-					Buff.affect(hero, Camouflage.Camo.class).set(5);
+					Buff.prolong(hero, Invisibility.class, 4);
+					Sample.INSTANCE.play( Assets.Sounds.MELD );
 				}
 			}
 			

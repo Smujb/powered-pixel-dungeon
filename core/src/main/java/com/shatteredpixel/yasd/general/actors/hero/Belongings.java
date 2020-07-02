@@ -66,6 +66,7 @@ import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Bundle;
+import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
@@ -400,30 +401,31 @@ public class Belongings implements Iterable<Item> {
 		ArrayList<Armor> Armors = getArmors();
 		speed *= RingOfHaste.speedMultiplier(owner);
 		for (int i=0; i < Armors.size(); i++) {
-			Armor CurArmour = Armors.get(i);
+			Armor curArmor = Armors.get(i);
 			//speed *= CurArmour.speedMultiplier(ownerID);
-			int aEnc = CurArmour.STRReq() - owner.STR();
+			int aEnc = curArmor.STRReq() - owner.STR();
 			if (aEnc > 0) speed /= Math.pow(1.2, aEnc);
 
-			if (CurArmour.hasGlyph(Swiftness.class, owner)) {
+			if (curArmor.hasGlyph(Swiftness.class, owner)) {
 				boolean enemyNear = false;
+				PathFinder.buildDistanceMap(owner.pos, Dungeon.level.passable(), 2);
 				for (Char ch : Actor.chars()){
-					if (Dungeon.level.adjacent(ch.pos, owner.pos) && owner.alignment != ch.alignment){
+					if ( PathFinder.distance[ch.pos] != Integer.MAX_VALUE && owner.alignment != ch.alignment){
 						enemyNear = true;
 						break;
 					}
 				}
-				if (!enemyNear) speed *= (1.2f + 0.04f * CurArmour.level());
-			} else if (CurArmour.hasGlyph(Flow.class, owner) && Dungeon.level.liquid(owner.pos)){
-				speed *= 2f;
+				if (!enemyNear) speed *= (1.2f + 0.04f * curArmor.level());
+			} else if (curArmor.hasGlyph(Flow.class, owner) && Dungeon.level.liquid(owner.pos)){
+				speed *= (2f + 0.25f*curArmor.level());
 			}
 
-			if (CurArmour.hasGlyph(Bulk.class, owner) &&
+			if (curArmor.hasGlyph(Bulk.class, owner) &&
 					(Dungeon.level.getTerrain(owner.pos) == Terrain.DOOR
 							|| Dungeon.level.getTerrain(owner.pos) == Terrain.OPEN_DOOR )) {
 				speed /= 3f;
 			}
-			speed *= CurArmour.speedFactor;
+			speed *= curArmor.speedFactor;
 
 		}
 		return speed;
