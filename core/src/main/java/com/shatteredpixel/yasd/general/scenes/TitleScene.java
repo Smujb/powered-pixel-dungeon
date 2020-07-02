@@ -43,7 +43,6 @@ import com.shatteredpixel.yasd.general.ui.LanguageButton;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.ui.UpdateNotification;
 import com.shatteredpixel.yasd.general.windows.WndSettings;
-import com.shatteredpixel.yasd.general.windows.WndStartGame;
 import com.watabou.glwrap.Blending;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
@@ -110,7 +109,9 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				if (GamesInProgress.checkAll().size() == 0){
-					TitleScene.this.add( new WndStartGame(1, false) );
+					GamesInProgress.selectedClass = null;
+					GamesInProgress.curSlot = 1;
+					MainGame.switchScene(HeroSelectScene.class);
 				} else {
 					MainGame.switchScene( StartScene.class );
 				}
@@ -120,7 +121,9 @@ public class TitleScene extends PixelScene {
 			protected boolean onLongClick() {
 				//making it easier to start runs quickly while debugging
 				if (DeviceCompat.isDebug()) {
-					TitleScene.this.add( new WndStartGame(1, true) );
+					GamesInProgress.selectedClass = null;
+					GamesInProgress.curSlot = 1;
+					MainGame.switchScene(HeroSelectScene.class);
 					return true;
 				}
 				return super.onLongClick();
