@@ -288,7 +288,7 @@ public class Item implements Bundlable {
 
 		if (necessaryBag != null && !necessaryBag.isInstance(container)) {
 			for (Item item:items) {
-				if (item instanceof Bag && ((Bag)item).grab( this ) && necessaryBag.isInstance(item)) {
+				if (item instanceof Bag && ((Bag)item).canHold( this ) && necessaryBag.isInstance(item)) {
 					if (collect( (Bag)item, ch)){
 						return true;
 					}
@@ -303,9 +303,18 @@ public class Item implements Bundlable {
 		}
 		
 		for (Item item:items) {
-			if (item instanceof Bag && ((Bag)item).grab( this )) {
+			if (item instanceof Bag && ((Bag)item).canHold( this )) {
 				return collect( (Bag)item, ch);
 			}
+		}
+
+		if (!container.canHold(this)){
+			GLog.n( Messages.get(Item.class, "pack_full", container.name()) );
+			return false;
+		}
+
+		if (items.contains( this )) {
+			return true;
 		}
 		
 		if (stackable) {
@@ -317,24 +326,17 @@ public class Item implements Bundlable {
 				}
 			}
 		}
-		
-		if (items.size() < container.size) {
-			
-			if (Dungeon.hero != null && Dungeon.hero.isAlive()) {
-				Badges.validateItemLevelAquired( this );
-			}
-			
-			items.add( this );
-			Dungeon.quickslot.replacePlaceholder(this);
-			updateQuickslot();
-			Collections.sort( items, itemComparator );
-			return true;
-			
-		} else {
-			GLog.n( Messages.get(Item.class, "pack_full", container.name()) );
-			return false;
+
+		if (Dungeon.hero != null && Dungeon.hero.isAlive()) {
+			Badges.validateItemLevelAquired( this );
 			
 		}
+
+		items.add( this );
+		Dungeon.quickslot.replacePlaceholder(this);
+		updateQuickslot();
+		Collections.sort( items, itemComparator );
+		return true;
 	}
 	
 	public final boolean collect() {

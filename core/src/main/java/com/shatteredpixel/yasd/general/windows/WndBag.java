@@ -147,14 +147,14 @@ public class WndBag extends WndTabbed {
 
 
 		nCols = PixelScene.landscape() ? COLS_L : COLS_P;
-		nRows = (int)Math.ceil((Belongings.BACKPACK_SIZE + Constants.MISC_SLOTS) / (float)nCols);
 
 		int slotsWidth = SLOT_WIDTH * nCols + SLOT_MARGIN * (nCols - 1);
-		int slotsHeight = SLOT_HEIGHT * nRows + SLOT_MARGIN * (nRows - 1);
 
 		placeTitle( bag, slotsWidth );
 		
 		placeItems( bag );
+
+		int slotsHeight = SLOT_HEIGHT * row + SLOT_MARGIN * (row - 1);
 
 		resize( slotsWidth, slotsHeight + TITLE_HEIGHT );
 
@@ -252,12 +252,16 @@ public class WndBag extends WndTabbed {
 		}
 		
 		// Free Space
-		while ((count - stuff.miscs.length) < container.size) {
+		while ((count - stuff.miscs.length) < container.capacity()) {
 			placeItem( null );
 		}
 	}
 	
 	protected void placeItem( final Item item ) {
+
+		count++;
+
+		if (item instanceof Bag) return;
 		
 		int x = col * (SLOT_WIDTH + SLOT_MARGIN);
 		int y = TITLE_HEIGHT + row * (SLOT_HEIGHT + SLOT_MARGIN);
@@ -268,8 +272,6 @@ public class WndBag extends WndTabbed {
 			col = 0;
 			row++;
 		}
-		
-		count++;
 	}
 
 	@Override
