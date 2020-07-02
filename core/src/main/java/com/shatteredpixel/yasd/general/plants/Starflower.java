@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.plants;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Bless;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -52,10 +51,6 @@ public class Starflower extends Plant {
 				Buff.prolong(ch, Recharging.class, Recharging.DURATION);
 				((Hero)ch).gainMorale(Random.Float()+0.5f);//5% to 15% Morale gain
 			}
-		}
-
-		if (Random.Int(5) == 0){
-			Dungeon.level.drop(new Seed(), pos).sprite.drop();
 		}
 	}
 
