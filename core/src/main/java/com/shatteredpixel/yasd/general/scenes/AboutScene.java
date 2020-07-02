@@ -45,6 +45,8 @@ import com.watabou.utils.DeviceCompat;
 
 public class AboutScene extends PixelScene {
 
+	public static final String DISCORD_LINK = "https://discord.gg/wEaQyTj";
+
 	@Override
 	public void create() {
 		super.create();
@@ -61,6 +63,45 @@ public class AboutScene extends PixelScene {
 		Component content = list.content();
 		content.clear();
 
+		//*** YASD Credits ***
+
+		CreditsBlock YASD = new CreditsBlock(true, Window.SHPX_COLOR,
+				"Yet Another Shattered Dungeon",
+				Icons.YENDOR.get(),
+				"Developed by: _Samuel Braithwaite_\nBased on Shattered Pixel Dungeon's open source",
+				"Discord Server",
+				DISCORD_LINK);
+		YASD.setRect((w - fullWidth)/2f, 6, 120, 0);
+		content.add(YASD);
+
+		CreditsBlock testers = new CreditsBlock(false, Window.SHPX_COLOR,
+				"Beta testing:",
+				Icons.DISCORD.get(),
+				"All the users on my Discord server have helped with beta testing",
+				"Discord Server",
+				DISCORD_LINK);
+		testers.setSize(colWidth/2f, 0);
+		if (landscape()){
+			testers.setPos(YASD.right(), YASD.top() + (YASD.height() - testers.height())/2f);
+		} else {
+			testers.setPos(w/2f - colWidth/2f, YASD.bottom()+5);
+		}
+		content.add(testers);
+
+		CreditsBlock assets = new CreditsBlock(true,
+				Window.TITLE_COLOR,
+				"Assets for Yet Another Shattered Dungeon",
+				null,
+				"Most of the assets are inherited from Shattered Pixel Dungeon" +
+						"\nAll of the soundtracks not in Shattered were made by the developer" +
+						"\nA few of the sprites, such as Wand of Flow, are also made by the developer" +
+						"\nMost original graphics are made by the user _Ømicrónrg9_ from my Discord server, as well as a few by other members" +
+						"\nVarious images and inspiration are also taken from _Yet Another Pixel Dungeon_",
+				null,
+				null);
+		assets.setRect(0, YASD.bottom() + 8, fullWidth, 0);
+		content.add(assets);
+
 		//*** Shattered Pixel Dungeon Credits ***
 
 		CreditsBlock shpx = new CreditsBlock(true, Window.SHPX_COLOR,
@@ -69,8 +110,10 @@ public class AboutScene extends PixelScene {
 				"Developed by: _Evan Debenham_\nBased on Pixel Dungeon's open source",
 				"ShatteredPixel.com",
 				"https://ShatteredPixel.com");
-		shpx.setRect((w - fullWidth)/2f, 6, 120, 0);
+		shpx.setRect((w - fullWidth)/2f, assets.bottom() + 8, 120, 0);
 		content.add(shpx);
+
+		addLine(shpx.top() - 4, content);
 
 		CreditsBlock alex = new CreditsBlock(false, Window.SHPX_COLOR,
 				"Hero Art & Design:",
