@@ -62,25 +62,17 @@ public class Messages {
 	/**
 	 * Setup Methods
 	 */
+
 	private static String[] prop_files = new String[]{
 			Assets.Messages.ACTORS,
 			Assets.Messages.ITEMS,
 			Assets.Messages.JOURNAL,
 			Assets.Messages.LEVELS,
+			Assets.Messages.MISC,
 			Assets.Messages.PLANTS,
 			Assets.Messages.SCENES,
 			Assets.Messages.UI,
-			Assets.Messages.WINDOWS,
-			Assets.Messages.MISC
-			/*"com/shatteredpixel/yasd/general/messages/actors/actors",
-			"com/shatteredpixel/yasd/general/messages/items/items",
-			"com/shatteredpixel/yasd/general/messages/journal/journal",
-			"com/shatteredpixel/yasd/general/messages/levels/levels",
-			"com/shatteredpixel/yasd/general/messages/plants/plants",
-			"com/shatteredpixel/yasd/general/messages/scenes/scenes",
-			"com/shatteredpixel/yasd/general/messages/ui/ui",
-			"com/shatteredpixel/yasd/general/messages/windows/windows",
-			"com/shatteredpixel/yasd/general/messages/misc/misc"*/
+			Assets.Messages.WINDOWS
 	};
 
 	static{
@@ -96,7 +88,7 @@ public class Messages {
 		Locale locale = new Locale(lang.code());
 
 		for (String file : prop_files) {
-			bundles.add(I18NBundle.createBundle(Gdx.files.classpath(file), locale));
+			bundles.add(I18NBundle.createBundle(Gdx.files.internal(file), locale));
 		}
 	}
 
@@ -164,6 +156,7 @@ public class Messages {
 	}
 
 
+
 	/**
 	 * String Utility Methods
 	 */
@@ -185,24 +178,26 @@ public class Messages {
 	//Words which should not be capitalized in title case, mostly prepositions which appear ingame
 	//This list is not comprehensive!
 	private static final HashSet<String> noCaps = new HashSet<>(
-			Arrays.asList(//English
-					"a", "an", "and", "of", "by", "to", "the", "x")
+			Arrays.asList(new String[]{
+					//English
+					"a", "an", "and", "of", "by", "to", "the", "x"
+			})
 	);
 
 	public static String titleCase( String str ){
 		//English capitalizes every word except for a few exceptions
 		if (lang == Languages.ENGLISH){
-			StringBuilder result = new StringBuilder();
+			String result = "";
 			//split by any unicode space character
 			for (String word : str.split("(?<=\\p{Zs})")){
 				if (noCaps.contains(word.trim().toLowerCase(Locale.ENGLISH).replaceAll(":|[0-9]", ""))){
-					result.append(word);
+					result += word;
 				} else {
-					result.append(capitalize(word));
+					result += capitalize(word);
 				}
 			}
 			//first character is always capitalized.
-			return capitalize(result.toString());
+			return capitalize(result);
 		}
 
 		//Otherwise, use sentence case
