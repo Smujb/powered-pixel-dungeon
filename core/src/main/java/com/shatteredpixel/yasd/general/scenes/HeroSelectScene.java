@@ -77,9 +77,14 @@ public class HeroSelectScene extends PixelScene {
 	private IconButton challengeButton;
 	private IconButton btnExit;
 
+	public static boolean testing = false;
+
 	@Override
 	public void create() {
 		super.create();
+
+		YASDSettings.testing(testing);
+		testing = false;
 
 		Badges.loadGlobal();
 		Journal.loadGlobal();
