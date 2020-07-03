@@ -438,10 +438,10 @@ public class Generator {
 
 	public static Item random() {
 		Category cat = Random.chances( categoryProbs );
-		if (cat == null){
+		do {
 			reset();
 			cat = Random.chances( categoryProbs );
-		}
+		} while (cat == null);
 		categoryProbs.put( cat, categoryProbs.get( cat ) - 1);
 		return random( cat );
 	}
@@ -459,6 +459,9 @@ public class Generator {
 				//if we're out of artifacts, return a ring instead.
 				return item != null ? item : random(Category.RING);
 			default:
+				if (cat.probs == null) {
+					cat.probs = cat.defaultProbs;
+				}
 				int i = Random.chances(cat.probs);
 				if (i == -1) {
 					reset(cat);
