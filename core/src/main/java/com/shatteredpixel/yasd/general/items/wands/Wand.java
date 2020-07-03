@@ -500,6 +500,10 @@ public abstract class Wand extends KindofMisc {
 		usesLeftToID = USES_TO_ID;
 		availableUsesToID = USES_TO_ID/2f;
 	}
+
+	protected int collisionProperties( int target ){
+		return collisionProperties;
+	}
 	
 	private CellSelector.Listener zapper = new CellSelector.Listener(this) {
 		
@@ -511,7 +515,7 @@ public abstract class Wand extends KindofMisc {
 				//Source is always Wand in this case.
 				final Wand curWand = (Wand) source;
 
-				final Ballistica shot = new Ballistica( curUser.pos, target, curWand.collisionProperties);
+				final Ballistica shot = new Ballistica( curUser.pos, target, curWand.collisionProperties(target));
 				int cell = shot.collisionPos;
 				
 				if (target == curUser.pos || cell == curUser.pos) {
