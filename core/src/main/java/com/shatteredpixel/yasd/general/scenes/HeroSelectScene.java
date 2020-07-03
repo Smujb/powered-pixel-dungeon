@@ -38,6 +38,7 @@ import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
+import com.shatteredpixel.yasd.general.journal.Journal;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -79,6 +80,9 @@ public class HeroSelectScene extends PixelScene {
 	@Override
 	public void create() {
 		super.create();
+
+		Badges.loadGlobal();
+		Journal.loadGlobal();
 
 		background = new Image(HeroClass.WARRIOR.splashArt()){
 			@Override
