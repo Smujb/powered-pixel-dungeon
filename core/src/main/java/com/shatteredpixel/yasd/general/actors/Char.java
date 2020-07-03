@@ -418,7 +418,7 @@ public abstract class Char extends Actor {
 			enemy.sprite.bloodBurstA(sprite.center(), dmg);
 			enemy.sprite.flash();
 
-			if (!enemy.isAlive() && visibleFight) {
+			if (enemy.isAlive() && prep != null && prep.canKO(enemy)){
 				if (enemy == Dungeon.hero) {
 
 					Dungeon.fail(getClass());
