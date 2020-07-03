@@ -261,9 +261,9 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					dmg = Math.round(dmg*0.6f);
 					break;
 			}
-			
+
+			boolean wasAlly = enemy.alignment == target.alignment;
 			dmg = enemy.defenseProc(target, dmg);
-			//dmg -= enemy.drRoll(Element.PHYSICAL);
 			dmg = target.attackProc(enemy, dmg);
 			enemy.damage( dmg, new Char.DamageSrc(Element.PHYSICAL, target) );
 
@@ -324,8 +324,9 @@ public class Combo extends Buff implements ActionIndicator.Action {
 			//Post-attack behaviour
 			switch(type){
 				case CLEAVE:
-					if (!enemy.isAlive()) {
-						//combo isn't reset, but rather increments with a cleave kill, and grants more time.
+					//combo isn't reset, but rather increments with a cleave kill, and grants more time.
+					//this includes corrupting kills (which is why we check alignment
+					if (!enemy.isAlive() || (!wasAlly && enemy.alignment == target.alignment)) {
 						hit( enemy );
 						comboTime = 12f;
 					} else {
