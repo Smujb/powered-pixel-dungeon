@@ -53,11 +53,11 @@ import com.shatteredpixel.yasd.general.windows.WndChallenges;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.shatteredpixel.yasd.general.windows.WndStartGame;
 import com.shatteredpixel.yasd.general.windows.WndTabbed;
+import com.watabou.gltextures.TextureCache;
 import com.watabou.input.PointerEvent;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
-import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.PointerArea;
 import com.watabou.utils.DeviceCompat;
 import com.watabou.utils.GameMath;
@@ -67,7 +67,6 @@ import java.util.ArrayList;
 public class HeroSelectScene extends PixelScene {
 
 	private Image background;
-	private NinePatch border;
 	private RenderedTextBlock prompt;
 
 	//fading UI elements
@@ -106,14 +105,20 @@ public class HeroSelectScene extends PixelScene {
 		background.y = (Camera.main.height - background.height())/2f;
 		background.visible = false;
 		PixelScene.align(background);
-
-		border = Chrome.get(Chrome.Type.WINDOW_SILVER);
-		border.size(background.width()+border.marginHor()-4, background.height()+border.marginVer()-4);
-		border.x = background.x - border.marginLeft()+2;
-		border.y = background.y - border.marginTop()+2;
-		border.visible = false;
-		add(border);
 		add(background);
+
+		if (background.x > 0){
+			Image fadeLeft = new Image(TextureCache.createGradient(0xFF000000, 0x00000000));
+			fadeLeft.x = background.x-2;
+			fadeLeft.scale.set(4, background.height());
+			add(fadeLeft);
+
+			Image fadeRight = new Image(fadeLeft);
+			fadeRight.x = background.x + background.width() + 2;
+			fadeRight.y = background.y + background.height();
+			fadeRight.angle = 180;
+			add(fadeRight);
+		}
 
 		prompt = PixelScene.renderTextBlock(Messages.get(WndStartGame.class, "title"), 12);
 		prompt.hardlight(Window.TITLE_COLOR);
@@ -236,7 +241,6 @@ public class HeroSelectScene extends PixelScene {
 		background.texture( cl.splashArt() );
 		background.visible = true;
 		background.hardlight(1.5f,1.5f,1.5f);
-		border.visible = true;
 
 		prompt.visible = false;
 		startBtn.visible = true;
