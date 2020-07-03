@@ -38,6 +38,11 @@ public class PotionBandolier extends Bag {
 	}
 
 	@Override
+	public int capacity() {
+		return super.capacity()-1;
+	}
+
+	@Override
 	public boolean canHold( Item item ) {
 		if (item instanceof Potion){
 			return super.canHold(item);

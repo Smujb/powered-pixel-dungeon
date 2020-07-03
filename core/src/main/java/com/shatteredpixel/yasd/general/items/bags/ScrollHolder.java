@@ -38,6 +38,11 @@ public class ScrollHolder extends Bag {
 	{
 		image = ItemSpriteSheet.HOLDER;
 	}
+
+	@Override
+	public int capacity() {
+		return super.capacity()-1;
+	}
 	
 	@Override
 	public boolean canHold( Item item ) {

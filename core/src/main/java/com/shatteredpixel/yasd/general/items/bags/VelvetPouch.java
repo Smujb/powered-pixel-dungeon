@@ -39,6 +39,10 @@ public class VelvetPouch extends Bag {
 	{
 		image = ItemSpriteSheet.POUCH;
 	}
+
+	public int capacity(){
+		return super.capacity()-1;
+	}
 	
 	@Override
 	public boolean canHold( Item item ) {

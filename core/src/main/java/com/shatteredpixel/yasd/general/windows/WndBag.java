@@ -240,15 +240,20 @@ public class WndBag extends WndTabbed {
 		for (KindofMisc item : stuff.miscs) {
 			placeItem(item != null ? item : new Placeholder( ItemSpriteSheet.RING_HOLDER ));
 		}
-		/*placeItem( stuff.miscs[0] != null ? stuff.miscs[0] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		placeItem( stuff.miscs[1] != null ? stuff.miscs[1] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		placeItem( stuff.miscs[2] != null ? stuff.miscs[2] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		placeItem( stuff.miscs[3] != null ? stuff.miscs[3] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );
-		placeItem( stuff.miscs[4] != null ? stuff.miscs[4] : new Placeholder( ItemSpriteSheet.RING_HOLDER ) );*/
 
-		// Items in the bag
+		//the container itself if it's not the root backpack
+		if (container != Dungeon.hero.belongings.backpack){
+			placeItem(container);
+			count--; //don't count this one, as it's not actually inside of itself
+		}
+
+		// Items in the bag, except other containers (they have tags at the bottom)
 		for (Item item : container.items.toArray(new Item[0])) {
-			placeItem( item );
+			if (!(item instanceof Bag)) {
+				placeItem( item );
+			} else {
+				count++;
+			}
 		}
 		
 		// Free Space
@@ -260,8 +265,6 @@ public class WndBag extends WndTabbed {
 	protected void placeItem( final Item item ) {
 
 		count++;
-
-		if (item instanceof Bag) return;
 		
 		int x = col * (SLOT_WIDTH + SLOT_MARGIN);
 		int y = TITLE_HEIGHT + row * (SLOT_HEIGHT + SLOT_MARGIN);
@@ -360,7 +363,7 @@ public class WndBag extends WndTabbed {
 			super( item );
 
 			this.item = item;
-			if (item instanceof Gold) {
+			if (item instanceof Gold || item instanceof Bag) {
 				bg.visible = false;
 			}
 			
@@ -449,7 +452,7 @@ public class WndBag extends WndTabbed {
 		
 		@Override
 		protected void onClick() {
-			if (!lastBag.contains(item) && !item.isEquipped(Dungeon.hero)){
+			if (lastBag != item && !lastBag.contains(item) && !item.isEquipped(Dungeon.hero)){
 
 				hide();
 
