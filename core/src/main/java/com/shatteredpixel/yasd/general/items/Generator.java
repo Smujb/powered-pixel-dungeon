@@ -33,13 +33,6 @@ import com.shatteredpixel.yasd.general.items.alcohol.Alcohol;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
-import com.shatteredpixel.yasd.general.items.armor.BasicArmor;
-import com.shatteredpixel.yasd.general.items.armor.ChainArmor;
-import com.shatteredpixel.yasd.general.items.armor.HeavyArmor;
-import com.shatteredpixel.yasd.general.items.armor.HuntressArmor;
-import com.shatteredpixel.yasd.general.items.armor.LightArmor;
-import com.shatteredpixel.yasd.general.items.armor.MageArmor;
-import com.shatteredpixel.yasd.general.items.armor.RogueArmor;
 import com.shatteredpixel.yasd.general.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.artifacts.CapeOfThorns;
@@ -110,23 +103,7 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfShock;
 import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Axe;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Basic;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Blunt;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Dual;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Flail;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Heavy;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Long;
-import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Magical;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Polearm;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Projectile;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Sharp;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Shield;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Sneak;
-import com.shatteredpixel.yasd.general.items.weapon.melee.Staff;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.Bolas;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ForceCube;
@@ -302,42 +279,20 @@ public class Generator {
 			STONE.probs = STONE.defaultProbs.clone();
 
 			//see generator.randomWeapon
-			WEAPON.classes = new Class<?>[]{
-					Staff.class,
-					Fist.class,
-					MagesStaff.class,
-					Sharp.class,
-					Dual.class,
-					Long.class,
-					Axe.class,
-					Flail.class,
-					Magical.class,
-					Sneak.class,
-					Projectile.class,
-					Basic.class,
-					Blunt.class,
-					Polearm.class,
-					Heavy.class,
-					Shield.class
-
-			};
-			WEAPON.probs = new float[]{1, 1, 0, 4, 4, 4, 6, 5, 5, 4, 4, 4, 6, 4, 5, 4};
+			WEAPON.classes = new Class<?>[]{};
+			WEAPON.probs = new float[]{};
 
 			//see Generator.randomArmor
-			ARMOR.classes = new Class<?>[]{
-					RogueArmor.class,
-					MageArmor.class,
-					HuntressArmor.class,
-					LightArmor.class,
-					ChainArmor.class,
-					BasicArmor.class,
-					HeavyArmor.class,
-			};
-			ARMOR.probs = new float[]{0, 0, 0, 5, 5, 5, 5};
+			ARMOR.classes = new Class<?>[]{};
+			ARMOR.probs = new float[]{};
 
 			//see Generator.randomMissile
 			MISSILE.classes = new Class<?>[]{};
 			MISSILE.probs = new float[]{};
+
+			//see Generator.randomWand
+			WAND.classes = new Class<?>[]{};
+			WAND.probs = new float[]{};
 
 			MIS_T1.classes = new Class<?>[]{
 					ThrowingStone.class,
@@ -447,7 +402,10 @@ public class Generator {
 	}
 
 	public static Item random( Category cat ) {
+		if (cat == null) return random();
 		switch (cat) {
+			case WAND:
+				return randomWand();
 			case ARMOR:
 				return randomArmor();
 			case WEAPON:
