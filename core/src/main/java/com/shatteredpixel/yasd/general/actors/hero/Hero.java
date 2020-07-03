@@ -1651,9 +1651,14 @@ public class Hero extends Char {
 							ScrollOfMagicMapping.discover( p );
 							
 							smthFound = true;
-	
-							if (talisman != null && !talisman.isCursed())
-								talisman.charge();
+
+							if (talisman != null){
+								if (Dungeon.level.hasTrap(p)){
+									talisman.charge(2);
+								} else if (oldValue == Terrain.SECRET_DOOR){
+									talisman.charge(10);
+								}
+							}
 						}
 					}
 				}
