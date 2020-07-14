@@ -130,7 +130,18 @@ public class Toolbar extends Component {
 			}
 		});
 
+		add(new Button(){
+			@Override
+			protected void onClick() {
+				examining = false;
+				Dungeon.hero.rest(true);
+			}
 
+			@Override
+			public GameAction keyAction() {
+				return YASDAction.REST;
+			}
+		});
 		
 		add(btnInventory = new Tool(0, 0, 24, 26) {
 			private GoldIndicator gold;

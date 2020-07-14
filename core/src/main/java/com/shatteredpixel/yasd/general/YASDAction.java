@@ -55,6 +55,7 @@ public class YASDAction extends GameAction {
 
 	public static final GameAction WAIT        = new YASDAction("wait");
 	public static final GameAction SEARCH      = new YASDAction("search");
+	public static final GameAction REST        = new YASDAction("rest");
 
 	public static final GameAction INVENTORY   = new YASDAction("inventory");
 	public static final GameAction QUICKSLOT_1 = new YASDAction("quickslot_1");
@@ -91,6 +92,7 @@ public class YASDAction extends GameAction {
 
 		defaultBindingsDesktop.put( Input.Keys.SPACE,       YASDAction.WAIT );
 		defaultBindingsDesktop.put( Input.Keys.S,           YASDAction.SEARCH );
+		defaultBindingsDesktop.put( Input.Keys.Z,           YASDAction.REST );
 
 		defaultBindingsDesktop.put( Input.Keys.I,           YASDAction.INVENTORY );
 		defaultBindingsDesktop.put( Input.Keys.Q,           YASDAction.QUICKSLOT_1 );
