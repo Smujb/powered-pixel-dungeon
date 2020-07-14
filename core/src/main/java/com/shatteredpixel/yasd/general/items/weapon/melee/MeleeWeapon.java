@@ -384,6 +384,8 @@ public class MeleeWeapon extends Weapon {
 	private static final String IMG = "image";
 	private static final String NAME = "name";
 	private static final String DESC = "desc";
+	private static final String SOUND = "sound";
+	private static final String PITCH = "pitch";
 
 	@Override
 	public void storeInBundle(  Bundle bundle) {
@@ -398,6 +400,8 @@ public class MeleeWeapon extends Weapon {
 		bundle.put(NAME, name);
 		bundle.put(IMG, image);
 		bundle.put(DESC, desc);
+		bundle.put(SOUND, hitSound);
+		bundle.put(PITCH, hitSoundPitch);
 		for (int i = 0; i < properties.size(); i++) {
 			bundle.put(PROPERTIES+i, properties.get(i));
 		}
@@ -416,6 +420,8 @@ public class MeleeWeapon extends Weapon {
 			desc = bundle.getString(DESC);
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
+			hitSound = bundle.getString(SOUND);
+			hitSoundPitch = bundle.getFloat(PITCH);
 			int numProps = bundle.getInt(PROPERTIES_AMT);
 			for (int i = 0; i < numProps; i++) {
 				properties.add(bundle.getEnum(PROPERTIES+i, Property.class));

@@ -41,8 +41,8 @@ import java.util.ArrayList;
 
 abstract public class KindOfWeapon extends KindofMisc {
 
-	protected String hitSound = Assets.Sounds.HIT;
-	protected float hitSoundPitch = 1f;
+	public String hitSound = Assets.Sounds.HIT;
+	public float hitSoundPitch = 1f;
 
 	public enum Property {
 		DUAL_HANDED,

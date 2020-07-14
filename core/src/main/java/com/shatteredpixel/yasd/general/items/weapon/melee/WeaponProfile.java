@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.Profile;
@@ -39,66 +40,90 @@ public enum WeaponProfile implements Profile {
 	NONE {
 		{
 			image = ItemSpriteSheet.SWORD;
+			sndFX = Assets.Sounds.HIT;
 		}
 	},
 	SLOW {
 		{
 			image = ItemSpriteSheet.GLAIVE;
+			sndFX = Assets.Sounds.HIT_SLASH;
+			sndPitch = 0.8f;
 		}
 	},
 	FAST {
 		{
 			image = ItemSpriteSheet.GAUNTLETS;
+			sndFX = Assets.Sounds.HIT_CRUSH;
+			sndPitch = 1.2f;
 		}
 	},
 	ACCURATE {
 		{
 			image = ItemSpriteSheet.HAND_AXE;
+			sndFX = Assets.Sounds.HIT_SLASH;
+			sndPitch = 0.9f;
 		}
 	},
 	INACCURATE {
 		{
 			image = ItemSpriteSheet.FLAIL;
+			sndFX = Assets.Sounds.HIT_CRUSH;
+			sndPitch = 0.8f;
 		}
 	},
 	WEAK {
 		{
 			image = ItemSpriteSheet.WORN_SHORTSWORD;
+			sndFX = Assets.Sounds.HIT_CRUSH;
+			sndPitch = 1.5f;
 		}
 	},
 	STRONG {
 		{
 			image = ItemSpriteSheet.GREATSWORD;
+			sndFX = Assets.Sounds.HIT_STRONG;
+			sndPitch = 0.8f;
 		}
 	},
 	BLOCKING {
 		{
 			image = ItemSpriteSheet.GREATSHIELD;
+			sndFX = Assets.Sounds.HIT_PARRY;
+			sndPitch = 0.8f;
 		}
 	},
 	REACH {
 		{
 			image = ItemSpriteSheet.WHIP;
+			sndFX = Assets.Sounds.HIT_SLASH;
+			sndPitch = 1.3f;
 		}
 	},
 	DUAL_HANDED {
 		{
 			image = ItemSpriteSheet.GREATAXE;
+			sndFX = Assets.Sounds.HIT;
 		}
 	},
 	BLUNT {
 		{
 			image = ItemSpriteSheet.WAR_HAMMER;
+			sndFX = Assets.Sounds.HIT_CRUSH;
+			sndPitch = 0.8f;
 		}
 	},
 	CANT_SURPRISE_ATTK {
 		{
 			image = ItemSpriteSheet.FLAIL;
+			sndFX = Assets.Sounds.HIT_STRONG;
+			sndPitch = 0.8f;
 		}
 	},
 	SURPRISE_ATTK_BENEFIT {
 		{
 			image = ItemSpriteSheet.ASSASSINS_BLADE;
+			sndFX = Assets.Sounds.HIT_STAB;
+			sndPitch = 1.2f;
 		}
 	};
 
@@ -108,10 +133,14 @@ public enum WeaponProfile implements Profile {
 		weapon.image = image;
 		weapon.desc = weaponDesc();
 		weapon.setName(weaponName());
+		weapon.hitSound = sndFX;
+		weapon.hitSoundPitch = sndPitch;
 		return weapon;
 	}
 
 	public int image;
+	protected String sndFX;
+	protected float sndPitch = 1f;
 
 	public String weaponName() {
 		return Messages.get(WeaponProfile.class, name() +  "_name");
