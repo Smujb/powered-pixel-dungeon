@@ -431,7 +431,27 @@ public class Hero extends Char {
 	public String name() {
 		return className();
 	}
-	
+
+	@Override
+	public void hitSound(float pitch) {
+		KindOfWeapon weapon = belongings.getCurrentWeapon();
+		if ( weapon != null ){
+			weapon.hitSound(pitch);
+		} else {
+			super.hitSound(pitch * 1.1f);
+		}
+	}
+
+	@Override
+	public boolean blockSound(float pitch) {
+		KindOfWeapon weapon = belongings.getCurrentWeapon();
+		if ( weapon != null && weapon.defenseFactor(this) >= 4 ){
+			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, pitch);
+			return true;
+		}
+		return super.blockSound(pitch);
+	}
+
 	public void live() {
 		Buff.affect( this, Regeneration.class );
 		Buff.affect( this, Hunger.class );
@@ -454,13 +474,6 @@ public class Hero extends Char {
 		}
 		return hit;
 	}
-
-	/*@Override
-	public int elementalDefenseProc(Char enemy, int damage) {
-		damage *= RingOfElements.resist(this);
-		damageMorale(damage- elementalDRRoll());
-		return super.elementalDefenseProc(enemy, damage);
-	}*/
 
 	@Override
 	public int attackSkill( Char target ) {
@@ -986,6 +999,7 @@ public class Hero extends Char {
 		if (shake > 0) {
 			Camera.main.shake(GameMath.gate(0.5f, shake*2, 10), 0.2f);
 			if (shake > 0.5f) {
+				Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL);
 				float divisor = 3 + 12*((HP + shielding()) / (float)(HT + shielding()));
 				GameScene.flash( (int)(0xFF/divisor) << 16 );
 				if (YASDSettings.vibrate()) {
@@ -996,6 +1010,8 @@ public class Hero extends Char {
 				} else {
 					loseMorale(shake * 0.33f, false);
 				}
+			} else {
+				Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN);
 			}
 		}
 	}

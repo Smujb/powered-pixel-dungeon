@@ -27,12 +27,15 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ShamanSprite;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Random;
 
 //TODO stats on these might be a bit weak
@@ -70,6 +73,15 @@ public abstract class Shaman extends Mob {
 	protected Item createLoot() {
 		Dungeon.LimitedDrops.SHAMAN_WAND.count++;
 		return super.createLoot();
+	}
+
+	@Override
+	public boolean attack(Char enemy, boolean guaranteed) {
+		boolean attack = super.attack(enemy, guaranteed);
+		if (attack) {
+			Sample.INSTANCE.play( Assets.Sounds.DEBUFF );
+		}
+		return attack;
 	}
 
 	public static class RedShaman extends Shaman {

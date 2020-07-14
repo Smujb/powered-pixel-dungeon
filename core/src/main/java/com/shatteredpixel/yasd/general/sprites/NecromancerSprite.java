@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.sprites;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.mobs.Necromancer;
 import com.watabou.noosa.TextureFilm;
+import com.watabou.noosa.audio.Sample;
 
 public class NecromancerSprite extends MobSprite {
 	
@@ -62,7 +63,15 @@ public class NecromancerSprite extends MobSprite {
 		
 		idle();
 	}
-	
+
+	@Override
+	public void operate(int cell) {
+		super.operate(cell);
+		if (visible && ch instanceof Necromancer && ((Necromancer) ch).summoning){
+			Sample.INSTANCE.play( Assets.Sounds.CHARGEUP, 1f, 0.8f );
+		}
+	}
+
 	public void charge(){
 		play(charging);
 	}

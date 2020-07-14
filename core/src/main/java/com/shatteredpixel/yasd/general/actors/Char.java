@@ -296,6 +296,14 @@ public abstract class Char extends Actor {
 		}
 	}
 
+	public void hitSound( float pitch ){
+		Sample.INSTANCE.play(Assets.Sounds.HIT, 1, pitch);
+	}
+
+	public boolean blockSound( float pitch ) {
+		return false;
+	}
+
 	protected static final String POS = "pos";
 	protected static final String TAG_HP = "HP";
 	protected static final String TAG_HT = "HT";
@@ -365,7 +373,7 @@ public abstract class Char extends Actor {
 			if (visibleFight) {
 				enemy.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "invulnerable") );
 
-				Sample.INSTANCE.play(Assets.Sounds.MISS);
+				Sample.INSTANCE.play(Assets.Sounds.HIT_PARRY, 1f, Random.Float(0.96f, 1.05f));
 			}
 
 			return false;
@@ -400,7 +408,9 @@ public abstract class Char extends Actor {
 			enemy.damage( dmg, src );
 
 			if (Dungeon.hero.fieldOfView(enemy.pos) || Dungeon.hero.fieldOfView(pos)) {
-				Sample.INSTANCE.play( Assets.Sounds.HIT, 1, 1, Random.Float( 0.8f, 1.25f ) );
+				if (dmg > 0 || !enemy.blockSound(Random.Float(0.96f, 1.05f))) {
+					hitSound(Random.Float(0.87f, 1.15f));
+				}
 			}
 
 			if (buff(FireImbue.class) != null)
@@ -437,6 +447,7 @@ public abstract class Char extends Actor {
 				String defense = enemy.defenseVerb();
 				enemy.sprite.showStatus(CharSprite.NEUTRAL, defense);
 
+				//TODO enemy.defenseSound? currently miss plays for monks/crab even when the parry
 				Sample.INSTANCE.play(Assets.Sounds.MISS);
 			}
 
@@ -466,9 +477,7 @@ public abstract class Char extends Actor {
 		if (defender.buff(  Hex.class) != null) defRoll *= 0.8f;
 		if (defender.buff(Bless.class) != null) defRoll *= 1.25f;
 		if (attacker.elementalType().isMagical()) {
-			if (Dungeon.level.adjacent(attacker.pos, defender.pos)) {//Magical mobs have reduced accuracy at melee range.
-				acuRoll /= 2;
-			} else {
+			if (!Dungeon.level.adjacent(attacker.pos, defender.pos)) {
 				acuRoll *= 2;
 			}
 		}
@@ -482,6 +491,7 @@ public abstract class Char extends Actor {
 					Surprise.hit(defender);
 				}
 			}
+			Sample.INSTANCE.play(Assets.Sounds.HIT_STRONG);
 			return true;
 		}
 		return acuRoll >= defRoll;

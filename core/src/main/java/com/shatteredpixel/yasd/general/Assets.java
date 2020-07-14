@@ -134,8 +134,6 @@ public class Assets {
 		public static final String UNLOCK	= "sounds/snd_unlock.mp3";
 		public static final String ITEM		= "sounds/snd_item.mp3";
 		public static final String DEWDROP	= "sounds/snd_dewdrop.mp3";
-		public static final String HIT		= "sounds/snd_hit.mp3";
-		public static final String MISS		= "sounds/snd_miss.mp3";
 		public static final String STEP		= "sounds/snd_step.mp3";
 		public static final String WATER	= "sounds/snd_water.mp3";
 		public static final String GRASS	= "sounds/grass.mp3";
@@ -176,19 +174,41 @@ public class Assets {
 		public static final String BEE      = "sounds/snd_bee.mp3";
 		public static final String DEGRADE  = "sounds/snd_degrade.mp3";
 		public static final String MIMIC    = "sounds/snd_mimic.mp3";
+		public static final String DEBUFF   = "sounds/debuff.mp3";
+		public static final String CHARGEUP = "sounds/chargeup.mp3";
+		public static final String GAS      = "sounds/gas.mp3";
+		public static final String CHAINS   = "sounds/chains.mp3";
+
+		public static final String HIT		        = "sounds/hit.mp3";
+		public static final String MISS		        = "sounds/miss.mp3";
+		public static final String HIT_SLASH        = "sounds/hit_slash.mp3";
+		public static final String HIT_STAB         = "sounds/hit_stab.mp3";
+		public static final String HIT_CRUSH        = "sounds/hit_crush.mp3";
+		public static final String HIT_MAGIC        = "sounds/hit_magic.mp3";
+		public static final String HIT_STRONG       = "sounds/hit_strong.mp3";
+		public static final String HIT_PARRY        = "sounds/hit_parry.mp3";
+		public static final String ATK_SPIRITBOW    = "sounds/atk_spiritbow.mp3";
+		public static final String ATK_CROSSBOW     = "sounds/atk_crossbow.mp3";
+		public static final String HEALTH_WARN      = "sounds/health_warn.mp3";
+		public static final String HEALTH_CRITICAL  = "sounds/health_critical.mp3";
 
 		public static final String[] all = new String[]{
 				CLICK, BADGE, GOLD,
-				OPEN, UNLOCK, ITEM, DEWDROP, HIT, MISS, STEP, WATER, GRASS, TRAMPLE, STURDY,
+
+				OPEN, UNLOCK, ITEM, DEWDROP, STEP, WATER, GRASS, TRAMPLE, STURDY,
+
+				HIT, MISS, HIT_SLASH, HIT_STAB, HIT_CRUSH, HIT_MAGIC, HIT_STRONG, HIT_PARRY,
+				ATK_SPIRITBOW, ATK_CROSSBOW, HEALTH_WARN, HEALTH_CRITICAL,
+
 				DESCEND, EAT, READ, LULLABY, DRINK, SHATTER, ZAP, LIGHTNING, LEVELUP, DEATH,
+
 				CHALLENGE, CURSED, TRAP, EVOKE, TOMB, ALERT, MELD, BOSS, BLAST, PLANT, RAY, BEACON,
 				TELEPORT, CHARMS, MASTERY, PUFF, ROCKS, BURNING, FALLING, GHOST, SECRET, BONES,
-				BEE, DEGRADE, MIMIC
+				BEE, DEGRADE, MIMIC, DEBUFF, CHARGEUP, GAS, CHAINS
 		};
 	}
 
 	public static class Splashes {
-
 		public static final String WARRIOR	= "splashes/warrior.jpg";
 		public static final String MAGE		= "splashes/mage.jpg";
 		public static final String ROGUE	= "splashes/rogue.jpg";
@@ -196,7 +216,6 @@ public class Assets {
 	}
 
 	public static class Sprites {
-
 		public static final String ITEMS	    = "sprites/items.png";
 		public static final String ITEM_ICONS   = "sprites/item_icons.png";
 

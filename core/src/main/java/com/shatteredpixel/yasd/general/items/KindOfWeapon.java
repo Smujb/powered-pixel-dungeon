@@ -27,17 +27,22 @@
 
 package com.shatteredpixel.yasd.general.items;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.BArray;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 import java.util.ArrayList;
 
 abstract public class KindOfWeapon extends KindofMisc {
+
+	protected String hitSound = Assets.Sounds.HIT;
+	protected float hitSoundPitch = 1f;
 
 	public enum Property {
 		DUAL_HANDED,
@@ -130,5 +135,8 @@ abstract public class KindOfWeapon extends KindofMisc {
 	public int proc( Char attacker, Char defender, int damage ) {
 		return damage;
 	}
-	
+
+	public void hitSound( float pitch ){
+		Sample.INSTANCE.play(hitSound, 1, pitch * hitSoundPitch);
+	}
 }

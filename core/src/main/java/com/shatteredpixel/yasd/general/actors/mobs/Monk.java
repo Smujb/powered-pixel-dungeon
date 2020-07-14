@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
@@ -37,6 +38,7 @@ import com.shatteredpixel.yasd.general.sprites.MonkSprite;
 import com.shatteredpixel.yasd.general.sprites.SeniorSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
 import com.watabou.noosa.Image;
+import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -108,6 +110,7 @@ public class Monk extends Mob {
 			return super.defenseVerb();
 		} else {
 			f.detach();
+			Sample.INSTANCE.play( Assets.Sounds.HIT_PARRY, 1, Random.Float(0.96f, 1.05f));
 			focusCooldown = Random.NormalFloat(6, 7);
 			return Messages.get(this, "parried");
 		}

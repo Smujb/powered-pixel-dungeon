@@ -27,13 +27,15 @@
 
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Dual extends MeleeWeapon {
 
 	{
-		//image = ItemSpriteSheet.SAI;
+		hitSound = Assets.Sounds.HIT_STAB;
+		hitSoundPitch = 1.3f;
 
 		tier = 1;
 		DLY = 0.33f; //3x speed
