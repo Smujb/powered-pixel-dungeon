@@ -30,20 +30,14 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.PixelScene;
-import com.shatteredpixel.yasd.general.ui.HealthBar;
-import com.shatteredpixel.yasd.general.ui.ItemSlot;
 import com.shatteredpixel.yasd.general.ui.RedButton;
-import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
-import com.shatteredpixel.yasd.general.ui.Window;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
-public class WndItem extends Window {
-	
-	//only one wnditem can appear at a time
-	private static WndItem INSTANCE;
+public class WndUseItem extends WndInfoItem {
+
+	//only one wnduseitem can appear at a time
+	private static WndUseItem INSTANCE;
 
 	private static final float BUTTON_HEIGHT	= 16;
 	
@@ -52,61 +46,21 @@ public class WndItem extends Window {
 	private static final int WIDTH_MIN = 120;
 	private static final int WIDTH_MAX = 220;
 
-	public WndItem( final WndBag owner, final Item item ){
-		this( owner, item, owner != null );
-	}
-	
-	public WndItem( final WndBag owner, final Item item , final boolean options ) {
-		
-		super();
+	public WndUseItem(final WndBag owner, final Item item ) {
+
+		super(item);
 		
 		if( INSTANCE != null ){
 			INSTANCE.hide();
 		}
 		INSTANCE = this;
 
-		int width = WIDTH_MIN;
-		
-		RenderedTextBlock info = PixelScene.renderTextBlock( item.info(), 6 );
-		info.maxWidth(width);
-		
-		//info box can go out of the screen on landscape, so widen it
-		while (PixelScene.landscape()
-				&& info.height() > 100
-				&& width < WIDTH_MAX){
-			width += 20;
-			info.maxWidth(width);
-		}
-		
-		IconTitle titlebar = new IconTitle( item );
-		titlebar.setRect( 0, 0, width, 0 );
-		add( titlebar );
-
-		if (item.levelKnown && item.level() > 0) {
-			titlebar.color( ItemSlot.UPGRADED );
-		} else if (item.levelKnown && item.level() < 0) {
-			titlebar.color( ItemSlot.DEGRADED );
-		}
-		if (item.canDegrade()) {
-			HealthBar health = new HealthBar();
-			health.level(item.degradedPercent());
-			float w = width - GAP;
-
-			health.setRect(GAP, titlebar.bottom() + GAP, w, health.height());
-			add(health);
-
-			info.setPos(titlebar.left(), health.bottom() + GAP);
-		} else {
-			info.setPos(titlebar.left(), titlebar.bottom() + GAP);
-		}
-		add( info );
-	
-		float y = info.top() + info.height() + GAP;
+		float y = height + GAP;
 		float x = 0;
-		
-		if (Dungeon.hero.isAlive() && options) {
+
+		if (Dungeon.hero.isAlive()) {
 			ArrayList<RedButton> buttons = new ArrayList<>();
-			for (final String action:item.actions( Dungeon.hero )) {
+			for (final String action : item.actions( Dungeon.hero )) {
 				
 				RedButton btn = new RedButton( Messages.get(item, "ac_" + action), 8 ) {
 					@Override
@@ -225,17 +179,4 @@ public class WndItem extends Window {
 			INSTANCE = null;
 		}
 	}
-	
-	private static Comparator<RedButton> widthComparator = new Comparator<RedButton>() {
-		@Override
-		public int compare(RedButton lhs, RedButton rhs) {
-			if (lhs.width() < rhs.width()){
-				return -1;
-			} else if (lhs.width() == rhs.width()){
-				return 0;
-			} else {
-				return 1;
-			}
-		}
-	};
 }

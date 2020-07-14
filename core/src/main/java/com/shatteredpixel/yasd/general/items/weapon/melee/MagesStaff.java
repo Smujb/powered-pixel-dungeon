@@ -46,7 +46,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.shatteredpixel.yasd.general.windows.WndBag;
-import com.shatteredpixel.yasd.general.windows.WndItem;
+import com.shatteredpixel.yasd.general.windows.WndUseItem;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
@@ -140,7 +140,7 @@ public class MagesStaff extends MeleeWeapon {
 		} else if (action.equals(AC_ZAP)){
 
 			if (wand == null) {
-				GameScene.show(new WndItem(null, this, true));
+				GameScene.show(new WndUseItem(null, this));
 				return;
 			}
 

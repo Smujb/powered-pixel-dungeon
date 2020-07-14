@@ -51,7 +51,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.MissileSprite;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.utils.GLog;
-import com.shatteredpixel.yasd.general.windows.WndItem;
+import com.shatteredpixel.yasd.general.windows.WndUseItem;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundlable;
@@ -171,12 +171,6 @@ public class Item implements Bundlable {
 				degrade();
 			} else {
 				curse();
-				/*cursed = true;
-				if (this instanceof MeleeWeapon) {
-					((MeleeWeapon)this).enchant(Weapon.Enchantment.randomCurse());
-				} else if (this instanceof Armor) {
-					((Armor)this).inscribe(Armor.Glyph.randomCurse());
-				}*/
 			}
 
 		} else if (curDurability <= MAXIMUM_DURABILITY*0.2f & !saidAlmostBreak && curUser instanceof Hero) {
@@ -253,10 +247,10 @@ public class Item implements Bundlable {
 
 				break;
 			case AC_INFO:
-				if (!testing) {
-					GameScene.show(new WndItem(null, this, true));
-				} else {
+				if (Dungeon.testing) {
 					LevelHandler.descend();
+				} else {
+					GameScene.show(new WndUseItem(null, this));
 				}
 				break;
 		}
