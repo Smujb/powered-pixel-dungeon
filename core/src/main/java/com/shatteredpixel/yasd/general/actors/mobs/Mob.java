@@ -1041,8 +1041,8 @@ public abstract class Mob extends Char {
 	}
 
 	private float suspicion = 1;
-	private static final int MAX_SUSPICION = 6;
-	private static final int SUSPICION_THRESHOLD = 3;
+	private static final int MAX_SUSPICION = 10;
+	private static final int SUSPICION_THRESHOLD = 5;
 
 	public void notice() {
 		enemySeen = true;
