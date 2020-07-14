@@ -35,7 +35,9 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Point;
 import com.watabou.utils.Random;
+import com.watabou.utils.Rect;
 import com.watabou.utils.RectF;
 
 public class NewDM300 extends Mob {
@@ -160,7 +162,7 @@ public class NewDM300 extends Mob {
 							return false;
 						} else {
 							ventGas(enemy);
-							Sample.INSTANCE.play(Assets.Sounds.PUFF);
+							Sample.INSTANCE.play(Assets.Sounds.GAS);
 							return true;
 						}
 
@@ -195,7 +197,7 @@ public class NewDM300 extends Mob {
 								return false;
 							} else {
 								ventGas(enemy);
-								Sample.INSTANCE.play(Assets.Sounds.PUFF);
+								Sample.INSTANCE.play(Assets.Sounds.GAS);
 								return true;
 							}
 						} else {
@@ -205,7 +207,7 @@ public class NewDM300 extends Mob {
 								return false;
 							} else {
 								dropRocks(enemy);
-								Sample.INSTANCE.play(Assets.Sounds.PUFF);
+								Sample.INSTANCE.play(Assets.Sounds.GAS);
 								return true;
 							}
 						}
@@ -504,11 +506,16 @@ public class NewDM300 extends Mob {
 					bestpos = pos+i;
 				}
 			}
+			Rect gate = NewCavesBossLevel.gate;
 			if (bestpos != pos){
 				Sample.INSTANCE.play( Assets.Sounds.ROCKS );
 
 				for (int i : PathFinder.NEIGHBOURS9){
 					if (Dungeon.level.getTerrain(pos+i) == Terrain.WALL || Dungeon.level.getTerrain(pos+i) == Terrain.WALL_DECO){
+						Point p = Dungeon.level.cellToPoint(pos+i);
+						if (p.y < gate.bottom && p.x > gate.left-2 && p.x < gate.right+2){
+							continue; //don't break the gate or walls around the gate
+						}
 						Dungeon.level.set(pos+i, Terrain.EMPTY_DECO);
 						GameScene.updateMap(pos+i);
 					}
@@ -517,8 +524,9 @@ public class NewDM300 extends Mob {
 				Dungeon.observe();
 				spend(3f);
 
+				bestpos = pos;
 				for (int i : PathFinder.NEIGHBOURS8){
-					if (Actor.findChar(pos+i) == null &&
+					if (Actor.findChar(pos+i) == null && Dungeon.level.openSpace(pos+i) &&
 							Dungeon.level.trueDistance(bestpos, target) > Dungeon.level.trueDistance(pos+i, target)){
 						bestpos = pos+i;
 					}

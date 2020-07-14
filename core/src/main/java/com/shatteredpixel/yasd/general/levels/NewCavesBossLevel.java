@@ -78,7 +78,6 @@ import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.EXIT;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.INTERACTION;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.NONE;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.SIGN;
-import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.STATUE;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WALL;
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.WATER;
 
@@ -125,18 +124,6 @@ public class NewCavesBossLevel extends Level {
 
 		setSize(WIDTH, HEIGHT);
 
-		//fill in special floor, statues, and exits
-		Painter.fill(this, 15, 2, 3, 3, EMPTY_SP);
-		Painter.fill(this, 15, 5, 3, 1, STATUE);
-		Painter.fill(this, 15, 7, 3, 1, STATUE);
-		Painter.fill(this, 15, 9, 3, 1, STATUE);
-		Painter.fill(this, 16, 5, 1, 6, EMPTY_SP);
-		//Set the large exit.
-		interactiveAreas.add(new DescendArea().setPos(15, 0, 3, 3));
-		Painter.fill(this, 15, 0, 3, 3, EXIT);
-
-		//setExit(16 + 2*width());
-
 		//These signs are visually overridden with custom tile visuals
 		Painter.fill(this, gate, SIGN);
 
@@ -166,6 +153,18 @@ public class NewCavesBossLevel extends Level {
 		Painter.fill(this, 12, 9, 9, 1, Terrain.CHASM);
 		Painter.fill(this, 13, 10, 7, 1, Terrain.CHASM);
 		Painter.fill(this, 14, 3, 5, 10, Terrain.EMPTY);
+
+		//fill in special floor, statues, and exits
+		Painter.fill(this, 15, 2, 3, 3, Terrain.EMPTY_SP);
+		Painter.fill(this, 15, 5, 3, 1, Terrain.STATUE);
+		Painter.fill(this, 15, 7, 3, 1, Terrain.STATUE);
+		Painter.fill(this, 15, 9, 3, 1, Terrain.STATUE);
+		Painter.fill(this, 16, 5, 1, 6, Terrain.EMPTY_SP);
+		Painter.fill(this, 15, 0, 3, 3, Terrain.EXIT);
+
+		//Set the large exit.
+		interactiveAreas.add(new DescendArea().setPos(15, 0, 3, 3));
+		Painter.fill(this, 15, 0, 3, 3, EXIT);
 
 		CustomTilemap customVisuals = new CityEntrance();
 		customVisuals.setRect(0, 0, width(), 11);
