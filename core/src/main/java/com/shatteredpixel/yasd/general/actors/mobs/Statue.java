@@ -33,7 +33,6 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
-import com.shatteredpixel.yasd.general.effects.MagicMissile;
 import com.shatteredpixel.yasd.general.items.Ankh;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
@@ -41,7 +40,6 @@ import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon.Enchantment;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.journal.Notes;
@@ -192,18 +190,8 @@ public class Statue extends Mob implements Callback {
 				wand = wandToAttack(enemy);
 			}
 			wand.setUser(this);
-			if (wand instanceof WandOfWarding) {//Wand of Warding cannot zap directly
-				int closest = findClosest(enemy, this.pos);
+			wand.zap(enemy.pos);
 
-				if (closest == -1){
-					sprite.centerEmitter().burst(MagicMissile.WardParticle.FACTORY, 8);
-					return;
-				} else {
-					wand.zap(closest);
-				}
-			} else {
-				wand.zap(enemy.pos);
-			}
 		}
 	}
 

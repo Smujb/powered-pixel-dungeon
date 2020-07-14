@@ -32,9 +32,6 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
-import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.sprites.EarthGuardianSprite;
@@ -54,8 +51,8 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.NoosaScript;
-import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.PointerArea;
+import com.watabou.noosa.TextureFilm;
 import com.watabou.noosa.Visual;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.Point;
@@ -170,8 +167,12 @@ public class SurfaceScene extends PixelScene {
 				roseLevel = Math.max(roseLevel, rose.ghostArmor().level());
 			}
 		}
+
+		//FIXME use new Ally wands.
+		int earthLevel = 0;
+		int wardLevel = 0;
 		
-		int earthLevel = Dungeon.hero.belongings.getItem(WandOfLivingEarth.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfLivingEarth.class).level();
+		/*int earthLevel = Dungeon.hero.belongings.getItem(WandOfLivingEarth.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfLivingEarth.class).level();
 		int wardLevel = Dungeon.hero.belongings.getItem(WandOfWarding.class) == null ? 0 : Dungeon.hero.belongings.getItem(WandOfWarding.class).level();
 		
 		MagesStaff staff = Dungeon.hero.belongings.getItem(MagesStaff.class);
@@ -181,7 +182,7 @@ public class SurfaceScene extends PixelScene {
 			} else if (staff.wandClass() == WandOfWarding.class){
 				wardLevel = Math.max(wardLevel, staff.level());
 			}
-		}
+		}*/
 		
 		if (roseLevel >= 3 && roseLevel >= earthLevel && roseLevel >= wardLevel){
 			allySprite = new GhostSprite();

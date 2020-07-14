@@ -28,11 +28,12 @@
 package com.shatteredpixel.yasd.general.levels.rooms.secret;
 
 import com.shatteredpixel.yasd.general.actors.blobs.Foliage;
-import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.general.levels.Level;
 import com.shatteredpixel.yasd.general.levels.Patch;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.plants.Dewcatcher;
+import com.shatteredpixel.yasd.general.plants.Seedpod;
 import com.shatteredpixel.yasd.general.plants.Starflower;
 import com.watabou.utils.Random;
 
@@ -55,13 +56,13 @@ public class SecretGardenRoom extends SecretRoom {
 		entrance().set( Door.Type.HIDDEN );
 		
 		level.plant(new Starflower.Seed(), plantPos(level));
-		level.plant(new WandOfRegrowth.Seedpod.Seed(), plantPos( level ));
-		level.plant(new WandOfRegrowth.Dewcatcher.Seed(), plantPos( level ));
+		level.plant(new Seedpod.Seed(), plantPos( level ));
+		level.plant(new Dewcatcher.Seed(), plantPos( level ));
 		
 		if (Random.Int(2) == 0){
-			level.plant(new WandOfRegrowth.Seedpod.Seed(), plantPos( level ));
+			level.plant(new Seedpod.Seed(), plantPos( level ));
 		} else {
-			level.plant(new WandOfRegrowth.Dewcatcher.Seed(), plantPos( level ));
+			level.plant(new Dewcatcher.Seed(), plantPos( level ));
 		}
 		
 		Foliage light = (Foliage)level.blobs.get( Foliage.class );

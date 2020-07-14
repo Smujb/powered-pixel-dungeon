@@ -87,7 +87,6 @@ import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.exotic.ScrollOfPsionicBlast;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blazing;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Blocking;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Grim;
@@ -643,17 +642,11 @@ public abstract class Char extends Actor {
 				damage = belongings.defenseProc(enemy, damage);
 			}
 		}
-		if (elementalType().isMagical()) {
-			Earthroot.Armor armor = buff(Earthroot.Armor.class);
-			if (armor != null) {
-				damage = armor.absorb(damage);
-			}
-
-			WandOfLivingEarth.RockArmor rockArmor = buff(WandOfLivingEarth.RockArmor.class);
-			if (rockArmor != null) {
-				damage = rockArmor.absorb(damage);
-			}
+		Earthroot.Armor armor = buff(Earthroot.Armor.class);
+		if (armor != null) {
+			damage = armor.absorb(damage);
 		}
+
 		elementalType().defenseProc(damage, enemy, this);
 		return damage;
 	}

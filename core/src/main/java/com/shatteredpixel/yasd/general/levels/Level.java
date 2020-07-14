@@ -70,7 +70,6 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfLevitation;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfEnchantment;
 import com.shatteredpixel.yasd.general.items.stones.StoneOfIntuition;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.levels.features.Door;
 import com.shatteredpixel.yasd.general.levels.interactive.AscendArea;
@@ -1748,7 +1747,7 @@ public abstract class Level implements Bundlable {
 					fieldOfView[p+i] = true;
 			}
 
-			for (Mob ward : mobs) {
+			/*for (Mob ward : mobs) {
 				if (ward instanceof WandOfWarding.Ward) {
 					if (ward.fieldOfView == null || ward.fieldOfView.length != length()) {
 						ward.fieldOfView = new boolean[length()];
@@ -1762,7 +1761,7 @@ public abstract class Level implements Bundlable {
 					}
 					BArray.or(fieldOfView, ward.fieldOfView, fieldOfView);
 				}
-			}
+			}*/
 		}
 
 		if (c == Dungeon.hero) {

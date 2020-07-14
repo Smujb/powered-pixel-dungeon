@@ -37,9 +37,10 @@ import com.shatteredpixel.yasd.general.actors.buffs.Healing;
 import com.shatteredpixel.yasd.general.effects.Splash;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfHealing;
-import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
+import com.shatteredpixel.yasd.general.plants.Dewcatcher;
 import com.shatteredpixel.yasd.general.plants.Plant;
+import com.shatteredpixel.yasd.general.plants.Seedpod;
 import com.shatteredpixel.yasd.general.plants.Starflower;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -109,10 +110,10 @@ public class RegrowthBomb extends Bomb {
 			Plant.Seed plant;
 			switch (Random.chances(new float[]{0, 6, 3, 1})){
 				case 1: default:
-					plant = new WandOfRegrowth.Dewcatcher.Seed();
+					plant = new Dewcatcher.Seed();
 					break;
 				case 2:
-					plant = new WandOfRegrowth.Seedpod.Seed();
+					plant = new Seedpod.Seed();
 					break;
 				case 3:
 					plant = new Starflower.Seed();

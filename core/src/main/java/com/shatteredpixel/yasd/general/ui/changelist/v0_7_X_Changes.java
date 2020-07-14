@@ -41,10 +41,6 @@ import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMirrorImage;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTerror;
-import com.shatteredpixel.yasd.general.items.wands.WandOfLivingEarth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfRegrowth;
-import com.shatteredpixel.yasd.general.items.wands.WandOfTransfusion;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.Shuriken;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.Tomahawk;
@@ -240,8 +236,8 @@ public class v0_7_X_Changes {
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
 		changes.hardlight( CharSprite.NEGATIVE );
 		changeInfos.add(changes);
-		
-		changes.addButton( new ChangeButton(new WandOfLivingEarth(),
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_LIVING_EARTH), "Wand of Living Earth",
 				"I'm continuing to adjust the wand of living earth to make it less able to stand on its own as a run-winning item. It should excel at providing defensive power, but shouldn't also give good offense.\n\n" +
 				"_-_ Guardian average damage decreased by 33%\n" +
 				"_-_ Base wand damage up to 4-6 from 3-6\n" +
@@ -269,11 +265,11 @@ public class v0_7_X_Changes {
 				"\n" +
 				"Dev commentary will be added here in the future."));
 
-		changes.addButton( new ChangeButton(new WandOfWarding(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_WARDING), "Wand of Warding",
 				"This brand new wand spawns autonomous wards which attack enemies. Wards can be upgraded by being zapped again, and eventually form up into sentry turrets.\n\n" +
 				"The Wand of Warding does very consistent damage, but requires some setup first."));
 
-		changes.addButton( new ChangeButton(new WandOfLivingEarth(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_LIVING_EARTH), "Wand of Living Earth",
 				"This new wand has a lower damage output, but grants significant defensive power. The rocks the wand shoots at enemies reform around the hero and absorb damage. If enough rock is built, it will form up into a rock guardian which fights with the player.\n\n" +
 				"The Wand of Living Earth is lacking in offensive output, but does a great job of pulling focus and damage away from the player."));
 		
@@ -624,8 +620,8 @@ public class v0_7_X_Changes {
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "buffs"), false, null);
 		changes.hardlight( CharSprite.POSITIVE );
 		changeInfos.add(changes);
-		
-		changes.addButton( new ChangeButton(new WandOfTransfusion(),
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_TRANSFUSION), "Wand of Transfusion",
 				"Wand of Transfusion changed significantly when used on enemies:\n" +
 				"_-_ No longer self-harms, now grants a mild self-shield instead\n" +
 				"_-_ Charm duration no longer scales with level, damage to undead enemies reduced"));
@@ -942,7 +938,7 @@ public class v0_7_X_Changes {
 		changes.hardlight( CharSprite.POSITIVE );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(new WandOfTransfusion(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_TRANSFUSION), "Wand of Transfusion",
 				"Wand of transfusion has been rebalanced, with an emphasis on making it much more useful in conjunction with weaker allies:\n\n" +
 				"_-_ Using the wand still costs 10% max hp\n\n" +
 				"_-_ Ally healing adjusted to 10% of user max HP + a flat 3 per level, from 30% + 3%/lvl missing hp\n\n" +
@@ -969,7 +965,7 @@ public class v0_7_X_Changes {
 		changes.hardlight( CharSprite.NEGATIVE );
 		changeInfos.add(changes);
 		
-		changes.addButton( new ChangeButton(new WandOfRegrowth(),
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_REGROWTH), "Wand of Regrowth",
 				"Wand of regrowth will now cease producing plants if it is overused. Charges spent before it begins degrading will increase if the wand is upgraded. At +12 the wand will function infinitely.\n\n" +
 				"This change is made to combat farming with low-levelled wands of regrowth. Especially with the alchemy changes this would be far too powerful. Infinite farming is still possible, but requires upgrades."));
 		

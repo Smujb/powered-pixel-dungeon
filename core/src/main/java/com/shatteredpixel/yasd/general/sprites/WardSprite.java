@@ -32,7 +32,6 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.effects.Beam;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
-import com.shatteredpixel.yasd.general.items.wands.WandOfWarding;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
@@ -101,19 +100,19 @@ public class WardSprite extends MobSprite {
 	@Override
 	public void resetColor() {
 		super.resetColor();
-		if (ch instanceof WandOfWarding.Ward){
+		/*if (ch instanceof WandOfWarding.Ward){
 			WandOfWarding.Ward ward = (WandOfWarding.Ward) ch;
 			if (ward.tier <= 3){
 				brightness(Math.max(0.2f, 1f - (ward.totalZaps / (float)(2*ward.tier-1))));
 			}
-		}
+		}*/
 	}
 	
 	public void linkVisuals( Char ch ){
 		
 		if (ch == null) return;
 		
-		updateTier( ((WandOfWarding.Ward)ch).tier );
+		//updateTier( ((WandOfWarding.Ward)ch).tier );
 		
 	}
 
