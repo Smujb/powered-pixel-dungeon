@@ -373,8 +373,7 @@ public abstract class YogFist extends Mob {
 					i = Random.Int(Dungeon.level.length());
 				} while (Dungeon.level.heroFOV[i]
 						|| Dungeon.level.solid(i)
-						|| Actor.findChar(i) != null
-						|| Dungeon.findStep(this, Dungeon.level.getExitPos(), Dungeon.level.passable(), fieldOfView, false) == -1);
+						|| Actor.findChar(i) != null|| PathFinder.getStep(i, Dungeon.level.getExitPos(), Dungeon.level.passable()) == -1);
 				ScrollOfTeleportation.appear(this, i);
 				state = WANDERING;
 				GameScene.flash(0xFFFFFF);
@@ -418,7 +417,7 @@ public abstract class YogFist extends Mob {
 				} while (Dungeon.level.heroFOV[i]
 						|| Dungeon.level.solid(i)
 						|| Actor.findChar(i) != null
-						|| Dungeon.findStep(this, Dungeon.level.getExitPos(), Dungeon.level.passable(), fieldOfView, false) == -1);
+						|| PathFinder.getStep(i, Dungeon.level.getExitPos(), Dungeon.level.passable()) == -1);
 				ScrollOfTeleportation.appear(this, i);
 				state = WANDERING;
 				GameScene.flash(0, false, 1f);

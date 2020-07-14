@@ -48,7 +48,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.SoulMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Terror;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -814,7 +813,7 @@ public abstract class Mob extends Char {
 	}
 
 	public boolean surprisedBy( Char enemy ){
-		return !enemySeen && enemy == Dungeon.hero;
+		return (!enemySeen || enemy.invisible > 0) && enemy == Dungeon.hero;
 	}
 
 	public Char getEnemy() {
