@@ -45,6 +45,9 @@ public enum Icons {
 	EXIT,
 	CLOSE,
 	ARROW,
+	DISPLAY,
+	//TODO UI,
+	AUDIO,
 
 	//ingame UI icons
 	SKULL,
@@ -126,6 +129,13 @@ public enum Icons {
 			case ARROW:
 				icon.frame( icon.texture.uvRect( 16, 16, 27, 27 ) );
 				break;
+			case DISPLAY:
+				icon.frame( icon.texture.uvRect( 32, 16, 45, 32 ) );
+				break;
+			//TODO UI icon?
+			case AUDIO:
+				icon.frame( icon.texture.uvRect( 64, 16, 77, 28 ) );
+				break;
 
 			case SKULL:
 				icon.frame( icon.texture.uvRect( 0, 32, 8, 40 ) );
@@ -196,10 +206,10 @@ public enum Icons {
 				icon.frame( icon.texture.uvRect( 68, 64, 84, 80 ) );
 				break;
 			case YENDOR:
-				icon.frame( icon.texture.uvRect( 32, 14, 46, 30 ) );
+				icon.frame( icon.texture.uvRect( 32, 142, 46, 158 ) );
 				break;
 			case DISCORD:
-				icon.frame( icon.texture.uvRect( 49, 14, 61, 27 ) );
+				icon.frame( icon.texture.uvRect( 49, 142, 61, 155 ) );
 				break;
 			case GOLD:
 				icon.frame( icon.texture.uvRect( 85, 64, 102, 80 ) );
