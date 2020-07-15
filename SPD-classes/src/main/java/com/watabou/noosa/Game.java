@@ -30,6 +30,7 @@ package com.watabou.noosa;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.GLVersion;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.watabou.glscripts.Script;
 import com.watabou.gltextures.TextureCache;
@@ -101,15 +102,17 @@ public class Game implements ApplicationListener {
 		density = Gdx.graphics.getDensity();
 		dispHeight = Gdx.graphics.getDisplayMode().height;
 		dispWidth = Gdx.graphics.getDisplayMode().width;
-		
-		Blending.useDefault();
 
 		inputHandler = new InputHandler( Gdx.input );
 		
 		//refreshes texture and vertex data stored on the gpu
+		versionContextRef = Gdx.graphics.getGLVersion();
+		Blending.useDefault();
 		TextureCache.reload();
 		Vertexbuffer.refreshAllBuffers();
 	}
+
+	private GLVersion versionContextRef;
 	
 	@Override
 	public void resize(int width, int height) {
@@ -117,9 +120,14 @@ public class Game implements ApplicationListener {
 			return;
 		}
 
-		Blending.useDefault();
-		TextureCache.reload();
-		Vertexbuffer.refreshAllBuffers();
+		//If the EGL context was destroyed, we need to refresh some data stored on the GPU.
+		// This checks that by seeing if GLVersion has a new object reference
+		if (versionContextRef != Gdx.graphics.getGLVersion()) {
+			versionContextRef = Gdx.graphics.getGLVersion();
+			Blending.useDefault();
+			TextureCache.reload();
+			Vertexbuffer.refreshAllBuffers();
+		}
 		
 		if (height != Game.height || width != Game.width) {
 			
