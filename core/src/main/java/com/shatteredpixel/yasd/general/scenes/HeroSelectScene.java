@@ -286,6 +286,11 @@ public class HeroSelectScene extends PixelScene {
 		uiAlpha = 2f;
 	}
 
+	@Override
+	protected void onBackPressed() {
+		MainGame.switchScene( TitleScene.class );
+	}
+
 	private class HeroBtn extends StyledButton {
 
 		private HeroClass cl;

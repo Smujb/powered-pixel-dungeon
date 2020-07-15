@@ -1741,6 +1741,7 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (TalismanOfForesight.CharAwareness a : c.buffs(TalismanOfForesight.CharAwareness.class)){
+				if (Dungeon.depth != a.depth) continue;
 				Char ch = (Char) Actor.findById(a.charID);
 				if (ch == null) {
 					a.detach();
@@ -1752,9 +1753,9 @@ public abstract class Level implements Bundlable {
 			}
 
 			for (TalismanOfForesight.HeapAwareness h : c.buffs(TalismanOfForesight.HeapAwareness.class)){
-				int p = h.pos;
+				if (Dungeon.depth != h.depth) continue;
 				for (int i : PathFinder.NEIGHBOURS9)
-					fieldOfView[p+i] = true;
+					fieldOfView[h.pos+i] = true;
 			}
 
 			/*for (Mob ward : mobs) {

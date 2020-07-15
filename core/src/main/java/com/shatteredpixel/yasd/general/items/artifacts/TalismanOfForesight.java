@@ -349,8 +349,10 @@ public class TalismanOfForesight extends Artifact {
 	public static class CharAwareness extends FlavourBuff {
 
 		public int charID;
+		public int depth = Dungeon.depth;
 
 		private static final String ID = "id";
+		private static final String DEPTH = "depth";
 
 		@Override
 		public void detach() {
@@ -363,12 +365,14 @@ public class TalismanOfForesight extends Artifact {
 		public void restoreFromBundle(Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			charID = bundle.getInt(ID);
+			depth = bundle.getInt(DEPTH);
 		}
 
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(ID, charID);
+			bundle.put(DEPTH, depth);
 		}
 
 	}
@@ -376,8 +380,10 @@ public class TalismanOfForesight extends Artifact {
 	public static class HeapAwareness extends FlavourBuff {
 
 		public int pos;
+		public int depth = Dungeon.depth;
 
 		private static final String POS = "pos";
+		private static final String DEPTH = "depth";
 
 		@Override
 		public void detach() {
@@ -390,12 +396,14 @@ public class TalismanOfForesight extends Artifact {
 		public void restoreFromBundle(Bundle bundle) {
 			super.restoreFromBundle(bundle);
 			pos = bundle.getInt(POS);
+			depth = bundle.getInt(DEPTH);
 		}
 
 		@Override
 		public void storeInBundle(Bundle bundle) {
 			super.storeInBundle(bundle);
 			bundle.put(POS, pos);
+			bundle.put(DEPTH, depth);
 		}
 	}
 }
