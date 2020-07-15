@@ -46,19 +46,18 @@ public class Lotus extends NPC {
 		viewDistance = 1;
 	}
 
-	private int wandLvl = 0;
-
-	private void setLevel( int lvl ){
-		wandLvl = lvl;
-		HP = HT = lvl*4;
+	@Override
+	protected void onCreate() {
+		super.onCreate();
+		HP = HT = level*4;
 	}
 
 	public boolean inRange(int pos){
-		return Dungeon.level.trueDistance(this.pos, pos) <= wandLvl;
+		return Dungeon.level.trueDistance(this.pos, pos) <= level;
 	}
 
 	public float seedPreservation(){
-		return 0.25f + 0.05f*wandLvl;
+		return 0.25f + 0.05f*level;
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class Lotus extends NPC {
 
 	@Override
 	public String description() {
-		return Messages.get(this, "desc", wandLvl, (int)(seedPreservation()*100), (int)(seedPreservation()*100) );
+		return Messages.get(this, "desc", level, (int)(seedPreservation()*100), (int)(seedPreservation()*100) );
 	}
 
 	private static final String WAND_LVL = "wand_lvl";
@@ -110,12 +109,12 @@ public class Lotus extends NPC {
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		bundle.put(WAND_LVL, wandLvl);
+		bundle.put(WAND_LVL, level);
 	}
 
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		wandLvl = bundle.getInt(WAND_LVL);
+		level = bundle.getInt(WAND_LVL);
 	}
 }
