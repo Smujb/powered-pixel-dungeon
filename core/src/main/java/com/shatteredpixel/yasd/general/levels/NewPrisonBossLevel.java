@@ -36,6 +36,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.Regrowth;
 import com.shatteredpixel.yasd.general.actors.blobs.StormCloud;
+import com.shatteredpixel.yasd.general.actors.buffs.Doom;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.NewTengu;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -431,11 +432,13 @@ public class NewPrisonBossLevel extends Level {
 
 				setMapPause();
 				cleanMapState();
-				
+
+				Doom d = tengu.buff(Doom.class);
 				Actor.remove(tengu);
 				mobs.remove(tengu);
 				TargetHealthIndicator.instance.target(null);
 				tengu.sprite.kill();
+				if (d != null) tengu.add(d);
 				
 				GameScene.flash(0xFFFFFF);
 				Sample.INSTANCE.play(Assets.Sounds.BLAST);

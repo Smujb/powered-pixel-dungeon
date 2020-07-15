@@ -34,6 +34,8 @@ import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Imp;
 import com.shatteredpixel.yasd.general.effects.MagicMissile;
+import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfTeleportation;
 import com.shatteredpixel.yasd.general.sprites.GolemSprite;
 import com.watabou.utils.Bundle;
@@ -57,13 +59,6 @@ public class Golem extends Mob {
 
 		WANDERING = new Wandering();
 		HUNTING = new Hunting();
-	}
-	
-	@Override
-	public void rollToDropLoot() {
-		Imp.Quest.process( this );
-		
-		super.rollToDropLoot();
 	}
 
 	private boolean teleporting = false;
@@ -126,6 +121,26 @@ public class Golem extends Mob {
 	private void quickTeleportEnemy(Char enemy) {
 		spend(TICK);
 		teleportEnemy(enemy);
+	}
+
+	@Override
+	public void rollToDropLoot() {
+		Imp.Quest.process( this );
+
+		//each drop makes future drops 1/2 as likely
+		// so loot chance looks like: 1/8, 1/16, 1/32, 1/64, etc.
+		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.GOLEM_EQUIP.count);
+		super.rollToDropLoot();
+	}
+
+	protected Item createLoot() {
+		Dungeon.LimitedDrops.GOLEM_EQUIP.count++;
+		//uses probability tables for demon halls
+		if (loot == Generator.Category.WEAPON){
+			return Generator.randomWeapon(5);
+		} else {
+			return Generator.randomArmor(5);
+		}
 	}
 
 	private void teleportEnemy(Char enemy) {

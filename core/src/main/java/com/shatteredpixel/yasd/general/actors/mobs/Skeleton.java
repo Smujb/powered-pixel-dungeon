@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Generator;
+import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.SkeletonSprite;
@@ -108,5 +109,11 @@ public class Skeleton extends Mob {
 		// so loot chance looks like: 1/6, 1/12, 1/24, 1/48, etc.
 		lootChance *= Math.pow(1/2f, Dungeon.LimitedDrops.SKELE_WEP.count);
 		super.rollToDropLoot();
+	}
+
+	@Override
+	protected Item createLoot() {
+		Dungeon.LimitedDrops.SKELE_WEP.count++;
+		return super.createLoot();
 	}
 }

@@ -75,7 +75,7 @@ public class WndInfoCell extends Window {
 		}
 
 
-		String desc = "";
+		StringBuilder desc = new StringBuilder();
 
 		IconTitle titlebar = new IconTitle();
 		if (customTile != null){
@@ -96,12 +96,12 @@ public class WndInfoCell extends Window {
 
 			String customDesc = customTile.desc(x, y);
 			if (customDesc != null) {
-				desc += customDesc;
+				desc.append(customDesc);
 			} else {
 				if (tile instanceof Terrain) {
-					desc += Dungeon.level.tileDesc((Terrain) tile);
+					desc.append(Dungeon.level.tileDesc((Terrain) tile));
 				} else if (tile instanceof CustomTerrain) {
-					desc += ((CustomTerrain)tile).desc();
+					desc.append(((CustomTerrain) tile).desc());
 				}
 			}
 
@@ -122,9 +122,9 @@ public class WndInfoCell extends Window {
 			}
 			titlebar.label(name);
 			if (tile instanceof Terrain) {
-				desc += Dungeon.level.tileDesc((Terrain)tile);
+				desc.append(Dungeon.level.tileDesc((Terrain) tile));
 			} else if (tile instanceof CustomTerrain) {
-				desc += ((CustomTerrain)tile).desc();
+				desc.append(((CustomTerrain) tile).desc());
 			}
 			//desc += Dungeon.level.tileDesc(tile);
 
@@ -135,16 +135,18 @@ public class WndInfoCell extends Window {
 		RenderedTextBlock info = PixelScene.renderTextBlock(6);
 		add(info);
 
-		for (Blob blob:Dungeon.level.blobs.values()) {
-			if (blob.volume > 0 && blob.cur[cell] > 0 && blob.tileDesc() != null) {
-				if (desc.length() > 0) {
-					desc += "\n\n";
+		if (Dungeon.level.heroFOV[cell]) {
+			for (Blob blob : Dungeon.level.blobs.values()) {
+				if (blob.volume > 0 && blob.cur[cell] > 0 && blob.tileDesc() != null) {
+					if (desc.length() > 0) {
+						desc.append("\n\n");
+					}
+					desc.append(blob.tileDesc());
 				}
-				desc += blob.tileDesc();
 			}
 		}
 		
-		info.text( desc.length() == 0 ? Messages.get(this, "nothing") : desc );
+		info.text( desc.length() == 0 ? Messages.get(this, "nothing") : desc.toString());
 		info.maxWidth(WIDTH);
 		info.setPos(titlebar.left(), titlebar.bottom() + 2*GAP);
 		
