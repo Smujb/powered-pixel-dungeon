@@ -173,11 +173,12 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 
 	@Override
 	public float iconFadePercent() {
-		if (AttackLevel.getLvl(turnsPrep) == AttackLevel.LVL_4){
+		AttackLevel level = AttackLevel.getLvl(turnsPrep);
+		if (level == AttackLevel.LVL_4){
 			return 0;
 		} else {
-			float turnsForCur = AttackLevel.getLvl(turnsPrep).turnsReq;
-			float turnsForNext = AttackLevel.values()[AttackLevel.getLvl(turnsPrep).ordinal()+1].turnsReq;
+			float turnsForCur = level.turnsReq;
+			float turnsForNext = AttackLevel.values()[level.ordinal()+1].turnsReq;
 			turnsForNext -= turnsForCur;
 			float turnsToNext = turnsPrep - turnsForCur;
 			return Math.min(1, (turnsForNext - turnsToNext)/(turnsForNext));

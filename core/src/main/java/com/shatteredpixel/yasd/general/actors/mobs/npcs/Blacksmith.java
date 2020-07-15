@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.actors.mobs.npcs;
 
 import com.shatteredpixel.yasd.general.Assets;
+import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -249,6 +250,10 @@ public class Blacksmith extends NPC {
 				Dungeon.level.drop( first, Dungeon.hero.pos );
 			}
 		}
+
+		Dungeon.hero.spendAndNext( 2f );
+		Badges.validateItemLevelAquired( first );
+		Item.updateQuickslot();
 		
 		Quest.reforged = true;
 		
