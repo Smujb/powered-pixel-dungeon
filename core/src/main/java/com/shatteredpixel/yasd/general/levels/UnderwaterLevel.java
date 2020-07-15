@@ -99,8 +99,7 @@ public class UnderwaterLevel extends Level {
 	//Use Points to make it easier to understand - efficiency doesn't matter too much as this is only executed during levelgen.
 	public static int scaleCell(int cell, int oldWidth, float factor) {
 		Point point = new Point(cell % oldWidth, cell / oldWidth);
-		point.x *= factor;
-		point.y *= factor;
+		point.scale(factor);
 		float newWidth = oldWidth * factor;
 		return point.x + Math.round(point.y * newWidth);
 	}
