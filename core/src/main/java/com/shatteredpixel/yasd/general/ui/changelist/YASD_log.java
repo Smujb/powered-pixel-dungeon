@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.ui.changelist;
 
+import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -40,18 +41,108 @@ import com.shatteredpixel.yasd.general.sprites.StatueSprite;
 import com.shatteredpixel.yasd.general.sprites.WraithSprite;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.Window;
+import com.watabou.noosa.Image;
 
 import java.util.ArrayList;
 
 public class YASD_log {
 	
-	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ){
+	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ) {
+		add_v0_4_X_Changes(changeInfos);
+		add_v0_3_X_Changes(changeInfos);
 		add_v0_2_X_Changes(changeInfos);
 		add_v0_1_X_Changes(changeInfos);
 	}
 
+	private static void add_v0_4_X_Changes(ArrayList<ChangeInfo> changeInfos) {
+		ChangeInfo changes = new ChangeInfo( "0.4", true, "");
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
+
+		//Changes
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"),false,null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
+
+		//New
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		//Buffs
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "buffs"), false, null);
+		changes.hardlight( CharSprite.POSITIVE );
+		changeInfos.add(changes);
+
+		//Nerfs
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
+		changes.hardlight( CharSprite.NEGATIVE );
+		changeInfos.add(changes);
+	}
+
+	private static void add_v0_3_X_Changes(ArrayList<ChangeInfo> changeInfos) {
+		ChangeInfo changes = new ChangeInfo( "0.3", true, "");
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
+
+		//Changes
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "changes"),false,null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add( changes );
+
+		changes.addButton( new ChangeButton(new Image( Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"Fixed:\n" +
+						"_-_ Hero current HP not increasing on level up\n" +
+						"_-_ A variety of crashes related to the hero not having weapons\n" +
+						"_-_ Crashes with Artifacts"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Ported Shattered Pixel Dungeon V0.8.0",
+				"This includes almost all of it's features and improvements."));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.ROGUE), "Reworked Rogue",
+				"_-_ Rogue no longer starts with the Cloak of Shadows, instead he must rely on Stealth\n" +
+						"_-_ Asassin's Preparation buff is reworked to work based off noticing/being noticed by enemies."));
+
+
+		//New
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
+		changes.hardlight( Window.TITLE_COLOR );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK), "New Stealth system",
+				"Completely reworked the stealth system. Now, the hero and mobs have a stealth and perception stat. This also means, with a low chance, mobs can be detected through walls."));
+
+		changes.addButton( new ChangeButton(new Image( Assets.Environment.TILES_SEWERS, 80, 80, 16, 16), "Bronze Locked Doors",
+				"Now, there are two types of locked doors in the dungeon: Bronze and Silver. They are identical but a Bronze key can't open a Silver door and neither can a Silver key open a Bronze door."));
+
+		changes.addButton( new ChangeButton(new Image( Assets.Environment.TILES_SEWERS, 48, 64, 16, 16), "Bombable Walls",
+				"These walls have a crack on them and can be blown up by bombs. They occasionally replace barricade walls, and a hidden variant may replace hidden doors."));
+
+		//Buffs
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "buffs"), false, null);
+		changes.hardlight( CharSprite.POSITIVE );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.CHALLENGE_ON), "Difficulty",
+				"Lowered the difficulty on easy and a little on medium, but kept the same on hard. There is also an \"Impossible\" difficulty for players who beat the game on all 4 classes."));
+
+		//Nerfs
+		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
+		changes.hardlight( CharSprite.NEGATIVE );
+		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_DAMNATION), "Wand of Damnation nerfed",
+				"Wand of Damnation's ability to one shot enemies so easily proved too powerful. Deferred death now lasts much longer."));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_THORNVINES), "Wand of Thornvines fixed",
+				"Wand of Thornvines had a bug that made the Thornvine basically invulnerable at high levels. This is no longer possible."));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_LIFE_DRAIN), "Wand of Life Drain nerfed",
+				"Wand of Life drain now only heals user for half of the damage it deals."));
+	}
+
 	private static void add_v0_2_X_Changes(ArrayList<ChangeInfo> changeInfos) {
-		ChangeInfo changes = new ChangeInfo( "0.2 - release", true, "");
+		ChangeInfo changes = new ChangeInfo( "0.2", true, "");
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
 

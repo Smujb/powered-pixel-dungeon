@@ -110,7 +110,7 @@ public class v0_8_X_Changes {
 						"_-_ The talisman gains exp based on what it reveals. Secrets are worth the most EXP.\n" +
 						"_-_ As the talisman levels, max scry distance and mind vision duration increase."));
 
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_REGROWTH), "Wand of Corruption",
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WAND_CORRUPTION), "Wand of Corruption",
 				"The _Wand of Regrowth_ has been reworked, with the goal of making it useful for more than just farming:\n\n" +
 						"_-_ Initial charges increased to 2 from 1.\n" +
 						"_-_ Regrowth now attacks in the same pattern as fireblast, no longer consumes all charges at once.\n" +
