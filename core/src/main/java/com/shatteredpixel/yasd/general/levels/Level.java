@@ -56,6 +56,7 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mimic;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.Wraith;
 import com.shatteredpixel.yasd.general.actors.mobs.YogFist;
+import com.shatteredpixel.yasd.general.actors.mobs.npcs.Lotus;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Sheep;
 import com.shatteredpixel.yasd.general.effects.particles.FlowParticle;
 import com.shatteredpixel.yasd.general.effects.particles.WindParticle;
@@ -1439,6 +1440,15 @@ public abstract class Level implements Bundlable {
 		plants.put( pos, plant );
 		
 		GameScene.plantSeed( pos );
+
+		for (Char ch : Actor.chars()){
+			if (ch instanceof Lotus
+					&& ((Lotus) ch).inRange(pos)
+					&& Actor.findChar(pos) != null){
+				plant.trigger();
+				return null;
+			}
+		}
 		
 		return plant;
 	}

@@ -43,6 +43,8 @@ public class Icecap extends Plant {
 	
 	{
 		image = 4;
+
+		seedClass = Seed.class;
 	}
 	
 	@Override

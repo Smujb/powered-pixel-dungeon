@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
+import com.shatteredpixel.yasd.general.actors.mobs.npcs.Lotus;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
 import com.shatteredpixel.yasd.general.effects.particles.LeafParticle;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -47,6 +48,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
+import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import java.util.ArrayList;
@@ -57,6 +59,9 @@ public abstract class Plant implements Bundlable {
 	
 	public int image;
 	public int pos;
+
+
+	protected Class<? extends Plant.Seed> seedClass;
 
 	public void trigger(){
 
@@ -78,7 +83,22 @@ public abstract class Plant implements Bundlable {
 		if (Dungeon.level.heroFOV[pos]) {
 			CellEmitter.get( pos ).burst( LeafParticle.GENERAL, 6 );
 		}
-		
+
+		float seedChance = 0f;
+		for (Char c : Actor.chars()){
+			if (c instanceof Lotus){
+				Lotus l = (Lotus) c;
+				if (l.inRange(pos)){
+					seedChance = Math.max(seedChance, l.seedPreservation());
+				}
+			}
+		}
+
+		if (Random.Float() < seedChance){
+			if (seedClass != null && seedClass != Rotberry.Seed.class) {
+				Dungeon.level.drop(Reflection.newInstance(seedClass), pos).sprite.drop();
+			}
+		}
 	}
 	
 	private static final String POS	= "pos";

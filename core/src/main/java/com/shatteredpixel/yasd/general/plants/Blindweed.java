@@ -44,6 +44,8 @@ public class Blindweed extends Plant {
 	
 	{
 		image = 11;
+
+		seedClass = Seed.class;
 	}
 	
 	@Override
