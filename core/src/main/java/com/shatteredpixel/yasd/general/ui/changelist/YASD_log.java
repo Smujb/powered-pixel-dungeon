@@ -30,12 +30,15 @@ package com.shatteredpixel.yasd.general.ui.changelist;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.items.spells.MagicalInfusion;
+import com.shatteredpixel.yasd.general.levels.traps.GuardianTrap;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.ChangesScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
+import com.shatteredpixel.yasd.general.sprites.GuardSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.sprites.PiranhaSprite;
+import com.shatteredpixel.yasd.general.sprites.RatSprite;
 import com.shatteredpixel.yasd.general.sprites.ShopkeeperSprite;
 import com.shatteredpixel.yasd.general.sprites.StatueSprite;
 import com.shatteredpixel.yasd.general.sprites.WraithSprite;
@@ -64,20 +67,60 @@ public class YASD_log {
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add( changes );
 
+		changes.addButton( new ChangeButton(new Image( Assets.Sprites.SPINNER, 144, 0, 16, 16), Messages.get(ChangesScene.class, "bugfixes"),
+				"Fixed various critical errors preventing the game being finishable:\n" +
+						"_-_ Fixed DM 300 often softlocking the game\n" +
+						"_-_ Fixed DM 300 exit not working\n" +
+						"_-_ Fixed Dwarf King exit not working\n" +
+						"_-_ Fixed Dwarf King fight softlocking if you can't do enough damage\n" +
+						"_-_ Fixed Yog exit not working"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.SHPX), "Ported Shattered Pixel Dungeon V0.8.1",
+				"This includes almost all of it's features and improvements."));
+
+		changes.addButton(new ChangeButton(new PiranhaSprite(), "Diving",
+				"Diving mechanic changed:\n" +
+						"_-_ Underwater levels are now half the size of their parent level\n" +
+						"_-_ Loot on underwater levels is now 3 down from 10\n" +
+						"_-_ Bubbles are now 5 down from 10"));
+
+		changes.addButton( new ChangeButton(Icons.get(Icons.PREFS), "Keybindings",
+				"Android now supports keybindings for controllers. The volume keys can also be bound."));
+
 		//New
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "new"),false,null);
 		changes.hardlight( Window.TITLE_COLOR );
 		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.WEAPON_HOLDER), "Equipment",
+				"Equipment properties for Wands, Weapons and Armour are all randomly generated rather than individual presets existing.\n" +
+						"_-_ Wands are either bolt, aoe, ally or support and have a random element\n" +
+						"_-_ Weapons and Armours have all their properties (Eg accuracy multiplier) randomised between -50% (half of normal) and +100% (twice normal)"));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.KIT), "New Rogue item",
+				"Rogue now has a new unique item that lets him change the properties of weapons."));
+
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_MAGE), "Magic defense",
+				"Magical DR is now based off focus not armour upgrade level."));
 
 		//Buffs
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "buffs"), false, null);
 		changes.hardlight( CharSprite.POSITIVE );
 		changeInfos.add(changes);
 
+		changes.addButton( new ChangeButton(new GuardianTrap.GuardianSprite(), "Guardians",
+				"Guardians from the traps no longer have have Ankhs as this made them more harmful than they should be"));
+
+		changes.addButton( new ChangeButton(new RatSprite(), "Mobs",
+				"Mobs do a little more damage, except slimes who do ~33% less."));
+
 		//Nerfs
 		changes = new ChangeInfo(Messages.get(ChangesScene.class, "nerfs"), false, null);
 		changes.hardlight( CharSprite.NEGATIVE );
 		changeInfos.add(changes);
+
+		changes.addButton( new ChangeButton(new GuardSprite(), "Enemy armour",
+				"Enemy DR/armour scaling nerfed as it made fast weapons non-viable"));
 	}
 
 	private static void add_v0_3_X_Changes(ArrayList<ChangeInfo> changeInfos) {

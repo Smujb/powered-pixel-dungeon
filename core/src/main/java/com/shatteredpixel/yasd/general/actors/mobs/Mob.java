@@ -202,6 +202,7 @@ public abstract class Mob extends Char {
 		} else if (properties().contains(Property.MINIBOSS)) {
 			HP = HT *= 2;
 		}
+		super.updateHT(boostHP);
 	}
 
 	private int normalHP(int level) {
@@ -231,23 +232,9 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalDRRoll(int level) {
-		int max = 1 + level/5;
-		int min = level/10;
+		int max = 1 + level/4;
+		int min = level/8;
 		return Random.NormalIntRange(min, max);
-	}
-
-	int findClosest(Char enemy, int pos) {
-		int closest = -1;
-		boolean[] passable = Dungeon.level.passable();
-
-		for (int n : PathFinder.NEIGHBOURS9) {
-			int c = pos + n;
-			if (passable[c] && Actor.findChar( c ) == null
-					&& (closest == -1 || (Dungeon.level.trueDistance(c, enemy.pos) < (Dungeon.level.trueDistance(closest, enemy.pos))))) {
-				closest = c;
-			}
-		}
-		return closest;
 	}
 
 	public static <T extends Mob> T create(Class<T> type, int level) {
