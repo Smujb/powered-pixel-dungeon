@@ -988,7 +988,7 @@ public abstract class Char extends Actor {
 
 	public float noticeChance( Char defender, float factor) {
 		if (Dungeon.level.distance(pos, defender.pos) < viewDistance) {
-			float perception = (noticeSkill(defender)) / (Math.max(2, Dungeon.level.distance(pos, defender.pos)));
+			float perception = (noticeSkill(defender)) / (Math.max(1, Dungeon.level.distance(pos, defender.pos)/2));
 			if (!fieldOfView(defender.pos)) {
 				perception /= 2f;
 			}

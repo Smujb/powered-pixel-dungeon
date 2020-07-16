@@ -1028,8 +1028,8 @@ public abstract class Mob extends Char {
 	}
 
 	private float suspicion = 1;
-	private static final int MAX_SUSPICION = 10;
-	private static final int SUSPICION_THRESHOLD = 5;
+	private static final int MAX_SUSPICION = 5;
+	private static final int SUSPICION_THRESHOLD = 3;
 
 	public void notice() {
 		enemySeen = true;
@@ -1065,7 +1065,11 @@ public abstract class Mob extends Char {
 		if (enemy == null) {
 			return;
 		}
-		if (notice(enemy, state.noticeFactor())) {
+		float noticeFactor = state.noticeFactor();
+		if (suspicion > SUSPICION_THRESHOLD) {
+			noticeFactor /= 2;
+		}
+		if (notice(enemy, noticeFactor)) {
 			increaseSuspicion(1);
 		} else {
 			//Swarm Intelligence causes mobs to forget you slower.
