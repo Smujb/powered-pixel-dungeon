@@ -29,14 +29,18 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.shatteredpixel.yasd.general.ui.HealthBar;
 import com.shatteredpixel.yasd.general.ui.ItemSlot;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.Window;
 
+import org.jetbrains.annotations.NotNull;
+
 public class WndInfoItem extends Window {
 	
-	private static final float GAP	= 2;
+	private static final float GAP_LRG = 6;
 
 	private static final int WIDTH_MIN = 120;
 	private static final int WIDTH_MAX = 220;
@@ -84,10 +88,19 @@ public class WndInfoItem extends Window {
 		
 		RenderedTextBlock txtInfo = PixelScene.renderTextBlock( item.info(), 6 );
 
-		layoutFields(titlebar, txtInfo);
+		HealthBar healthBar = null;
+		if (item.canDegrade() || item instanceof MissileWeapon) {
+			healthBar = new HealthBar();
+			healthBar.level(item.degradedPercent());
+		}
+		layoutFields(titlebar, txtInfo, healthBar);
 	}
 
 	private void layoutFields(IconTitle title, RenderedTextBlock info) {
+		layoutFields(title, info, null);
+	}
+
+	private void layoutFields(IconTitle title, @NotNull RenderedTextBlock info, HealthBar healthBar) {
 		int width = WIDTH_MIN;
 
 		info.maxWidth(width);
@@ -103,7 +116,14 @@ public class WndInfoItem extends Window {
 		title.setRect(0, 0, width, 0);
 		add(title);
 
-		info.setPos(title.left(), title.bottom() + GAP);
+		float bottom = title.bottom();
+		if (healthBar != null) {
+			healthBar.setRect(GAP, title.bottom() + GAP, width-GAP, healthBar.height());
+			add(healthBar);
+			bottom = healthBar.bottom();
+		}
+
+		info.setPos(title.left(), bottom + GAP);
 		add(info);
 
 		resize(width, (int) (info.bottom() + 2));

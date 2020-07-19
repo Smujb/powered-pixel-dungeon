@@ -161,7 +161,7 @@ public class WndTradeItem extends WndInfoItem {
 		btnSteal.setRect(0, btnBuy.bottom() + GAP, WIDTH, BTN_HEIGHT);
 		add(btnSteal);
 
-		resize(width, (int) pos);
+		resize(width, (int) btnSteal.bottom());
 	}
 	
 	@Override
