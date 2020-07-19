@@ -27,6 +27,8 @@
 
 package com.shatteredpixel.yasd.general;
 
+import com.shatteredpixel.yasd.general.messages.Messages;
+
 import org.jetbrains.annotations.Contract;
 
 public enum Difficulty {
@@ -107,5 +109,9 @@ public enum Difficulty {
 			case 4:
 				return IMPOSSIBLE;
 		}
+	}
+
+	public String title() {
+		return Messages.get(Difficulty.class, name());
 	}
 }
