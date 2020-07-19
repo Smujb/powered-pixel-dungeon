@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.Difficulty;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
@@ -51,7 +50,6 @@ import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.windows.WndChallenges;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
-import com.shatteredpixel.yasd.general.windows.WndStartGame;
 import com.shatteredpixel.yasd.general.windows.WndTabbed;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.input.PointerEvent;
@@ -120,7 +118,7 @@ public class HeroSelectScene extends PixelScene {
 			add(fadeRight);
 		}
 
-		prompt = PixelScene.renderTextBlock(Messages.get(WndStartGame.class, "title"), 12);
+		prompt = PixelScene.renderTextBlock(Messages.get(this, "title"), 12);
 		prompt.hardlight(Window.TITLE_COLOR);
 		prompt.setPos( (Camera.main.width - prompt.width())/2f, (Camera.main.height - HeroBtn.HEIGHT - prompt.height() - 4));
 		PixelScene.align(prompt);
@@ -138,7 +136,7 @@ public class HeroSelectScene extends PixelScene {
 				//GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				Dungeon.difficulty = Difficulty.fromInt(YASDSettings.difficulty());//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				Dungeon.difficulty = YASDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
 				YASDSettings.lastClass(GamesInProgress.selectedClass);
 				if (YASDSettings.intro()) {
 					YASDSettings.intro( false );
