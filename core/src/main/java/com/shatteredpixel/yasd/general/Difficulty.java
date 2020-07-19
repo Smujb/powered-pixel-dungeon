@@ -35,10 +35,15 @@ public enum Difficulty {
 	EASY,
 	MEDIUM,
 	HARD,
-	IMPOSSIBLE;
+	IMPOSSIBLE {
+		@Override
+		public boolean isUnlocked() {
+			return Badges.isUnlocked(Badges.Badge.VICTORY_ALL_CLASSES);
+		}
+	};
 
-	public static int maxDiff() {
-		return Badges.isUnlocked(Badges.Badge.VICTORY_ALL_CLASSES) ? 4 : 3;//Lock Impossible mode until the player has won with all classes.
+	public boolean isUnlocked() {
+		return true;
 	}
 
 	@Contract(pure = true)

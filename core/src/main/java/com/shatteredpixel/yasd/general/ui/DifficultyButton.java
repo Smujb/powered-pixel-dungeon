@@ -33,42 +33,38 @@ import com.shatteredpixel.yasd.general.YASDSettings;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 public class DifficultyButton extends StyledButton {
 
+	public static int WIDTH = 80;
+	public static int HEIGHT = 20;
+
 	private Difficulty difficulty;
+	public static ArrayList<DifficultyButton> buttonArrayList = new ArrayList<>();
 
 	public DifficultyButton(@NotNull Difficulty difficulty) {
 		super(Chrome.Type.GREY_BUTTON_TR, difficulty.title(), 9);
 		this.difficulty = difficulty;
+		buttonArrayList.add(this);
+		updateDifficulty();
 	}
 
 	@Override
 	protected void onClick() {
 		super.onClick();
 		YASDSettings.difficulty(difficulty);
-	}
-
-	public static class Easy extends DifficultyButton {
-		public Easy() {
-			super(Difficulty.EASY);
+		for (DifficultyButton difficultyButton : buttonArrayList) {
+			difficultyButton.updateDifficulty();
 		}
 	}
 
-	public static class Medium extends DifficultyButton {
-		public Medium() {
-			super(Difficulty.MEDIUM);
+	private void updateDifficulty() {
+		if (difficulty == YASDSettings.difficulty()) {
+			icon(Icons.get(Icons.CHALLENGE_ON));
+		} else {
+			icon(Icons.get(Icons.CHALLENGE_OFF));
 		}
-	}
-
-	public static class Hard extends DifficultyButton {
-		public Hard() {
-			super(Difficulty.HARD);
-		}
-	}
-
-	public static class Impossible extends DifficultyButton {
-		public Impossible() {
-			super(Difficulty.IMPOSSIBLE);
-		}
+		enable(difficulty.isUnlocked());
 	}
 }

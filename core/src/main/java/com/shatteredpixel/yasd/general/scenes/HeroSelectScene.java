@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Chrome;
+import com.shatteredpixel.yasd.general.Difficulty;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
@@ -42,6 +43,7 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.ui.ActionIndicator;
+import com.shatteredpixel.yasd.general.ui.DifficultyButton;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.IconButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
@@ -215,6 +217,15 @@ public class HeroSelectScene extends PixelScene {
 		btnExit.setPos( Camera.main.width - btnExit.width(), 0 );
 		add( btnExit );
 
+		int width = Camera.main.width;
+		Difficulty[] values = Difficulty.values();
+		for (int i = 0; i < values.length; i++) {
+			Difficulty difficulty = values[i];
+			DifficultyButton button = new DifficultyButton(difficulty);
+			button.setRect(width - DifficultyButton.WIDTH, btnExit.bottom() + 2 + DifficultyButton.HEIGHT*i, DifficultyButton.WIDTH, DifficultyButton.HEIGHT);
+			add(button);
+		}
+
 		PointerArea fadeResetter = new PointerArea(0, 0, Camera.main.width, Camera.main.height){
 			@Override
 			public boolean onSignal(PointerEvent event) {
@@ -271,6 +282,9 @@ public class HeroSelectScene extends PixelScene {
 			float alpha = GameMath.gate(0f, uiAlpha, 1f);
 			for (StyledButton b : heroBtns){
 				b.alpha(alpha);
+			}
+			for (DifficultyButton button : DifficultyButton.buttonArrayList) {
+				button.alpha(alpha);
 			}
 			startBtn.alpha(alpha);
 			btnExit.icon().alpha(alpha);
