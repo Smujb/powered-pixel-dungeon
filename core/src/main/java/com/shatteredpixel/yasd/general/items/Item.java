@@ -291,6 +291,11 @@ public class Item implements Bundlable {
 			return false;
 		}
 
+		if (!container.canHold(this)){
+			GLog.n( Messages.get(Item.class, "pack_full", container.name()) );
+			return false;
+		}
+
 		curUser = ch;
 		if (items.contains( this )) {
 			return true;
