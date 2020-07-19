@@ -60,7 +60,7 @@ import com.watabou.utils.Reflection;
 public class ScrollOfTransmutation extends InventoryScroll {
 	
 	{
-		icon = ItemSpriteSheet.Icons.SCROLL_UPGRADE;
+		icon = ItemSpriteSheet.Icons.SCROLL_TRANSMUTE;
 		mode = WndBag.Mode.TRANMSUTABLE;
 		
 		bones = true;
