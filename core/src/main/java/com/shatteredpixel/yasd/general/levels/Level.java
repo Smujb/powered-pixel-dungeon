@@ -233,6 +233,9 @@ public abstract class Level implements Bundlable {
 	}
 
 	public boolean edge(int pos) {
+		if (width <= 0 || height <= 0) {
+			return true;
+		}
 		int lastRow = length() - width();
 		if (pos < width || pos > lastRow && pos < length()) {
 			return true;
@@ -1820,7 +1823,7 @@ public abstract class Level implements Bundlable {
 		return new Point(cell % width(), cell / width());
 	}
 
-	public int pointToCell( Point p ){
+	public final int pointToCell(@NotNull Point p ){
 		return p.x + p.y*width();
 	}
 	

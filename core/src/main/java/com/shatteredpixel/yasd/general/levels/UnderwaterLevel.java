@@ -41,6 +41,7 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -66,8 +67,8 @@ public class UnderwaterLevel extends Level {
 
 	public static final float SIZE_FACTOR = 0.5f;
 
-	private int _width = -1;
-	private int _height = -1;
+	private int surfaceWidth = -1;
+	private int surfaceHeight = -1;
 
 	private ArrayList<Integer> lightLocations = new ArrayList<>();
 
@@ -75,33 +76,36 @@ public class UnderwaterLevel extends Level {
 
 	private ArrayList<Integer> chasmLocations = new ArrayList<>();//Doesn't need to be stored as it's only used in levelgen.
 
-	//NOTE: setParent() MUST be called before create(). If not, the level size and terrain won't be correct.
-	public UnderwaterLevel setParent(Level level) {
-		waterTex = level.waterTex();
-		tilesTex = level.tilesTex();
-		minScaleFactor = level.minScaleFactor;
-		maxScaleFactor = level.maxScaleFactor;
-		_width = level.width();
-		_height = level.height();
-		lightLocations = scaleCellsList(level.getTileLocations(Terrain.DEEP_WATER), level.width(), SIZE_FACTOR);
-		chasmLocations = scaleCellsList(level.getTileLocations(Terrain.CHASM), level.width(), SIZE_FACTOR);
+	//NOTE: setParent() is necessary for levelgen. Just calling create() won't cut it.
+	public UnderwaterLevel setParent(Level surface) {
+		waterTex = surface.waterTex();
+		tilesTex = surface.tilesTex();
+		minScaleFactor = surface.minScaleFactor;
+		maxScaleFactor = surface.maxScaleFactor;
+		surfaceWidth = surface.width();
+		surfaceHeight = surface.height();
+		setSize((int) (surfaceWidth *SIZE_FACTOR), (int) (surfaceHeight *SIZE_FACTOR));
+		lightLocations = scaleCellsList(surface.getTileLocations(Terrain.DEEP_WATER), surface);
+		chasmLocations = scaleCellsList(surface.getTileLocations(Terrain.CHASM), surface);
 		return this;
 	}
 
-	private static ArrayList<Integer> scaleCellsList(ArrayList<Integer> cells, int oldWidth, float factor) {
+	private ArrayList<Integer> scaleCellsList(ArrayList<Integer> cells, Level surfaceLevel) {
 		ArrayList<Integer> newList = new ArrayList<>();
 		for (int i : cells) {
-			newList.add(scaleCell(i, oldWidth, factor));
+			newList.add(scaleCell(i, surfaceLevel));
 		}
 		return newList;
 	}
 
 	//Use Points to make it easier to understand - efficiency doesn't matter too much as this is only executed during levelgen.
-	public static int scaleCell(int cell, int oldWidth, float factor) {
-		Point point = new Point(cell % oldWidth, cell / oldWidth);
-		point.scale(factor);
-		float newWidth = oldWidth * factor;
-		return point.x + Math.round(point.y * newWidth);
+	public int scaleCell(int cell, Level surfaceLevel) {
+		Point point = surfaceLevel.cellToPoint(cell);
+		GLog.p("Before: x: " + point.x + ", y: " + point.y + ", pos: " + cell + "\n");
+		point.scale(UnderwaterLevel.SIZE_FACTOR);
+		int scaledCell = this.pointToCell(point);
+		GLog.p("After: x: " + point.x + ", y: " + point.y + ", pos: " + scaledCell + "\n\n");
+		return scaledCell;
 	}
 
 	@Override
@@ -116,7 +120,8 @@ public class UnderwaterLevel extends Level {
 
 	@Override
 	protected boolean build() {
-		setSize((int) (_width*SIZE_FACTOR), (int) (_height*SIZE_FACTOR));
+		//Yes, I need to do this twice...
+		setSize((int) (surfaceWidth *SIZE_FACTOR), (int) (surfaceHeight *SIZE_FACTOR));
 		setMap(Level.basicMap(length()));
 		buildFlagMaps();
 		boolean[] setSolid = Patch.generate( width(), height(), 0.2f, 4, true );
