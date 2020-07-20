@@ -154,7 +154,9 @@ public class WndBag extends WndTabbed {
 		
 		placeItems( bag );
 
-		int slotsHeight = SLOT_HEIGHT * row + SLOT_MARGIN * (row - 1);
+		nRows = (int) Math.ceil((Belongings.BACKPACK_SIZE + Constants.MISC_SLOTS) / (float)nCols);
+
+		int slotsHeight = SLOT_HEIGHT * nRows + SLOT_MARGIN * (nRows - 1);
 
 		resize( slotsWidth, slotsHeight + TITLE_HEIGHT );
 
@@ -249,10 +251,10 @@ public class WndBag extends WndTabbed {
 
 		// Items in the bag, except other containers (they have tags at the bottom)
 		for (Item item : container.items.toArray(new Item[0])) {
-			if (!(item instanceof Bag)) {
-				placeItem( item );
-			} else {
+			if (item instanceof Bag) {
 				count++;
+			} else {
+				placeItem( item );
 			}
 		}
 		

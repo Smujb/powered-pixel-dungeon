@@ -38,6 +38,8 @@ import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -165,16 +167,17 @@ public class Bag extends Item implements Iterable<Item> {
 	public boolean canHold( Item item ){
 		if (items.contains(item) || item instanceof Bag || items.size() < capacity()){
 			return true;
-		} else {
+		} else if (item.stackable) {
 			for (Item i : items) {
 				if (item.isSimilar( i )) {
 					return true;
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 
+	@NotNull
 	@Override
 	public Iterator<Item> iterator() {
 		return new ItemIterator();
