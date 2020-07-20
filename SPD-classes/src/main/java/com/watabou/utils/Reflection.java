@@ -45,7 +45,7 @@ public class Reflection {
 	public static <T> T newInstance( Class<T> cls ){
 		try {
 			return ClassReflection.newInstance(cls);
-		} catch (ReflectionException e) {
+		} catch (Exception e) {
 			Game.reportException(e);
 			return null;
 		}
@@ -66,7 +66,7 @@ public class Reflection {
 	public static Class forName( String name ){
 		try {
 			return ClassReflection.forName( name );
-		} catch (ReflectionException e) {
+		} catch (Exception e) {
 			Game.reportException(e);
 			return null;
 		}
