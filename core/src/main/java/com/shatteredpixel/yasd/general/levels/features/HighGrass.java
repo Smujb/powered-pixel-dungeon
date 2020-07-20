@@ -73,9 +73,6 @@ public class HighGrass {
 				} else {
 					Dungeon.level.set(pos, Terrain.GRASS);
 				}
-				if (ch instanceof Hero){
-					Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
-				}
 			}
 			
 		} else {
@@ -84,10 +81,6 @@ public class HighGrass {
 				freezeTrample = true;
 			} else {
 				Dungeon.level.set(pos, Terrain.GRASS);
-			}
-
-			if (ch instanceof Hero){
-				Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
 			}
 			
 			int naturalismLevel = 0;

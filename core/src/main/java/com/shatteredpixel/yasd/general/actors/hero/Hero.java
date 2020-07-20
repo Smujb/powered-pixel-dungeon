@@ -1482,6 +1482,7 @@ public class Hero extends Char {
 
 	@Override
 	public void move( int step ) {
+		boolean wasHighGrass = Dungeon.level.getTerrain(step) == Terrain.HIGH_GRASS;
 		super.move( step );
 		
 		if (!flying) {
@@ -1492,7 +1493,11 @@ public class Hero extends Char {
 			} else if (Dungeon.level.getTerrain(pos) == Terrain.GRASS
 					|| Dungeon.level.getTerrain(pos) == Terrain.EMBERS
 					|| Dungeon.level.getTerrain(pos) == Terrain.FURROWED_GRASS){
-				Sample.INSTANCE.play( Assets.Sounds.GRASS, 1, Random.Float( 0.96f, 1.05f ) );
+				if (step == pos && wasHighGrass) {
+					Sample.INSTANCE.play(Assets.Sounds.TRAMPLE, 1, Random.Float( 0.96f, 1.05f ) );
+				} else {
+					Sample.INSTANCE.play( Assets.Sounds.GRASS, 1, Random.Float( 0.96f, 1.05f ) );
+				}
 			} else {
 				Sample.INSTANCE.play( Assets.Sounds.STEP, 1, Random.Float( 0.96f, 1.05f ) );
 			}
