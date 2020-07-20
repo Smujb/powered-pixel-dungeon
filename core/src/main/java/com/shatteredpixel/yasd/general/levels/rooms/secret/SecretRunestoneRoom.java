@@ -84,7 +84,7 @@ public class SecretRunestoneRoom extends SecretRoom {
 		
 		do{
 			dropPos = level.pointToCell(random());
-		} while (level.getTerrain(dropPos) != Terrain.EMPTY_SP);
+		} while (level.getTerrain(dropPos) != Terrain.EMPTY_SP || level.heaps.get( dropPos ) != null);
 		level.drop( new StoneOfEnchantment(), dropPos);
 		
 		entrance.set(Door.Type.HIDDEN);
