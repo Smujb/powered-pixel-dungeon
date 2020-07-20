@@ -41,7 +41,6 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.tiles.DungeonTilemap;
-import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.Bundle;
@@ -101,11 +100,8 @@ public class UnderwaterLevel extends Level {
 	//Use Points to make it easier to understand - efficiency doesn't matter too much as this is only executed during levelgen.
 	public int scaleCell(int cell, Level surfaceLevel) {
 		Point point = surfaceLevel.cellToPoint(cell);
-		GLog.p("Before: x: " + point.x + ", y: " + point.y + ", pos: " + cell + "\n");
 		point.scale(UnderwaterLevel.SIZE_FACTOR);
-		int scaledCell = this.pointToCell(point);
-		GLog.p("After: x: " + point.x + ", y: " + point.y + ", pos: " + scaledCell + "\n\n");
-		return scaledCell;
+		return this.pointToCell(point);
 	}
 
 	@Override
