@@ -52,7 +52,7 @@ public class Entrance extends InteractiveCell {
 	}
 
 	public static void ascend(Hero hero) {
-		if (hero.rooted) {
+		if (hero.rooted || hero.buff(LockedFloor.class) != null) {
 			Camera.main.shake(1, 1f);
 			hero.ready();
 			return;
@@ -76,7 +76,7 @@ public class Entrance extends InteractiveCell {
 				Dungeon.deleteGame(GamesInProgress.curSlot, true);
 			}
 
-		} else if (hero.buff(LockedFloor.class) == null) {
+		} else {
 
 			hero.curAction = null;
 

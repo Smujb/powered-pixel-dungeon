@@ -121,33 +121,33 @@ public class NewTengu extends Mob {
 		}
 
 		NewPrisonBossLevel.State state = ((NewPrisonBossLevel)Dungeon.level).state();
-		
+
 		int hpBracket = 20;
-		
+
 		int beforeHitHP = HP;
 		super.damage(dmg, src);
 		dmg = beforeHitHP - HP;
-		
+
 		//tengu cannot be hit through multiple brackets at a time
 		if ((beforeHitHP/hpBracket - HP/hpBracket) >= 2){
 			HP = hpBracket * ((beforeHitHP/hpBracket)-1) + 1;
 		}
-		
+
 		LockedFloor lock = Dungeon.hero.buff(LockedFloor.class);
 		if (lock != null) {
 			int multiple = state == NewPrisonBossLevel.State.FIGHT_START ? 1 : 4;
 			lock.addTime(dmg*multiple);
 		}
-		
+
 		//phase 2 of the fight is over
 		if (HP == 0 && state == NewPrisonBossLevel.State.FIGHT_ARENA) {
 			//let full attack action complete first
 			Actor.add(new Actor() {
-				
+
 				{
 					actPriority = VFX_PRIO;
 				}
-				
+
 				@Override
 				protected boolean act() {
 					Actor.remove(this);
@@ -157,14 +157,14 @@ public class NewTengu extends Mob {
 			});
 			return;
 		}
-		
+
 		//phase 1 of the fight is over
 		if (state == NewPrisonBossLevel.State.FIGHT_START && HP <= HT/2){
 			HP = (HT/2);
 			yell(Messages.get(this, "interesting"));
 			((NewPrisonBossLevel)Dungeon.level).progress();
 			BossHealthBar.bleed(true);
-			
+
 			//if tengu has lost a certain amount of hp, jump
 		} else if (beforeHitHP / hpBracket != HP / hpBracket) {
 			jump();
@@ -210,84 +210,83 @@ public class NewTengu extends Mob {
 	}
 	
 	private void jump() {
-		
+
 		//in case tengu hasn't had a chance to act yet
 		if (fieldOfView == null || fieldOfView.length != Dungeon.level.length()){
 			fieldOfView = new boolean[Dungeon.level.length()];
 			Dungeon.level.updateFieldOfView( this, fieldOfView );
 		}
-		
+
 		if (enemy == null) enemy = chooseEnemy();
 		if (enemy == null) return;
-		
+
 		int newPos;
 		if (Dungeon.level instanceof NewPrisonBossLevel){
 			NewPrisonBossLevel level = (NewPrisonBossLevel) Dungeon.level;
-			
+
 			//if we're in phase 1, want to warp around within the room
 			if (level.state() == NewPrisonBossLevel.State.FIGHT_START) {
-				
+
 				level.cleanTenguCell();
-				
+
 				do {
 					newPos = ((NewPrisonBossLevel)Dungeon.level).randomTenguCellPos();
 				} while ( level.trueDistance(newPos, enemy.pos) <= 3.5f
 						|| level.trueDistance(newPos, Dungeon.hero.pos) <= 3.5f
 						|| Actor.findChar(newPos) != null);
-				
+
 				if (level.heroFOV[pos]) CellEmitter.get( pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-				
+
 				sprite.move( pos, newPos );
 				move( newPos );
-				
+
 				if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
 				Sample.INSTANCE.play( Assets.Sounds.PUFF );
-				
-				float fill = 0.9f - 0.5f*((HP-80)/80f);
+
+				float fill = 0.9f - 0.5f*missingHPPercent();
 				level.placeTrapsInTenguCell(fill);
-				
-			//otherwise, jump in a larger possible area, as the room is bigger
+				GLog.p("3");
+
+				//otherwise, jump in a larger possible area, as the room is bigger
 			} else {
-				
 				do {
 					newPos = Random.Int(level.length());
 				} while (
 						level.solid(newPos) ||
-								!canOccupy(Dungeon.level, newPos) ||
- 								level.distance(newPos, enemy.pos) < 5 ||
+								level.distance(newPos, enemy.pos) < 5 ||
 								level.distance(newPos, enemy.pos) > 7 ||
 								level.distance(newPos, Dungeon.hero.pos) < 5 ||
 								level.distance(newPos, Dungeon.hero.pos) > 7 ||
 								level.distance(newPos, pos) < 6 ||
 								Actor.findChar(newPos) != null ||
 								Dungeon.level.heaps.get(newPos) != null);
-				
+
 				if (level.heroFOV[pos]) CellEmitter.get( pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-				
+
 				sprite.move( pos, newPos );
 				move( newPos );
-				
+
 				if (arenaJumps < 4) arenaJumps++;
-				
+
 				if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
 				Sample.INSTANCE.play( Assets.Sounds.PUFF );
-				
+
 			}
-			
-		//if we're on another type of level
+
+			//if we're on another type of level
 		} else {
 			Level level = Dungeon.level;
-			
-			newPos = level.randomRespawnCell(this);
-			
+
+			newPos = level.randomRespawnCell( this );
+
 			if (level.heroFOV[pos]) CellEmitter.get( pos ).burst( Speck.factory( Speck.WOOL ), 6 );
-			
+
 			sprite.move( pos, newPos );
 			move( newPos );
-			
+
 			if (level.heroFOV[newPos]) CellEmitter.get( newPos ).burst( Speck.factory( Speck.WOOL ), 6 );
 			Sample.INSTANCE.play( Assets.Sounds.PUFF );
-			
+
 		}
 		
 	}

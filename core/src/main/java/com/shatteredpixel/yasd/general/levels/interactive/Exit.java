@@ -42,20 +42,19 @@ public class Exit extends InteractiveCell {
 	}
 
 	public static void descend(Hero hero) {
-		if (hero.rooted) {
+		if (hero.rooted || hero.buff(LockedFloor.class) != null) {
 			Camera.main.shake(1, 1f);
 			hero.ready();
 			return;
 		}
-		if (hero.buff(LockedFloor.class) == null) {
-			hero.curAction = null;
+		hero.curAction = null;
 
-			Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);
-			if (buff != null) buff.detach();
-			buff = hero.buff(Swiftthistle.TimeBubble.class);
-			if (buff != null) buff.detach();
+		Buff buff = hero.buff(TimekeepersHourglass.timeFreeze.class);
+		if (buff != null) buff.detach();
+		buff = hero.buff(Swiftthistle.TimeBubble.class);
+		if (buff != null) buff.detach();
 
-			LevelHandler.descend();
-		}
+		LevelHandler.descend();
+
 	}
 }
