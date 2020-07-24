@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class Beer extends Alcohol {
     {
         image = ItemSpriteSheet.BEER;
-        MoraleGain = 5f;
+        MoraleGain = 2f;
         drunkTurns = 100f;
     }
 
