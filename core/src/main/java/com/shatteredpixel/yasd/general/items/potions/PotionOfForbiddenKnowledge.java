@@ -28,7 +28,9 @@
 package com.shatteredpixel.yasd.general.items.potions;
 
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Random;
 
 public class PotionOfForbiddenKnowledge extends Potion {
@@ -43,6 +45,7 @@ public class PotionOfForbiddenKnowledge extends Potion {
 
 		//50 - 60% Morale lost
 		hero.loseMorale(5f + Random.Float());
+		GLog.n(Messages.get(this, "drink"));
 		hero.distributePoints();
 	}
 
