@@ -432,7 +432,7 @@ public class Dungeon {
 			Actor.addDelayed( respawner, level.respawnTime() );
 		}
 
-		if (level.solid(cell)) {
+		if (!level.insideMap(cell) || level.solid(cell)) {
 			for (int i : level.neighbors9(cell)) {
 				if (level.insideMap(i) && !level.solid(i) && level.findMob(i) == null) {
 					cell = i;
