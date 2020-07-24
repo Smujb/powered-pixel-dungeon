@@ -84,7 +84,7 @@ import com.shatteredpixel.yasd.general.items.keys.Key;
 import com.shatteredpixel.yasd.general.items.keys.SkeletonKey;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfExperience;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfForbiddenKnowledge;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
@@ -774,7 +774,7 @@ public class Hero extends Char {
 
 						boolean important =
 								(item instanceof ScrollOfUpgrade && ((Scroll)item).isKnown()) ||
-								(item instanceof PotionOfStrength && ((Potion)item).isKnown());
+								(item instanceof PotionOfForbiddenKnowledge && ((Potion)item).isKnown());
 						if (important) {
 							GLog.p( Messages.get(this, "you_now_have", item.name()) );
 						} else {
@@ -1320,20 +1320,23 @@ public class Hero extends Char {
 				float missingMoralePercent = (float) (1f - (morale/MAX_MORALE)*0.1);
 				gainMorale(missingMoralePercent*0.5f);//Gains more Morale on level up when on low Morale (up to 1)
 			}
-
-			DistributionPoints += 3;
-			MainGame.runOnRenderThread(new Callback() {
-				@Override
-				public void call() {
-					WndHero window = new WndHero();
-					window.switchToAbilities();
-					GameScene.show(window);
-				}
-			});
+			distributePoints();
 			Item.updateQuickslot();
 			
 			Badges.validateLevelReached();
 		}
+	}
+
+	public void distributePoints() {
+		DistributionPoints += 3;
+		MainGame.runOnRenderThread(new Callback() {
+			@Override
+			public void call() {
+				WndHero window = new WndHero();
+				window.switchToAbilities();
+				GameScene.show(window);
+			}
+		});
 	}
 	
 	public int maxExp() {

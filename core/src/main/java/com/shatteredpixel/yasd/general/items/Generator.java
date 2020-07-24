@@ -62,7 +62,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfMindVision;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfPurity;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfForbiddenKnowledge;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
@@ -211,7 +211,7 @@ public class Generator {
 			ALCOHOL.probs = new float[]{1, 2};
 
 			POTION.classes = new Class<?>[]{
-					PotionOfStrength.class, //2 drop every chapter, see Dungeon.posNeeded()
+					PotionOfForbiddenKnowledge.class,
 					PotionOfHealing.class,
 					PotionOfMindVision.class,
 					PotionOfFrost.class,
@@ -223,7 +223,7 @@ public class Generator {
 					PotionOfParalyticGas.class,
 					PotionOfPurity.class,
 					PotionOfExperience.class};
-			POTION.defaultProbs = new float[]{0, 6, 4, 3, 3, 3, 2, 2, 2, 2, 2, 1};
+			POTION.defaultProbs = new float[]{1, 6, 4, 3, 3, 3, 2, 2, 2, 2, 2, 1};
 			POTION.probs = POTION.defaultProbs.clone();
 
 			SEED.classes = new Class<?>[]{

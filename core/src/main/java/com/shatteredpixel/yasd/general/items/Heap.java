@@ -45,7 +45,7 @@ import com.shatteredpixel.yasd.general.items.food.FrozenCarpaccio;
 import com.shatteredpixel.yasd.general.items.food.MysteryMeat;
 import com.shatteredpixel.yasd.general.items.journal.DocumentPage;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfForbiddenKnowledge;
 import com.shatteredpixel.yasd.general.items.rings.RingOfWealth;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -307,7 +307,7 @@ public class Heap implements Bundlable {
 			if (item instanceof MysteryMeat) {
 				replace( item, FrozenCarpaccio.cook( (MysteryMeat)item ) );
 				frozen = true;
-			} else if (item instanceof Potion && !(item instanceof PotionOfStrength)) {
+			} else if (item instanceof Potion && !(item instanceof PotionOfForbiddenKnowledge)) {
 				items.remove(item);
 				((Potion) item).shatter(pos);
 				frozen = true;

@@ -37,7 +37,7 @@ import com.shatteredpixel.yasd.general.items.Generator.Category;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfForbiddenKnowledge;
 import com.shatteredpixel.yasd.general.items.rings.Ring;
 import com.shatteredpixel.yasd.general.items.scrolls.Scroll;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfUpgrade;
@@ -228,7 +228,7 @@ public class WaterOfTransmutation extends WellWater {
 	}
 	
 	private Potion changePotion( Potion p ) {
-		if (p instanceof PotionOfStrength) {
+		if (p instanceof PotionOfForbiddenKnowledge) {
 			
 			return null;
 			

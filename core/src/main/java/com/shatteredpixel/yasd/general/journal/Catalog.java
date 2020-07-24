@@ -58,7 +58,7 @@ import com.shatteredpixel.yasd.general.items.potions.PotionOfLiquidFlame;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfMindVision;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfParalyticGas;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfPurity;
-import com.shatteredpixel.yasd.general.items.potions.PotionOfStrength;
+import com.shatteredpixel.yasd.general.items.potions.PotionOfForbiddenKnowledge;
 import com.shatteredpixel.yasd.general.items.potions.PotionOfToxicGas;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.rings.RingOfEvasion;
@@ -198,7 +198,7 @@ public enum Catalog {
 		ARTIFACTS.seen.put( UnstableSpellbook.class,        false);
 	
 		POTIONS.seen.put( PotionOfHealing.class,            false);
-		POTIONS.seen.put( PotionOfStrength.class,           false);
+		POTIONS.seen.put( PotionOfForbiddenKnowledge.class,           false);
 		POTIONS.seen.put( PotionOfLiquidFlame.class,        false);
 		POTIONS.seen.put( PotionOfFrost.class,              false);
 		POTIONS.seen.put( PotionOfToxicGas.class,           false);
