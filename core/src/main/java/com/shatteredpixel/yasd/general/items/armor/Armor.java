@@ -353,7 +353,7 @@ public class Armor extends KindofMisc {
 	private float getFocusLvl() {
 		float lvl = 0;
 		if (curUser instanceof Hero) {
-			lvl = ((Hero)curUser).getFocus();
+			lvl = ((Hero)curUser).getFocus()*3;
 		} else if (curUser instanceof Mob) {
 			lvl = ((Mob)curUser).getLevel();
 		}

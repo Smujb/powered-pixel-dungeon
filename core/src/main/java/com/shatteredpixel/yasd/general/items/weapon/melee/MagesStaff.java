@@ -157,7 +157,7 @@ public class MagesStaff extends MeleeWeapon {
 				attacker instanceof Hero && ((Hero)attacker).subClass == HeroSubClass.BATTLEMAGE) {
 			if (wand.curCharges < wand.maxCharges) wand.partialCharge += 0.33f;
 			ScrollOfRecharging.charge(attacker);
-			damage += Random.NormalIntRange(1, ((Hero)attacker).getFocus()/2);
+			damage += Random.NormalIntRange(1, (int) (((Hero)attacker).getFocus()*1.5f));
 			wand.onHit(this, attacker, defender, damage);
 		}
 

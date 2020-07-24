@@ -95,7 +95,7 @@ public abstract class Wand extends KindofMisc {
 	}
 
 	private float effectiveness(Hero hero) {
-		return level() + hero.getFocus()/6f;
+		return level() + hero.getFocus()/2f;
 	}
 
 	public float actualLevel() {

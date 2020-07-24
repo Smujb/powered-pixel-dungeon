@@ -262,11 +262,7 @@ public class Hero extends Char {
 	}
 
 	public int getPerception() {
-		int perception = Perception + RingOfPerception.perceptionBonus(this);
-		if (buff(Drunk.class) != null) {
-			perception /= 2;
-		}
-		return perception;
+		return Perception + RingOfPerception.perceptionBonus(this);
 	}
 
 	public int getFocus() {
@@ -274,11 +270,7 @@ public class Hero extends Char {
 	}
 
 	public int getEvasion() {
-		int evasion = Evasion + RingOfEvasion.evasionBonus(this);
-		if (buff(Drunk.class) != null) {
-			evasion /= 2;
-		}
-		return evasion;
+		return Evasion + RingOfEvasion.evasionBonus(this);
 	}
 
 	public void setPower(int power) {
@@ -389,24 +381,33 @@ public class Hero extends Char {
 		Perception = bundle.getInt( PERCEPTION );
 		Evasion = bundle.getInt( EVASION );
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
+
+		//Old saves
+		if (Dungeon.version < MainGame.v0_4_7) {
+			Power /= 3;
+			Focus /= 3;
+			Perception /= 3;
+			Evasion /= 3;
+			DistributionPoints /= 3;
+		}
 	}
 
 
 	@Override
 	public int STR() {
-		STR = 10 + getPower()/3;
+		STR = 10 + getPower();
 		return super.STR();
 	}
 
 	@Override
 	public float sneakSkill(Char enemy) {
-		sneakSkill = 9 + getEvasion();
+		sneakSkill = 9 + getEvasion()*3;
 		return super.sneakSkill(enemy);
 	}
 
 	@Override
 	public float noticeSkill(Char enemy) {
-		noticeSkill = 4 + getPerception();
+		noticeSkill = 4 + getPerception()*3;
 		return super.noticeSkill(enemy);
 	}
 
@@ -476,14 +477,14 @@ public class Hero extends Char {
 
 	@Override
 	public int attackSkill( Char target ) {
-		attackSkill = 9 + getPerception();
+		attackSkill = 9 + getPerception()*3;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
 	@Override
 	public int defenseSkill( Char enemy ) {
-		defenseSkill = 3 + getEvasion();
+		defenseSkill = 3 + getEvasion()*3;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		//GLog.w(String.valueOf(evasion));
 		return (int) (super.defenseSkill(enemy)*(1+moraleMultiplier));
@@ -1328,7 +1329,7 @@ public class Hero extends Char {
 	}
 
 	public void distributePoints() {
-		DistributionPoints += 3;
+		DistributionPoints += 1;
 		MainGame.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
