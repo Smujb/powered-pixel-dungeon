@@ -32,8 +32,8 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class Whiskey extends Alcohol {
     {
         image = ItemSpriteSheet.WHISKEY;
-        MoraleGain = 4.5f;
-        drunkTurns = 200f;
+        MoraleGain = 2.5f;
+        drunkTurns = 150f;
     }
 
     @Override

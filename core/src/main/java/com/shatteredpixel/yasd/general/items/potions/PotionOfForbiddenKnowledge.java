@@ -29,8 +29,9 @@ package com.shatteredpixel.yasd.general.items.potions;
 
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
+import com.watabou.utils.Random;
 
-public class PotionOfStrength extends Potion {
+public class PotionOfForbiddenKnowledge extends Potion {
 
 	{
 		icon = ItemSpriteSheet.Icons.POTION_STRENGTH;
@@ -40,7 +41,9 @@ public class PotionOfStrength extends Potion {
 	public void apply( Hero hero ) {
 		setKnown();
 
-		hero.DistributionPoints += 5;
+		//50 - 60% Morale lost
+		hero.loseMorale(5f + Random.Float());
+		hero.distributePoints();
 	}
 
 	@Override
