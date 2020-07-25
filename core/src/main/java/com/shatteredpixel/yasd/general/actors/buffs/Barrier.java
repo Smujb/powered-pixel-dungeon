@@ -40,8 +40,8 @@ public class Barrier extends ShieldBuff {
 	
 	@Override
 	public boolean act() {
-		
-		absorbDamage(1);
+
+		decShield();
 		
 		if (shielding() <= 0){
 			detach();

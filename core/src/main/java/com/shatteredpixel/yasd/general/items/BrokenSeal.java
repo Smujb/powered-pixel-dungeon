@@ -30,6 +30,7 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
@@ -149,7 +150,7 @@ public class BrokenSeal extends Item {
 		
 		@Override
 		//logic edited slightly as buff should not detach
-		public int absorbDamage(int dmg) {
+		public int absorbDamage(int dmg, Char.DamageSrc src) {
 			if (shielding() >= dmg){
 				decShield(dmg);
 				dmg = 0;

@@ -80,7 +80,7 @@ public abstract class ShieldBuff extends Buff {
 	}
 	
 	//returns the amount of damage leftover
-	public int absorbDamage( int dmg ){
+	public int absorbDamage(int dmg, Char.DamageSrc src){
 		if (shielding >= dmg){
 			shielding -= dmg;
 			dmg = 0;

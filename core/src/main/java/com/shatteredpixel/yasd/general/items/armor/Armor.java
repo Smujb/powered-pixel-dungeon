@@ -30,14 +30,12 @@ package com.shatteredpixel.yasd.general.items.armor;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
 import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
-import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.BrokenSeal;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -86,8 +84,8 @@ public class Armor extends KindofMisc {
 	public float EVA = 1f;
 	public float STE = 1f;
 	public float speedFactor = 1f;
-	public float DRfactor = 1f;
-	public float magicalDRFactor = 1f;
+	public float magicalResist = 1f;
+	public float physicalResist = 1f;
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -146,6 +144,7 @@ public class Armor extends KindofMisc {
 	private static final String SPEED = "speed";
 	private static final String DR = "dr";
 	private static final String MAGICAL_DR = "magic-dr";
+	private static final String PHYSICAL_DR = "phys-dr";
 	private static final String IMG = "image";
 	private static final String NAME = "name";
 	private static final String DESC = "desc";
@@ -164,8 +163,8 @@ public class Armor extends KindofMisc {
 		bundle.put( STEALTH, STE );
 		bundle.put( EVASION, EVA );
 		bundle.put( SPEED, speedFactor );
-		bundle.put( DR, DRfactor );
-		bundle.put( MAGICAL_DR, magicalDRFactor );
+		bundle.put( MAGICAL_DR, magicalResist);
+		bundle.put( PHYSICAL_DR, physicalResist);
 		bundle.put(NAME, name);
 		bundle.put(IMG, image);
 		bundle.put(DESC, desc);
@@ -196,8 +195,8 @@ public class Armor extends KindofMisc {
 			STE = bundle.getFloat(STEALTH);
 			EVA = bundle.getFloat(EVASION);
 			speedFactor = bundle.getFloat(SPEED);
-			DRfactor = bundle.getFloat(DR);
-			magicalDRFactor = bundle.getFloat(MAGICAL_DR);
+			magicalResist = bundle.getFloat(MAGICAL_DR);
+			physicalResist = bundle.getFloat(PHYSICAL_DR);
 			desc = bundle.getString(DESC);
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
@@ -216,9 +215,9 @@ public class Armor extends KindofMisc {
 	private void resetStats() {
 		EVA = 1f;
 		STE = 1f;
-		DRfactor = 1f;
 		speedFactor = 1f;
-		magicalDRFactor = 1f;
+		magicalResist = 1f;
+		physicalResist = 1f;
 	}
 
 	@Override
@@ -228,7 +227,6 @@ public class Armor extends KindofMisc {
 
 	public Armor initStats() {
 		resetStats();
-		float factor = 1f;
 		if (Random.Int(3) == 0) {
 			EVA = randomStat();
 		}
@@ -238,14 +236,17 @@ public class Armor extends KindofMisc {
 		if (Random.Int(3) == 0) {
 			speedFactor = randomStat();
 		}
-		factor *= 1/EVA;
-		factor *= 1/STE;
-		factor *= 1/speedFactor;
-		float regularDR = Random.Float() * 2f;
-		float magicalDR = 2f - regularDR;
-		magicalDRFactor = magicalDR * factor;
-		DRfactor = regularDR * factor;
+		physicalResist = (Random.Float() + 1f)/2f;
+		magicalResist = 2f - physicalResist;
 		return matchProfile();
+	}
+
+	public float getDefenseFactor() {
+		float DRfactor = 1f;
+		DRfactor *= 1/EVA;
+		DRfactor *= 1/STE;
+		DRfactor *= 1/speedFactor;
+		return DRfactor;
 	}
 
 	@Contract(" -> this")
@@ -329,62 +330,12 @@ public class Armor extends KindofMisc {
 		return 2 / hero.speed();
 	}
 
-	public final int DRMax(){
-		return DRMax(level());
+	public int defense() {
+		return defense(level());
 	}
 
-	public int DRMax(int lvl){
-		return Math.round(((tier*3) + (tier * lvl)) * DRfactor);
-	}
-
-	public final int DRMin(){
-		return DRMin(level());
-	}
-
-	public int DRMin(int lvl){
-		return Math.round((tier + lvl) * DRfactor);
-	}
-
-	public int DRRoll() {
-		return DRRoll(level());
-	}
-
-	public int DRRoll(int lvl) {
-		return Random.NormalIntRange(DRMin(lvl), DRMax(lvl));
-	}
-
-	private float getFocusLvl() {
-		float lvl = 0;
-		if (curUser instanceof Hero) {
-			lvl = ((Hero)curUser).getFocus()*3;
-		} else if (curUser instanceof Mob) {
-			lvl = ((Mob)curUser).getLevel();
-		}
-		return lvl;
-	}
-
-	public final int magicalDRMax(){
-		return magicalDRMax(getFocusLvl());
-	}
-
-	public int magicalDRMax(float lvl){
-		return Math.round(((tier*3) + lvl) * magicalDRFactor);
-	}
-
-	public final int magicalDRMin(){
-		return magicalDRMin(getFocusLvl());
-	}
-
-	public int magicalDRMin(float lvl){
-		return Math.round(tier + lvl/5 * magicalDRFactor);
-	}
-
-	public int magicalDRRoll() {
-		return magicalDRRoll(getFocusLvl());
-	}
-
-	public int magicalDRRoll(float lvl) {
-		return Random.NormalIntRange(magicalDRMin(lvl), magicalDRMax(lvl));
+	public int defense(int lvl) {
+		return Math.round(((tier * 4) + (tier * lvl * 2)) * getDefenseFactor());
 	}
 
 	@Override
@@ -508,20 +459,13 @@ public class Armor extends KindofMisc {
 		String info = desc();
 		
 		if (levelKnown) {
-			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, DRMin(), DRMax(), STRReq());
-
-			info += " " + Messages.get(Armor.class, "curr_absorb_magic",  magicalDRMin(), magicalDRMax());
-
+			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, defense(), STRReq());
 			
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
 			}
 		} else {
-			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, DRMin(0), DRMax(0), STRReq(0));
-
-			if (magicalDRMax() > 0) {
-				info += " " +  Messages.get(Armor.class, "avg_absorb_magic", magicalDRMin(0), magicalDRMax(0));
-			}
+			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, defense(0), STRReq(0));
 
 			if (STRReq(0) > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "probably_too_heavy");
@@ -842,25 +786,31 @@ public class Armor extends KindofMisc {
 
 	public static class Defense extends ShieldBuff {
 
-		//TODO make these read player's armour
-		private float magicEffectiveness() {
-			return 1f;
+		private float magicResist() {
+			return target.magicalResist();
 		}
 
-		private float physicalEffectiveness() {
-			return 1f;
+		private float physicalResist() {
+			return target.physicalResist();
 		}
 
-		private int maxShield;
-		private float regenPerTurn;
+		private int maxShield() {
+			return target.defense();
+		}
+
+		private float regenPerTurn() {
+			return target.defenseRegen();
+		}
 
 		private float partialRegen = 0f;
+
+		private static final String PARTIAL_REGEN = "partial_regen";
 
 		//Prevents shielding going above max.
 		@Override
 		public void incShield(int amt) {
 			super.incShield(amt);
-			int overflow = shielding() - maxShield;
+			int overflow = shielding() - maxShield();
 			if (overflow > 0) {
 				decShield(overflow);
 			}
@@ -868,15 +818,14 @@ public class Armor extends KindofMisc {
 
 		@Override
 		public boolean act() {
-
 			//Round regen to a whole number and add it
-			int roundedRegen = (int) regenPerTurn;
+			int roundedRegen = (int) regenPerTurn();
 			if (roundedRegen > 0) {
 				incShield(roundedRegen);
 			}
 
 			//If regen isn't a whole number, add the rest to a partial regen which builds up to +1 shield.
-			partialRegen += regenPerTurn - roundedRegen;
+			partialRegen += regenPerTurn() - roundedRegen;
 			if (partialRegen > 1f) {
 				//Decrease instead of set to 0 as it may overflow above 1.
 				partialRegen--;
@@ -890,10 +839,37 @@ public class Armor extends KindofMisc {
 
 		@Override
 		public boolean attachTo(@NotNull Char target) {
-			//TODO
-			maxShield = target.drRoll(Element.PHYSICAL);
-			regenPerTurn = target.drRoll(Element.PHYSICAL)/10f;
+			setShield(target.defense());
 			return super.attachTo(target);
+		}
+
+		@Override
+		public int absorbDamage(int dmg, @NotNull Char.DamageSrc src) {
+			//Armour degrades when the shield absorbs damage
+			if (target.hasBelongings() && target.belongings.getArmors().size() > 0) target.belongings.getArmors().get(0).use();
+
+			if (src.ignores()) {
+				return dmg;
+			}
+
+			if (src.getElement().isMagical() && shielding() > 0) {
+				dmg *= magicResist();
+			} else {
+				dmg *= physicalResist();
+			}
+			return super.absorbDamage(dmg, src);
+		}
+
+		@Override
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(PARTIAL_REGEN, partialRegen);
+		}
+
+		@Override
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			partialRegen = bundle.getFloat(PARTIAL_REGEN);
 		}
 
 		//Don't detach at zero - this buff regenerates.

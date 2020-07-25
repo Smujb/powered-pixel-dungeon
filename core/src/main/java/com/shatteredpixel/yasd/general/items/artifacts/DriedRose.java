@@ -685,17 +685,11 @@ public class DriedRose extends Artifact {
 			
 			return stealth;
 		}
-		
+
 		@Override
-		public int drRoll(Element element) {
-			int block = 0;
-			if (rose != null && rose.armor != null){
-				block += rose.armor.DRRoll();
-			}
-			if (rose != null && rose.weapon != null){
-				block += Random.NormalIntRange( 0, rose.weapon.defenseFactor( this ));
-			}
-			return block;
+		public int defense() {
+
+			return rose.armor.defense();
 		}
 		
 		private void setTarget(int cell) {

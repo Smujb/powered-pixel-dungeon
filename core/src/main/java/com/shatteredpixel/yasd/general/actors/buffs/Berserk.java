@@ -90,11 +90,11 @@ public class Berserk extends Buff {
 			if (target.HP <= 0) {
 				int dmg = 1 + (int)Math.ceil(target.shielding() * 0.1f);
 				if (buff != null && buff.shielding() > 0) {
-					buff.absorbDamage(dmg);
+					buff.absorbDamage(dmg, defaultSrc());
 				} else {
 					//if there is no shield buff, or it is empty, then try to remove from other shielding buffs
 					for (ShieldBuff s : target.buffs(ShieldBuff.class)){
-						dmg = s.absorbDamage(dmg);
+						dmg = s.absorbDamage(dmg, defaultSrc());
 						if (dmg == 0) break;
 					}
 				}
@@ -105,7 +105,7 @@ public class Berserk extends Buff {
 			} else {
 				state = State.RECOVERING;
 				levelRecovery = LEVEL_RECOVER_START;
-				if (buff != null) buff.absorbDamage(buff.shielding());
+				if (buff != null) buff.absorbDamage(buff.shielding(), defaultSrc());
 				power = 0f;
 			}
 		} else if (state == State.NORMAL) {

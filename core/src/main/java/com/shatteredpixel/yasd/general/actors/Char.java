@@ -83,6 +83,7 @@ import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.Surprise;
 import com.shatteredpixel.yasd.general.effects.Wound;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.potions.elixirs.ElixirOfMight;
 import com.shatteredpixel.yasd.general.items.rings.RingOfElements;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRetribution;
@@ -148,6 +149,10 @@ public abstract class Char extends Actor {
 		ENEMY,
 		NEUTRAL,
 		ALLY
+	}
+
+	public Char() {
+		live();
 	}
 
 	public Alignment alignment;
@@ -301,6 +306,10 @@ public abstract class Char extends Actor {
 
 	public boolean blockSound( float pitch ) {
 		return false;
+	}
+
+	public void live() {
+		Buff.affect( this, Armor.Defense.class );
 	}
 
 	protected static final String POS = "pos";
@@ -527,18 +536,15 @@ public abstract class Char extends Actor {
 		return Messages.get(this, "def_verb");
 	}
 
-	public int drRoll(Element element) {
-		int dr = 0;
-		if (element.isMagical()) {
-			if (hasBelongings()) {
-				dr += belongings.magicalDR();
-			}
-		} else {
-			if (hasBelongings()) {
-				dr += belongings.drRoll();
-			}
+	public int defense() {
+		if (hasBelongings()) {
+			return belongings.defense();
 		}
-		return affectDRRoll(element, dr);
+		return 0;
+	}
+
+	public float defenseRegen() {
+		return defense()/10f;
 	}
 
 	public int damageRoll() {
@@ -706,7 +712,19 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
+	public float physicalResist() {
+		if (hasBelongings()) {
+			return belongings.physicalResist();
+		}
+		return 1f;
+	}
 
+	public float magicalResist() {
+		if (hasBelongings()) {
+			return belongings.magicalResist();
+		}
+		return 1f;
+	}
 
 	@Contract(" -> new")
 	private DamageSrc defaultSrc() {
@@ -733,13 +751,11 @@ public abstract class Char extends Actor {
 			return;
 		}
 
-		if (!src.ignores()) {
-			dmg = Math.max(dmg - drRoll(src.getElement()), 0);
-		}
 		if (this.buff(Drowsy.class) != null && dmg > 0) {
 			Buff.detach(this, Drowsy.class);
 			GLog.w(Messages.get(this, "pain_resist"));
 		}
+
 		if (hasBelongings()) {
 			dmg = belongings.affectDamage(dmg, src);
 		}
@@ -798,8 +814,8 @@ public abstract class Char extends Actor {
 
 		int shielded = dmg;
 		if (!src.breaksShields()){
-			for (ShieldBuff s : buffs(ShieldBuff.class)){
-				dmg = s.absorbDamage(dmg);
+			for (ShieldBuff s : buffs(ShieldBuff.class)) {
+				dmg = s.absorbDamage(dmg, src);
 				if (dmg == 0) break;
 			}
 		}

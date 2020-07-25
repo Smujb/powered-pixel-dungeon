@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
@@ -61,10 +60,6 @@ public class OldTengu extends Mob {
 	
 	{
 		spriteClass = TenguSprite.class;
-		
-		HP = HT = 120;
-		EXP = 20;
-		defenseSkill = 20;
 
 		HUNTING = new  Hunting();
 
@@ -88,11 +83,6 @@ public class OldTengu extends Mob {
 	@Override
 	public int attackSkill( Char target ) {
 		return 20;
-	}
-	
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 5);
 	}
 
 	@Override

@@ -452,7 +452,9 @@ public class Hero extends Char {
 		return super.blockSound(pitch);
 	}
 
+	@Override
 	public void live() {
+		super.live();
 		Buff.affect( this, Regeneration.class );
 		Buff.affect( this, Hunger.class );
 	}
@@ -464,7 +466,7 @@ public class Hero extends Char {
 	@Override
 	public boolean shoot(Char enemy, MissileWeapon wep) {
 		boolean hit = super.shoot(enemy,wep);
-		if (subClass == HeroSubClass.GLADIATOR){
+		if (subClass == HeroSubClass.GLADIATOR) {
 			if (hit) {
 				Buff.affect( this, Combo.class ).hit( enemy );
 			} else {

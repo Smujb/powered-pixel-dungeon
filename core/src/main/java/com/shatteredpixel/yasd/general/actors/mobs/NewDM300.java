@@ -48,7 +48,7 @@ public class NewDM300 extends Mob {
 		healthFactor = 1.6f;
 		damageFactor = 2/3f;
 		drFactor = 2f;
-		elementaldrFactor = 2f;
+		elementalResist = 2f;
 		perceptionFactor = 3f;
 
 		EXP = 30;

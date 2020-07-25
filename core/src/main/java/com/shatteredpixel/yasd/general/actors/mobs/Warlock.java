@@ -46,7 +46,7 @@ public class Warlock extends Mob {
 		evasionFactor = 0.6f;
 		accuracyFactor = 1.2f;
 		damageFactor = 1.3f;
-		elementaldrFactor = 2f;
+		elementalResist = 2f;
 
 		numTypes = 4;
 

@@ -44,7 +44,6 @@ public abstract class DamageWand extends Wand{
 		if (curUser == null) {
 			curUser = Dungeon.hero;
 		}
-		damage -= enemy.drRoll(element);
 		damage = element.attackProc(damage, curUser, enemy);
 		damage = enemy.defenseProc(curUser, damage);
 		if (damage > 0) {

@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -94,7 +93,8 @@ public abstract class Mob extends Char {
 	public float damageFactor = 1f;
 	public float healthFactor = 1f;
 	public float drFactor = 1f;
-	public float elementaldrFactor = 0f;
+	public float elementalResist = 1f;
+	public float physicalResist = 1f;
 	public float attackDelay = 1f;
 	public float accuracyFactor = 1f;
 	public float evasionFactor = 1f;
@@ -124,6 +124,16 @@ public abstract class Mob extends Char {
 	protected Char enemy;
 	public boolean enemySeen;
 	protected boolean alerted = false;
+
+	@Override
+	public float magicalResist() {
+		return elementalResist;
+	}
+
+	@Override
+	public float physicalResist() {
+		return physicalResist;
+	}
 
 	protected static final float TIME_TO_WAKE_UP = 1f;
 	
@@ -226,15 +236,13 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalDamageRoll(int level) {
-		int max = 3 + level;
-		int min = level/2;
+		int max = 5 + level;
+		int min = 1 + level/2;
 		return Random.NormalIntRange(min, max);
 	}
 
-	private int normalDRRoll(int level) {
-		int max = 1 + level/4;
-		int min = level/8;
-		return Random.NormalIntRange(min, max);
+	private int normalDefense(int level) {
+		return 2 + level/4;
 	}
 
 	public static <T extends Mob> T create(Class<T> type, int level) {
@@ -279,17 +287,11 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public int drRoll(Element element) {
+	public int defense() {
 		if (hasBelongings()) {
-			return super.drRoll(element);
+			return super.defense();
 		} else {
-			int dr = 0;
-			if (element.isMagical()) {
-				dr = (int) (normalDRRoll(level) * drFactor);
-			} else {
-				dr = (int) (normalDRRoll(level) * elementaldrFactor);
-			}
-			return affectDRRoll(element, dr);
+			return (int) (normalDefense(level) * drFactor);
 		}
 	}
 

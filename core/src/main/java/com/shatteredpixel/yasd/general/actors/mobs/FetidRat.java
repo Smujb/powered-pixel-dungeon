@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
 import com.shatteredpixel.yasd.general.actors.blobs.StenchGas;
@@ -54,11 +53,6 @@ public class FetidRat extends Rat {
 	@Override
 	public int attackSkill( Char target ) {
 		return 12;
-	}
-
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 2);
 	}
 
 	@Override

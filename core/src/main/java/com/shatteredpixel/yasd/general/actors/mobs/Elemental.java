@@ -98,15 +98,6 @@ public abstract class Elemental extends Mob {
 	}
 
 	@Override
-	public int drRoll(Element element) {
-		if (element == Element.WATER) {
-			return -super.drRoll(element);
-		} else {
-			return super.drRoll(element);
-		}
-	}
-
-	@Override
 	public void add(Buff buff) {
 		if (harmfulBuffs.contains(buff.getClass())) {
 			damage(Random.NormalIntRange(HT / 2, HT * 3 / 5), buff);

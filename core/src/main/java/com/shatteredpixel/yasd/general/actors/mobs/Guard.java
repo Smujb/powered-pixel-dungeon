@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Cripple;
@@ -57,7 +56,7 @@ public class Guard extends Mob {
 		healthFactor = 2f;
 		damageFactor = 2/3f;
 
-		elementaldrFactor = 1.5f;
+		elementalResist = 1.5f;
 
 		EXP = 7;
 
@@ -122,11 +121,6 @@ public class Guard extends Mob {
 	@Override
 	public int attackSkill( Char target ) {
 		return 18;
-	}
-
-	@Override
-	public int drRoll(Element element) {
-		return Random.NormalIntRange(0, 10);
 	}
 
 	@Override

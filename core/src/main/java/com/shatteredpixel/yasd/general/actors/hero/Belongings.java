@@ -45,7 +45,6 @@ import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.KindofMisc;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.curses.Bulk;
-import com.shatteredpixel.yasd.general.items.armor.glyphs.AntiMagic;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Brimstone;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Flow;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Obfuscation;
@@ -234,49 +233,46 @@ public class Belongings implements Iterable<Item> {
 		return accuracy;
 	}
 
-	public int magicalDR() {
-		int dr = 0;
-		ArrayList<Armor> Armors = getArmors();
-		int degradeAmount = new Item().defaultDegradeAmount();
-		for (int i = 0; i < Armors.size(); i++) {
-			Armors.get(i).use(degradeAmount / Armors.size());
-			int armDr = Armors.get(i).magicalDRRoll();
-			if (owner.STR() < Armors.get(i).STRReq()) {
-				armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
-			}
-			if (armDr > 0) dr += armDr;
-			if (Armors.get(i) != null && Armors.get(i).hasGlyph(AntiMagic.class, owner)) {
-				dr += AntiMagic.drRoll(Armors.get(i).level());
-			}
+	public float physicalResist() {
+		float resist = 1f;
+		for (Armor armor : getArmors()) {
+			resist *= armor.physicalResist;
 		}
-		return dr;
+		return resist;
 	}
 
-	public int drRoll() {
-		int dr = 0;
+	public float magicalResist() {
+		float resist = 1f;
+		for (Armor armor : getArmors()) {
+			resist *= armor.magicalResist;
+		}
+		return resist;
+	}
+
+	public int defense() {
+		int defense = 0;
 		ArrayList<Armor> Armors = getArmors();
 		if (Armors.size() > 0) {
-			Armors.get(0).use();
 			for (int i = 0; i < Armors.size(); i++) {
-				int armDr = Armors.get(i).DRRoll();
+				int armDefense = Armors.get(i).defense();
 				if (owner.STR() < Armors.get(i).STRReq()) {
-					armDr -= 2 * (Armors.get(i).STRReq() - owner.STR());
+					armDefense -= 2 * (Armors.get(i).STRReq() - owner.STR());
 				}
-				if (armDr > 0) dr += armDr;
+				if (armDefense > 0) defense += armDefense;
 			}
 		}
 
 		ArrayList<KindOfWeapon> Weapons = getWeapons();
 		if (Weapons.size() > 0) {
 			for (int i = 0; i < Weapons.size(); i++) {
-				int wepDr = Random.NormalIntRange(0, Weapons.get(i).defenseFactor(owner));
+				int wepDefense = Weapons.get(i).defenseFactor(owner);
 				if (Weapons.get(i) instanceof MeleeWeapon & owner.STR() < ((MeleeWeapon) Weapons.get(i)).STRReq()) {
-					wepDr -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - owner.STR();
+					wepDefense -= 2 * (((MeleeWeapon) Weapons.get(i)).STRReq()) - owner.STR();
 				}
-				if (wepDr > 0) dr += wepDr;
+				if (wepDefense > 0) defense += wepDefense;
 			}
 		}
-		return dr;
+		return defense;
 	}
 
 	public int damageRoll() {

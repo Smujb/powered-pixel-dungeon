@@ -266,7 +266,7 @@ public class Yog extends Mob {
 			healthFactor = 1/3f;
 			damageFactor = 1.5f;
 			drFactor = 0.75f;
-			elementaldrFactor = 1.5f;
+			elementalResist = 1.5f;
 			
 			EXP = 0;
 			

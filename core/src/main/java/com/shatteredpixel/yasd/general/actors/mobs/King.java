@@ -305,11 +305,6 @@ public class King extends Mob {
 				Sample.INSTANCE.play( Assets.Sounds.BONES );
 			}
 		}
-		
-		@Override
-		public int drRoll(Element element) {
-			return Random.NormalIntRange(0, 5);
-		}
 
 		{
 			immunities.add( Grim.class );

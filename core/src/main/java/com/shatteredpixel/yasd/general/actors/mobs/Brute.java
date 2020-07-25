@@ -128,7 +128,7 @@ public class Brute extends Mob {
 				return true;
 			}
 
-			absorbDamage( 4 );
+			absorbDamage( 4, new DamageSrc(Element.META));
 
 			if (shielding() <= 0){
 				target.die(new DamageSrc(Element.META));
@@ -197,7 +197,7 @@ public class Brute extends Mob {
 					return true;
 				}
 
-				absorbDamage( 1 );
+				absorbDamage( 1, new DamageSrc(Element.META));
 
 				if (shielding() <= 0){
 					target.die(new DamageSrc(Element.META));

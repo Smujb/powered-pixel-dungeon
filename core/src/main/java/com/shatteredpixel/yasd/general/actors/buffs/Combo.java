@@ -247,7 +247,7 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					dmg = Math.round(dmg*1.5f);
 					break;
 				case SLAM:
-					dmg += target.drRoll(Element.PHYSICAL);
+					dmg += target.defense();
 					break;
 				case CRUSH:
 					//rolls 4 times, takes the highest roll

@@ -36,8 +36,6 @@ public class HuntressArmor extends ClothArmor {
 		image = ItemSpriteSheet.ARMOR_HUNTRESS;
 		EVA = 1.25f;
 		speedFactor = 1.4f;
-		DRfactor = 0.75f;
-		magicalDRFactor = 0.5f;
 	}
 
 	@Override
