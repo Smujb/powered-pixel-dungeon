@@ -68,6 +68,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Ooze;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Poison;
 import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
+import com.shatteredpixel.yasd.general.actors.buffs.Regeneration;
 import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.general.actors.buffs.Slow;
 import com.shatteredpixel.yasd.general.actors.buffs.Speed;
@@ -309,7 +310,12 @@ public abstract class Char extends Actor {
 	}
 
 	public void live() {
-		Buff.affect( this, Armor.Defense.class );
+		if (buff(Armor.Defense.class) == null) {
+			Buff.affect(this, Armor.Defense.class);
+		}
+		if (buff(Regeneration.class) == null) {
+			Buff.affect(this, Regeneration.class);
+		}
 	}
 
 	protected static final String POS = "pos";

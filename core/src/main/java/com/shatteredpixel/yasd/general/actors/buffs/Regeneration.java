@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.buffs;
 
-import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.artifacts.ChaliceOfBlood;
 
@@ -47,17 +47,16 @@ public class Regeneration extends Buff {
 
 			if (target.HP < regencap() && !(target instanceof Hero && ((Hero)target).isStarving())) {
 				LockedFloor lock = target.buff(LockedFloor.class);
-				if (target.HP > 0 && (lock == null || lock.regenOn())) {
+				if (target.HP > 0 && !target.properties().contains(Char.Property.UNDEAD) && (lock == null || lock.regenOn())) {
 					target.heal(1);
-					if (target.HP == regencap()) {
+					if (target.HP == regencap() && target instanceof Hero) {
 						((Hero) target).resting = false;
 					}
 				}
 			}
 
-			ChaliceOfBlood.chaliceRegen regenBuff = Dungeon.hero.buff( ChaliceOfBlood.chaliceRegen.class);
-
-			if (regenBuff != null)
+			ChaliceOfBlood.chaliceRegen regenBuff;
+			if (target instanceof Hero && (regenBuff = ((Hero)target).buff( ChaliceOfBlood.chaliceRegen.class)) != null)
 				if (regenBuff.isCursed())
 					spend( REGENERATION_DELAY * 1.5f );
 				else

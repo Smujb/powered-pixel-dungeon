@@ -58,7 +58,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.MindVision;
 import com.shatteredpixel.yasd.general.actors.buffs.Momentum;
 import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
-import com.shatteredpixel.yasd.general.actors.buffs.Regeneration;
 import com.shatteredpixel.yasd.general.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -455,8 +454,9 @@ public class Hero extends Char {
 	@Override
 	public void live() {
 		super.live();
-		Buff.affect( this, Regeneration.class );
-		Buff.affect( this, Hunger.class );
+		if (buff(Hunger.class) == null) {
+			Buff.affect(this, Hunger.class);
+		}
 	}
 	
 	public int tier() {

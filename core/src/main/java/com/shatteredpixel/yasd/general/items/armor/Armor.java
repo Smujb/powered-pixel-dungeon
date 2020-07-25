@@ -820,12 +820,14 @@ public class Armor extends KindofMisc {
 		public boolean act() {
 			//Round regen to a whole number and add it
 			int roundedRegen = (int) regenPerTurn();
+			GLog.p(" " + roundedRegen);
 			if (roundedRegen > 0) {
 				incShield(roundedRegen);
 			}
 
 			//If regen isn't a whole number, add the rest to a partial regen which builds up to +1 shield.
 			partialRegen += regenPerTurn() - roundedRegen;
+			GLog.p(" " + target.buffs(getClass()).size());
 			if (partialRegen > 1f) {
 				//Decrease instead of set to 0 as it may overflow above 1.
 				partialRegen--;
