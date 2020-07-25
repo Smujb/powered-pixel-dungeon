@@ -145,9 +145,9 @@ import java.util.LinkedHashMap;
 public class Generator {
 
 	public enum Category {
-		WEAPON(6, MeleeWeapon.class),
+		WEAPON(4, MeleeWeapon.class),
 
-		ARMOR(6, Armor.class),
+		ARMOR(4, Armor.class),
 
 		MISSILE ( 4,    MissileWeapon.class ),
 		MIS_T1(0, MissileWeapon.class),
@@ -156,7 +156,7 @@ public class Generator {
 		MIS_T4(0, MissileWeapon.class),
 		MIS_T5(0, MissileWeapon.class),
 
-		WAND(4, Wand.class),
+		WAND(3, Wand.class),
 		RING(2, Ring.class),
 		ARTIFACT(3, Artifact.class),
 
