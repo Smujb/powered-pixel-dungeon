@@ -232,7 +232,7 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalStealth(int level) {
-		return 4 + level;
+		return 3 + level;
 	}
 
 	private int normalDamageRoll(int level) {

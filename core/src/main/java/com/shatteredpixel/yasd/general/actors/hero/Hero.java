@@ -401,13 +401,13 @@ public class Hero extends Char {
 
 	@Override
 	public float sneakSkill(Char enemy) {
-		sneakSkill = 9 + getEvasion()*3;
+		sneakSkill = 1 + getEvasion()*3;
 		return super.sneakSkill(enemy);
 	}
 
 	@Override
 	public float noticeSkill(Char enemy) {
-		noticeSkill = 4 + getPerception()*3;
+		noticeSkill = 7 + getPerception()*3;
 		return super.noticeSkill(enemy);
 	}
 
@@ -479,14 +479,14 @@ public class Hero extends Char {
 
 	@Override
 	public int attackSkill( Char target ) {
-		attackSkill = 9 + getPerception()*3;
+		attackSkill = 7 + getPerception()*3;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		return (int) (super.attackSkill(target)*(1+moraleMultiplier));
 	}
 
 	@Override
 	public int defenseSkill( Char enemy ) {
-		defenseSkill = 3 + getEvasion()*3;
+		defenseSkill = 1 + getEvasion()*3;
 		float moraleMultiplier = (float) ((morale - MAX_MORALE) * 0.04);
 		//GLog.w(String.valueOf(evasion));
 		return (int) (super.defenseSkill(enemy)*(1+moraleMultiplier));
