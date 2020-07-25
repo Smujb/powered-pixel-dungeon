@@ -794,8 +794,9 @@ public class Armor extends KindofMisc {
 			return target.physicalResist();
 		}
 
-		private int maxShield() {
-			return target.defense();
+		@Override
+		protected int shieldCap() {
+			return target == null ? -1 : target.defense();
 		}
 
 		private float regenPerTurn() {
@@ -806,28 +807,16 @@ public class Armor extends KindofMisc {
 
 		private static final String PARTIAL_REGEN = "partial_regen";
 
-		//Prevents shielding going above max.
-		@Override
-		public void incShield(int amt) {
-			super.incShield(amt);
-			int overflow = shielding() - maxShield();
-			if (overflow > 0) {
-				decShield(overflow);
-			}
-		}
-
 		@Override
 		public boolean act() {
 			//Round regen to a whole number and add it
 			int roundedRegen = (int) regenPerTurn();
-			GLog.p(" " + roundedRegen);
 			if (roundedRegen > 0) {
 				incShield(roundedRegen);
 			}
 
 			//If regen isn't a whole number, add the rest to a partial regen which builds up to +1 shield.
 			partialRegen += regenPerTurn() - roundedRegen;
-			GLog.p(" " + target.buffs(getClass()).size());
 			if (partialRegen > 1f) {
 				//Decrease instead of set to 0 as it may overflow above 1.
 				partialRegen--;
@@ -837,12 +826,6 @@ public class Armor extends KindofMisc {
 			spend( TICK );
 
 			return true;
-		}
-
-		@Override
-		public boolean attachTo(@NotNull Char target) {
-			setShield(target.defense());
-			return super.attachTo(target);
 		}
 
 		@Override

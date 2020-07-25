@@ -35,6 +35,10 @@ import org.jetbrains.annotations.NotNull;
 public abstract class ShieldBuff extends Buff {
 	
 	private int shielding;
+
+	protected int shieldCap() {
+		return -1;
+	}
 	
 	@Override
 	public boolean attachTo(@NotNull Char target) {
@@ -51,6 +55,15 @@ public abstract class ShieldBuff extends Buff {
 		target.needsShieldUpdate = true;
 		super.detach();
 	}
+
+	private void fixShieldOverflow() {
+		if (shieldCap() > 0 && shielding > shieldCap()) {
+			shielding = shieldCap();
+		} else if (shielding < 0) {
+			shielding = 0;
+			onZeroShield();
+		}
+	}
 	
 	public int shielding(){
 		return shielding;
@@ -58,6 +71,7 @@ public abstract class ShieldBuff extends Buff {
 	
 	public void setShield( int shield ) {
 		this.shielding = shield;
+		fixShieldOverflow();
 		if (target != null) target.needsShieldUpdate = true;
 	}
 	
@@ -67,6 +81,7 @@ public abstract class ShieldBuff extends Buff {
 	
 	public void incShield( int amt ){
 		shielding += amt;
+		fixShieldOverflow();
 		if (target != null) target.needsShieldUpdate = true;
 	}
 	
@@ -76,6 +91,7 @@ public abstract class ShieldBuff extends Buff {
 	
 	public void decShield( int amt ){
 		shielding -= amt;
+		fixShieldOverflow();
 		if (target != null) target.needsShieldUpdate = true;
 	}
 	
