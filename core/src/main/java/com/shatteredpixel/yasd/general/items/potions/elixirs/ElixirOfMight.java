@@ -51,8 +51,6 @@ public class ElixirOfMight extends Elixir {
 	public void apply( Hero hero ) {
 		setKnown();
 		
-		hero.STR++;
-		
 		Buff.affect(hero, HTBoost.class).reset();
 		HTBoost boost = Buff.affect(hero, HTBoost.class);
 		boost.reset();
