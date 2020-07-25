@@ -30,10 +30,12 @@ package com.shatteredpixel.yasd.general.items.armor;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
+import com.shatteredpixel.yasd.general.actors.buffs.ShieldBuff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -73,6 +75,7 @@ import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -832,7 +835,69 @@ public class Armor extends KindofMisc {
 		updateTier();
 		return this;
 	}
+
 	public void updateTier() {
 
+	}
+
+	public static class Defense extends ShieldBuff {
+
+		//TODO make these read player's armour
+		private float magicEffectiveness() {
+			return 1f;
+		}
+
+		private float physicalEffectiveness() {
+			return 1f;
+		}
+
+		private int maxShield;
+		private float regenPerTurn;
+
+		private float partialRegen = 0f;
+
+		//Prevents shielding going above max.
+		@Override
+		public void incShield(int amt) {
+			super.incShield(amt);
+			int overflow = shielding() - maxShield;
+			if (overflow > 0) {
+				decShield(overflow);
+			}
+		}
+
+		@Override
+		public boolean act() {
+
+			//Round regen to a whole number and add it
+			int roundedRegen = (int) regenPerTurn;
+			if (roundedRegen > 0) {
+				incShield(roundedRegen);
+			}
+
+			//If regen isn't a whole number, add the rest to a partial regen which builds up to +1 shield.
+			partialRegen += regenPerTurn - roundedRegen;
+			if (partialRegen > 1f) {
+				//Decrease instead of set to 0 as it may overflow above 1.
+				partialRegen--;
+				incShield();
+			}
+
+			spend( TICK );
+
+			return true;
+		}
+
+		@Override
+		public boolean attachTo(@NotNull Char target) {
+			//TODO
+			maxShield = target.drRoll(Element.PHYSICAL);
+			regenPerTurn = target.drRoll(Element.PHYSICAL)/10f;
+			return super.attachTo(target);
+		}
+
+		//Don't detach at zero - this buff regenerates.
+		@Override
+		protected void onZeroShield() {}
 	}
 }

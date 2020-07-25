@@ -61,7 +61,7 @@ public abstract class ShieldBuff extends Buff {
 		if (target != null) target.needsShieldUpdate = true;
 	}
 	
-	public void incShield(){
+	public final void incShield(){
 		incShield(1);
 	}
 	
@@ -70,7 +70,7 @@ public abstract class ShieldBuff extends Buff {
 		if (target != null) target.needsShieldUpdate = true;
 	}
 	
-	public void decShield(){
+	public final void decShield(){
 		decShield(1);
 	}
 	
@@ -89,10 +89,14 @@ public abstract class ShieldBuff extends Buff {
 			shielding = 0;
 		}
 		if (shielding == 0){
-			detach();
+			onZeroShield();
 		}
 		if (target != null) target.needsShieldUpdate = true;
 		return dmg;
+	}
+
+	protected void onZeroShield() {
+		detach();
 	}
 	
 	private static final String SHIELDING = "shielding";
