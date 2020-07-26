@@ -264,6 +264,7 @@ public abstract class Mob extends Char {
 		} else {
 			mob.type = 0;
 		}
+		mob.live();
 		return mob;
 	}
 

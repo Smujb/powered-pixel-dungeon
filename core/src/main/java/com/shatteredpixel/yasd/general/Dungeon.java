@@ -247,6 +247,7 @@ public class Dungeon {
 
 		Generator.reset();
 		hero = new Hero();
+		hero.live();
 		
 		Badges.reset();
 		

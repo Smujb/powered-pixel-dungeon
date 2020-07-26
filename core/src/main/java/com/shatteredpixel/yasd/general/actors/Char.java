@@ -153,7 +153,6 @@ public abstract class Char extends Actor {
 	}
 
 	public Char() {
-		live();
 	}
 
 	public Alignment alignment;
@@ -311,7 +310,7 @@ public abstract class Char extends Actor {
 
 	public void live() {
 		if (buff(Armor.Defense.class) == null) {
-			Buff.affect(this, Armor.Defense.class);
+			Buff.affect(this, Armor.Defense.class).setToMax();
 		}
 		if (buff(Regeneration.class) == null) {
 			Buff.affect(this, Regeneration.class);

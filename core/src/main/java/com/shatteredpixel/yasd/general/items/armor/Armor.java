@@ -803,6 +803,10 @@ public class Armor extends KindofMisc {
 			return target.defenseRegen();
 		}
 
+		public void setToMax() {
+			setShield(shieldCap());
+		}
+
 		private float partialRegen = 0f;
 
 		private static final String PARTIAL_REGEN = "partial_regen";
