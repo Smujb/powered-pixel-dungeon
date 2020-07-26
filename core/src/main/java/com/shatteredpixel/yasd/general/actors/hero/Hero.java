@@ -68,6 +68,7 @@ import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Heap.Type;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.armor.glyphs.Viscosity;
 import com.shatteredpixel.yasd.general.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.general.items.artifacts.DriedRose;
@@ -992,11 +993,12 @@ public class Hero extends Char {
 
 	private void damageMorale(int dmg) {
 		float shake;
+		dmg -= Armor.Defense.curShield(this);
 		if (dmg <= 0) {
 			return;
 		}
 		int effectiveHP = Math.max(HT/2, HP);
-		shake = ((float) dmg / (float) effectiveHP) * 4f;
+		shake = ((float) dmg / (float) effectiveHP) * 2f;
 
 		if (shake > 0) {
 			Camera.main.shake(GameMath.gate(0.5f, shake*2, 10), 0.2f);

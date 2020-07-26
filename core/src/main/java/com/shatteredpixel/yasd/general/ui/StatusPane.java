@@ -61,7 +61,6 @@ public class StatusPane extends Component {
 	private int lastTier = 0;
 
 	private Image rawShielding;
-	private Image shieldedHP;
 	private Image hp;
 	private Image air;
 	private Image morale;
@@ -123,15 +122,11 @@ public class StatusPane extends Component {
 		compass = new Compass( Statistics.amuletObtained ? Dungeon.level.getEntrancePos() : Dungeon.level.getExitPos() );
 		add( compass );
 
-		rawShielding = new Image( Assets.Interfaces.SHLD_BAR );
-		rawShielding.alpha(0.5f);
-		add(rawShielding);
-
-		shieldedHP = new Image( Assets.Interfaces.SHLD_BAR );
-		add(shieldedHP);
-
 		hp = new Image( Assets.Interfaces.HP_BAR );
 		add( hp );
+
+		rawShielding = new Image( Assets.Interfaces.SHLD_BAR );
+		add(rawShielding);
 
 		air = new Image( Assets.Interfaces.MORALE_BAR, 0, 0, 21, 3 );
 		add( air );
@@ -192,8 +187,8 @@ public class StatusPane extends Component {
 		compass.y = avatar.y + avatar.height / 2f - compass.origin.y;
 		PixelScene.align(compass);
 
-		hp.x = shieldedHP.x = rawShielding.x = morale.x = 30;
-		hp.y = shieldedHP.y = rawShielding.y = 4;
+		hp.x = rawShielding.x = morale.x = 30;
+		hp.y = rawShielding.y = 4;
 
 		morale.y = 11;
 
@@ -248,8 +243,7 @@ public class StatusPane extends Component {
 			avatar.resetColor();
 		}
 
-		hp.scale.x = Math.max( 0, (health-shield)/max);
-		shieldedHP.scale.x = health/max;
+		hp.scale.x = Math.max( 0, health/max);
 		rawShielding.scale.x = shield/max;
 		morale.scale.x = moraleAmt/maxMorale;
 

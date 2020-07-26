@@ -807,6 +807,15 @@ public class Armor extends KindofMisc {
 			setShield(shieldCap());
 		}
 
+		public static int curShield(Char ch) {
+			Defense defense = ch.buff(Defense.class);
+			if (defense != null) {
+				return defense.shielding();
+			} else {
+				return 0;
+			}
+		}
+
 		private float partialRegen = 0f;
 
 		private static final String PARTIAL_REGEN = "partial_regen";
