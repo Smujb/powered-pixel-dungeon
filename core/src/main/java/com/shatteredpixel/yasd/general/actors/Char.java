@@ -549,7 +549,7 @@ public abstract class Char extends Actor {
 	}
 
 	public float defenseRegen() {
-		return defense()/10f;
+		return defense()/20f;
 	}
 
 	public int damageRoll() {

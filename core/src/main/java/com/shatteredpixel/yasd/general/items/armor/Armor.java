@@ -836,7 +836,7 @@ public class Armor extends KindofMisc {
 				incShield();
 			}
 
-			spend( TICK );
+			spend(TICK);
 
 			return true;
 		}
