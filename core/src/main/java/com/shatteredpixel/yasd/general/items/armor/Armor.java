@@ -482,9 +482,21 @@ public class Armor extends KindofMisc {
 			case NONE:
 		}
 
-		if (EVA != 1f || STE != 1f || speedFactor != 1f) {
+		if (EVA != 1f || STE != 1f || speedFactor != 1f || magicalResist != 1f || physicalResist != 1f) {
 
 			info += "\n";
+
+			if (magicalResist > 1f) {
+				info += "\n" + Messages.get(Armor.class, "magical_weak", Math.round((magicalResist-1f)*100));
+			} else if (magicalResist < 1f) {
+				info += "\n" + Messages.get(Armor.class, "magical_resist", Math.round((1f-magicalResist)*100));
+			}
+
+			if (physicalResist > 1f) {
+				info += "\n" + Messages.get(Armor.class, "physical_weak", Math.round((physicalResist-1f)*100));
+			} else if (physicalResist < 1f) {
+				info += "\n" + Messages.get(Armor.class, "physical_resist", Math.round((1f-physicalResist)*100));
+			}
 
 			if (EVA > 1f) {
 				info += "\n" + Messages.get(Armor.class, "eva_increase", Math.round((EVA-1f)*100));
