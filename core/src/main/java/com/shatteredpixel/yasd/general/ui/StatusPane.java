@@ -180,7 +180,7 @@ public class StatusPane extends Component {
 		bg.size( width, bg.height );
 
 		avatar.x = bg.x + 15 - avatar.width / 2f;
-		avatar.y = bg.y + 16 - avatar.height / 2f;
+		avatar.y = bg.y + 17 - avatar.height / 2f;
 		PixelScene.align(avatar);
 
 		compass.x = avatar.x + avatar.width / 2f - compass.origin.x;
@@ -188,28 +188,26 @@ public class StatusPane extends Component {
 		PixelScene.align(compass);
 
 		hp.x = rawShielding.x = morale.x = 30;
-		hp.y = rawShielding.y = 4;
+		hp.y = rawShielding.y = 5;
 
-		morale.y = 11;
+		morale.y = 12;
 
 		air.x = 1;
-		air.y = 30;
+		air.y = 31;
 
-		bossHP.setPos( 6 + (width - bossHP.width())/2, 20);
-
-		//airBar.setPos( 6 + (width - bossHP.width())/2, 20);
+		bossHP.setPos( 6 + (width - bossHP.width())/2, 21);
 
 		depth.x = width - 35.5f - depth.width() / 2f;
-		depth.y = 8f - depth.baseLine() / 2f;
+		depth.y = 9f - depth.baseLine() / 2f;
 		PixelScene.align(depth);
 
-		danger.setPos( width - danger.width(), 20 );
+		danger.setPos( width - danger.width(), 21 );
 
-		buffs.setPos( 35, 17 );
+		buffs.setPos( 35, 18 );
 
-		btnJournal.setPos( width - 42, 1 );
+		btnJournal.setPos( width - 42, 2 );
 
-		btnMenu.setPos( width - btnMenu.width(), 1 );
+		btnMenu.setPos( width - btnMenu.width(), 2 );
 		
 		version.scale.set(PixelScene.align(0.5f));
 		version.measure();
