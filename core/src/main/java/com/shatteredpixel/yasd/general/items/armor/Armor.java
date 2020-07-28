@@ -75,6 +75,7 @@ import com.watabou.utils.Reflection;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -86,6 +87,7 @@ public class Armor extends KindofMisc {
 	public float speedFactor = 1f;
 	public float magicalResist = 1f;
 	public float physicalResist = 1f;
+	public float regenFactor = 1f;
 
 	protected static final String AC_DETACH       = "DETACH";
 	
@@ -149,6 +151,7 @@ public class Armor extends KindofMisc {
 	private static final String NAME = "name";
 	private static final String DESC = "desc";
 	private static final String APPEARANCE = "appearance";
+	private static final String REGEN_FACTOR = "regen-factor";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -169,6 +172,7 @@ public class Armor extends KindofMisc {
 		bundle.put(IMG, image);
 		bundle.put(DESC, desc);
 		bundle.put(APPEARANCE, appearance);
+		bundle.put(REGEN_FACTOR, regenFactor);
 	}
 
 	@Override
@@ -201,6 +205,7 @@ public class Armor extends KindofMisc {
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
 			appearance = bundle.getInt(APPEARANCE);
+			regenFactor = bundle.getFloat(REGEN_FACTOR);
 		} else {
 			desc = super.desc();
 			name = Messages.get(this, "name");
@@ -218,6 +223,7 @@ public class Armor extends KindofMisc {
 		speedFactor = 1f;
 		magicalResist = 1f;
 		physicalResist = 1f;
+		regenFactor = 1f;
 	}
 
 	@Override
@@ -236,6 +242,9 @@ public class Armor extends KindofMisc {
 		if (Random.Int(3) == 0) {
 			speedFactor = randomStat();
 		}
+		if (Random.Int(3) == 0) {
+			regenFactor = randomStat();
+		}
 		physicalResist = (Random.Float() + 1f)/2f;
 		magicalResist = 2f - physicalResist;
 		return matchProfile();
@@ -246,6 +255,7 @@ public class Armor extends KindofMisc {
 		DRfactor *= 1/EVA;
 		DRfactor *= 1/STE;
 		DRfactor *= 1/speedFactor;
+		DRfactor *= 1/regenFactor;
 		return DRfactor;
 	}
 
@@ -336,6 +346,10 @@ public class Armor extends KindofMisc {
 
 	public int defense(int lvl) {
 		return Math.round(((tier * 4) + (tier * lvl * 2)) * getDefenseFactor());
+	}
+
+	public float defenseRegen() {
+		return 0.2f*tier*regenFactor;
 	}
 
 	@Override
@@ -459,13 +473,13 @@ public class Armor extends KindofMisc {
 		String info = desc();
 		
 		if (levelKnown) {
-			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, defense(), STRReq());
+			info += "\n\n" + Messages.get(Armor.class, "curr_absorb", tier, defense(), new DecimalFormat("#.##").format(defenseRegen()), STRReq());
 			
 			if (STRReq() > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "too_heavy");
 			}
 		} else {
-			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, defense(0), STRReq(0));
+			info += "\n\n" + Messages.get(Armor.class, "avg_absorb", tier, defense(0), new DecimalFormat("#.##").format(defenseRegen()), STRReq(0));
 
 			if (STRReq(0) > Dungeon.hero.STR()) {
 				info += " " + Messages.get(Armor.class, "probably_too_heavy");

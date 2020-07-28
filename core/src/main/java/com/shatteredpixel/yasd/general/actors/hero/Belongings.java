@@ -249,6 +249,18 @@ public class Belongings implements Iterable<Item> {
 		return resist;
 	}
 
+	public float defenseRegen() {
+		float regen = 0;
+		ArrayList<Armor> armors = getArmors();
+		if (armors.size() > 0) {
+			for (int i = 0; i < armors.size(); i++) {
+				float armRegen = armors.get(i).defenseRegen();
+				if (armRegen > 0) regen += armRegen;
+			}
+		}
+		return regen;
+	}
+
 	public int defense() {
 		int defense = 0;
 		ArrayList<Armor> Armors = getArmors();

@@ -549,7 +549,11 @@ public abstract class Char extends Actor {
 	}
 
 	public float defenseRegen() {
-		return defense()/20f;
+		if (hasBelongings()) {
+			return belongings.defenseRegen();
+		} else {
+			return defense()/20f;
+		}
 	}
 
 	public int damageRoll() {
