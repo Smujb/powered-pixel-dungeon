@@ -225,6 +225,8 @@ public class SpiritBow extends Weapon {
 	public class SpiritArrow extends MissileWeapon {
 		
 		{
+			image = ItemSpriteSheet.SPIRIT_ARROW;
+
 			hitSound = Assets.Sounds.HIT_ARROW;
 		}
 		
