@@ -32,7 +32,7 @@ import com.watabou.noosa.TextureFilm;
 
 public class ItemSpriteSheet {
 
-	private static final int WIDTH = 16;
+	private static final int WIDTH = 32;
 	public static final int SIZE = 16;
 
 	public static TextureFilm film = new TextureFilm( Assets.Sprites.ITEMS, SIZE, SIZE );
@@ -204,6 +204,30 @@ public class ItemSpriteSheet {
 		assignItemRect(CRYSTAL_KEY, 8, 14);
 		assignItemRect(SKELETON_KEY, 8, 14);
 		assignItemRect(BRONZE_KEY, 8, 14);
+	}
+
+
+	public static int adjustForTier(int image, int tier) {
+		return image + (tier-1) * WIDTH;
+	}
+
+	public static class Weapons {
+
+		private static final int WEAPON      =                               xy(1, 32);   //8 slots
+		public static final int MAGES_STAFF 	 = WEAPON+0;
+		public static final int SWORD       	 = WEAPON+1;
+		public static final int SPEAR       	 = WEAPON+2;
+		public static final int GLOVE       	 = WEAPON+3;
+		public static final int AXE         	 = WEAPON+4;
+		public static final int CURVED      	 = WEAPON+5;
+		public static final int WEAK        	 = WEAPON+6;
+		public static final int STRONG      	 = WEAPON+7;
+		public static final int DEFENSE     	 = WEAPON+8;
+		public static final int REACH     	 	 = WEAPON+9;
+		public static final int DUAL_HAND  	  	 = WEAPON+10;
+		public static final int BLUNT       	 = WEAPON+11;
+		public static final int NO_SURPRISE 	 = WEAPON+12;
+		public static final int SURPRISE_BENEFIT = WEAPON+13;
 	}
 
 	private static final int WEP_TIER1      =                               xy(1, 7);   //8 slots

@@ -39,89 +39,89 @@ import org.jetbrains.annotations.NotNull;
 public enum WeaponProfile implements Profile {
 	NONE {
 		{
-			image = ItemSpriteSheet.SWORD;
+			image = ItemSpriteSheet.Weapons.SWORD;
 			sndFX = Assets.Sounds.HIT;
 		}
 	},
 	SLOW {
 		{
-			image = ItemSpriteSheet.GLAIVE;
+			image = ItemSpriteSheet.Weapons.SPEAR;
 			sndFX = Assets.Sounds.HIT_SLASH;
 			sndPitch = 0.8f;
 		}
 	},
 	FAST {
 		{
-			image = ItemSpriteSheet.GAUNTLETS;
+			image = ItemSpriteSheet.Weapons.GLOVE;
 			sndFX = Assets.Sounds.HIT_CRUSH;
 			sndPitch = 1.2f;
 		}
 	},
 	ACCURATE {
 		{
-			image = ItemSpriteSheet.HAND_AXE;
+			image = ItemSpriteSheet.Weapons.AXE;
 			sndFX = Assets.Sounds.HIT_SLASH;
 			sndPitch = 0.9f;
 		}
 	},
 	INACCURATE {
 		{
-			image = ItemSpriteSheet.FLAIL;
+			image = ItemSpriteSheet.Weapons.CURVED;
 			sndFX = Assets.Sounds.HIT_CRUSH;
 			sndPitch = 0.8f;
 		}
 	},
 	WEAK {
 		{
-			image = ItemSpriteSheet.WORN_SHORTSWORD;
+			image = ItemSpriteSheet.Weapons.WEAK;
 			sndFX = Assets.Sounds.HIT_CRUSH;
 			sndPitch = 1.5f;
 		}
 	},
 	STRONG {
 		{
-			image = ItemSpriteSheet.GREATSWORD;
+			image = ItemSpriteSheet.Weapons.STRONG;
 			sndFX = Assets.Sounds.HIT_STRONG;
 			sndPitch = 0.8f;
 		}
 	},
 	BLOCKING {
 		{
-			image = ItemSpriteSheet.GREATSHIELD;
+			image = ItemSpriteSheet.Weapons.DEFENSE;
 			sndFX = Assets.Sounds.HIT_PARRY;
 			sndPitch = 0.8f;
 		}
 	},
 	REACH {
 		{
-			image = ItemSpriteSheet.WHIP;
+			image = ItemSpriteSheet.Weapons.REACH;
 			sndFX = Assets.Sounds.HIT_SLASH;
 			sndPitch = 1.3f;
 		}
 	},
 	DUAL_HANDED {
 		{
-			image = ItemSpriteSheet.GREATAXE;
+			image = ItemSpriteSheet.Weapons.DUAL_HAND;
 			sndFX = Assets.Sounds.HIT;
 		}
 	},
 	BLUNT {
 		{
-			image = ItemSpriteSheet.WAR_HAMMER;
+			image = ItemSpriteSheet.Weapons.BLUNT;
 			sndFX = Assets.Sounds.HIT_CRUSH;
 			sndPitch = 0.8f;
 		}
 	},
 	CANT_SURPRISE_ATTK {
 		{
-			image = ItemSpriteSheet.FLAIL;
+			image = ItemSpriteSheet.Weapons.NO_SURPRISE;
 			sndFX = Assets.Sounds.HIT_STRONG;
 			sndPitch = 0.8f;
 		}
 	},
 	SURPRISE_ATTK_BENEFIT {
 		{
-			image = ItemSpriteSheet.ASSASSINS_BLADE;
+			image = ItemSpriteSheet.Weapons.SURPRISE_BENEFIT;
 			sndFX = Assets.Sounds.HIT_STAB;
 			sndPitch = 1.2f;
 		}

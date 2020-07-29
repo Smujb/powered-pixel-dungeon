@@ -101,6 +101,11 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	@Override
+	public int image() {
+		return ItemSpriteSheet.adjustForTier(image, tier);
+	}
+
+	@Override
 	public int damageRoll(Char owner) {
 
 		int damage = augment.damageFactor(super.damageRoll( owner ));
@@ -430,6 +435,10 @@ public class MeleeWeapon extends Weapon {
 			desc = super.desc();
 			name = Messages.get(this, "name");
 			properties = new ArrayList<>();
+		}
+		//Ensures this doesn't override Mage's Staff or any other possible unique weapons.
+		if (getClass() == MeleeWeapon.class) {
+			matchProfile();
 		}
 	}
 }
