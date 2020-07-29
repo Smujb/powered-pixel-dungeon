@@ -829,8 +829,8 @@ public class Armor extends KindofMisc {
 			return target.defenseRegen();
 		}
 
-		public void setToMax() {
-			setShield(shieldCap());
+		public void setToMax(Char ch) {
+			setShield(ch.defense());
 		}
 
 		public static int curShield(Char ch) {

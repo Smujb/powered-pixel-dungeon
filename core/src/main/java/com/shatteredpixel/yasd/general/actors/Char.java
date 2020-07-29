@@ -310,7 +310,7 @@ public abstract class Char extends Actor {
 
 	public void live() {
 		if (buff(Armor.Defense.class) == null) {
-			Buff.affect(this, Armor.Defense.class).setToMax();
+			Buff.affect(this, Armor.Defense.class).setToMax(this);
 		}
 		if (buff(Regeneration.class) == null) {
 			Buff.affect(this, Regeneration.class);
