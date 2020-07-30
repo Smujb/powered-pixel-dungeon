@@ -31,6 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
@@ -322,6 +323,10 @@ public class MagesStaff extends MeleeWeapon {
 		if (wand != null) {
 			wand.maxCharges = Math.min(wand.maxCharges, Constants.WAND_CHARGE_CAP);
 			name = Messages.get(wand, "staff_name");
+		}
+
+		if (Dungeon.version < MainGame.v0_4_8) {
+			image = ItemSpriteSheet.Weapons.MAGES_STAFF;
 		}
 	}
 
