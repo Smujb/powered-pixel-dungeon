@@ -80,7 +80,7 @@ public enum WeaponProfile implements Profile {
 	},
 	STRONG {
 		{
-			image = ItemSpriteSheet.Weapons.STRONG;
+			image = ItemSpriteSheet.Weapons.GREATAXE;
 			sndFX = Assets.Sounds.HIT_STRONG;
 			sndPitch = 0.8f;
 		}
@@ -101,8 +101,16 @@ public enum WeaponProfile implements Profile {
 	},
 	DUAL_HANDED {
 		{
-			image = ItemSpriteSheet.Weapons.DUAL_HAND;
+			image = ItemSpriteSheet.Weapons.GREATSWORD;
 			sndFX = Assets.Sounds.HIT;
+		}
+	},
+	SINGLE_HANDED {
+		//TODO add the image and property
+		{
+			image = ItemSpriteSheet.Weapons.SINGLE_HAND;
+			sndFX = Assets.Sounds.HIT;
+			sndPitch = 1.5f;
 		}
 	},
 	BLUNT {
@@ -196,6 +204,8 @@ public enum WeaponProfile implements Profile {
 				} else {
 					return 1f;
 				}
+			case SINGLE_HANDED:
+				return 0f;
 		}
 	}
 }

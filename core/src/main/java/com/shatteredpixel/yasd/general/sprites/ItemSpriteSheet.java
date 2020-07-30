@@ -221,13 +221,14 @@ public class ItemSpriteSheet {
 		public static final int AXE         	 = WEAPON+4;
 		public static final int CURVED      	 = WEAPON+5;
 		public static final int WEAK        	 = WEAPON+6;
-		public static final int STRONG      	 = WEAPON+7;
+		public static final int GREATSWORD       = WEAPON+7;
 		public static final int DEFENSE     	 = WEAPON+8;
 		public static final int REACH     	 	 = WEAPON+9;
-		public static final int DUAL_HAND  	  	 = WEAPON+10;
+		public static final int GREATAXE         = WEAPON+10;
 		public static final int BLUNT       	 = WEAPON+11;
 		public static final int NO_SURPRISE 	 = WEAPON+12;
 		public static final int SURPRISE_BENEFIT = WEAPON+13;
+		public static final int SINGLE_HAND  	 = WEAPON+14;
 	}
 
 	private static final int WEP_TIER1      =                               xy(1, 7);   //8 slots
