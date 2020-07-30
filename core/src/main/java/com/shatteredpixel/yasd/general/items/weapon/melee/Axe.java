@@ -28,26 +28,15 @@
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Axe extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.BATTLE_AXE;
 		hitSound = Assets.Sounds.HIT_SLASH;
 		hitSoundPitch = 0.9f;
 
 		tier = 1;
 		ACC = 1.33f; //33% boost to accuracy
-	}
-
-	@Override
-	public int image() {
-		if (tier < 4) {
-			return ItemSpriteSheet.HAND_AXE;
-		} else {
-			return ItemSpriteSheet.BATTLE_AXE;
-		}
 	}
 
 	@Override

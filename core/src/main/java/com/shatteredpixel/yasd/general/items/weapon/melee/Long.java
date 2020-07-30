@@ -28,16 +28,12 @@
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Long extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.WHIP;
-
 		tier = 3;
 		RCH = 3;    //lots of extra reach
-
 	}
 
 	@Override

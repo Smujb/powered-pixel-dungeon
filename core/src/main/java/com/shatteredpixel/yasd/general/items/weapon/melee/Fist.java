@@ -30,12 +30,10 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Fist extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.GLOVES;
 		hitSound = Assets.Sounds.HIT_CRUSH;
 		hitSoundPitch = 1.2f;
 
@@ -44,17 +42,6 @@ public class Fist extends MeleeWeapon {
 		
 		bones = false;
 
-	}
-
-	@Override
-	public int image() {
-		if (tier < 3) {
-			return ItemSpriteSheet.GLOVES;
-		} else if (tier < 5) {
-			return ItemSpriteSheet.KNUCKLEDUSTER;
-		} else {
-			return ItemSpriteSheet.GAUNTLETS;
-		}
 	}
 
 	@Override

@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Polearm extends MeleeWeapon {
 
@@ -41,17 +40,6 @@ public class Polearm extends MeleeWeapon {
 		RCH = 2;    //extra reach
 
 		properties.add(Property.DUAL_HANDED);
-	}
-
-	@Override
-	public int image() {
-		if (tier >= 4) {
-			return ItemSpriteSheet.GLAIVE;
-		} else if (tier > 1) {
-			return ItemSpriteSheet.SPEAR;
-		} else {
-			return ItemSpriteSheet.PRIMITIVE_SPEAR;
-		}
 	}
 
 	@Override

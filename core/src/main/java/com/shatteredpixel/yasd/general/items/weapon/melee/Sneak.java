@@ -29,29 +29,16 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Sneak extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.ASSASSINS_BLADE;
 		hitSound = Assets.Sounds.HIT_STAB;
 		hitSoundPitch = 0.9f;
 
 		tier = 1;
 
 		properties.add(Property.SURPRISE_ATTK_BENEFIT);
-	}
-
-	@Override
-	public int image() {
-		if (tier < 2) {
-			return ItemSpriteSheet.DAGGER;
-		} else if (tier < 3) {
-			return ItemSpriteSheet.DIRK;
-		} else {
-			return ItemSpriteSheet.ASSASSINS_BLADE;
-		}
 	}
 
 	@Override

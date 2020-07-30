@@ -210,6 +210,10 @@ public class Armor extends KindofMisc {
 			desc = super.desc();
 			name = Messages.get(this, "name");
 		}
+		//Check the correct profile is still applied only if it's the main armour class not a subclass.
+		if (getClass() == Armor.class) {
+			matchProfile();
+		}
 	}
 
 	private static float randomStat() {

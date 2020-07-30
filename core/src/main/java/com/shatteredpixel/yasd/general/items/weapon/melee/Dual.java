@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Dual extends MeleeWeapon {
 
@@ -41,15 +40,6 @@ public class Dual extends MeleeWeapon {
 		DLY = 0.33f; //3x speed
 
 		properties.add(Property.DUAL_HANDED);
-	}
-
-	@Override
-	public int image() {
-		if (tier >= 4) {
-			return ItemSpriteSheet.KATANA;
-		} else {
-			return ItemSpriteSheet.SAI;
-		}
 	}
 
 	@Override

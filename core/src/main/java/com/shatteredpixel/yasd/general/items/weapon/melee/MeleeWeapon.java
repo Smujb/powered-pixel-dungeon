@@ -48,7 +48,7 @@ import java.util.Collections;
 
 public class MeleeWeapon extends Weapon {
 	{
-		image = ItemSpriteSheet.SWORD;
+		image = ItemSpriteSheet.Weapons.SWORD;
 	}
 
 	protected String desc = null;

@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Shield extends MeleeWeapon {
 
@@ -38,15 +37,6 @@ public class Shield extends MeleeWeapon {
 
 		tier = 1;
 
-	}
-
-	@Override
-	public int image() {
-		if (tier >= 4) {
-			return ItemSpriteSheet.GREATSHIELD;
-		} else {
-			return ItemSpriteSheet.ROUND_SHIELD;
-		}
 	}
 
 	@Override

@@ -29,33 +29,14 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Basic extends MeleeWeapon {
 
 	{
-		image = ItemSpriteSheet.GREATSWORD;
 		hitSound = Assets.Sounds.HIT_SLASH;
 		hitSoundPitch = 1f;
 
 		tier=1;
-	}
-
-	@Override
-	public int image() {
-		switch (tier) {
-			case 1:
-				return ItemSpriteSheet.WORN_SHORTSWORD;
-			case 2:
-				return ItemSpriteSheet.SHORTSWORD;
-			case 3:
-				return ItemSpriteSheet.SWORD;
-			case 4:
-				return ItemSpriteSheet.LONGSWORD;
-			case 5: default:
-				return ItemSpriteSheet.GREATSWORD;
-
-		}
 	}
 
 	@Override

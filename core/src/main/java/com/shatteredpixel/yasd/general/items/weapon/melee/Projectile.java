@@ -29,17 +29,13 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
 public class Projectile extends MeleeWeapon {
 	
 	{
-		image = ItemSpriteSheet.CROSSBOW;
 		hitSound = Assets.Sounds.HIT;
 		hitSoundPitch = 1f;
-		
-		//check Dart.class for additional properties
-		
+
 		tier = 1;
 	}
 

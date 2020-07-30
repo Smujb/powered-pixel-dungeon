@@ -259,7 +259,7 @@ public class v0_8_X_Changes {
 						"_- Swiftness_ now requires 2 tiles of space, up from 1\n" +
 						"_- Thorns_ proc rate scaling reduced by ~50%"));
 
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.GREATAXE), "Various Weapon Nerfs",
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.Weapons.GREATAXE), "Various Weapon Nerfs",
 				"A few weapons are also being toned down:\n\n" +
 						"As warlocks no longer reduce hero strength, the greataxe is now much easier to use and is too strong as a result:\n" +
 						"_- Greataxe_ base dmg reduced to 5-45 from 5-50\n\n" +
