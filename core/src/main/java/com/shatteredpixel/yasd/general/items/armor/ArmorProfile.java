@@ -120,14 +120,14 @@ public enum ArmorProfile implements Profile {
 			case EVASION_DECREASE:
 				return 1/armor.EVA;
 			case PHYSICAL:
-				if (armor.physicalResist > 1.2f) {
-					return armor.physicalResist;
+				if (armor.physicalResist < 0.8f) {
+					return 1/armor.physicalResist;
 				} else {
 					return 1f;
 				}
 			case MAGICAL:
-				if (armor.magicalResist > 1.2f) {
-					return armor.magicalResist;
+				if (armor.magicalResist < 0.8f) {
+					return 1/armor.magicalResist;
 				} else {
 					return 1f;
 				}
