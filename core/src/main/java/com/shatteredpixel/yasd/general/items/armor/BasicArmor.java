@@ -33,15 +33,15 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class BasicArmor extends Armor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_SCALE;
+		image = ItemSpriteSheet.Armors.SCALE;
 	}
 
 	@Override
 	public int image() {
 		if (tier < 4) {
-			return ItemSpriteSheet.ARMOR_DISC;
+			return ItemSpriteSheet.Armors.DISC;
 		} else  {
-			return ItemSpriteSheet.ARMOR_SCALE;
+			return ItemSpriteSheet.Armors.SCALE;
 		}
 	}
 

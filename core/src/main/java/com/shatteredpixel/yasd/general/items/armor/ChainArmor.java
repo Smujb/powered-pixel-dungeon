@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class ChainArmor extends Armor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_MAIL;
+		image = ItemSpriteSheet.Armors.MAIL;
 
 		magicalResist = 1.5f;
 		physicalResist = 2/3f;
@@ -44,11 +44,11 @@ public class ChainArmor extends Armor {
 	@Override
 	public int image() {
 		if (tier < 3) {
-			return ItemSpriteSheet.ARMOR_STUDDED;
+			return ItemSpriteSheet.Armors.STUDDED;
 		} else if (tier < 5) {
-			return ItemSpriteSheet.ARMOR_RINGMAIL;
+			return ItemSpriteSheet.Armors.RINGMAIL;
 		} else {
-			return ItemSpriteSheet.ARMOR_MAIL;
+			return ItemSpriteSheet.Armors.MAIL;
 		}
 	}
 

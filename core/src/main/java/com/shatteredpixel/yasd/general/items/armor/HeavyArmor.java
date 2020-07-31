@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class HeavyArmor extends Armor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_PLATE;
+		image = ItemSpriteSheet.Armors.PLATE;
 
 		EVA = 2/3f;
 		speedFactor = 2/3f;
@@ -42,9 +42,9 @@ public class HeavyArmor extends Armor {
 	@Override
 	public int image() {
 		if (tier < 4) {
-			return ItemSpriteSheet.ARMOR_PLATE;
+			return ItemSpriteSheet.Armors.PLATE;
 		} else  {
-			return ItemSpriteSheet.ARMOR_BANDED;
+			return ItemSpriteSheet.Armors.BANDED;
 		}
 	}
 

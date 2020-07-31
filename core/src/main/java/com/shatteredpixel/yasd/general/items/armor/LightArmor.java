@@ -33,18 +33,18 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 public class LightArmor extends Armor {
 
 	{
-		image = ItemSpriteSheet.ARMOR_LEATHER;
+		image = ItemSpriteSheet.Armors.LEATHER;
 		EVA = 1.33f;
 	}
 
 	@Override
 	public int image() {
 		if (tier == 0) {
-			return ItemSpriteSheet.ARMOR_CLOTH;
+			return ItemSpriteSheet.Armors.CLOTH;
 		} else if (tier < 4) {
-			return ItemSpriteSheet.ARMOR_HIDE;
+			return ItemSpriteSheet.Armors.HIDE;
 		} else  {
-			return ItemSpriteSheet.ARMOR_LEATHER;
+			return ItemSpriteSheet.Armors.LEATHER;
 		}
 	}
 

@@ -364,7 +364,7 @@ public class v0_8_X_Changes {
 						"_-_ Pitfall traps are now more common, affect a 3x3 area, and give you one turn to react\n" +
 						"_-_ Distortion traps are now more common, can appear in the city, and have a reworked effect. They now act as more chaotic summoning traps, instead of resetting the current floor."));
 
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_WARRIOR), "Weapon and Armor Changes",
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.Armors.WARRIOR), "Weapon and Armor Changes",
 				"While I intend to make larger changes in a future update, I've decided to do some targeted improvements to class armors now to make the abilities more usable:\n" +
 						"_-_ Class armor now has a charge percentage which builds at a rate of 50% per level, each ability uses 35% charge.\n" +
 						"_-_ Stun from heroic leap increased to 5 turns from 3.\n" +

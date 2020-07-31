@@ -37,49 +37,49 @@ import org.jetbrains.annotations.NotNull;
 public enum ArmorProfile implements Profile {
 	NONE {
 		{
-			image = ItemSpriteSheet.ARMOR_DISC;
+			image = ItemSpriteSheet.Armors.DISC;
 			appearance = 4;
 		}
 	},
 	STEALTH_INCREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_HIDE;
+			image = ItemSpriteSheet.Armors.HIDE;
 			appearance = 2;
 		}
 	},
 	STEALTH_DECREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_BANDED;
+			image = ItemSpriteSheet.Armors.BANDED;
 			appearance = 5;
 		}
 	},
 	SPEED_INCREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_LEATHER;
+			image = ItemSpriteSheet.Armors.LEATHER;
 			appearance = 2;
 		}
 	},
 	SPEED_DECREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_WARRIOR;
+			image = ItemSpriteSheet.Armors.WARRIOR;
 			appearance = 5;
 		}
 	},
 	EVASION_INCREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_DISC;
+			image = ItemSpriteSheet.Armors.DISC;
 			appearance = 4;
 		}
 	},
 	EVASION_DECREASE {
 		{
-			image = ItemSpriteSheet.ARMOR_MAIL;
+			image = ItemSpriteSheet.Armors.MAIL;
 			appearance = 3;
 		}
 	},
 	PHYSICAL {
 		{
-			image = ItemSpriteSheet.ARMOR_PLATE;
+			image = ItemSpriteSheet.Armors.PLATE;
 			appearance = 5;
 		}
 	},

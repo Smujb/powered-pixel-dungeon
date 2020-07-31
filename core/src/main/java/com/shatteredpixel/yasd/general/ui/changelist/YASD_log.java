@@ -100,7 +100,7 @@ public class YASD_log {
 		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.KIT), "New Rogue item",
 				"Rogue now has a new unique item that lets him change the properties of weapons."));
 
-		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.ARMOR_MAGE), "Magic defense",
+		changes.addButton( new ChangeButton(new ItemSprite(ItemSpriteSheet.Armors.MAGE), "Magic defense",
 				"Magical DR is now based off focus not armour upgrade level."));
 
 		//Buffs

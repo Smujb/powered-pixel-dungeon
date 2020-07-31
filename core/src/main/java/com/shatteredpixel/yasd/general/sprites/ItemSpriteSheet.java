@@ -214,6 +214,7 @@ public class ItemSpriteSheet {
 	public static class Weapons {
 
 		private static final int WEAPON      =                               xy(1, 32);   //8 slots
+
 		public static final int MAGES_STAFF 	 = WEAPON+0;
 		public static final int SWORD       	 = WEAPON+1;
 		public static final int SPEAR       	 = WEAPON+2;
@@ -232,6 +233,41 @@ public class ItemSpriteSheet {
 		public static final int EXTRA_ENCHANT  	 = WEAPON+15;
 		public static final int PARRY_BONUS  	 = WEAPON+16;
 		public static final int CROSSBOW     	 = WEAPON+17;
+	}
+
+	public static class Armors {
+
+		private static final int ARMOR = xy(1, 39);   //8 slots
+
+		public static final int CLOTH             = ARMOR+0;
+		public static final int LEATHER           = ARMOR+1;
+		public static final int MAIL              = ARMOR+2;
+		public static final int SCALE             = ARMOR+3;
+		public static final int PLATE             = ARMOR+4;
+		public static final int WARRIOR           = ARMOR+5;
+		public static final int MAGE              = ARMOR+6;
+		public static final int ROGUE             = ARMOR+7;
+		public static final int HUNTRESS          = ARMOR+8;
+		public static final int STUDDED           = ARMOR+9;
+		public static final int HIDE				= ARMOR+10;
+		public static final int BANDED			= ARMOR+11;
+		public static final int CHAINMAIL_ELVISH  = ARMOR+12;
+		public static final int CHAINMAIL_DWARVISH= ARMOR+13;
+		public static final int CHAINMAIL_ORCISH  = ARMOR+14;
+		public static final int RINGMAIL 			= ARMOR+15;
+		public static final int DISC              = ARMOR+16;
+
+		static{
+			assignItemRect(CLOTH,     15, 12);
+			assignItemRect(LEATHER,   14, 13);
+			assignItemRect(MAIL,      14, 12);
+			assignItemRect(SCALE,     14, 11);
+			assignItemRect(PLATE,     12, 12);
+			assignItemRect(WARRIOR,   12, 12);
+			assignItemRect(MAGE,      15, 15);
+			assignItemRect(ROGUE,     14, 12);
+			assignItemRect(HUNTRESS,  13, 15);
+		}
 	}
 
 	private static final int MISSILE_WEP    =                               xy(1, 10);  //16 slots. 3 per tier + boomerang
@@ -297,36 +333,6 @@ public class ItemSpriteSheet {
 	static {
 		for (int i = TIPPED_DARTS; i < TIPPED_DARTS+16; i++)
 			assignItemRect(i, 15, 15);
-	}
-	
-	private static final int ARMOR                  =                               xy(1, 12);  //16 slots
-	public static final int ARMOR_CLOTH             = ARMOR+0;
-	public static final int ARMOR_LEATHER           = ARMOR+1;
-	public static final int ARMOR_MAIL              = ARMOR+2;
-	public static final int ARMOR_SCALE             = ARMOR+3;
-	public static final int ARMOR_PLATE             = ARMOR+4;
-	public static final int ARMOR_WARRIOR           = ARMOR+5;
-	public static final int ARMOR_MAGE              = ARMOR+6;
-	public static final int ARMOR_ROGUE             = ARMOR+7;
-	public static final int ARMOR_HUNTRESS          = ARMOR+8;
-	public static final int ARMOR_STUDDED           = ARMOR+9;
-	public static final int ARMOR_HIDE				= ARMOR+10;
-	public static final int ARMOR_BANDED			= ARMOR+11;
-	public static final int ARMOR_CHAINMAIL_ELVISH  = ARMOR+12;
-	public static final int ARMOR_CHAINMAIL_DWARVISH= ARMOR+13;
-	public static final int ARMOR_CHAINMAIL_ORCISH  = ARMOR+14;
-	public static final int ARMOR_RINGMAIL 			= ARMOR+15;
-	public static final int ARMOR_DISC              = ARMOR+16;
-	static{
-		assignItemRect(ARMOR_CLOTH,     15, 12);
-		assignItemRect(ARMOR_LEATHER,   14, 13);
-		assignItemRect(ARMOR_MAIL,      14, 12);
-		assignItemRect(ARMOR_SCALE,     14, 11);
-		assignItemRect(ARMOR_PLATE,     12, 12);
-		assignItemRect(ARMOR_WARRIOR,   12, 12);
-		assignItemRect(ARMOR_MAGE,      15, 15);
-		assignItemRect(ARMOR_ROGUE,     14, 12);
-		assignItemRect(ARMOR_HUNTRESS,  13, 15);
 	}
 
 	private static final int WANDS_YAPD              =                      xy(1, 13);  //16 slots

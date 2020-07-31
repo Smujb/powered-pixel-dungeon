@@ -33,7 +33,7 @@ public class MageArmor extends ClothArmor {
 
 
 	{
-		image = ItemSpriteSheet.ARMOR_MAGE;
+		image = ItemSpriteSheet.Armors.MAGE;
 		EVA = 1.25f;
 		magicalResist = 2/3f;
 		physicalResist = 1.5f;

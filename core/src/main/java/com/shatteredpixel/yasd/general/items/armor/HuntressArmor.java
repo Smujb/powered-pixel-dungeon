@@ -33,7 +33,7 @@ public class HuntressArmor extends ClothArmor {
 
 	
 	{
-		image = ItemSpriteSheet.ARMOR_HUNTRESS;
+		image = ItemSpriteSheet.Armors.HUNTRESS;
 		EVA = 1.25f;
 		speedFactor = 1.4f;
 	}
