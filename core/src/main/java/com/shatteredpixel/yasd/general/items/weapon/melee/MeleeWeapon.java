@@ -34,6 +34,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -185,24 +186,46 @@ public class MeleeWeapon extends Weapon {
 	//Generates stats for the weapon.
 	public MeleeWeapon initStats() {
 		resetStats();
-		if (Random.Int(5) == 0) {
-			DLY = randomStat();
+		KindOfWeapon.Property[] basicProps = Property.values();
+		int nProps = basicProps.length + 5;
+		int maxProps = 0;
+		while (maxProps < 5 && Random.Int(3 + nProps / 2) != 0) {
+			maxProps++;
 		}
-		if (Random.Int(5) == 0) {
-			ACC = randomStat();
+		boolean[] propertiesEnabled = new boolean[nProps];
+		for (int i = 0; i < maxProps; i++) {
+			int index = Random.Int(nProps);
+			if (!propertiesEnabled[index]) {
+				propertiesEnabled[index] = true;
+			}
 		}
-		if (Random.Int(5) == 0) {
-			degradeFactor = randomStat();
-		}
-		if (Random.Int(5) == 0) {
-			defenseMultiplier = Random.NormalFloat(0, 1);
-		}
-		if (Random.Int(5) == 0) {
-			RCH = Random.NormalIntRange(1, 3);
-		}
-		for (Property property : Property.values()) {
-			if (Random.Int(5) == 0 && property.canApply(this)) {
+
+		for (int i = 0; i < basicProps.length; i++) {
+			Property property = basicProps[i];
+			if (propertiesEnabled[i] && property.canApply(this)) {
 				properties.add(property);
+			}
+		}
+
+		for (int i = basicProps.length; i < nProps; i++) {
+			if (propertiesEnabled[i]) {
+				switch (i-basicProps.length) {
+					case 0:
+						DLY = randomStat();
+						break;
+					case 1:
+						ACC = randomStat();
+						break;
+					case 2:
+						degradeFactor = randomStat();
+						break;
+					case 3:
+						defenseMultiplier = Random.NormalFloat(0, 1);
+						break;
+					case 4:
+						RCH = Random.NormalIntRange(1, 3);
+						break;
+				}
 			}
 		}
 
