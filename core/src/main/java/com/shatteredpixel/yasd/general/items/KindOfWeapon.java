@@ -45,7 +45,18 @@ abstract public class KindOfWeapon extends KindofMisc {
 	public float hitSoundPitch = 1f;
 
 	public enum Property {
-		DUAL_HANDED,
+		DUAL_HANDED {
+			@Override
+			public boolean canApply(KindOfWeapon weapon) {
+				return !weapon.properties.contains(SINGLE_HANDED);
+			}
+		},
+		SINGLE_HANDED {
+			@Override
+			public boolean canApply(KindOfWeapon weapon) {
+				return !weapon.properties.contains(DUAL_HANDED);
+			}
+		},
 		BLUNT,
 		CANT_SURPRISE_ATTK {
 			@Override

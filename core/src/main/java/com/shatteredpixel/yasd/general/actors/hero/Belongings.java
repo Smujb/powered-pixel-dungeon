@@ -162,20 +162,25 @@ public class Belongings implements Iterable<Item> {
 
 	public int getWeaponSTRReq() {
 		ArrayList<KindOfWeapon> weapons = getWeapons();
-		int TotalRequirement = 8;
-		int IndividualRequirement;
+		int totalRequirement = 8;
+		int individualRequirement;
 		for (int i=0; i < weapons.size(); i++) {
 			if (weapons.get(i) instanceof MeleeWeapon) {
-				if (weapons.size() > 1 & ((MeleeWeapon) weapons.get(i)).properties.contains(KindOfWeapon.Property.DUAL_HANDED)) {//If the weapon has a dual wield penalty and it is being used with another weapon, increase total requirement.
-					TotalRequirement += ((MeleeWeapon) weapons.get(i)).tier;
+				int penalty = ((MeleeWeapon) weapons.get(i)).tier;
+				if (weapons.size() > 1) {
+					if  (((MeleeWeapon) weapons.get(i)).properties.contains(KindOfWeapon.Property.DUAL_HANDED)) {//If the weapon has a dual wield penalty and it is being used with another weapon, increase total requirement.
+						totalRequirement += penalty;
+					} else if (((MeleeWeapon) weapons.get(i)).properties.contains(KindOfWeapon.Property.SINGLE_HANDED)) {
+						totalRequirement -= penalty;
+					}
 				}
-				IndividualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
-				IndividualRequirement -= 8;
-				TotalRequirement += IndividualRequirement;
+				individualRequirement = ((MeleeWeapon)weapons.get(i)).defaultSTRReq();
+				individualRequirement -= 8;
+				totalRequirement += individualRequirement;
 			}
 
 		}
-		return TotalRequirement;
+		return totalRequirement;
 	}
 
 	public boolean shoot(Char enemy, MissileWeapon wep) {

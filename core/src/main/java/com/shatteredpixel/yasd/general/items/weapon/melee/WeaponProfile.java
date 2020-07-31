@@ -106,7 +106,6 @@ public enum WeaponProfile implements Profile {
 		}
 	},
 	SINGLE_HANDED {
-		//TODO add the image and property
 		{
 			image = ItemSpriteSheet.Weapons.SINGLE_HAND;
 			sndFX = Assets.Sounds.HIT;
@@ -205,7 +204,11 @@ public enum WeaponProfile implements Profile {
 					return 1f;
 				}
 			case SINGLE_HANDED:
-				return 0f;
+				if (weapon.properties.contains(KindOfWeapon.Property.SINGLE_HANDED)) {
+					return KindOfWeapon.Property.SINGLE_HANDED.importance();
+				} else {
+					return 1f;
+				}
 		}
 	}
 }
