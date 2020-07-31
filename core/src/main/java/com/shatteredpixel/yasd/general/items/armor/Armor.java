@@ -237,20 +237,43 @@ public class Armor extends KindofMisc {
 
 	public Armor initStats() {
 		resetStats();
-		if (Random.Int(3) == 0) {
-			EVA = randomStat();
+		final int nProps = 6;
+		int maxProps = 0;
+		while (maxProps < 5 && Random.Int(4-(maxProps/2)) != 0) {
+			maxProps++;
 		}
-		if (Random.Int(3) == 0) {
-			STE = randomStat();
+		boolean[] propertiesEnabled = new boolean[nProps];
+		for (int i = 0; i < maxProps; i++) {
+			int index = Random.Int(nProps);
+			if (!propertiesEnabled[index]) {
+				propertiesEnabled[index] = true;
+			}
 		}
-		if (Random.Int(3) == 0) {
-			speedFactor = randomStat();
+
+		for (int i = 0; i < nProps; i++) {
+			if (propertiesEnabled[i]) {
+				switch (i) {
+					case 0:
+						EVA = randomStat();
+						break;
+					case 1:
+						STE = randomStat();
+						break;
+					case 2:
+						speedFactor = randomStat();
+						break;
+					case 3:
+						regenFactor = randomStat();
+						break;
+					case 4:
+						physicalResist = Random.NormalFloat(0.5f, 1);
+						break;
+					case 5:
+						magicalResist = Random.NormalFloat(0.5f, 1);
+						break;
+				}
+			}
 		}
-		if (Random.Int(3) == 0) {
-			regenFactor = randomStat();
-		}
-		physicalResist = (Random.Float() + 1f)/2f;
-		magicalResist = 2f - physicalResist;
 		return matchProfile();
 	}
 
@@ -260,6 +283,8 @@ public class Armor extends KindofMisc {
 		DRfactor *= 1/STE;
 		DRfactor *= 1/speedFactor;
 		DRfactor *= 1/regenFactor;
+		DRfactor *= magicalResist;
+		DRfactor *= physicalResist;
 		return DRfactor;
 	}
 
