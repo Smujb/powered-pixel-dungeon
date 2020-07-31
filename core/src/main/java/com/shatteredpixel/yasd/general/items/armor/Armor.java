@@ -816,6 +816,10 @@ public class Armor extends KindofMisc {
 
 	public static class Defense extends ShieldBuff {
 
+		{
+			type = buffType.POSITIVE;
+		}
+
 		private float magicResist() {
 			return target.magicalResist();
 		}

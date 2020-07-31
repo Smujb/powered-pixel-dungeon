@@ -69,7 +69,9 @@ public class Shopkeeper extends NPC {
 	
 	@Override
 	public void add( Buff buff ) {
-		flee();
+		if (buff.type == Buff.buffType.NEGATIVE) {
+			flee();
+		}
 	}
 	
 	public void flee() {
