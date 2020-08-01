@@ -237,7 +237,7 @@ public class ItemSpriteSheet {
 
 	public static class Armors {
 
-		private static final int ARMOR = xy(1, 39);   //8 slots
+		private static final int ARMOR = xy(1, 40);   //8 slots
 
 		public static final int CLOTH             = ARMOR+0;
 		public static final int LEATHER           = ARMOR+1;
