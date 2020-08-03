@@ -85,7 +85,7 @@ public enum ArmorProfile implements Profile {
 	},
 	MAGICAL {
 		{
-			image = ItemSpriteSheet.ARMOR_HOLDER;
+			image = ItemSpriteSheet.Armors.ETHEREAL;
 			appearance = 3;
 		}
 	};

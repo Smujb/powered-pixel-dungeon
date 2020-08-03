@@ -230,9 +230,10 @@ public class ItemSpriteSheet {
 		public static final int NO_SURPRISE 	 = WEAPON+12;
 		public static final int SURPRISE_BENEFIT = WEAPON+13;
 		public static final int SINGLE_HAND  	 = WEAPON+14;
-		public static final int EXTRA_ENCHANT  	 = WEAPON+15;
+		public static final int BETTER_ENCHANT   = WEAPON+15;
 		public static final int PARRY_BONUS  	 = WEAPON+16;
 		public static final int CROSSBOW     	 = WEAPON+17;
+		public static final int WORSE_ENCHANT    = WEAPON+15;
 	}
 
 	public static class Armors {
@@ -256,14 +257,10 @@ public class ItemSpriteSheet {
 		public static final int CHAINMAIL_ORCISH  = ARMOR+14;
 		public static final int RINGMAIL 			= ARMOR+15;
 		public static final int DISC              = ARMOR+16;
+		public static final int ETHEREAL              = ARMOR+17;
 
 		static{
 			assignItemRect(CLOTH,     15, 12);
-			assignItemRect(LEATHER,   14, 13);
-			assignItemRect(MAIL,      14, 12);
-			assignItemRect(SCALE,     14, 11);
-			assignItemRect(PLATE,     12, 12);
-			assignItemRect(WARRIOR,   12, 12);
 			assignItemRect(MAGE,      15, 15);
 			assignItemRect(ROGUE,     14, 12);
 			assignItemRect(HUNTRESS,  13, 15);

@@ -216,6 +216,11 @@ public class Armor extends KindofMisc {
 		}
 	}
 
+	@Override
+	public int image() {
+		return ItemSpriteSheet.adjustForTier(image, tier);
+	}
+
 	private static float randomStat() {
 		int num = Random.Int(5, 20);
 		return num/10f;
