@@ -260,7 +260,7 @@ public class ItemSpriteSheet {
 		public static final int ETHEREAL              = ARMOR+17;
 
 		static{
-			assignItemRect(CLOTH,     15, 12);
+			assignItemRect(CLOTH,     15, 16);
 			assignItemRect(MAGE,      15, 15);
 			assignItemRect(ROGUE,     14, 12);
 			assignItemRect(HUNTRESS,  13, 15);
