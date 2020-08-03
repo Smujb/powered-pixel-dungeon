@@ -254,7 +254,7 @@ public class ItemSpriteSheet {
 		public static final int BANDED			= ARMOR+11;
 		public static final int CHAINMAIL_ELVISH  = ARMOR+12;
 		public static final int CHAINMAIL_DWARVISH= ARMOR+13;
-		public static final int CHAINMAIL_ORCISH  = ARMOR+14;
+		public static final int LIGHT             = ARMOR+14;
 		public static final int RINGMAIL 			= ARMOR+15;
 		public static final int DISC              = ARMOR+16;
 		public static final int ETHEREAL              = ARMOR+17;

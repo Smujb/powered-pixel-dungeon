@@ -67,7 +67,7 @@ public enum ArmorProfile implements Profile {
 	},
 	EVASION_INCREASE {
 		{
-			image = ItemSpriteSheet.Armors.DISC;
+			image = ItemSpriteSheet.Armors.LIGHT;
 			appearance = 4;
 		}
 	},
