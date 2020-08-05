@@ -317,16 +317,16 @@ public abstract class Wand extends KindofMisc {
 	
 	@Override
 	public int level() {
+		if (!cursed && curseInfusionBonus){
+			curseInfusionBonus = false;
+			updateLevel();
+		}
 		int lvl = super.level();
 		if (curUser != null) {
 			MagicCharge buff = curUser.buff(MagicCharge.class);
 			if (buff != null && buff.level() > lvl){
 				return buff.level();
 			}
-		}
-		if (!cursed && curseInfusionBonus){
-			curseInfusionBonus = false;
-			updateLevel();
 		}
 		return lvl + (curseInfusionBonus ? Constants.CURSE_INFUSION_BONUS_AMT : 0);
 	}
