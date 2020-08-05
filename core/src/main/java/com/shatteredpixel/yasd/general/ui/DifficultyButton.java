@@ -59,6 +59,12 @@ public class DifficultyButton extends StyledButton {
 		}
 	}
 
+	@Override
+	public void alpha(float value) {
+		super.alpha(value);
+		text.alpha(difficulty.isUnlocked() ? value*1f : value*0.3f);
+	}
+
 	private void updateDifficulty() {
 		if (difficulty == YASDSettings.difficulty()) {
 			icon(Icons.get(Icons.CHALLENGE_ON));

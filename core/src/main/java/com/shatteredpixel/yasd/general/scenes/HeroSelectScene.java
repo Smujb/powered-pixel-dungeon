@@ -275,22 +275,25 @@ public class HeroSelectScene extends PixelScene {
 		for (Object v : members){
 			if (v instanceof Window) resetFade();
 		}
+		float alpha;
 		if (GamesInProgress.selectedClass != null) {
 			if (uiAlpha > 0f){
 				uiAlpha -= Game.elapsed/4f;
 			}
-			float alpha = GameMath.gate(0f, uiAlpha, 1f);
-			for (StyledButton b : heroBtns){
-				b.alpha(alpha);
-			}
-			for (DifficultyButton button : DifficultyButton.buttonArrayList) {
-				button.alpha(alpha);
-			}
-			startBtn.alpha(alpha);
-			btnExit.icon().alpha(alpha);
-			challengeButton.icon().alpha(alpha);
-			infoButton.icon().alpha(alpha);
+			alpha = GameMath.gate(0f, uiAlpha, 1f);
+		} else {
+			alpha = 1f;
 		}
+		for (StyledButton b : heroBtns){
+			b.alpha(alpha);
+		}
+		for (DifficultyButton button : DifficultyButton.buttonArrayList) {
+			button.alpha(alpha);
+		}
+		startBtn.alpha(alpha);
+		btnExit.icon().alpha(alpha);
+		challengeButton.icon().alpha(alpha);
+		infoButton.icon().alpha(alpha);
 	}
 
 	private void resetFade(){
