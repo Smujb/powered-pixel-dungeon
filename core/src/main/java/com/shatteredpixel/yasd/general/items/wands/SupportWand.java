@@ -117,12 +117,8 @@ public class SupportWand extends NormalWand {
 				break;
 			case MAGICAL:
 				if (attack) {
-					for (Wand.Charger wandCharger : curUser.buffs(Wand.Charger.class)){
-						if (wandCharger.wand().level() < level() || curUser.buff(MagicCharge.class) != null){
-							Buff.prolong(curUser, MagicCharge.class, MagicCharge.DURATION).setLevel(level());
-							break;
-						}
-					}
+					//Refresh, but don't extend the buff.
+					Buff.affect(curUser, MagicCharge.class, MagicCharge.DURATION).setLevel(level());
 				} else {
 					Buff.affect(receiver, Sungrass.Health.class).boost(receiver.HT);
 				}
