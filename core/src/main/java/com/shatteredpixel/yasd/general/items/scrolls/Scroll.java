@@ -202,11 +202,16 @@ public abstract class Scroll extends Item {
 	public void empoweredRead(){}
 
 	protected void readAnimation() {
+		float time = TIME_TO_READ;
 		if (curUser instanceof Hero) {
-			curUser.spend(TIME_TO_READ);
-			curUser.busy();
+			if (((Hero) curUser).lowMorale()) {
+				time *= 3;
+				GLog.n(Messages.get(this, "low_morale"));
+			}
 			((HeroSprite) curUser.sprite).read();
 		}
+		curUser.spend(time);
+		curUser.busy();
 	}
 	
 	public boolean isKnown() {

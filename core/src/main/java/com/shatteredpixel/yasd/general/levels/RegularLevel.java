@@ -304,7 +304,7 @@ public abstract class RegularLevel extends Level {
 
 			Heap.Type type;
 			switch (Random.Int( 20 )) {
-				case 0:
+				case 0: default:
 					type = Heap.Type.SKELETON;
 					break;
 				case 1:
@@ -320,9 +320,7 @@ public abstract class RegularLevel extends Level {
 					}
 					type = Heap.Type.CHEST;
 					break;
-				default:
-					type = Heap.Type.HEAP;
-					break;
+
 			}
 
 			if ((toDrop instanceof Artifact && Random.Int(2) == 0) ||

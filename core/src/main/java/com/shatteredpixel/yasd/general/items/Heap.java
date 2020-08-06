@@ -50,6 +50,7 @@ import com.shatteredpixel.yasd.general.items.rings.RingOfWealth;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -70,7 +71,12 @@ public class Heap implements Bundlable {
 		TOMB,
 		SKELETON,
 		REMAINS,
-		MIMIC //remains for pre-0.8.0 compatibility. There are converted to mimics on level load
+		MIMIC; //remains for pre-0.8.0 compatibility. There are converted to mimics on level load
+
+		public String openMsg(boolean lowMorale) {
+			String message =  Messages.get(Heap.class, name() + "_open" + (lowMorale ? "_low_morale" : ""));
+			return message.contains("missed_string") ? "" : message;
+		}
 	}
 	public Type type = Type.HEAP;
 	
@@ -83,6 +89,10 @@ public class Heap implements Bundlable {
 	public LinkedList<Item> items = new LinkedList<>();
 	
 	public void open( Hero hero ) {
+		String msg = type.openMsg(hero.morale < hero.MAX_MORALE*0.5f);
+		if (!msg.equals("")) {
+			GLog.n(msg);
+		}
 		switch (type) {
 		case MIMIC:
 			type = Type.CHEST;

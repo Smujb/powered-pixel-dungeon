@@ -221,6 +221,10 @@ public class Hero extends Char {
 		}
 	}
 
+	public boolean lowMorale() {
+		return morale < MAX_MORALE * 0.5f;
+	}
+
 	public void loseMorale(float Amount) {
 		loseMorale(Amount, true);
 	}
