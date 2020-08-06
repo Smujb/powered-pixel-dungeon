@@ -118,6 +118,10 @@ public class Preparation extends Buff implements ActionIndicator.Action {
 	
 	@Override
 	public boolean act() {
+		if (Dungeon.level == null || Dungeon.level.mobs == null) {
+			spend(TICK);
+			return true;
+		}
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (mob.getEnemy() == target && mob.enemySeen) {
 				detach();
