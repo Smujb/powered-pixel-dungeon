@@ -765,10 +765,6 @@ public abstract class Mob extends Char {
 		return damage;
 	}
 
-	public boolean canBeSurpriseAttacked( Char enemy ) {
-		return surprisedBy(enemy) && Dungeon.hero.canSurpriseAttack();
-	}
-	
 	protected boolean hitWithRanged = false;
 	
 	@Override
@@ -800,8 +796,9 @@ public abstract class Mob extends Char {
 		return super.defenseProc(enemy, damage);
 	}
 
-	public boolean surprisedBy( Char enemy ){
-		return enemy == Dungeon.hero && (enemy.invisible > 0 || (!enemySeen && state != PASSIVE));
+	@Override
+	public boolean surprisedBy(Char enemy) {
+		return super.surprisedBy(enemy) || (!enemySeen && state != PASSIVE);
 	}
 
 	public Char getEnemy() {

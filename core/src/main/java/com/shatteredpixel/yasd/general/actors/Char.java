@@ -79,7 +79,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Vulnerable;
 import com.shatteredpixel.yasd.general.actors.buffs.Weakness;
 import com.shatteredpixel.yasd.general.actors.buffs.Wet;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
-import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.effects.Surprise;
 import com.shatteredpixel.yasd.general.effects.Wound;
@@ -500,7 +499,7 @@ public abstract class Char extends Actor {
 				acuRoll *= 2;
 			}
 		}
-		if (defender instanceof Mob && ((Mob)defender).canBeSurpriseAttacked(attacker)) {
+		if (defender.surprisedBy(attacker) && attacker.canSurpriseAttack()) {
 			Statistics.sneakAttacks++;
 			Badges.validateRogueUnlock();
 			if (defender.sprite.visible) {
@@ -712,6 +711,10 @@ public abstract class Char extends Actor {
 		}
 		needsShieldUpdate = false;
 		return cachedShield;
+	}
+
+	public boolean surprisedBy( Char enemy ){
+		return enemy.invisible > 0;
 	}
 
 	public boolean canSurpriseAttack(){
