@@ -142,7 +142,7 @@ public class MirrorImage extends NPC {
 	
 	@Override
     public boolean canAttack(@NotNull Char enemy) {
-		return super.canAttack(enemy) || (user.belongings.getWeapons() != null && user.belongings.getWeapons().get(0).canReach(this, enemy.pos));
+		return super.canAttack(enemy) || (user.belongings.getWeapons().size() > 0 && user.belongings.getWeapons().get(0).canReach(this, enemy.pos));
 	}
 	
 	@Override
