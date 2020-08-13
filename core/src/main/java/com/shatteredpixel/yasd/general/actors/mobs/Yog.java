@@ -317,9 +317,8 @@ public class Yog extends Mob {
 			damageFactor = 2f;
 			
 			EXP = 0;
-			maxLvl = -2;
-			
-			state = HUNTING;
+
+            state = HUNTING;
 
 			properties.add(Property.DEMONIC);
 		}

@@ -53,9 +53,8 @@ public class Monk extends Mob {
 		attackDelay = 0.5f;
 
 		EXP = 11;
-		maxLvl = 21;
 
-		attackDelay = 0.5f;
+        attackDelay = 0.5f;
 
 		loot = new Food();
 		lootChance = 0.083f;

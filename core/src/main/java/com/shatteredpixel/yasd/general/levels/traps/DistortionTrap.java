@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.levels.traps;
 
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -144,8 +143,7 @@ public class DistortionTrap extends Trap{
 				continue;
 			}
 
-			mob.maxLvl = Constants.HERO_EXP_CAP;
-			mob.state = mob.WANDERING;
+            mob.state = mob.WANDERING;
 			mob.pos = point;
 			GameScene.add(mob, DELAY);
 			mobs.add(mob);

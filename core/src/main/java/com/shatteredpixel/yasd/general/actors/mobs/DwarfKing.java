@@ -517,8 +517,7 @@ public class DwarfKing extends Mob {
 				Mob m = Mob.create(summon);
 				if (ch == null) {
 					m.pos = pos;
-					m.maxLvl = -2;
-					GameScene.add(m);
+                    GameScene.add(m);
 					m.state = m.HUNTING;
 					if (((DwarfKing)target).phase == 2){
 						Buff.affect(m, KingDamager.class);
