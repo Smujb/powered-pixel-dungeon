@@ -46,7 +46,7 @@ public class ChainArmor extends Armor {
 		if (tier < 3) {
 			return ItemSpriteSheet.Armors.STUDDED;
 		} else if (tier < 5) {
-			return ItemSpriteSheet.Armors.RINGMAIL;
+			return ItemSpriteSheet.Armors.STUDDED;
 		} else {
 			return ItemSpriteSheet.Armors.MAIL;
 		}

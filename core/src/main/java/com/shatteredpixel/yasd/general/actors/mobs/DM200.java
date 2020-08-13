@@ -58,7 +58,6 @@ public class DM200 extends Mob {
 		healthFactor = 2f;
 
 		EXP = 9;
-		maxLvl = 17;
 
 		loot = Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR);
 		lootChance = 0.125f; //initially, see rollToDropLoot
@@ -265,7 +264,6 @@ public class DM200 extends Mob {
 
 		@Override
 		public void rollToDropLoot() {
-			if (Dungeon.hero.lvl > maxLvl + 2) return;
 
 			super.rollToDropLoot();
 
