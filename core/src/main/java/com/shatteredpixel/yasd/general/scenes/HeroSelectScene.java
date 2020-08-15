@@ -218,6 +218,7 @@ public class HeroSelectScene extends PixelScene {
 		add( btnExit );
 
 		int width = Camera.main.width;
+		DifficultyButton.reset();
 		Difficulty[] values = Difficulty.values();
 		for (int i = 0; i < values.length; i++) {
 			Difficulty difficulty = values[i];

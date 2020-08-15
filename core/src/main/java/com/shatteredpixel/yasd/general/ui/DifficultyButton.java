@@ -73,4 +73,8 @@ public class DifficultyButton extends StyledButton {
 		}
 		enable(difficulty.isUnlocked());
 	}
+
+	public static void reset() {
+		buttonArrayList = new ArrayList<>();
+	}
 }
