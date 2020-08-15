@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -37,8 +38,6 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSprite;
 import com.shatteredpixel.yasd.general.tiles.DungeonTerrainTilemap;
 import com.shatteredpixel.yasd.general.windows.WndBag;
-import com.shatteredpixel.yasd.general.windows.WndJournal;
-import com.shatteredpixel.yasd.general.YASDAction;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
@@ -154,13 +153,6 @@ public class Toolbar extends Component {
 			@Override
 			public GameAction keyAction() {
 				return YASDAction.INVENTORY;
-			}
-			
-			@Override
-			protected boolean onLongClick() {
-				WndJournal.last_index = 3; //catalog page
-				GameScene.show(new WndJournal());
-				return true;
 			}
 
 			@Override
