@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -38,8 +38,8 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.rohitss.uceh.UCEHandler;
 import com.shatteredpixel.yasd.UpdateImpl;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
-import com.shatteredpixel.yasd.general.MainGame;
 import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
 import com.watabou.utils.FileUtils;
@@ -107,7 +107,7 @@ public class AndroidGame extends AndroidApplication {
 		
 		support.updateSystemUI();
 
-		MainGame mainGame = new MainGame(support);
+		PPDGame mainGame = new PPDGame(support);
 		initialize(mainGame, config);
 		
 		view = (GLSurfaceView)graphics.getView();

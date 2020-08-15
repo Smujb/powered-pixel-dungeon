@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -111,9 +111,9 @@ public class TitleScene extends PixelScene {
 				if (GamesInProgress.checkAll().size() == 0){
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					MainGame.switchScene(HeroSelectScene.class);
+					PPDGame.switchScene(HeroSelectScene.class);
 				} else {
-					MainGame.switchScene( StartScene.class );
+					PPDGame.switchScene( StartScene.class );
 				}
 			}
 			
@@ -124,7 +124,7 @@ public class TitleScene extends PixelScene {
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
 					HeroSelectScene.testing = true;
-					MainGame.switchScene(HeroSelectScene.class);
+					PPDGame.switchScene(HeroSelectScene.class);
 					return true;
 				}
 				return super.onLongClick();
@@ -145,7 +145,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnRankings = new TitleButton(Messages.get(this, "rankings")){
 			@Override
 			protected void onClick() {
-				MainGame.switchScene( RankingsScene.class );
+				PPDGame.switchScene( RankingsScene.class );
 			}
 		};
 		btnRankings.icon(Icons.get(Icons.RANKINGS));
@@ -154,7 +154,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnBadges = new TitleButton(Messages.get(this, "badges")){
 			@Override
 			protected void onClick() {
-				MainGame.switchScene( BadgesScene.class );
+				PPDGame.switchScene( BadgesScene.class );
 			}
 		};
 		btnBadges.icon(Icons.get(Icons.BADGES));
@@ -164,7 +164,7 @@ public class TitleScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				ChangesScene.changesSelected = 0;
-				MainGame.switchScene( ChangesScene.class );
+				PPDGame.switchScene( ChangesScene.class );
 			}
 		};
 		btnChanges.icon(Icons.get(Icons.CHANGES));
@@ -173,7 +173,7 @@ public class TitleScene extends PixelScene {
 		TitleButton btnAbout = new TitleButton(Messages.get(this, "about")){
 			@Override
 			protected void onClick() {
-				MainGame.switchScene( AboutScene.class );
+				PPDGame.switchScene( AboutScene.class );
 			}
 		};
 		btnAbout.icon(Icons.get(Icons.YENDOR));

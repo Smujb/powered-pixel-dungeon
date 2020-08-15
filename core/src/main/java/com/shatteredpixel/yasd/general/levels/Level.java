@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -631,7 +631,7 @@ public abstract class Level implements Bundlable {
 		version = bundle.getInt( VERSION );
 		
 		//saves from before 0.6.5c are not supported
-		if (version < MainGame.v0_6_5c){
+		if (version < PPDGame.v0_6_5c){
 			throw new RuntimeException("old save");
 		}
 
@@ -789,7 +789,7 @@ public abstract class Level implements Bundlable {
 	}
 
 	public void addMob(Mob mob) {
-		if (MainGame.scene() instanceof GameScene && Dungeon.level == this) {
+		if (PPDGame.scene() instanceof GameScene && Dungeon.level == this) {
 			GameScene.add(mob);
 		} else {
 			mobs.add(mob);
@@ -1416,7 +1416,7 @@ public abstract class Level implements Bundlable {
 			heap.drop(item);
 		}
 
-		if (Dungeon.level != null && MainGame.scene() instanceof GameScene) {
+		if (Dungeon.level != null && PPDGame.scene() instanceof GameScene) {
 			pressCell( cell );
 		}
 		

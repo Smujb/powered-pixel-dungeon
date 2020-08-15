@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -387,7 +387,7 @@ public class Hero extends Char {
 		DistributionPoints = bundle.getInt( DISTRIBUTIONPOINTS );
 
 		//Old saves
-		if (Dungeon.version < MainGame.v0_4_7) {
+		if (Dungeon.version < PPDGame.v0_4_7) {
 			Power /= 3;
 			Focus /= 3;
 			Perception /= 3;
@@ -750,7 +750,7 @@ public class Hero extends Char {
 				Alchemy.alchPos = dst;
 				AlchemyScene.setProvider( alch );
 			}
-			MainGame.switchScene(AlchemyScene.class);
+			PPDGame.switchScene(AlchemyScene.class);
 			return false;
 
 		} else if (getCloser( dst )) {
@@ -1011,7 +1011,7 @@ public class Hero extends Char {
 				float divisor = 3 + 12*((HP + shielding()) / (float)(HT + shielding()));
 				GameScene.flash( (int)(0xFF/divisor) << 16 );
 				if (YASDSettings.vibrate()) {
-					MainGame.vibrate(Math.min(250, (int) (shake * 50)));
+					PPDGame.vibrate(Math.min(250, (int) (shake * 50)));
 				}
 				if (shake > 1f) {
 					loseMorale(shake * 0.33f);
@@ -1174,7 +1174,7 @@ public class Hero extends Char {
 			
 			float speed = speed();
 			if (Dungeon.isChallenged(Challenges.COLLAPSING_FLOOR) & (Dungeon.level.getTerrain(pos) == Terrain.EMPTY || Dungeon.level.getTerrain(pos) == Terrain.EMPTY_SP || Dungeon.level.getTerrain(pos) == Terrain.EMBERS)) {
-				if (MainGame.scene() instanceof GameScene) {
+				if (PPDGame.scene() instanceof GameScene) {
 					if (!isFlying()) {
 						Dungeon.level.set(pos, Terrain.CHASM);
 					}
@@ -1338,7 +1338,7 @@ public class Hero extends Char {
 
 	public void distributePoints() {
 		DistributionPoints += 1;
-		MainGame.runOnRenderThread(new Callback() {
+		PPDGame.runOnRenderThread(new Callback() {
 			@Override
 			public void call() {
 				WndHero window = new WndHero();

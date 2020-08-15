@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.Lore;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
@@ -175,7 +175,7 @@ public class GameScene extends PixelScene {
 	public void create() {
 		
 		if (Dungeon.hero == null){
-			MainGame.switchNoFade(TitleScene.class);
+			PPDGame.switchNoFade(TitleScene.class);
 			return;
 		}
 
@@ -518,7 +518,7 @@ public class GameScene extends PixelScene {
 				try {
 					GameScene.class.wait(5000);
 				} catch (InterruptedException e) {
-					MainGame.reportException(e);
+					PPDGame.reportException(e);
 				}
 				synchronized (actorThread) {
 					if (Actor.processing()) {
@@ -553,7 +553,7 @@ public class GameScene extends PixelScene {
 			Badges.saveGlobal();
 			Journal.saveGlobal();
 		} catch (IOException e) {
-			MainGame.reportException(e);
+			PPDGame.reportException(e);
 		}
 	}
 

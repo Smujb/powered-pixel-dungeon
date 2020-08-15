@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -110,14 +110,14 @@ public class GamesInProgress {
 				Dungeon.preview(info, bundle);
 				
 				//saves from before 0.6.5c are not supported
-				if (info.version < MainGame.v0_6_5c) {
+				if (info.version < PPDGame.v0_6_5c) {
 					info = null;
 				}
 
 			} catch (IOException e) {
 				info = null;
 			} catch (Exception e){
-				MainGame.reportException( e );
+				PPDGame.reportException( e );
 				info = null;
 			}
 

@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.items.armor;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.MagicImmune;
@@ -192,10 +192,10 @@ public class Armor extends KindofMisc {
 		
 		augment = bundle.getEnum(AUGMENT, Augment.class);
 
-		if (Dungeon.version >= MainGame.v0_2_0) {//Support older saves
+		if (Dungeon.version >= PPDGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);
 		}
-		if (Dungeon.version > MainGame.v0_3_6) {
+		if (Dungeon.version > PPDGame.v0_3_6) {
 			STE = bundle.getFloat(STEALTH);
 			EVA = bundle.getFloat(EVASION);
 			speedFactor = bundle.getFloat(SPEED);

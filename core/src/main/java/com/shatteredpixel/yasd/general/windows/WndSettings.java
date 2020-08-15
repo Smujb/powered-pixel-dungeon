@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -123,7 +123,7 @@ public class WndSettings extends WndTabbed {
 				protected void onChange() {
 					if (getSelectedValue() != YASDSettings.scale()) {
 						YASDSettings.scale(getSelectedValue());
-						MainGame.seamlessResetScene();
+						PPDGame.seamlessResetScene();
 					}
 				}
 			};
@@ -142,7 +142,7 @@ public class WndSettings extends WndTabbed {
 						super.onClick();
 						if (checked()) {
 							checked( !checked() );
-							MainGame.scene().add( new WndOptions(
+							PPDGame.scene().add(new WndOptions(
 									Messages.get( DisplayTab.class, "saver" ),
 									Messages.get( DisplayTab.class, "saver_desc" ),
 									Messages.get( DisplayTab.class, "okay" ),
@@ -325,7 +325,7 @@ public class WndSettings extends WndTabbed {
 				@Override
 				protected void onClick() {
 					super.onClick();
-					MainGame.seamlessResetScene(new Game.SceneChangeCallback() {
+					PPDGame.seamlessResetScene(new Game.SceneChangeCallback() {
 						@Override
 						public void beforeCreate() {
 							YASDSettings.systemFont(checked());
@@ -347,7 +347,7 @@ public class WndSettings extends WndTabbed {
 					@Override
 					protected void onClick() {
 						super.onClick();
-						MainGame.scene().addToFront(new WndKeyBindings());
+						PPDGame.scene().addToFront(new WndKeyBindings());
 					}
 				};
 

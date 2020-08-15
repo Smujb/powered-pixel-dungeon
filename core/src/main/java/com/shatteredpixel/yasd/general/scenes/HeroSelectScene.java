@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.Difficulty;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
@@ -158,7 +158,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				MainGame.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
+				PPDGame.scene().addToFront(new WndHeroInfo(GamesInProgress.selectedClass));
 			}
 		};
 		infoButton.visible = false;
@@ -187,7 +187,7 @@ public class HeroSelectScene extends PixelScene {
 				Icons.get( YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 			@Override
 			protected void onClick() {
-				MainGame.scene().addToFront(new WndChallenges(YASDSettings.challenges(), true) {
+				PPDGame.scene().addToFront(new WndChallenges(YASDSettings.challenges(), true) {
 					public void onBackPressed() {
 						super.onBackPressed();
 						icon(Icons.get(YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
@@ -304,7 +304,7 @@ public class HeroSelectScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		MainGame.switchScene( TitleScene.class );
+		PPDGame.switchScene( TitleScene.class );
 	}
 
 	private class HeroBtn extends StyledButton {
@@ -342,9 +342,9 @@ public class HeroSelectScene extends PixelScene {
 			super.onClick();
 
 			if( cl.locked() ){
-				MainGame.scene().addToFront( new WndMessage(cl.unlockMsg()));
+				PPDGame.scene().addToFront( new WndMessage(cl.unlockMsg()));
 			} else if (GamesInProgress.selectedClass == cl) {
-				MainGame.scene().add(new WndHeroInfo(cl));
+				PPDGame.scene().add(new WndHeroInfo(cl));
 			} else {
 				setSelectedHero(cl);
 			}

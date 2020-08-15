@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -137,7 +137,7 @@ public class WndDocument extends Window {
 		
 		public boolean onClick( float x, float y ) {
 			if (inside( x, y ) && found) {
-				MainGame.scene().addToFront( new WndStory( doc.pageBody(page) ));
+				PPDGame.scene().addToFront( new WndStory( doc.pageBody(page) ));
 				return true;
 			} else {
 				return false;

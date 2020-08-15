@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.SharedLibraryLoader;
 import com.shatteredpixel.yasd.UpdateImpl;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.services.Updates;
 import com.watabou.noosa.Game;
@@ -112,12 +112,12 @@ public class DesktopLauncher {
         String basePath = "";
         if (SharedLibraryLoader.isWindows) {
             if (System.getProperties().getProperty("os.name").equals("Windows XP")) {
-                basePath = "Application Data/.smujb/Yet Another Shattered Dungeon/";
+                basePath = "Application Data/.smujb/Powered Pixel Dungeon/";
             } else {
-                basePath = "AppData/Roaming/.smujb/Yet Another Shattered Dungeon/";
+                basePath = "AppData/Roaming/.smujb/Powered Pixel Dungeon/";
             }
         } else if (SharedLibraryLoader.isMac) {
-            basePath = "Library/Application Support/Yet Another Shattered Dungeon/";
+            basePath = "Library/Application Support/Powered Pixel Dungeon/";
         } else if (SharedLibraryLoader.isLinux) {
             basePath = ".smujb/yet-another-shattered-dungeon/";
         }
@@ -145,6 +145,6 @@ public class DesktopLauncher {
         config.setWindowIcon("icons/icon_16.png", "icons/icon_32.png", "icons/icon_64.png",
                 "icons/icon_128.png", "icons/icon_256.png");
 
-        new Lwjgl3Application(new MainGame(new DesktopPlatformSupport()), config);
+        new Lwjgl3Application(new PPDGame(new DesktopPlatformSupport()), config);
     }
 }

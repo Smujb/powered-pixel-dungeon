@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
@@ -474,7 +474,7 @@ public class WndBag extends WndTabbed {
 		protected boolean onLongClick() {
 			if (listener == null) {
 				hide();
-				MainGame.platform.promptTextInput(Messages.get(this, "rename_title"), item.name(), 20, false, Messages.get(this, "confirm"), Messages.get(this, "cancel"), new PlatformSupport.TextCallback() {
+				PPDGame.platform.promptTextInput(Messages.get(this, "rename_title"), item.name(), 20, false, Messages.get(this, "confirm"), Messages.get(this, "cancel"), new PlatformSupport.TextCallback() {
 					@Override
 					public void onSelect(boolean positive, String text) {
 						if (positive && text != null && !text.isEmpty()) {

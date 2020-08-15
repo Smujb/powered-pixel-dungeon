@@ -18,7 +18,7 @@
 
 ---------------  S U M M A R Y ------------
 
-Command Line: -DImplementation-Version=426 -DSpecification-Name=Yet Another Shattered Dungeon -DSpecification-Version=0.2.22-INDEV -Dfile.encoding=windows-1252 -Duser.country=GB -Duser.language=en -Duser.variant com.shatteredpixel.yasd.desktop.DesktopLauncher
+Command Line: -DImplementation-Version=426 -DSpecification-Name=Powered Pixel Dungeon -DSpecification-Version=0.2.22-INDEV -Dfile.encoding=windows-1252 -Duser.country=GB -Duser.language=en -Duser.variant com.shatteredpixel.yasd.desktop.DesktopLauncher
 
 Host: AMD Ryzen 7 2700X Eight-Core Processor         , 16 cores, 15G,  Windows 10 , 64 bit Build 18362 (10.0.18362.778)
 Time: Fri Apr 17 14:40:44 2020 GMT Summer Time elapsed time: 11 seconds (0d 0h 0m 11s)
@@ -39,7 +39,7 @@ j  com.shatteredpixel.yasd.desktop.DesktopPlatformSupport.setupFontGenerators(IZ
 j  com.shatteredpixel.yasd.general.scenes.PixelScene.create()V+318
 j  com.shatteredpixel.yasd.general.scenes.TitleScene.create()V+1
 j  com.watabou.noosa.Game.switchScene()V+46
-j  com.shatteredpixel.yasd.general.MainGame.switchScene()V+1
+j  com.shatteredpixel.yasd.general.PPDGame.switchScene()V+1
 J 1610 c1 com.watabou.noosa.Game.step()V (41 bytes) @ 0x0000025ee11e7a4c [0x0000025ee11e75a0+0x00000000000004ac]
 J 1706 c1 com.watabou.noosa.Game.render()V (59 bytes) @ 0x0000025ee1214924 [0x0000025ee12133c0+0x0000000000001564]
 j  com.badlogic.gdx.backends.lwjgl.LwjglApplication.mainLoop()V+770
@@ -634,7 +634,7 @@ dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
 symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-12.0.1\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.778_none_e6c6b761130d4fb8;C:\Program Files\Java\jdk-12.0.1\bin\server;C:\Users\samue\AppData\Local\Temp\libgdxsamue\7d76f548;C:\Users\samue\AppData\Local\Temp\libgdxsamue\1cecf4f6;C:\WINDOWS\System32\DriverStore\FileRepository\u0346830.inf_amd64_35731e557194973d\B345901;C:\Users\samue\AppData\Local\Temp\libgdxsamue\fd391f27
 
 VM Arguments:
-jvm_args: -DImplementation-Version=426 -DSpecification-Name=Yet Another Shattered Dungeon -DSpecification-Version=0.2.22-INDEV -Dfile.encoding=windows-1252 -Duser.country=GB -Duser.language=en -Duser.variant 
+jvm_args: -DImplementation-Version=426 -DSpecification-Name=Powered Pixel Dungeon -DSpecification-Version=0.2.22-INDEV -Dfile.encoding=windows-1252 -Duser.country=GB -Duser.language=en -Duser.variant
 java_command: com.shatteredpixel.yasd.desktop.DesktopLauncher
 java_class_path (initial): F:\yasd-master\desktop\build\classes\java\main;F:\yasd-master\desktop\build\resources\main;F:\yasd-master\core\build\libs\core-0.2.22.jar;F:\yasd-master\SPD-classes\build\libs\SPD-classes-0.2.22.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-freetype\1.9.10\8853e4f08589a9feb4b851187909cfde8810e491\gdx-freetype-1.9.10.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-backend-lwjgl\1.9.10\8f88abd43500d94c486d25f04d642318da72773a\gdx-backend-lwjgl-1.9.10.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-platform\1.9.10\1907b49f8363dd1ee37d273854a9cc3c741a6e66\gdx-platform-1.9.10-natives-desktop.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-freetype-platform\1.9.10\5c4b67db9c1d62383b718ce040c7cdb555d5b19f\gdx-freetype-platform-1.9.10-natives-desktop.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations\15.0\d40ab99147584cf6cfb5245be67b3fee2c7220f9\annotations-15.0.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx-controllers\1.9.10\b63b3ad62050405148be30ffd2e1946c13123cec\gdx-controllers-1.9.10.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.gdx\gdx\1.9.10\79d9ad27bd5e3eb18c9ade61d3a27d7237695d53\gdx-1.9.10.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl_util\2.9.3\751f06b62424da056954c67288fd5c494431e350\lwjgl_util-2.9.3.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl\2.9.3\3df168ac74e4a8c96562cdff24ad352e255bf89c\lwjgl-2.9.3.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\com.badlogicgames.jlayer\jlayer\1.0.1-gdx\7cca83cec5c1b2f011362f4d85aabd71a73b049d\jlayer-1.0.1-gdx.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\org.jcraft\jorbis\0.0.17\8872d22b293e8f5d7d56ff92be966e6dc28ebdc6\jorbis-0.0.17.jar;C:\Users\samue\.gradle\caches\modules-2\files-2.1\org.json\json\2017051
 Launcher Type: SUN_STANDARD

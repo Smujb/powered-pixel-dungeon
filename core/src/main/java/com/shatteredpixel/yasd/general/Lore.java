@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,7 @@ public class Lore {
 			TextScene.init(text, null, level.loadImg(), 5, 0.67f, new Callback() {
 				@Override
 				public void call() {
-					MainGame.switchScene(GameScene.class);
+					PPDGame.switchScene(GameScene.class);
 				}
 			}, null, false);
 		}

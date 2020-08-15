@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.windows;
 
 import com.badlogic.gdx.Gdx;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.YASDAction;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -268,11 +268,11 @@ public class WndKeyBindings extends Window {
 			if (inside(x, y)){
 				//assigning second key
 				if (x >= this.x + 3*width()/4 && key1 != 0) {
-					MainGame.scene().addToFront( new WndChangeBinding(gameAction, this, false, key2, key1));
+					PPDGame.scene().addToFront( new WndChangeBinding(gameAction, this, false, key2, key1));
 
 					//assigning first key
 				} else if (x >= this.x + width()/2){
-					MainGame.scene().addToFront( new WndChangeBinding(gameAction, this, true, key1, key2));
+					PPDGame.scene().addToFront( new WndChangeBinding(gameAction, this, true, key1, key2));
 
 				}
 				return true;

@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -32,7 +32,7 @@ import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.buffs.Awareness;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
@@ -135,11 +135,11 @@ public class DeveloperItem extends Item {
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 				item = null;
-				MainGame.scene().addToFront(new WndError(e.getMessage()));
+				PPDGame.scene().addToFront(new WndError(e.getMessage()));
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 				item = null;
-				MainGame.scene().addToFront(new WndError(e.getMessage()));
+				PPDGame.scene().addToFront(new WndError(e.getMessage()));
 			}
 			return item;
 		}
@@ -174,7 +174,7 @@ public class DeveloperItem extends Item {
 			RedButton btnChoose = new RedButton( "Input Item" ) {
 				@Override
 				protected void onClick() {
-					MainGame.platform.promptTextInput("Enter id of an item you want: ", name(itemClass[0]), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
+					PPDGame.platform.promptTextInput("Enter id of an item you want: ", name(itemClass[0]), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
 
 						@Override
 						public void onSelect(boolean positive, String text) {
@@ -183,8 +183,8 @@ public class DeveloperItem extends Item {
 									itemClass[0] = Class.forName(BASE_NAME + text);
 									GLog.p("Successfully fetched item.");
 								} catch (ClassNotFoundException e) {
-									MainGame.reportException(e);
-									MainGame.scene().addToFront(new WndError(e.getLocalizedMessage()));
+									PPDGame.reportException(e);
+									PPDGame.scene().addToFront(new WndError(e.getLocalizedMessage()));
 								}
 								window.update();
 							}
@@ -333,7 +333,7 @@ public class DeveloperItem extends Item {
 			RedButton btnChoose = new RedButton( "Enter Key" ) {
 				@Override
 				protected void onClick() {
-					MainGame.platform.promptTextInput("Enter key of level to fetch: ", Random.element(Dungeon.staticLevels.keySet().toArray(new String[0])), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
+					PPDGame.platform.promptTextInput("Enter key of level to fetch: ", Random.element(Dungeon.staticLevels.keySet().toArray(new String[0])), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
 
 						@Override
 						public void onSelect(boolean positive, String text) {
@@ -412,10 +412,10 @@ public class DeveloperItem extends Item {
 				scroll.empoweredRead();
 				break;
 			case AC_CHOOSEDEPTH:
-				MainGame.scene().addToFront(new WndChooseDepth(Dungeon.level));
+				PPDGame.scene().addToFront(new WndChooseDepth(Dungeon.level));
 				break;
 			case AC_ITEM:
-				MainGame.scene().addToFront(new WndGetItem(this));
+				PPDGame.scene().addToFront(new WndGetItem(this));
 				break;
 			case AC_KILL:
 				for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {

@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -29,9 +29,8 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
-import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -249,10 +248,10 @@ public abstract class Mob extends Char {
 		try {
 			mob = type.newInstance();
 		} catch (InstantiationException e) {
-			MainGame.reportException(e);
+			PPDGame.reportException(e);
 			throw new RuntimeException(e.getCause());
 		} catch (IllegalAccessException e) {
-			MainGame.reportException(e);
+			PPDGame.reportException(e);
 			throw new RuntimeException(e.getCause());
 		}
 		mob.level = level;

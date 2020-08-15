@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	public static void fullscreen( boolean value ) {
 		put( KEY_FULLSCREEN, value );
 		
-		MainGame.updateSystemUI();
+		PPDGame.updateSystemUI();
 	}
 	
 	public static boolean fullscreen() {
@@ -75,7 +75,7 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	
 	public static void landscape( boolean value ){
 		put( KEY_LANDSCAPE, value );
-		((MainGame) MainGame.instance).updateDisplaySize();
+		((PPDGame) PPDGame.instance).updateDisplaySize();
 	}
 
 	//can return null because we need to directly handle the case of landscape not being set
@@ -90,7 +90,7 @@ public class YASDSettings extends com.watabou.utils.GameSettings {
 	
 	public static void powerSaver( boolean value ){
 		put( KEY_POWER_SAVER, value );
-		((MainGame) MainGame.instance).updateDisplaySize();
+		((PPDGame) PPDGame.instance).updateDisplaySize();
 	}
 	
 	public static boolean powerSaver(){

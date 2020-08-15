@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.watabou.gltextures.TextureCache;
 import com.watabou.glwrap.Blending;
@@ -81,7 +81,7 @@ public class TextScene extends PixelScene {
 			onFinish = new Callback() {
 				@Override
 				public void call() {
-					MainGame.switchScene(GameScene.class);
+					PPDGame.switchScene(GameScene.class);
 				}
 			};
 		}
@@ -218,7 +218,7 @@ public class TextScene extends PixelScene {
 		TextScene.continueText = continueText;
 		TextScene.autoFinish = autoFinish;
 
-		MainGame.switchScene(TextScene.class);
+		PPDGame.switchScene(TextScene.class);
 	}
 
 	private void fadeOut() {

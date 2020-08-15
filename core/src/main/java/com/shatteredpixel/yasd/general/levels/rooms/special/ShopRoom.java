@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.levels.rooms.special;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.npcs.Shopkeeper;
@@ -109,7 +109,7 @@ public class ShopRoom extends SpecialRoom {
 
 		Mob shopkeeper = Mob.create(Shopkeeper.class, level);
 		shopkeeper.pos = pos;
-		if (MainGame.scene() instanceof GameScene) {
+		if (PPDGame.scene() instanceof GameScene) {
 			GameScene.add(shopkeeper);
 		} else {
 			level.mobs.add(shopkeeper);

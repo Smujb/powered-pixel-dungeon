@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.scenes;
 
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.effects.Flare;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
@@ -66,7 +66,7 @@ public class AboutScene extends PixelScene {
 		//*** YASD Credits ***
 
 		CreditsBlock YASD = new CreditsBlock(true, Window.SHPX_COLOR,
-				"Yet Another Shattered Dungeon",
+				"Powered Pixel Dungeon",
 				Icons.YENDOR.get(),
 				"Developed by: _Samuel Braithwaite_\nBased on Shattered Pixel Dungeon's open source",
 				"Discord Server",
@@ -90,7 +90,7 @@ public class AboutScene extends PixelScene {
 
 		CreditsBlock assets = new CreditsBlock(true,
 				Window.TITLE_COLOR,
-				"Assets for Yet Another Shattered Dungeon",
+				"Assets for Powered Pixel Dungeon",
 				null,
 				"Most of the assets are inherited from Shattered Pixel Dungeon" +
 						"\nAll of the soundtracks not in Shattered were made by the developer" +
@@ -281,7 +281,7 @@ public class AboutScene extends PixelScene {
 
 	@Override
 	protected void onBackPressed() {
-		MainGame.switchScene(TitleScene.class);
+		PPDGame.switchScene(TitleScene.class);
 	}
 
 	private void addLine( float y, Group content ){

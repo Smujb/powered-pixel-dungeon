@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.spells;
 
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.potions.AlchemicalCatalyst;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -50,7 +50,7 @@ public class Alchemize extends Spell implements AlchemyScene.AlchemyProvider {
 		detach( curUser.belongings.backpack );
 		updateQuickslot();
 		AlchemyScene.setProvider(this);
-		MainGame.switchScene(AlchemyScene.class);
+		PPDGame.switchScene(AlchemyScene.class);
 	}
 	
 	@Override

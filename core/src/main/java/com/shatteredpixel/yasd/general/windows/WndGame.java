@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.HeroSelectScene;
@@ -82,7 +82,7 @@ public class WndGame extends Window {
 					//InterlevelScene.noStory = true;
 					GamesInProgress.selectedClass = Dungeon.hero.heroClass;
 					GamesInProgress.curSlot = GamesInProgress.firstEmpty();
-					MainGame.switchScene(HeroSelectScene.class);
+					PPDGame.switchScene(HeroSelectScene.class);
 				}
 			} );
 			btnStart.textColor(Window.TITLE_COLOR);
@@ -104,7 +104,7 @@ public class WndGame extends Window {
 						try {
 							Dungeon.saveAll();
 						} catch (IOException e) {
-							MainGame.reportException(e);
+							PPDGame.reportException(e);
 						}
 						Game.switchScene(TitleScene.class);
 					}
@@ -116,7 +116,7 @@ public class WndGame extends Window {
 						try {
 							Dungeon.saveAll();
 						} catch (IOException e) {
-							MainGame.reportException(e);
+							PPDGame.reportException(e);
 						}
 						Game.instance.finish();
 					}

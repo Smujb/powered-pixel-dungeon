@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.ui;
 
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.scenes.TitleScene;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -48,7 +48,7 @@ public class ExitButton extends IconButton {
 		if (Game.scene() instanceof TitleScene) {
 			Game.instance.finish();
 		} else {
-			MainGame.switchNoFade( TitleScene.class );
+			PPDGame.switchNoFade( TitleScene.class );
 		}
 	}
 }

@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -185,7 +185,7 @@ public class LevelHandler {
 		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
-				MainGame.switchScene(GameScene.class);
+				PPDGame.switchScene(GameScene.class);
 			}
 		}, getThread(), YASDSettings.fastInterlevelScene());
 	}
@@ -198,7 +198,7 @@ public class LevelHandler {
 		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
-				MainGame.switchScene(GameScene.class);
+				PPDGame.switchScene(GameScene.class);
 			}
 		}, new Thread() {
 			@Override
@@ -220,7 +220,7 @@ public class LevelHandler {
 		TextScene.init(msg, Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
-				MainGame.switchScene(GameScene.class);
+				PPDGame.switchScene(GameScene.class);
 			}
 		}, getThread(), YASDSettings.fastInterlevelScene());
 	}

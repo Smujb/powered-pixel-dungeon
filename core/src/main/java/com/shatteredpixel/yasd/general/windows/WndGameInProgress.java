@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.windows;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -82,7 +82,7 @@ public class WndGameInProgress extends Window {
 			protected boolean onLongClick() {
 				try {
 					Bundle bundle = FileUtils.bundleFromFile(GamesInProgress.gameFile(slot));
-					MainGame.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
+					PPDGame.scene().addToFront(new WndMessage("_Debug Info:_\n\n" +
 							"Version: " + Game.version + " (" + Game.versionCode + ")\n" +
 							"Seed: " + bundle.getLong("seed") + "\n" +
 							"Challenge Mask: " + info.challenges));
@@ -144,7 +144,7 @@ public class WndGameInProgress extends Window {
 			protected void onClick() {
 				super.onClick();
 				
-				MainGame.scene().add(new WndOptions(
+				PPDGame.scene().add(new WndOptions(
 						Messages.get(WndGameInProgress.class, "erase_warn_title"),
 						Messages.get(WndGameInProgress.class, "erase_warn_body"),
 						Messages.get(WndGameInProgress.class, "erase_warn_yes"),
@@ -154,7 +154,7 @@ public class WndGameInProgress extends Window {
 						if (index == 0) {
 							FileUtils.deleteDir(GamesInProgress.slotFolder(slot));
 							GamesInProgress.setUnknown(slot);
-							MainGame.switchNoFade(StartScene.class);
+							PPDGame.switchNoFade(StartScene.class);
 						}
 					}
 				} );

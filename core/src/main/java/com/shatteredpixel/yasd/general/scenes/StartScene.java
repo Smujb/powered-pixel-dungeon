@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ package com.shatteredpixel.yasd.general.scenes;
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.journal.Journal;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -119,7 +119,7 @@ public class StartScene extends PixelScene {
 	
 	@Override
 	protected void onBackPressed() {
-		MainGame.switchScene( TitleScene.class );
+		PPDGame.switchScene( TitleScene.class );
 	}
 	
 	private static class SaveSlotButton extends Button {
@@ -266,9 +266,9 @@ public class StartScene extends PixelScene {
 			if (newGame) {
 				GamesInProgress.selectedClass = null;
 				GamesInProgress.curSlot = slot;
-				MainGame.switchScene(HeroSelectScene.class);
+				PPDGame.switchScene(HeroSelectScene.class);
 			} else {
-				MainGame.scene().add( new WndGameInProgress(slot));
+				PPDGame.scene().add( new WndGameInProgress(slot));
 			}
 		}
 	}

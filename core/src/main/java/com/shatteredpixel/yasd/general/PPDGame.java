@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PlatformSupport;
 
-public class MainGame extends Game {
+public class PPDGame extends Game {
 
 	public static final int v0_6_5c = 264;
 	public static final int v0_2_0  = 400;
@@ -83,8 +83,9 @@ public class MainGame extends Game {
 	public static final int v0_4_6  = 446;
 	public static final int v0_4_7  = 449;
 	public static final int v0_4_8  = 450;
+	public static final int v0_4_9  = 452;
 	
-	public MainGame(PlatformSupport platform ) {
+	public PPDGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
 		
 		//v0.7.0

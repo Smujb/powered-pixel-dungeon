@@ -1,4 +1,4 @@
-# Yet Another Shattered Dungeon
+# Powered Pixel Dungeon
 
 Based of Shattered Pixel Dungeon by 00-Evan:
 https://github.com/00-Evan/shattered-pixel-dungeon

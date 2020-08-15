@@ -7,7 +7,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -40,11 +40,11 @@ buildscript {
 
 allprojects {
     ext {
-        appName = 'Yet Another Shattered Dungeon'
+        appName = 'Powered Pixel Dungeon'
         appPackageName = 'com.smujamesb.yasd'
 
-        appVersionCode = 451
-        appVersionName = '0.4.8a'
+        appVersionCode = 452
+        appVersionName = '0.4.9'
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
         appAndroidCompileSDK = 29

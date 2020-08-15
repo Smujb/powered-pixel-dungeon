@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.ui.changelist;
 
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -59,7 +59,7 @@ public class ChangeButton extends Component {
 	}
 	
 	protected void onClick() {
-		MainGame.scene().add(new ChangesWindow(new Image(icon), title, message));
+		PPDGame.scene().add(new ChangesWindow(new Image(icon), title, message));
 	}
 	
 	@Override

@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Yet Another Shattered Dungeon
+ *   Powered Pixel Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.AvailableUpdateData;
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.services.Updates;
 import com.shatteredpixel.yasd.general.windows.WndOptions;
@@ -61,7 +61,7 @@ public class UpdateNotification extends StyledButton {
 	@Override
 	protected void onClick() {
 		if (Updates.updateAvailable()){
-			MainGame.scene().addToFront( new WndUpdate( Updates.updateData() ) );
+			PPDGame.scene().addToFront( new WndUpdate( Updates.updateData() ) );
 		}
 	}
 

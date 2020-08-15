@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -420,12 +420,12 @@ public class OldPrisonBossLevel extends Level {
 				CustomTilemap vis = new exitVisual();
 				vis.pos(11, 8);
 				customTiles.add(vis);
-				((GameScene) MainGame.scene()).addCustomTile(vis);
+				((GameScene) PPDGame.scene()).addCustomTile(vis);
 
 				vis = new exitVisualWalls();
 				vis.pos(11, 8);
 				customWalls.add(vis);
-				((GameScene) MainGame.scene()).addCustomWall(vis);
+				((GameScene) PPDGame.scene()).addCustomWall(vis);
 
 				Dungeon.hero.interrupt();
 				Dungeon.hero.pos = 5+27*32;

@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
@@ -215,7 +215,7 @@ public class WndHero extends WndTabbed {
 			RedButton btnInfo = new RedButton(Messages.get(this, "info")) {
 				@Override
 				protected void onClick() {
-					MainGame.scene().addToFront(new WndTitledMessage( HeroSprite.avatar(hero.heroClass, 6 ), Messages.get(AbilitiesTab.class, "info_title"), Messages.get(AbilitiesTab.class, "info_desc")));
+					PPDGame.scene().addToFront(new WndTitledMessage( HeroSprite.avatar(hero.heroClass, 6 ), Messages.get(AbilitiesTab.class, "info_title"), Messages.get(AbilitiesTab.class, "info_desc")));
 				}
 			};
 			btnInfo.setRect(WIDTH*0.1f, pos, WIDTH*0.8f, BTN_HEIGHT);

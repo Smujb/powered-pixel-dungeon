@@ -6,7 +6,7 @@
  *  * Shattered Pixel Dungeon
  *  * Copyright (C) 2014-2019 Evan Debenham
  *  *
- *  * Yet Another Shattered Dungeon
+ *  * Powered Pixel Dungeon
  *  * Copyright (C) 2014-2020 Samuel Braithwaite
  *  *
  *  * This program is free software: you can redistribute it and/or modify
@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.scenes;
 
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GamesInProgress;
-import com.shatteredpixel.yasd.general.MainGame;
+import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Rankings;
 import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
@@ -46,7 +46,7 @@ import com.watabou.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static int LATEST_UPDATE = MainGame.v0_4_8;
+	private static int LATEST_UPDATE = PPDGame.v0_4_9;
 
 	@Override
 	public void create() {
@@ -54,8 +54,8 @@ public class WelcomeScene extends PixelScene {
 
 		final int previousVersion = YASDSettings.version();
 
-		if (MainGame.versionCode == previousVersion) {
-			MainGame.switchNoFade(TitleScene.class);
+		if (PPDGame.versionCode == previousVersion) {
+			PPDGame.switchNoFade(TitleScene.class);
 			return;
 		}
 
@@ -103,13 +103,13 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					YASDSettings.version(MainGame.versionCode);
+					YASDSettings.version(PPDGame.versionCode);
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
-					MainGame.switchScene(HeroSelectScene.class);
+					PPDGame.switchScene(HeroSelectScene.class);
 				} else {
 					updateVersion(previousVersion);
-					MainGame.switchScene(TitleScene.class);
+					PPDGame.switchScene(TitleScene.class);
 				}
 			}
 		};
@@ -121,7 +121,7 @@ public class WelcomeScene extends PixelScene {
 				protected void onClick() {
 					super.onClick();
 					updateVersion(previousVersion);
-					MainGame.switchScene(ChangesScene.class);
+					PPDGame.switchScene(ChangesScene.class);
 				}
 			};
 			okay.setRect(title.x, h-25, (title.width()/2)-2, 21);
@@ -141,7 +141,7 @@ public class WelcomeScene extends PixelScene {
 		String message;
 		if (previousVersion == 0) {
 			message = Messages.get(this, "welcome_msg");
-		} else if (previousVersion <= MainGame.versionCode) {
+		} else if (previousVersion <= PPDGame.versionCode) {
 			if (previousVersion < LATEST_UPDATE){
 				message = Messages.get(this, "update_intro");
 				message += "\n\n" + Messages.get(this, "update_msg");
@@ -174,18 +174,18 @@ public class WelcomeScene extends PixelScene {
 					} catch (Exception e) {
 						//if we encounter a fatal per-record error, then clear that record
 						Rankings.INSTANCE.records.remove(rec);
-						MainGame.reportException(e);
+						PPDGame.reportException(e);
 					}
 				}
 				Rankings.INSTANCE.save();
 			} catch (Exception e) {
 				//if we encounter a fatal error, then just clear the rankings
 				FileUtils.deleteFile( Rankings.RANKINGS_FILE );
-				MainGame.reportException(e);
+				PPDGame.reportException(e);
 			}
 		}
 		
-		YASDSettings.version(MainGame.versionCode);
+		YASDSettings.version(PPDGame.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {
