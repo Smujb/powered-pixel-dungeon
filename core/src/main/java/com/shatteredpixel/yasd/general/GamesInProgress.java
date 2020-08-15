@@ -120,6 +120,10 @@ public class GamesInProgress {
 				MainGame.reportException( e );
 				info = null;
 			}
+
+			if (info == null) {
+				delete(slot);
+			}
 			
 			slotStates.put( slot, info );
 			return info;
