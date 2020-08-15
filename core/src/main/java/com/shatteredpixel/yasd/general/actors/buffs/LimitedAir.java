@@ -69,13 +69,15 @@ public class LimitedAir extends Buff {
 
 	@Override
 	public boolean act() {
-		if (duration > 0) {
-			duration--;
-		} else {
-			target.damage(target.HT/5, this);
-			if (target == Dungeon.hero && !target.isAlive()) {
-				Dungeon.fail( getClass() );
-				GLog.n( Messages.get(this, "ondeath") );
+		if (!Dungeon.level.canBreathe(target.pos)) {
+			if (duration > 0) {
+				duration--;
+			} else {
+				target.damage(target.HT / 5, this);
+				if (target == Dungeon.hero && !target.isAlive()) {
+					Dungeon.fail(getClass());
+					GLog.n(Messages.get(this, "ondeath"));
+				}
 			}
 		}
 		spend( TICK );

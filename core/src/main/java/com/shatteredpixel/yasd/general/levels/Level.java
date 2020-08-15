@@ -245,6 +245,10 @@ public abstract class Level implements Bundlable {
 		return false;
 	}
 
+	public boolean canBreathe(int pos) {
+		return true;
+	}
+
 	//Cache map flags to use later and improve performance.
 	private FlagCache passable = new FlagCache();
 	private FlagCache losBlocking = new FlagCache();

@@ -216,6 +216,11 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
+	public boolean canBreathe(int pos) {
+		return bubbleLocations.contains(pos);
+	}
+
+	@Override
 	public String loadImg() {
 		return waterTex();
 	}
