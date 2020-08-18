@@ -343,6 +343,7 @@ abstract public class MissileWeapon extends Weapon {
 			MissileWeapon m = (MissileWeapon)split;
 			m.durability = MAX_DURABILITY;
 			m.parent = this;
+			m.curUser = curUser;
 		}
 		
 		return split;
