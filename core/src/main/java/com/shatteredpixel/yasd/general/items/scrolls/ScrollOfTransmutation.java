@@ -150,16 +150,17 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	private Weapon changeWeapon( Weapon w ) {
 		
 		Weapon n;
-		Generator.Category c;
 		if (w instanceof MeleeWeapon) {
-			c = Generator.Category.WEAPON;
+			n = Generator.randomWeapon();
+			((MeleeWeapon)n).setTier(((MeleeWeapon) w).tier);
 		} else {
+			Generator.Category c;
 			c = Generator.misTiers[((MissileWeapon)w).tier - 1];
+			do {
+				n = (Weapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
+			} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
 		}
-		
-		do {
-			n = (Weapon) Reflection.newInstance(c.classes[Random.chances(c.probs)]);
-		} while (Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
+
 		
 		int level = w.level();
 		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
@@ -219,11 +220,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	
 	private Wand changeWand( Wand w ) {
 		
-		Wand n;
-		do {
-			n = (Wand)Generator.random( Generator.Category.WAND );
-		} while ( Challenges.isItemBlocked(n) || n.getClass() == w.getClass());
-		
+		Wand n = Generator.randomWand();
 		n.level( 0 );
 		int level = w.level();
 		if (w.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
