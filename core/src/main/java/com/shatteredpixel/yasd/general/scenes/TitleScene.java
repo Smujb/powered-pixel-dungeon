@@ -50,6 +50,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Music;
 import com.watabou.utils.DeviceCompat;
+import com.watabou.utils.PlatformSupport;
 
 public class TitleScene extends PixelScene {
 	
@@ -124,7 +125,19 @@ public class TitleScene extends PixelScene {
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
 					HeroSelectScene.testing = true;
-					PPDGame.switchScene(HeroSelectScene.class);
+					PPDGame.platform.promptTextInput("Enter a seed", "-1", Integer.MAX_VALUE, false, "Confirm", "Cancel", new PlatformSupport.TextCallback() {
+						@Override
+						public void onSelect(boolean positive, String text) {
+							if (positive) {
+								try {
+									HeroSelectScene.seed = Long.parseLong(text);
+								} catch (NumberFormatException e) {
+									PPDGame.reportException(e);
+								}
+							}
+							PPDGame.switchScene(HeroSelectScene.class);
+						}
+					});
 					return true;
 				}
 				return super.onLongClick();

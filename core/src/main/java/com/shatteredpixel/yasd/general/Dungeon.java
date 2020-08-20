@@ -197,19 +197,23 @@ public class Dungeon {
 
 	public static long seed;
 	
-	public static void init() {
+	public static void init(long seed) {
 
 		version = Game.versionCode;
 		challenges = YASDSettings.challenges();
 
-		seed = DungeonSeed.randomSeed();
+		if (seed == -1) {
+			Dungeon.seed = DungeonSeed.randomSeed();
+		} else {
+			Dungeon.seed = seed;
+		}
 
 		testing = YASDSettings.testing();
 
 		Actor.clear();
 		Actor.resetNextID();
 
-		Random.pushGenerator( seed );
+		Random.pushGenerator(Dungeon.seed);
 
 		Scroll.initLabels();
 		Potion.initColors();

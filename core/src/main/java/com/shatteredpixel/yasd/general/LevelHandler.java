@@ -190,7 +190,7 @@ public class LevelHandler {
 		}, getThread(), YASDSettings.fastInterlevelScene());
 	}
 
-	public static void doInit() {
+	public static void doInit(long seed) {
 		mode = Mode.DESCEND;
 		depth = 1;
 		pos = null;
@@ -204,7 +204,7 @@ public class LevelHandler {
 			@Override
 			public void run() {
 				try {
-					initGame();
+					initGame(seed);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
@@ -229,11 +229,11 @@ public class LevelHandler {
 		mode = Mode.MOVE;
 	}
 
-	private static void initGame() throws IOException {
+	private static void initGame(long seed) throws IOException {
 		Mob.clearHeldAllies();
 		Dungeon.level = null;
 		Dungeon.hero = null;
-		Dungeon.init();
+		Dungeon.init(seed);
 		GameLog.wipe();
 		LevelHandler.key = Dungeon.keyForDepth();
 		switchDepth(1, Mode.DESCEND, Dungeon.keyForDepth());

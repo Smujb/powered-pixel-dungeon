@@ -78,6 +78,8 @@ public class HeroSelectScene extends PixelScene {
 
 	public static boolean testing = false;
 
+	public static long seed = -1;
+
 	@Override
 	public void create() {
 		super.create();
@@ -144,7 +146,8 @@ public class HeroSelectScene extends PixelScene {
 					YASDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
-					LevelHandler.doInit();
+					LevelHandler.doInit(seed);
+					seed = -1;
 				}
 			}
 		};

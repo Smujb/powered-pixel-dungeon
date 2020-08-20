@@ -41,8 +41,7 @@ public class IntroScene extends PixelScene {
 			@Override
 			public void hide() {
 				super.hide();
-				LevelHandler.doInit();
-				//Game.switchScene( InterlevelScene.class );
+				LevelHandler.doInit(-1);
 			}
 		} );
 		
