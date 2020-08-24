@@ -147,11 +147,9 @@ public class Armor extends KindofMisc {
 	private static final String DR = "dr";
 	private static final String MAGICAL_DR = "magic-dr";
 	private static final String PHYSICAL_DR = "phys-dr";
-	private static final String IMG = "image";
-	private static final String NAME = "name";
-	private static final String DESC = "desc";
 	private static final String APPEARANCE = "appearance";
 	private static final String REGEN_FACTOR = "regen-factor";
+	private static final String PROFILE      = "profile";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -168,9 +166,7 @@ public class Armor extends KindofMisc {
 		bundle.put( SPEED, speedFactor );
 		bundle.put( MAGICAL_DR, magicDamageFactor);
 		bundle.put( PHYSICAL_DR, physicalDamageFactor);
-		bundle.put(NAME, name);
-		bundle.put(IMG, image);
-		bundle.put(DESC, desc);
+		bundle.put(PROFILE, profile);
 		bundle.put(APPEARANCE, appearance);
 		bundle.put(REGEN_FACTOR, regenFactor);
 	}
@@ -201,9 +197,6 @@ public class Armor extends KindofMisc {
 			speedFactor = bundle.getFloat(SPEED);
 			magicDamageFactor = bundle.getFloat(MAGICAL_DR);
 			physicalDamageFactor = bundle.getFloat(PHYSICAL_DR);
-			desc = bundle.getString(DESC);
-			name = bundle.getString(NAME);
-			image = bundle.getInt(IMG);
 			appearance = bundle.getInt(APPEARANCE);
 			regenFactor = bundle.getFloat(REGEN_FACTOR);
 		} else {
@@ -211,8 +204,9 @@ public class Armor extends KindofMisc {
 			name = Messages.get(this, "name");
 		}
 		//Check the correct profile is still applied only if it's the main armour class not a subclass.
+		profile = bundle.getEnum(PROFILE, ArmorProfile.class);
 		if (getClass() == Armor.class) {
-			matchProfile();
+			profile.copy(this);
 		}
 	}
 
@@ -293,6 +287,8 @@ public class Armor extends KindofMisc {
 		return DRfactor;
 	}
 
+	private ArmorProfile profile = ArmorProfile.NONE;
+
 	@Contract(" -> this")
 	public Armor matchProfile() {
 		//Weapons that are only very slightly different from the basic weapon get it's image and description.
@@ -309,6 +305,7 @@ public class Armor extends KindofMisc {
 			}
 		}
 		closestMatchProfile.copy(this);
+		profile = closestMatchProfile;
 		return this;
 	}
 

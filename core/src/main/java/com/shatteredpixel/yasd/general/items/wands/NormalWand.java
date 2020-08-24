@@ -87,8 +87,7 @@ public abstract class NormalWand extends DamageWand {
 		chargesPerCast = bundle.getInt(CHARGES_PER_CAST);
 	}
 
-	public NormalWand() {
-		initStats();
+	public void resetStats() {
 		initialCharges = curCharges = maxCharges = BASE_INITIAL_CHARGES;
 		chargesPerCast = BASE_CHARGES_PER_CAST;
 	}
@@ -177,6 +176,7 @@ public abstract class NormalWand extends DamageWand {
 	}
 
 	protected NormalWand initStats() {
+		resetStats();
 		do {
 			element = Random.element(Element.values());
 		} while (element == Element.META);

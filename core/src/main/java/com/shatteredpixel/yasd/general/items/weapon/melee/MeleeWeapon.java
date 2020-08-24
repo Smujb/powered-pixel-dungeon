@@ -60,6 +60,8 @@ public class MeleeWeapon extends Weapon {
 
 	public float degradeFactor = 1f;
 
+	private WeaponProfile profile = WeaponProfile.NONE;
+
 	@Override
 	public boolean canDegrade() {
 		return Constants.DEGRADATION;
@@ -248,6 +250,7 @@ public class MeleeWeapon extends Weapon {
 			}
 		}
 		closestMatchProfile.copy(this);
+		profile = closestMatchProfile;
 		return this;
 	}
 
@@ -409,9 +412,7 @@ public class MeleeWeapon extends Weapon {
 	private static final String REACH = "reach";
 	private static final String PROPERTIES = "props";
 	private static final String PROPERTIES_AMT = "num-props";
-	private static final String IMG = "image";
-	private static final String NAME = "name";
-	private static final String DESC = "desc";
+	private static final String PROFILE = "profile";
 	private static final String SOUND = "sound";
 	private static final String PITCH = "pitch";
 
@@ -425,9 +426,7 @@ public class MeleeWeapon extends Weapon {
 		bundle.put(DEFENSEFACTOR, defenseMultiplier);
 		bundle.put(REACH, RCH);
 		bundle.put(PROPERTIES_AMT, properties.size());
-		bundle.put(NAME, name);
-		bundle.put(IMG, image);
-		bundle.put(DESC, desc);
+		bundle.put(PROFILE, profile);
 		bundle.put(SOUND, hitSound);
 		bundle.put(PITCH, hitSoundPitch);
 		for (int i = 0; i < properties.size(); i++) {
@@ -445,9 +444,6 @@ public class MeleeWeapon extends Weapon {
 			ACC = bundle.getFloat(ACCURACY);
 			defenseMultiplier = bundle.getFloat(DEFENSEFACTOR);
 			RCH = bundle.getInt(REACH);
-			desc = bundle.getString(DESC);
-			name = bundle.getString(NAME);
-			image = bundle.getInt(IMG);
 			hitSound = bundle.getString(SOUND);
 			hitSoundPitch = bundle.getFloat(PITCH);
 			int numProps = bundle.getInt(PROPERTIES_AMT);
@@ -459,9 +455,9 @@ public class MeleeWeapon extends Weapon {
 			name = Messages.get(this, "name");
 			properties = new ArrayList<>();
 		}
-		//Ensures this doesn't override Mage's Staff or any other possible unique weapons.
+		profile = bundle.getEnum(PROFILE, WeaponProfile.class);
 		if (getClass() == MeleeWeapon.class) {
-			matchProfile();
+			profile.copy(this);
 		}
 	}
 }
