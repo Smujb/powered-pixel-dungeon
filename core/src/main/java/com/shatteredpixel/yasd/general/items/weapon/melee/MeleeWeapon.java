@@ -455,9 +455,13 @@ public class MeleeWeapon extends Weapon {
 			name = Messages.get(this, "name");
 			properties = new ArrayList<>();
 		}
-		profile = bundle.getEnum(PROFILE, WeaponProfile.class);
-		if (getClass() == MeleeWeapon.class) {
-			profile.copy(this);
+		if (bundle.contains(PROFILE)) {
+			profile = bundle.getEnum(PROFILE, WeaponProfile.class);
+			if (getClass() == MeleeWeapon.class) {
+				profile.copy(this);
+			}
+		} else {
+			matchProfile();
 		}
 	}
 }
