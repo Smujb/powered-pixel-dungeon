@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.items.EquipableItem;
 import com.shatteredpixel.yasd.general.items.Generator;
 import com.shatteredpixel.yasd.general.items.Item;
+import com.shatteredpixel.yasd.general.items.armor.Armor;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.potions.AlchemicalCatalyst;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
@@ -68,6 +69,7 @@ public class ScrollOfTransmutation extends InventoryScroll {
 	
 	public static boolean canTransmute(Item item){
 		return item instanceof MeleeWeapon ||
+				item instanceof Armor ||
 				(item instanceof MissileWeapon && !(item instanceof Dart)) ||
 				(item instanceof Potion && !(item instanceof Elixir || item instanceof Brew || item instanceof AlchemicalCatalyst)) ||
 				item instanceof Scroll ||
@@ -101,6 +103,8 @@ public class ScrollOfTransmutation extends InventoryScroll {
 			result = changeStone((Runestone) item);
 		} else if (item instanceof Artifact) {
 			result = changeArtifact( (Artifact)item );
+		} else if (item instanceof Armor) {
+			result = changeArmor( (Armor) item );
 		} else {
 			result = null;
 		}
@@ -146,12 +150,36 @@ public class ScrollOfTransmutation extends InventoryScroll {
 		
 		return staff;
 	}
+
+	private Armor changeArmor( Armor a ) {
+		Armor n;
+		do {
+			n = Generator.randomArmor();
+		} while (n.getClass() == a.getClass());
+
+		n.setTier(a.tier);
+
+		int level = a.level();
+		if (a.curseInfusionBonus) level -= Constants.CURSE_INFUSION_BONUS_AMT;
+
+		n.level(level);
+
+		n.glyph = a.glyph;
+		n.curseInfusionBonus = a.curseInfusionBonus;
+		n.levelKnown = a.levelKnown;
+		n.cursedKnown = a.cursedKnown;
+		n.cursed = a.cursed;
+		n.augment = a.augment;
+		return n;
+	}
 	
 	private Weapon changeWeapon( Weapon w ) {
 		
 		Weapon n;
 		if (w instanceof MeleeWeapon) {
-			n = Generator.randomWeapon();
+			do {
+				n = Generator.randomWeapon();
+			} while (n.getClass() == w.getClass());
 			((MeleeWeapon)n).setTier(((MeleeWeapon) w).tier);
 		} else {
 			Generator.Category c;
