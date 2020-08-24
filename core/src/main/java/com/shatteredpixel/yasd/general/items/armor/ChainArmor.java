@@ -35,8 +35,8 @@ public class ChainArmor extends Armor {
 	{
 		image = ItemSpriteSheet.Armors.MAIL;
 
-		magicalResist = 1.5f;
-		physicalResist = 2/3f;
+		magicDamageFactor = 1.5f;
+		physicalDamageFactor = 2/3f;
 		STE = 0.75f;
 		EVA = 0.75f;
 	}

@@ -238,18 +238,18 @@ public class Belongings implements Iterable<Item> {
 		return accuracy;
 	}
 
-	public float physicalResist() {
+	public float physicalDamageFactor() {
 		float resist = 1f;
 		for (Armor armor : getArmors()) {
-			resist *= armor.physicalResist;
+			resist *= armor.physicalDamageFactor;
 		}
 		return resist;
 	}
 
-	public float magicalResist() {
+	public float magicalDamageFactor() {
 		float resist = 1f;
 		for (Armor armor : getArmors()) {
-			resist *= armor.magicalResist;
+			resist *= armor.magicDamageFactor;
 		}
 		return resist;
 	}

@@ -85,8 +85,8 @@ public class Armor extends KindofMisc {
 	public float EVA = 1f;
 	public float STE = 1f;
 	public float speedFactor = 1f;
-	public float magicalResist = 1f;
-	public float physicalResist = 1f;
+	public float magicDamageFactor = 1f;
+	public float physicalDamageFactor = 1f;
 	public float regenFactor = 1f;
 
 	protected static final String AC_DETACH       = "DETACH";
@@ -166,8 +166,8 @@ public class Armor extends KindofMisc {
 		bundle.put( STEALTH, STE );
 		bundle.put( EVASION, EVA );
 		bundle.put( SPEED, speedFactor );
-		bundle.put( MAGICAL_DR, magicalResist);
-		bundle.put( PHYSICAL_DR, physicalResist);
+		bundle.put( MAGICAL_DR, magicDamageFactor);
+		bundle.put( PHYSICAL_DR, physicalDamageFactor);
 		bundle.put(NAME, name);
 		bundle.put(IMG, image);
 		bundle.put(DESC, desc);
@@ -199,8 +199,8 @@ public class Armor extends KindofMisc {
 			STE = bundle.getFloat(STEALTH);
 			EVA = bundle.getFloat(EVASION);
 			speedFactor = bundle.getFloat(SPEED);
-			magicalResist = bundle.getFloat(MAGICAL_DR);
-			physicalResist = bundle.getFloat(PHYSICAL_DR);
+			magicDamageFactor = bundle.getFloat(MAGICAL_DR);
+			physicalDamageFactor = bundle.getFloat(PHYSICAL_DR);
 			desc = bundle.getString(DESC);
 			name = bundle.getString(NAME);
 			image = bundle.getInt(IMG);
@@ -230,8 +230,8 @@ public class Armor extends KindofMisc {
 		EVA = 1f;
 		STE = 1f;
 		speedFactor = 1f;
-		magicalResist = 1f;
-		physicalResist = 1f;
+		magicDamageFactor = 1f;
+		physicalDamageFactor = 1f;
 		regenFactor = 1f;
 	}
 
@@ -271,10 +271,10 @@ public class Armor extends KindofMisc {
 						regenFactor = randomStat();
 						break;
 					case 4:
-						physicalResist = Random.NormalFloat(0.5f, 1);
+						physicalDamageFactor = Random.NormalFloat(0.5f, 1);
 						break;
 					case 5:
-						magicalResist = Random.NormalFloat(0.5f, 1);
+						magicDamageFactor = Random.NormalFloat(0.5f, 1);
 						break;
 				}
 			}
@@ -288,8 +288,8 @@ public class Armor extends KindofMisc {
 		DRfactor *= 1/STE;
 		DRfactor *= 1/speedFactor;
 		DRfactor *= 1/regenFactor;
-		DRfactor *= magicalResist;
-		DRfactor *= physicalResist;
+		DRfactor *= magicDamageFactor;
+		DRfactor *= physicalDamageFactor;
 		return DRfactor;
 	}
 
@@ -530,20 +530,20 @@ public class Armor extends KindofMisc {
 			case NONE:
 		}
 
-		if (EVA != 1f || STE != 1f || speedFactor != 1f || magicalResist != 1f || physicalResist != 1f) {
+		if (EVA != 1f || STE != 1f || speedFactor != 1f || magicDamageFactor != 1f || physicalDamageFactor != 1f) {
 
 			info += "\n";
 
-			if (magicalResist > 1f) {
-				info += "\n" + Messages.get(Armor.class, "magical_weak", Math.round((magicalResist-1f)*100));
-			} else if (magicalResist < 1f) {
-				info += "\n" + Messages.get(Armor.class, "magical_resist", Math.round((1f-magicalResist)*100));
+			if (magicDamageFactor > 1f) {
+				info += "\n" + Messages.get(Armor.class, "magical_weak", Math.round((magicDamageFactor -1f)*100));
+			} else if (magicDamageFactor < 1f) {
+				info += "\n" + Messages.get(Armor.class, "magical_resist", Math.round((1f- magicDamageFactor)*100));
 			}
 
-			if (physicalResist > 1f) {
-				info += "\n" + Messages.get(Armor.class, "physical_weak", Math.round((physicalResist-1f)*100));
-			} else if (physicalResist < 1f) {
-				info += "\n" + Messages.get(Armor.class, "physical_resist", Math.round((1f-physicalResist)*100));
+			if (physicalDamageFactor > 1f) {
+				info += "\n" + Messages.get(Armor.class, "physical_weak", Math.round((physicalDamageFactor -1f)*100));
+			} else if (physicalDamageFactor < 1f) {
+				info += "\n" + Messages.get(Armor.class, "physical_resist", Math.round((1f- physicalDamageFactor)*100));
 			}
 
 			if (EVA > 1f) {
@@ -850,12 +850,12 @@ public class Armor extends KindofMisc {
 			type = buffType.POSITIVE;
 		}
 
-		private float magicResist() {
-			return target.magicalResist();
+		private float magicalDamageFactor() {
+			return target.magicalDamageFactor();
 		}
 
-		private float physicalResist() {
-			return target.physicalResist();
+		private float physicalDamageFactor() {
+			return target.physicalDamageFactor();
 		}
 
 		@Override
@@ -914,10 +914,10 @@ public class Armor extends KindofMisc {
 				return dmg;
 			}
 
-			if (src.getElement().isMagical() && shielding() > 0) {
-				dmg *= magicResist();
+			if (src.getElement().isMagical()) {
+				dmg *= magicalDamageFactor();
 			} else {
-				dmg *= physicalResist();
+				dmg *= physicalDamageFactor();
 			}
 			return super.absorbDamage(dmg, src);
 		}

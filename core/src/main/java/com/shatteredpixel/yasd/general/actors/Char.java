@@ -724,16 +724,16 @@ public abstract class Char extends Actor {
 		return true;
 	}
 
-	public float physicalResist() {
+	public float physicalDamageFactor() {
 		if (hasBelongings()) {
-			return belongings.physicalResist();
+			return belongings.physicalDamageFactor();
 		}
 		return 1f;
 	}
 
-	public float magicalResist() {
+	public float magicalDamageFactor() {
 		if (hasBelongings()) {
-			return belongings.magicalResist();
+			return belongings.magicalDamageFactor();
 		}
 		return 1f;
 	}

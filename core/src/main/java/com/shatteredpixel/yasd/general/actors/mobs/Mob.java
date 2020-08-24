@@ -124,12 +124,12 @@ public abstract class Mob extends Char {
 	protected boolean alerted = false;
 
 	@Override
-	public float magicalResist() {
+	public float magicalDamageFactor() {
 		return elementalResist;
 	}
 
 	@Override
-	public float physicalResist() {
+	public float physicalDamageFactor() {
 		return physicalResist;
 	}
 

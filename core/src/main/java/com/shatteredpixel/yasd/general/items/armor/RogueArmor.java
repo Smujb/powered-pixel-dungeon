@@ -34,8 +34,8 @@ public class RogueArmor extends ClothArmor {
 
 	{
 		image = ItemSpriteSheet.Armors.ROGUE;
-		physicalResist = 1.25f;
-		magicalResist = 1.25f;
+		physicalDamageFactor = 1.25f;
+		magicDamageFactor = 1.25f;
 		EVA = 1.25f;
 		STE = 1.25f;
 	}
