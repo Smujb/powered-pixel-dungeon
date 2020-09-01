@@ -9,4 +9,4 @@ https://github.com/watabou/pixel-dungeon
 Version by 00-Evan compatible with newer Android Studio:
 https://github.com/00-Evan/pixel-dungeon-gradle
 
-This version of Pixel Dungeon combines features from Shattered Pixel Dungeon by 00-Evan and Yet Another Pixel Dungeon by ConsideredHamster, as well as having minor inspiration from other mods and several original features. It is also easier to mod than other versions, as it has no strict dependence on loading floors in order, and has some stuff in Constants.java to tweak around with.
+This version of Pixel Dungeon was previously known as Yet Another Shattered Dungeon or YASD, as it was intended to combine features of Yet Another Pixel Dungeon and Shattered Pixel Dungeon. However, it has taken a new direction since, and it has been renamed to Powered PD.
