@@ -321,6 +321,10 @@ public class MeleeWeapon extends Weapon {
 				info += "\n" + Messages.get(MeleeWeapon.class, "dual_wield_penalty");
 			}
 
+			if (properties.contains(Property.SINGLE_HANDED)) {
+				info += "\n" + Messages.get(MeleeWeapon.class, "dual_wield_benefit");
+			}
+
 			if (breaksArmor(curUser)) {
 				info += "\n" + Messages.get(MeleeWeapon.class, "breaks_armour");
 			}
