@@ -242,7 +242,7 @@ public class Armor extends KindofMisc {
 		resetStats();
 		final int nProps = 6;
 		int maxProps = 0;
-		while (maxProps < 5 && Random.Int(4-(maxProps/2)) != 0) {
+		while (maxProps < 4 && Random.Float() < (0.75f * Math.pow(0.5, maxProps))) {
 			maxProps++;
 		}
 		boolean[] propertiesEnabled = new boolean[nProps];
