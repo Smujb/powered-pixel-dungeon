@@ -87,7 +87,7 @@ public abstract class SpecialRoom extends Room {
 	}
 	
 	private static final ArrayList<Class<? extends SpecialRoom>> ALL_SPEC = new ArrayList<>( Arrays.asList(
-			WeakFloorRoom.class, MagicWellRoom.class, CryptRoom.class, PoolRoom.class, GardenRoom.class, LibraryRoom.class, ArmoryRoom.class,
+			MagicWellRoom.class, CryptRoom.class, PoolRoom.class, GardenRoom.class, LibraryRoom.class, ArmoryRoom.class,
 			TreasuryRoom.class, TrapsRoom.class, StorageRoom.class, StatueRoom.class, VaultRoom.class, RunestoneRoom.class, AltarRoom.class
 	) );
 	
@@ -124,30 +124,12 @@ public abstract class SpecialRoom extends Room {
 	}
 	
 	public static SpecialRoom createRoom(){
-		if (Dungeon.depth == pitNeededDepth){
-			pitNeededDepth = -1;
-			
-			floorSpecials.remove( ArmoryRoom.class );
-			floorSpecials.remove( CryptRoom.class );
-			floorSpecials.remove( LibraryRoom.class );
-			floorSpecials.remove( RunestoneRoom.class );
-			floorSpecials.remove( StatueRoom.class );
-			floorSpecials.remove( TreasuryRoom.class );
-			floorSpecials.remove( VaultRoom.class );
-			floorSpecials.remove( WeakFloorRoom.class );
-			
-			return new PitRoom();
-			
-		} else if (floorSpecials.contains(LaboratoryRoom.class)) {
+		if (floorSpecials.contains(LaboratoryRoom.class)) {
 		
 			useType(LaboratoryRoom.class);
 			return new LaboratoryRoom();
 		
 		} else {
-			
-			if (Dungeon.bossLevel(Dungeon.depth + 1)){
-				floorSpecials.remove(WeakFloorRoom.class);
-			}
 			
 			Room r = null;
 			int index = floorSpecials.size();
@@ -157,10 +139,6 @@ public abstract class SpecialRoom extends Room {
 			}
 			
 			r = Reflection.newInstance(floorSpecials.get( index ));
-			
-			if (r instanceof WeakFloorRoom){
-				pitNeededDepth = Dungeon.depth + 1;
-			}
 			
 			useType( r.getClass() );
 			return (SpecialRoom)r;

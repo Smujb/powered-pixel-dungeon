@@ -30,16 +30,14 @@ package com.shatteredpixel.yasd.general.levels.rooms.special;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.actors.mobs.RotHeart;
 import com.shatteredpixel.yasd.general.actors.mobs.RotLasher;
-import com.shatteredpixel.yasd.general.items.keys.BronzeKey;
-import com.shatteredpixel.yasd.general.items.keys.IronKey;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
+import com.shatteredpixel.yasd.general.levels.rooms.LockedRoom;
+import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
-public class RotGardenRoom extends SpecialRoom {
+public class RotGardenRoom extends LockedRoom {
 	
 	@Override
 	public int minWidth() { return 7; }
@@ -47,17 +45,9 @@ public class RotGardenRoom extends SpecialRoom {
 	@Override
 	public int minHeight() { return 7; }
 
-	public void paint( Level level ) {
-
+	@Override
+	public void paintRoom(Level level) {
 		Door entrance = entrance();
-		if (level instanceof RegularLevel && ((RegularLevel) level).hasPitRoom()) {
-			entrance.set(Door.Type.BRONZE);
-			level.addItemToSpawn(new BronzeKey(level.key));
-		} else {
-			entrance.set(Door.Type.LOCKED);
-			level.addItemToSpawn(new IronKey(level.key));
-		}
-
 		Painter.fill(level, this, Terrain.WALL);
 		Painter.fill(level, this, 1, Terrain.GRASS);
 

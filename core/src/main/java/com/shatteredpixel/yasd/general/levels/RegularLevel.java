@@ -48,7 +48,6 @@ import com.shatteredpixel.yasd.general.levels.builders.LoopBuilder;
 import com.shatteredpixel.yasd.general.levels.painters.Painter;
 import com.shatteredpixel.yasd.general.levels.rooms.Room;
 import com.shatteredpixel.yasd.general.levels.rooms.secret.SecretRoom;
-import com.shatteredpixel.yasd.general.levels.rooms.special.PitRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.ShopRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.special.SpecialRoom;
 import com.shatteredpixel.yasd.general.levels.rooms.standard.EntranceRoom;
@@ -126,7 +125,6 @@ public abstract class RegularLevel extends Level {
 		SpecialRoom.initForFloor();
 		for (int i = 0; i < specials; i++) {
 			SpecialRoom s = SpecialRoom.createRoom();
-			if (s instanceof PitRoom) specials++;
 			initRooms.add(s);
 		}
 		
@@ -417,17 +415,7 @@ public abstract class RegularLevel extends Level {
 	public ArrayList<Room> rooms() {
 		return new ArrayList<>(rooms);
 	}
-	
-	//FIXME pit rooms shouldn't be problematic enough to warrant this
-	public boolean hasPitRoom(){
-		for (Room r : rooms) {
-			if (r instanceof PitRoom) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
+
 	protected Room randomRoom( Class<?extends Room> type ) {
 		Random.shuffle( rooms );
 		for (Room r : rooms) {
@@ -470,25 +458,6 @@ public abstract class RegularLevel extends Level {
 				}
 			}
 		}
-	}
-	
-	@Override
-	public int fallCell( boolean fallIntoPit ) {
-		if (fallIntoPit) {
-			for (Room room : rooms) {
-				if (room instanceof PitRoom) {
-					int result;
-					do {
-						result = pointToCell(room.random());
-					} while (trap(result) != null
-							|| findMob(result) != null
-							|| heaps.get(result) != null);
-					return result;
-				}
-			}
-		}
-		
-		return super.fallCell( false );
 	}
 	
 	@Override

@@ -40,9 +40,6 @@ import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.items.artifacts.TimekeepersHourglass;
 import com.shatteredpixel.yasd.general.items.spells.FeatherFall;
-import com.shatteredpixel.yasd.general.levels.RegularLevel;
-import com.shatteredpixel.yasd.general.levels.rooms.Room;
-import com.shatteredpixel.yasd.general.levels.rooms.special.WeakFloorRoom;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -93,15 +90,7 @@ public class Chasm {
 		
 		if (Dungeon.hero.isAlive()) {
 			Dungeon.hero.interrupt();
-			boolean fallIntoPit;
-			if (Dungeon.level instanceof RegularLevel) {
-				Room room = ((RegularLevel)Dungeon.level).room( pos );
-				fallIntoPit = room instanceof WeakFloorRoom;
-			} else {
-				fallIntoPit = false;
-			}
-
-			LevelHandler.fall(fallIntoPit, Dungeon.bossLevel());
+			LevelHandler.fall(false, Dungeon.bossLevel());
 
 		} else {
 			Dungeon.hero.sprite.visible = false;

@@ -42,25 +42,23 @@ public abstract class LockedRoom extends SpecialRoom {
 	public void paint(Level level) {
 		paintRoom(level);
 		if (level instanceof RegularLevel) {
-			RegularLevel regularLevel = ((RegularLevel)level);
-			if (regularLevel.hasPitRoom()) {
-				entrance().set(Door.Type.BRONZE);
-			} else {
-				switch (Random.Int(10)) {
-					case 0: default:
-						setKeyDoor(level);
-						break;
-					case 1:
-						setBarricadeDoor(level);
-						break;
-					case 2: case 3:
-						setCrackedWallDoor(level);
-						break;
-					case 4: case 5: case 6:
-						setBronzeKeyDoor(level);
-						break;
-				}
-
+			switch (Random.Int(10)) {
+				case 0:
+				default:
+					setKeyDoor(level);
+					break;
+				case 1:
+					setBarricadeDoor(level);
+					break;
+				case 2:
+				case 3:
+					setCrackedWallDoor(level);
+					break;
+				case 4:
+				case 5:
+				case 6:
+					setBronzeKeyDoor(level);
+					break;
 			}
 		} else {
 			setKeyDoor(level);
