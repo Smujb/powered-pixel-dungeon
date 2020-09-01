@@ -334,7 +334,7 @@ public class MeleeWeapon extends Weapon {
 			}
 
 			if (defenseFactor(curUser) > 0) {
-				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", 0,  defenseFactor(Dungeon.hero));
+				info += "\n" + Messages.get(MeleeWeapon.class, "blocks", defenseFactor(Dungeon.hero));
 			}
 
 			if (properties.contains(Property.SURPRISE_ATTK_BENEFIT)) {
