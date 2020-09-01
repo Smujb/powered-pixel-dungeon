@@ -202,6 +202,7 @@ public class DwarfKing extends Mob {
 				spend(TICK);
 				return true;
 			} else {
+				summonSubject(4);
 				spend(TICK);
 				return true;
 			}
