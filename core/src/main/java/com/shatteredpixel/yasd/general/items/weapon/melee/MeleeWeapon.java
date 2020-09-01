@@ -95,7 +95,7 @@ public class MeleeWeapon extends Weapon {
 
 	@Override
 	public int defenseFactor(Char owner) {
-		return (int) ((max(level(), tier, 1f)/2f)*defenseMultiplier);
+		return Math.round((tier*(5+level()))*defenseMultiplier);
 	}
 
 	@Override
