@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.potions.brews;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.potions.Potion;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -49,7 +50,7 @@ public abstract class Brew extends Potion {
 	
 	
 	@Override
-	public void doThrow(Hero hero) {
+	public void doThrow(Char ch) {
 		GameScene.selectCell(thrower);
 	}
 	

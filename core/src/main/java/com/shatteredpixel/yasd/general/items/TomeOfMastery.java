@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Badges;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.effects.Speck;
@@ -98,9 +99,9 @@ public class TomeOfMastery extends Item {
 	}
 	
 	@Override
-	public boolean doPickUp( Hero hero ) {
+	public boolean doPickUp(Char ch) {
 		Badges.validateMastery();
-		return super.doPickUp( hero );
+		return super.doPickUp(ch);
 	}
 	
 	@Override

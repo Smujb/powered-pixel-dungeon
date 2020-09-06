@@ -28,15 +28,13 @@
 package com.shatteredpixel.yasd.general.items.keys;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.journal.Notes;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-
-import org.jetbrains.annotations.NotNull;
 
 public abstract class Key extends Item {
 
@@ -59,12 +57,12 @@ public abstract class Key extends Item {
 	}
 
 	@Override
-	public boolean doPickUp(Hero hero) {
-		GameScene.pickUpJournal(this, hero.pos);
+	public boolean doPickUp(Char ch) {
+		GameScene.pickUpJournal(this, ch.pos);
 		WndJournal.last_index = 2;
 		Notes.add(this);
 		Sample.INSTANCE.play( Assets.Sounds.ITEM );
-		hero.spendAndNext( TIME_TO_PICK_UP );
+		ch.spendAndNext( TIME_TO_PICK_UP );
 		GameScene.updateKeyDisplay();
 		return true;
 	}

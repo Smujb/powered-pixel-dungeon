@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.items;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -44,9 +44,9 @@ public class Dewdrop extends Item {
 	}
 	
 	@Override
-	public boolean doPickUp( Hero hero ) {
+	public boolean doPickUp(Char ch) {
 		
-		DewVial vial = hero.belongings.getItem( DewVial.class );
+		DewVial vial = ch.belongings.getItem( DewVial.class );
 		
 		if (vial != null && !vial.isFull()){
 			
@@ -55,11 +55,11 @@ public class Dewdrop extends Item {
 		} else {
 			
 			//20 drops for a full heal
-			int heal = Math.round( hero.HT * 0.05f * quantity );
+			int heal = Math.round( ch.HT * 0.05f * quantity );
 			
-			int effect = Math.min( hero.HT - hero.HP, heal );
+			int effect = Math.min( ch.HT - ch.HP, heal );
 			if (effect > 0) {
-				hero.heal(effect,false, true);
+				ch.heal(effect,false, true);
 				//hero.sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
 				//hero.sprite.showStatus( CharSprite.POSITIVE, Messages.get(this, "value", effect) );
 			} else {
@@ -70,7 +70,7 @@ public class Dewdrop extends Item {
 		}
 		
 		Sample.INSTANCE.play( Assets.Sounds.DEWDROP );
-		hero.spendAndNext( TIME_TO_PICK_UP );
+		ch.spendAndNext( TIME_TO_PICK_UP );
 		
 		return true;
 	}

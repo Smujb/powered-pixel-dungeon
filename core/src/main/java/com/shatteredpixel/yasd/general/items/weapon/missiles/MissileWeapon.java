@@ -192,9 +192,9 @@ abstract public class MissileWeapon extends Weapon {
 	}
 
 	@Override
-	public void doThrow(Hero hero) {
+	public void doThrow(Char ch) {
 		parent = null; //reset parent before throwing, just incase
-		super.doThrow(hero);
+		super.doThrow(ch);
 	}
 
 	@Override
@@ -350,9 +350,9 @@ abstract public class MissileWeapon extends Weapon {
 	}
 	
 	@Override
-	public boolean doPickUp(Hero hero) {
+	public boolean doPickUp(Char ch) {
 		parent = null;
-		return super.doPickUp(hero);
+		return super.doPickUp(ch);
 	}
 	
 	@Override

@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.items.journal;
 
 import com.shatteredpixel.yasd.general.Assets;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.journal.Document;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
@@ -36,8 +36,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
-
-import org.jetbrains.annotations.NotNull;
 
 public abstract class DocumentPage extends Item {
 	
@@ -58,8 +56,8 @@ public abstract class DocumentPage extends Item {
 	}
 	
 	@Override
-	public final boolean doPickUp(Hero hero) {
-		GameScene.pickUpJournal(this, hero.pos);
+	public final boolean doPickUp(Char ch) {
+		GameScene.pickUpJournal(this, ch.pos);
 		GameScene.flashJournal();
 		if (document() == Document.ALCHEMY_GUIDE){
 			WndJournal.last_index = 1;
@@ -68,7 +66,7 @@ public abstract class DocumentPage extends Item {
 		}
 		document().addPage(page);
 		Sample.INSTANCE.play( Assets.Sounds.ITEM );
-		hero.spendAndNext( TIME_TO_PICK_UP );
+		ch.spendAndNext( TIME_TO_PICK_UP );
 		return true;
 	}
 	
