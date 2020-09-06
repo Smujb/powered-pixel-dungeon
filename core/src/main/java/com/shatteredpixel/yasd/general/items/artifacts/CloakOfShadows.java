@@ -122,8 +122,8 @@ public class CloakOfShadows extends Artifact {
 	}
 
 	@Override
-	public boolean doUnequip(Char hero, boolean collect, boolean single) {
-		if (super.doUnequip(hero, collect, single)){
+	public boolean doUnequip(Char ch, boolean collect, boolean single) {
+		if (super.doUnequip(ch, collect, single)){
 			stealthed = false;
 			return true;
 		} else

@@ -29,7 +29,6 @@ package com.shatteredpixel.yasd.general.items.rings;
 
 
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -41,9 +40,9 @@ public class RingOfPower extends Ring {
 	}
 
 	@Override
-	public boolean doEquip(Hero hero) {
-		if (super.doEquip(hero)){
-			hero.updateHT( false );
+	public boolean doEquip(Char ch) {
+		if (super.doEquip(ch)){
+			ch.updateHT( false );
 			return true;
 		} else {
 			return false;
@@ -51,9 +50,9 @@ public class RingOfPower extends Ring {
 	}
 
 	@Override
-	public boolean doUnequip(Char hero, boolean collect, boolean single) {
-		if (super.doUnequip(hero, collect, single)){
-			hero.updateHT( false );
+	public boolean doUnequip(Char ch, boolean collect, boolean single) {
+		if (super.doUnequip(ch, collect, single)){
+			ch.updateHT( false );
 			return true;
 		} else {
 			return false;

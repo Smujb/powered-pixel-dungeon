@@ -388,9 +388,11 @@ public class Armor extends KindofMisc {
 	}
 
 	@Override
-	public boolean doEquip(Hero hero) {
-		boolean equipped = super.doEquip(hero);
-		((HeroSprite) hero.sprite).updateArmor();
+	public boolean doEquip(Char ch) {
+		boolean equipped = super.doEquip(ch);
+		if (ch instanceof Hero) {
+			((HeroSprite)ch.sprite).updateArmor();
+		}
 		return equipped;
 	}
 

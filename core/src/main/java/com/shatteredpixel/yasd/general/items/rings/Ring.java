@@ -136,10 +136,10 @@ public class Ring extends KindofMisc {
 	}
 
 	@Override
-	public boolean doUnequip(Char hero, boolean collect, boolean single ) {
-		if (super.doUnequip( hero, collect, single )) {
+	public boolean doUnequip(Char ch, boolean collect, boolean single ) {
+		if (super.doUnequip(ch, collect, single )) {
 
-			hero.remove( buff );
+			ch.remove( buff );
 			buff = null;
 
 			return true;

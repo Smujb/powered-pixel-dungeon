@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.items;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.utils.GLog;
@@ -42,9 +41,9 @@ public abstract class KindofMisc extends EquipableItem {
 	private static final float TIME_TO_EQUIP = 1f;
 
 	@Override
-	public boolean doEquip(final Hero hero) {
-		final KindofMisc[] miscs = hero.belongings.miscs;
-		if (!hero.belongings.canEquip(this)) {
+	public boolean doEquip(final Char ch) {
+		final KindofMisc[] miscs = ch.belongings.miscs;
+		if (!ch.belongings.canEquip(this)) {
 
 			String[] miscNames = new String[miscs.length];
 			for (int i = 0; i < miscs.length; i++) {
@@ -70,9 +69,9 @@ public abstract class KindofMisc extends EquipableItem {
 							if (equipped == null) return;
 
 							int slot = Dungeon.quickslot.getSlot(KindofMisc.this);
-							detach(hero.belongings.backpack);
-							if (equipped.doUnequip(hero, true, false)) {
-								doEquip(hero);
+							detach(ch.belongings.backpack);
+							if (equipped.doUnequip(ch, true, false)) {
+								doEquip(ch);
 							} else {
 								collect();
 							}
@@ -85,24 +84,24 @@ public abstract class KindofMisc extends EquipableItem {
 		} else {
 
 			for (int i = 0; i < miscs.length; i++) {
-				if (hero.belongings.canEquip(this, i)) {
-					hero.belongings.miscs[i] = this;
+				if (ch.belongings.canEquip(this, i)) {
+					ch.belongings.miscs[i] = this;
 					break;
 				}
 			}
 
 
-			detach( hero.belongings.backpack );
+			detach( ch.belongings.backpack );
 
-			activate( hero );
+			activate(ch);
 
 			cursedKnown = true;
 			if (cursed) {
-				equipCursed( hero );
+				equipCursed(ch);
 				GLog.n( Messages.get(this, "equip_cursed", this) );
 			}
 
-			hero.spendAndNext( TIME_TO_EQUIP );
+			ch.spendAndNext( TIME_TO_EQUIP );
 			return true;
 
 		}
@@ -110,12 +109,12 @@ public abstract class KindofMisc extends EquipableItem {
 	}
 
 	@Override
-	public boolean doUnequip(Char hero, boolean collect, boolean single) {
-		if (super.doUnequip(hero, collect, single)){
+	public boolean doUnequip(Char ch, boolean collect, boolean single) {
+		if (super.doUnequip(ch, collect, single)){
 
 			for (int i = 0; i < Constants.MISC_SLOTS; i++) {
-				if (hero.belongings.miscs[i] == this) {
-					hero.belongings.miscs[i] = null;
+				if (ch.belongings.miscs[i] == this) {
+					ch.belongings.miscs[i] = null;
 				}
 			}
 

@@ -37,8 +37,6 @@ import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 public abstract class EquipableItem extends Item {
@@ -82,9 +80,9 @@ public abstract class EquipableItem extends Item {
 	}
 
 	@Override
-	public void doDrop( Hero hero) {
-		if (!isEquipped(hero) || doUnequip(hero, false, false)) {
-			super.doDrop(hero);
+	public void doDrop(Char ch) {
+		if (!isEquipped(ch) || doUnequip(ch, false, false)) {
+			super.doDrop(ch);
 		}
 	}
 
@@ -108,38 +106,38 @@ public abstract class EquipableItem extends Item {
 		return 1;
 	}
 
-	public abstract boolean doEquip(Hero hero);
+	public abstract boolean doEquip(Char ch);
 
-	public boolean doUnequip(Char hero, boolean collect, boolean single) {
+	public boolean doUnequip(Char ch, boolean collect, boolean single) {
 
-		if (cursed && hero.buff(MagicImmune.class) == null) {
+		if (cursed && ch.buff(MagicImmune.class) == null) {
 			GLog.w(Messages.get(EquipableItem.class, "unequip_cursed"));
-			if (hero instanceof Hero) {
-				((Hero) hero).loseMorale(2f);
+			if (ch instanceof Hero) {
+				((Hero) ch).loseMorale(2f);
 			}
 
 			return false;
 		}
 
 		if (single) {
-			hero.spendAndNext(time2equip(hero));
+			ch.spendAndNext(time2equip(ch));
 		} else {
-			if (hero instanceof Hero)
-				hero.spend(time2equip(hero));
+			if (ch instanceof Hero)
+				ch.spend(time2equip(ch));
 		}
 
-		if (!collect || !collect(hero.belongings.backpack, hero)) {
+		if (!collect || !collect(ch.belongings.backpack, ch)) {
 			onDetach();
 			Dungeon.quickslot.clearItem(this);
 			updateQuickslot();
-			if (collect) Dungeon.level.drop(this, hero.pos);
+			if (collect) Dungeon.level.drop(this, ch.pos);
 		}
 
 		return true;
 	}
 
-	final public boolean doUnequip(Hero hero, boolean collect) {
-		return doUnequip(hero, collect, true);
+	final public boolean doUnequip(Char ch, boolean collect) {
+		return doUnequip(ch, collect, true);
 	}
 
 	public void activate(Char ch) {

@@ -62,15 +62,15 @@ public class Artifact extends KindofMisc {
 	protected int cooldown = 0;
 
 	@Override
-	public boolean doEquip( final Hero hero ) {
+	public boolean doEquip( final Char ch) {
 
-		for (KindofMisc misc : hero.belongings.miscs) {
+		for (KindofMisc misc : ch.belongings.miscs) {
 			if (misc != null && misc.getClass() == this.getClass()) {
 				GLog.w(Messages.get(Artifact.class, "cannot_wear_two"));
 				return false;
 			}
 		}
-		if (super.doEquip(hero)) {
+		if (super.doEquip(ch)) {
 
 			identify();
 			return true;
@@ -90,8 +90,8 @@ public class Artifact extends KindofMisc {
 	}
 
 	@Override
-	public boolean doUnequip(Char hero, boolean collect, boolean single ) {
-		if (super.doUnequip( hero, collect, single )) {
+	public boolean doUnequip(Char ch, boolean collect, boolean single ) {
+		if (super.doUnequip(ch, collect, single )) {
 
 			passiveBuff.detach();
 			passiveBuff = null;
