@@ -380,7 +380,7 @@ public class Armor extends KindofMisc {
 	}
 
 	public int defense(int lvl) {
-		return Math.round(((tier * 4) + (tier * lvl * 2)) * getDefenseFactor());
+		return Math.round(((tier * 2) + (tier * lvl)) * getDefenseFactor());
 	}
 
 	public float defenseRegen() {
