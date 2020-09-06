@@ -49,8 +49,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 
-import org.jetbrains.annotations.NotNull;
-
 public class BeaconOfReturning extends Spell {
 	
 	{
@@ -93,9 +91,9 @@ public class BeaconOfReturning extends Spell {
 	}
 	
 	@Override
-	public void doDrop( Hero hero) {
+	public void doDrop(Char ch) {
 		returnDepth = -1;
-		super.doDrop(hero);
+		super.doDrop(ch);
 	}
 	
 	private void setBeacon(Hero hero ){

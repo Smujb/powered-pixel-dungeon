@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.items.artifacts;
 
 import com.shatteredpixel.yasd.general.Dungeon;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.Recipe;
@@ -39,8 +40,6 @@ import com.shatteredpixel.yasd.general.windows.WndBag;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.GameMath;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -150,8 +149,8 @@ public class AlchemistsToolkit extends Artifact {
 	}
 	
 	@Override
-	public boolean doEquip(Hero hero) {
-		if (super.doEquip(hero)){
+	public boolean doEquip(Char ch) {
+		if (super.doEquip(ch)){
 			alchemyReady = false;
 			return true;
 		} else {

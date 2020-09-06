@@ -31,7 +31,6 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Elemental;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -43,8 +42,6 @@ import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -74,8 +71,8 @@ public class CeremonialCandle extends Item {
 	}
 
 	@Override
-	public void doDrop( Hero hero) {
-		super.doDrop(hero);
+	public void doDrop(Char ch) {
+		super.doDrop(ch);
 		checkCandles();
 	}
 

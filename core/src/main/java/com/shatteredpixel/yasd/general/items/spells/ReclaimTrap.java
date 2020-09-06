@@ -30,7 +30,6 @@ package com.shatteredpixel.yasd.general.items.spells;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.quest.MetalShard;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfMagicMapping;
 import com.shatteredpixel.yasd.general.items.scrolls.ScrollOfRecharging;
@@ -43,8 +42,6 @@ import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Reflection;
-
-import org.jetbrains.annotations.NotNull;
 
 public class ReclaimTrap extends TargetedSpell {
 	
@@ -96,9 +93,9 @@ public class ReclaimTrap extends TargetedSpell {
 	}
 	
 	@Override
-	public void doDrop( Hero hero) {
+	public void doDrop(Char ch) {
 		storedTrap = null;
-		super.doDrop(hero);
+		super.doDrop(ch);
 	}
 	
 	private static final ItemSprite.Glowing[] COLORS = new ItemSprite.Glowing[]{
