@@ -196,12 +196,12 @@ public class Item implements Bundlable {
 		return actions;
 	}
 	
-	public boolean doPickUp( Hero hero ) {
-		if (collect( hero.belongings.backpack, hero)) {
+	public boolean doPickUp(Char ch) {
+		if (collect( ch.belongings.backpack, ch)) {
 			
-			GameScene.pickUp( this, hero.pos );
+			GameScene.pickUp( this, ch.pos );
 			Sample.INSTANCE.play( Assets.Sounds.ITEM );
-			hero.spendAndNext( TIME_TO_PICK_UP );
+			ch.spendAndNext( TIME_TO_PICK_UP );
 			return true;
 			
 		} else {
@@ -221,8 +221,10 @@ public class Item implements Bundlable {
 		name = Messages.get(this, "name");
 	}
 
-	public void doThrow( Hero hero ) {
-		GameScene.selectCell(thrower);
+	public void doThrow(Char ch) {
+		if (ch instanceof Hero) {
+			GameScene.selectCell(thrower);
+		}
 	}
 	
 	public void execute( Hero hero, String action ) {

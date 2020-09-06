@@ -40,7 +40,6 @@ import com.shatteredpixel.yasd.general.actors.buffs.Buff;
 import com.shatteredpixel.yasd.general.actors.buffs.Burning;
 import com.shatteredpixel.yasd.general.actors.buffs.Doom;
 import com.shatteredpixel.yasd.general.actors.buffs.LockedFloor;
-import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.effects.BlobEmitter;
 import com.shatteredpixel.yasd.general.effects.CellEmitter;
@@ -666,7 +665,7 @@ public class NewTengu extends Mob {
 			}
 			
 			@Override
-			public boolean doPickUp( Hero hero ) {
+			public boolean doPickUp(Char ch) {
 				GLog.w( Messages.get(this, "cant_pickup") );
 				return false;
 			}
@@ -1034,7 +1033,7 @@ public class NewTengu extends Mob {
 			}
 			
 			@Override
-			public boolean doPickUp( Hero hero ) {
+			public boolean doPickUp(Char ch) {
 				GLog.w( Messages.get(this, "cant_pickup") );
 				return false;
 			}

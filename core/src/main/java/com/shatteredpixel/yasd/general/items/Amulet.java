@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.scenes.AmuletScene;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
@@ -68,13 +69,13 @@ public class Amulet extends Item {
 	}
 	
 	@Override
-	public boolean doPickUp( Hero hero ) {
-		if (super.doPickUp( hero )) {
+	public boolean doPickUp(Char ch) {
+		if (super.doPickUp(ch)) {
 			
 			if (!Statistics.amuletObtained) {
 				Statistics.amuletObtained = true;
 				Badges.validateVictory();
-				hero.spend(-TIME_TO_PICK_UP);
+				ch.spend(-TIME_TO_PICK_UP);
 
 				//add a delayed actor here so pickup behaviour can fully process.
 				Actor.addDelayed(new Actor(){
