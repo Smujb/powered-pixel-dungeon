@@ -37,7 +37,6 @@ import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.YASDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Alchemy;
@@ -118,7 +117,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
@@ -996,31 +994,26 @@ public class Hero extends Char {
 	}
 
 	private void damageMorale(int dmg) {
-		float shake;
 		dmg -= Armor.Defense.curShield(this);
 		if (dmg <= 0) {
 			return;
 		}
 		int effectiveHP = Math.max(HT/2, HP);
-		shake = ((float) dmg / (float) effectiveHP) * 2f;
+		float shake = ((float) dmg / (float) effectiveHP) * 2f;
 
 		if (shake > 0) {
-			Camera.main.shake(GameMath.gate(0.5f, shake*2, 10), 0.2f);
-			if (shake > 0.5f) {
-				Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL);
-				float divisor = 3 + 12*((HP + shielding()) / (float)(HT + shielding()));
-				GameScene.flash( (int)(0xFF/divisor) << 16 );
-				if (YASDSettings.vibrate()) {
-					PPDGame.vibrate(Math.min(250, (int) (shake * 50)));
-				}
-				if (shake > 1f) {
-					loseMorale(shake * 0.33f);
+			if (isAlive()) {
+				if (shake >= 1/3f) {
+					float divisor = 3 + 12 * ((HP + shielding()) / (float) (HT + shielding()));
+					GameScene.flash((int) (0xFF / divisor) << 16);
+					loseMorale(shake);
+					Sample.INSTANCE.play(Assets.Sounds.HEALTH_CRITICAL, 1/3f + shake * 2f);
 				} else {
-					loseMorale(shake * 0.33f, false);
+					loseMorale(shake, false);
+					Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN, shake * 2f);
 				}
-			} else {
-				Sample.INSTANCE.play(Assets.Sounds.HEALTH_WARN);
 			}
+			PPDGame.shake(shake);
 		}
 	}
 	

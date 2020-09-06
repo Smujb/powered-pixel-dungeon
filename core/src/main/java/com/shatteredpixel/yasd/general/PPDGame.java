@@ -36,9 +36,11 @@ import com.shatteredpixel.yasd.general.items.weapon.melee.Fist;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.scenes.WelcomeScene;
+import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.GameMath;
 import com.watabou.utils.PlatformSupport;
 
 public class PPDGame extends Game {
@@ -194,6 +196,15 @@ public class PPDGame extends Game {
 	public void destroy(){
 		super.destroy();
 		GameScene.endActorThread();
+	}
+
+	public static void shake(float amount) {
+		Camera.main.shake(GameMath.gate(0.5f, amount*2, 10), 0.2f);
+		if (amount > 0.5f) {
+			if (YASDSettings.vibrate()) {
+				PPDGame.vibrate(Math.min(250, (int) (amount * 50)));
+			}
+		}
 	}
 
 	public static void switchNoFade(Class<? extends PixelScene> c){
