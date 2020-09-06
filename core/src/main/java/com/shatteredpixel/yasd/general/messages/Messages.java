@@ -31,7 +31,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.DeviceCompat;
 
@@ -76,7 +76,7 @@ public class Messages {
 	};
 
 	static{
-		setup(YASDSettings.language());
+		setup(PPDSettings.language());
 	}
 
 	public static void setup( Languages lang ){
@@ -135,7 +135,7 @@ public class Messages {
 				return get(c.getSuperclass(), k, baseName, args);
 			} else {
 				String name = "missed_string:"+baseName;
-				if (YASDSettings.debugReport() && DeviceCompat.isDebug()) {
+				if (PPDSettings.debugReport() && DeviceCompat.isDebug()) {
 					GLog.n(name);
 				}
 				return name;

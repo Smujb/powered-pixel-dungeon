@@ -35,7 +35,7 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.actors.hero.HeroClass;
 import com.shatteredpixel.yasd.general.actors.hero.HeroSubClass;
 import com.shatteredpixel.yasd.general.journal.Journal;
@@ -84,7 +84,7 @@ public class HeroSelectScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		YASDSettings.testing(testing);
+		PPDSettings.testing(testing);
 		testing = false;
 
 		Badges.loadGlobal();
@@ -140,10 +140,10 @@ public class HeroSelectScene extends PixelScene {
 				//GamesInProgress.curSlot = slot;
 				Dungeon.hero = null;
 				ActionIndicator.action = null;
-				Dungeon.difficulty = YASDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
-				YASDSettings.lastClass(GamesInProgress.selectedClass);
-				if (YASDSettings.intro()) {
-					YASDSettings.intro( false );
+				Dungeon.difficulty = PPDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+				PPDSettings.lastClass(GamesInProgress.selectedClass);
+				if (PPDSettings.intro()) {
+					PPDSettings.intro( false );
 					Game.switchScene( IntroScene.class );
 				} else {
 					LevelHandler.doInit(seed);
@@ -187,13 +187,13 @@ public class HeroSelectScene extends PixelScene {
 		}
 
 		challengeButton = new IconButton(
-				Icons.get( YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+				Icons.get( PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
 			@Override
 			protected void onClick() {
-				PPDGame.scene().addToFront(new WndChallenges(YASDSettings.challenges(), true) {
+				PPDGame.scene().addToFront(new WndChallenges(PPDSettings.challenges(), true) {
 					public void onBackPressed() {
 						super.onBackPressed();
-						icon(Icons.get(YASDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+						icon(Icons.get(PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
 					}
 				} );
 			}
@@ -213,7 +213,7 @@ public class HeroSelectScene extends PixelScene {
 			add(challengeButton);
 		} else {
 			Dungeon.challenges = 0;
-			YASDSettings.challenges(0);
+			PPDSettings.challenges(0);
 		}
 
 		btnExit = new ExitButton();

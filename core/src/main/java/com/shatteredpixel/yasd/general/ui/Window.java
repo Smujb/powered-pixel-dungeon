@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Chrome;
-import com.shatteredpixel.yasd.general.YASDAction;
+import com.shatteredpixel.yasd.general.PPDAction;
 import com.shatteredpixel.yasd.general.effects.ShadowBox;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.watabou.input.KeyBindings;
@@ -167,7 +167,7 @@ public class Window extends Group implements Signal.Listener<KeyEvent> {
 	@Override
 	public boolean onSignal( KeyEvent event ) {
 		if (event.pressed) {
-			if (KeyBindings.getActionForKey( event ) == YASDAction.BACK){
+			if (KeyBindings.getActionForKey( event ) == PPDAction.BACK){
 				onBackPressed();
 
 			}

@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.Difficulty;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ public class DifficultyButton extends StyledButton {
 	@Override
 	protected void onClick() {
 		super.onClick();
-		YASDSettings.difficulty(difficulty);
+		PPDSettings.difficulty(difficulty);
 		for (DifficultyButton difficultyButton : buttonArrayList) {
 			difficultyButton.updateDifficulty();
 		}
@@ -66,7 +66,7 @@ public class DifficultyButton extends StyledButton {
 	}
 
 	private void updateDifficulty() {
-		if (difficulty == YASDSettings.difficulty()) {
+		if (difficulty == PPDSettings.difficulty()) {
 			icon(Icons.get(Icons.CHALLENGE_ON));
 		} else {
 			icon(Icons.get(Icons.CHALLENGE_OFF));

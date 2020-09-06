@@ -39,7 +39,7 @@ import com.shatteredpixel.yasd.general.sprites.HeroSprite;
 import com.shatteredpixel.yasd.general.windows.WndGame;
 import com.shatteredpixel.yasd.general.windows.WndHero;
 import com.shatteredpixel.yasd.general.windows.WndJournal;
-import com.shatteredpixel.yasd.general.YASDAction;
+import com.shatteredpixel.yasd.general.PPDAction;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Camera;
@@ -103,7 +103,7 @@ public class StatusPane extends Component {
 			}
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.HERO_INFO;
+				return PPDAction.HERO_INFO;
 			}
 		}.setRect( 0, 1, 30, 30 ));
 
@@ -307,7 +307,7 @@ public class StatusPane extends Component {
 
 		@Override
 		public GameAction keyAction() {
-			return YASDAction.JOURNAL;
+			return PPDAction.JOURNAL;
 		}
 
 		@Override

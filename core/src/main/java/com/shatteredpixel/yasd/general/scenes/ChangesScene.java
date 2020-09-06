@@ -38,7 +38,7 @@ import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.ScrollPane;
 import com.shatteredpixel.yasd.general.ui.Window;
 import com.shatteredpixel.yasd.general.ui.changelist.ChangeInfo;
-import com.shatteredpixel.yasd.general.ui.changelist.YASD_log;
+import com.shatteredpixel.yasd.general.ui.changelist.PPD_log;
 import com.shatteredpixel.yasd.general.ui.changelist.v0_1_X_Changes;
 import com.shatteredpixel.yasd.general.ui.changelist.v0_2_X_Changes;
 import com.shatteredpixel.yasd.general.ui.changelist.v0_3_X_Changes;
@@ -95,7 +95,7 @@ public class ChangesScene extends PixelScene {
 		
 		switch (changesSelected){
 			case 0: default:
-				YASD_log.addAllChanges(changeInfos);
+				PPD_log.addAllChanges(changeInfos);
 				break;
 			case 1:
 				v0_8_X_Changes.addAllChanges(changeInfos);

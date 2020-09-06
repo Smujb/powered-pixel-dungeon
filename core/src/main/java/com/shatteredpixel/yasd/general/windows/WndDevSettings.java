@@ -27,7 +27,7 @@
 
 package com.shatteredpixel.yasd.general.windows;
 
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.ui.CheckBox;
@@ -55,11 +55,11 @@ public class WndDevSettings extends Window {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				YASDSettings.debugReport(checked());
+				PPDSettings.debugReport(checked());
 			}
 		};
 		chkDebugReport.setRect(0, message.bottom() + GAP, WIDTH, BTN_HEIGHT);
-		chkDebugReport.checked(YASDSettings.debugReport());
+		chkDebugReport.checked(PPDSettings.debugReport());
 		add(chkDebugReport);
 
 		RenderedTextBlock message2 = PixelScene.renderTextBlock( Messages.get(this, "disable_cache_desc"), 6 );
@@ -71,11 +71,11 @@ public class WndDevSettings extends Window {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				YASDSettings.mapCache(!checked());
+				PPDSettings.mapCache(!checked());
 			}
 		};
 		chkDisableCache.setRect(0, message2.bottom() + GAP, WIDTH, BTN_HEIGHT);
-		chkDisableCache.checked(!YASDSettings.mapCache());
+		chkDisableCache.checked(!PPDSettings.mapCache());
 		add(chkDisableCache);
 
 		resize(WIDTH, (int) chkDisableCache.bottom());

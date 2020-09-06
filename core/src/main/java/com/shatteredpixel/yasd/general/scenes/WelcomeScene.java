@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Rankings;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.effects.BannerSprites;
 import com.shatteredpixel.yasd.general.effects.Fireball;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -52,7 +52,7 @@ public class WelcomeScene extends PixelScene {
 	public void create() {
 		super.create();
 
-		final int previousVersion = YASDSettings.version();
+		final int previousVersion = PPDSettings.version();
 
 		if (PPDGame.versionCode == previousVersion) {
 			PPDGame.switchNoFade(TitleScene.class);
@@ -103,7 +103,7 @@ public class WelcomeScene extends PixelScene {
 			protected void onClick() {
 				super.onClick();
 				if (previousVersion == 0){
-					YASDSettings.version(PPDGame.versionCode);
+					PPDSettings.version(PPDGame.versionCode);
 					GamesInProgress.selectedClass = null;
 					GamesInProgress.curSlot = 1;
 					PPDGame.switchScene(HeroSelectScene.class);
@@ -185,7 +185,7 @@ public class WelcomeScene extends PixelScene {
 			}
 		}
 		
-		YASDSettings.version(PPDGame.versionCode);
+		PPDSettings.version(PPDGame.versionCode);
 	}
 
 	private void placeTorch( float x, float y ) {

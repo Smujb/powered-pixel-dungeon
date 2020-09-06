@@ -29,8 +29,8 @@ package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASDAction;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDAction;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.CellSelector;
@@ -95,7 +95,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.WAIT;
+				return PPDAction.WAIT;
 			}
 
 			protected boolean onLongClick() {
@@ -119,7 +119,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.SEARCH;
+				return PPDAction.SEARCH;
 			}
 
 			@Override
@@ -138,7 +138,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.REST;
+				return PPDAction.REST;
 			}
 		});
 		
@@ -152,7 +152,7 @@ public class Toolbar extends Component {
 
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.INVENTORY;
+				return PPDAction.INVENTORY;
 			}
 
 			@Override
@@ -176,12 +176,12 @@ public class Toolbar extends Component {
 	protected void layout() {
 
 		for(int i = 0; i <= 3; i++) {
-			if (i == 0 && !YASDSettings.flipToolbar() ||
-					i == 3 && YASDSettings.flipToolbar()) {
+			if (i == 0 && !PPDSettings.flipToolbar() ||
+					i == 3 && PPDSettings.flipToolbar()) {
 				btnQuick[i].border(0, 2);
 				btnQuick[i].frame(106, 0, 19, 24);
-			} else if (i == 0 && YASDSettings.flipToolbar() ||
-					i == 3 && !YASDSettings.flipToolbar()) {
+			} else if (i == 0 && PPDSettings.flipToolbar() ||
+					i == 3 && !PPDSettings.flipToolbar()) {
 				btnQuick[i].border(2, 1);
 				btnQuick[i].frame(86, 0, 20, 24);
 			} else {
@@ -192,7 +192,7 @@ public class Toolbar extends Component {
 		}
 
 		float right = width;
-		switch(Mode.valueOf(YASDSettings.toolbarMode())){
+		switch(Mode.valueOf(PPDSettings.toolbarMode())){
 			case SPLIT:
 				btnWait.setPos(x, y);
 				btnSearch.setPos(btnWait.right(), y);
@@ -241,7 +241,7 @@ public class Toolbar extends Component {
 		}
 		right = width;
 
-		if (YASDSettings.flipToolbar()) {
+		if (PPDSettings.flipToolbar()) {
 
 			btnWait.setPos( (right - btnWait.right()), y);
 			btnSearch.setPos( (right - btnSearch.right()), y);

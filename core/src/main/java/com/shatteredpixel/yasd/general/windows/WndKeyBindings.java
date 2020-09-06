@@ -29,7 +29,7 @@ package com.shatteredpixel.yasd.general.windows;
 
 import com.badlogic.gdx.Gdx;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.YASDAction;
+import com.shatteredpixel.yasd.general.PPDAction;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
@@ -123,7 +123,7 @@ public class WndKeyBindings extends Window {
 		RedButton btnDefaults = new RedButton(Messages.get(this, "default"), 9){
 			@Override
 			protected void onClick() {
-				changedBindings = YASDAction.getDefaults();
+				changedBindings = PPDAction.getDefaults();
 				for (BindingItem i : listItems){
 					int key1 = 0;
 					int key2 = 0;
@@ -145,7 +145,7 @@ public class WndKeyBindings extends Window {
 			protected void onClick() {
 				KeyBindings.setAllBindings(changedBindings);
 				InputHandler.updateEventCatching(Gdx.input);
-				YASDAction.saveBindings();
+				PPDAction.saveBindings();
 				hide();
 			}
 		};

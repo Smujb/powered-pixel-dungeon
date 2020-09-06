@@ -34,7 +34,7 @@ import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.Lore;
 import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
-import com.shatteredpixel.yasd.general.YASDSettings;
+import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -181,10 +181,10 @@ public class GameScene extends PixelScene {
 
 		Music.INSTANCE.play( Dungeon.level.music(), true );
 
-		YASDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
+		PPDSettings.lastClass(Dungeon.hero.heroClass.ordinal());
 		
 		super.create();
-		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + YASDSettings.zoom(), maxZoom));
+		Camera.main.zoom( GameMath.gate(minZoom, defaultZoom + PPDSettings.zoom(), maxZoom));
 
 		scene = this;
 
@@ -362,7 +362,7 @@ public class GameScene extends PixelScene {
 				ScrollOfTeleportation.appear(Dungeon.hero, Dungeon.hero.pos);
 				break;
 			case DESCEND:
-				if (Dungeon.bossLevel(Dungeon.depth -1) && YASDSettings.cutscenes()) {
+				if (Dungeon.bossLevel(Dungeon.depth -1) && PPDSettings.cutscenes()) {
 					Lore.showChapter(Dungeon.level);
 				}
 				/*
@@ -643,9 +643,9 @@ public class GameScene extends PixelScene {
 
 		if (scene == null) return;
 
-		float tagLeft = YASDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
+		float tagLeft = PPDSettings.flipTags() ? 0 : uiCamera.width - scene.attack.width();
 
-		if (YASDSettings.flipTags()) {
+		if (PPDSettings.flipTags()) {
 			scene.log.setRect(scene.attack.width(), scene.toolbar.top()-2, uiCamera.width - scene.attack.width(), 0);
 		} else {
 			scene.log.setRect(0, scene.toolbar.top()-2, uiCamera.width - scene.attack.width(),  0 );

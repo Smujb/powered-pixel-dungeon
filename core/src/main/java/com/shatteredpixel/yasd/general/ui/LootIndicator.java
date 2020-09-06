@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.ui;
 
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.YASDAction;
+import com.shatteredpixel.yasd.general.PPDAction;
 import com.shatteredpixel.yasd.general.items.Heap;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.watabou.input.GameAction;
@@ -61,7 +61,7 @@ public class LootIndicator extends Tag {
 
 			@Override
 			public GameAction keyAction() {
-				return YASDAction.TAG_LOOT;
+				return PPDAction.TAG_LOOT;
 			}
 		};
 		slot.showExtraInfo( false );
