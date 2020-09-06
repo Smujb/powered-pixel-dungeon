@@ -48,7 +48,7 @@ import com.watabou.noosa.Image;
 
 import java.util.ArrayList;
 
-public class YASD_log {
+public class PPD_log {
 	
 	public static void addAllChanges( ArrayList<ChangeInfo> changeInfos ) {
 		add_v0_4_X_Changes(changeInfos);

@@ -31,7 +31,7 @@ import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.YASDAction;
+import com.shatteredpixel.yasd.general.PPDAction;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Belongings;
 import com.shatteredpixel.yasd.general.items.EquipableItem;
@@ -201,7 +201,7 @@ public class WndBag extends WndTabbed {
 	}
 
 	public boolean onSignal(KeyEvent event) {
-		if (event.pressed && KeyBindings.getActionForKey( event ) == YASDAction.INVENTORY) {
+		if (event.pressed && KeyBindings.getActionForKey( event ) == PPDAction.INVENTORY) {
 			hide();
 			return true;
 		} else {

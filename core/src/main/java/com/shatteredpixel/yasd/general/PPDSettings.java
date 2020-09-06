@@ -37,7 +37,7 @@ import com.watabou.utils.Point;
 
 import java.util.Locale;
 
-public class YASDSettings extends com.watabou.utils.GameSettings {
+public class PPDSettings extends com.watabou.utils.GameSettings {
 	
 	//Version info
 	

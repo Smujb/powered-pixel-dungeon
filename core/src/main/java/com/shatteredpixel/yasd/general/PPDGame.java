@@ -181,12 +181,12 @@ public class PPDGame extends Game {
 		super.create();
 
 		updateSystemUI();
-		YASDAction.loadBindings();
+		PPDAction.loadBindings();
 		
-		Music.INSTANCE.enable( YASDSettings.music() );
-		Music.INSTANCE.volume( YASDSettings.musicVol()*YASDSettings.musicVol()/100f );
-		Sample.INSTANCE.enable( YASDSettings.soundFx() );
-		Sample.INSTANCE.volume( YASDSettings.SFXVol()*YASDSettings.SFXVol()/100f );
+		Music.INSTANCE.enable( PPDSettings.music() );
+		Music.INSTANCE.volume( PPDSettings.musicVol()* PPDSettings.musicVol()/100f );
+		Sample.INSTANCE.enable( PPDSettings.soundFx() );
+		Sample.INSTANCE.volume( PPDSettings.SFXVol()* PPDSettings.SFXVol()/100f );
 
 		Sample.INSTANCE.load( Assets.Sounds.all );
 		
@@ -201,7 +201,7 @@ public class PPDGame extends Game {
 	public static void shake(float amount) {
 		Camera.main.shake(GameMath.gate(0.5f, amount*2, 10), 0.2f);
 		if (amount > 0.5f) {
-			if (YASDSettings.vibrate()) {
+			if (PPDSettings.vibrate()) {
 				PPDGame.vibrate(Math.min(250, (int) (amount * 50)));
 			}
 		}

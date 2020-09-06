@@ -200,7 +200,7 @@ public class Dungeon {
 	public static void init(long seed) {
 
 		version = Game.versionCode;
-		challenges = YASDSettings.challenges();
+		challenges = PPDSettings.challenges();
 
 		if (seed == -1) {
 			Dungeon.seed = DungeonSeed.randomSeed();
@@ -208,7 +208,7 @@ public class Dungeon {
 			Dungeon.seed = seed;
 		}
 
-		testing = YASDSettings.testing();
+		testing = PPDSettings.testing();
 
 		Actor.clear();
 		Actor.resetNextID();
@@ -648,7 +648,7 @@ public class Dungeon {
 
 		difficulty = bundle.contains(DIFFICULTY) ? bundle.getEnum(DIFFICULTY, Difficulty.class) : Difficulty.fromInt(bundle.getInt(_DIFFICULTY));
 
-		testing = bundle.contains(TESTING) ? YASDSettings.testing() : bundle.getBoolean(TESTING);
+		testing = bundle.contains(TESTING) ? PPDSettings.testing() : bundle.getBoolean(TESTING);
 
 		key = bundle.contains(KEY) ? bundle.getString(KEY) : keyForDepth();
 

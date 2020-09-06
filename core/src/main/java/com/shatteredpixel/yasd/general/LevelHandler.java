@@ -187,7 +187,7 @@ public class LevelHandler {
 			public void call() {
 				PPDGame.switchScene(GameScene.class);
 			}
-		}, getThread(), YASDSettings.fastInterlevelScene());
+		}, getThread(), PPDSettings.fastInterlevelScene());
 	}
 
 	public static void doInit(long seed) {
@@ -209,7 +209,7 @@ public class LevelHandler {
 					throw new RuntimeException(e);
 				}
 			}
-		}, YASDSettings.fastInterlevelScene());
+		}, PPDSettings.fastInterlevelScene());
 	}
 
 	public static void move(String key, String msg, Mode mode, int depth, Point pos) {
@@ -222,7 +222,7 @@ public class LevelHandler {
 			public void call() {
 				PPDGame.switchScene(GameScene.class);
 			}
-		}, getThread(), YASDSettings.fastInterlevelScene());
+		}, getThread(), PPDSettings.fastInterlevelScene());
 	}
 
 	public static void resetMode() {
