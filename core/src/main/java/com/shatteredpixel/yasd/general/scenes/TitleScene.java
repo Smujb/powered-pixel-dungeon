@@ -39,7 +39,6 @@ import com.shatteredpixel.yasd.general.ui.DevSettingsButton;
 import com.shatteredpixel.yasd.general.ui.DiscordButton;
 import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
-import com.shatteredpixel.yasd.general.ui.LanguageButton;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.ui.UpdateNotification;
 import com.shatteredpixel.yasd.general.windows.WndSettings;
@@ -229,12 +228,6 @@ public class TitleScene extends PixelScene {
 		add( btnDiscord );
 		
 		pos += btnDiscord.width();
-
-		LanguageButton btnLang = new LanguageButton();
-		btnLang.setRect(pos, 0, 16, 20);
-		add( btnLang );
-
-		pos += btnLang.width();
 		if (DeviceCompat.isDebug()) {
 			DevSettingsButton devSettingsButton = new DevSettingsButton();
 			devSettingsButton.setRect(pos, 0, 16, 20);
