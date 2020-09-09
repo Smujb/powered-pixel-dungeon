@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.actors.buffs;
 
+import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.ui.BuffIndicator;
@@ -57,7 +58,16 @@ public class Barrier extends ShieldBuff {
 		if (on) target.sprite.add(CharSprite.State.SHIELDED);
 		else target.sprite.remove(CharSprite.State.SHIELDED);
 	}
-	
+
+	public static int curShield(Char ch) {
+		Barrier barrier;
+		if ( (barrier = ch.buff(Barrier.class)) != null) {
+			return barrier.shielding();
+		} else {
+			return 0;
+		}
+	}
+
 	@Override
 	public int icon() {
 		return BuffIndicator.ARMOR;
