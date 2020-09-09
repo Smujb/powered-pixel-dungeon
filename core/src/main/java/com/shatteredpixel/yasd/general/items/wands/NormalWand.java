@@ -85,6 +85,7 @@ public abstract class NormalWand extends DamageWand {
 		element = bundle.getEnum(ELEMENT, Element.class);
 		initialCharges = bundle.getInt(INITIAL_CHARGES);
 		chargesPerCast = bundle.getInt(CHARGES_PER_CAST);
+		updateLevel();
 	}
 
 	public void resetStats() {
@@ -180,11 +181,9 @@ public abstract class NormalWand extends DamageWand {
 		do {
 			element = Random.element(Element.values());
 		} while (element == Element.META);
-		chargesPerCast = BASE_CHARGES_PER_CAST;
 		if (Random.Int(3) == 0) {
 			chargesPerCast += Random.Int(3);
 		}
-		initialCharges = BASE_INITIAL_CHARGES;
 		if (Random.Int(3) == 0) {
 			initialCharges += Random.Int(3);
 		}
