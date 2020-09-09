@@ -80,10 +80,10 @@ public class RotHeart extends Mob {
 	}
 
 	@Override
-	public int defenseProc(Char enemy, int damage) {
+	public int defenseProc(Char enemy, int damage, DamageSrc src) {
 		GameScene.add(Blob.seed(pos, 20, CorrosiveGas.class).setStrength(3));
 
-		return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage, src);
 	}
 
 	@Override

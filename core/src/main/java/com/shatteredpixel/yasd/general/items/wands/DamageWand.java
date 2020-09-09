@@ -27,7 +27,6 @@
 
 package com.shatteredpixel.yasd.general.items.wands;
 
-import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.watabou.utils.Random;
@@ -41,13 +40,11 @@ public abstract class DamageWand extends Wand{
 	}
 
 	public int hit(Char enemy, int damage) {
-		if (curUser == null) {
-			curUser = Dungeon.hero;
-		}
+		Char.DamageSrc src = new Char.DamageSrc(element, this);
 		damage = element.attackProc(damage, curUser, enemy);
-		damage = enemy.defenseProc(curUser, damage);
+		damage = enemy.defenseProc(curUser, damage, src);
 		if (damage > 0) {
-			enemy.damage(damage, new Char.DamageSrc(element, this));
+			enemy.damage(damage, src);
 		}
 		return damage;
 	}

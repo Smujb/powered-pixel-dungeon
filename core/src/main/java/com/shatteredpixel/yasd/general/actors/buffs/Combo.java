@@ -261,11 +261,11 @@ public class Combo extends Buff implements ActionIndicator.Action {
 					dmg = Math.round(dmg*0.6f);
 					break;
 			}
-
+			Char.DamageSrc src =  new Char.DamageSrc(Element.PHYSICAL, target);
 			boolean wasAlly = enemy.alignment == target.alignment;
-			dmg = enemy.defenseProc(target, dmg);
+			dmg = enemy.defenseProc(target, dmg, src);
 			dmg = target.attackProc(enemy, dmg);
-			enemy.damage( dmg, new Char.DamageSrc(Element.PHYSICAL, target) );
+			enemy.damage( dmg, src );
 
 			//special effects
 			switch (type){

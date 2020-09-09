@@ -94,10 +94,9 @@ public class SupportWand extends NormalWand {
 		boolean attack = enemy.alignment != curUser.alignment;
 		damage = proc(enemy, attack, damage);
 		if (attack) {
-			damage = enemy.defenseProc(curUser, damage);
-			if (damage > 0) {
-				enemy.damage(damage, new Char.DamageSrc(element, this).ignoreDefense());
-			}
+			Char.DamageSrc src = new Char.DamageSrc(element, this);
+			damage = enemy.defenseProc(curUser, damage, src);
+			enemy.damage(damage, src);
 		} else {
 			if (damage > 0) {
 				enemy.heal(damage, true);

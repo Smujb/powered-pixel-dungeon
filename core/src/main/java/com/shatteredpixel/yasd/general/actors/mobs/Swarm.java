@@ -100,9 +100,9 @@ public class Swarm extends Mob {
 
 
 	@Override
-	public int defenseProc(Char enemy, int damage) {
+	public int defenseProc(Char enemy, int damage, DamageSrc src) {
 
-		if (HP >= damage + 2 && !enemy.elementalType().isMagical()) {
+		if (HP >= damage + 2 && !src.getElement().isMagical()) {
 			ArrayList<Integer> candidates = new  ArrayList<>();
 			boolean[] solid = Dungeon.level.solid();
 			
@@ -129,7 +129,7 @@ public class Swarm extends Mob {
 			}
 		}
 		
-		return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage, src);
 	}
 	
 	/*@Override

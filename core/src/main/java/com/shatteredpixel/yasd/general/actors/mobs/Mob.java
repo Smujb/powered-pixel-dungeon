@@ -766,7 +766,7 @@ public abstract class Mob extends Char {
 	protected boolean hitWithRanged = false;
 	
 	@Override
-	public int defenseProc(Char enemy, int damage) {
+	public int defenseProc(Char enemy, int damage, DamageSrc src) {
 		if (enemy instanceof Hero && ((Hero) enemy).belongings.miscs[0] instanceof MissileWeapon){
 			hitWithRanged = true;
 		}
@@ -791,7 +791,7 @@ public abstract class Mob extends Char {
 			Dungeon.hero.sprite.emitter().burst( Speck.factory(Speck.HEALING), 1 );
 		}
 
-		return super.defenseProc(enemy, damage);
+		return super.defenseProc(enemy, damage, src);
 	}
 
 	@Override

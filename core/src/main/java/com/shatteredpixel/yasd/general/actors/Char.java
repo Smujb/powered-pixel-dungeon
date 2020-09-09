@@ -411,7 +411,7 @@ public abstract class Char extends Actor {
 				src.ignoreDefense();
 			}
 			dmg = attackProc(enemy, dmg);
-			dmg = enemy.defenseProc(this, dmg);
+			dmg = enemy.defenseProc(this, dmg, src);
 			// If the enemy is already dead, interrupt the attack.
 			// This matters as defence procs can sometimes inflict self-damage, such as armour glyphs.
 			if (!enemy.isAlive()) {
@@ -658,7 +658,7 @@ public abstract class Char extends Actor {
 		return damage;
 	}
 
-	public int defenseProc(Char enemy, int damage) {
+	public int defenseProc(Char enemy, int damage, DamageSrc src) {
 		if (hasBelongings()) {
 			if (enemy.elementalType().isMagical()) {
 				damage = belongings.magicalDefenseProc(enemy, damage);

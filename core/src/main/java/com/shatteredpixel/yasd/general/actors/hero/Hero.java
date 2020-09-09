@@ -977,7 +977,7 @@ public class Hero extends Char {
 	}
 	
 	@Override
-	public int defenseProc(@NotNull Char enemy, int damage) {
+	public int defenseProc(@NotNull Char enemy, int damage, DamageSrc src) {
 
 		if (enemy.elementalType().isMagical()) {
 			damage *= RingOfElements.resist(enemy);
@@ -988,7 +988,7 @@ public class Hero extends Char {
 			berserk.damage(damage);
 		}
 
-		damage = super.defenseProc(enemy,damage);
+		damage = super.defenseProc(enemy,damage, src);
 		
 		return damage;
 	}
