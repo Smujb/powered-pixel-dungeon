@@ -226,11 +226,11 @@ public abstract class Mob extends Char {
 	}
 
 	private int normalPerception(int level) {
-		return 9 + level;
+		return 5 + level;
 	}
 
 	private int normalStealth(int level) {
-		return 3 + level;
+		return 5 + level;
 	}
 
 	private int normalDamageRoll(int level) {
@@ -370,7 +370,7 @@ public abstract class Mob extends Char {
 	private Char chooseAlly() {
 		ArrayList<Char> targets = new ArrayList<>();
 		for (Char ch : Actor.chars()) {
-			if (ch.alignment == this.alignment && (fieldOfView[ch.pos] || notice(ch, 4))) {
+			if (ch.alignment == this.alignment && (fieldOfView[ch.pos] || notice(ch))) {
 				targets.add(ch);
 			}
 		}
@@ -822,7 +822,6 @@ public abstract class Mob extends Char {
 		}
 		if (state != HUNTING) {
 			alerted = true;
-			notice();
 		}
 
 		
@@ -1032,11 +1031,12 @@ public abstract class Mob extends Char {
 	public void notice() {
 		enemySeen = true;
 		for (Mob mob : Dungeon.level.mobs.toArray( new  Mob[0] )) {
-			//Mobs get less suspicion increase drop-off distance on swarm intelligence.
-			float increase = SUSPICION_THRESHOLD - Dungeon.level.distance(pos, mob.pos)/(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 5f : 3f);
-			mob.increaseSuspicion(increase);
+			if (mob.alignment == alignment && mob != this) {
+				//Mobs get less suspicion increase drop-off distance on swarm intelligence.
+				float increase = SUSPICION_THRESHOLD - Dungeon.level.distance(pos, mob.pos) / (Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 5f : 3f);
+				mob.increaseSuspicion(increase);
+			}
 		}
-		increaseSuspicion(SUSPICION_THRESHOLD);
 	}
 
 	private void increaseSuspicion(float amount) {
@@ -1044,7 +1044,7 @@ public abstract class Mob extends Char {
 		if (suspicion > MAX_SUSPICION) {
 			suspicion = MAX_SUSPICION;
 		}
-		if (suspicion > SUSPICION_THRESHOLD && sprite != null) {
+		if (Math.round(suspicion) == SUSPICION_THRESHOLD && sprite != null) {
 			sprite.showAlert();
 		}
 	}
@@ -1054,7 +1054,7 @@ public abstract class Mob extends Char {
 		if (suspicion < 0) {
 			suspicion = 0;
 		}
-		if (suspicion < SUSPICION_THRESHOLD && sprite != null) {
+		if (Math.round(suspicion) == SUSPICION_THRESHOLD && sprite != null) {
 			sprite.showLost();
 		}
 	}
@@ -1063,15 +1063,13 @@ public abstract class Mob extends Char {
 		if (enemy == null) {
 			return;
 		}
-		float noticeFactor = state.noticeFactor();
-		if (suspicion > SUSPICION_THRESHOLD) {
-			noticeFactor /= 2;
-		}
-		if (notice(enemy, noticeFactor)) {
+		if (notice(enemy)) {
 			increaseSuspicion(1);
 		} else {
-			//Swarm Intelligence causes mobs to forget you slower.
-			decreaseSuspicion(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 2/3f : 1.5f);
+			if (!fieldOfView(enemy.pos)) {
+				//Swarm Intelligence causes mobs to forget you slower.
+				decreaseSuspicion(Dungeon.isChallenged(Challenges.SWARM_INTELLIGENCE) ? 2 / 3f : 1.5f);
+			}
 		}
 	}
 

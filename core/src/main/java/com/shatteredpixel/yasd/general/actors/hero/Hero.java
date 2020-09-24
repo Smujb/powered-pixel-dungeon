@@ -403,13 +403,13 @@ public class Hero extends Char {
 
 	@Override
 	public float sneakSkill(Char enemy) {
-		sneakSkill = 1 + getEvasion()*3;
+		sneakSkill = 5 + getEvasion()*3;
 		return super.sneakSkill(enemy);
 	}
 
 	@Override
 	public float noticeSkill(Char enemy) {
-		noticeSkill = 7 + getPerception()*3;
+		noticeSkill = 5 + getPerception()*3;
 		return super.noticeSkill(enemy);
 	}
 
