@@ -1505,7 +1505,7 @@ public abstract class Level implements Bundlable {
 		return traps;
 	}
 
-	private void onTrapModified() {
+	public void onTrapModified() {
 		secret.invalidate();
 		avoid.invalidate();
 		passable.invalidate();
