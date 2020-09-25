@@ -138,10 +138,12 @@ public class LevelHandler {
 	}
 
 	public static void descend() {
+		GameScene.messageOnEnter = Messages.get(LevelHandler.class, "descend", Dungeon.depth + 1);
 		move(Dungeon.keyForDepth(Dungeon.depth +1), Messages.get(Mode.class, Mode.DESCEND.name()), Mode.DESCEND, Dungeon.depth + 1, null);
 	}
 
 	public static void ascend() {
+		GameScene.messageOnEnter = Messages.get(LevelHandler.class, "ascend", Dungeon.depth + 1);
 		move(Dungeon.keyForDepth(Dungeon.depth -1), Messages.get(Mode.class, Mode.ASCEND.name()), Mode.ASCEND, Dungeon.depth - 1, null);
 	}
 
@@ -164,6 +166,7 @@ public class LevelHandler {
 	}
 
 	public static void returnTo(int depth, int pos) {
+		GameScene.messageOnEnter = Messages.get(LevelHandler.class, "return", depth);
 		returnTo(depth, Dungeon.level.cellToPoint(pos));
 	}
 
@@ -177,6 +180,11 @@ public class LevelHandler {
 
 	public static void dive(Point pos) {
 		Dungeon.underwater = !Dungeon.underwater();
+		if (Dungeon.underwater()) {
+			GameScene.messageOnEnter = Messages.get(LevelHandler.class, "dive");
+		} else {
+			GameScene.messageOnEnter = Messages.get(LevelHandler.class, "resurface");
+		}
 		move(Dungeon.keyForDepth(), Messages.get(Mode.class, Mode.DIVE.name()), Mode.DIVE, Dungeon.depth, pos);
 	}
 
@@ -185,6 +193,7 @@ public class LevelHandler {
 		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
+				GameScene.messageOnEnter = Messages.get(LevelHandler.class, "return", depth);
 				PPDGame.switchScene(GameScene.class);
 			}
 		}, getThread(), PPDSettings.fastInterlevelScene());
@@ -195,6 +204,7 @@ public class LevelHandler {
 		depth = 1;
 		pos = null;
 		key = Dungeon.keyForDepth();
+		GameScene.messageOnEnter = Messages.get(LevelHandler.class, "start", depth);
 		TextScene.init(Messages.get(Mode.class, Mode.DESCEND.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {

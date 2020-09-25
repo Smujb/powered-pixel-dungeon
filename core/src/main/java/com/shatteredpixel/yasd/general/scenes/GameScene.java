@@ -170,7 +170,9 @@ public class GameScene extends PixelScene {
 	private ActionIndicator action;
 	private ResumeIndicator resume;
 	private DiveIndicator dive;
-	
+
+	public static String messageOnEnter = null;
+
 	@Override
 	public void create() {
 		
@@ -426,7 +428,6 @@ public class GameScene extends PixelScene {
 		if (LevelHandler.mode() != LevelHandler.Mode.MOVE) {
 			if (Dungeon.depth == Statistics.deepestFloor
 					&& (LevelHandler.mode() == LevelHandler.Mode.DESCEND || LevelHandler.mode() == LevelHandler.Mode.FALL)) {
-				GLog.h(Messages.get(this, "ascend"), Dungeon.depth);
 				Sample.INSTANCE.play(Assets.Sounds.DESCEND);
 				
 				for (Char ch : Actor.chars()){
@@ -452,10 +453,6 @@ public class GameScene extends PixelScene {
 					}
 				}
 				
-			} else if (LevelHandler.mode() == LevelHandler.Mode.RESET) {
-				GLog.h(Messages.get(this, "warp"));
-			} else {
-				GLog.h(Messages.get(this, "return"), Dungeon.depth);
 			}
 
 			switch (Dungeon.level.feeling) {
@@ -493,6 +490,11 @@ public class GameScene extends PixelScene {
 			LevelHandler.resetMode();
 
 			
+		}
+
+		if (messageOnEnter != null) {
+			GLog.h(messageOnEnter);
+			messageOnEnter = null;
 		}
 		
 		fadeIn();
