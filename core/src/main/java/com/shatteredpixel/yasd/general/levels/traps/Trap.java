@@ -70,14 +70,22 @@ public abstract class Trap implements Bundlable {
 	public boolean canBeHidden = true;
 	public boolean canBeSearched = true;
 
+	private void stateChange() {
+		if (Dungeon.level != null) {
+			Dungeon.level.onTrapModified();
+		}
+	}
+
 	public Trap set(int pos){
 		this.pos = pos;
+		stateChange();
 		return this;
 	}
 
 	public Trap reveal() {
 		visible = true;
 		GameScene.updateMap(pos);
+		stateChange();
 		return this;
 	}
 
@@ -85,6 +93,7 @@ public abstract class Trap implements Bundlable {
 		if (canBeHidden) {
 			visible = false;
 			GameScene.updateMap(pos);
+			stateChange();
 			return this;
 		} else {
 			return reveal();
