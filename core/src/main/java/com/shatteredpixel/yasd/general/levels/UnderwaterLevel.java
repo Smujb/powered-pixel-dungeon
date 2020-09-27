@@ -149,6 +149,16 @@ public class UnderwaterLevel extends Level {
 	}
 
 	@Override
+	public boolean setCellToGrass(int cell) {
+		return false;
+	}
+
+	@Override
+	public boolean setCellToWater(boolean includeTraps, int cell) {
+		return true;
+	}
+
+	@Override
 	protected void createMobs() {
 		for (int i = 0; i < nMobs(); i++) {
 			Mob mob = createMob();

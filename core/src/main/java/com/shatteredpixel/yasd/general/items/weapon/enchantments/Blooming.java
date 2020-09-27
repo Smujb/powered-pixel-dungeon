@@ -82,7 +82,7 @@ public class Blooming extends Weapon.Enchantment {
 		KindOfTerrain c = Dungeon.level.getTerrain(cell);
 		if ( c == Terrain.EMPTY || c == Terrain.EMPTY_DECO
 				|| c == Terrain.EMBERS || c == Terrain.GRASS){
-			Dungeon.level.set(cell, Terrain.HIGH_GRASS);
+			Dungeon.level.setCellToGrass(cell);
 			GameScene.updateMap(cell);
 			CellEmitter.get( cell ).burst( LeafParticle.LEVEL_SPECIFIC, 4 );
 			return true;

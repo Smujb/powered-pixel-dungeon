@@ -1519,6 +1519,11 @@ public abstract class Level implements Bundlable {
 		GameScene.updateMap( cell );
 	}
 
+	public boolean setCellToGrass(int cell) {
+		set(cell, GRASS);
+		return true;
+	}
+
 	public boolean setCellToWater( boolean includeTraps, int cell ){
 		Point p = cellToPoint(cell);
 
