@@ -116,7 +116,9 @@ public class DiveIndicator extends Tag {
 			hero.sprite.operate(hero.pos, new Callback() {
 				@Override
 				public void call() {
-					LevelHandler.dive(hero.pos);
+					if (hero.isAlive()) {
+						LevelHandler.dive(hero.pos);
+					}
 				}
 			});
 		}
