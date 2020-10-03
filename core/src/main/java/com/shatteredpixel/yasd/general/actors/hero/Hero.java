@@ -233,9 +233,9 @@ public class Hero extends Char {
 			return;
 		}
 		Amount *= Dungeon.difficulty.moraleFactor();
-		morale -= Amount;
-		morale = Math.max(morale, 0);
 		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk
+			morale -= Amount;
+			morale = Math.max(morale, 0);
 			if (this.sprite != null) {
 				this.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, "loss"));
 			}
