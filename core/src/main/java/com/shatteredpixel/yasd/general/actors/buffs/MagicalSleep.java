@@ -47,7 +47,7 @@ public class MagicalSleep extends Buff {
 			target.paralysed++;
 			
 			if (target.alignment == Char.Alignment.ALLY) {
-				if (target.HP == target.HT) {
+				if (target.HP == target.HT || target instanceof  Hero && ((Hero)target).morale == ((Hero) target).MAX_MORALE) {
 					if (target instanceof  Hero) GLog.i(Messages.get(this, "toohealthy"));
 					detach();
 				} else {
