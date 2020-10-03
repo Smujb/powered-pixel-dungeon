@@ -270,9 +270,6 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 	
 	public void attack( int cell, Callback callback ) {
 		final Char enemy= Actor.findChar(cell);
-		if (enemy == null) {
-			callback.call();
-		}
 		animCallback = new Callback() {
 			@Override
 			public void call() {
