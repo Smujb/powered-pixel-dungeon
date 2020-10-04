@@ -87,6 +87,7 @@ public class PPDGame extends Game {
 	public static final int v0_4_8  = 450;
 	public static final int v0_4_9  = 452;
 	public static final int v0_4_10  = 453;
+	public static final int v0_4_11  = 454;
 	
 	public PPDGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
