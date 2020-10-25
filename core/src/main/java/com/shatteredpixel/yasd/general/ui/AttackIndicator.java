@@ -33,8 +33,11 @@ import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
 import com.shatteredpixel.yasd.general.sprites.CharSprite;
 import com.shatteredpixel.yasd.general.PPDAction;
+import com.shatteredpixel.yasd.general.sprites.ItemSprite;
+import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.Visual;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
@@ -49,7 +52,7 @@ public class AttackIndicator extends Tag {
 	
 	private static AttackIndicator instance;
 	
-	private CharSprite sprite = null;
+	private Visual sprite = null;
 
 	private Mob lastTarget;
 	private ArrayList<Mob> candidates = new ArrayList<>();
@@ -127,7 +130,6 @@ public class AttackIndicator extends Tag {
 			} else {
 				active = true;
 				lastTarget = Random.element( candidates );
-				updateImage();
 				flash();
 			}
 		} else {
@@ -136,9 +138,10 @@ public class AttackIndicator extends Tag {
 				flash();
 			}
 		}
-		
-		visible( lastTarget != null );
-		enable( bg.visible );
+
+		updateImage();
+		visible( v > 0 );
+		enable( lastTarget != null );
 	}
 	
 	private synchronized void updateImage() {
@@ -147,14 +150,23 @@ public class AttackIndicator extends Tag {
 			sprite.killAndErase();
 			sprite = null;
 		}
-		
-		sprite = Reflection.newInstance(lastTarget.spriteClass);
-		active = true;
-		sprite.linkVisuals(lastTarget);
-		sprite.idle();
-		sprite.paused = true;
-		add( sprite );
 
+		if (lastTarget == null) {
+			int img;
+			if (Dungeon.hero.belongings.getWeapons().size() > 0) {
+				img = Dungeon.hero.belongings.getCurrentWeapon().image;
+			} else {
+				img = ItemSpriteSheet.WEAPON_HOLDER;
+			}
+			sprite = new ItemSprite(img);
+		} else {
+			sprite = Reflection.newInstance(lastTarget.spriteClass);
+			active = true;
+			((CharSprite)sprite).linkVisuals(lastTarget);
+			((CharSprite)sprite).idle();
+			((CharSprite)sprite).paused = true;
+		}
+		add(sprite);
 		layout();
 	}
 	
@@ -175,10 +187,12 @@ public class AttackIndicator extends Tag {
 	
 	@Override
 	protected void onClick() {
-		if (enabled) {
+		if (Dungeon.hero.canAttack(lastTarget)) {
 			if (Dungeon.hero.handle( lastTarget.pos )) {
 				Dungeon.hero.next();
 			}
+		} else {
+			Dungeon.hero.belongings.doSwitchToNextWeapon();
 		}
 	}
 	
@@ -192,6 +206,8 @@ public class AttackIndicator extends Tag {
 	}
 	
 	public static void updateState() {
-		instance.checkEnemies();
+		if (instance != null) {
+			instance.checkEnemies();
+		}
 	}
 }

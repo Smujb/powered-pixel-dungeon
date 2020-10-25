@@ -498,6 +498,7 @@ public class GameScene extends PixelScene {
 		}
 		
 		fadeIn();
+		AttackIndicator.updateState();
 
 	}
 

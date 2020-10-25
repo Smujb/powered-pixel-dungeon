@@ -64,6 +64,7 @@ import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.terrain.Terrain;
 import com.shatteredpixel.yasd.general.messages.Messages;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
@@ -208,6 +209,14 @@ public class Belongings implements Iterable<Item> {
 	public void nextWeapon() {
 		currentWeapon += 1;
 		resetWeapon();
+	}
+
+	public void doSwitchToNextWeapon() {
+		owner.spend(attackDelay());
+		owner.busy();
+		nextWeapon();
+		owner.sprite.operate( owner.pos );
+		GLog.i(Messages.get(this, "weapon_switch"));
 	}
 
 	public KindOfWeapon getCurrentWeapon() {
