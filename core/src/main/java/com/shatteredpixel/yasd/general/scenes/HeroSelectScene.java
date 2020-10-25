@@ -383,7 +383,7 @@ public class HeroSelectScene extends PixelScene {
 					break;
 				case ROGUE:
 					tabIcons = new Image[]{
-							new ItemSprite(ItemSpriteSheet.ARTIFACT_CLOAK, null),
+							new ItemSprite(ItemSpriteSheet.KIT, null),
 							new ItemSprite(ItemSpriteSheet.Weapons.SURPRISE_BENEFIT, null),
 							Icons.get(Icons.DEPTH)
 					};
