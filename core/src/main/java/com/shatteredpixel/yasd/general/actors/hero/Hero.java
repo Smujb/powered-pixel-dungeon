@@ -59,6 +59,7 @@ import com.shatteredpixel.yasd.general.actors.buffs.Paralysis;
 import com.shatteredpixel.yasd.general.actors.buffs.Preparation;
 import com.shatteredpixel.yasd.general.actors.buffs.SnipersMark;
 import com.shatteredpixel.yasd.general.actors.buffs.Vertigo;
+import com.shatteredpixel.yasd.general.actors.buffs.WellFed;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
 import com.shatteredpixel.yasd.general.effects.CheckedCell;
 import com.shatteredpixel.yasd.general.items.Ankh;
@@ -201,21 +202,21 @@ public class Hero extends Char {
 		super.updateHT(boostHP);
 	}
 
-	private static class Morale{}
+	private static class Morale {}
 
-	private void moraleCheck() {
+	private void sayMorale() {
+		int choice = Random.Int(3);
 		if (morale > MAX_MORALE*0.67) {
-			return;
+			String messageTitle = "med_" + choice;
+			sprite.showStatus(CharSprite.NEUTRAL, Messages.get(Morale.class, messageTitle));
 
 		} else if (morale > MAX_MORALE*0.33) {
-			int choice = Random.Int(5) + 1;
-			String messageTitle = "low_morale_" + choice;
-			GLog.w(Messages.get(Hero.class, messageTitle));
+			String messageTitle = "low_" + choice;
+			sprite.showStatus(CharSprite.WARNING, Messages.get(Morale.class, messageTitle));
 
 		} else {
-			int choice = Random.Int(5) + 1;
-			String messageTitle = "very_low_morale_" + choice;
-			GLog.w(Messages.get(Hero.class, messageTitle));
+			String messageTitle = "very_low_" + choice;
+			sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, messageTitle));
 
 		}
 	}
@@ -224,23 +225,24 @@ public class Hero extends Char {
 		return morale < MAX_MORALE * 0.5f;
 	}
 
-	public void loseMorale(float Amount) {
-		loseMorale(Amount, true);
+	public void loseMorale(float amount) {
+		loseMorale(amount, true);
 	}
 
-	public void loseMorale(float Amount, boolean say) {
+	public void loseMorale(float amount, boolean say) {
 		if (!Constants.MORALE) {
 			return;
 		}
-		Amount *= Dungeon.difficulty.moraleFactor();
+		if (buff(WellFed.class) != null) amount *= 2/3f;
+		amount *= Dungeon.difficulty.moraleFactor();
 		if (buff(Drunk.class) == null) {//Can't lose Morale when drunk
-			morale -= Amount;
+			morale -= amount;
 			morale = Math.max(morale, 0);
 			if (this.sprite != null) {
 				this.sprite.showStatus(CharSprite.NEGATIVE, Messages.get(Morale.class, "loss"));
 			}
 			if (say) {
-				moraleCheck();
+				sayMorale();
 			}
 			if (morale == 0f & isAlive()) {
 				Buff.affect(this, Bleeding.class).set(Math.max(1, this.HP / 6));
