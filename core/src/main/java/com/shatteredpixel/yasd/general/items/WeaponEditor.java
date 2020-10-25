@@ -169,7 +169,8 @@ public class WeaponEditor extends Item {
 		GLog.p(Messages.get(WeaponEditor.class, "gained_scrap", weapon.name(), amount));
 	}
 
-	private static class Scrap extends Item {
+	public static class Scrap extends Item {
+
 		{
 			image = ItemSpriteSheet.DUST;
 
