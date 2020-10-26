@@ -97,8 +97,8 @@ public class PPDGame extends Game {
 				"com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon" );
 
 		com.watabou.utils.Bundle.addAlias(
-				com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon.class,
-				"com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon" );
+				com.shatteredpixel.yasd.general.items.armor.RandomArmor.class,
+				"com.shatteredpixel.yasd.general.items.armor.Armor" );
 
 		//v0.7.0
 		com.watabou.utils.Bundle.addAlias(
