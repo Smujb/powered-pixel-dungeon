@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
+import com.shatteredpixel.yasd.general.items.randomiser.Randomisable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class RandomMeleeWeapon extends MeleeWeapon {
+public class RandomMeleeWeapon extends MeleeWeapon implements Randomisable {
 
 
     protected String desc = null;
@@ -53,22 +54,20 @@ public class RandomMeleeWeapon extends MeleeWeapon {
 
     private WeaponProfile profile = WeaponProfile.NONE;
 
-    private static float randomStat() {
-        int num = Random.NormalIntRange(5, 20);
-        return num / 10f;
-    }
 
-
-    private void resetStats() {
+    @Override
+    public RandomMeleeWeapon resetStats() {
         DLY = 1f;
         ACC = 1f;
         degradeFactor = 1f;
         defenseMultiplier = 0f;
         RCH = 1;
         properties = new ArrayList<>();
+        return this;
     }
 
     //Generates stats for the weapon.
+    @Override
     public RandomMeleeWeapon rollStats() {
         resetStats();
         KindOfWeapon.Property[] basicProps = Property.values();
@@ -96,13 +95,13 @@ public class RandomMeleeWeapon extends MeleeWeapon {
             if (propertiesEnabled[i]) {
                 switch (i - basicProps.length) {
                     case 0:
-                        DLY = randomStat();
+                        DLY = Randomisable.randomStat();
                         break;
                     case 1:
-                        ACC = randomStat();
+                        ACC = Randomisable.randomStat();
                         break;
                     case 2:
-                        degradeFactor = randomStat();
+                        degradeFactor = Randomisable.randomStat();
                         break;
                     case 3:
                         defenseMultiplier = Random.NormalFloat(0, 1);
@@ -118,6 +117,7 @@ public class RandomMeleeWeapon extends MeleeWeapon {
     }
 
     @Contract(" -> this")
+    @Override
     public RandomMeleeWeapon matchProfile() {
         //Weapons that are only very slightly different from the basic weapon get it's image and description.
         float closestMatch = 1.1f;

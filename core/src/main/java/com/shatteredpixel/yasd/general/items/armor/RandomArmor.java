@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.armor;
 
+import com.shatteredpixel.yasd.general.items.randomiser.Randomisable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class RandomArmor extends Armor {
+public class RandomArmor extends Armor implements Randomisable {
 
     protected String desc = null;
 
@@ -50,20 +51,18 @@ public class RandomArmor extends Armor {
         this.name = name;
     }
 
-    private static float randomStat() {
-        int num = Random.Int(5, 20);
-        return num/10f;
-    }
-
-    private void resetStats() {
+    @Override
+    public RandomArmor resetStats() {
         EVA = 1f;
         STE = 1f;
         speedFactor = 1f;
         magicDamageFactor = 1f;
         physicalDamageFactor = 1f;
         regenFactor = 1f;
+        return this;
     }
 
+    @Override
     public RandomArmor rollStats() {
         resetStats();
         final int nProps = 6;
@@ -83,16 +82,16 @@ public class RandomArmor extends Armor {
             if (propertiesEnabled[i]) {
                 switch (i) {
                     case 0:
-                        EVA = randomStat();
+                        EVA = Randomisable.randomStat();
                         break;
                     case 1:
-                        STE = randomStat();
+                        STE = Randomisable.randomStat();
                         break;
                     case 2:
-                        speedFactor = randomStat();
+                        speedFactor = Randomisable.randomStat();
                         break;
                     case 3:
-                        regenFactor = randomStat();
+                        regenFactor = Randomisable.randomStat();
                         break;
                     case 4:
                         physicalDamageFactor = Random.NormalFloat(0.5f, 1);
@@ -109,6 +108,7 @@ public class RandomArmor extends Armor {
     private ArmorProfile profile = ArmorProfile.NONE;
 
     @Contract(" -> this")
+    @Override
     public RandomArmor matchProfile() {
         //Weapons that are only very slightly different from the basic weapon get it's image and description.
         float closestMatch = 1.1f;

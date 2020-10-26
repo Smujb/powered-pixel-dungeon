@@ -28,7 +28,8 @@
 package com.shatteredpixel.yasd.general.items.armor;
 
 import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.Profile;
+import com.shatteredpixel.yasd.general.items.randomiser.Profile;
+import com.shatteredpixel.yasd.general.items.randomiser.Randomisable;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
@@ -102,7 +103,7 @@ public enum ArmorProfile implements Profile {
 	}
 
 	@Override
-	public float match(@NotNull Item item) {
+	public float match(@NotNull Randomisable item) {
 		Armor armor = ((Armor)item);
 		switch (this) {
 			default:
@@ -135,7 +136,7 @@ public enum ArmorProfile implements Profile {
 	}
 
 	@Override
-	public Item copy(@NotNull Item item) {
+	public Item copy(@NotNull Randomisable item) {
 		RandomArmor armor = ((RandomArmor)item);
 		armor.image = image;
 		armor.desc = armorDesc();

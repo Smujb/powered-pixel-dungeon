@@ -30,7 +30,8 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 import com.shatteredpixel.yasd.general.Assets;
 import com.shatteredpixel.yasd.general.items.Item;
 import com.shatteredpixel.yasd.general.items.KindOfWeapon;
-import com.shatteredpixel.yasd.general.items.Profile;
+import com.shatteredpixel.yasd.general.items.randomiser.Profile;
+import com.shatteredpixel.yasd.general.items.randomiser.Randomisable;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 
@@ -135,8 +136,8 @@ public enum WeaponProfile implements Profile {
 	};
 
 	@Override
-	public Item copy(@NotNull Item item) {
-		MeleeWeapon weapon = ((MeleeWeapon)item);
+	public Item copy(@NotNull Randomisable item) {
+		RandomMeleeWeapon weapon = ((RandomMeleeWeapon)item);
 		weapon.image = image;
 		weapon.desc = weaponDesc();
 		weapon.setName(weaponName());
@@ -158,7 +159,7 @@ public enum WeaponProfile implements Profile {
 	}
 
 	@Override
-	public float match(@NotNull Item item) {
+	public float match(@NotNull Randomisable item) {
 		MeleeWeapon weapon = ((MeleeWeapon)item);
 		switch (this) {
 			default:

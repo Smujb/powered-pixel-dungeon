@@ -6,7 +6,7 @@
  *   Shattered Pixel Dungeon
  *   Copyright (C) 2014-2019 Evan Debenham
  *
- *   Powered Pixel Dungeon
+ *   Yet Another Shattered Dungeon
  *   Copyright (C) 2014-2020 Samuel Braithwaite
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,20 @@
  *
  */
 
-package com.shatteredpixel.yasd.general.items;
+package com.shatteredpixel.yasd.general.items.randomiser;
 
-import org.jetbrains.annotations.NotNull;
+import com.watabou.utils.Random;
 
-public interface Profile {
-	float match(@NotNull Item item);
+public interface Randomisable {
 
-	Item copy(@NotNull Item item);
+    Randomisable rollStats();
+
+    Randomisable resetStats();
+
+    Randomisable matchProfile();
+
+    static float randomStat() {
+        int num = Random.NormalIntRange(5, 20);
+        return num / 10f;
+    }
 }
