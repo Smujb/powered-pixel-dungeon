@@ -38,6 +38,18 @@ import java.util.Collections;
 
 public class RandomArmor extends Armor {
 
+    protected String desc = null;
+
+
+    @Override
+    public String desc() {
+        return desc;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private static float randomStat() {
         int num = Random.Int(5, 20);
         return num/10f;

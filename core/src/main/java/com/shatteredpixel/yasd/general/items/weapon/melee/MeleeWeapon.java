@@ -43,8 +43,6 @@ public class MeleeWeapon extends Weapon {
 		image = ItemSpriteSheet.Weapons.SWORD;
 	}
 
-	protected String desc = null;
-
 	public int tier = 1;
 
 	public float defenseMultiplier = 0f;
@@ -85,11 +83,6 @@ public class MeleeWeapon extends Weapon {
 	@Override
 	public int defenseFactor(Char owner) {
 		return Math.round((tier*(2+level()/2f))*defenseMultiplier);
-	}
-
-	@Override
-	public String desc() {
-		return desc == null ? "" : desc;
 	}
 
 	@Override
@@ -148,10 +141,6 @@ public class MeleeWeapon extends Weapon {
 			multiplier *= 0.6f;
 		}
 		return multiplier;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int defaultSTRReq() {

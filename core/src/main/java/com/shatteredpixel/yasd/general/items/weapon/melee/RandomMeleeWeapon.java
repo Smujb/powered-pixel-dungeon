@@ -40,6 +40,17 @@ import java.util.Collections;
 public class RandomMeleeWeapon extends MeleeWeapon {
 
 
+    protected String desc = null;
+
+    @Override
+    public String desc() {
+        return desc == null ? "" : desc;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private WeaponProfile profile = WeaponProfile.NONE;
 
     private static float randomStat() {

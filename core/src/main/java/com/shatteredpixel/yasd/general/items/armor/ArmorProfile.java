@@ -136,7 +136,7 @@ public enum ArmorProfile implements Profile {
 
 	@Override
 	public Item copy(@NotNull Item item) {
-		Armor armor = ((Armor)item);
+		RandomArmor armor = ((RandomArmor)item);
 		armor.image = image;
 		armor.desc = armorDesc();
 		armor.setName(armorName());

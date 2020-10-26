@@ -116,8 +116,6 @@ public class Armor extends KindofMisc {
 		return Constants.DEGRADATION;
 	}
 
-	protected String desc = null;
-
 	public Augment augment = Augment.NONE;
 	
 	public Glyph glyph;
@@ -177,11 +175,6 @@ public class Armor extends KindofMisc {
 	@Override
 	public int image() {
 		return ItemSpriteSheet.adjustForTier(image, tier);
-	}
-
-	@Override
-	public String desc() {
-		return desc;
 	}
 
 	@Override
@@ -502,10 +495,6 @@ public class Armor extends KindofMisc {
 		}
 
 		return this;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int defaultSTRReq() {
