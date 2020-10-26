@@ -72,13 +72,11 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 import com.watabou.utils.Reflection;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Armor extends KindofMisc {
 
@@ -141,15 +139,6 @@ public class Armor extends KindofMisc {
 	private static final String SEAL            = "seal";
 	private static final String AUGMENT			= "augment";
 	private static final String TIER = "tier";
-	private static final String STEALTH = "stealth";
-	private static final String EVASION = "evasion";
-	private static final String SPEED = "speed";
-	private static final String DR = "dr";
-	private static final String MAGICAL_DR = "magic-dr";
-	private static final String PHYSICAL_DR = "phys-dr";
-	private static final String APPEARANCE = "appearance";
-	private static final String REGEN_FACTOR = "regen-factor";
-	private static final String PROFILE      = "profile";
 
 	@Override
 	public void storeInBundle(  Bundle bundle ) {
@@ -160,15 +149,7 @@ public class Armor extends KindofMisc {
 		bundle.put( CURSE_INFUSION_BONUS, curseInfusionBonus );
 		bundle.put( SEAL, seal);
 		bundle.put( AUGMENT, augment);
-		bundle.put( TIER, tier );
-		bundle.put( STEALTH, STE );
-		bundle.put( EVASION, EVA );
-		bundle.put( SPEED, speedFactor );
-		bundle.put( MAGICAL_DR, magicDamageFactor);
-		bundle.put( PHYSICAL_DR, physicalDamageFactor);
-		bundle.put(PROFILE, profile);
-		bundle.put(APPEARANCE, appearance);
-		bundle.put(REGEN_FACTOR, regenFactor);
+		bundle.put(TIER, tier);
 	}
 
 	@Override
@@ -191,27 +172,6 @@ public class Armor extends KindofMisc {
 		if (Dungeon.version >= PPDGame.v0_2_0) {//Support older saves
 			tier = bundle.getInt(TIER);
 		}
-		if (Dungeon.version > PPDGame.v0_3_6) {
-			STE = bundle.getFloat(STEALTH);
-			EVA = bundle.getFloat(EVASION);
-			speedFactor = bundle.getFloat(SPEED);
-			magicDamageFactor = bundle.getFloat(MAGICAL_DR);
-			physicalDamageFactor = bundle.getFloat(PHYSICAL_DR);
-			appearance = bundle.getInt(APPEARANCE);
-			regenFactor = bundle.getFloat(REGEN_FACTOR);
-		} else {
-			desc = super.desc();
-			name = Messages.get(this, "name");
-		}
-		if (bundle.contains(PROFILE)) {
-			//Check the correct profile is still applied only if it's the main armour class not a subclass.
-			profile = bundle.getEnum(PROFILE, ArmorProfile.class);
-			if (getClass() == Armor.class) {
-				profile.copy(this);
-			}
-		} else {
-			matchProfile();
-		}
 	}
 
 	@Override
@@ -219,98 +179,9 @@ public class Armor extends KindofMisc {
 		return ItemSpriteSheet.adjustForTier(image, tier);
 	}
 
-	private static float randomStat() {
-		int num = Random.Int(5, 20);
-		return num/10f;
-	}
-
-	private void resetStats() {
-		EVA = 1f;
-		STE = 1f;
-		speedFactor = 1f;
-		magicDamageFactor = 1f;
-		physicalDamageFactor = 1f;
-		regenFactor = 1f;
-	}
-
 	@Override
 	public String desc() {
 		return desc;
-	}
-
-	public Armor initStats() {
-		resetStats();
-		final int nProps = 6;
-		int maxProps = 0;
-		while (maxProps < 4 && Random.Float() < (0.75f * Math.pow(0.5, maxProps))) {
-			maxProps++;
-		}
-		boolean[] propertiesEnabled = new boolean[nProps];
-		for (int i = 0; i < maxProps; i++) {
-			int index = Random.Int(nProps);
-			if (!propertiesEnabled[index]) {
-				propertiesEnabled[index] = true;
-			}
-		}
-
-		for (int i = 0; i < nProps; i++) {
-			if (propertiesEnabled[i]) {
-				switch (i) {
-					case 0:
-						EVA = randomStat();
-						break;
-					case 1:
-						STE = randomStat();
-						break;
-					case 2:
-						speedFactor = randomStat();
-						break;
-					case 3:
-						regenFactor = randomStat();
-						break;
-					case 4:
-						physicalDamageFactor = Random.NormalFloat(0.5f, 1);
-						break;
-					case 5:
-						magicDamageFactor = Random.NormalFloat(0.5f, 1);
-						break;
-				}
-			}
-		}
-		return matchProfile();
-	}
-
-	public float getDefenseFactor() {
-		float DRfactor = 1f;
-		DRfactor *= 1/EVA;
-		DRfactor *= 1/STE;
-		DRfactor *= 1/speedFactor;
-		DRfactor *= 1/regenFactor;
-		DRfactor *= magicDamageFactor;
-		DRfactor *= physicalDamageFactor;
-		return DRfactor;
-	}
-
-	private ArmorProfile profile = ArmorProfile.NONE;
-
-	@Contract(" -> this")
-	public Armor matchProfile() {
-		//Weapons that are only very slightly different from the basic weapon get it's image and description.
-		float closestMatch = 1.1f;
-		ArmorProfile closestMatchProfile = ArmorProfile.NONE;
-		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
-		ArrayList<ArmorProfile> profiles = new ArrayList<>(Arrays.asList(ArmorProfile.values()));
-		Collections.shuffle(profiles);
-		for (ArmorProfile profile : profiles) {
-			float importance = profile.match(this);
-			if (importance > closestMatch) {
-				closestMatch = importance;
-				closestMatchProfile = profile;
-			}
-		}
-		closestMatchProfile.copy(this);
-		profile = closestMatchProfile;
-		return this;
 	}
 
 	@Override
@@ -361,6 +232,16 @@ public class Armor extends KindofMisc {
 		}
 	}
 
+	public float getDefenseFactor() {
+		float DRfactor = 1f;
+		DRfactor *= 1/EVA;
+		DRfactor *= 1/STE;
+		DRfactor *= 1/speedFactor;
+		DRfactor *= 1/regenFactor;
+		DRfactor *= magicDamageFactor;
+		DRfactor *= physicalDamageFactor;
+		return DRfactor;
+	}
 
 	public int appearance() {
 		return appearance;
@@ -619,8 +500,6 @@ public class Armor extends KindofMisc {
 		} else if (effectRoll >= 0.85f){
 			inscribe();
 		}
-
-		initStats();
 
 		return this;
 	}

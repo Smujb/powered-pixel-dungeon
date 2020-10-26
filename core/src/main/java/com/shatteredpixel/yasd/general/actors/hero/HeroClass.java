@@ -63,7 +63,7 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfRepair;
 import com.shatteredpixel.yasd.general.items.wands.WandOfMagicMissile;
 import com.shatteredpixel.yasd.general.items.weapon.SpiritBow;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MagesStaff;
-import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingKnife;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ThrowingStone;
 import com.shatteredpixel.yasd.general.messages.Messages;
@@ -168,7 +168,7 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior( Hero hero ) {
-		MeleeWeapon weapon = new MeleeWeapon();
+		RandomMeleeWeapon weapon = new RandomMeleeWeapon();
 		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new ChainArmor()).identify();
 		ThrowingStone stones = new ThrowingStone();
@@ -206,7 +206,7 @@ public enum HeroClass {
 	}
 
 	private static void initRogue( Hero hero ) {
-		MeleeWeapon weapon = new MeleeWeapon();
+		RandomMeleeWeapon weapon = new RandomMeleeWeapon();
 		weapon.properties.add(KindOfWeapon.Property.SURPRISE_ATTK_BENEFIT);
 		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new RogueArmor()).identify();
@@ -229,7 +229,7 @@ public enum HeroClass {
 	}
 
 	private static void initHuntress( Hero hero ) {
-		MeleeWeapon weapon = new MeleeWeapon();
+		RandomMeleeWeapon weapon = new RandomMeleeWeapon();
 		weapon.DLY = 0.5f;
 		(hero.belongings.miscs[0] = weapon.matchProfile()).identify();
 		(hero.belongings.miscs[1] = new HuntressArmor()).identify();

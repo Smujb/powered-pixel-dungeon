@@ -29,23 +29,14 @@ package com.shatteredpixel.yasd.general.items.weapon.melee;
 
 import com.shatteredpixel.yasd.general.Constants;
 import com.shatteredpixel.yasd.general.Dungeon;
-import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
-import com.shatteredpixel.yasd.general.items.Item;
-import com.shatteredpixel.yasd.general.items.KindOfWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.sprites.ItemSpriteSheet;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
-
-import org.jetbrains.annotations.Contract;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class MeleeWeapon extends Weapon {
 	{
@@ -59,8 +50,6 @@ public class MeleeWeapon extends Weapon {
 	public float defenseMultiplier = 0f;
 
 	public float degradeFactor = 1f;
-
-	private WeaponProfile profile = WeaponProfile.NONE;
 
 	@Override
 	public boolean canDegrade() {
@@ -161,97 +150,8 @@ public class MeleeWeapon extends Weapon {
 		return multiplier;
 	}
 
-	private static float randomStat() {
-		int num = Random.NormalIntRange(5, 20);
-		return num/10f;
-	}
-
-	@Override
-	public Item random() {
-		Item item = super.random();
-		return ((MeleeWeapon)item).initStats();
-	}
-
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	private void resetStats() {
-		DLY = 1f;
-		ACC = 1f;
-		degradeFactor = 1f;
-		defenseMultiplier = 0f;
-		RCH = 1;
-		properties = new ArrayList<>();
-	}
-
-	//Generates stats for the weapon.
-	public MeleeWeapon initStats() {
-		resetStats();
-		KindOfWeapon.Property[] basicProps = Property.values();
-		int nProps = basicProps.length + 5;
-		int maxProps = 0;
-		while (maxProps < 4 && Random.Float() < (0.75f * Math.pow(0.5, maxProps))) {
-			maxProps++;
-		}
-		boolean[] propertiesEnabled = new boolean[nProps];
-		for (int i = 0; i < maxProps; i++) {
-			int index = Random.Int(nProps);
-			if (!propertiesEnabled[index]) {
-				propertiesEnabled[index] = true;
-			}
-		}
-
-		for (int i = 0; i < basicProps.length; i++) {
-			Property property = basicProps[i];
-			if (propertiesEnabled[i] && property.canApply(this)) {
-				properties.add(property);
-			}
-		}
-
-		for (int i = basicProps.length; i < nProps; i++) {
-			if (propertiesEnabled[i]) {
-				switch (i-basicProps.length) {
-					case 0:
-						DLY = randomStat();
-						break;
-					case 1:
-						ACC = randomStat();
-						break;
-					case 2:
-						degradeFactor = randomStat();
-						break;
-					case 3:
-						defenseMultiplier = Random.NormalFloat(0, 1);
-						break;
-					case 4:
-						RCH = Random.NormalIntRange(1, 3);
-						break;
-				}
-			}
-		}
-
-		return matchProfile();
-	}
-
-	@Contract(" -> this")
-	public MeleeWeapon matchProfile() {
-		//Weapons that are only very slightly different from the basic weapon get it's image and description.
-		float closestMatch = 1.1f;
-		WeaponProfile closestMatchProfile = WeaponProfile.NONE;
-		//Shuffle list first in case two are tied for first place, to give all an equal chance. Randomness is fine as the image variable is stored in bundles, so it won't change for an individual weapon.
-		ArrayList<WeaponProfile> profiles = new ArrayList<>(Arrays.asList(WeaponProfile.values()));
-		Collections.shuffle(profiles);
-		for (WeaponProfile profile : profiles) {
-			float importance = profile.match(this);
-			if (importance > closestMatch) {
-				closestMatch = importance;
-				closestMatchProfile = profile;
-			}
-		}
-		closestMatchProfile.copy(this);
-		profile = closestMatchProfile;
-		return this;
 	}
 
 	public int defaultSTRReq() {
@@ -409,63 +309,16 @@ public class MeleeWeapon extends Weapon {
 	}
 
 	private static final String TIER = "tier";
-	private static final String DELAY = "delay";
-	private static final String DEGRADE = "degrade-factor";
-	private static final String ACCURACY = "accuracy";
-	private static final String DEFENSEFACTOR = "defense-factor";
-	private static final String REACH = "reach";
-	private static final String PROPERTIES = "props";
-	private static final String PROPERTIES_AMT = "num-props";
-	private static final String PROFILE = "profile";
-	private static final String SOUND = "sound";
-	private static final String PITCH = "pitch";
 
 	@Override
 	public void storeInBundle(  Bundle bundle) {
 		super.storeInBundle(bundle);
 		bundle.put(TIER, tier);
-		bundle.put(DELAY, DLY);
-		bundle.put(DEGRADE, degradeFactor);
-		bundle.put(ACCURACY, ACC);
-		bundle.put(DEFENSEFACTOR, defenseMultiplier);
-		bundle.put(REACH, RCH);
-		bundle.put(PROPERTIES_AMT, properties.size());
-		bundle.put(PROFILE, profile);
-		bundle.put(SOUND, hitSound);
-		bundle.put(PITCH, hitSoundPitch);
-		for (int i = 0; i < properties.size(); i++) {
-			bundle.put(PROPERTIES+i, properties.get(i));
-		}
 	}
 
 	@Override
 	public void restoreFromBundle(  Bundle bundle) {
 		super.restoreFromBundle(bundle);
 		tier = bundle.getInt(TIER);
-		if (Dungeon.version > PPDGame.v0_3_6) {
-			DLY = bundle.getFloat(DELAY);
-			degradeFactor = bundle.getFloat(DEGRADE);
-			ACC = bundle.getFloat(ACCURACY);
-			defenseMultiplier = bundle.getFloat(DEFENSEFACTOR);
-			RCH = bundle.getInt(REACH);
-			hitSound = bundle.getString(SOUND);
-			hitSoundPitch = bundle.getFloat(PITCH);
-			int numProps = bundle.getInt(PROPERTIES_AMT);
-			for (int i = 0; i < numProps; i++) {
-				properties.add(bundle.getEnum(PROPERTIES+i, Property.class));
-			}
-		} else {
-			desc = super.desc();
-			name = Messages.get(this, "name");
-			properties = new ArrayList<>();
-		}
-		if (bundle.contains(PROFILE)) {
-			profile = bundle.getEnum(PROFILE, WeaponProfile.class);
-			if (getClass() == MeleeWeapon.class) {
-				profile.copy(this);
-			}
-		} else {
-			matchProfile();
-		}
 	}
 }

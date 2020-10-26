@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.items.alcohol.Alcohol;
 import com.shatteredpixel.yasd.general.items.alcohol.Beer;
 import com.shatteredpixel.yasd.general.items.alcohol.Whiskey;
 import com.shatteredpixel.yasd.general.items.armor.Armor;
+import com.shatteredpixel.yasd.general.items.armor.RandomArmor;
 import com.shatteredpixel.yasd.general.items.artifacts.AlchemistsToolkit;
 import com.shatteredpixel.yasd.general.items.artifacts.Artifact;
 import com.shatteredpixel.yasd.general.items.artifacts.CapeOfThorns;
@@ -104,6 +105,7 @@ import com.shatteredpixel.yasd.general.items.stones.StoneOfShock;
 import com.shatteredpixel.yasd.general.items.wands.NormalWand;
 import com.shatteredpixel.yasd.general.items.wands.Wand;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.Bolas;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.FishingSpear;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.ForceCube;
@@ -453,9 +455,7 @@ public class Generator {
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
-
-		//Armor a = (Armor)Reflection.newInstance(Category.ARMOR.classes[Random.chances(Category.ARMOR.probs)]);
-		Armor a = new Armor();
+		RandomArmor a = new RandomArmor().rollStats();
 		a.random();
 		a.setTier(tier);
 		if (a.tier == 1) {
@@ -485,11 +485,10 @@ public class Generator {
 	}
 
 	public static MeleeWeapon randomWeapon(int floorSet) {
-		MeleeWeapon w = new MeleeWeapon();
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
 		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
-		//w = (MeleeWeapon) Reflection.newInstance(Category.WEAPON.classes[Random.chances( Category.WEAPON.probs )]);
+		RandomMeleeWeapon w = new RandomMeleeWeapon().rollStats();
 		w.random();
 		w.setTier(tier);
 		if (w.tier == 1) {
@@ -506,7 +505,6 @@ public class Generator {
 					break;
 			}
 		}
-		w.initStats();
 		return w;
 	}
 

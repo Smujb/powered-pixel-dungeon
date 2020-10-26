@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.hero.Hero;
 import com.shatteredpixel.yasd.general.items.weapon.Weapon;
 import com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon;
+import com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
@@ -87,10 +88,10 @@ public class WeaponEditor extends Item {
 			GameScene.selectItem(new WndBag.Listener() {
 				@Override
 				public void onSelect(Item item) {
-					if (!(item instanceof MeleeWeapon)) {
+					if (!(item instanceof RandomMeleeWeapon)) {
 						return;
 					}
-					Game.scene().addToFront(new WndEditWeapon(((MeleeWeapon)item)));
+					Game.scene().addToFront(new WndEditWeapon(((RandomMeleeWeapon)item)));
 				}
 			}, WndBag.Mode.WEAPON, Messages.get(this, "select_weapon"));
 		} else if (action.equals(AC_DESTROY)) {
@@ -200,7 +201,7 @@ public class WeaponEditor extends Item {
 		private float attackDelay;
 		private float defenseMultiplier;
 
-		private WndEditWeapon(MeleeWeapon weapon) {
+		private WndEditWeapon(RandomMeleeWeapon weapon) {
 			properties = weapon.properties;
 			degradeFactor = weapon.degradeFactor;
 			accuracyFactor = weapon.ACC;
@@ -325,7 +326,7 @@ public class WeaponEditor extends Item {
 		}
 
 		private int calcCost() {
-			return amountOfScrap(copyTo(new MeleeWeapon())) * 2;
+			return amountOfScrap(copyTo(new RandomMeleeWeapon())) * 2;
 		}
 
 		@Override
@@ -333,7 +334,7 @@ public class WeaponEditor extends Item {
 			message.text(Messages.get(this, "body", calcCost()));
 		}
 
-		private MeleeWeapon copyTo(MeleeWeapon weapon) {
+		private MeleeWeapon copyTo(RandomMeleeWeapon weapon) {
 			weapon.properties = properties;
 			weapon.degradeFactor = degradeFactor;
 			weapon.ACC = accuracyFactor;

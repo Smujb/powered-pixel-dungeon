@@ -91,7 +91,15 @@ public class PPDGame extends Game {
 	
 	public PPDGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );
-		
+		//Support pre-0.4.12 files
+		com.watabou.utils.Bundle.addAlias(
+				com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon.class,
+				"com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon" );
+
+		com.watabou.utils.Bundle.addAlias(
+				com.shatteredpixel.yasd.general.items.weapon.melee.RandomMeleeWeapon.class,
+				"com.shatteredpixel.yasd.general.items.weapon.melee.MeleeWeapon" );
+
 		//v0.7.0
 		com.watabou.utils.Bundle.addAlias(
 				com.shatteredpixel.yasd.general.items.bombs.Bomb.class,
