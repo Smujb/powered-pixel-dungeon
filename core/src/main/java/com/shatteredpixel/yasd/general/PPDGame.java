@@ -45,7 +45,10 @@ import com.watabou.utils.PlatformSupport;
 
 public class PPDGame extends Game {
 
+	//Shattered Pixel Dungeon
 	public static final int v0_6_5c = 264;
+
+	//Powered Pixel Dungeon
 	public static final int v0_2_0  = 400;
 	public static final int v0_2_1  = 401;
 	public static final int v0_2_2  = 402;
@@ -76,6 +79,7 @@ public class PPDGame extends Game {
 	public static final int v0_3_4  = 431;
 	public static final int v0_3_5  = 432;
 	public static final int v0_3_6  = 433;
+
 	public static final int v0_4_0  = 434;
 	public static final int v0_4_1  = 435;
 	public static final int v0_4_2  = 437;
@@ -88,6 +92,7 @@ public class PPDGame extends Game {
 	public static final int v0_4_9  = 452;
 	public static final int v0_4_10  = 453;
 	public static final int v0_4_11  = 454;
+	public static final int v0_4_12  = 455;
 	
 	public PPDGame(PlatformSupport platform ) {
 		super( sceneClass == null ? WelcomeScene.class : sceneClass, platform );

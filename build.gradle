@@ -43,8 +43,8 @@ allprojects {
         appName = 'Powered Pixel Dungeon'
         appPackageName = 'com.smujamesb.yasd'
 
-        appVersionCode = 454
-        appVersionName = '0.4.11'
+        appVersionCode = 455
+        appVersionName = '0.4.12'
         appJavaCompatibility = JavaVersion.VERSION_1_8
 
         appAndroidCompileSDK = 29
