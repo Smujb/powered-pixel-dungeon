@@ -176,6 +176,8 @@ public class Dungeon {
 	public static Hero hero;
 	public static Level level;
 
+	private static CustomGame customGame;
+
 	public static QuickSlot quickslot = new QuickSlot();
 	
 	public static int depth;
@@ -201,6 +203,9 @@ public class Dungeon {
 
 		version = Game.versionCode;
 		challenges = PPDSettings.challenges();
+
+		customGame = new CustomGame();
+		customGame.setupLocals();
 
 		if (seed == -1) {
 			Dungeon.seed = DungeonSeed.randomSeed();
@@ -545,6 +550,7 @@ public class Dungeon {
 	private static final String UNDERWATER 		= "underwater";
 	private static final String KEY 		= "key";
 	private static final String TESTING 	= "testing";
+	private static final String CUSTOM 	= "custom-game";
 	
 	public static void saveGame( int save ) {
 		try {
@@ -561,6 +567,7 @@ public class Dungeon {
 			bundle.put( UNDERWATER, underwater );
 			bundle.put( DIFFICULTY, difficulty );
 			bundle.put( TESTING, testing );
+			bundle.put(CUSTOM, customGame);
 
 			for (int d : droppedItems.keyArray()) {
 				bundle.put(Messages.format(DROPPED, d), droppedItems.get(d));
@@ -653,7 +660,8 @@ public class Dungeon {
 		key = bundle.contains(KEY) ? bundle.getString(KEY) : keyForDepth();
 
 		underwater = bundle.getBoolean(UNDERWATER);
-		//xPos = bundle.contains(XPOS) ? bundle.getInt(XPOS) : 0;
+
+		customGame = bundle.contains(CUSTOM) ? (CustomGame) bundle.get(CUSTOM) : new CustomGame().setupLocals();
 
 		Actor.restoreNextID( bundle );
 
