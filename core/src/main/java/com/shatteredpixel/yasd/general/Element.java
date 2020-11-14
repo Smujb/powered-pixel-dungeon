@@ -207,7 +207,7 @@ public enum Element {
 		}
 
 		if (attacker.alignment == Char.Alignment.ENEMY) {
-			damage *= Dungeon.difficulty.mobDamageFactor();
+			damage *= Dungeon.difficulty.mobDamageFactor() * CustomGame.Modifier.MOB_DAMAGE_FACTOR.getLocal();
 		}
 		return damage;
 	}

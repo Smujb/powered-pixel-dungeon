@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.actors.mobs;
 
 import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Challenges;
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.Statistics;
@@ -203,7 +204,7 @@ public abstract class Mob extends Char {
 	@Override
 	public void updateHT(boolean boostHP) {
 		HP = HT = (int) (normalHP(level) * healthFactor);
-		HP = HT *= Dungeon.difficulty.mobHealthFactor();
+		HP = HT *= Dungeon.difficulty.mobHealthFactor() * CustomGame.Modifier.MOB_HP_FACTOR.getLocal();
 		//Bosses (obviously) have higher HP
 		if (properties().contains(Property.BOSS)) {
 			HP = HT *= 5;
