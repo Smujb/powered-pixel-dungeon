@@ -173,7 +173,7 @@ public class DwarfKing extends Mob {
 					yell(Messages.get(this, "wave_1"));
 				}
 				summonSubject(3, DKGhoul.class);
-				spend(3 * TICK);
+				spend(6 * TICK);
 				summonsMade++;
 				return true;
 			} else if (shielding() <= 200 && summonsMade < 8) {
@@ -188,7 +188,7 @@ public class DwarfKing extends Mob {
 					summonSubject(3, DKGhoul.class);
 				}
 				summonsMade++;
-				spend(TICK);
+				spend(3*TICK);
 				return true;
 			} else if (shielding() <= 100 && summonsMade < 12) {
 				sprite.centerEmitter().start(Speck.factory(Speck.SCREAM), 0.4f, 2);
@@ -199,11 +199,11 @@ public class DwarfKing extends Mob {
 				summonSubject(4, DKGhoul.class);
 				summonSubject(4, DKGhoul.class);
 				summonsMade = 12;
-				spend(TICK);
+				spend(2*TICK);
 				return true;
 			} else {
 				summonSubject(4);
-				spend(TICK);
+				spend(5*TICK);
 				return true;
 			}
 		} else if (phase == 3 && buffs(Summoning.class).size() < 4) {
