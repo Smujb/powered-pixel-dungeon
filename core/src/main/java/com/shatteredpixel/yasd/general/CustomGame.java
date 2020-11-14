@@ -44,6 +44,9 @@ public class CustomGame implements Bundlable {
     //Initially set to null so the game knows to load the modifiers from the bundle
     private static ArrayMap<Modifier, Float> cachedGlobals = null;
 
+
+    public static boolean enabledForRun = false;
+
     public enum Modifier {
         //TODO more modifiers
         MOB_DAMAGE_FACTOR,
@@ -58,7 +61,7 @@ public class CustomGame implements Bundlable {
 
         public float getGlobal() {
             //No checks are done for this (because they can't really be) but do not use this to actually apply the modifier, or the player can modify one run from the start scene of another
-            return getGlobals().get(this);
+            return getGlobals().get(this, 1f);
         }
 
         public void setGlobalValue(float value) {
@@ -86,6 +89,13 @@ public class CustomGame implements Bundlable {
     public CustomGame setupLocals() {
         for (Modifier modifier : Modifier.values()) {
             modifier.floatValue = getGlobals().get(modifier);
+        }
+        return this;
+    }
+
+    public CustomGame resetLocals() {
+        for (Modifier modifier : Modifier.values()) {
+            modifier.floatValue = 1f;
         }
         return this;
     }

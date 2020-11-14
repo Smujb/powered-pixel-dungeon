@@ -50,7 +50,7 @@ import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.ui.Window;
-import com.shatteredpixel.yasd.general.windows.WndChallenges;
+import com.shatteredpixel.yasd.general.windows.WndCustomGame;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.shatteredpixel.yasd.general.windows.WndTabbed;
 import com.watabou.gltextures.TextureCache;
@@ -73,12 +73,29 @@ public class HeroSelectScene extends PixelScene {
 	private ArrayList<StyledButton> heroBtns = new ArrayList<>();
 	private StyledButton startBtn;
 	private IconButton infoButton;
-	private IconButton challengeButton;
+	private IconButton customButton;
 	private IconButton btnExit;
 
 	public static boolean testing = false;
 
 	public static long seed = -1;
+
+	public static void doInitRun() {
+		if (GamesInProgress.selectedClass == null) return;
+
+		//GamesInProgress.curSlot = slot;
+		Dungeon.hero = null;
+		ActionIndicator.action = null;
+		Dungeon.difficulty = PPDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
+		PPDSettings.lastClass(GamesInProgress.selectedClass);
+		if (PPDSettings.intro()) {
+			PPDSettings.intro( false );
+			Game.switchScene( IntroScene.class );
+		} else {
+			LevelHandler.doInit(seed);
+			seed = -1;
+		}
+	}
 
 	@Override
 	public void create() {
@@ -132,23 +149,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-
-				if (GamesInProgress.selectedClass == null) return;
-
-				super.onClick();
-
-				//GamesInProgress.curSlot = slot;
-				Dungeon.hero = null;
-				ActionIndicator.action = null;
-				Dungeon.difficulty = PPDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
-				PPDSettings.lastClass(GamesInProgress.selectedClass);
-				if (PPDSettings.intro()) {
-					PPDSettings.intro( false );
-					Game.switchScene( IntroScene.class );
-				} else {
-					LevelHandler.doInit(seed);
-					seed = -1;
-				}
+				doInitRun();
 			}
 		};
 		startBtn.icon(Icons.get(Icons.ENTER));
@@ -186,16 +187,11 @@ public class HeroSelectScene extends PixelScene {
 			heroBtns.add(button);
 		}
 
-		challengeButton = new IconButton(
-				Icons.get( PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON :Icons.CHALLENGE_OFF)){
+		customButton = new IconButton(
+				Icons.get(Icons.PREFS)){
 			@Override
 			protected void onClick() {
-				PPDGame.scene().addToFront(new WndChallenges(PPDSettings.challenges(), true) {
-					public void onBackPressed() {
-						super.onBackPressed();
-						icon(Icons.get(PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
-					}
-				} );
+				PPDGame.scene().addToFront(new WndCustomGame());
 			}
 
 			@Override
@@ -206,11 +202,11 @@ public class HeroSelectScene extends PixelScene {
 				super.update();
 			}
 		};
-		challengeButton.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 21, 21);
-		challengeButton.visible = false;
+		customButton.setRect(heroBtnleft + 16, Camera.main.height-HeroBtn.HEIGHT-16, 21, 21);
+		customButton.visible = false;
 
 		if (DeviceCompat.isDebug() || Badges.isUnlocked(Badges.Badge.VICTORY)){
-			add(challengeButton);
+			add(customButton);
 		} else {
 			Dungeon.challenges = 0;
 			PPDSettings.challenges(0);
@@ -266,8 +262,8 @@ public class HeroSelectScene extends PixelScene {
 		infoButton.visible = true;
 		infoButton.setPos(startBtn.right(), startBtn.top());
 
-		challengeButton.visible = true;
-		challengeButton.setPos(startBtn.left()-challengeButton.width(), startBtn.top());
+		customButton.visible = true;
+		customButton.setPos(startBtn.left()- customButton.width(), startBtn.top());
 	}
 
 	private float uiAlpha;
@@ -296,7 +292,7 @@ public class HeroSelectScene extends PixelScene {
 		}
 		startBtn.alpha(alpha);
 		btnExit.icon().alpha(alpha);
-		challengeButton.icon().alpha(alpha);
+		customButton.icon().alpha(alpha);
 		infoButton.icon().alpha(alpha);
 	}
 

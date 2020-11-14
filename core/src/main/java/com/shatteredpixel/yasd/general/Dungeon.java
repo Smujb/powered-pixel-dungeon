@@ -205,7 +205,12 @@ public class Dungeon {
 		challenges = PPDSettings.challenges();
 
 		customGame = new CustomGame();
-		customGame.setupLocals();
+		if (CustomGame.enabledForRun) {
+			customGame.setupLocals();
+			CustomGame.enabledForRun = false;
+		} else {
+			customGame.resetLocals();
+		}
 
 		if (seed == -1) {
 			Dungeon.seed = DungeonSeed.randomSeed();
@@ -661,7 +666,7 @@ public class Dungeon {
 
 		underwater = bundle.getBoolean(UNDERWATER);
 
-		customGame = bundle.contains(CUSTOM) ? (CustomGame) bundle.get(CUSTOM) : new CustomGame().setupLocals();
+		customGame = bundle.contains(CUSTOM) ? (CustomGame) bundle.get(CUSTOM) : new CustomGame().resetLocals();
 
 		Actor.restoreNextID( bundle );
 
