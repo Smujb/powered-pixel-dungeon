@@ -67,8 +67,8 @@ public class Constants {
     //
 
 
-    //Chapter length. WIP.
-    public static final int CHAPTER_LENGTH = 6;
+    //Chapter length.
+    public static final int CHAPTER_LENGTH = 4;
 
     //Number of chapters.
     public static final int NUM_CHAPTERS = 5;
