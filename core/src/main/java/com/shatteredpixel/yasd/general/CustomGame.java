@@ -139,6 +139,23 @@ public class CustomGame implements Bundlable {
         return this;
     }
 
+    public float calcTotalDifficultyFactor() {
+        float factor = 1f;
+        for (Modifier modifier : Modifier.values()) {
+            if (modifier.positive) {
+                factor *= 1/localModifiers.get(modifier, 1f);
+            } else {
+                factor *=  localModifiers.get(modifier, 1f);
+            }
+        }
+        for (Toggle toggle : Toggle.values()) {
+            if (localToggles.get(toggle, false)) {
+                factor *= toggle.difficultyFactor;
+            }
+        }
+        return factor;
+    }
+
     //Gets the global modifiers from the bundle and caches them in an array to increase performance.
     private static ArrayMap<Modifier, Float> getGlobalModifiers() {
 
