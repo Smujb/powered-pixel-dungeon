@@ -80,10 +80,11 @@ public class HeroSelectScene extends PixelScene {
 
 	public static long seed = -1;
 
-	public static void doInitRun() {
+	public static void doInitRun(boolean customEnabled) {
 		if (GamesInProgress.selectedClass == null) return;
 
 		//GamesInProgress.curSlot = slot;
+		Dungeon.initCustom(customEnabled);
 		Dungeon.hero = null;
 		ActionIndicator.action = null;
 		Dungeon.difficulty = PPDSettings.difficulty();//I could just call YASDSettings.difficulty() every time I want to check difficulty, but that would mean that changing it on separate runs would interfere with each other.
@@ -149,7 +150,7 @@ public class HeroSelectScene extends PixelScene {
 			@Override
 			protected void onClick() {
 				super.onClick();
-				doInitRun();
+				doInitRun(false);
 			}
 		};
 		startBtn.icon(Icons.get(Icons.ENTER));

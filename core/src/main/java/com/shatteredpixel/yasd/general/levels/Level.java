@@ -34,8 +34,8 @@ import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.GamesInProgress;
 import com.shatteredpixel.yasd.general.LevelHandler;
 import com.shatteredpixel.yasd.general.PPDGame;
-import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.PPDSettings;
+import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.blobs.Blob;
@@ -130,7 +130,6 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
-import com.watabou.utils.GameMath;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Point;
 import com.watabou.utils.Random;
@@ -200,18 +199,8 @@ public abstract class Level implements Bundlable {
 	
 	public boolean[] heroFOV;
 
-
-	int minScaleFactor = 0;
-	int maxScaleFactor = -1;
-	//By default, scales with depth and has max and min defined within the individual levels. -1 max gives no limit.
 	public int getScaleFactor() {
-		//Change this to hero level if you are making a non-linear game.
-		int level = Dungeon.depth;
-		if (maxScaleFactor == -1) {
-			return Math.max(minScaleFactor, level);
-		} else {
-			return (int) GameMath.gate(minScaleFactor, level, maxScaleFactor);
-		}
+		return Dungeon.depth;
 	}
 
 	public ArrayList<Integer> getTileLocations(Terrain terrain) {

@@ -33,6 +33,7 @@ import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.scenes.HeroSelectScene;
 import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.shatteredpixel.yasd.general.ui.CheckBox;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.OptionSlider;
 import com.shatteredpixel.yasd.general.ui.RedButton;
@@ -49,6 +50,7 @@ public class WndCustomGame extends Window {
     private static final float GAP          = 2;
 
     private ArrayList<OptionSlider> sliders = new ArrayList<>();
+    private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
     public WndCustomGame() {
         RenderedTextBlock title = PixelScene.renderTextBlock(Messages.get(this, "title"), 9);
@@ -74,7 +76,22 @@ public class WndCustomGame extends Window {
             pos = slider.bottom() + GAP;
         }
 
-        RedButton btnChals = new RedButton(Messages.get(this, "challenges")) {
+        for (CustomGame.Toggle toggle : CustomGame.Toggle.values()) {
+            CheckBox checkBox = new CheckBox(Messages.get(this, toggle.name())) {
+                @Override
+                protected void onClick() {
+                    super.onClick();
+                    toggle.setGlobalValue(checked());
+                }
+            };
+            checkBox.checked(toggle.getGlobal());
+            checkBox.setRect(0, pos, WIDTH, BTN_HEIGHT);
+            checkBoxes.add(checkBox);
+            add(checkBox);
+            pos = checkBox.bottom() + GAP;
+        }
+
+             RedButton btnChals = new RedButton(Messages.get(this, "challenges")) {
 
             @Override
             protected void onClick() {
@@ -103,6 +120,13 @@ public class WndCustomGame extends Window {
                     slider.setSelectedValue(10);
                 }
 
+                //Reset all toggles
+                for (CustomGame.Toggle toggle : CustomGame.Toggle.values()) toggle.setGlobalValue(false);
+                //Visually rest toggles
+                for (CheckBox checkBox : checkBoxes) {
+                    checkBox.checked(false);
+                }
+
                 //Reset challenges
                 PPDSettings.challenges(0);
                 //Visually reset challenges
@@ -118,8 +142,7 @@ public class WndCustomGame extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                CustomGame.enabledForRun = true;
-                HeroSelectScene.doInitRun();
+                HeroSelectScene.doInitRun(true);
             }
         };
         btnStart.setRect(0, pos, WIDTH, BTN_HEIGHT);

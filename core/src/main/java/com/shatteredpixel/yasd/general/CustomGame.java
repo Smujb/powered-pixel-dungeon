@@ -41,14 +41,14 @@ public class CustomGame implements Bundlable {
 
     public static final String CUSTOM_MODIFIERS_FILE = "global_custom_modifiers.dat";
 
-    //Initially set to null so the game knows to load the modifiers from the bundle
+    //Initially set to null so the game knows to load the modifiers/toggles from the bundle
     private static ArrayMap<Modifier, Float> cachedGlobalModifiers = null;
+    private static ArrayMap<Toggle, Boolean> cachedGlobalToggles = null;
 
 
+    //Locally stored values on a per-run basis
     private final ArrayMap<Modifier, Float> localModifiers = new ArrayMap<>();
-
-    //Set to true to tell the Dungeon.init() function to init using current modifiers not default ones. Kinda messy, might want to refactor
-    public static boolean enabledForRun = false;
+    private final ArrayMap<Toggle, Boolean> localToggles = new ArrayMap<>();
 
     public enum Modifier {
         //TODO more modifiers
@@ -64,19 +64,41 @@ public class CustomGame implements Bundlable {
         protected boolean positive = false;
 
         public float getLocal() {
-            //Don't let this function be called outside of a context where the hero exists or there will be buggy results (most likely getGlobal should have been used)
-            if (Dungeon.hero == null || Dungeon.customGame == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
+            if (Dungeon.customGame == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
             return Dungeon.customGame.localModifiers.get(this, 1f);
         }
 
         public float getGlobal() {
             //No checks are done for this (because they can't really be) but do not use this to actually apply the modifier, or the player can modify one run from the start scene of another
-            return getGlobals().get(this, 1f);
+            return getGlobalModifiers().get(this, 1f);
         }
 
         public void setGlobalValue(float value) {
             //Sets the *global* value. Local values are set during setupLocals and copied from globals.
-            getGlobals().put(this, value);
+            getGlobalModifiers().put(this, value);
+            storeGlobals();
+        }
+    }
+
+    public enum Toggle {
+        //TODO endless mode
+        ENDLESS;
+
+        protected float difficultyFactor = 1f;
+
+        public boolean getLocal() {
+            if (Dungeon.customGame == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
+            return Dungeon.customGame.localToggles.get(this, false);
+        }
+
+        public boolean getGlobal() {
+            //No checks are done for this (because they can't really be) but do not use this to actually apply the modifier, or the player can modify one run from the start scene of another
+            return getGlobalToggles().get(this, false);
+        }
+
+        public void setGlobalValue(boolean value) {
+            //Sets the *global* value. Local values are set during setupLocals and copied from globals.
+            getGlobalToggles().put(this, value);
             storeGlobals();
         }
     }
@@ -95,23 +117,30 @@ public class CustomGame implements Bundlable {
         }
     }
 
-    //Copy global modifiers into local per-run modifiers
+    //Copy global modifiers into local per-run modifiers, used when starting a custom run
     public CustomGame setupLocals() {
         for (Modifier modifier : Modifier.values()) {
-            localModifiers.put(modifier, getGlobals().get(modifier));
+            localModifiers.put(modifier, getGlobalModifiers().get(modifier, 1f));
+        }
+        for (Toggle toggle : Toggle.values()) {
+            localToggles.put(toggle, getGlobalToggles().get(toggle, false));
         }
         return this;
     }
 
+    //Reset local values, used when starting a new non-custom run
     public CustomGame resetLocals() {
         for (Modifier modifier : Modifier.values()) {
             localModifiers.put(modifier, 1f);
+        }
+        for (Toggle toggle : Toggle.values()) {
+            localToggles.put(toggle, false);
         }
         return this;
     }
 
     //Gets the global modifiers from the bundle and caches them in an array to increase performance.
-    private static ArrayMap<Modifier, Float> getGlobals() {
+    private static ArrayMap<Modifier, Float> getGlobalModifiers() {
 
         if (cachedGlobalModifiers != null) {
             return cachedGlobalModifiers;
@@ -133,13 +162,39 @@ public class CustomGame implements Bundlable {
         }
     }
 
-    //Stores the current global modifier cache to the file
+    //FIXME a lot of copy paste from previous function, surely there is a better way?
+    //Gets the global toggles from the bundle and caches them in an array to increase performance.
+    private static ArrayMap<Toggle, Boolean> getGlobalToggles() {
+
+        if (cachedGlobalToggles != null) {
+            return cachedGlobalToggles;
+        } else {
+            cachedGlobalToggles = new ArrayMap<>();
+        }
+
+        try {
+            Bundle bundle = FileUtils.bundleFromFile(CUSTOM_MODIFIERS_FILE);
+            for (Toggle toggle : Toggle.values()) {
+                if (bundle.contains(toggle.toString())) {
+                    cachedGlobalToggles.put(toggle, bundle.getBoolean(toggle.toString()));
+                }
+            }
+            return cachedGlobalToggles;
+        } catch (IOException e) {
+            PPDGame.reportException(e);
+            return new ArrayMap<>();
+        }
+    }
+
+    //Stores the current global modifier cache and global toggle cache to the file
     private static void storeGlobals() {
 
-        ArrayMap<Modifier, Float> map = getGlobals();
+        ArrayMap<Modifier, Float> modifiers = getGlobalModifiers();
+        ArrayMap<Toggle, Boolean> toggles = getGlobalToggles();
 
         Bundle bundle = new Bundle();
-        for (Modifier modifier : Modifier.values()) bundle.put( modifier.toString(), map.get(modifier, 1f) );
+        for (Modifier modifier : Modifier.values()) bundle.put( modifier.toString(), modifiers.get(modifier, 1f) );
+        for (Toggle toggle : Toggle.values()) bundle.put( toggle.toString(), toggles.get(toggle, false) );
 
         try {
             FileUtils.bundleToFile(CUSTOM_MODIFIERS_FILE, bundle );

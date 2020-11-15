@@ -79,8 +79,6 @@ public class UnderwaterLevel extends Level {
 	public UnderwaterLevel setParent(Level surface) {
 		waterTex = surface.waterTex();
 		tilesTex = surface.tilesTex();
-		minScaleFactor = surface.minScaleFactor;
-		maxScaleFactor = surface.maxScaleFactor;
 		surfaceWidth = surface.width();
 		surfaceHeight = surface.height();
 		setSize((int) (surfaceWidth *SIZE_FACTOR), (int) (surfaceHeight *SIZE_FACTOR));
@@ -262,8 +260,6 @@ public class UnderwaterLevel extends Level {
 		super.storeInBundle(bundle);
 		bundle.put(TILE_TEX, tilesTex);
 		bundle.put(WATER_TEX, waterTex);
-		bundle.put(SCALE_FACTOR_MIN, minScaleFactor);
-		bundle.put(SCALE_FACTOR_MAX, maxScaleFactor);
 
 		for (int i = 0; i < lightLocations.size(); i++) {
 			bundle.put(LIGHT_TILE+i, lightLocations.get(i));
@@ -280,8 +276,6 @@ public class UnderwaterLevel extends Level {
 		super.restoreFromBundle(bundle);
 		tilesTex = bundle.getString(TILE_TEX);
 		waterTex = bundle.getString(WATER_TEX);
-		minScaleFactor = bundle.getInt(SCALE_FACTOR_MIN);
-		maxScaleFactor = bundle.getInt(SCALE_FACTOR_MAX);
 
 		int numLightTiles = bundle.getInt(LIGHT_TILE_AMT);
 		for (int i = 0; i < numLightTiles; i++) {

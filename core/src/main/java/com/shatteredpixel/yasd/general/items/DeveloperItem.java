@@ -333,7 +333,7 @@ public class DeveloperItem extends Item {
 			RedButton btnChoose = new RedButton( "Enter Key" ) {
 				@Override
 				protected void onClick() {
-					PPDGame.platform.promptTextInput("Enter key of level to fetch: ", Random.element(Dungeon.staticLevels.keySet().toArray(new String[0])), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
+					PPDGame.platform.promptTextInput("Enter key of level to fetch: ", Random.element(Dungeon.overrideLevels.keySet().toArray(new String[0])), Integer.MAX_VALUE, false, "OK", "CANCEL", new PlatformSupport.TextCallback() {
 
 						@Override
 						public void onSelect(boolean positive, String text) {

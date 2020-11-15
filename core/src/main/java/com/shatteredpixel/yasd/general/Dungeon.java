@@ -95,6 +95,7 @@ import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -199,19 +200,20 @@ public class Dungeon {
 	public static Difficulty difficulty = Difficulty.MEDIUM;
 
 	public static long seed;
+
+	public static void initCustom(boolean enabled) {
+		customGame = new CustomGame();
+		if (enabled) {
+			customGame.setupLocals();
+		} else {
+			customGame.resetLocals();
+		}
+	}
 	
 	public static void init(long seed) {
 
 		version = Game.versionCode;
 		challenges = PPDSettings.challenges();
-
-		customGame = new CustomGame();
-		if (CustomGame.enabledForRun) {
-			customGame.setupLocals();
-			CustomGame.enabledForRun = false;
-		} else {
-			customGame.resetLocals();
-		}
 
 		if (seed == -1) {
 			Dungeon.seed = DungeonSeed.randomSeed();
@@ -242,7 +244,6 @@ public class Dungeon {
 		QuickSlotButton.reset();
 		
 		depth = 1;
-		key = keyForDepth();
 		underwater = false;
 
 		gold = 0;
@@ -282,28 +283,33 @@ public class Dungeon {
 	public static final String LAST_ID = "last";
 	public static final String UNDERWATER_ID = "(underwater) ";
 
-	public static HashMap<String, Class<? extends Level>> staticLevels = new HashMap<>();
+	//Used to "override" which level should appear, mainly for bosses
+	public static HashMap<String, Class<? extends Level>> overrideLevels = new HashMap<>();
+
+	//Used for endless mode
+	public static ArrayList<Class<? extends Level>> bossLevels = new ArrayList<>(Arrays.asList(SewerBossLevel.class, NewPrisonBossLevel.class, NewCavesBossLevel.class, NewCityBossLevel.class, NewHallsBossLevel.class));
+	public static ArrayList<Class<? extends Level>> regularLevels = new ArrayList<>(Arrays.asList(SewerLevel.class, PrisonLevel.class, CavesLevel.class, CityLevel.class, HallsLevel.class));
 	static {
 		//Bosses
-		staticLevels.put("sewers - 5", SewerBossLevel.class);
-		staticLevels.put("prison - 5", NewPrisonBossLevel.class);
-		staticLevels.put("caves - 5", NewCavesBossLevel.class);
-		staticLevels.put("city - 5", NewCityBossLevel.class);
-		staticLevels.put("halls - 5", NewHallsBossLevel.class);
+		overrideLevels.put("sewers - 5", SewerBossLevel.class);
+		overrideLevels.put("prison - 5", NewPrisonBossLevel.class);
+		overrideLevels.put("caves - 5", NewCavesBossLevel.class);
+		overrideLevels.put("city - 5", NewCityBossLevel.class);
+		overrideLevels.put("halls - 5", NewHallsBossLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
-		staticLevels.put("sewers - 0", FirstLevel.class);
+		overrideLevels.put("sewers - 0", FirstLevel.class);
 		//Amulet depth
-		staticLevels.put( LAST_ID, LastLevel.class );
+		overrideLevels.put( LAST_ID, LastLevel.class );
 		//testing stuff
-		staticLevels.put("test boss", TestBossLevel.class);
-		staticLevels.put("test", TilemapTest.class);
-		staticLevels.put("test 2", TilemapTest2.class);
-		staticLevels.put("test 3", TestingLevel.class);
-		staticLevels.put("old tengu", OldPrisonBossLevel.class);
-		staticLevels.put("old dm300", OldCavesBossLevel.class);
-		staticLevels.put("old dwarf king", OldCityBossLevel.class);
-		staticLevels.put("old yog", OldHallsBossLevel.class);
-		staticLevels.put("loot", LootLevel.class);
+		overrideLevels.put("test boss", TestBossLevel.class);
+		overrideLevels.put("test", TilemapTest.class);
+		overrideLevels.put("test 2", TilemapTest2.class);
+		overrideLevels.put("test 3", TestingLevel.class);
+		overrideLevels.put("old tengu", OldPrisonBossLevel.class);
+		overrideLevels.put("old dm300", OldCavesBossLevel.class);
+		overrideLevels.put("old dwarf king", OldCityBossLevel.class);
+		overrideLevels.put("old yog", OldHallsBossLevel.class);
+		overrideLevels.put("loot", LootLevel.class);
 	}
 
 	@Contract(pure = true)
@@ -314,6 +320,7 @@ public class Dungeon {
 	@Contract(pure = true)
 	static String keyForDepth(int depth) {
 		String key = "none";
+		if (CustomGame.Toggle.ENDLESS.getLocal()) return "depth " + depth;
 		int depthInChapter = (depth-1)%Constants.CHAPTER_LENGTH;
 		String depthMarker = " - " + depthInChapter;
 		if (depth <= Constants.CHAPTER_LENGTH) {
@@ -341,20 +348,28 @@ public class Dungeon {
 
 		Level level = null;
 		Class<? extends Level> levelClass = null;
-		if (staticLevels.containsKey(key)) {
-			levelClass = staticLevels.get(key);
-		} else if (key.contains(SEWERS_ID)) {
-			levelClass = SewerLevel.class;
-		} else if (key.contains(PRISON_ID)) {
-			levelClass = PrisonLevel.class;
-		} else if (key.contains(CAVES_ID)) {
-			levelClass = CavesLevel.class;
-		} else if (key.contains(CITY_ID)) {
-			levelClass = CityLevel.class;
-		} else if (key.contains(HALLS_ID)) {
-			levelClass = HallsLevel.class;
-		} else if (key.equals(LAST_ID)) {
-			levelClass = LastLevel.class;
+		if (CustomGame.Toggle.ENDLESS.getLocal()) {
+			if (depth % Constants.CHAPTER_LENGTH == 0) {
+				levelClass = Random.element(bossLevels);
+			} else {
+				levelClass = Random.element(regularLevels);
+			}
+		} else {
+			if (overrideLevels.containsKey(key)) {
+				levelClass = overrideLevels.get(key);
+			} else if (key.contains(SEWERS_ID)) {
+				levelClass = SewerLevel.class;
+			} else if (key.contains(PRISON_ID)) {
+				levelClass = PrisonLevel.class;
+			} else if (key.contains(CAVES_ID)) {
+				levelClass = CavesLevel.class;
+			} else if (key.contains(CITY_ID)) {
+				levelClass = CityLevel.class;
+			} else if (key.contains(HALLS_ID)) {
+				levelClass = HallsLevel.class;
+			} else if (key.equals(LAST_ID)) {
+				levelClass = LastLevel.class;
+			}
 		}
 		if (levelClass != null) {
 			level = Reflection.newInstance(levelClass);

@@ -60,8 +60,6 @@ import com.watabou.noosa.particles.Emitter;
 import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 
 import static com.shatteredpixel.yasd.general.levels.terrain.Terrain.*;
@@ -72,8 +70,6 @@ public class PrisonLevel extends RegularLevel {
 		color1 = 0x6a723d;
 		color2 = 0x88924c;
 
-		minScaleFactor = 7;
-		maxScaleFactor = 12;
 	}
 	
 	@Override
