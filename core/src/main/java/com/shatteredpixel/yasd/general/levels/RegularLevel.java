@@ -29,6 +29,7 @@ package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Constants;
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
@@ -109,6 +110,7 @@ public abstract class RegularLevel extends Level {
 		initRooms.add( roomExit = new ExitRoom());
 		
 		int standards = standardRooms();
+		standards *= CustomGame.Modifier.LEVEL_SIZE.getLocal();
 		for (int i = 0; i < standards; i++) {
 			StandardRoom s;
 			do {
@@ -166,7 +168,7 @@ public abstract class RegularLevel extends Level {
 	
 	@Override
 	public int nMobs() {
-		return 3 + getScaleFactor() % Constants.CHAPTER_LENGTH + Random.Int(3);
+		return Math.round((3 + getScaleFactor() % Constants.CHAPTER_LENGTH + Random.Int(3)) * CustomGame.Modifier.MOBS_PER_DEPTH.getLocal());
 	}
 	
 	@Override
@@ -286,6 +288,7 @@ public abstract class RegularLevel extends Level {
 	protected void createItems() {
 
 		int nItems = 2 + standardRooms()/2;
+		nItems *= CustomGame.Modifier.ITEMS_PER_DEPTH.getLocal();
 		
 		for (int i=0; i < nItems; i++) {
 

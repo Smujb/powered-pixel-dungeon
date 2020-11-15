@@ -49,11 +49,6 @@ public class FirstLevel extends SewerLevel {//First depth has different mobs
 	}
 
 	@Override
-	public int nMobs() {
-		return 8;
-	}
-
-	@Override
 	protected Class<?>[] trapClasses() {
 		return new Class<?>[]{WornDartTrap.class};
 	}

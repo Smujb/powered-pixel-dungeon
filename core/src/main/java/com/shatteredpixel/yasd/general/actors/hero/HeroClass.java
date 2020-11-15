@@ -148,8 +148,9 @@ public enum HeroClass {
 		for (int i = 0; i < Belongings.BACKPACK_SIZE; i++) {
 			new ScrollOfUpgrade().collect();
 			new MagicalInfusion().collect();
+			Generator.randomWeapon().identify().collect();
+			Generator.randomArmor().identify().collect();
 		}
-		Generator.randomWand().identify().collect();
 	}
 
 	@Contract(pure = true)

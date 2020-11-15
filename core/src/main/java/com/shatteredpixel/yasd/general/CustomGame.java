@@ -50,18 +50,38 @@ public class CustomGame implements Bundlable {
     private final ArrayMap<Modifier, Float> localModifiers = new ArrayMap<>();
     private final ArrayMap<Toggle, Boolean> localToggles = new ArrayMap<>();
 
+    public enum Type {NEUTRAL,POSITIVE,NEGATIVE}
+
     public enum Modifier {
-        //TODO more modifiers
         HERO_HP_FACTOR {
             {
-                positive = true;
+                type = Type.POSITIVE;
+            }
+        },
+        MOBS_PER_DEPTH,
+        ITEMS_PER_DEPTH {
+            {
+                type = Type.POSITIVE;
+            }
+        },
+        LEVEL_SIZE {
+            {
+                type = Type.NEUTRAL;
             }
         },
         MOB_DAMAGE_FACTOR,
         MOB_HP_FACTOR;
 
         //If the modifier is positive (eg increases hero HP) then the game needs to know this when calculating how much easier/harder you have made the game
-        protected boolean positive = false;
+        protected Type type = Type.NEGATIVE;
+
+        public boolean positive() {
+            return type == Type.POSITIVE;
+        }
+
+        public boolean negative() {
+            return type == Type.NEGATIVE;
+        }
 
         public float getLocal() {
             if (Dungeon.customGame == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
@@ -81,7 +101,7 @@ public class CustomGame implements Bundlable {
     }
 
     public enum Toggle {
-        //TODO endless mode
+        CRAZY_ITEMS,
         ENDLESS;
 
         protected float difficultyFactor = 1f;
@@ -146,9 +166,9 @@ public class CustomGame implements Bundlable {
     public float calcTotalLocalDifficultyFactor() {
         float factor = 1f;
         for (Modifier modifier : Modifier.values()) {
-            if (modifier.positive) {
+            if (modifier.positive()) {
                 factor *= 1/localModifiers.get(modifier, 1f);
-            } else {
+            } else if (modifier.negative()) {
                 factor *=  localModifiers.get(modifier, 1f);
             }
         }
@@ -163,9 +183,9 @@ public class CustomGame implements Bundlable {
     public static float calcTotalGlobalDifficultyFactor() {
         float factor = 1f;
         for (Modifier modifier : Modifier.values()) {
-            if (modifier.positive) {
+            if (modifier.positive()) {
                 factor *= 1/getGlobalModifiers().get(modifier, 1f);
-            } else {
+            } else if (modifier.negative()) {
                 factor *=  getGlobalModifiers().get(modifier, 1f);
             }
         }

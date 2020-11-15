@@ -27,6 +27,7 @@
 
 package com.shatteredpixel.yasd.general.items.armor;
 
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.items.randomiser.Randomisable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -65,13 +66,17 @@ public class RandomArmor extends Armor implements Randomisable {
     @Override
     public RandomArmor rollStats() {
         resetStats();
+        int maxProps = 3;
+        if (CustomGame.Toggle.CRAZY_ITEMS.getLocal()) {
+            maxProps *= 2;
+        }
         final int nProps = 6;
-        int maxProps = 0;
-        while (maxProps < 4 && Random.Float() < (0.75f * Math.pow(0.5, maxProps))) {
-            maxProps++;
+        int propsToAdd = 0;
+        while (propsToAdd <= maxProps && Random.Float() < (maxProps * 0.25f * Math.pow(0.5, propsToAdd))) {
+            propsToAdd++;
         }
         boolean[] propertiesEnabled = new boolean[nProps];
-        for (int i = 0; i < maxProps; i++) {
+        for (int i = 0; i < propsToAdd; i++) {
             int index = Random.Int(nProps);
             if (!propertiesEnabled[index]) {
                 propertiesEnabled[index] = true;

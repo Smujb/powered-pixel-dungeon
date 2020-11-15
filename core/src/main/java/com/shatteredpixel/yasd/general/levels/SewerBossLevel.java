@@ -28,6 +28,7 @@
 package com.shatteredpixel.yasd.general.levels;
 
 import com.shatteredpixel.yasd.general.Bones;
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.actors.Actor;
 import com.shatteredpixel.yasd.general.actors.Char;
 import com.shatteredpixel.yasd.general.actors.mobs.Mob;
@@ -74,6 +75,7 @@ public class SewerBossLevel extends SewerLevel {
 		initRooms.add( roomExit = new SewerBossExitRoom() );
 		
 		int standards = standardRooms();
+		standards *= CustomGame.Modifier.LEVEL_SIZE.getLocal();
 		for (int i = 0; i < standards; i++) {
 			StandardRoom s = StandardRoom.createRoom(this);
 			//force to normal size

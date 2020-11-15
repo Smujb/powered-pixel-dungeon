@@ -42,6 +42,7 @@ import com.shatteredpixel.yasd.general.ui.Window;
 
 import java.util.ArrayList;
 
+//FIXME use multiple tabs as there are too many modifiers now for one tab
 public class WndCustomGame extends Window {
     private static final int WIDTH	    = 120;
 

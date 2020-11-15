@@ -179,7 +179,7 @@ public class Badges {
 
 	public static void addGlobal( Badge badge ){
 		if (!global.contains(badge) && Dungeon.badgesEnabled()){
-			addGlobal( badge );
+			global.add( badge );
 			saveNeeded = true;
 		}
 	}
