@@ -63,14 +63,14 @@ public class WndCustomGame extends Window {
 
         for (CustomGame.Modifier modifier : CustomGame.Modifier.values()) {
             //0.5x to 4x (gets divided by 10)
-            OptionSlider slider = new OptionSlider(Messages.get(this, modifier.name()), "0.5x", "4x", 5, 40) {
+            OptionSlider slider = new OptionSlider(Messages.get(this, modifier.name()), "0.5x", "4x", 1, 8) {
                 @Override
                 protected void onChange() {
-                    modifier.setGlobalValue(getSelectedValue()/10f);
+                    modifier.setGlobalValue(getSelectedValue()/2f);
                 }
             };
             //Set to 1 (default)
-            slider.setSelectedValue((int) (modifier.getGlobal()*10));
+            slider.setSelectedValue((int) (modifier.getGlobal()*2));
             slider.setRect(0, pos, WIDTH, SLIDER_HEIGHT);
             sliders.add(slider);
             add(slider);
@@ -118,7 +118,7 @@ public class WndCustomGame extends Window {
                 for (CustomGame.Modifier modifier : CustomGame.Modifier.values()) modifier.setGlobalValue(1f);
                 //Visually reset modifiers
                 for (OptionSlider slider : sliders) {
-                    slider.setSelectedValue(10);
+                    slider.setSelectedValue(2);
                 }
 
                 //Reset all toggles
@@ -131,7 +131,7 @@ public class WndCustomGame extends Window {
                 //Reset challenges
                 PPDSettings.challenges(0);
                 //Visually reset challenges
-                btnChals.icon(Icons.get(PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
+                btnChals.icon(Icons.get(Icons.CHALLENGE_OFF));
             }
         };
         btnDefaults.setRect(0, pos, WIDTH, BTN_HEIGHT);
