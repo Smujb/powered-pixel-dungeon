@@ -72,9 +72,7 @@ public class YogDzewa extends Mob {
 		healthFactor = 1.5f;
 		damageFactor = 0.8f;
 
-		EXP = 50;
-
-		//so that allies can attack it. States are never actually used.
+        //so that allies can attack it. States are never actually used.
 		state = HUNTING;
 
 		properties.add(Property.BOSS);
@@ -481,8 +479,6 @@ public class YogDzewa extends Mob {
 			damageFactor = 1.5f;
 			evasionFactor = 0.7f;
 			viewDistance = Light.DISTANCE;
-
-			EXP = 5;
 
             properties.add(Property.DEMONIC);
 		}

@@ -37,10 +37,8 @@ public class Gnoll extends Mob {
 		
 		//HP = HT = 12;
 		//defenseSkill = 4;
-		
-		EXP = 2;
-		
-		loot = Gold.class;
+
+        loot = Gold.class;
 		lootChance = 0.5f;
 	}
 	

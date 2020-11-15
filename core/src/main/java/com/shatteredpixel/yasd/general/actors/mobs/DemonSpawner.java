@@ -50,8 +50,6 @@ public class DemonSpawner extends Mob {
 		healthFactor = 2f;
 		evasionFactor = 0f;
 
-		EXP = 25;
-
         state = PASSIVE;
 
 		loot = PotionOfHealing.class;

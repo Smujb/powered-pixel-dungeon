@@ -57,7 +57,6 @@ import com.shatteredpixel.yasd.general.items.rings.RingOfWealth;
 import com.shatteredpixel.yasd.general.items.weapon.enchantments.Lucky;
 import com.shatteredpixel.yasd.general.items.weapon.missiles.MissileWeapon;
 import com.shatteredpixel.yasd.general.levels.Level;
-import com.shatteredpixel.yasd.general.levels.features.Chasm;
 import com.shatteredpixel.yasd.general.mechanics.Ballistica;
 import com.shatteredpixel.yasd.general.messages.Messages;
 import com.shatteredpixel.yasd.general.plants.Swiftthistle;
@@ -117,8 +116,6 @@ public abstract class Mob extends Char {
 	public Class<? extends CharSprite> spriteClass;
 	
 	protected int target = -1;
-	
-	public int EXP = 1;
 
 	protected Char enemy;
 	public boolean enemySeen;
@@ -132,6 +129,16 @@ public abstract class Mob extends Char {
 	@Override
 	public float physicalDamageFactor() {
 		return physicalResist;
+	}
+
+	public int experience() {
+		int exp = 1 + level/2;
+		if (properties().contains(Property.BOSS)) {
+			exp *= 5;
+		} else if (properties().contains(Property.MINIBOSS)) {
+			exp *= 2;
+		}
+		return exp;
 	}
 
 	protected static final float TIME_TO_WAKE_UP = 1f;
@@ -844,7 +851,7 @@ public abstract class Mob extends Char {
 				Badges.validateMonstersSlain();
 				Statistics.qualifiedForNoKilling = false;
 				
-				int exp = Dungeon.hero.lvl <= Dungeon.getScaleFactor() + 2 ? EXP : 0;
+				int exp = Dungeon.hero.lvl <= Dungeon.getScaleFactor() + 2 ? experience() : 0;
 				if (exp > 0) {
 					Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Messages.get(this, "exp", exp));
 				}
@@ -859,12 +866,6 @@ public abstract class Mob extends Char {
 		if (hitWithRanged){
 			Statistics.thrownAssists++;
 			Badges.validateHuntressUnlock();
-		}
-		
-		if (cause.getCause() == Chasm.class){
-			//50% chance to round up, 50% to round down
-			if (EXP % 2 == 1) EXP += Random.Int(2);
-			EXP /= 2;
 		}
 
 		if (alignment == Alignment.ENEMY && Dungeon.hero != null){
@@ -905,7 +906,7 @@ public abstract class Mob extends Char {
 
 	public float corruptionResistance() {
 		//base enemy resistance is usually based on their exp, but in special cases it is based on other criteria
-		float enemyResist = 1 + this.EXP;
+		float enemyResist = 1 + this.experience();
 		if (this instanceof Mimic || this instanceof Statue || this instanceof Wraith){
 			enemyResist = 3 + Dungeon.getScaleFactor() *2;
 		} else if (this instanceof Piranha || this instanceof Bee) {
@@ -916,7 +917,7 @@ public abstract class Mob extends Char {
 			enemyResist = 1 + 5;
 		} else if (this instanceof Swarm){
 			//child swarms don't give exp, so we force this here.
-			enemyResist = 1 + new Swarm().EXP;
+			enemyResist = 1 + level/2f;
 		}
 		//100% health: 5x resist   75%: 3.25x resist   50%: 2x resist   25%: 1.25x resist
 		enemyResist *= 1 + 4*Math.pow(enemy.HP/(float)enemy.HT, 2);

@@ -58,9 +58,7 @@ public abstract class Elemental extends Mob {
 		healthFactor = 0.7f;
 		damageFactor = 1.3f;
 
-		EXP = 10;
-
-		flying = true;
+        flying = true;
 
 		loot = Reflection.newInstance(PotionOfLiquidFlame.class);
 		lootChance = 0.1f;
@@ -152,9 +150,7 @@ public abstract class Elemental extends Mob {
 
 			defenseSkill = 12;
 
-			EXP = 7;
-
-			properties.add(Property.MINIBOSS);
+            properties.add(Property.MINIBOSS);
 		}
 
 		@Override

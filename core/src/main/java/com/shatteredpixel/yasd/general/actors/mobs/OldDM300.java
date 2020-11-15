@@ -69,8 +69,7 @@ public class OldDM300 extends Mob {
 		damageFactor = 0.7f;
 		perceptionFactor = 2f;
 		///HP = HT = 200;
-		EXP = 30;
-		//defenseSkill = 18;
+        //defenseSkill = 18;
 		
 
 		properties.add(Property.BOSS);

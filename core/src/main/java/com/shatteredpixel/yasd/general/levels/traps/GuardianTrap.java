@@ -75,9 +75,13 @@ public class GuardianTrap extends Trap {
 		{
 			spriteClass = GuardianSprite.class;
 
-			EXP = 0;
 			state = WANDERING;
 			lootChance = 0.5f;
+		}
+
+		@Override
+		public int experience() {
+			return 0;
 		}
 
 		public Guardian() {

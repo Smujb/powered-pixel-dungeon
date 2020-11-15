@@ -42,9 +42,7 @@ public class FetidRat extends Rat {
 	{
 		spriteClass = FetidRatSprite.class;
 
-		EXP = 4;
-
-		state = WANDERING;
+        state = WANDERING;
 
 		properties.add(Property.MINIBOSS);
 		properties.add(Property.DEMONIC);

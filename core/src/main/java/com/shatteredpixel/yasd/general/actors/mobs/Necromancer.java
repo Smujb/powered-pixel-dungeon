@@ -59,8 +59,6 @@ public class Necromancer extends Mob {
 		healthFactor = 0.8f;
 		//HP = HT = 40;
 		//defenseSkill = 13;
-		
-		EXP = 7;
 
         loot = new PotionOfHealing();
 		lootChance = 0.2f; //see createloot

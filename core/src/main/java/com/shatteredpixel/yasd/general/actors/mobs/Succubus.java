@@ -62,8 +62,6 @@ public class Succubus extends Mob {
 		accuracyFactor = 1.5f;
 		perceptionFactor = 1.5f;
 		viewDistance = Light.DISTANCE;
-		
-		EXP = 12;
 
         loot = Generator.Category.SCROLL;
 		lootChance = 0.33f;

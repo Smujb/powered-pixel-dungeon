@@ -70,10 +70,8 @@ public class Yog extends Mob {
 		spriteClass = YogSprite.class;
 
 		//HP = HT = 600;
-		
-		EXP = 50;
-		
-		state = PASSIVE;
+
+        state = PASSIVE;
 
 		properties.add(Property.BOSS);
 		properties.add(Property.IMMOVABLE);
@@ -215,10 +213,8 @@ public class Yog extends Mob {
 			healthFactor = 0.5f;
 			//HP = HT = 300;
 			//defenseSkill = 25;
-			
-			EXP = 0;
-			
-			state = WANDERING;
+
+            state = WANDERING;
 
 			properties.add(Property.MINIBOSS);
 			properties.add(Property.DEMONIC);
@@ -267,10 +263,8 @@ public class Yog extends Mob {
 			damageFactor = 1.5f;
 			drFactor = 0.75f;
 			elementalResist = 1.5f;
-			
-			EXP = 0;
-			
-			state = WANDERING;
+
+            state = WANDERING;
 
 			properties.add(Property.MINIBOSS);
 			properties.add(Property.DEMONIC);
@@ -315,8 +309,6 @@ public class Yog extends Mob {
 			healthFactor = 0.25f;
 			baseSpeed = 2f;
 			damageFactor = 2f;
-			
-			EXP = 0;
 
             state = HUNTING;
 

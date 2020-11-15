@@ -51,10 +51,8 @@ public class Golem extends Mob {
 
 		healthFactor = 2f;
 		damageFactor = 1.5f;
-		
-		EXP = 12;
-		
-		properties.add(Property.INORGANIC);
+
+        properties.add(Property.INORGANIC);
 		properties.add(Property.LARGE);
 
 		WANDERING = new Wandering();

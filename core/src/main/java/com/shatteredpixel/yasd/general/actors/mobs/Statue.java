@@ -59,8 +59,7 @@ public class Statue extends Mob implements Callback {
 	{
 		spriteClass = StatueSprite.class;
 
-		EXP = 0;
-		state = PASSIVE;
+        state = PASSIVE;
 		
 		properties.add(Property.INORGANIC);
 

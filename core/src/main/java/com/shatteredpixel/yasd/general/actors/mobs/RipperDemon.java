@@ -58,8 +58,6 @@ public class RipperDemon extends Mob {
 		accuracyFactor = 2f;
 		attackDelay = 0.5f;
 
-		EXP = 9; //for corrupting
-
         HUNTING = new Hunting();
 
 		baseSpeed = 1f;

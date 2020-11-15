@@ -71,9 +71,7 @@ public class King extends Mob {
 
 		healthFactor = 3f;
 
-		EXP = 40;
-		
-		Undead.count = 0;
+        Undead.count = 0;
 
 		properties.add(Property.BOSS);
 		properties.add(Property.UNDEAD);
@@ -256,9 +254,7 @@ public class King extends Mob {
 			//HP = HT = 28;
 			//defenseSkill = 15;
 
-            EXP = 0;
-			
-			state = WANDERING;
+            state = WANDERING;
 
 			properties.add(Property.UNDEAD);
 			properties.add(Property.INORGANIC);
