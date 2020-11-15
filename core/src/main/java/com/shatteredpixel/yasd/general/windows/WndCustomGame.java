@@ -142,7 +142,20 @@ public class WndCustomGame extends Window {
             @Override
             protected void onClick() {
                 super.onClick();
-                HeroSelectScene.doInitRun(true);
+                if (CustomGame.calcTotalGlobalDifficultyFactor() < CustomGame.DIFFICULTY_MIN_BADGES) {
+                    PPDGame.scene().addToFront(new WndOptions(Messages.get(WndCustomGame.this, "warning"), Messages.get(WndCustomGame.this, "difficulty_too_low"), Messages.get(WndCustomGame.this, "confirm"), Messages.get(WndCustomGame.this, "cancel")) {
+                        @Override
+                        protected void onSelect(int index) {
+                            super.onSelect(index);
+                            if (index == 0) {
+                                HeroSelectScene.doInitRun(true);
+                            }
+                            hide();
+                        }
+                    });
+                } else {
+                    HeroSelectScene.doInitRun(true);
+                }
             }
         };
         btnStart.setRect(0, pos, WIDTH, BTN_HEIGHT);

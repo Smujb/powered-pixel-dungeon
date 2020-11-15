@@ -139,7 +139,11 @@ public class CustomGame implements Bundlable {
         return this;
     }
 
-    public float calcTotalDifficultyFactor() {
+    //Minimum difficulty the player can earn badges on
+    public static final float DIFFICULTY_MIN_BADGES = 0.7f;
+
+    //Calculate the effect all the factors have on difficulty
+    public float calcTotalLocalDifficultyFactor() {
         float factor = 1f;
         for (Modifier modifier : Modifier.values()) {
             if (modifier.positive) {
@@ -150,6 +154,23 @@ public class CustomGame implements Bundlable {
         }
         for (Toggle toggle : Toggle.values()) {
             if (localToggles.get(toggle, false)) {
+                factor *= toggle.difficultyFactor;
+            }
+        }
+        return factor;
+    }
+
+    public static float calcTotalGlobalDifficultyFactor() {
+        float factor = 1f;
+        for (Modifier modifier : Modifier.values()) {
+            if (modifier.positive) {
+                factor *= 1/getGlobalModifiers().get(modifier, 1f);
+            } else {
+                factor *=  getGlobalModifiers().get(modifier, 1f);
+            }
+        }
+        for (Toggle toggle : Toggle.values()) {
+            if (getGlobalToggles().get(toggle, false)) {
                 factor *= toggle.difficultyFactor;
             }
         }

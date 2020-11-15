@@ -176,6 +176,19 @@ public class Badges {
 		local.clear();
 		loadGlobal();
 	}
+
+	public static void addGlobal( Badge badge ){
+		if (!global.contains(badge) && Dungeon.badgesEnabled()){
+			addGlobal( badge );
+			saveNeeded = true;
+		}
+	}
+
+	public static void addLocal( Badge badge ) {
+		if (Dungeon.badgesEnabled()) {
+			local.add(badge);
+		}
+	}
 	
 	public static final String BADGES_FILE	= "badges.dat";
 	private static final String BADGES		= "badges";
@@ -264,19 +277,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.MONSTERS_SLAIN_1 ) && Statistics.enemiesSlain >= 10) {
 			badge = Badge.MONSTERS_SLAIN_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.MONSTERS_SLAIN_2 ) && Statistics.enemiesSlain >= 50) {
 			badge = Badge.MONSTERS_SLAIN_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.MONSTERS_SLAIN_3 ) && Statistics.enemiesSlain >= 150) {
 			badge = Badge.MONSTERS_SLAIN_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.MONSTERS_SLAIN_4 ) && Statistics.enemiesSlain >= 250) {
 			badge = Badge.MONSTERS_SLAIN_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -287,19 +300,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.GOLD_COLLECTED_1 ) && Statistics.goldCollected >= 100) {
 			badge = Badge.GOLD_COLLECTED_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.GOLD_COLLECTED_2 ) && Statistics.goldCollected >= 500) {
 			badge = Badge.GOLD_COLLECTED_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.GOLD_COLLECTED_3 ) && Statistics.goldCollected >= 2500) {
 			badge = Badge.GOLD_COLLECTED_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.GOLD_COLLECTED_4 ) && Statistics.goldCollected >= 7500) {
 			badge = Badge.GOLD_COLLECTED_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -310,19 +323,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.LEVEL_REACHED_1 ) && Dungeon.hero.lvl >= 6) {
 			badge = Badge.LEVEL_REACHED_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.LEVEL_REACHED_2 ) && Dungeon.hero.lvl >= 12) {
 			badge = Badge.LEVEL_REACHED_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.LEVEL_REACHED_3 ) && Dungeon.hero.lvl >= 18) {
 			badge = Badge.LEVEL_REACHED_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.LEVEL_REACHED_4 ) && Dungeon.hero.lvl >= 24) {
 			badge = Badge.LEVEL_REACHED_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -333,19 +346,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.STRENGTH_ATTAINED_1 ) && Dungeon.hero.STR >= 13) {
 			badge = Badge.STRENGTH_ATTAINED_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.STRENGTH_ATTAINED_2 ) && Dungeon.hero.STR >= 15) {
 			badge = Badge.STRENGTH_ATTAINED_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.STRENGTH_ATTAINED_3 ) && Dungeon.hero.STR >= 17) {
 			badge = Badge.STRENGTH_ATTAINED_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.STRENGTH_ATTAINED_4 ) && Dungeon.hero.STR >= 19) {
 			badge = Badge.STRENGTH_ATTAINED_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -356,19 +369,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.FOOD_EATEN_1 ) && Statistics.foodEaten >= 10) {
 			badge = Badge.FOOD_EATEN_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.FOOD_EATEN_2 ) && Statistics.foodEaten >= 20) {
 			badge = Badge.FOOD_EATEN_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.FOOD_EATEN_3 ) && Statistics.foodEaten >= 30) {
 			badge = Badge.FOOD_EATEN_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.FOOD_EATEN_4 ) && Statistics.foodEaten >= 40) {
 			badge = Badge.FOOD_EATEN_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -379,19 +392,19 @@ public class Badges {
 		
 		if (!local.contains( Badge.POTIONS_COOKED_1 ) && Statistics.potionsCooked >= 3) {
 			badge = Badge.POTIONS_COOKED_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.POTIONS_COOKED_2 ) && Statistics.potionsCooked >= 6) {
 			badge = Badge.POTIONS_COOKED_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.POTIONS_COOKED_3 ) && Statistics.potionsCooked >= 9) {
 			badge = Badge.POTIONS_COOKED_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.POTIONS_COOKED_4 ) && Statistics.potionsCooked >= 12) {
 			badge = Badge.POTIONS_COOKED_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -402,7 +415,7 @@ public class Badges {
 		
 		if (!local.contains( Badge.PIRANHAS ) && Statistics.piranhasKilled >= 6) {
 			badge = Badge.PIRANHAS;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -423,19 +436,19 @@ public class Badges {
 		Badge badge = null;
 		if (!local.contains( Badge.ITEM_LEVEL_1 ) && item.level() >= 3) {
 			badge = Badge.ITEM_LEVEL_1;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.ITEM_LEVEL_2 ) && item.level() >= 6) {
 			badge = Badge.ITEM_LEVEL_2;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.ITEM_LEVEL_3 ) && item.level() >= 9) {
 			badge = Badge.ITEM_LEVEL_3;
-			local.add( badge );
+			addLocal( badge );
 		}
 		if (!local.contains( Badge.ITEM_LEVEL_4 ) && item.level() >= 12) {
 			badge = Badge.ITEM_LEVEL_4;
-			local.add( badge );
+			addLocal( badge );
 		}
 		
 		displayBadge( badge );
@@ -456,7 +469,7 @@ public class Badges {
 		
 		if (badge != null) {
 			
-			local.add( badge );
+			addLocal( badge );
 			
 			if (!local.contains( Badge.ALL_BAGS_BOUGHT ) &&
 				local.contains( Badge.BAG_BOUGHT_SEED_POUCH ) &&
@@ -465,7 +478,7 @@ public class Badges {
 				local.contains( Badge.BAG_BOUGHT_WAND_HOLSTER )) {
 						
 					badge = Badge.ALL_BAGS_BOUGHT;
-					local.add( badge );
+					addLocal( badge );
 					displayBadge( badge );
 			}
 		}
@@ -497,7 +510,7 @@ public class Badges {
 	
 	public static void validateDeathFromFire() {
 		Badge badge = Badge.DEATH_FROM_FIRE;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 		
 		validateYASD();
@@ -505,7 +518,7 @@ public class Badges {
 	
 	public static void validateDeathFromPoison() {
 		Badge badge = Badge.DEATH_FROM_POISON;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 		
 		validateYASD();
@@ -513,7 +526,7 @@ public class Badges {
 	
 	public static void validateDeathFromGas() {
 		Badge badge = Badge.DEATH_FROM_GAS;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 		
 		validateYASD();
@@ -521,7 +534,7 @@ public class Badges {
 	
 	public static void validateDeathFromHunger() {
 		Badge badge = Badge.DEATH_FROM_HUNGER;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 		
 		validateYASD();
@@ -529,7 +542,7 @@ public class Badges {
 	
 	public static void validateDeathFromGlyph() {
 		Badge badge = Badge.DEATH_FROM_GLYPH;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 
 		validateYASD();
@@ -537,7 +550,7 @@ public class Badges {
 	
 	public static void validateDeathFromFalling() {
 		Badge badge = Badge.DEATH_FROM_FALLING;
-		local.add( badge );
+		addLocal( badge );
 		displayBadge( badge );
 
 		validateYASD();
@@ -552,7 +565,7 @@ public class Badges {
 			global.contains( Badge.DEATH_FROM_FALLING)) {
 			
 			Badge badge = Badge.YASD;
-			local.add( badge );
+			addLocal( badge );
 			displayBadge( badge );
 		}
 	}
@@ -576,7 +589,7 @@ public class Badges {
 		}
 		
 		if (badge != null) {
-			local.add( badge );
+			addLocal( badge );
 			displayBadge( badge );
 			
 			if (badge == Badge.BOSS_SLAIN_1) {
@@ -594,9 +607,9 @@ public class Badges {
 					badge = Badge.BOSS_SLAIN_1_HUNTRESS;
 					break;
 				}
-				local.add( badge );
+				addLocal( badge );
 				if (!global.contains( badge )) {
-					global.add( badge );
+					addGlobal( badge );
 					saveNeeded = true;
 				}
 				
@@ -608,7 +621,7 @@ public class Badges {
 					badge = Badge.BOSS_SLAIN_1_ALL_CLASSES;
 					if (!global.contains( badge )) {
 						displayBadge( badge );
-						global.add( badge );
+						addGlobal( badge );
 						saveNeeded = true;
 					}
 				}
@@ -642,9 +655,9 @@ public class Badges {
 				default:
 					return;
 				}
-				local.add( badge );
+				addLocal( badge );
 				if (!global.contains( badge )) {
-					global.add( badge );
+					addGlobal( badge );
 					saveNeeded = true;
 				}
 				
@@ -660,7 +673,7 @@ public class Badges {
 					badge = Badge.BOSS_SLAIN_3_ALL_SUBCLASSES;
 					if (!global.contains( badge )) {
 						displayBadge( badge );
-						global.add( badge );
+						addGlobal( badge );
 						saveNeeded = true;
 					}
 				}
@@ -687,7 +700,7 @@ public class Badges {
 		}
 		
 		if (!global.contains( badge )) {
-			global.add( badge );
+			addGlobal( badge );
 			saveNeeded = true;
 		}
 	}
@@ -713,7 +726,7 @@ public class Badges {
 	public static void validateMasteryCombo( int n ) {
 		if (!local.contains( Badge.MASTERY_COMBO ) && n == 10) {
 			Badge badge = Badge.MASTERY_COMBO;
-			local.add( badge );
+			addLocal( badge );
 			displayBadge( badge );
 		}
 	}
@@ -737,9 +750,9 @@ public class Badges {
 			badge = Badge.VICTORY_HUNTRESS;
 			break;
 		}
-		local.add( badge );
+		addLocal( badge );
 		if (!global.contains( badge )) {
-			global.add( badge );
+			addGlobal( badge );
 			saveNeeded = true;
 		}
 		
@@ -756,7 +769,7 @@ public class Badges {
 	public static void validateNoKilling() {
 		if (!local.contains( Badge.NO_MONSTERS_SLAIN ) && Statistics.completedWithNoKilling) {
 			Badge badge = Badge.NO_MONSTERS_SLAIN;
-			local.add( badge );
+			addLocal( badge );
 			displayBadge( badge );
 		}
 	}
@@ -764,7 +777,7 @@ public class Badges {
 	public static void validateGrimWeapon() {
 		if (!local.contains( Badge.GRIM_WEAPON )) {
 			Badge badge = Badge.GRIM_WEAPON;
-			local.add( badge );
+			addLocal( badge );
 			displayBadge( badge );
 		}
 	}
@@ -789,7 +802,7 @@ public class Badges {
 	
 	//necessary in order to display the happy end badge in the surface scene
 	public static void silentValidateHappyEnd() {
-        local.add( Badge.HAPPY_END );
+        addLocal( Badge.HAPPY_END );
 	}
 	
 	public static void validateHappyEnd() {
@@ -824,7 +837,7 @@ public class Badges {
 			
 		} else {
 			
-			global.add( badge );
+			addGlobal( badge );
 			saveNeeded = true;
 			
 			if (badge.meta) {
@@ -849,13 +862,6 @@ public class Badges {
 		loadGlobal();
 		global.remove( badge );
 		saveNeeded = true;
-	}
-	
-	public static void addGlobal( Badge badge ){
-		if (!global.contains(badge)){
-			global.add( badge );
-			saveNeeded = true;
-		}
 	}
 	
 	public static List<Badge> filtered( boolean global ) {

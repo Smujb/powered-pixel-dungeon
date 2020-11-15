@@ -838,9 +838,15 @@ public class Dungeon {
 		Rankings.INSTANCE.submit( true, cause );
 	}
 
+
+	public static boolean badgesEnabled() {
+		float difficultyFactor = customGame.calcTotalLocalDifficultyFactor();
+		return difficultyFactor >= CustomGame.DIFFICULTY_MIN_BADGES;
+	}
+
 	//TODO hero max vision is now separate from shadowcaster max vision. Might want to adjust.
-	public static void observe(){
-		observe( ShadowCaster.MAX_DISTANCE+1 );
+	public static void observe() {
+		observe(ShadowCaster.MAX_DISTANCE + 1);
 	}
 	
 	public static void observe( int dist ) {
