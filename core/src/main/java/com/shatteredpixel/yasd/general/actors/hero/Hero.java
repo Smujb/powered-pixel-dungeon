@@ -32,6 +32,7 @@ import com.shatteredpixel.yasd.general.Badges;
 import com.shatteredpixel.yasd.general.Bones;
 import com.shatteredpixel.yasd.general.Challenges;
 import com.shatteredpixel.yasd.general.Constants;
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Element;
 import com.shatteredpixel.yasd.general.GamesInProgress;
@@ -198,6 +199,7 @@ public class Hero extends Char {
 	public void updateHT(boolean boostHP) {
 		int preHT = HT;
 		HT = 20 + 5*(lvl-1) + HTBoost;
+		HT *= CustomGame.Modifier.HERO_HP_FACTOR.getLocal();
 		heal(HT-preHT);
 		super.updateHT(boostHP);
 	}
@@ -463,6 +465,7 @@ public class Hero extends Char {
 		if (buff(Hunger.class) == null) {
 			Buff.affect(this, Hunger.class);
 		}
+		updateHT(true);
 	}
 	
 	public int tier() {

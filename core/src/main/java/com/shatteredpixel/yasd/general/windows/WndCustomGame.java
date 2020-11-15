@@ -59,12 +59,14 @@ public class WndCustomGame extends Window {
         float pos = title.bottom() + GAP;
 
         for (CustomGame.Modifier modifier : CustomGame.Modifier.values()) {
+            //0.5x to 4x (gets divided by 10)
             OptionSlider slider = new OptionSlider(Messages.get(this, modifier.name()), "0.5x", "4x", 5, 40) {
                 @Override
                 protected void onChange() {
                     modifier.setGlobalValue(getSelectedValue()/10f);
                 }
             };
+            //Set to 1 (default)
             slider.setSelectedValue((int) (modifier.getGlobal()*10));
             slider.setRect(0, pos, WIDTH, SLIDER_HEIGHT);
             sliders.add(slider);

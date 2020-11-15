@@ -80,6 +80,7 @@ import com.shatteredpixel.yasd.general.scenes.GameScene;
 import com.shatteredpixel.yasd.general.ui.QuickSlotButton;
 import com.shatteredpixel.yasd.general.utils.BArray;
 import com.shatteredpixel.yasd.general.utils.DungeonSeed;
+import com.shatteredpixel.yasd.general.utils.GLog;
 import com.watabou.noosa.Game;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -176,7 +177,7 @@ public class Dungeon {
 	public static Hero hero;
 	public static Level level;
 
-	private static CustomGame customGame;
+	protected static CustomGame customGame;
 
 	public static QuickSlot quickslot = new QuickSlot();
 	
@@ -666,8 +667,6 @@ public class Dungeon {
 
 		underwater = bundle.getBoolean(UNDERWATER);
 
-		customGame = bundle.contains(CUSTOM) ? (CustomGame) bundle.get(CUSTOM) : new CustomGame().resetLocals();
-
 		Actor.restoreNextID( bundle );
 
 		quickslot.reset();
@@ -767,6 +766,10 @@ public class Dungeon {
 				portedItems.put( i, items );
 			}
 		}
+
+
+		customGame = bundle.contains(CUSTOM) ? (CustomGame) bundle.get(CUSTOM) : new CustomGame().resetLocals();
+		for (CustomGame.Modifier modifier : CustomGame.Modifier.values()) GLog.n(modifier.name() + "  " + modifier.getLocal());
 	}
 
 	public static int getScaleFactor() {

@@ -237,7 +237,7 @@ public abstract class Mob extends Char {
 	private int normalDamageRoll(int level) {
 		int max = 3 + Math.round(level * 0.5f);
 		int min = Math.round(level * 0.25f);
-		return Random.NormalIntRange(min, max);
+		return Math.round(Random.NormalIntRange(min, max) * CustomGame.Modifier.MOB_DAMAGE_FACTOR.getLocal());
 	}
 
 	private int normalDefense(int level) {

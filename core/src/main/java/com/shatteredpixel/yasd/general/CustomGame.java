@@ -42,21 +42,31 @@ public class CustomGame implements Bundlable {
     public static final String CUSTOM_MODIFIERS_FILE = "global_custom_modifiers.dat";
 
     //Initially set to null so the game knows to load the modifiers from the bundle
-    private static ArrayMap<Modifier, Float> cachedGlobals = null;
+    private static ArrayMap<Modifier, Float> cachedGlobalModifiers = null;
 
 
+    private final ArrayMap<Modifier, Float> localModifiers = new ArrayMap<>();
+
+    //Set to true to tell the Dungeon.init() function to init using current modifiers not default ones. Kinda messy, might want to refactor
     public static boolean enabledForRun = false;
 
     public enum Modifier {
         //TODO more modifiers
+        HERO_HP_FACTOR {
+            {
+                positive = true;
+            }
+        },
         MOB_DAMAGE_FACTOR,
         MOB_HP_FACTOR;
-        private float floatValue = 1f;
+
+        //If the modifier is positive (eg increases hero HP) then the game needs to know this when calculating how much easier/harder you have made the game
+        protected boolean positive = false;
 
         public float getLocal() {
             //Don't let this function be called outside of a context where the hero exists or there will be buggy results (most likely getGlobal should have been used)
-            if (Dungeon.hero == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
-            return floatValue;
+            if (Dungeon.hero == null || Dungeon.customGame == null) throw new RuntimeException("Attempted to access local modifiers from a global context");
+            return Dungeon.customGame.localModifiers.get(this, 1f);
         }
 
         public float getGlobal() {
@@ -74,28 +84,28 @@ public class CustomGame implements Bundlable {
     @Override
     public void restoreFromBundle(Bundle bundle) {
         for (Modifier modifier : Modifier.values()) {
-            bundle.put(modifier.toString(), modifier.floatValue);
+            localModifiers.put(modifier, bundle.getFloat(modifier.toString()));
         }
     }
 
     @Override
     public void storeInBundle(Bundle bundle) {
         for (Modifier modifier : Modifier.values()) {
-            modifier.floatValue = bundle.getFloat(modifier.toString());
+            bundle.put(modifier.toString(), localModifiers.get(modifier, 1f));
         }
     }
 
     //Copy global modifiers into local per-run modifiers
     public CustomGame setupLocals() {
         for (Modifier modifier : Modifier.values()) {
-            modifier.floatValue = getGlobals().get(modifier);
+            localModifiers.put(modifier, getGlobals().get(modifier));
         }
         return this;
     }
 
     public CustomGame resetLocals() {
         for (Modifier modifier : Modifier.values()) {
-            modifier.floatValue = 1f;
+            localModifiers.put(modifier, 1f);
         }
         return this;
     }
@@ -103,20 +113,20 @@ public class CustomGame implements Bundlable {
     //Gets the global modifiers from the bundle and caches them in an array to increase performance.
     private static ArrayMap<Modifier, Float> getGlobals() {
 
-        if (cachedGlobals != null) {
-            return cachedGlobals;
+        if (cachedGlobalModifiers != null) {
+            return cachedGlobalModifiers;
         } else {
-            cachedGlobals = new ArrayMap<>();
+            cachedGlobalModifiers = new ArrayMap<>();
         }
 
         try {
             Bundle bundle = FileUtils.bundleFromFile(CUSTOM_MODIFIERS_FILE);
             for (Modifier modifier : Modifier.values()) {
                 if (bundle.contains(modifier.toString())) {
-                    modifier.floatValue = bundle.getFloat(modifier.toString());
+                    cachedGlobalModifiers.put(modifier, bundle.getFloat(modifier.toString()));
                 }
             }
-            return cachedGlobals;
+            return cachedGlobalModifiers;
         } catch (IOException e) {
             PPDGame.reportException(e);
             return new ArrayMap<>();
@@ -126,8 +136,10 @@ public class CustomGame implements Bundlable {
     //Stores the current global modifier cache to the file
     private static void storeGlobals() {
 
+        ArrayMap<Modifier, Float> map = getGlobals();
+
         Bundle bundle = new Bundle();
-        for (Modifier modifier : Modifier.values()) bundle.put( modifier.toString(), modifier.floatValue );
+        for (Modifier modifier : Modifier.values()) bundle.put( modifier.toString(), map.get(modifier, 1f) );
 
         try {
             FileUtils.bundleToFile(CUSTOM_MODIFIERS_FILE, bundle );
