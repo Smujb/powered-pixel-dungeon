@@ -56,6 +56,9 @@ public abstract class OptionSlider extends Component {
 	private ColorBlock[] sliderTicks;
 	private float tickDist;
 
+	protected NinePatch chrome(boolean slider) {
+		return Chrome.get(Chrome.Type.RED_BUTTON);
+	}
 
 	public OptionSlider(String title, String minTxt, String maxTxt, int minVal, int maxVal){
 		super();
@@ -96,7 +99,7 @@ public abstract class OptionSlider extends Component {
 	protected void createChildren() {
 		super.createChildren();
 
-		add( BG = Chrome.get(Chrome.Type.RED_BUTTON));
+		add( BG = chrome(false));
 		BG.alpha(0.5f);
 
 		add(title = PixelScene.renderTextBlock(9));
@@ -104,7 +107,7 @@ public abstract class OptionSlider extends Component {
 		add(this.maxTxt = PixelScene.renderTextBlock(6));
 
 		add(sliderBG = new ColorBlock(1, 1, 0xFF222222));
-		sliderNode = Chrome.get(Chrome.Type.RED_BUTTON);
+		sliderNode = chrome(true);
 		sliderNode.size(5, 9);
 
 		pointerArea = new PointerArea(0, 0, 0, 0){
