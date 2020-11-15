@@ -201,6 +201,7 @@ public class Dungeon {
 
 	public static long seed;
 
+	//Must be called as soon as a new game is started, before the level or hero are created
 	public static void initCustom(boolean enabled) {
 		customGame = new CustomGame();
 		if (enabled) {
@@ -838,7 +839,7 @@ public class Dungeon {
 		Rankings.INSTANCE.submit( true, cause );
 	}
 
-
+	//Prevent adding a badge if the modifiers result in very low difficulty
 	public static boolean badgesEnabled() {
 		float difficultyFactor = customGame.calcTotalLocalDifficultyFactor();
 		return difficultyFactor >= CustomGame.DIFFICULTY_MIN_BADGES;
