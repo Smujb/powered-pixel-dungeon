@@ -841,6 +841,7 @@ public class Dungeon {
 
 	//Prevent adding a badge if the modifiers result in very low difficulty
 	public static boolean badgesEnabled() {
+		if (customGame == null) return true;
 		float difficultyFactor = customGame.calcTotalLocalDifficultyFactor();
 		return difficultyFactor >= CustomGame.DIFFICULTY_MIN_BADGES;
 	}

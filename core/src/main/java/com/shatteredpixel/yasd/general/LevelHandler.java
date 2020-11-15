@@ -190,7 +190,7 @@ public class LevelHandler {
 
 	public static void doRestore() {
 		mode = Mode.CONTINUE;
-		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Dungeon.newLevel( Dungeon.keyForDepth(), false).loadImg(), getSpeed(), 0.67f, new Callback() {
+		TextScene.init(Messages.get(Mode.class, Mode.CONTINUE.name()), Messages.get(LevelHandler.class, "continue"), Assets.Interfaces.SHADOW, getSpeed(), 0.67f, new Callback() {
 			@Override
 			public void call() {
 				GameScene.messageOnEnter = Messages.get(LevelHandler.class, "return", depth);
