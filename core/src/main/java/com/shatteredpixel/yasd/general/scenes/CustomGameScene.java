@@ -25,26 +25,31 @@
  *
  */
 
-package com.shatteredpixel.yasd.general.windows;
+package com.shatteredpixel.yasd.general.scenes;
 
+import com.shatteredpixel.yasd.general.Chrome;
 import com.shatteredpixel.yasd.general.CustomGame;
 import com.shatteredpixel.yasd.general.PPDGame;
 import com.shatteredpixel.yasd.general.PPDSettings;
 import com.shatteredpixel.yasd.general.messages.Messages;
-import com.shatteredpixel.yasd.general.scenes.HeroSelectScene;
-import com.shatteredpixel.yasd.general.scenes.PixelScene;
+import com.shatteredpixel.yasd.general.ui.Archs;
 import com.shatteredpixel.yasd.general.ui.CheckBox;
+import com.shatteredpixel.yasd.general.ui.ExitButton;
 import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.OptionSlider;
-import com.shatteredpixel.yasd.general.ui.RedButton;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
+import com.shatteredpixel.yasd.general.ui.StyledButton;
+import com.shatteredpixel.yasd.general.ui.TransparentOptionSlider;
 import com.shatteredpixel.yasd.general.ui.Window;
+import com.shatteredpixel.yasd.general.windows.WndChallenges;
+import com.shatteredpixel.yasd.general.windows.WndOptions;
+import com.watabou.noosa.Camera;
 
 import java.util.ArrayList;
 
-//FIXME use multiple tabs as there are too many modifiers now for one tab
-public class WndCustomGame extends Window {
-    private static final int WIDTH	    = 120;
+public class CustomGameScene extends PixelScene {
+
+    private static final int BUTTON_WIDTH   = 80;
 
     private static final int SLIDER_HEIGHT	= 24;
     private static final int BTN_HEIGHT	    = 18;
@@ -53,32 +58,85 @@ public class WndCustomGame extends Window {
     private ArrayList<OptionSlider> sliders = new ArrayList<>();
     private ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
-    public WndCustomGame() {
+    @Override
+    public void create() {
+        super.create();
+
+        uiCamera.visible = false;
+
+        int w = Camera.main.width;
+        int h = Camera.main.height;
+
+        Archs archs = new Archs();
+        archs.setSize(w, h);
+        add(archs);
+
+        ExitButton btnExit = new ExitButton() {
+            @Override
+            protected void onClick() {
+                onBackPressed();
+            }
+        };
+        btnExit.setPos(w - btnExit.width(), 0);
+        add(btnExit);
+
         RenderedTextBlock title = PixelScene.renderTextBlock(Messages.get(this, "title"), 9);
-        title.hardlight(TITLE_COLOR);
-        title.setPos(0, 0);
+        title.hardlight(Window.TITLE_COLOR);
+        title.setPos(
+                (w - title.width()) / 2f,
+                (20 - title.height()) / 2f
+        );
+        align(title);
         add(title);
 
-        float pos = title.bottom() + GAP;
+        //########## COLUMN 1 ##########
+        float yPos = title.bottom() + GAP;
+        float xPos = 0;
+
+        float btnWidth;
+        if (PixelScene.landscape()) {
+            btnWidth = (w - GAP) / 3f - GAP;
+        } else {
+            btnWidth = (w - GAP) / 2f - GAP;
+        }
 
         for (CustomGame.Modifier modifier : CustomGame.Modifier.values()) {
             //0.5x to 4x (gets divided by 10)
-            OptionSlider slider = new OptionSlider(Messages.get(this, modifier.name()), "0.5x", "4x", 1, 8) {
+            TransparentOptionSlider slider = new TransparentOptionSlider(Messages.get(this, modifier.name()), "0.5x", "4x", 1, 8) {
                 @Override
                 protected void onChange() {
-                    modifier.setGlobalValue(getSelectedValue() / 2f);
+                    modifier.setGlobalValue(getSelectedValue()/2f);
                 }
             };
             //Set to 1 (default)
-            slider.setSelectedValue((int) (modifier.getGlobal() * 2));
-            slider.setRect(0, pos, WIDTH, SLIDER_HEIGHT);
+            slider.setSelectedValue((int) (modifier.getGlobal()*2));
+            slider.setRect(xPos, yPos, btnWidth, SLIDER_HEIGHT);
             sliders.add(slider);
             add(slider);
-            pos = slider.bottom() + GAP;
+            yPos = slider.bottom() + GAP;
+        }
+
+        //########## COLUMN 2 ##########
+        //Only move to a new column on Landscape mode, on Portrait it looks better with 2 columns not 3
+        if (PixelScene.landscape()) {
+            xPos += btnWidth + GAP;
+            yPos = title.bottom() + GAP;
         }
 
         for (CustomGame.Toggle toggle : CustomGame.Toggle.values()) {
             CheckBox checkBox = new CheckBox(Messages.get(this, toggle.name())) {
+
+                @Override
+                protected void layout() {
+                    super.layout();
+                    remove(bg);
+                    bg = Chrome.get(Chrome.Type.GREY_BUTTON_TR);
+                    bg.x = x;
+                    bg.y = y;
+                    bg.size( width, height );
+                    add(bg);
+                }
+
                 @Override
                 protected void onClick() {
                     super.onClick();
@@ -86,13 +144,17 @@ public class WndCustomGame extends Window {
                 }
             };
             checkBox.checked(toggle.getGlobal());
-            checkBox.setRect(0, pos, WIDTH, BTN_HEIGHT);
+            checkBox.setRect(xPos, yPos, btnWidth, BTN_HEIGHT);
             checkBoxes.add(checkBox);
             add(checkBox);
-            pos = checkBox.bottom() + GAP;
+            yPos = checkBox.bottom() + GAP;
         }
 
-        RedButton btnChals = new RedButton(Messages.get(this, "challenges")) {
+        //########## COLUMN 3 ##########
+        yPos = title.bottom() + GAP;
+        xPos += btnWidth + GAP;
+
+        StyledButton btnChals = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "challenges")) {
 
             @Override
             protected void onClick() {
@@ -104,13 +166,13 @@ public class WndCustomGame extends Window {
                 });
             }
         };
-        btnChals.setRect(0, pos, WIDTH, BTN_HEIGHT);
+        btnChals.setRect(xPos, yPos, btnWidth, BTN_HEIGHT);
         btnChals.icon(Icons.get(PPDSettings.challenges() > 0 ? Icons.CHALLENGE_ON : Icons.CHALLENGE_OFF));
         add(btnChals);
 
-        pos = btnChals.bottom() + GAP;
+        yPos = btnChals.bottom() + GAP;
 
-        RedButton btnDefaults = new RedButton(Messages.get(this, "defaults")) {
+        StyledButton btnDefaults = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "defaults")) {
 
             @Override
             protected void onClick() {
@@ -136,17 +198,18 @@ public class WndCustomGame extends Window {
                 btnChals.icon(Icons.get(Icons.CHALLENGE_OFF));
             }
         };
-        btnDefaults.setRect(0, pos, WIDTH, BTN_HEIGHT);
+        btnDefaults.setRect(xPos, yPos, btnWidth, BTN_HEIGHT);
         add(btnDefaults);
 
-        pos = btnDefaults.bottom() + GAP;
+        yPos = btnDefaults.bottom() + GAP;
 
-        RedButton btnStart = new RedButton(Messages.get(this, "start")) {
+        //At the bottom of the screen, across the entire screen always
+        StyledButton btnStart = new StyledButton(Chrome.Type.GREY_BUTTON_TR, Messages.get(this, "start")) {
             @Override
             protected void onClick() {
                 super.onClick();
                 if (CustomGame.calcTotalGlobalDifficultyFactor() < CustomGame.DIFFICULTY_MIN_BADGES) {
-                    PPDGame.scene().addToFront(new WndOptions(Messages.get(WndCustomGame.this, "warning"), Messages.get(WndCustomGame.this, "difficulty_too_low"), Messages.get(WndCustomGame.this, "confirm"), Messages.get(WndCustomGame.this, "cancel")) {
+                    PPDGame.scene().addToFront(new WndOptions(Messages.get(CustomGameScene.this, "warning"), Messages.get(CustomGameScene.this, "difficulty_too_low"), Messages.get(CustomGameScene.this, "confirm"), Messages.get(CustomGameScene.this, "cancel")) {
                         @Override
                         protected void onSelect(int index) {
                             super.onSelect(index);
@@ -161,11 +224,14 @@ public class WndCustomGame extends Window {
                 }
             }
         };
-        btnStart.setRect(0, pos, WIDTH, BTN_HEIGHT);
+        btnStart.setRect(0, h-BTN_HEIGHT, w, BTN_HEIGHT);
         add(btnStart);
 
-        pos = btnStart.bottom() + GAP;
+        fadeIn();
+    }
 
-        resize(WIDTH, (int) pos);
+    @Override
+    protected void onBackPressed() {
+        PPDGame.switchScene(HeroSelectScene.class);
     }
 }

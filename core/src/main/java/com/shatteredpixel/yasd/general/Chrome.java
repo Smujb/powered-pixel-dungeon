@@ -50,6 +50,7 @@ public class Chrome {
 	public static NinePatch get( Type type ) {
 		String Asset = Assets.Interfaces.CHROME;
 		switch (type) {
+			default:
 			case WINDOW:
 				return new NinePatch(Asset, 0, 0, 20, 20, 6);
 			case WINDOW_SILVER:
@@ -76,8 +77,6 @@ public class Chrome {
 				return new NinePatch(Asset, 65, 22, 8, 13, 3, 7, 3, 5);
 			case TAB_UNSELECTED:
 				return new NinePatch(Asset, 75, 22, 8, 13, 3, 7, 3, 5);
-			default:
-				return null;
 		}
 	}
 }

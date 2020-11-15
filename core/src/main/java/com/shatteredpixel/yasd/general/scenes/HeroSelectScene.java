@@ -50,7 +50,6 @@ import com.shatteredpixel.yasd.general.ui.Icons;
 import com.shatteredpixel.yasd.general.ui.RenderedTextBlock;
 import com.shatteredpixel.yasd.general.ui.StyledButton;
 import com.shatteredpixel.yasd.general.ui.Window;
-import com.shatteredpixel.yasd.general.windows.WndCustomGame;
 import com.shatteredpixel.yasd.general.windows.WndMessage;
 import com.shatteredpixel.yasd.general.windows.WndTabbed;
 import com.watabou.gltextures.TextureCache;
@@ -192,7 +191,7 @@ public class HeroSelectScene extends PixelScene {
 				Icons.get(Icons.PREFS)){
 			@Override
 			protected void onClick() {
-				PPDGame.scene().addToFront(new WndCustomGame());
+				PPDGame.switchScene(CustomGameScene.class);
 			}
 
 			@Override
