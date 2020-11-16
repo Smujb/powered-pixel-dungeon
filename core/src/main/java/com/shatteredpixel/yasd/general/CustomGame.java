@@ -101,6 +101,11 @@ public class CustomGame implements Bundlable {
     }
 
     public enum Toggle {
+        DISABLE_MUTANTS {
+            {
+                difficultyFactor = 0.9f;
+            }
+        },
         CRAZY_ITEMS,
         ENDLESS;
 

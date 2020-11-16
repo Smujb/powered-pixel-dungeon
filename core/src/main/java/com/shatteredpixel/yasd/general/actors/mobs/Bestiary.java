@@ -27,11 +27,13 @@
 
 package com.shatteredpixel.yasd.general.actors.mobs;
 
+import com.shatteredpixel.yasd.general.CustomGame;
 import com.watabou.utils.Random;
 
 public class Bestiary {
 
 	public static Class<? extends Mob> swapMobAlt( Class<? extends Mob> mob ) {
+		if (CustomGame.Toggle.DISABLE_MUTANTS.getLocal()) return mob;
 		Class<? extends Mob> cl = mob;
 		if (Random.Int( 5 ) == 0) {
 			if (cl == Rat.class) {
