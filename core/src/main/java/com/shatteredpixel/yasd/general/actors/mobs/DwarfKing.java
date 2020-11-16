@@ -452,12 +452,9 @@ public class DwarfKing extends Mob {
 	public static class DKGhoul extends Ghoul {
 		{
 			state = HUNTING;
-		}
 
-		@Override
-		protected boolean act() {
-			partnerID = -2; //no partners
-			return super.act();
+			//Cannot resurrect
+			canBeLifeLinked = false;
 		}
 	}
 

@@ -127,7 +127,7 @@ public class Ghoul extends Mob {
 
 	@Override
 	public void die(DamageSrc cause) {
-		if (cause.getCause() != Chasm.class && cause.getCause() != GhoulLifeLink.class && !Dungeon.level.pit(pos)) {
+		if (cause.getCause() != Chasm.class && cause.getCause() != GhoulLifeLink.class && !Dungeon.level.pit(pos) && canBeLifeLinked) {
 			Ghoul nearby = GhoulLifeLink.searchForHost(this);
 			if (nearby != null){
 				beingLifeLinked = true;
@@ -143,6 +143,7 @@ public class Ghoul extends Mob {
 
 		super.die(cause);
 	}
+	protected boolean canBeLifeLinked = true;
 
 	@Override
 	protected synchronized void onRemove() {
