@@ -292,11 +292,11 @@ public class Dungeon {
 	public static ArrayList<Class<? extends Level>> regularLevels = new ArrayList<>(Arrays.asList(SewerLevel.class, PrisonLevel.class, CavesLevel.class, CityLevel.class, HallsLevel.class));
 	static {
 		//Bosses
-		overrideLevels.put("sewers - 5", SewerBossLevel.class);
-		overrideLevels.put("prison - 5", NewPrisonBossLevel.class);
-		overrideLevels.put("caves - 5", NewCavesBossLevel.class);
-		overrideLevels.put("city - 5", NewCityBossLevel.class);
-		overrideLevels.put("halls - 5", NewHallsBossLevel.class);
+		overrideLevels.put("sewers - 3", SewerBossLevel.class);
+		overrideLevels.put("prison - 3", NewPrisonBossLevel.class);
+		overrideLevels.put("caves - 3", NewCavesBossLevel.class);
+		overrideLevels.put("city - 3", NewCityBossLevel.class);
+		overrideLevels.put("halls - 3", NewHallsBossLevel.class);
 		//First level spawns different mobs and rooms. Might rework later.
 		overrideLevels.put("sewers - 0", FirstLevel.class);
 		//Amulet depth
