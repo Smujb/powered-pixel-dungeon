@@ -46,7 +46,7 @@ import com.watabou.utils.FileUtils;
 
 public class WelcomeScene extends PixelScene {
 
-	private static final int LATEST_UPDATE = PPDGame.v0_4_12;
+	private static final int LATEST_UPDATE = PPDGame.v0_4_13;
 
 	@Override
 	public void create() {
