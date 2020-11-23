@@ -454,7 +454,7 @@ public class Generator {
 	public static Armor randomArmor(int floorSet) {
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
-		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
+		int tier = (int) GameMath.gate(1, floorSet, Dungeon.maxTier());
 		RandomArmor a = new RandomArmor().rollStats();
 		a.random();
 		a.setTier(tier);
@@ -487,7 +487,7 @@ public class Generator {
 	public static MeleeWeapon randomWeapon(int floorSet) {
 
 		floorSet += (Random.chances(new float[]{1, 3, 3, 2, 1})) - 1;
-		int tier = (int) GameMath.gate(1, floorSet, Constants.MAXIMUM_TIER);
+		int tier = (int) GameMath.gate(1, floorSet, Dungeon.maxTier());
 		RandomMeleeWeapon w = new RandomMeleeWeapon().rollStats();
 		w.random();
 		w.setTier(tier);

@@ -846,6 +846,11 @@ public class Dungeon {
 		return difficultyFactor >= CustomGame.DIFFICULTY_MIN_BADGES;
 	}
 
+	public static int maxTier() {
+		if (customGame == null || !CustomGame.Toggle.ENDLESS.getLocal()) return Constants.MAXIMUM_TIER;
+		else return Integer.MAX_VALUE;
+	}
+
 	//TODO hero max vision is now separate from shadowcaster max vision. Might want to adjust.
 	public static void observe() {
 		observe(ShadowCaster.MAX_DISTANCE + 1);

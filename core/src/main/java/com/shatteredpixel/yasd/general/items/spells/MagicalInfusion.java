@@ -28,7 +28,7 @@
 package com.shatteredpixel.yasd.general.items.spells;
 
 import com.shatteredpixel.yasd.general.Badges;
-import com.shatteredpixel.yasd.general.Constants;
+import com.shatteredpixel.yasd.general.Dungeon;
 import com.shatteredpixel.yasd.general.Statistics;
 import com.shatteredpixel.yasd.general.effects.Speck;
 import com.shatteredpixel.yasd.general.items.Item;
@@ -52,11 +52,11 @@ public class MagicalInfusion extends InventorySpell {
 	protected void onItemSelected( Item item ) {
 
 		if (item instanceof MeleeWeapon) {
-			if (((MeleeWeapon) item).tier < Constants.MAXIMUM_TIER) {
+			if (((MeleeWeapon) item).tier < Dungeon.maxTier()) {
 				((MeleeWeapon) item).upgradeTier(1);
 			}
 		} else if (item instanceof Armor) {
-			if (((Armor) item).tier < Constants.MAXIMUM_TIER ) {
+			if (((Armor) item).tier < Dungeon.maxTier()) {
 				((Armor) item).upgradeTier(1);
 			}
 		}
