@@ -291,7 +291,7 @@ public class YogDzewa extends Mob {
 		if (phase == 0 || findFist() != null) return;
 
 		if (phase < 4) {
-			HP = Math.max(HP, HT - 300 * phase);
+			HP = Math.max(HP, HT - (HT/4)*phase);
 		} else if (phase == 4) {
 			HP = Math.max(HP, 100);
 		}
@@ -302,7 +302,7 @@ public class YogDzewa extends Mob {
 			summonCooldown -= dmgTaken / 10f;
 		}
 
-		if (phase < 4 && HP <= HT - (HT/3)*phase) {
+		if (phase < 4 && HP <= HT - (HT/4)*phase) {
 
 			Dungeon.level.viewDistance = Math.max(1, Dungeon.level.viewDistance-1);
 			if (Dungeon.hero.buff(Light.class) == null){
